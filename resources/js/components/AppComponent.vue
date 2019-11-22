@@ -8,12 +8,6 @@
           <li>
             <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
             </li>
-          <li>
-            <router-link :to="{name: 'perfil'}">  Perfil</router-link>
-            </li>
-          <li>
-            <router-link :to="{name: 'prestamo'}">  Prestamo</router-link>
-          </li>
       </ul>
     
       <a class="toggle-nav" id="toggle-nav" @click="toggleActive" href="#">&#9776;</a>
@@ -23,7 +17,7 @@
           <button>Buscar</button>
       </form>
   </nav>
-  <div class="container-fluid p-0">
+  <div class="container-fluid p-0"> 
     <router-view></router-view>
   </div>
   </div>

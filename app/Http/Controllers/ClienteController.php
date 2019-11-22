@@ -88,18 +88,6 @@ class ClienteController extends Controller
        
     }
 
-    public function tables()
-    {
-        $departments = Departassmento::all();
-
-        return $departments;
-        // $departments = Departamento::where('activo',1)->orderByDescription()->get();
-        // $provinces = Provincia::where('activo',1)->orderByDescription()->get();
-        // $districts = Distrito::where('activo',1)->orderByDescription()->get();
-        // $locations = $this->getLocationCascade();
- 
-        // return  ['departments'=>$departments, 'provinces'=>$provinces, 'districts'=>$districts,  'locations'=>$locations];
-    }
 
 
     /**
@@ -218,6 +206,17 @@ class ClienteController extends Controller
         
     }
 
+    public function prestamoVer($prestamo)
+    {
+        $prestamo= Prestamo::find($prestamo);
+
+        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        $avals = Aval::where('prestamos_id',$prestamo->id)->get();
+        $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+
+        return compact('prestamo','cliente','avals','garantias');
+
+    }
     /**
      * Show the form for editing the specified resource.
      *

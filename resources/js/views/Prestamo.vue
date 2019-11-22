@@ -233,7 +233,7 @@
             </div>
 
             <div class="col-md-12 d-flex justify-content-end mt-3 mb-4">
-              <button class="btn btn-success btn-sm">Continuar</button>
+              <button class="btn btn-success btn-sm" @click.prevent="handleClick('aval')">Continuar</button>
             </div>
           </div>
         </div>
@@ -341,7 +341,7 @@
               </button>
             </div>
             <div class="col-md-12 d-flex justify-content-end mb-4">
-              <button class="btn btn-success btn-sm">Continuar</button>
+              <button class="btn btn-success btn-sm" @click.prevent="handleClick('garantia')">Continuar</button>
             </div>
           </div>
         </div>
@@ -384,7 +384,7 @@
               </button>
             </div>
             <div class="col-md-12 d-flex justify-content-end mb-4">
-              <button class="btn btn-success btn-sm">Continuar</button>
+              <button class="btn btn-success btn-sm" @click.prevent="handleClick('propuesta')">Continuar</button>
             </div>
           </div>
         </div>

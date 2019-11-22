@@ -89,7 +89,7 @@
 
 <script>
 import InfiniteLoading from "vue-infinite-loading";
-export default {
+export default { 
   components: { InfiniteLoading },
   data() {
     return {
@@ -97,6 +97,7 @@ export default {
       clientes: [],
       page: 0,
       tipo: true,
+      last_page: 1,
       form: {},
       notificationSystem: {
         options: {
@@ -115,17 +116,20 @@ export default {
   },
   methods: {
     infiniteHander($estado) {
-      this.page++;
+        this.page++
       console.log($estado);
       let url = "http://crecer.test/api/clientes?page=" + this.page;
       axios.get(url).then(response => {
         let datos = response.data.data;
-        if (datos.length) {
+        
+        if (this.page<=this.last_page) {
           this.clientes = this.clientes.concat(datos);
           $estado.loaded();
         } else {
           $estado.complete();
         }
+
+        this.last_page = response.data.last_page;
       });
     },
     crearCliente() {
@@ -133,7 +137,6 @@ export default {
     },
     cancelarCliente() {
       this.tipo = true;
-      this.page = 0;
     },
     initForm() {
       this.form = {

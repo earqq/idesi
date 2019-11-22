@@ -39,7 +39,64 @@
             </router-link>
           </div>
           <div class="w-100" v-if="prestamos.length>0">
-            <div class="col-md-12 loans" v-for="prestamo in prestamos" :key="prestamo.id"></div>
+            <div class="col-md-12 loans" v-for="prestamo in prestamos" :key="prestamo.id">
+              <div class="row">
+                <div class="col-md-3 col-sm-12">
+                  <div class="form-group d-flex">
+                    <label>Producto:</label>
+                    <p class="ml-3" v-text="prestamo.producto"></p>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                  <div class="form-group d-flex">
+                    <label>Forma:</label>
+                    <p class="ml-3" v-text="prestamo.forma"></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-2">
+                      <div class="form-group d-flex">
+                    <label>Importe:</label>
+                    <p class="ml-3" v-text="prestamo.importe"></p>
+                  </div>
+                  </div>
+                  <div class="col-md-2">
+                      <div class="form-group d-flex">
+                    <label>aporte:</label>
+                    <p class="ml-3" v-text="prestamo.aporte"></p>
+                  </div>
+                  </div>
+                  <div class="col-md-2">
+                      <div class="form-group d-flex">
+                    <label>Plazo:</label>
+                    <p class="ml-3" v-text="prestamo.plazo"></p>
+                  </div>
+                  </div>
+                  <div class="col-md-2">
+                      <div class="form-group d-flex">
+                    <label>Cuotas:</label>
+                    <p class="ml-3" v-text="prestamo.cuotas"></p>
+                  </div>
+                  </div>
+                  <div class="col-md-2">
+                      <div class="form-group d-flex">
+                    <label>Tasa:</label>
+                    <p class="ml-3" v-text="prestamo.tasa"></p>
+                  </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group d-flex">
+                    <label>Comentarios:</label>
+                    <p class="ml-3" v-text="prestamo.comentarios"></p>
+                  </div>
+                  </div>
+                   <router-link :to="{name:'ver', params:{prestamo:prestamo.id}}">
+                     VER PRESTAMO
+                  </router-link>
+              </div>
+            </div>
           </div>
           <div class="w-100" v-else>
             <p class="text-center">No registra prestamos</p>

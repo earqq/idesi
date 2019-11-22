@@ -16,12 +16,17 @@ export default new Router({
             component: require('./views/Clientes').default
         },
         {
-            path: ':documento',
+            path: '/perfil/:documento',
             name: 'perfil',
             component: require('./views/Perfil').default
         },
         {
-            path: 'prestamo/:dni',
+            path: '/ver/:prestamo',
+            name: 'ver',
+            component: require('./views/VerPrestamo').default
+        },
+        {
+            path: '/prestamo/:dni',
             name: 'prestamo',
             component: require('./views/Prestamo').default
         },
