@@ -1,0 +1,76 @@
+.dashboard
+    .loans
+        h1
+            font-size: 1.3rem
+            background: $bg-general
+            margin: 0
+            padding: 7px 10px
+        table
+            th
+                height: 45px
+                font-size: 20px
+            tr
+                border: 1px solid $accent
+                text-align: center
+    .views
+        height: calc(100vh - 55px)
+        border-left: 2px solid $accent
+        .title
+            padding: 15px 10px
+            border-bottom: 2px solid $accent
+            h1
+                font-size: 1.3rem
+                font-size: 19px
+                margin: 0
+                font-weight: bold
+        .sub-title
+            border-bottom: 2px solid $accent
+            padding: 5px 13px
+            h1
+                font-weight: bold
+                font-size: 19px
+                margin: 0
+        .views-list
+            .clients-view
+                border-bottom: 1px solid $accent
+                cursor: pointer
+                transition: all $duration-transition ease-in-out
+                .date-client
+                    padding: 10px 13px
+                    p
+                        transition: all $duration-transition ease-in-out
+                        margin: 0 !important
+                .map
+                    text-align: center
+                    display: flex
+                    flex-direction: column
+                    justify-content: center
+                    i
+                        transition: all $duration-transition ease-in-out
+                        font-size: 22px
+                        margin-top: -7px
+                &:hover
+                    background: $color-dark
+                    .date-client
+                        p
+                            color: #fff !important
+                    .map
+                        i
+                            color: #fff !important
+    .info
+        margin: 15px 0  
+        .row
+            .col-md-3
+                height: 100px
+                background: $bg-general
+                border-right: 1px solid $accent
+                cursor: pointer
+                .icon
+                    i
+                        font-size: 50px
+                .text
+                    p
+                        margin: 0
+                    .title
+                        font-size: 20px
+    
