@@ -17,5 +17,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('clientes','ClienteController@index');
-Route::get('cliente/{dni}','ClienteController@show');

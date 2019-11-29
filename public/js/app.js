@@ -2044,7 +2044,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.page++;
       console.log($estado);
-      var url = "http://crecer.test/api/clientes?page=" + this.page;
+      var url = "/clientes?page=" + this.page;
       axios.get(url).then(function (response) {
         var datos = response.data.data;
 

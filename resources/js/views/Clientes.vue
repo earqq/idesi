@@ -118,7 +118,7 @@ export default {
     infiniteHander($estado) {
         this.page++
       console.log($estado);
-      let url = "http://crecer.test/api/clientes?page=" + this.page;
+      let url = "/clientes?page=" + this.page; 
       axios.get(url).then(response => {
         let datos = response.data.data;
         
