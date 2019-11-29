@@ -19,6 +19,8 @@ $fa-font-path: "../webfonts";
 @import 'profile';
 @import 'home';
 @import 'loan';
+@import 'view';
+@import 'evaluacion';
 
 h1,h2,h3,p{
     color:$color-text!important;

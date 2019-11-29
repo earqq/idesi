@@ -26,7 +26,7 @@ class CreateVistasTable extends Migration
             $table->increments('id');
             $table->string('imagen', 45)->nullable();
             $table->date('fecha')->nullable();
-            $table->string('hora', 5)->nullable();
+            $table->string('hora', 10)->nullable();
             $table->string('motivo', 50)->nullable();
             $table->string('latitud', 50)->nullable();
             $table->string('altitud', 50)->nullable();

@@ -17456,6 +17456,172 @@ readers do not read off random characters that represent icons */
   letter-spacing: 3px;
 }
 
+.loans-views .views h1 {
+  font-size: 1.3rem;
+  background: #e7e5e5;
+  margin: 0;
+  padding: 7px 10px;
+}
+
+.loans-views .views table th {
+  height: 45px;
+  font-size: 20px;
+}
+
+.loans-views .views table tr {
+  border: 1px solid #c6d0da;
+  text-align: center;
+}
+
+.loans-views .new-view {
+  padding: 2% 4%;
+}
+
+.loans-views .new-view .image {
+  background: #e0e0e0;
+}
+
+.loans-views .new-view .documento-input {
+  letter-spacing: 6px;
+}
+
+.evaluations .loans h1 {
+  font-size: 1.3rem;
+  background: #e7e5e5;
+  margin: 0;
+  padding: 7px 10px;
+}
+
+.evaluations .file .row {
+  padding: 25px 2px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 1rem;
+}
+
+.evaluations .file .row .files {
+  height: 200px;
+  background: #d8d8d8;
+  position: relative;
+  cursor: pointer;
+}
+
+.evaluations .file .row .files .eye {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+.evaluations .file .row .files .file-one {
+  position: absolute;
+  top: 68px;
+  left: 85px;
+  font-size: 50px;
+}
+
+.evaluations .loan-date {
+  padding: 25px 0;
+  background: #d8d8d8;
+}
+
+.evaluations .views {
+  height: calc(100vh - 55px);
+  border-left: 2px solid #c6d0da;
+}
+
+.evaluations .views .title {
+  padding: 15px 10px;
+  border-bottom: 2px solid #c6d0da;
+}
+
+.evaluations .views .title h1 {
+  font-size: 1.3rem;
+  font-size: 19px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.evaluations .views .sub-title {
+  border-bottom: 2px solid #c6d0da;
+  padding: 5px 13px;
+}
+
+.evaluations .views .sub-title h1 {
+  font-weight: bold;
+  font-size: 19px;
+  margin: 0;
+}
+
+.evaluations .views .views-list .clients-view {
+  border-bottom: 1px solid #c6d0da;
+  cursor: pointer;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.evaluations .views .views-list .clients-view .date-client {
+  padding: 10px 13px;
+}
+
+.evaluations .views .views-list .clients-view .date-client p {
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  margin: 0 !important;
+}
+
+.evaluations .views .views-list .clients-view .map {
+  text-align: center;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+
+.evaluations .views .views-list .clients-view .map i {
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  font-size: 22px;
+  margin-top: -7px;
+}
+
+.evaluations .views .views-list .clients-view:hover {
+  background: #2c2929;
+}
+
+.evaluations .views .views-list .clients-view:hover .date-client p {
+  color: #fff !important;
+}
+
+.evaluations .views .views-list .clients-view:hover .map i {
+  color: #fff !important;
+}
+
+.evaluations .info {
+  margin: 15px 0;
+}
+
+.evaluations .info .row .col-md-3 {
+  height: 100px;
+  background: #e7e5e5;
+  border-right: 1px solid #c6d0da;
+  cursor: pointer;
+}
+
+.evaluations .info .row .col-md-3 .icon i {
+  font-size: 50px;
+}
+
+.evaluations .info .row .col-md-3 .text p {
+  margin: 0;
+}
+
+.evaluations .info .row .col-md-3 .text .title {
+  font-size: 20px;
+}
+
 h1,
 h2,
 h3,

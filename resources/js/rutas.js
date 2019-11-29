@@ -16,6 +16,11 @@ export default new Router({
             component: require('./views/Clientes').default
         },
         {
+            path: '/evaluaciones',
+            name: 'evaluaciones',
+            component: require('./views/Evaluaciones').default
+        },
+        {
             path: '/perfil/:documento',
             name: 'perfil',
             component: require('./views/Perfil').default

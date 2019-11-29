@@ -85,7 +85,7 @@
                     <label>Tasa:</label>
                     <p class="ml-3" v-text="prestamo.tasa"></p>
                   </div>
-                  </div>
+                  </div> 
                   <div class="col-md-2">
                     <div class="form-group d-flex">
                     <label>Comentarios:</label>
@@ -95,6 +95,7 @@
                    <router-link :to="{name:'ver', params:{prestamo:prestamo.id}}">
                      VER PRESTAMO
                   </router-link>
+
               </div>
             </div>
           </div>

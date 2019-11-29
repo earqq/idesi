@@ -8,6 +8,9 @@
           <li>
             <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
             </li>
+          <li>
+            <router-link :to="{name: 'evaluaciones'}"  >Evaluaciones</router-link>
+            </li>
       </ul>
     
       <a class="toggle-nav" id="toggle-nav" @click="toggleActive" href="#">&#9776;</a>

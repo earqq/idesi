@@ -147,7 +147,7 @@ export default {
       };
     },
     resetForm() {
-      this.initForm;
+      this.initForm();
     },
     datosCliente() {
       let me = this;

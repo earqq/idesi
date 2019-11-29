@@ -9,6 +9,7 @@ use App\Distrito;
 use App\Aval;
 use App\Garantia;
 use App\Provincia;
+use App\Vista;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -42,7 +43,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        if (!$request->ajax()) return redirect('/');
+        // if (!$request->ajax()) return redirect('/');
 
         try{
 
@@ -79,6 +80,18 @@ class ClienteController extends Controller
        
     }
 
+    public function visitaStore(Request $request)
+    {
+        $visita = new Vista($request->all());
+        $visita->save();
+        return [
+            'success' => true,
+            'data' => 'Cliente creado',
+        ];
+        
+       
+    }
+
     public function datos()
     {
        $departments = Departamento::where('activo',1)->orderBy('descripcion')->get();
@@ -105,6 +118,14 @@ class ClienteController extends Controller
         $prestamos = Prestamo::where('clientes_id',$cliente->id)->get();
 
         return ['cliente'=>$cliente, 'prestamos'=>$prestamos];
+        
+    }
+
+    public function visitas($documento)
+    {
+        $vistas = Vista::where('prestamos_id',$documento)->get();
+
+        return $vistas;
         
     }
 
