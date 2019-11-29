@@ -73,7 +73,7 @@
 
               <div class="form-group col-md-4">
                 <label for="nacimiento">Fecha de Nacimiento</label>
-                <input type="text" class="form-control" v-model="form.nacimiento" placeholder />
+                <input type="date" class="form-control" v-model="form.nacimiento" placeholder />
               </div>
             </div>
           </div>

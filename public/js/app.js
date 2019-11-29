@@ -41357,7 +41357,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "" },
+                      attrs: { type: "date", placeholder: "" },
                       domProps: { value: _vm.form.nacimiento },
                       on: {
                         input: function($event) {
@@ -61748,7 +61748,18 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
-
+ // import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+// import { Icon } from 'leaflet';
+// import 'leaflet/dist/leaflet.css';
+// Vue.component('l-map', LMap);
+// Vue.component('l-tile-layer', LTileLayer);
+// Vue.component('l-marker', LMarker);
+// delete Icon.Default.prototype._getIconUrl;
+// Icon.Default.mergeOptions({ 
+//   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+//   iconUrl: require('leaflet/dist/images/marker-icon.png'),
+//   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+// });
 
 var VueInputMask = __webpack_require__(/*! vue-inputmask */ "./node_modules/vue-inputmask/dist/vue-inputmask.js")["default"];
 

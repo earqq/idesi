@@ -547,6 +547,7 @@
 </template>
 <script>
 import Tabs from "vue-tabs-with-active-line";
+ 
 import { serviceNumber } from "../mixins/functions";
 const TABS = [
   {

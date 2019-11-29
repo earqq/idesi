@@ -264,7 +264,7 @@ class CreateLocationTable extends Migration
         // ]);
 
         Schema::create('departamentos', function (Blueprint $table) {
-            $table->integer('id')->index();
+            $table->integer('id')->unique();
             $table->string('descripcion');
             $table->boolean('activo')->default(true);
         });
@@ -298,7 +298,7 @@ class CreateLocationTable extends Migration
         ]);
 
         Schema::create('provincias', function (Blueprint $table) {
-            $table->integer('id')->index();
+            $table->integer('id')->unique();
             $table->integer('departamento_id');
             $table->string('descripcion');
             $table->boolean('activo')->default(true);
@@ -506,7 +506,7 @@ class CreateLocationTable extends Migration
         ]);
 
         Schema::create('distritos', function (Blueprint $table) {
-            $table->integer('id')->index();
+            $table->integer('id')->unique();
             $table->integer('provincia_id');
             $table->string('descripcion');
             $table->boolean('activo')->default(true);
