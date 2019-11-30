@@ -98,34 +98,34 @@
 
             <div class="col-md-12">
               <label for>Producto</label>
-              <input type="text" class="form-control" />
+              <input type="text" v-model="form.producto" class="form-control" />
             </div>
             <div class="col-md-6">
               <label for>Aporte</label>
-              <input type="text" class="form-control" />
+              <input type="text" v-model="form.aporte" class="form-control" />
             </div>
             <div class="col-md-6">
               <label for>Importe</label>
-              <input type="text" class="form-control" />
+              <input type="text" v-model="form.importe" class="form-control" />
             </div>
             <div class="col-md-12">
               <label for>Plazo</label>
-              <input type="text" class="form-control" />
+              <input type="text" v-model="form.plazo" class="form-control" />
             </div>
             <div class="col-md-6">
               <label for>Cuotas</label>
-              <input type="text" class="form-control" />
+              <input type="text" v-model="form.cuotas" class="form-control" />
             </div>
             <div class="col-md-6">
               <label for>Taza</label>
-              <input type="text" class="form-control" />
+              <input type="text" v-model="form.taza" class="form-control" />
             </div>
             <div class="col-md-12">
-              <button class="btn btn-success w-100 mb-1 mt-2">FIRMAR</button>
+              <button class="btn btn-success w-100 mb-1 mt-2"  @click="firmarEvaluacion()">FIRMAR</button>
             </div>
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
               <button class="btn btn-success w-100 mb-1 mt-1">GUARDAR</button>
-            </div>
+            </div> -->
             <div class="col-md-12">
               <button class="btn btn-danger w-100 mb-1 mt-1" @click="cancelarEvaluacion()">CANCELAR</button>
             </div>
@@ -175,6 +175,20 @@ export default {
           this.detalle = response.data;
           console.log(this.detalle);
         });
+    },
+    formInit(){
+
+      this.form={
+          producto: '',
+          aporte: '',
+          importe: '',
+          plazo:'',
+          cuotas: '',
+          taza: '',
+      }
+    },
+    firmarEvaluacion(){
+
     },
     cancelarEvaluacion() {
       this.tipo = true;

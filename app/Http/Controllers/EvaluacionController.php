@@ -58,6 +58,13 @@ class EvaluacionController extends Controller
         return $prestamo;
     }
 
+
+    public function evaluar($id)
+    {
+        $prestamo = Prestamo::find($id);
+        return $prestamo;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
