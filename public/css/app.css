@@ -17485,6 +17485,92 @@ readers do not read off random characters that represent icons */
   letter-spacing: 6px;
 }
 
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.login-crecer {
+  background: #eaeaea !important;
+}
+
+.login-crecer .user_card {
+  height: 400px;
+  width: 350px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: #cecece;
+  position: relative;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+}
+
+.login-crecer .brand_logo_container {
+  position: absolute;
+  height: 170px;
+  width: 170px;
+  top: -75px;
+  border-radius: 50%;
+  background: #eaeaea;
+  padding: 10px;
+  text-align: center;
+}
+
+.login-crecer .brand_logo {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.login-crecer .form_container {
+  margin-top: 100px;
+}
+
+.login-crecer .login_btn {
+  width: 100%;
+  background: #2cab9f !important;
+  color: white !important;
+}
+
+.login-crecer .login_btn:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
+.login-crecer .login_container {
+  padding: 0 2rem;
+}
+
+.login-crecer .input-group-text {
+  background: #2cab9f !important;
+  color: white !important;
+  border: 0 !important;
+  border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+.login-crecer .input_user,
+.login-crecer .input_pass:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
+.login-crecer .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #c0392b !important;
+}
+
 .evaluations .loans h1 {
   font-size: 1.3rem;
   background: #e7e5e5;
@@ -17512,11 +17598,24 @@ readers do not read off random characters that represent icons */
   top: 5px;
 }
 
-.evaluations .file .row .files .file-one {
+.evaluations .file .row .files a {
+  color: #000;
+  position: absolute;
+  width: 100%;
+  height: 200px;
+}
+
+.evaluations .file .row .files a .file-one {
   position: absolute;
   top: 68px;
   left: 85px;
   font-size: 50px;
+}
+
+.evaluations .file .row .files p {
+  position: absolute;
+  left: 74px;
+  bottom: 30px;
 }
 
 .evaluations .loan-date {
@@ -17620,6 +17719,62 @@ readers do not read off random characters that represent icons */
 
 .evaluations .info .row .col-md-3 .text .title {
   font-size: 20px;
+}
+
+.file-loan .files {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-auto-rows: auto;
+  grid-gap: 1rem;
+  padding: 31px 3%;
+}
+
+.file-loan .files .file-type {
+  height: 280px;
+}
+
+.file-loan .files .file-type .type {
+  position: relative;
+}
+
+.file-loan .files .file-type .type button {
+  width: 100%;
+  background: #212529;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.file-loan .files .file-type .type img {
+  width: 100%;
+  -o-object-fit: fill;
+     object-fit: fill;
+  height: 200px;
+}
+
+.file-loan .files .file-type .type p {
+  text-align: center;
+  padding: 7px 0;
+  background: #484d53;
+  color: #fff !important;
+  position: absolute;
+  top: 247px;
+  width: 100%;
+}
+
+.file-loan .files .file-type .type .mask {
+  width: 100%;
+  background: rgba(138, 138, 138, 0.91);
+  height: 200px;
+  position: absolute;
+  top: 47px;
+  cursor: pointer;
+}
+
+.file-loan .files .file-type .type .mask i {
+  position: absolute;
+  font-size: 68px;
+  left: 96px;
+  top: 55px;
 }
 
 h1,

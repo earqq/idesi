@@ -32,9 +32,9 @@
           <div class="col-md-12 p-0 d-flex justify-content-between">
             <h1>Prestamos</h1>
             <router-link
-              :to="{name: 'prestamo', params:{documento:cliente.documento}}"
-              class="btn btn-success"
-            >
+              :to="{name: 'prestamo', params:{dni:cliente.documento}}"
+              class="btn btn-success " style="height: fit-content;margin-top: 5px;"
+            > 
               <i class="fas fa-plus"></i> Nuevo Prestamo
             </router-link>
           </div>
@@ -92,8 +92,11 @@
                     <p class="ml-3" v-text="prestamo.comentarios"></p>
                   </div>
                   </div>
-                   <router-link :to="{name:'ver', params:{prestamo:prestamo.id}}">
+                   <router-link :to="{name:'ver', params:{prestamo:prestamo.id}}" class="btn btn-success ml-3 ">
                      VER PRESTAMO
+                  </router-link>
+                   <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" class="btn btn-danger ml-3">
+                     CARGAR ARCHIVOS
                   </router-link>
 
               </div>

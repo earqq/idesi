@@ -178,7 +178,11 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label>Fecha de Nacimiento</label>
-                <input type="text" v-model="form.nacimiento_conyugue" class="form-control" />
+                <date-pick
+                                 v-model="form.nacimiento_conyugue" 
+                                 :months="mesEs"
+                                 :weekdays="diaEs"
+                                ></date-pick>
               </div>
             </div>
             <div class="col-md-4">
@@ -272,14 +276,25 @@
             <div class="col-md-3">
               <div class="form-group">
                 <label>Fecha de Nacimiento</label>
-                <input type="text" v-model="row.nacimiento" class="form-control" />
+                  <date-pick
+                                 v-model="row.nacimiento" 
+                                 :months="mesEs"
+                                 :weekdays="diaEs"
+                                ></date-pick>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="form-group">
                 <label>Estado Civil</label>
-                <input type="text" v-model="row.estado_civil" class="form-control" />
+                <select  v-model="row.estado_civil"  class="form-control">
+                  <option value="0">SELECCIONE ...</option>
+                  <option value="SOLTERO">SOLTERO</option>
+                  <option value="CASADO">CASADO</option>
+                  <option value="CONVIVIENTE">CONVIVIENTE</option>
+                  <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
+                  <option value="VIUDO">VIUDO</option>
+                </select>
               </div>
             </div>
 
@@ -453,6 +468,12 @@
 <script>
 import Tabs from "vue-tabs-with-active-line";
 import { serviceNumber } from "../mixins/functions";
+import DatePick from 'vue-date-pick';
+import 'vue-date-pick/dist/vueDatePick.css';
+
+// import BackMixin from `vue-router-back-mixin`;
+
+
 const TABS = [
   {
     title: "01 DATOS CLIENTE",
@@ -471,9 +492,17 @@ const TABS = [
     value: "propuesta"
   }
 ];
+const mesConf=[
+        'Enero', 'Febrero', 'Marzo', 'Abril',
+        'Mayo', 'Junio', 'Julio', 'Agosto',
+        'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+const diaConf=[
+       'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'
+];
 export default {
   mixins: [serviceNumber],
-  components: { Tabs },
+  components: { Tabs ,DatePick},
   data() {
     return {
       resource: "clientes",
@@ -487,7 +516,19 @@ export default {
       errors: {},
       form: {},
       contador_aval: 0,
-      contador_garantia: 0
+      contador_garantia: 0,
+      mesEs: mesConf,
+      diaEs: diaConf,
+      notificationSystem: {
+        options: {
+          success: {
+            position: "topRight"
+          },
+          error: {
+            position: "topRight"
+          }
+        }
+      },
     };
   },
   created() {
@@ -500,7 +541,7 @@ export default {
     });
 
     this.$http
-      .get(`/${this.resource}/datos/prestamo/` + this.$route.params.documento)
+      .get(`/${this.resource}/datos/prestamo/` + this.$route.params.dni)
       .then(response => {
         console.log(response.data);
         this.form.departamentos_id = response.data["departamentos_id"];
@@ -569,6 +610,9 @@ export default {
     clickRemoveGarantia(index) {
       this.form.garantias.splice(index, 1);
     },
+    clearForm(){
+      this.initForm()
+    },
     initForm() {
       this.errors = {};
       this.form = {
@@ -576,7 +620,7 @@ export default {
         provincias_id: "0",
         distritos_id: "0",
         estado_civil: "0",
-        documento: this.$route.params.documento,
+        documento: this.$route.params.dni,
         ocupacion: "",
         telefono: "",
         celular: "",
@@ -656,7 +700,16 @@ export default {
 
       this.$http
         .post(`/${this.resource}/prestamo`, this.form)
-        .then(response => {})
+        .then(response => {
+          this.clearForm()
+          this.$toast.success(
+              "El prestamo fue creado",
+              "Exitoso",
+              this.notificationSystem.options.success
+            ); 
+          this.currentTab = 'cliente'
+          this.backMixin_handleBack()
+        })
         // .catch(error => {
         //   if (error.response.status === 422) {
         //     this.errors = error.response.data;
@@ -729,5 +782,24 @@ export default {
 }
 button {
   width: 24%;
+}
+.vdpWithInput{
+      width: 100%;
+}
+.vdpWithInput > input { 
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0.1em 0.3em;
+    padding: 5px 40px 6px 15px;
+    border-radius: 4px;
+    background: white;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(224, 224, 224);
+    border-image: initial;
+    outline: 0px;
 }
 </style>

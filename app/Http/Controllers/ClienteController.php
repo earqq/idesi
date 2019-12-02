@@ -22,6 +22,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
+        
         return Cliente::orderBy('id')->paginate(10);
     }
 
@@ -43,7 +44,7 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        // if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
 
         try{
 
@@ -82,6 +83,7 @@ class ClienteController extends Controller
 
     public function visitaStore(Request $request)
     {
+        if (!$request->ajax()) return redirect('/');
         $visita = new Vista($request->all());
         $visita->save();
         return [
@@ -123,6 +125,7 @@ class ClienteController extends Controller
 
     public function visitas($documento)
     {
+        if (!$request->ajax()) return redirect('/');
         $vistas = Vista::where('prestamos_id',$documento)->get();
 
         return $vistas;
@@ -131,7 +134,6 @@ class ClienteController extends Controller
 
     public function general($documento)
     {
-        
         return Cliente::where('documento',$documento)->first();
         
     }

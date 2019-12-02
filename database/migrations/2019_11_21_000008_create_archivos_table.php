@@ -24,10 +24,11 @@ class CreateArchivosTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('nombre', 50)->nullable();
-            $table->string('tipo', 5)->nullable();
+            $table->string('nombre', 50)->unique();
+            $table->string('tipo', 10)->nullable();
+            $table->string('extension', 5)->nullable();
             $table->integer('prestamos_id')->unsigned();
-
+ 
             $table->softDeletes();
 
             $table->timestamps();

@@ -6,6 +6,11 @@ Vue.use(Router)
 export default new Router({
     routes:[
         {
+            path: '/inicio',
+            name: 'inicio',
+            component: require('./views/Inicio').default
+        },
+        {
             path: '/',
             name: 'inicio',
             component: require('./views/Inicio').default
@@ -29,6 +34,11 @@ export default new Router({
             path: '/ver/:prestamo',
             name: 'ver',
             component: require('./views/VerPrestamo').default
+        },
+        {
+            path: '/archivos/:prestamo',
+            name: 'archivos',
+            component: require('./views/Archivos').default
         },
         {
             path: '/prestamo/:dni',

@@ -190,7 +190,12 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label>Fecha de Nacimiento</label>
-                  <input type="text" v-model="cliente.nacimiento_conyugue" class="form-control" />
+                  <!-- <input type="text" v-model="cliente.nacimiento_conyugue" class="form-control" /> -->
+                  <date-pick
+                    v-model="cliente.nacimiento_conyugue"
+                    :months="mesEs"
+                    :weekdays="diaEs"
+                  ></date-pick>
                 </div>
               </div>
               <div class="col-md-4">
@@ -240,7 +245,11 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Dirección</label>
-                  <input type="text" v-model="cliente.direccion_laboral_conyugue" class="form-control" />
+                  <input
+                    type="text"
+                    v-model="cliente.direccion_laboral_conyugue"
+                    class="form-control"
+                  />
                 </div>
               </div>
 
@@ -287,7 +296,8 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label>Fecha de Nacimiento</label>
-                  <input type="text" v-model="row.nacimiento" class="form-control" />
+                  <!-- <input type="text" v-model="row.nacimiento" class="form-control" /> -->
+                  <date-pick v-model="row.nacimiento" :months="mesEs" :weekdays="diaEs"></date-pick>
                 </div>
               </div>
 
@@ -474,7 +484,7 @@
               <button class="btn btn-success" @click="crearVisita()">Crear Visita</button>
             </div>
             <div class="col-md-12 views p-0">
-              <h1>Visitas</h1> 
+              <h1>Visitas</h1>
               <table style="width:100%">
                 <tr>
                   <th>Fecha</th>
@@ -484,70 +494,78 @@
                   <th></th>
                 </tr>
                 <tr v-for="visita in list_vistas" :key="visita.id">
-                  <td v-text="visita.fecha"></td>
+                  <td v-text="stringDate(visita.fecha)"></td>
                   <td v-text="visita.hora"></td>
                   <td v-text="visita.motivo"></td>
-                  <td><i class="fas fa-map-marked-alt"></i></td>
                   <td>
-                    <button class="btn btn-success" style="width:50%" v-if="visita.estado==1">Completar</button>
+                    <i class="fas fa-map-marked-alt"></i>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-success"
+                      style="width:50%"
+                      v-if="visita.estado==1"
+                    >Completar</button>
                     <button class="btn btn-success disabled" style="width:50%" v-else>Completo</button>
                   </td>
                 </tr>
-
               </table>
             </div>
           </div>
 
-                <div class="new-view" v-else>
-                    <div class="row d-flex justify-content-center">
-                      <div class="col-md-10">
-                        <div class="form-group">
-                          <label for="motivo">Motivo</label>
-                          <input
-                            type="text"
-                            class="form-control documento-input"
-                            v-model="formViews.motivo"
-                          />
-                        </div>
+          <div class="new-view" v-else>
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="motivo">Motivo</label>
+                  <input
+                    type="text"
+                    class="form-control documento-input"
+                    v-model="formViews.motivo"
+                  />
+                </div>
 
-                        <div class="row">
-                         
-                          <div class="form-group col-md-3">
-                            <label for="fecha">Fecha</label>
-                            <input type="date" class="form-control" v-model="formViews.fecha" placeholder />
-                          </div>
-
-                          <div class="form-group col-md-3">
-                            <label for="hora">Hora</label>
-                            <input type="text" class="form-control" v-model="formViews.hora" placeholder />
-                          </div>
-
-                          <div class="form-group col-md-3">
-                            <label for="altitud">Altitud</label>
-                            <input type="text" class="form-control" v-model="formViews.altitud" placeholder />
-                          </div>
-
-                          <div class="form-group col-md-3">
-                            <label for="latitud">Latitud</label>
-                            <input type="text" class="form-control" v-model="formViews.latitud" placeholder />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-2 offset-md-8 d-flex justify-content-end">
-                        <button class="btn btn-danger w-100" @click="cancelarVisita">Cancelar</button>
-                        <button class="btn btn-success w-100" @click.prevent="submit">Registrar Visita</button>
-                      </div>
-                    </div>
+                <div class="row">
+                  <div class="form-group col-md-3">
+                    <label for="fecha">Fecha</label>
+                    <date-pick v-model="formViews.fecha" :months="mesEs" :weekdays="diaEs"></date-pick>
                   </div>
+
+                  <div class="form-group col-md-3">
+                    <label for="hora">Hora</label>
+                    <input type="text" class="form-control" v-model="formViews.hora" placeholder />
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <label for="altitud">Altitud</label>
+                    <input type="text" class="form-control" v-model="formViews.altitud" placeholder />
+                  </div>
+
+                  <div class="form-group col-md-3">
+                    <label for="latitud">Latitud</label>
+                    <input type="text" class="form-control" v-model="formViews.latitud" placeholder />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-2 offset-md-8 d-flex justify-content-end">
+                <button class="btn btn-danger w-100" @click="cancelarVisita">Cancelar</button>
+                <button class="btn btn-success w-100" @click.prevent="submit">Registrar Visita</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import Tabs from "vue-tabs-with-active-line";
- 
+import DatePick from "vue-date-pick";
+import "vue-date-pick/dist/vueDatePick.css";
+import moment from "moment";
+
 import { serviceNumber } from "../mixins/functions";
 const TABS = [
   {
@@ -577,9 +595,25 @@ const TABSALL = [
     value: "visita"
   }
 ];
+
+const mesConf = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre"
+];
+const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   mixins: [serviceNumber],
-  components: { Tabs },
+  components: { Tabs, DatePick },
   data() {
     return {
       resource: "clientes",
@@ -610,8 +644,12 @@ export default {
             position: "topRight"
           }
         }
-      }
-
+      },
+      mesEs: mesConf,
+      diaEs: diaConf,
+      video: {},
+      canvas: {},
+      captures: []
     };
   },
   async created() {
@@ -627,30 +665,37 @@ export default {
     /**
      *  DATOS DE PRESTAMOS
      */
-     await this.$http
+    await this.$http
       .get(`/${this.resource}/prestamo/ver/` + this.$route.params.prestamo)
       .then(response => {
         console.log(response.data);
-        this.cliente=response.data.cliente
-        this.avals=response.data.avals
-        this.garantias=response.data.garantias
-        this.prestamo=response.data.prestamo
+        this.cliente = response.data.cliente;
+        this.avals = response.data.avals;
+        this.garantias = response.data.garantias;
+        this.prestamo = response.data.prestamo;
       });
 
-     await this.views()
+    await this.views();
     /**
      * DATOS VIES
      */
     await this.initForm();
   },
-    methods: {
-       crearVisita() {
+  methods: {
+    stringDate(date) {
+      var string = moment(date)
+        .locale("es")
+        .format("D [de] MMMM [del] YYYY");
+      return string;
+    },
+
+    crearVisita() {
       this.tipo = false;
     },
-     cancelarVisita() {
+    cancelarVisita() {
       this.tipo = true;
     },
-      handleClick(newTab) {
+    handleClick(newTab) {
       this.currentTab = newTab;
     },
     handleClickAll(newTab) {
@@ -673,12 +718,12 @@ export default {
         estado: 1
       };
     },
-    views(){
+    views() {
       this.$http
-      .get(`/${this.resource}/visitas/` + this.$route.params.prestamo)
-      .then(response => {
-        this.list_vistas=response.data
-      });
+        .get(`/${this.resource}/visitas/` + this.$route.params.prestamo)
+        .then(response => {
+          this.list_vistas = response.data;
+        });
     },
     resetForm() {
       this.initForm();
@@ -698,8 +743,8 @@ export default {
               "La visita fue creado",
               "Exitoso",
               this.notificationSystem.options.success
-            )
-            this.views()
+            );
+            this.views();
           }
         })
         // .catch(error => {
@@ -713,11 +758,11 @@ export default {
           // this.loading_submit = false;
         });
     }
-  },
-
+  }
 };
 </script>
 <style lang="scss">
+
 .default-tabs {
   position: relative;
   margin: 0 auto;
@@ -778,5 +823,24 @@ button {
   button {
     width: 48%;
   }
+}
+.vdpWithInput {
+  width: 100%;
+}
+.vdpWithInput > input {
+  font-size: 16px;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0.1em 0.3em;
+  padding: 5px 40px 6px 15px;
+  border-radius: 4px;
+  background: white;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(224, 224, 224);
+  border-image: initial;
+  outline: 0px;
 }
 </style>

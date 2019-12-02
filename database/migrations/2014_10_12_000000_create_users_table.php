@@ -17,16 +17,24 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('usuario')->unique();
             $table->string('password');
+            $table->boolean('condicion')->default(1);
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            
+            $table->integer('idrol')->unsigned();
+            $table->foreign('idrol')->references('id')->on('roles');
+
         });
 
-        DB::table('users')->insert([
-            ['id' => '1', 'name' => 'PRUEBA','email'=>'prueba@gmail.com' ,'password'=>'2ddawfwfafwfw']
-        ]);
 
+        DB::table('users')->insert(array('id'=>'1','name'=>'gian marco albornoz rimas',
+        'email'=>'albornozrimas123@gmail.com','usuario'=>'admin', 
+        'password'=>'$2y$10$iQU.I7teZQ4Sxt56c/1TouTr4GdGUyBAU7Kgzq7mQahVbbvHvNouS', 'condicion'=>'1'
+        ,'idrol'=>'1'));
 
     }
 

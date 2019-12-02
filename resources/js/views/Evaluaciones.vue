@@ -32,23 +32,20 @@
             <div class="col-md-12 p-0 loans">
               <h1>Archivos</h1>
             </div>
+
             <div class="col-md-12 file p-0">
               <div class="row m-0">
-                <div class="files">
+                <div class="files" v-for="(archivo, index) in archivos" :key="index">
                   <i class="fas fa-eye eye"></i>
-                  <i class="fas fa-file-download file-one"></i>
-                </div>
-                <div class="files">
-                  <i class="fas fa-eye eye"></i>
-                  <i class="fas fa-file-download file-one"></i>
-                </div>
-                <div class="files">
-                  <i class="fas fa-eye eye"></i>
-                  <i class="fas fa-file-download file-one"></i>
-                </div>
-                <div class="files">
-                  <i class="fas fa-eye eye"></i>
-                  <i class="fas fa-file-download file-one"></i>
+                  <a
+                    :href="'../storage/'+person.nombres+'_'+person.apellidos+'_'+person.id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+                    target="_blank"
+                  >
+                    <p v-text="archivo.nombre+'.'+archivo.extension"></p>
+                    <div class="mask">
+                      <i class="fas fa-file-download file-one"></i>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -91,9 +88,9 @@
         <div class="col-md-3 m-0 views">
           <div class="row m-0">
             <div class="col-md-12 status pt-4 pb-4 pl-3">
-              <input type="radio" name="gender" /> Aprobado
-              <input type="radio" name="gender" /> Observado
-              <input type="radio" name="gender" /> Desaprobado
+              <input type="radio" v-model="form.tipo" /> Aprobado
+              <input type="radio" v-model="form.tipo" /> Observado
+              <input type="radio" v-model="form.tipo" /> Desaprobado
             </div>
 
             <div class="col-md-12">
@@ -121,11 +118,11 @@
               <input type="text" v-model="form.taza" class="form-control" />
             </div>
             <div class="col-md-12">
-              <button class="btn btn-success w-100 mb-1 mt-2"  @click="firmarEvaluacion()">FIRMAR</button>
+              <button class="btn btn-success w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button>
             </div>
             <!-- <div class="col-md-12">
               <button class="btn btn-success w-100 mb-1 mt-1">GUARDAR</button>
-            </div> -->
+            </div>-->
             <div class="col-md-12">
               <button class="btn btn-danger w-100 mb-1 mt-1" @click="cancelarEvaluacion()">CANCELAR</button>
             </div>
@@ -154,13 +151,23 @@ export default {
             position: "topRight"
           }
         }
-      }
+      },
+
+      person: {},
+      archivos: []
     };
   },
   async created() {
     await this.methodsPrestamo();
   },
   methods: {
+    listFile(id) {
+      this.$http.get(`/files/${id}`).then(response => {
+        this.person = response.data["datos"];
+        this.archivos = response.data["files"];
+        console.log(this.person);
+      });
+    },
     methodsPrestamo() {
       this.$http.get(`/${this.resource}/prestamos/`).then(response => {
         this.prestamos = response.data;
@@ -173,23 +180,22 @@ export default {
         .get(`/${this.resource}/prestamos/detalle/` + id)
         .then(response => {
           this.detalle = response.data;
-          console.log(this.detalle);
+          this.listFile(id);
+          // console.log(this.detalle);
         });
     },
-    formInit(){
-
-      this.form={
-          producto: '',
-          aporte: '',
-          importe: '',
-          plazo:'',
-          cuotas: '',
-          taza: '',
-      }
+    formInit() {
+      this.form = {
+        producto: "",
+        aporte: "",
+        importe: "",
+        plazo: "",
+        cuotas: "",
+        taza: "",
+        tipo: ""
+      };
     },
-    firmarEvaluacion(){
-
-    },
+    firmarEvaluacion() {},
     cancelarEvaluacion() {
       this.tipo = true;
     }

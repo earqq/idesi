@@ -1,12 +1,25 @@
 export const serviceNumber = {
     data() {
         return {
-            loading_search: false
+            loading_search: false,
+            fromRoute: undefined
         }
     },
+  beforeRouteEnter (to, from, next) {
+    next((vm) => {
+      vm.fromRoute = from.name
+    })
+  },
     methods: {
+        backMixin_handleBack(fallBackUrl) {
+            if (this.fromRoute) {
+              this.$router.back()
+            } else {
+              this.$router.push(fallBackUrl || '/')
+            }
+          },
         filterProvince() {
-            this.form.provincias_id = null
+            this.form.provincias_id = null 
             this.form.distritos_id = null
             console.log("sdad");
             this.filterProvinces()

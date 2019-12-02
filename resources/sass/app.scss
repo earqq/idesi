@@ -20,7 +20,9 @@ $fa-font-path: "../webfonts";
 @import 'home';
 @import 'loan';
 @import 'view';
+@import 'login';
 @import 'evaluacion';
+@import 'file';
 
 h1,h2,h3,p{
     color:$color-text!important;

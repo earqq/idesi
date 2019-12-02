@@ -73,7 +73,7 @@
 
               <div class="form-group col-md-4">
                 <label for="nacimiento">Fecha de Nacimiento</label>
-                <input type="date" class="form-control" v-model="form.nacimiento" placeholder />
+                <date-pick v-model="form.nacimiento"  :months="mesEs" :weekdays="diaEs"></date-pick>
               </div>
             </div>
           </div>
@@ -89,8 +89,26 @@
 
 <script>
 import InfiniteLoading from "vue-infinite-loading";
+import DatePick from "vue-date-pick";
+import "vue-date-pick/dist/vueDatePick.css";
+
+const mesConf = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre"
+];
+const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default { 
-  components: { InfiniteLoading },
+  components: { InfiniteLoading,DatePick },
   data() {
     return {
       resource: "clientes",
@@ -108,7 +126,9 @@ export default {
             position: "topRight"
           }
         }
-      }
+      },
+      mesEs: mesConf,
+      diaEs: diaConf
     };
   },
   async created() {
@@ -184,7 +204,9 @@ export default {
               "Exitoso",
               this.notificationSystem.options.success
             );
+            this.tipo=true
           } else {
+            this.resetForm();
             this.$toast.error(
               "El cliente ya existe!",
               "Error",
@@ -209,3 +231,25 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.vdpWithInput {
+  width: 100%;
+}
+.vdpWithInput > input {
+  font-size: 16px;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0.1em 0.3em;
+  padding: 5px 40px 6px 15px;
+  border-radius: 4px;
+  background: white;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(224, 224, 224);
+  border-image: initial;
+  outline: 0px;
+}
+</style>
