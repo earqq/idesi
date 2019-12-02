@@ -23,7 +23,7 @@ class ClienteController extends Controller
     public function index()
     {
         
-        return Cliente::orderBy('id')->paginate(10);
+        return Cliente::orderBy('id','desc')->paginate(10);
     }
 
     /**
