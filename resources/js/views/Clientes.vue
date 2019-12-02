@@ -5,6 +5,9 @@
     <!-- +++++++++++++++++++ -->
 
     <div class="container-general container-fluid clients" v-if="tipo">
+      <div class="row col-12">
+        <input type="text" class="form-control">
+      </div>
       <div class="card-client new" @click="crearCliente()">
         <i class="fas fa-plus-circle"></i>
         <h1>Crear Cliente</h1>

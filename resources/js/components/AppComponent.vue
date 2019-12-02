@@ -10,7 +10,10 @@
             </li>
           <li>
             <router-link :to="{name: 'evaluaciones'}"  >Evaluaciones</router-link>
-            </li>
+          </li>
+          <li>
+            <router-link :to="{name: '/lista-evaluaciones'}"  >Evaluaciones Final</router-link>
+          </li>
       </ul>
     
       <a class="toggle-nav" id="toggle-nav" @click="toggleActive" href="#">&#9776;</a>

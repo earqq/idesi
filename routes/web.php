@@ -36,7 +36,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('clientes/prestamo/ver/{prestamo}', 'ClienteController@prestamoVer');
         Route::get('evaluaciones/prestamos', 'EvaluacionController@prestamos');
         Route::get('evaluaciones/prestamos/detalle/{prestamo}', 'EvaluacionController@show');
-        Route::get('evaluaciones/prestamos/evaluar/{prestamo}', 'EvaluacionController@evaluar');
+        Route::post('evaluaciones/prestamos/evaluar', 'EvaluacionController@evaluar');
+
         Route::post('/consulta/dni','ConsultaController@dni');
 
         /**

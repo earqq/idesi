@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Prestamo;
+use App\Evaluacion;
 
 class EvaluacionController extends Controller
 {
@@ -59,10 +60,47 @@ class EvaluacionController extends Controller
     }
 
 
-    public function evaluar($id)
+    // public function evaluar($id)
+    // {
+    //     $prestamo = Prestamo::find($id);
+    //     return $prestamo;
+    // }
+
+    public function evaluar(Request $request)
     {
-        $prestamo = Prestamo::find($id);
-        return $prestamo;
+        if($request['tipo']=='APROBADO'){
+            $evaluacion = new Evaluacion();
+            $evaluacion->producto  = $request['producto'] ;
+            $evaluacion->aporte  = $request['aporte'];
+            $evaluacion->importe  = $request['importe'];
+            $evaluacion->plazo  = $request['plazo'];
+            $evaluacion->cuotas  = $request['cuotas'];
+            $evaluacion->tasa  = $request['tasa'];
+            $evaluacion->estado  = $request['tipo'];
+            $evaluacion->prestamos_id  = $request['prestamos_id'];
+            $evaluacion->users_id  = '1';
+            $evaluacion->save();
+            // $prestamo = Prestamo::find($request['prestamos_id']);
+            // $prestamo->estado = $request['tipo'];
+            // $prestamo->save();
+        }
+        elseif($request['tipo']=='OBSERVADO'){
+
+        }
+        elseif($request['tipo']=='DESAPROBADO'){
+            $evaluacion = new Evaluacion();
+            $evaluacion->producto  = 00;
+            $evaluacion->aporte  = 00;
+            $evaluacion->importe  = 00;
+            $evaluacion->plazo  = 00;
+            $evaluacion->cuotas  = 00;
+            $evaluacion->tasa  = 00;
+            $evaluacion->estado  = $request['tipo'];
+            $evaluacion->prestamos_id  = $request['prestamos_id'];
+            $evaluacion->users_id  = '1';
+            $evaluacion->save();
+        }
+        // return $request['tipo'];
     }
 
     /**

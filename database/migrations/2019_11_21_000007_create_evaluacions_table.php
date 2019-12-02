@@ -30,7 +30,7 @@ class CreateEvaluacionsTable extends Migration
             $table->integer('plazo')->nullable();
             $table->integer('cuotas')->nullable();
             $table->decimal('tasa', 11, 2)->nullable();
-            $table->char('estado', 1)->nullable();
+            $table->string('estado', 15)->nullable();
             $table->integer('prestamos_id')->unsigned();
             $table->integer('users_id')->unsigned();
 
