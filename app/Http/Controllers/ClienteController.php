@@ -7,11 +7,14 @@ use App\Prestamo;
 use App\Departamento;
 use App\Distrito;
 use App\Aval;
+use App\Archivo;
 use App\Garantia;
 use App\Provincia;
 use App\Vista;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Storage;
 
 class ClienteController extends Controller
 {
@@ -211,7 +214,24 @@ class ClienteController extends Controller
                 $garantia->prestamos_id = $prestamo->id;
                 $garantia->save();
             }
- 
+
+            $prestamos= Prestamo::find($prestamo->id);
+            $cliente = Cliente::where('id',$prestamos->clientes_id)->first();
+            $avals = Aval::where('prestamos_id',$prestamos->id)->get();
+            $garantias = Garantia::where('prestamos_id',$prestamos->id)->get();
+
+            // return $cliente;
+            $pdf = PDF::loadView('reportes.prestamo',compact('prestamos','cliente','avals','garantias'));
+
+            if (Storage::put('public/'.$this->getUserDir($prestamos->id) .'/prestamo_'.$prestamo->id.'/documento/prestamo_'.$prestamo->id.'.pdf', $pdf->output())) {
+                $file= new Archivo;
+                $file->nombre = 'prestamo_'.$prestamo->id;
+                $file->tipo = 'documento';
+                $file->extension = 'pdf';
+                $file->prestamos_id =  $prestamos->id;
+                $file->save();
+            }
+    
             DB::commit();
 
             return [
@@ -249,6 +269,13 @@ class ClienteController extends Controller
     public function edit(Cliente $cliente)
     {
         //
+    }
+
+    private function getUserDir($id)
+    {   
+        $prestamo = Prestamo::where('id',$id)->first();
+        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        return $cliente->nombres.'_'. $cliente->apellidos .'_' . $cliente->id;
     }
 
     /**

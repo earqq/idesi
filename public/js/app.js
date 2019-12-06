@@ -59668,6 +59668,8 @@ var render = function() {
                             _vm.person.apellidos +
                             "_" +
                             _vm.person.id +
+                            "/prestamo_" +
+                            archivo.prestamos_id +
                             "/" +
                             archivo.tipo +
                             "/" +
@@ -59726,6 +59728,8 @@ var render = function() {
                           _vm.person.apellidos +
                           "_" +
                           _vm.person.id +
+                          "/prestamo_" +
+                          archivo.prestamos_id +
                           "/" +
                           archivo.tipo +
                           "/" +

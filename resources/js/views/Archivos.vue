@@ -24,7 +24,7 @@
                 <button class="btn btn-file" title="Delete" @click="prepareToDelete(archivo)" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-trash"></i> ELIMINAR</button>
                 <a :href="'../storage/'+person.nombres+'_'+person.apellidos+'_'+person.id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension" target="_blank">
                     
-                        <img  :src="'../storage/'+person.nombres+'_'+person.apellidos+'_'+person.id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension" :alt="archivo.nombre">
+                        <img  :src="'../storage/'+person.nombres+'_'+person.apellidos+'_'+person.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension" :alt="archivo.nombre">
                         <p v-text="archivo.nombre+'.'+archivo.extension"></p>
                         <div class="mask">
                             <i class="fas fa-file-download"></i>
@@ -34,7 +34,7 @@
 
              <div class="type file-document" v-if="archivo.tipo=='documento'">
                  <button class="btn btn-file" title="Delete" @click="prepareToDelete(archivo)" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-trash"></i> ELIMINAR</button>
-                 <a :href="'../storage/'+person.nombres+'_'+person.apellidos+'_'+person.id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension" target="_blank">
+                 <a :href="'../storage/'+person.nombres+'_'+person.apellidos+'_'+person.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension" target="_blank">
                     
                  <p v-text="archivo.nombre+'.'+archivo.extension"></p>
                  <div class="mask">

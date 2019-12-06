@@ -53,7 +53,7 @@ class FileController extends Controller
         $type = $this->getType($ext);
  
 
-        if (Storage::putFileAs('/public/' . $this->getUserDir($request['prestamo_id']) . '/' . $type . '/', $file, $request['name'] . '.' . $ext)) {
+        if (Storage::putFileAs('/public/' . $this->getUserDir($request['prestamo_id']) .'/prestamo_'.$request['prestamo_id']. '/' . $type . '/', $file, $request['name'] . '.' . $ext)) {
             return $model::create([
                     'nombre' => $request['name'],
                     'tipo' => $type,
