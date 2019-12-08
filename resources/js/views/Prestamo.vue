@@ -1,5 +1,11 @@
 <template>
   <div class="container-general">
+     <header>
+        <span @click="retornar()">
+          <i class="fas fa-angle-left"></i>
+        </span>
+        <h1>Nuevo prestamo</h1>
+      </header>
     <div class="row col-md-12 m-0 loan">
       <tabs
         :tabs="tabs"
@@ -418,9 +424,15 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label>Forma</label>
-                <input type="text" v-model="form.forma" class="form-control" />
+                <select v-model="form.forma" class="form-control">
+                  <option value="0">SELECCIONE</option>
+                  <option value="DIARIO">DIARIO</option>
+                  <option value="SEMANAL">SEMANAL</option>
+                  <option value="MENSUAL">MENSUAL</option>
+                </select>
               </div>
             </div>
+
 
             <div class="col-md-3">
               <div class="form-group">
@@ -429,9 +441,14 @@
               </div>
             </div>
 
-            <div class="col-md-3">
-              <label>Plazo</label>
-              <input type="text" v-model="form.plazo" class="form-control" />
+             <div class="col-md-3">
+              <div class="form-group">
+                <label>Plazo</label>
+                <select v-model="form.plazo"   class="form-control">
+                  <option value="0">SELECCIONE</option>
+                  <option v-for="(index) in 36" :key="index" :value="index" >{{index}} </option>
+                </select>
+              </div>
             </div>
 
             <div class="col-md-3">
@@ -456,7 +473,7 @@
             </div>
 
             <div class="col-md-12 d-flex justify-content-end mt-3 mb-4">
-              <button class="btn btn-success btn-sm" @click.prevent="submit">Guardar</button>
+              <button class="btn btn-success btn-sm " @click.prevent="submit">Guardar</button>
             </div>
           </div>
         </div>
@@ -580,7 +597,7 @@ export default {
       this.currentTab = newTab;
     },
     clickAddAval() {
-      this.contador_aval++;
+      // this.contador_aval++;
       this.form.avals.push({
         documento: "",
         nombres: "",
@@ -600,7 +617,7 @@ export default {
       this.form.avals.splice(index, 1);
     },
     clickAddGarantia() {
-      this.contador_garantia++;
+      // this.contador_garantia++;
       this.form.garantias.push({
         bien_garantia: "",
         inscripcion: "",
@@ -642,7 +659,7 @@ export default {
         garantias: [],
         avals: [],
         producto: "",
-        forma: "",
+        forma: "0",
         importe: 0,
         aporte: 0,
         plazo: 0,
@@ -720,6 +737,9 @@ export default {
         .then(() => {
           // this.loading_submit = false;
         });
+    },
+        retornar(){
+      this.backMixin_handleBack()
     }
   },
   mounted() {

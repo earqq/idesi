@@ -23,8 +23,11 @@
           <button>Buscar</button>
       </form>
   </nav>
-  <div class="container-fluid p-0"> 
-    <router-view></router-view>
+  <div class="container-fluid">
+    
+    <transition name="fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
   </div>
 </template>
@@ -47,5 +50,10 @@ export default {
 };
 </script>
 <style lang="css" scoped>
-
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+    opacity: 0
+}
 </style>

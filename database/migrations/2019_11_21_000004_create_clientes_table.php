@@ -24,42 +24,21 @@ class CreateClientesTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('documento')->nullable();
-            $table->string('nombres', 50)->nullable();
-            $table->string('apellidos', 50)->nullable();
-            $table->date('nacimiento')->nullable();
-            $table->string('estado_civil', 15)->nullable();
-            $table->string('ocupacion', 50)->nullable();
-            $table->string('telefono', 10)->nullable();
-            $table->string('celular', 15)->nullable();
-            $table->string('direccion', 100)->nullable();
-            $table->string('referencia', 100)->nullable();
-            $table->string('tipo_domicilio', 30)->nullable();
-            $table->string('centro_laboral', 40)->nullable();
-            $table->string('direccion_laboral', 100)->nullable();
-            $table->integer('documento_conyugue')->nullable();
-            $table->string('nombres_conyugue', 50)->nullable();
-            $table->string('apellidos_conyugue', 50)->nullable();
-            $table->date('nacimiento_conyugue')->nullable();
-            $table->string('estado_civil_conyugue', 15)->nullable();
-            $table->string('ocupacion_conyugue', 50)->nullable();
-            $table->string('telefono_conyugue', 10)->nullable();
-            $table->string('celular_conyugue', 15)->nullable();
-            $table->string('centro_laboral_conyugue', 40)->nullable();
-            $table->string('direccion_laboral_conyugue', 100)->nullable();
-            $table->integer('departamentos_id')->nullable();
-            $table->integer('distritos_id')->nullable();
-            $table->integer('provincias_id')->nullable();
-
-            $table->softDeletes();
-
-            $table->timestamps();
+            $table->string('documento', 8)->nullable();
+            $table->string('codigo', 10)->nullable();
+            $table->string('tipo_cliente', 5)->nullable();
+            $table->char('estado')->default('1');
+            $table->integer('departamentos_id')->nullable()->default(null);
+            $table->integer('distritos_id')->nullable()->default(null);
+            $table->integer('provincias_id')->nullable()->default(null);
 
             $table->index(["departamentos_id"], 'fk_clientes_departamentos1_idx');
 
             $table->index(["distritos_id"], 'fk_clientes_distritos1_idx');
 
             $table->index(["provincias_id"], 'fk_clientes_provincias1_idx');
+            $table->softDeletes();
+            $table->nullableTimestamps();
 
 
             $table->foreign('departamentos_id', 'fk_clientes_departamentos1_idx')

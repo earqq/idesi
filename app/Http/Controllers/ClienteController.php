@@ -23,10 +23,17 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        
-        return Cliente::orderBy('id','desc')->paginate(10);
+        // if(!$request->ajax()) return redirect('/clientes');
+        // $pretamos = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
+        // ->select('clientes.nombres','clientes.apellidos','prestamos.estado','prestamos.id')->get();
+
+        $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
+                            //   ->join('juridicos','clientes.id','=','juridicos.clientes_id')
+                              ->select('clientes.documento','naturals.nombres','naturals.apellidos')
+                              ->orderBy('clientes.id','desc')->paginate(10);
+        return $clientes;
     }
 
     /**
@@ -110,7 +117,7 @@ class ClienteController extends Controller
 
     /**
      * Display the specified resource.
-     *
+     * 
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
@@ -128,7 +135,7 @@ class ClienteController extends Controller
 
     public function visitas($documento)
     {
-        if (!$request->ajax()) return redirect('/');
+        // if (!$request->ajax()) return redirect('/');
         $vistas = Vista::where('prestamos_id',$documento)->get();
 
         return $vistas;

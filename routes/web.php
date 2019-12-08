@@ -25,7 +25,7 @@ Route::group(['middleware'=>['auth']],function(){
             return view('index');
         });
         
-        Route::get('clientes','ClienteController@index');
+        Route::get('clientes/listado','ClienteController@index');
         Route::post('clientes/nuevo', 'ClienteController@store');
         Route::get('clientes/datos', 'ClienteController@datos');
         Route::get('clientes/datos/prestamo/{documento}', 'ClienteController@general');
@@ -33,6 +33,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('clientes/prestamo', 'ClienteController@prestamo');
         Route::post('clientes/visita/nuevo', 'ClienteController@visitaStore');
         Route::get('clientes/visitas/{prestamo}', 'ClienteController@visitas');
+
+
         Route::get('clientes/prestamo/ver/{prestamo}', 'ClienteController@prestamoVer');
         Route::get('evaluaciones/prestamos', 'EvaluacionController@prestamos');
         Route::get('evaluaciones/prestamos/detalle/{prestamo}', 'EvaluacionController@show');
