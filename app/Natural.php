@@ -27,7 +27,7 @@ class Natural extends Model
     /**
      * @var array
      */
-    protected $fillable = ['clientes_id', 'nombres', 'apellidos', 'estado_civil', 'ocupacion', 'telefono', 'celular', 'direccion_cliente', 'direccion_registros', 'referencia', 'tipo_domicilio', 'centro_laboral', 'direccion_laboral'];
+    protected $fillable = ['clientes_id', 'nombres', 'apellidos','nacimiento', 'estado_civil', 'ocupacion', 'telefono', 'celular', 'direccion_cliente', 'direccion_registros', 'referencia', 'tipo_domicilio', 'centro_laboral', 'direccion_laboral'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

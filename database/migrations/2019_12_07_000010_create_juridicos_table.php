@@ -37,6 +37,10 @@ class CreateJuridicosTable extends Migration
             $table->string('representante_referencia', 50)->nullable();
             $table->string('registros_direccion', 70)->nullable();
 
+            $table->softDeletes();
+
+            $table->timestamps();
+            
             $table->index(["clientes_id"], 'fk_juridicos_clientes1_idx');
 
 

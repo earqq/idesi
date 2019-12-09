@@ -10,6 +10,8 @@ use App\Aval;
 use App\Archivo;
 use App\Garantia;
 use App\Provincia;
+use App\Natural;
+use App\Juridico;
 use App\Vista;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -73,6 +75,134 @@ class ClienteController extends Controller
                 $cliente = new Cliente($request->all());
                 $cliente->save();
     
+                DB::commit();
+                return [
+                    'success' => true,
+                    'data' => 'Cliente creado',
+                ];
+    
+            }
+ 
+
+        } catch (Exception $e){
+            return [
+                'success' => false,
+            ];
+            DB::rollBack();
+        }
+       
+    }
+
+    public function storeNatural(Request $request)
+    {
+        // if (!$request->ajax()) return redirect('/');
+
+        // return $request->input('distritos_id');
+
+        try{
+
+            DB::beginTransaction();
+
+            
+            $cliente = Cliente::where('documento',$request->input('documento'))->first();
+            if($cliente){
+                DB::rollBack();
+                return [
+                    'success' => false,
+                    'data' => 'Cliente ya existe'
+                ];
+            }
+            else{
+                $cliente = new Cliente();
+                $cliente->documento = $request->input('documento');
+                $cliente->codigo = $request->input('codigo');
+                $cliente->tipo_cliente = $request->input('tipo_persona');
+                $cliente->estado = '1';
+                $cliente->departamentos_id = $request->input('departamentos_id');
+                $cliente->distritos_id = $request->input('distritos_id');
+                $cliente->provincias_id = $request->input('provincias_id');
+                $cliente->save();
+                
+                $natural = new Natural();
+                $natural->nombres= $request->input('nombres');    
+                $natural->apellidos= $request->input('apellidos');    
+                $natural->nacimiento= $request->input('nacimiento');    
+                $natural->estado_civil= $request->input('estado_civil');    
+                $natural->ocupacion= $request->input('ocupacion');    
+                $natural->telefono= $request->input('telefono');    
+                $natural->celular= $request->input('celular');    
+                $natural->direccion_cliente= $request->input('direccion');    
+                $natural->direccion_registros= $request->input('direccion_registros');    
+                $natural->referencia= $request->input('referencia');    
+                $natural->tipo_domicilio= $request->input('tipo_domicilio');    
+                $natural->centro_laboral= $request->input('centro_laboral');    
+                $natural->direccion_laboral= $request->input('direccion_laboral');    
+                $natural->clientes_id= $cliente->id;
+                $natural->save();
+
+                DB::commit();
+                return [
+                    'success' => true,
+                    'data' => 'Cliente creado',
+                ];
+    
+            }
+ 
+
+        } catch (Exception $e){
+            return [
+                'success' => false,
+            ];
+            DB::rollBack();
+        }
+       
+    }
+
+    public function storeJuridico(Request $request)
+    {
+        // if (!$request->ajax()) return redirect('/');
+
+        // return $request->input('distritos_id');
+
+        try{
+
+            DB::beginTransaction();
+
+            
+            $cliente = Cliente::where('documento',$request->input('documento'))->first();
+            if($cliente){
+                DB::rollBack();
+                return [
+                    'success' => false,
+                    'data' => 'Cliente ya existe'
+                ];
+            }
+            else{
+                $cliente = new Cliente();
+                $cliente->documento = $request->input('documento');
+                $cliente->codigo = $request->input('codigo');
+                $cliente->tipo_cliente = $request->input('tipo_persona');
+                $cliente->estado = '1';
+                $cliente->departamentos_id = $request->input('departamentos_id');
+                $cliente->distritos_id = $request->input('distritos_id');
+                $cliente->provincias_id = $request->input('provincias_id');
+                $cliente->save();
+                
+                $juridico = new Juridico();
+                $juridico->razon_social= $request->input('razon_social');    
+                $juridico->tipo_empresa= $request->input('tipo_empresa');    
+                $juridico->fecha_creacion= $request->input('fecha_creacion');    
+                $juridico->empresa_direccion= $request->input('empresa_direccion');    
+                $juridico->empresa_referencia= $request->input('empresa_referencia');    
+                $juridico->representante_doc= $request->input('representante_doc');    
+                $juridico->representante_nombres= $request->input('representante_nombres');    
+                $juridico->representante_apellidos= $request->input('representante_apellidos');    
+                $juridico->representante_direccion= $request->input('representante_direccion');    
+                $juridico->representante_referencia= $request->input('representante_referencia');    
+                $juridico->registros_direccion= $request->input('registros_direccion');
+                $juridico->clientes_id= $cliente->id;
+                $juridico->save();
+
                 DB::commit();
                 return [
                     'success' => true,

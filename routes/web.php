@@ -27,6 +27,8 @@ Route::group(['middleware'=>['auth']],function(){
         
         Route::get('clientes/listado','ClienteController@index');
         Route::post('clientes/nuevo', 'ClienteController@store');
+        Route::post('clientes/nuevo/natural', 'ClienteController@storeNatural');
+        Route::post('clientes/nuevo/juridico', 'ClienteController@storeJuridico');
         Route::get('clientes/datos', 'ClienteController@datos');
         Route::get('clientes/datos/prestamo/{documento}', 'ClienteController@general');
         Route::get('clientes/perfil/{documento}', 'ClienteController@show');

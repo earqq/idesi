@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNaturalsTable extends Migration
+class CreateConyugueTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'naturals';
+    public $set_schema_table = 'conyugue';
 
     /**
      * Run the migrations.
-     * @table naturals
+     * @table conyugue
      *
      * @return void
      */
@@ -24,30 +24,27 @@ class CreateNaturalsTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->integer('documento')->nullable();
             $table->string('nombres', 45)->nullable();
             $table->string('apellidos', 45)->nullable();
             $table->date('nacimiento')->nullable();
-            $table->string('estado_civil', 25)->nullable();
+            $table->string('estado_civil', 30)->nullable();
             $table->string('ocupacion', 50)->nullable();
             $table->string('telefono', 10)->nullable();
-            $table->string('celular', 15)->nullable();
-            $table->string('direccion_cliente', 70)->nullable();
-            $table->string('direccion_registros', 70)->nullable();
-            $table->string('referencia', 50)->nullable();
-            $table->string('tipo_domicilio', 30)->nullable();
-            $table->string('centro_laboral', 40)->nullable();
-            $table->string('direccion_laboral', 100)->nullable();
-            $table->unsignedInteger('clientes_id');
+            $table->string('celular', 10)->nullable();
+            $table->string('centro_laboral', 10)->nullable();
+            $table->string('direccion', 50)->nullable();
+            $table->unsignedInteger('naturals_id');
 
             $table->softDeletes();
 
             $table->timestamps();
             
-            $table->index(["clientes_id"], 'fk_naturals_clientes1_idx');
+            $table->index(["naturals_id"], 'fk_conyugue_naturals1_idx');
 
 
-            $table->foreign('clientes_id', 'fk_naturals_clientes1_idx')
-                ->references('id')->on('clientes')
+            $table->foreign('naturals_id', 'fk_conyugue_naturals1_idx')
+                ->references('id')->on('naturals')
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });
