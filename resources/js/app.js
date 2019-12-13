@@ -10,7 +10,7 @@ import router from './rutas';
 import Axios from 'axios'
 import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.css';
-import WebCam from "vue-web-cam";
+// import WebCam from "vue-web-cam";
 
 // import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 // import { Icon } from 'leaflet';
@@ -34,7 +34,6 @@ const VueInputMask = require('vue-inputmask').default
 Vue.use(VueInputMask)
 Vue.prototype.$http = Axios
 Vue.use(VueIziToast);
-Vue.use(WebCam);
 
 Vue.component('app', require('./components/AppComponent.vue').default);
 

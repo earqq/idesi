@@ -1,20 +1,37 @@
 <template>
-  <div class="container-fluid file-loan">
-      <div class=" row m-0 col-md-12">
-          <div class="col-md-4 form-group">
+  <div class="container-general">
+     <header>
+        <span @click="retornar()">
+          <i class="fas fa-angle-left"></i>
+        </span>
+        <h1>Subir archivo</h1>
+      </header>
+    <div class="container-fluid file-loan">
+      <div class=" row m-0 col-md-12 date-file">
+        <div class="col-md-3"></div>
+          <div class="col-md-3 form-group">
               <label >Nombre del archivo</label>
               <input class="form-control" type="text" placeholder="Nombre de archivo"  v-model="fileName" required  />
           </div>
-          <div class="col-md-4 form-group">
+          <div class="col-md-3 form-group">
               <label >Archivo</label>
             <input type="file" id="file" ref="file" v-on:change="handleFileUpload()" class="form-control"/>
           </div>
-          <div class="col-md-4" style="    padding-top: 30px;">
-              <button type="button" @click="submit" class="btn btn-success w-auto">Nuevo Archivo</button>
+          <div class="col-md-3"></div>
+          <div class="col-md-3"></div>
+          <div class="col-md-6" style="    padding-top: 30px;">
+              <button type="button" @click="submit" class="btn btn-crecer w-100">Nuevo Archivo</button>
           </div>
+          <div class="col-md-3"></div>
       </div>
         
-    
+    <div class="row col-md-12 list-file-uploads">
+      <pretty-check class="p-icon p-rotate" color="success" v-model="check">Dni</pretty-check>
+      <pretty-check class="p-icon p-rotate" color="success" v-model="check">Recibo de agua</pretty-check>
+      <pretty-check class="p-icon p-rotate" color="success" v-model="check">Recibo de luz</pretty-check>
+      <pretty-check class="p-icon p-rotate" color="success" v-model="check">Documento de prestamo</pretty-check>
+      <pretty-check class="p-icon p-rotate" color="success" v-model="check">Otros</pretty-check>
+    </div>
 
     <div class="row col-md-12 files" >
 
@@ -71,20 +88,23 @@
 
 
   </div>
+  </div>
 </template>
 
 <script>
-import InfiniteLoading from "vue-infinite-loading";
+import PrettyCheck from 'pretty-checkbox-vue/check';
+
 export default {
-  components: { InfiniteLoading },
+  components: { PrettyCheck },
   data() {
     return {
-      resource: "clientes",
+      resource: "clientes", 
       clientes: [],
       page: 0,
       tipo: true,
       last_page: 1,
       form: {},
+      check: 0,
       notificationSystem: {
         options: {
           success: {

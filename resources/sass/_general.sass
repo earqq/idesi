@@ -1,14 +1,20 @@
-.container-general 
+.container-general
+    overflow-y: auto
+    background: #fcfcfc
+    height: calc(100vh - 65px)
+    border-top: 1px solid #c4c4c4
+    background: #f9f9f9
     header
         display: flex
         height: 40px
         border: 1px solid $color-principal
         margin-bottom: 20px 
+        background: #fff
         span
             cursor: pointer
             
             i
-                padding: 10px 27px
+                padding: 9px 27px
                 font-size: 20px
                 background: $color-principal
                 color: #fff
@@ -20,6 +26,11 @@
             margin: 9px 8px
             font-size: 21px
             color: $color-principal
+            flex: 1
+        a
+            right: 17px
+            border-radius: 0
+            padding: 7px 63px
 .btn-crecer
     background: $color-principal
     border: 1px solid $color-principal
@@ -29,6 +40,87 @@
         background: $color-principal-darck
         border: 1px solid $color-principal-darck
         color: #fff !important
+.btn-def
+    background-color: #cedfe6
+    border-color: #cedfe6
+    color: #6e768e
 .letter-5
     letter-spacing: 5px
 
+.search-fa-animation
+    position: relative
+    i
+        padding: 6px 11px
+        background: #24302e
+        color: #fff
+        position: absolute
+        top: 41px
+        font-size: 24px
+        right: 1px
+
+$base-color: #d1cccc
+$shine-color: rgba(220, 220, 220, 0.8)
+$animation-duration: 2.0s
+$avatar-offset: 52 + 16
+
+// this unfortunately uses set px widths for the background-gradient, I never got around to changing it to work with all widths :(
+@mixin background-gradient
+  background-image: linear-gradient(90deg, $base-color 0px, $shine-color 40px, $base-color 80px) 
+  background-size: 600px
+
+
+.skeleton
+  width: 100%
+  height: auto
+  
+  .avatar
+    float: left
+    width: 52px
+    height: 52px
+    background-color: #ccc
+    border-radius: 25%
+    margin: 8px
+    
+    @include background-gradient
+    animation: shine-avatar $animation-duration infinite ease-out
+    
+  .line
+    float: left
+    width: 140px
+    height: 16px
+    // margin-top: 12px
+    border-radius: 7px
+    margin: 6px 2px
+    
+    @include background-gradient
+    animation: shine-lines $animation-duration infinite ease-out
+    
+  .avatar + .line
+    margin-top: 11px
+    width: 100px
+    
+  .line ~ .line
+    background-color: #ddd
+ 
+@keyframes shine-lines
+  0%
+    background-position: -100px
+  
+  40%, 100%
+    background-position: 140px
+
+@keyframes shine-avatar
+  0%
+    background-position: -100px + $avatar-offset
+  
+  40%, 100%
+    background-position: 140px + $avatar-offset
+
+
+.prop-card
+    .card-header 
+        background: #fff
+        color: $color-principal
+        border: transparent
+    .card-body
+        background: #fff

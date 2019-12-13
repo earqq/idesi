@@ -1,6 +1,12 @@
 <template>
   <div class="container-general">
-    <div class="row col-md-12 m-0 loan">
+    <header class="m-0">
+      <span @click="retornar()">
+        <i class="fas fa-angle-left"></i>
+      </span>
+      <h1>Perfil</h1>
+    </header>
+    <div class="row col-md-12 m-0 p-0 loan">
       <div class="loans-tab-general">
         <tabs
           :tabs="tabsAll"
@@ -24,10 +30,11 @@
             @onClick="handleClick"
           />
           <div class="loan-cliente" v-if="currentTab === 'cliente'">
-            <div class="row">
+            <div class="row p-0">
               <div class="col-md-12 d-flex titulo-prestamo-menu">
                 <p>Titular</p>
               </div>
+              
               <div class="col-md-3">
                 <div class="form-group">
                   <label>Estado Civil</label>
@@ -162,7 +169,7 @@
               </div>
 
               <div class="col-md-4">
-                <div class="form-group">
+                <div class="form-group search-fa-animation">
                   <label>Documento de Identidad</label>
                   <input
                     type="text"
@@ -171,6 +178,7 @@
                     v-mask="{mask: '99999999', greedy: true}"
                     @change="datosCliente()"
                   />
+                  <i class="fas fa-search"></i>
                 </div>
               </div>
 
@@ -261,14 +269,15 @@
               </div>
             </div>
           </div>
+
           <div class="loan-aval" v-if="currentTab === 'aval'">
-            <div v-for="(row, index) in avals" :key="index" class="row">
+            <div v-for="(row, index) in form.avals" :key="index" class="row p-0">
               <div class="col-md-12 d-flex titulo-prestamo-menu">
                 <p>Aval</p>
-                <i class="fas fa-trash" @click.prevent="clickRemoveAval(index)" v-if="index!=0"></i>
+                <i class="fas fa-trash" @click.prevent="clickRemoveAval(index)"></i>
               </div>
               <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group search-fa-animation">
                   <label>Documento de Identidad</label>
                   <input
                     type="text"
@@ -277,6 +286,7 @@
                     v-mask="{mask: '99999999', greedy: true}"
                     @change="datosAval(index)"
                   />
+                  <i class="fas fa-search"></i>
                 </div>
               </div>
               <div class="col-md-3">
@@ -335,7 +345,7 @@
                   <input type="text" v-model="row.direccion" class="form-control" />
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-4 p-0">
                 <div class="form-group">
                   <label>Distrito</label>
                   <input type="text" v-model="row.distrito" class="form-control" />
@@ -347,7 +357,7 @@
                   <input type="text" v-model="row.centro_laboral" class="form-control" />
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 pr-0">
                 <div class="form-group">
                   <label>Dirección</label>
                   <input type="text" v-model="row.direccion_laboral" class="form-control" />
@@ -355,12 +365,12 @@
               </div>
             </div>
 
-            <div class="row">
+            <div class="row p-0">
               <div class="col-md-12">
                 <button
                   type="button"
                   @click.prevent="clickAddAval"
-                  class="btn btn-outline-dark more-option"
+                  class="btn btn-crecer more-option"
                 >
                   <i class="fas fa-plus"></i> Agregar Aval
                 </button>
@@ -375,10 +385,10 @@
           </div>
 
           <div class="loan-garantia" v-if="currentTab === 'garantia'">
-            <div v-for="(row, index) in garantias" :key="index" class="row">
+            <div v-for="(row, index) in form.garantias" :key="index" class="row">
               <div class="col-md-12 d-flex titulo-prestamo-menu">
                 <p>Garantía</p>
-                <i class="fas fa-trash" @click.prevent="clickRemoveGarantia(index)" v-if="index!=0"></i>
+                <i class="fas fa-trash" @click.prevent="clickRemoveGarantia(index)"></i>
               </div>
 
               <div class="col-md-12">
@@ -401,12 +411,12 @@
               </div>
             </div>
 
-            <div class="row">
-              <div class="col-md-12">
+            <div class="row p-0">
+              <div class="col-md-12 p-0">
                 <button
                   type="button"
                   @click.prevent="clickAddGarantia"
-                  class="btn btn-outline-dark more-option"
+                  class="btn btn-crecer more-option"
                 >
                   <i class="fas fa-plus"></i> Agregar Garantia
                 </button>
@@ -662,6 +672,8 @@ export default {
       this.all_districts = response.data.districts;
     });
 
+    await this.initFormPrestamo();
+
     /**
      *  DATOS DE PRESTAMOS
      */
@@ -670,8 +682,8 @@ export default {
       .then(response => {
         console.log(response.data);
         this.cliente = response.data.cliente;
-        this.avals = response.data.avals;
-        this.garantias = response.data.garantias;
+        this.form.avals = response.data.avals;
+        this.form.garantias = response.data.garantias;
         this.prestamo = response.data.prestamo;
       });
 
@@ -693,7 +705,7 @@ export default {
       this.tipo = false;
     },
     cancelarVisita() {
-      this.tipo = true;
+      this.tipo = true; 
     },
     handleClick(newTab) {
       this.currentTab = newTab;
@@ -701,11 +713,36 @@ export default {
     handleClickAll(newTab) {
       this.currentTabAll = newTab;
     },
-    crearCliente() {
-      this.tipo = false;
+        clickAddAval() {
+      // this.contador_aval++;
+      this.form.avals.push({
+        documento: "",
+        nombres: "",
+        apellidos: "",
+        nacimiento: "",
+        estado_civil: "",
+        ocupacion: "",
+        telefono: "",
+        celular: "",
+        direccion: "",
+        distrito: "",
+        centro_laboral: "",
+        direccion_laboral: ""
+      });
     },
-    cancelarCliente() {
-      this.tipo = true;
+    clickRemoveAval(index) {
+      this.form.avals.splice(index, 1);
+    },
+        clickAddGarantia() {
+      // this.contador_garantia++;
+      this.form.garantias.push({
+        bien_garantia: "",
+        inscripcion: "",
+        declaracion_jurada: ""
+      });
+    },
+    clickRemoveGarantia(index) {
+      this.form.garantias.splice(index, 1);
     },
     initForm() {
       this.formViews = {
@@ -717,6 +754,48 @@ export default {
         prestamos_id: this.$route.params.prestamo,
         estado: 1
       };
+    },
+    initFormPrestamo() {
+      this.errors = {};
+      this.form = {
+        departamentos_id: "0",
+        provincias_id: "0",
+        distritos_id: "0",
+        estado_civil: "0",
+        documento: this.$route.params.dni,
+        ocupacion: "",
+        telefono: "",
+        celular: "",
+        direccion: "",
+        referencia: "",
+        tipo_domicilio: "",
+        centro_laboral: "",
+        direccion_laboral: "",
+        documento_conyugue: "",
+        nombres_conyugue: "",
+        apellidos_conyugue: "",
+        nacimiento_conyugue: "",
+        estado_civil_conyugue: "0",
+        ocupacion_conyugue: "",
+        telefono_conyugue: "",
+        celular_conyugue: "",
+        centro_laboral_conyugue: "",
+        direccion_laboral_conyugue: "",
+        garantias: [],
+        avals: [],
+        producto: "",
+        forma: "0",
+        importe: 0,
+        aporte: 0,
+        plazo: 0,
+        coutas: 0,
+        tasa: 0.0,
+        comentarios: "",
+        estado: "PENDIENTE"
+      };
+
+      this.clickAddAval();
+      this.clickAddGarantia();
     },
     views() {
       this.$http
@@ -761,7 +840,8 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+sty
+<style lang="scss" scoped>
 
 .default-tabs {
   position: relative;
@@ -808,8 +888,10 @@ export default {
     transition: transform 0.4s ease, width 0.4s ease;
   }
 }
+.default-tabs__item_active{
+        background: #d9d9d9!important;
+}
 .content {
-  margin-top: 30px;
   font-size: 20px;
 }
 .default-tabs {

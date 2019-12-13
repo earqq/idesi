@@ -31,7 +31,7 @@ class CreateConyugueTable extends Migration
             $table->string('estado_civil', 30)->nullable();
             $table->string('ocupacion', 50)->nullable();
             $table->string('telefono', 10)->nullable();
-            $table->string('celular', 10)->nullable();
+            $table->string('celular', 15)->nullable();
             $table->string('centro_laboral', 10)->nullable();
             $table->string('direccion', 50)->nullable();
             $table->unsignedInteger('naturals_id');

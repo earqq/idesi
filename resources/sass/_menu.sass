@@ -1,27 +1,52 @@
 .menu-general
   .toggle-nav
     display: none
+  .rigth-option
+    margin: 0px 15px
+    display: flex
+    img
+      width: 40px
+      height: 40px
+      margin-top: 11px
+    button
+      width: 100%
+      color: #fff
+      padding: 17px 17px
+    .dropdown-menu
+      a
+        color: #000
+      
 
 /*----- Menu -----
 @media screen and (min-width: 860px)
   .menu-general
     .menu
       width: 100%
-      padding: 10px 15px
       box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15)
       background: $color-principal
-      height: 50px
+      height: 65px
+      border-top: 2px solid #ef8401
 .menu-general
   .menu
     ul
       display: inline-block
+      height: 65px
+      margin-top: 0
+      position: relative
+      img
+        position: absolute
+        width: 50px
+        height: 50px
+        top: 4px
+      .list-menu
+        margin-left: 45px
 
     li
-      margin: 0px 50px 0px 0px
       float: left
       list-style: none
       font-size: 17px
-
+      height: 65px
+      padding: 16px 27px
       &:last-child
         margin-right: 0px
 

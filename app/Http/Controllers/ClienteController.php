@@ -10,6 +10,7 @@ use App\Aval;
 use App\Archivo;
 use App\Garantia;
 use App\Provincia;
+use App\Conyugue;
 use App\Natural;
 use App\Juridico;
 use App\Vista;
@@ -244,22 +245,20 @@ class ClienteController extends Controller
     }
 
 
-
-    /**
-     * Display the specified resource.
-     * 
-     * @param  \App\Cliente  $cliente
-     * @return \Illuminate\Http\Response
-     */
-    public function show($documento)
+    public function showCliente($documento)
     {
-        $cliente = Cliente::where('documento',$documento)
-        ->select('id','documento','nombres','apellidos','nacimiento')
-        ->first();
+        // $cliente = Cliente::where('documento',$documento)
+        // ->select('id','documento','nombres','apellidos','nacimiento')
+        // ->first();
 
-        $prestamos = Prestamo::where('clientes_id',$cliente->id)->get();
+        $clientes = Cliente::where('documento',$documento)
+                             ->join('naturals','clientes.id','=','naturals.clientes_id')
+                             ->select('clientes.documento','naturals.id','naturals.nombres','naturals.direccion_cliente','naturals.celular','naturals.apellidos','naturals.nacimiento')
+                             ->first();
 
-        return ['cliente'=>$cliente, 'prestamos'=>$prestamos];
+        $prestamos = Prestamo::where('clientes_id',$clientes->id)->get();
+
+        return ['cliente'=>$clientes, 'prestamos'=>$prestamos];
         
     }
 
@@ -274,8 +273,14 @@ class ClienteController extends Controller
 
     public function general($documento)
     {
-        return Cliente::where('documento',$documento)->first();
-        
+
+        $cliente = Cliente::where('documento',$documento)->first();
+
+        $natural = Natural::where('clientes_id',$cliente->id)->first();
+
+        $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
+
+        return compact('cliente','natural','conyugue');
     }
     public function prestamo(Request $request)
     {
@@ -285,32 +290,46 @@ class ClienteController extends Controller
 
             DB::beginTransaction();
   
-            $cliente = Cliente::where('documento',$request->input('documento'))->first();
-            $cliente->departamentos_id = $request->input('departamentos_id');
-            $cliente->distritos_id= $request->input('distritos_id');
-            $cliente->provincias_id = $request->input('provincias_id');
-            $cliente->celular = $request->input('celular');
-            $cliente->centro_laboral = $request->input('centro_laboral');
-            $cliente->direccion = $request->input('direccion');
-            $cliente->direccion_laboral = $request->input('direccion_laboral');
-            $cliente->estado_civil = $request->input('estado_civil');
-            $cliente->nacimiento = $request->input('nacimiento');
-            $cliente->ocupacion = $request->input('ocupacion');
-            $cliente->referencia = $request->input('referencia');
-            $cliente->telefono = $request->input('telefono');
-            $cliente->tipo_domicilio =  $request->input('tipo_domicilio');
-            $cliente->centro_laboral_conyugue= $request->input('centro_laboral_conyugue');
-            $cliente->direccion_laboral_conyugue = $request->input('direccion_laboral_conyugue') ;
-            $cliente->documento_conyugue = $request->input('documento_conyugue') ;
-            $cliente->estado_civil_conyugue =  $request->input('estado_civil_conyugue') ;
-            $cliente->nacimiento_conyugue =  $request->input('nacimiento_conyugue');
-            $cliente->nombres_conyugue =  $request->input('nombres_conyugue');
-            $cliente->apellidos_conyugue =  $request->input('apellidos_conyugue');
-            $cliente->ocupacion_conyugue =  $request->input('ocupacion_conyugue');
-            $cliente->telefono_conyugue =  $request->input('telefono_conyugue') ;
-            $cliente->celular_conyugue =  $request->input('celular_conyugue');
-
+            $cliente = Cliente::where('documento',$request->cliente['documento'])->first();
+            $cliente->departamentos_id = $request->cliente['departamentos_id'];
+            $cliente->distritos_id= $request->cliente['distritos_id'];
+            $cliente->provincias_id = $request->cliente['provincias_id'];
             $cliente->save();
+
+            $natural = Natural::where('clientes_id',$cliente->id)->first();
+            $natural->celular = $request->natural['celular'];
+            $natural->nombres = $request->natural['nombres'];
+            $natural->apellidos = $request->natural['apellidos'];
+            $natural->centro_laboral = $request->natural['centro_laboral'];
+            $natural->direccion_cliente = $request->natural['direccion'];
+            $natural->direccion_laboral = $request->natural['direccion_laboral'];
+            $natural->estado_civil = $request->natural['estado_civil'];
+            $natural->nacimiento = $request->natural['nacimiento'];
+            $natural->ocupacion = $request->natural['ocupacion'];
+            $natural->referencia = $request->natural['referencia'];
+            $natural->telefono = $request->natural['telefono'];
+            $natural->tipo_domicilio =  $request->natural['tipo_domicilio'];
+            $natural->save();
+
+
+            $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
+
+            if(!$conyugue){
+             $conyugue = new Conyugue;
+            }
+            $conyugue->centro_laboral= $request->conyugue['centro_laboral_conyugue'];
+            $conyugue->direccion = $request->conyugue['direccion_laboral_conyugue'] ;
+            $conyugue->documento = $request->conyugue['documento_conyugue'] ;
+            $conyugue->estado_civil =  $request->conyugue['estado_civil_conyugue'] ;
+            $conyugue->nacimiento =  $request->conyugue['nacimiento_conyugue'];
+            $conyugue->nombres =  $request->conyugue['nombres_conyugue'];
+            $conyugue->apellidos =  $request->conyugue['apellidos_conyugue'];
+            $conyugue->ocupacion =  $request->conyugue['ocupacion_conyugue'];
+            $conyugue->telefono =  $request->conyugue['telefono_conyugue'] ;
+            $conyugue->celular =  $request->conyugue['celular_conyugue'];
+            $conyugue->naturals_id = $natural->id;   
+            $conyugue->save();
+
 
             $prestamo = new Prestamo();
             $prestamo->clientes_id = $cliente->id;
@@ -352,22 +371,22 @@ class ClienteController extends Controller
                 $garantia->save();
             }
 
-            $prestamos= Prestamo::find($prestamo->id);
-            $cliente = Cliente::where('id',$prestamos->clientes_id)->first();
-            $avals = Aval::where('prestamos_id',$prestamos->id)->get();
-            $garantias = Garantia::where('prestamos_id',$prestamos->id)->get();
+            // $prestamos= Prestamo::find($prestamo->id);
+            // $cliente = Cliente::where('id',$prestamos->clientes_id)->first();
+            // $avals = Aval::where('prestamos_id',$prestamos->id)->get();
+            // $garantias = Garantia::where('prestamos_id',$prestamos->id)->get();
 
-            // return $cliente;
-            $pdf = PDF::loadView('reportes.prestamo',compact('prestamos','cliente','avals','garantias'));
+            // // return $cliente;
+            // $pdf = PDF::loadView('reportes.prestamo',compact('prestamos','cliente','avals','garantias'));
 
-            if (Storage::put('public/'.$this->getUserDir($prestamos->id) .'/prestamo_'.$prestamo->id.'/documento/prestamo_'.$prestamo->id.'.pdf', $pdf->output())) {
-                $file= new Archivo;
-                $file->nombre = 'prestamo_'.$prestamo->id;
-                $file->tipo = 'documento';
-                $file->extension = 'pdf';
-                $file->prestamos_id =  $prestamos->id;
-                $file->save();
-            }
+            // if (Storage::put('public/'.$this->getUserDir($prestamos->id) .'/prestamo_'.$prestamo->id.'/documento/prestamo_'.$prestamo->id.'.pdf', $pdf->output())) {
+            //     $file= new Archivo;
+            //     $file->nombre = 'prestamo_'.$prestamo->id;
+            //     $file->tipo = 'documento';
+            //     $file->extension = 'pdf';
+            //     $file->prestamos_id =  $prestamos->id;
+            //     $file->save();
+            // }
     
             DB::commit();
 

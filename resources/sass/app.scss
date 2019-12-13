@@ -1,5 +1,5 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+// @import url('./fonts/aventure/stylesheet.css');
 
 // Variables
 @import 'variables';
@@ -12,11 +12,12 @@ $fa-font-path: "../webfonts";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 @import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
-
+@import '~pretty-checkbox/src/pretty-checkbox.scss';
 
 @import 'menu';
 @import 'clients';
 @import 'profile';
+@import 'grid-profile';
 @import 'home';
 @import 'loan';
 @import 'view';
@@ -29,21 +30,13 @@ input{
     border-radius: 0!important;
 }
 body{
-    background: #e4e2e2;
+    background: #bcbcbc;
 }
 .form-group {
     margin-bottom: 3px;
 }
-// h1,h2,h3,p{
-//     color:$color-text!important;
-// }
-
-.container-general{
-    background: #fcfcfc;
-    margin: 18px 0;
-    height: calc(100vh - 86px);
-
-    border: 1px solid #c4c4c4;
+h1,h2,h3,p,label{
+    color:#000;
 }
 
 
@@ -54,6 +47,12 @@ body{
     padding: 3px;
     width: 100px;
 }
+
+.profile-username{
+    font-size: 15px;
+        margin-top: 13px;
+
+}
 .img-circle {
     border-radius: 50%;
 }
@@ -61,3 +60,39 @@ body{
     max-width: 100%;
     height: 100px;
 }
+
+/**LOADIN  PROFILE DATE*/
+.loader-profile{
+    background: #dddddd;
+    border-radius: 15px;
+}
+
+
+.scroll-style {
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 8px;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background: $color-principal;
+      border-radius: 4px;
+      &:active {
+        background-color: #999999;
+      }
+  
+      &:hover {
+        background: $color-principal;
+        box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+      }
+    }
+  
+    &::-webkit-scrollbar-track {
+      background: #e1e1e1;
+      border-radius: 4px;
+  
+      &:hover, &:active {
+        background: #d4d4d4;
+      }
+    }
+  }

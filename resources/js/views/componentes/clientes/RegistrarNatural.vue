@@ -260,7 +260,7 @@ mixins: [serviceNumber],
         centro_laboral: "",
         direccion_laboral: "",
         tipo_persona: this.tipo_persona,
-        direccion_registros: "0",
+        direccion_registros: "",
       };
     },
     resetForm() {

@@ -1,9 +1,5 @@
 <template>
   <div>
-    <!-- +++++++++++++++++++ -->
-    <!-- LISTADO DE  CLIENTE -->
-    <!-- +++++++++++++++++++ -->
-
     <div class="container-general" v-if="tipo">
         <div class="row col-12 box-search">
             <div class="search">
@@ -143,87 +139,13 @@ export default {
     },
     initForm() {
       this.form = {
-        documento: "",
-        nombres: "",
-        apellidos: "",
-        nacimiento: "",
-        departamentos_id: "0",
-        provincias_id: "0",
-        distritos_id: "0", 
-        estado_civil: "0",
-        ocupacion: "",
-        telefono: "",
-        celular: "",
-        direccion: "",
-        referencia: "",
-        tipo_domicilio: "",
-        centro_laboral: "",
-        direccion_laboral: "",
         tipo_persona: "0"
       };
     },
     resetForm() {
       this.initForm();
     },
-    datosCliente() {
-      let me = this;
-      // me.loader = "true";
-      axios
-        .post("/consulta/dni", {
-          documento: this.form.documento
-        })
-        .then(function(response) {
-          console.log(response.data);
-          me.form.nombres = response.data["nombres"];
-          me.form.apellidos = response.data["surnames"];
-
-          // me.loader = false;
-        })
-        .catch(function(error) {
-          console.log(error);
-          me.initForm();
-        });
-    },
-
-    submit() {
-      // if() {
-      //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
-      //  }
-
-      this.$http
-        .post(`/${this.resource}/nuevo`, this.form)
-        .then(response => {
-          if (response.data.success) {
-            this.resetForm();
-            this.$toast.success(
-              "El cliente fue creado",
-              "Exitoso",
-              this.notificationSystem.options.success
-            );
-            this.tipo = true;
-          } else {
-            this.resetForm();
-            this.$toast.error(
-              "El cliente ya existe!",
-              "Error",
-              this.notificationSystem.options.error
-            );
-          }
-        })
-        // .catch(error => {
-        //   if (error.response.status === 422) {
-        //     this.errors = error.response.data;
-        //   } else {
-        //     this.$message.error(error.response.data.message);
-        //   }
-        // })
-        .then(() => {
-          // this.loading_submit = false;
-        });
-    }
-  },
-  mounted() {
-    console.log("Component mounted.");
+    
   }
 };
 </script>
