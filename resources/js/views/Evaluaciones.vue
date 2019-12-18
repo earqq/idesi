@@ -44,15 +44,6 @@
 
                       <div class="file-type " @click="cargarPdf()">
                           <div class="type file-document" >
-                            <!-- <button
-                              class="btn btn-def "
-                              title="Delete"
-                              data-toggle="modal"
-                              data-target="#exampleModal"
-                            >
-                              <i class="fas fa-trash"></i> ELIMINAR
-                            </button> -->
-                            
                             <p>solicitud_credito.pdf</p> 
                               <div class="mask">
                                 <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M17.656 4c-1.336 0-2.59.52-3.535 1.465L5.465 14.12A4.964 4.964 0 0 0 4 17.656V57c0 1.652 1.348 3 3 3h40c1.652 0 3-1.348 3-3V46h8c1.102 0 2-.898 2-2V24c0-1.102-.898-2-2-2h-8V7c0-1.652-1.348-3-3-3zM18 6h29c.55 0 1 .45 1 1v15H16c-1.102 0-2 .898-2 2v20c0 1.102.898 2 2 2h32v11c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1V18h9c1.652 0 3-1.348 3-3zm-2 .5V15c0 .55-.45 1-1 1H6.5c.11-.164.234-.32.379-.465l8.656-8.656c.145-.145.3-.27.465-.379zM16 24h42v20H16zm9 4a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3c1.652 0 3-1.348 3-3v-2c0-1.652-1.348-3-3-3zm10 0a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3c2.207 0 4-1.793 4-4v-4c0-2.207-1.793-4-4-4zm10 0a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-4h4a1 1 0 1 0 0-2zm-19 2h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-3zm10 0h2c1.102 0 2 .898 2 2v4c0 1.102-.898 2-2 2h-2zM9 52a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1z"></path></svg>
@@ -85,14 +76,14 @@
                     <div class="card-body">
                       <h5 class="card-title">Special title treatment</h5>
                       <p
-                        class="card-text"
-                      >With supporting text below as a natural lead-in to additional content.</p>
+                        class="card-text" style="color: #000"
+                      > EVALUAZIONES VACIAS</p>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-8">
                   <div class="card">
-                    <div class="card-header">DETALLE DE PRESTAMO</div>
+                    <div class="card-header">PRESTAMO ANALISTA</div>
                     <div class="card-body">
                       <div class="row loan-date m-0">
                         <div class="col-md-6">
@@ -143,7 +134,7 @@
               <label for="Dos">Desaprobado</label>
             </div>
 
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
               <label for>Producto</label>
               <input type="text" v-model="form.producto" class="form-control" />
             </div>
@@ -166,7 +157,8 @@
             <div class="col-md-6">
               <label for>Tasa</label>
               <input type="text" v-model="form.tasa" class="form-control" />
-            </div>
+            </div> -->
+            <textarea name="" id="" cols="30" rows="10"></textarea>
             <div class="col-md-12">
               <button class="btn btn-success w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button>
             </div>

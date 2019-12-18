@@ -3011,14 +3011,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3610,6 +3602,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_date_pick__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_date_pick__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vue_date_pick_dist_vueDatePick_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-date-pick/dist/vueDatePick.css */ "./node_modules/vue-date-pick/dist/vueDatePick.css");
 /* harmony import */ var vue_date_pick_dist_vueDatePick_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_date_pick_dist_vueDatePick_css__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
 //
 //
 //
@@ -62587,7 +62581,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-8" }, [
                       _c("div", { staticClass: "card" }, [
                         _c("div", { staticClass: "card-header" }, [
-                          _vm._v("DETALLE DE PRESTAMO")
+                          _vm._v("PRESTAMO ANALISTA")
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "card-body" }, [
@@ -62758,161 +62752,9 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("Producto")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.producto,
-                        expression: "form.producto"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.form.producto },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.form, "producto", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("Aporte")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.aporte,
-                        expression: "form.aporte"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.form.aporte },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.form, "aporte", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("Importe")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.importe,
-                        expression: "form.importe"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.form.importe },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.form, "importe", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("Plazo")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.plazo,
-                        expression: "form.plazo"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.form.plazo },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.form, "plazo", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("Cuotas")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.cuotas,
-                        expression: "form.cuotas"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.form.cuotas },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.form, "cuotas", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("Tasa")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.tasa,
-                        expression: "form.tasa"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.form.tasa },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.form, "tasa", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
+                _c("textarea", {
+                  attrs: { name: "", id: "", cols: "30", rows: "10" }
+                }),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-12" }, [
                   _c(
@@ -62987,11 +62829,11 @@ var staticRenderFns = [
             _vm._v("Special title treatment")
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "card-text" }, [
-            _vm._v(
-              "With supporting text below as a natural lead-in to additional content."
-            )
-          ])
+          _c(
+            "p",
+            { staticClass: "card-text", staticStyle: { color: "#000" } },
+            [_vm._v(" EVALUAZIONES VACIAS")]
+          )
         ])
       ])
     ])
@@ -63909,8 +63751,8 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "tab-pane active loan-cliente",
-          attrs: { id: "cliente", role: "tabpanel", "aria-expanded": "true" }
+          staticClass: "tab-pane loan-cliente",
+          attrs: { id: "cliente", role: "tabpanel", "aria-expanded": "false" }
         },
         [
           _c("div", { staticClass: "row p-0 contenedor-titular" }, [
@@ -64939,27 +64781,7 @@ var render = function() {
                   }
                 }
               })
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-12 d-flex justify-content-end mt-3 mb-4" },
-              [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success btn-sm",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.handleClick("aval")
-                      }
-                    }
-                  },
-                  [_vm._v("Continuar")]
-                )
-              ]
-            )
+            ])
           ])
         ]
       ),
@@ -64967,8 +64789,8 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "tab-pane  loan-solicitud",
-          attrs: { id: "solicitud", role: "tabpanel", "aria-expanded": "false" }
+          staticClass: "tab-pane active loan-solicitud",
+          attrs: { id: "solicitud", role: "tabpanel", "aria-expanded": "true" }
         },
         [
           _c("div", { staticClass: "row contenedor-solicitud" }, [
@@ -65727,30 +65549,10 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "fas fa-plus" }),
-                  _vm._v(" Agregar Aval\n            ")
+                  _vm._v(" Agregar Aval\n              ")
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-12 d-flex justify-content-end mb-4" },
-              [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success btn-sm",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.handleClick("garantia")
-                      }
-                    }
-                  },
-                  [_vm._v("Continuar")]
-                )
-              ]
-            )
+            ])
           ])
         ],
         2
@@ -65885,30 +65687,10 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "fas fa-plus" }),
-                  _vm._v(" Agregar Garantia\n            ")
+                  _vm._v(" Agregar Garantia\n              ")
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-12 d-flex justify-content-end mb-4" },
-              [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success btn-sm",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.handleClick("propuesta")
-                      }
-                    }
-                  },
-                  [_vm._v("Continuar")]
-                )
-              ]
-            )
+            ])
           ])
         ],
         2
@@ -66206,12 +65988,12 @@ var staticRenderFns = [
               staticClass: "nav-link active",
               attrs: {
                 "data-toggle": "tab",
-                href: "#cliente",
+                href: "#solicitud",
                 role: "tab",
                 "aria-expanded": "true"
               }
             },
-            [_vm._v("Cliente")]
+            [_vm._v("Solicitud")]
           )
         ]),
         _vm._v(" "),
@@ -66222,12 +66004,12 @@ var staticRenderFns = [
               staticClass: "nav-link",
               attrs: {
                 "data-toggle": "tab",
-                href: "#solicitud",
+                href: "#cliente",
                 role: "tab",
                 "aria-expanded": "false"
               }
             },
-            [_vm._v("Solicitud")]
+            [_vm._v("Cliente")]
           )
         ]),
         _vm._v(" "),

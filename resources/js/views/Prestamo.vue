@@ -8,12 +8,14 @@
       </header>
 
           <ul style="list-style: outside none none;" class="nav nav-tabs row nav-loan" role="tablist">
-      <li class="nav-item col-md-3">
-        <a class="nav-link active" data-toggle="tab" href="#cliente" role="tab" aria-expanded="true" >Cliente</a>
+            <li class="nav-item col-md-3">
+        <a class="nav-link active" data-toggle="tab" href="#solicitud" role="tab" aria-expanded="true">Solicitud</a>
       </li>
+
       <li class="nav-item col-md-3">
-        <a class="nav-link" data-toggle="tab" href="#solicitud" role="tab" aria-expanded="false">Solicitud</a>
+        <a class="nav-link" data-toggle="tab" href="#cliente" role="tab" aria-expanded="false" >Cliente</a>
       </li>
+      
       <li class="nav-item col-md-2">
         <a class="nav-link" data-toggle="tab" href="#aval" role="tab" aria-expanded="false">Aval</a>
       </li>
@@ -26,7 +28,7 @@
     </ul>
 
     <div class="tab-content">
-      <div class="tab-pane active loan-cliente" id="cliente" role="tabpanel" aria-expanded="true">
+      <div class="tab-pane loan-cliente" id="cliente" role="tabpanel" aria-expanded="false">
         <div class="row p-0 contenedor-titular">
           <div class="col-md-12 d-flex titulo-prestamo-menu">
               <p>Titular</p>
@@ -244,14 +246,14 @@
                 <label>Dirección</label>
                 <input type="text" v-model="form.conyugue.direccion_laboral_conyugue" class="form-control" /> 
             </div>
-
+<!-- 
             <div class="col-md-12 d-flex justify-content-end mt-3 mb-4">
               <button class="btn btn-success btn-sm" @click.prevent="handleClick('aval')">Continuar</button>
-            </div>
+            </div> -->
         </div>
       </div>
 
-      <div class="tab-pane  loan-solicitud" id="solicitud" role="tabpanel" aria-expanded="false">
+      <div class="tab-pane active loan-solicitud" id="solicitud" role="tabpanel" aria-expanded="true">
           <div class="row contenedor-solicitud">
               <div class="col-md-12 d-flex titulo-prestamo-menu">
                 <p>Solicitud de credito</p>
@@ -408,9 +410,9 @@
                 <i class="fas fa-plus"></i> Agregar Aval
               </button>
             </div>
-            <div class="col-md-12 d-flex justify-content-end mb-4">
+            <!-- <div class="col-md-12 d-flex justify-content-end mb-4">
               <button class="btn btn-success btn-sm" @click.prevent="handleClick('garantia')">Continuar</button>
-            </div>
+            </div> -->
           </div>
       </div>
 
@@ -447,9 +449,9 @@
                 <i class="fas fa-plus"></i> Agregar Garantia
               </button>
             </div>
-            <div class="col-md-12 d-flex justify-content-end mb-4">
+            <!-- <div class="col-md-12 d-flex justify-content-end mb-4">
               <button class="btn btn-success btn-sm" @click.prevent="handleClick('propuesta')">Continuar</button>
-            </div>
+            </div> -->
           </div>
       </div>
 
