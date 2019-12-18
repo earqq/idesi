@@ -17,6 +17,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $celular
  * @property string $centro_laboral
  * @property string $direccion
+ * @property string $socio
+ * @property string $codigo_socio
+ * @property float $aporte_socio
  * @property string $deleted_at
  * @property string $created_at
  * @property string $updated_at
@@ -34,7 +37,7 @@ class Conyugue extends Model
     /**
      * @var array
      */
-    protected $fillable = ['naturals_id', 'documento', 'nombres', 'apellidos', 'nacimiento', 'estado_civil', 'ocupacion', 'telefono', 'celular', 'centro_laboral', 'direccion', 'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['naturals_id', 'documento', 'nombres', 'apellidos', 'nacimiento', 'estado_civil', 'ocupacion', 'telefono', 'celular', 'centro_laboral', 'direccion', 'socio', 'codigo_socio', 'aporte_socio', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

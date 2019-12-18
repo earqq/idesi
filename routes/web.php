@@ -37,6 +37,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('clientes/visita/nuevo', 'ClienteController@visitaStore');
         Route::get('clientes/visitas/{prestamo}', 'ClienteController@visitas');
 
+        Route::get('/clientes/solicitudPdf/{prestamo}','ClienteController@SolicitudPdf')->name('solicitud_pdf');
 
         Route::get('clientes/prestamo/ver/{prestamo}', 'ClienteController@prestamoVer');
         Route::get('evaluaciones/prestamos', 'EvaluacionController@prestamos');

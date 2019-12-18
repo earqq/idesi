@@ -34,23 +34,28 @@ export default new Router({
             path: '/perfil/:documento',
             name: 'perfil',
             component: require('./views/Perfil').default,
-            children: [
-                {
-                    path: '/archivos/:prestamo',
-                    name: 'archivos',
-                    component: require('./views/Archivos').default
-                }
-            ]
+            // children: [
+            //     {
+            //         path: '/archivos/:prestamo',
+            //         name: 'archivos',
+            //         component: require('./views/Archivos').default
+            //     }
+            // ]
         },
         {
             path: '/ver/:prestamo',
             name: 'ver',
             component: require('./views/VerPrestamo').default
         },
-        {
-            path: '/archivos/:prestamo',
+        { 
+            path: '/archivos/:prestamo', 
             name: 'archivos',
             component: require('./views/Archivos').default
+        },
+        {
+            path: '/visitas/:prestamo',
+            name: 'visitas',
+            component: require('./views/Visita').default
         },
         {
             path: '/prestamo/:dni',

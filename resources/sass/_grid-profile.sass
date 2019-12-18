@@ -37,6 +37,7 @@
             width: 100%
             top: 80px
             .profile-username
+                padding: 0 10px
                 span
                     margin-left: 9px
                     font-size: 18px
@@ -79,7 +80,7 @@
         .prestamos
             grid-area: prestamos
             padding: 10px 12px
-            overflow-y: auto
+            // overflow-y: auto
             nav
                 margin-bottom: 15px
                 .nav-tabs
@@ -111,6 +112,20 @@
                             font-weight: bold
                             i
                                 margin-right: 15px
-        .datos
+        .date
             grid-area: datos
+            display: grid
+            grid-template-columns: 1fr
+            grid-template-rows: 50px 1fr
+            grid-template-areas: "date-header" "date-body"
             background: #fff
+            .date-header
+                grid-area: date-header
+                height: 50px
+    .general-view
+        background: #f0f2f3
+        grid-area: content
+        display: grid
+        grid-template-columns: 3fr 1fr
+        grid-template-areas: "prestamos datos"
+        overflow: auto

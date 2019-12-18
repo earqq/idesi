@@ -13,6 +13,7 @@ use App\Provincia;
 use App\Conyugue;
 use App\Natural;
 use App\Juridico;
+use App\Subido;
 use App\Vista;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -282,6 +283,10 @@ class ClienteController extends Controller
 
         return compact('cliente','natural','conyugue');
     }
+
+
+
+
     public function prestamo(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
@@ -289,7 +294,8 @@ class ClienteController extends Controller
         try{
 
             DB::beginTransaction();
-  
+            
+            // return $request;
             $cliente = Cliente::where('documento',$request->cliente['documento'])->first();
             $cliente->departamentos_id = $request->cliente['departamentos_id'];
             $cliente->distritos_id= $request->cliente['distritos_id'];
@@ -327,13 +333,25 @@ class ClienteController extends Controller
             $conyugue->ocupacion =  $request->conyugue['ocupacion_conyugue'];
             $conyugue->telefono =  $request->conyugue['telefono_conyugue'] ;
             $conyugue->celular =  $request->conyugue['celular_conyugue'];
+            $conyugue->socio =  $request->conyugue['socio_conyugue'];
+            $conyugue->codigo_socio =  $request->conyugue['codigo_socio_conyugue'];
+            $conyugue->aporte_socio =  $request->conyugue['aporte_socio_conyugue'];
             $conyugue->naturals_id = $natural->id;   
             $conyugue->save();
 
-
-            $prestamo = new Prestamo();
+            if($request->input('idprestamo')<0){
+               $prestamo = new Prestamo();
+            }
+            else{
+                $prestamo = Prestamo::where('id',$request->input('idprestamo'))->first();
+            }
             $prestamo->clientes_id = $cliente->id;
             $prestamo->users_id = 1;
+            $prestamo->monto_inicial = $request->input('monto_inicial');
+            $prestamo->plazo_inicial = $request->input('plazo_inicial');
+            $prestamo->disponibilidad_pago_inicial = $request->input('disponibilidad_pago_inicial');
+            $prestamo->destino_inicial = $request->input('destino_inicial');
+            $prestamo->forma_inicial = $request->input('forma_inicial');
             $prestamo->producto = $request->input('producto');
             $prestamo->forma = $request->input('forma');
             $prestamo->importe = $request->input('importe');
@@ -348,8 +366,10 @@ class ClienteController extends Controller
             foreach ($request->avals as $ep=>$avals) {
                 $aval= new Aval;
                 $aval->documento = $avals['documento'];
+                $aval->tipo_persona = $avals['tipo_persona'];
                 $aval->nombres = $avals['nombres'];
                 $aval->apellidos = $avals['apellidos'];
+                $aval->nacimiento = $avals['nacimiento'];
                 $aval->estado_civil = $avals['estado_civil'];
                 $aval->ocupacion = $avals['ocupacion'];
                 $aval->telefono = $avals['telefono'];
@@ -358,6 +378,9 @@ class ClienteController extends Controller
                 $aval->distrito = $avals['distrito'];
                 $aval->centro_laboral = $avals['centro_laboral'];
                 $aval->direccion_laboral = $avals['direccion_laboral'];
+                $aval->socio = $avals['socio'];
+                $aval->codigo_socio = $avals['codigo_socio'];
+                $aval->aporte_socio = $avals['aporte_socio'];
                 $aval->prestamos_id = $prestamo->id;
                 $aval->save();
             }
@@ -370,6 +393,15 @@ class ClienteController extends Controller
                 $garantia->prestamos_id = $prestamo->id;
                 $garantia->save();
             }
+
+
+            $subido= new Subido;
+            $subido->prestamos_id=$prestamo->id;
+            $subido->save();
+
+            $subidos = Subido::find($subido->id);
+            $subidos->solicitud_credito=1;
+            $subidos->save();
 
             // $prestamos= Prestamo::find($prestamo->id);
             // $cliente = Cliente::where('id',$prestamos->clientes_id)->first();
@@ -408,12 +440,13 @@ class ClienteController extends Controller
     public function prestamoVer($prestamo)
     {
         $prestamo= Prestamo::find($prestamo);
-
         $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        $natural = Natural::where('clientes_id',$cliente->id)->first();
+        $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
         $avals = Aval::where('prestamos_id',$prestamo->id)->get();
         $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
 
-        return compact('prestamo','cliente','avals','garantias');
+        return compact('prestamo','cliente','avals','garantias','natural','conyugue');
 
     }
     /**
@@ -434,26 +467,20 @@ class ClienteController extends Controller
         return $cliente->nombres.'_'. $cliente->apellidos .'_' . $cliente->id;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cliente  $cliente
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Cliente $cliente)
-    {
-        //
+
+    public function SolicitudPdf($prestamo){
+
+
+        $prestamo= Prestamo::find($prestamo);
+        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        $natural = Natural::where('clientes_id',$cliente->id)->first();
+        $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
+        $avals = Aval::where('prestamos_id',$prestamo->id)->get();
+        $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+
+
+        $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue'));
+        return $pdf->stream('solicitud_de_credito.pdf');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Cliente  $cliente
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Cliente $cliente)
-    {
-        //
-    }
 }

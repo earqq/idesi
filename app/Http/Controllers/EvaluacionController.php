@@ -13,7 +13,7 @@ class EvaluacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index() 
     {
         //
     }
@@ -22,7 +22,8 @@ class EvaluacionController extends Controller
     public function prestamos()
     {
         $pretamos = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
-                              ->select('clientes.nombres','clientes.apellidos','prestamos.estado','prestamos.id')->get();
+                              ->join('naturals','clientes.id',"=","naturals.clientes_id")
+                              ->select('clientes.documento','naturals.nombres','naturals.apellidos','prestamos.estado','prestamos.created_at','prestamos.id')->get();
         return $pretamos;
     }
 

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $prestamos_id
  * @property int $documento
+ * @property string $tipo_persona
  * @property string $nombres
  * @property string $apellidos
  * @property string $nacimiento
@@ -19,6 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $distrito
  * @property string $centro_laboral
  * @property string $direccion_laboral
+ * @property string $socio
+ * @property string $codigo_socio
+ * @property float $aporte_socio
  * @property string $deleted_at
  * @property string $created_at
  * @property string $updated_at
@@ -29,7 +33,7 @@ class Aval extends Model
     /**
      * @var array
      */
-    protected $fillable = ['prestamos_id', 'documento', 'nombres', 'apellidos', 'nacimiento', 'estado_civil', 'ocupacion', 'telefono', 'celular', 'direccion', 'distrito', 'centro_laboral', 'direccion_laboral', 'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['prestamos_id', 'documento', 'tipo_persona', 'nombres', 'apellidos', 'nacimiento', 'estado_civil', 'ocupacion', 'telefono', 'celular', 'direccion', 'distrito', 'centro_laboral', 'direccion_laboral', 'socio', 'codigo_socio', 'aporte_socio', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

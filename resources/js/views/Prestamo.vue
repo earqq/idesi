@@ -1,25 +1,34 @@
 <template>
-  <div class="container-general">
+  <div class="container-general loan">
      <header>
         <span @click="retornar()">
           <i class="fas fa-angle-left"></i>
         </span>
         <h1>Nuevo prestamo</h1>
       </header>
-    <div class="row col-md-12 m-0 loan">
-      <tabs
-        :tabs="tabs"
-        :currentTab="currentTab"
-        :wrapper-class="'default-tabs'"
-        :tab-class="'default-tabs__item'"
-        :tab-active-class="'default-tabs__item_active'"
-        :line-class="'default-tabs__active-line'"
-        @onClick="handleClick"
-      />
-      <div class="content">
-        <div class="loan-cliente" v-if="currentTab === 'cliente'">
-          <div class="row">
-            <div class="col-md-12 d-flex titulo-prestamo-menu">
+
+          <ul style="list-style: outside none none;" class="nav nav-tabs row nav-loan" role="tablist">
+      <li class="nav-item col-md-3">
+        <a class="nav-link active" data-toggle="tab" href="#cliente" role="tab" aria-expanded="true" >Cliente</a>
+      </li>
+      <li class="nav-item col-md-3">
+        <a class="nav-link" data-toggle="tab" href="#solicitud" role="tab" aria-expanded="false">Solicitud</a>
+      </li>
+      <li class="nav-item col-md-2">
+        <a class="nav-link" data-toggle="tab" href="#aval" role="tab" aria-expanded="false">Aval</a>
+      </li>
+      <li class="nav-item col-md-2">
+        <a class="nav-link" data-toggle="tab" href="#garantia" role="tab" aria-expanded="false">Garantia</a>
+      </li>
+      <li class="nav-item col-md-2">
+        <a class="nav-link" data-toggle="tab" href="#propuesta"  role="tab" aria-expanded="false" >Propuesta analista</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active loan-cliente" id="cliente" role="tabpanel" aria-expanded="true">
+        <div class="row p-0 contenedor-titular">
+          <div class="col-md-12 d-flex titulo-prestamo-menu">
               <p>Titular</p>
             </div>
             <div class="col-md-3 form-group ">
@@ -154,7 +163,7 @@
                 <input
                   type="text"
                   v-model="form.conyugue.documento_conyugue"
-                  class="form-control input-mask"
+                  class="form-control letter-5"
                   v-mask="{mask: '99999999', greedy: true}"
                   @change="datosCliente()"
                 /> 
@@ -194,15 +203,35 @@
                 <input type="text" v-model="form.conyugue.ocupacion_conyugue" class="form-control" /> 
             </div>
             <div class="col-md-4 form-group"> 
+                <label>Socio</label>
+                <select v-model="form.conyugue.socio_conyugue" class="form-control">
+                  <option value="0">SELECCIONE ...</option>
+                  <option value="si">si</option>
+                  <option value="no">no</option>
+                </select> 
+            </div>
+            
+            <div class="col-md-4 form-group"> 
+                <label>Codigo</label>
+                <input type="text" v-model="form.conyugue.codigo_socio_conyugue" class="form-control"/> 
+            </div>
+
+            <div class="col-md-4 form-group"> 
+                <label>Aporte</label>
+                <input type="text" v-model="form.conyugue.aporte_socio_conyugue" class="form-control" /> 
+            </div>
+
+              <div class="col-md-4 form-group"> 
                 <label>Telefono</label>
                 <input type="text" v-model="form.conyugue.telefono_conyugue" class="form-control" /> 
             </div>
+            
             <div class="col-md-4 form-group"> 
                 <label>Celular</label>
                 <input
                   type="text"
                   v-model="form.conyugue.celular_conyugue"
-                  class="form-control input-mask"
+                  class="form-control letter-5"
                   v-mask="{mask: '+51 999999999', greedy: true}"
                 /> 
             </div>
@@ -219,20 +248,68 @@
             <div class="col-md-12 d-flex justify-content-end mt-3 mb-4">
               <button class="btn btn-success btn-sm" @click.prevent="handleClick('aval')">Continuar</button>
             </div>
-          </div>
         </div>
-        <div class="loan-aval" v-if="currentTab === 'aval'">
-          <div v-for="(row, index) in form.avals" :key="index" class="row">
+      </div>
+
+      <div class="tab-pane  loan-solicitud" id="solicitud" role="tabpanel" aria-expanded="false">
+          <div class="row contenedor-solicitud">
+              <div class="col-md-12 d-flex titulo-prestamo-menu">
+                <p>Solicitud de credito</p>
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label>Monto</label>
+                <input type="text" v-model="form.monto_inicial" class="form-control" />
+              </div>
+              <div class="col-md-4 form-group">
+                <label>Plazo</label>
+                <select v-model="form.plazo_inicial"   class="form-control">
+                  <option value="0">SELECCIONE</option>
+                  <option v-for="(index) in 36" :key="index" :value="index" >{{index}} </option>
+                </select>
+              </div>
+              <div class="col-md-4 form-group">
+                <label>Disponibilidad de pago</label>
+                <input type="text" v-model="form.disponibilidad_pago_inicial" class="form-control" />
+              </div>
+              <div class="col-md-6 form-group">
+                <label>Destino</label>
+                <input type="text" v-model="form.destino_inicial" class="form-control" />
+              </div>
+              <div class="col-md-6 form-group">
+                <label>Forma</label>
+                <select v-model="form.forma_inicial" class="form-control">
+                  <option value="0">SELECCIONE</option>
+                  <option value="DIARIO">DIARIO</option>
+                  <option value="SEMANAL">SEMANAL</option>
+                  <option value="MENSUAL">MENSUAL</option>
+                </select>
+              </div>
+
+
+          </div>
+      </div>
+
+      <div class="tab-pane loan-aval" id="aval" role="tabpanel" aria-expanded="false">
+        <div v-for="(row, index) in form.avals" :key="index" class="row p-0 contenedor-aval">
             <div class="col-md-12 d-flex titulo-prestamo-menu">
               <p>Aval</p>
               <i class="fas fa-trash" @click.prevent="clickRemoveAval(index)" v-if="index!=0"></i>
             </div>
-            <div class="col-md-3 form-group"> 
+            <div class="col-md-1 form-group"> 
+                <label>Tipo Persona</label>
+                <select  v-model="row.tipo_persona"  class="form-control">
+                  <option value="0">SELECCIONE ...</option>
+                  <option value="pn">Persona Natural</option>
+                  <option value="pj">Persona Juridica</option>
+                </select> 
+            </div>
+            <div class="col-md-2 form-group"> 
                 <label>Documento de Identidad</label>
                 <input
                   type="text"
                   v-model="row.documento"
-                  class="form-control input-mask"
+                  class="form-control letter-5"
                   v-mask="{mask: '99999999', greedy: true}"
                   @change="datosAval(index)"
                 /> 
@@ -278,9 +355,29 @@
                 <input type="text" v-model="row.telefono" class="form-control" /> 
             </div>
 
+              <div class="col-md-4 form-group"> 
+                <label>Socio</label>
+                <select v-model="row.socio" class="form-control">
+                  <option value="0">SELECCIONE ...</option>
+                  <option value="si">si</option>
+                  <option value="no">no</option>
+                </select> 
+            </div>
+            
+            <div class="col-md-4 form-group"> 
+                <label>Codigo</label>
+                <input type="text" v-model="row.codigo_socio" class="form-control"/> 
+            </div>
+
+            <div class="col-md-4 form-group"> 
+                <label>Aporte</label>
+                <input type="text" v-model="row.aporte_socio" class="form-control" /> 
+            </div>
+
+
             <div class="col-md-4 form-group">
                 <label>Celular</label>
-                <input type="text" v-model="row.celular" class="form-control" />
+                <input type="text" v-model="row.celular" class="form-control letter-5" v-mask="{mask: '+51 999999999', greedy: true}" />
             </div>
 
             <div class="col-md-4 form-group">
@@ -315,16 +412,16 @@
               <button class="btn btn-success btn-sm" @click.prevent="handleClick('garantia')">Continuar</button>
             </div>
           </div>
-        </div>
+      </div>
 
-        <div class="loan-garantia" v-if="currentTab === 'garantia'">
-          <div v-for="(row, index) in form.garantias" :key="index" class="row">
+      <div class="tab-pane loan-garantia" id="garantia"  role="tabpanel" aria-expanded="false" > 
+         <div v-for="(row, index) in form.garantias" :key="index" class="row contenedor-garantia">
             <div class="col-md-12 d-flex titulo-prestamo-menu">
               <p>Garantía</p>
               <i class="fas fa-trash" @click.prevent="clickRemoveGarantia(index)" v-if="index!=0"></i>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-12 form-group">
               <label>Bien en Garantía</label>
               <input type="text" v-model="row.bien_garantia" class="form-control" />
             </div>
@@ -354,9 +451,10 @@
               <button class="btn btn-success btn-sm" @click.prevent="handleClick('propuesta')">Continuar</button>
             </div>
           </div>
-        </div>
-        <div class="loan-propuesta" v-if="currentTab === 'propuesta'">
-          <div class="row">
+      </div>
+
+      <div class="tab-pane loan-propuesta" id="propuesta" role="tabpanel" aria-expanded="false" >
+          <div class="row contenedor-propuesta">
             <div class="col-md-12 d-flex titulo-prestamo-menu">
               <p>Propuesta</p>
             </div>
@@ -408,39 +506,18 @@
               <button class="btn btn-success btn-sm " @click.prevent="submit">Guardar</button>
             </div>
           </div>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Tabs from "vue-tabs-with-active-line";
 import { serviceNumber } from "../mixins/functions";
 import DatePick from 'vue-date-pick';
 import 'vue-date-pick/dist/vueDatePick.css';
 
 // import BackMixin from `vue-router-back-mixin`;
 
-
-const TABS = [
-  {
-    title: "01 DATOS CLIENTE",
-    value: "cliente"
-  },
-  {
-    title: "02 AVAL",
-    value: "aval"
-  },
-  {
-    title: "03 GARANTIA",
-    value: "garantia"
-  },
-  {
-    title: "04 PROPUESTA ANALISTA",
-    value: "propuesta"
-  }
-];
 const mesConf=[
         'Enero', 'Febrero', 'Marzo', 'Abril',
         'Mayo', 'Junio', 'Julio', 'Agosto',
@@ -451,11 +528,10 @@ const diaConf=[
 ];
 export default {
   mixins: [serviceNumber],
-  components: { Tabs ,DatePick},
+  components: { DatePick},
   data() {
     return {
       resource: "clientes",
-      tabs: TABS,
       currentTab: "cliente",
       all_departments: [],
       all_provinces: [],
@@ -513,7 +589,8 @@ export default {
         this.form.natural.tipo_domicilio = response.data['natural']["tipo_domicilio"];
         this.form.natural.centro_laboral = response.data['natural']["centro_laboral"];
         this.form.natural.direccion_laboral = response.data['natural']["direccion_laboral"];
-          if(response.data['conyugue']){
+
+        if(response.data['conyugue']){
               this.form.conyugue.documento_conyugue = response.data['conyugue']["documento"];
               this.form.conyugue.nombres_conyugue = response.data['conyugue']["nombres"];
               this.form.conyugue.apellidos_conyugue = response.data['conyugue']["apellidos"];
@@ -524,7 +601,11 @@ export default {
               this.form.conyugue.celular_conyugue = response.data['conyugue']["celular"];
               this.form.conyugue.centro_laboral_conyugue = response.data['conyugue']["centro_laboral"];
               this.form.conyugue.direccion_laboral_conyugue =response.data['conyugue']["direccion"];
+              this.form.conyugue.socio_conyugue =response.data['conyugue']["socio"];
+              this.form.conyugue.codigo_socio_conyugue =response.data['conyugue']["codigo_socio"];
+              this.form.conyugue.aporte_socio_conyugue =response.data['conyugue']["aporte_socio"];
           }
+
       });
   },
 
@@ -539,14 +620,18 @@ export default {
         nombres: "",
         apellidos: "",
         nacimiento: "",
-        estado_civil: "",
+        estado_civil: "0",
         ocupacion: "",
         telefono: "",
         celular: "",
         direccion: "",
         distrito: "",
         centro_laboral: "",
-        direccion_laboral: ""
+        direccion_laboral: "",
+        socio: 0,
+        codigo_socio: "",
+        aporte_socio: "",
+        tipo_persona:0
       });
     },
     clickRemoveAval(index) {
@@ -568,14 +653,15 @@ export default {
     },
     initForm() {
       this.errors = {};
-      this.form = {    
+      this.form = { 
+        idprestamo : -1,
         garantias: [],
         avals: [],
         cliente:{
                 departamentos_id: "0",
                 provincias_id: "0",
                 distritos_id: "0",
-                documento: this.$route.params.dni,
+                documento: this.$route.params.dni
         },
         natural:{
           nombres: "",
@@ -602,7 +688,15 @@ export default {
                   celular_conyugue: "",
                   centro_laboral_conyugue: "",
                   direccion_laboral_conyugue: "",
+                  socio_conyugue: 0,
+                  codigo_socio_conyugue: "",
+                  aporte_socio_conyugue: ""
         },
+        monto_inicial: '',
+        plazo_inicial:'0',
+        disponibilidad_pago_inicial: '',
+        destino_inicial:'',
+        forma_inicial:'0',
         producto: "",
         forma: "0",
         importe: 0,
@@ -633,7 +727,7 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-          me.initForm();
+          // me.initForm();
         });
     },
     datosAval(index) {
@@ -652,7 +746,7 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-          me.initForm();
+          // me.initForm();
         });
     },
     submit() {
@@ -693,60 +787,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.default-tabs {
-  position: relative;
-  margin: 0 auto;
-  &__item {
-    display: inline-block;
-    margin: 0 5px;
-    padding: 10px;
-    padding-bottom: 8px;
-    font-size: 16px;
-    letter-spacing: 0.8px;
-    color: gray;
-    text-decoration: none;
-    border: none;
-    background-color: transparent;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    transition: all 0.25s;
-    &_active {
-      color: black;
-    }
-    &:hover {
-      border-bottom: 2px solid gray;
-      color: black;
-    }
-    &:focus {
-      outline: none;
-      border-bottom: 2px solid gray;
-      color: black;
-    }
-    &:first-child {
-      margin-left: 0;
-    }
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-  &__active-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    background-color: black;
-    transition: transform 0.4s ease, width 0.4s ease;
-  }
-}
-.content {
-  font-size: 20px;
-}
-.default-tabs {
-  width: 100%;
-}
-button {
-  width: 24%;
-}
+
 .vdpWithInput{
       width: 100%;
 }

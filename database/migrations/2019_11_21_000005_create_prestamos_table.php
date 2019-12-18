@@ -24,6 +24,11 @@ class CreatePrestamosTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->double('monto_inicial')->nullable();
+            $table->integer('plazo_inicial')->nullable();
+            $table->string('disponibilidad_pago_inicial', 30)->nullable();
+            $table->string('destino_inicial', 30)->nullable();
+            $table->string('forma_inicial', 30)->nullable();
             $table->string('producto', 40)->nullable();
             $table->string('forma', 40)->nullable();
             $table->decimal('importe', 11, 2)->nullable();

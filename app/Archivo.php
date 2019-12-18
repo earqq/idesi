@@ -19,7 +19,7 @@ class Archivo extends Model
     /**
      * @var array
      */
-    protected $fillable = ['prestamos_id', 'nombre', 'tipo','extension' ,'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['prestamos_id', 'nombre', 'tipo','extension' ,'codigo','estado' ,'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

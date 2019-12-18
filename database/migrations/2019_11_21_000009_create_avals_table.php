@@ -25,17 +25,21 @@ class CreateAvalsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('documento')->nullable();
+            $table->string('tipo_persona', 15)->nullable();
             $table->string('nombres', 50)->nullable();
             $table->string('apellidos', 50)->nullable();
             $table->date('nacimiento')->nullable();
             $table->string('estado_civil', 20)->nullable();
             $table->string('ocupacion', 40)->nullable();
             $table->string('telefono', 10)->nullable();
-            $table->string('celular', 10)->nullable();
+            $table->string('celular', 15)->nullable();
             $table->string('direccion', 100)->nullable();
             $table->string('distrito', 30)->nullable();
             $table->string('centro_laboral', 50)->nullable();
             $table->string('direccion_laboral', 100)->nullable();
+            $table->string('socio', 5)->nullable();
+            $table->string('codigo_socio', 10)->nullable();
+            $table->decimal('aporte_socio', 11, 2)->nullable();
             $table->integer('prestamos_id')->unsigned();
 
             $table->softDeletes();
