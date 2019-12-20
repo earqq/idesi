@@ -25,23 +25,26 @@ class CreateJuridicosTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('clientes_id');
-            $table->string('razon_social', 50)->nullable();
-            $table->string('tipo_empresa', 30)->nullable();
-            $table->date('fecha_creacion')->nullable();
-            $table->string('empresa_direccion', 50)->nullable();
-            $table->string('empresa_referencia', 50)->nullable();
-            $table->integer('representante_doc')->nullable();
-            $table->string('representante_nombres', 30)->nullable();
-            $table->string('representante_apellidos', 30)->nullable();
-            $table->string('representante_direccion', 50)->nullable();
-            $table->string('representante_referencia', 50)->nullable();
-            $table->string('registros_direccion', 70)->nullable();
+            $table->string('razon_social', 50)->nullable()->default(null);
+            $table->string('nombre_comercial', 60)->nullable();
+            $table->string('actividad_principal', 50)->nullable();
+            $table->integer('partida_gesitral')->nullable();
+            $table->string('oficina_registral', 30)->nullable();
+            $table->string('tipo_negocio', 10)->nullable();
+            $table->string('dirección', 50)->nullable();
+            $table->string('numero', 45)->nullable();
+            $table->string('manzana', 5)->nullable();
+            $table->string('lote', 5)->nullable();
+            $table->string('pdto', 5)->nullable();
+            $table->string('int', 5)->nullable();
+            $table->string('piso', 5)->nullable();
+            $table->string('telefono', 15)->nullable();
+            $table->string('celular', 15)->nullable();
+            $table->string('email', 45)->nullable();
 
-            $table->softDeletes();
-
-            $table->timestamps();
-            
             $table->index(["clientes_id"], 'fk_juridicos_clientes1_idx');
+            $table->softDeletes();
+            $table->nullableTimestamps();
 
 
             $table->foreign('clientes_id', 'fk_juridicos_clientes1_idx')

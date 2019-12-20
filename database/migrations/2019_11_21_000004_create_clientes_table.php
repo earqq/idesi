@@ -24,10 +24,13 @@ class CreateClientesTable extends Migration
         Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('documento', 8)->nullable();
-            $table->string('codigo', 10)->nullable();
-            $table->string('tipo_cliente', 5)->nullable();
-            $table->char('estado')->default('1');
+            $table->string('tipo_documento', 10)->nullable();
+            $table->string('documento', 8)->nullable()->default(null);
+            $table->string('codigo', 10)->nullable()->default(null);
+            $table->string('tipo_cliente', 5)->nullable()->default(null);
+            $table->string('numero_registro', 15)->nullable();
+            $table->string('agencia', 50)->nullable();
+            $table->char('estado', 255)->default('1');
             $table->integer('departamentos_id')->nullable()->default(null);
             $table->integer('distritos_id')->nullable()->default(null);
             $table->integer('provincias_id')->nullable()->default(null);

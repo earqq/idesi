@@ -9,8 +9,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $departamentos_id
  * @property int $distritos_id
  * @property int $provincias_id
+ * @property string $tipo_documento
+ * @property string $documento
  * @property string $codigo
  * @property string $tipo_cliente
+ * @property string $numero_registro
+ * @property string $agencia
  * @property string $estado
  * @property string $deleted_at
  * @property string $created_at
@@ -27,7 +31,7 @@ class Cliente extends Model
     /**
      * @var array
      */
-    protected $fillable = ['departamentos_id', 'distritos_id', 'provincias_id', 'codigo',  'documento', 'tipo_cliente', 'estado', 'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['departamentos_id', 'distritos_id', 'provincias_id', 'tipo_documento', 'documento', 'codigo', 'tipo_cliente', 'numero_registro', 'agencia', 'estado', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
