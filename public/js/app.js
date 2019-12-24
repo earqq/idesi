@@ -2586,6 +2586,872 @@ var diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EvalCualitativa.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/EvalCualitativa.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      principal: {
+        destino_credito_descripcion: "",
+        destino_credito: 1,
+        fuente_ingreso: ""
+      },
+      negocio: {
+        ubicacion: "",
+        antiguedad: '1',
+        local: 1,
+        licencia_funcionamiento: 1,
+        horario_atencion: "",
+        mejoras_local: 0
+      },
+      vehiculo: {
+        marca: "",
+        modelo: "",
+        año: "",
+        tipo_servicio_brinda: "",
+        antiguedad_servicio: "",
+        permiso_servicio: 1,
+        horario_trabajo: ""
+      },
+      familiar: {
+        tipo_vivienda: 1,
+        situacion_familiar: 1,
+        miembros_familia: 1,
+        hijos: {
+          1: {},
+          2: {},
+          3: {},
+          4: {}
+        }
+      },
+      central_riesgo: {
+        1: {
+          entidad_financiera: "",
+          capital: false,
+          activo_f: false,
+          consumo: false,
+          vehicular: false,
+          hipoteca: false,
+          terceros: false
+        },
+        2: {
+          entidad_financiera: "",
+          capital: false,
+          activo_f: false,
+          consumo: false,
+          vehicular: false,
+          hipoteca: false,
+          terceros: false
+        },
+        3: {
+          entidad_financiera: "",
+          capital: false,
+          activo_f: false,
+          consumo: false,
+          vehicular: false,
+          hipoteca: false,
+          terceros: false
+        },
+        4: {
+          entidad_financiera: "",
+          capital: false,
+          activo_f: false,
+          consumo: false,
+          vehicular: false,
+          hipoteca: false,
+          terceros: false
+        }
+      },
+      referencias: {
+        1: {
+          tipo_relacion: "",
+          nombre: "",
+          telefono: ""
+        },
+        2: {
+          tipo_relacion: "",
+          nombre: "",
+          telefono: ""
+        },
+        3: {
+          tipo_relacion: "",
+          nombre: "",
+          telefono: ""
+        }
+      },
+      colateral: 0
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EvalCuantitativa.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/EvalCuantitativa.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      evaluacion: {
+        propuesta: {
+          producto: "",
+          monto: 1,
+          numero_cuotas: 0,
+          cuotas: 0
+        },
+        probabilidad_infocorp: 0,
+        gastos_hogar: [{
+          concepto: "",
+          pago: 0
+        }, {
+          concepto: "",
+          pago: 0
+        }, {
+          concepto: "",
+          pago: 0
+        }, {
+          concepto: "",
+          pago: 0
+        }, {
+          concepto: "",
+          pago: 0
+        }, {
+          concepto: "",
+          pago: 0
+        }],
+        propiedades: [{
+          concepto: "",
+          valor_estimado: 0
+        }, {
+          concepto: "",
+          valor_estimado: 0
+        }, {
+          concepto: "",
+          valor_estimado: 0
+        }, {
+          concepto: "",
+          valor_estimado: 0
+        }, {
+          concepto: "",
+          valor_estimado: 0
+        }, {
+          concepto: "",
+          valor_estimado: 0
+        }],
+        titular: {
+          ingresos_negocio: [{
+            concepto: '',
+            lunes: 0,
+            martes: 0,
+            miercoles: 0,
+            jueves: 0,
+            viernes: 0,
+            sabado: 0,
+            domingo: 0
+          }, {
+            concepto: '',
+            lunes: 0,
+            martes: 0,
+            miercoles: 0,
+            jueves: 0,
+            viernes: 0,
+            sabado: 0,
+            domingo: 0
+          }, {
+            concepto: '',
+            lunes: 0,
+            martes: 0,
+            miercoles: 0,
+            jueves: 0,
+            viernes: 0,
+            sabado: 0,
+            domingo: 0
+          }],
+          ingresos_por_categoria: [{
+            concepto: "",
+            mes: ""
+          }, {
+            concepto: "",
+            mes: ""
+          }],
+          gasto_financiero: [{
+            entidad: "",
+            saldo: 0,
+            cuota: 0
+          }, {
+            entidad: "",
+            saldo: 0,
+            cuota: 0
+          }, {
+            entidad: "",
+            saldo: 0,
+            cuota: 0
+          }],
+          gasto_negocio: [{
+            entidad: "ALQUILER",
+            pago: 0
+          }, {
+            entidad: "EMPLEADOS",
+            pago: 0
+          }, {
+            entidad: "IMPUESTOS",
+            pago: 0
+          }, {
+            entidad: "SERVICIOS LAT",
+            pago: 0
+          }],
+          giro_negocio: "",
+          margen_costo: 0,
+          valor_inventario: 0
+        },
+        conyuge: {
+          ingresos_negocio: [{
+            concepto: '',
+            lunes: 0,
+            martes: 0,
+            miercoles: 0,
+            jueves: 0,
+            viernes: 0,
+            sabado: 0,
+            domingo: 0
+          }, {
+            concepto: '',
+            lunes: 0,
+            martes: 0,
+            miercoles: 0,
+            jueves: 0,
+            viernes: 0,
+            sabado: 0,
+            domingo: 0
+          }, {
+            concepto: '',
+            lunes: 0,
+            martes: 0,
+            miercoles: 0,
+            jueves: 0,
+            viernes: 0,
+            sabado: 0,
+            domingo: 0
+          }],
+          ingresos_por_categoria: [{
+            concepto: "",
+            mes: ""
+          }, {
+            concepto: "",
+            mes: ""
+          }],
+          giro_negocio: "",
+          margen_costo: "",
+          valor_inventario: 0,
+          gasto_financiero: [{
+            entidad: "",
+            saldo: 0,
+            cuota: 0
+          }, {
+            entidad: "",
+            saldo: 0,
+            cuota: 0
+          }, {
+            entidad: "",
+            saldo: 0,
+            cuota: 0
+          }],
+          gasto_negocio: [{
+            entidad: "ALQUILER",
+            pago: 0
+          }, {
+            entidad: "EMPLEADOS",
+            pago: 0
+          }, {
+            entidad: "IMPUESTOS",
+            pago: 0
+          }, {
+            entidad: "SERVICIOS LAT",
+            pago: 0
+          }]
+        }
+      }
+    };
+  },
+  methods: {
+    negocioIngresosSubtotal: function negocioIngresosSubtotal(index) {
+      this.evaluacion.titular.ingresos_negocio[index].subtotal = parseFloat(this.evaluacion.titular.ingresos_negocio[index].lunes, 2) + parseFloat(this.evaluacion.titular.ingresos_negocio[index].martes, 2) + parseFloat(this.evaluacion.titular.ingresos_negocio[index].miercoles, 2) + parseFloat(this.evaluacion.titular.ingresos_negocio[index].jueves, 2) + parseFloat(this.evaluacion.titular.ingresos_negocio[index].viernes, 2) + parseFloat(this.evaluacion.titular.ingresos_negocio[index].sabado, 2) + parseFloat(this.evaluacion.titular.ingresos_negocio[index].domingo, 2);
+    },
+    guardar: function guardar() {
+      axios.post('/evaluaciones/cuantitativa', this.evaluacion).then(function (res) {
+        console.log('volvio');
+      });
+    },
+    conyugeIngresosSubtotal: function conyugeIngresosSubtotal(index) {
+      this.evaluacion.conyuge.ingresos_negocio[index].subtotal = parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].lunes, 2) + parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].martes, 2) + parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].miercoles, 2) + parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].jueves, 2) + parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].viernes, 2) + parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].sabado, 2) + parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].domingo, 2);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EvaluacionFinal.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/EvaluacionFinal.vue?vue&type=script&lang=js& ***!
@@ -3444,6 +4310,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _componentes_loader_perfil_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./componentes/loader/perfil.vue */ "./resources/js/views/componentes/loader/perfil.vue");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -63274,6 +64148,4426 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EvalCualitativa.vue?vue&type=template&id=32acb5a4&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/EvalCualitativa.vue?vue&type=template&id=32acb5a4& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-general" }, [
+    _c("h2", [_vm._v("Datos principales")]),
+    _vm._v(" "),
+    _c("label", [_vm._v("Fuente de ingreso")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.principal.fuente_ingreso,
+          expression: "principal.fuente_ingreso"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.principal.fuente_ingreso },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.principal, "fuente_ingreso", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("label", [_vm._v("Destino del credito")]),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.principal.destino_credito,
+            expression: "principal.destino_credito"
+          }
+        ],
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.$set(
+              _vm.principal,
+              "destino_credito",
+              $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+            )
+          }
+        }
+      },
+      [
+        _c("option", { attrs: { value: "1" } }, [_vm._v("Capital de trabajo")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2" } }, [_vm._v("Activo Fijo")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "3" } }, [_vm._v("Consumo")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "4" } }, [_vm._v("Vehiculo")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "5" } }, [_vm._v("Hipotecario")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "6" } }, [
+          _vm._v("Mejoramiento de vivienda")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "7" } }, [_vm._v("Compra de deuda")])
+      ]
+    ),
+    _vm._v(" "),
+    _c("label", [_vm._v("Descripcion destino")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.principal.destino_credito_descripcion,
+          expression: "principal.destino_credito_descripcion"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.principal.destino_credito_descripcion },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(
+            _vm.principal,
+            "destino_credito_descripcion",
+            $event.target.value
+          )
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("h2", [_vm._v("Datos del negocio")]),
+    _vm._v(" "),
+    _c("label", [_vm._v("Ubicacion del negocio")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.negocio.ubicacion,
+          expression: "negocio.ubicacion"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.negocio.ubicacion },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.negocio, "ubicacion", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("label", [_vm._v("Antiguedad")]),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.negocio.antiguedad,
+            expression: "negocio.antiguedad"
+          }
+        ],
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.$set(
+              _vm.negocio,
+              "antiguedad",
+              $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+            )
+          }
+        }
+      },
+      [
+        _c("option", { attrs: { value: "0" } }, [_vm._v("Menos de 1 año")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "1" } }, [_vm._v("1 año")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2" } }, [_vm._v("2 años")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "3" } }, [_vm._v("3 años")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "4" } }, [_vm._v("4 años")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "5" } }, [_vm._v("5 años")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "6" } }, [_vm._v("Más de 5 años")])
+      ]
+    ),
+    _vm._v(" "),
+    _c("label", [_vm._v("Local")]),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.negocio.local,
+            expression: "negocio.local"
+          }
+        ],
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.$set(
+              _vm.negocio,
+              "local",
+              $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+            )
+          }
+        }
+      },
+      [
+        _c("option", { attrs: { value: "1" } }, [_vm._v("Propio")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2" } }, [_vm._v("Alquilado")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "3" } }, [_vm._v("Módulo V. pública")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "4" } }, [_vm._v("Familiar")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "5" } }, [_vm._v("Hipotec/anticresis")])
+      ]
+    ),
+    _vm._v(" "),
+    _c("label", [_vm._v("Licencia de Funcionamiento")]),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.negocio.licencia_funcionamiento,
+            expression: "negocio.licencia_funcionamiento"
+          }
+        ],
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.$set(
+              _vm.negocio,
+              "licencia_funcionamiento",
+              $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+            )
+          }
+        }
+      },
+      [
+        _c("option", { attrs: { value: "1" } }, [_vm._v("Si cuenta")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "0" } }, [_vm._v("No cuenta")])
+      ]
+    ),
+    _vm._v(" "),
+    _c("label", [_vm._v("Realizo mejoras en el local")]),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.negocio.mejoras_local,
+            expression: "negocio.mejoras_local"
+          }
+        ],
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.$set(
+              _vm.negocio,
+              "mejoras_local",
+              $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+            )
+          }
+        }
+      },
+      [
+        _c("option", { attrs: { value: "1" } }, [_vm._v("Si realizo")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "0" } }, [_vm._v("No realizo")])
+      ]
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("Datos del vehiculo")]),
+    _vm._v(" "),
+    _c("label", [_vm._v("Marca")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.vehiculo.marca,
+          expression: "vehiculo.marca"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.vehiculo.marca },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.vehiculo, "marca", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("label", [_vm._v("Modelo")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.vehiculo.modelo,
+          expression: "vehiculo.modelo"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.vehiculo.modelo },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.vehiculo, "modelo", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("label", [_vm._v("Año fabricación")]),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.vehiculo.año,
+            expression: "vehiculo.año"
+          }
+        ],
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.$set(
+              _vm.vehiculo,
+              "año",
+              $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+            )
+          }
+        }
+      },
+      [
+        _c("option", { attrs: { value: "1995" } }, [_vm._v("1995")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "1996" } }, [_vm._v("1996")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "1997" } }, [_vm._v("1997")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "1998" } }, [_vm._v("1998")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "1999" } }, [_vm._v("1999")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2001" } }, [_vm._v("2001")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2002" } }, [_vm._v("2002")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2003" } }, [_vm._v("2003")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2004" } }, [_vm._v("2004")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2005" } }, [_vm._v("2005")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2006" } }, [_vm._v("2006")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2007" } }, [_vm._v("2007")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2008" } }, [_vm._v("2008")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2009" } }, [_vm._v("2009")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2010" } }, [_vm._v("2010")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2011" } }, [_vm._v("2011")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2012" } }, [_vm._v("2012")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2013" } }, [_vm._v("2013")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2014" } }, [_vm._v("2014")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2015" } }, [_vm._v("2015")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2016" } }, [_vm._v("2016")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2017" } }, [_vm._v("2017")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2018" } }, [_vm._v("2018")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2018" } }, [_vm._v("2018")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2019" } }, [_vm._v("2019")])
+      ]
+    ),
+    _vm._v(" "),
+    _c("label", [_vm._v("Tipo servicio que brinda")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.vehiculo.tipo_servicio_brinda,
+          expression: "vehiculo.tipo_servicio_brinda"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.vehiculo.tipo_servicio_brinda },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.vehiculo, "tipo_servicio_brinda", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("label", [_vm._v("Antiguedad realizando el servicio")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.vehiculo.antiguedad_servicio,
+          expression: "vehiculo.antiguedad_servicio"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.vehiculo.antiguedad_servicio },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.vehiculo, "antiguedad_servicio", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("label", [_vm._v(" Permiso para brindar servicio")]),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.vehiculo.permiso_servicio,
+            expression: "vehiculo.permiso_servicio"
+          }
+        ],
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.$set(
+              _vm.vehiculo,
+              "permiso_servicio",
+              $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+            )
+          }
+        }
+      },
+      [
+        _c("option", { attrs: { value: "1" } }, [_vm._v("Si cuenta")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "0" } }, [_vm._v("No cuenta")])
+      ]
+    ),
+    _vm._v(" "),
+    _c("label", [_vm._v("Horario trabajo")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.vehiculo.horario_servicio,
+          expression: "vehiculo.horario_servicio"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.vehiculo.horario_servicio },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.vehiculo, "horario_servicio", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("h2", [_vm._v("Informacion familiar")]),
+    _vm._v(" "),
+    _c("label", [_vm._v("Tipo de vivienda")]),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.familiar.tipo_vivienda,
+            expression: "familiar.tipo_vivienda"
+          }
+        ],
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.$set(
+              _vm.familiar,
+              "tipo_vivienda",
+              $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+            )
+          }
+        }
+      },
+      [
+        _c("option", { attrs: { value: "1" } }, [_vm._v("Propia Cancelada")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2" } }, [_vm._v("Propia (hipoteca)")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "3" } }, [_vm._v("De los padres")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "4" } }, [_vm._v("De familiares")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "5" } }, [_vm._v("Alquilada")])
+      ]
+    ),
+    _vm._v(" "),
+    _c("label", [_vm._v("Situacion familiar")]),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.familiar.situacion_familiar,
+            expression: "familiar.situacion_familiar"
+          }
+        ],
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.$set(
+              _vm.familiar,
+              "situacion_familiar",
+              $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+            )
+          }
+        }
+      },
+      [
+        _c("option", { attrs: { value: "1" } }, [_vm._v("Soltero")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2" } }, [_vm._v("Casado")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "3" } }, [_vm._v("Conviviente")])
+      ]
+    ),
+    _vm._v(" "),
+    _c("label", [_vm._v("Miembros de familia")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.familiar.miembros_familia,
+          expression: "familiar.miembros_familia"
+        }
+      ],
+      attrs: { type: "number" },
+      domProps: { value: _vm.familiar.miembros_familia },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.familiar, "miembros_familia", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("label", [_vm._v("Hijos")]),
+    _vm._v(" "),
+    _c("table", [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[1].edad,
+                expression: "familiar.hijos[1].edad"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[1].edad },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[1], "edad", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[1].colegio,
+                expression: "familiar.hijos[1].colegio"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[1].colegio },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[1], "colegio", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[1].grado,
+                expression: "familiar.hijos[1].grado"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[1].grado },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[1], "grado", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[1].costo,
+                expression: "familiar.hijos[1].costo"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[1].costo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[1], "costo", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[2].edad,
+                expression: "familiar.hijos[2].edad"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[2].edad },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[2], "edad", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[2].colegio,
+                expression: "familiar.hijos[2].colegio"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[2].colegio },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[2], "colegio", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[2].grado,
+                expression: "familiar.hijos[2].grado"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[2].grado },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[2], "grado", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[2].costo,
+                expression: "familiar.hijos[2].costo"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[2].costo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[2], "costo", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[3].edad,
+                expression: "familiar.hijos[3].edad"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[3].edad },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[3], "edad", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[3].colegio,
+                expression: "familiar.hijos[3].colegio"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[3].colegio },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[3], "colegio", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[3].grado,
+                expression: "familiar.hijos[3].grado"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[3].grado },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[3], "grado", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[3].costo,
+                expression: "familiar.hijos[3].costo"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[3].costo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[3], "costo", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[4].edad,
+                expression: "familiar.hijos[4].edad"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[4].edad },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[4], "edad", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[4].colegio,
+                expression: "familiar.hijos[4].colegio"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[4].colegio },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[4], "colegio", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[4].grado,
+                expression: "familiar.hijos[4].grado"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[4].grado },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[4], "grado", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.familiar.hijos[4].costo,
+                expression: "familiar.hijos[4].costo"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.familiar.hijos[4].costo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.familiar.hijos[4], "costo", $event.target.value)
+              }
+            }
+          })
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("h2", [_vm._v("COMENTARIOS (CENTRAL DE RIESGO)")]),
+    _vm._v(" "),
+    _c("table", [
+      _vm._m(1),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[1].entidad_financiera,
+                expression: "central_riesgo[1].entidad_financiera"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.central_riesgo[1].entidad_financiera },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.central_riesgo[1],
+                  "entidad_financiera",
+                  $event.target.value
+                )
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[1].capital,
+                expression: "central_riesgo[1].capital"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[1].capital)
+                ? _vm._i(_vm.central_riesgo[1].capital, null) > -1
+                : _vm.central_riesgo[1].capital
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[1].capital,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[1],
+                        "capital",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[1],
+                        "capital",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[1], "capital", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[1].activo_f,
+                expression: "central_riesgo[1].activo_f"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[1].activo_f)
+                ? _vm._i(_vm.central_riesgo[1].activo_f, null) > -1
+                : _vm.central_riesgo[1].activo_f
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[1].activo_f,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[1],
+                        "activo_f",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[1],
+                        "activo_f",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[1], "activo_f", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[1].consumo,
+                expression: "central_riesgo[1].consumo"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[1].consumo)
+                ? _vm._i(_vm.central_riesgo[1].consumo, null) > -1
+                : _vm.central_riesgo[1].consumo
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[1].consumo,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[1],
+                        "consumo",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[1],
+                        "consumo",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[1], "consumo", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[1].vehicular,
+                expression: "central_riesgo[1].vehicular"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[1].vehicular)
+                ? _vm._i(_vm.central_riesgo[1].vehicular, null) > -1
+                : _vm.central_riesgo[1].vehicular
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[1].vehicular,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[1],
+                        "vehicular",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[1],
+                        "vehicular",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[1], "vehicular", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[1].hipoteca,
+                expression: "central_riesgo[1].hipoteca"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[1].hipoteca)
+                ? _vm._i(_vm.central_riesgo[1].hipoteca, null) > -1
+                : _vm.central_riesgo[1].hipoteca
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[1].hipoteca,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[1],
+                        "hipoteca",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[1],
+                        "hipoteca",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[1], "hipoteca", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[1].terceros,
+                expression: "central_riesgo[1].terceros"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[1].terceros)
+                ? _vm._i(_vm.central_riesgo[1].terceros, null) > -1
+                : _vm.central_riesgo[1].terceros
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[1].terceros,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[1],
+                        "terceros",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[1],
+                        "terceros",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[1], "terceros", $$c)
+                }
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[2].entidad_financiera,
+                expression: "central_riesgo[2].entidad_financiera"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.central_riesgo[2].entidad_financiera },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.central_riesgo[2],
+                  "entidad_financiera",
+                  $event.target.value
+                )
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[2].capital,
+                expression: "central_riesgo[2].capital"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[2].capital)
+                ? _vm._i(_vm.central_riesgo[2].capital, null) > -1
+                : _vm.central_riesgo[2].capital
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[2].capital,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[2],
+                        "capital",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[2],
+                        "capital",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[2], "capital", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[2].activo_f,
+                expression: "central_riesgo[2].activo_f"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[2].activo_f)
+                ? _vm._i(_vm.central_riesgo[2].activo_f, null) > -1
+                : _vm.central_riesgo[2].activo_f
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[2].activo_f,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[2],
+                        "activo_f",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[2],
+                        "activo_f",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[2], "activo_f", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[2].consumo,
+                expression: "central_riesgo[2].consumo"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[2].consumo)
+                ? _vm._i(_vm.central_riesgo[2].consumo, null) > -1
+                : _vm.central_riesgo[2].consumo
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[2].consumo,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[2],
+                        "consumo",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[2],
+                        "consumo",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[2], "consumo", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[2].vehicular,
+                expression: "central_riesgo[2].vehicular"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[2].vehicular)
+                ? _vm._i(_vm.central_riesgo[2].vehicular, null) > -1
+                : _vm.central_riesgo[2].vehicular
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[2].vehicular,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[2],
+                        "vehicular",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[2],
+                        "vehicular",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[2], "vehicular", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[2].hipoteca,
+                expression: "central_riesgo[2].hipoteca"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[2].hipoteca)
+                ? _vm._i(_vm.central_riesgo[2].hipoteca, null) > -1
+                : _vm.central_riesgo[2].hipoteca
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[2].hipoteca,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[2],
+                        "hipoteca",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[2],
+                        "hipoteca",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[2], "hipoteca", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[2].terceros,
+                expression: "central_riesgo[2].terceros"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[2].terceros)
+                ? _vm._i(_vm.central_riesgo[2].terceros, null) > -1
+                : _vm.central_riesgo[2].terceros
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[2].terceros,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[2],
+                        "terceros",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[2],
+                        "terceros",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[2], "terceros", $$c)
+                }
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[3].entidad_financiera,
+                expression: "central_riesgo[3].entidad_financiera"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.central_riesgo[3].entidad_financiera },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.central_riesgo[3],
+                  "entidad_financiera",
+                  $event.target.value
+                )
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[3].capital,
+                expression: "central_riesgo[3].capital"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[3].capital)
+                ? _vm._i(_vm.central_riesgo[3].capital, null) > -1
+                : _vm.central_riesgo[3].capital
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[3].capital,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[3],
+                        "capital",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[3],
+                        "capital",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[3], "capital", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[3].activo_f,
+                expression: "central_riesgo[3].activo_f"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[3].activo_f)
+                ? _vm._i(_vm.central_riesgo[3].activo_f, null) > -1
+                : _vm.central_riesgo[3].activo_f
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[3].activo_f,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[3],
+                        "activo_f",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[3],
+                        "activo_f",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[3], "activo_f", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[3].consumo,
+                expression: "central_riesgo[3].consumo"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[3].consumo)
+                ? _vm._i(_vm.central_riesgo[3].consumo, null) > -1
+                : _vm.central_riesgo[3].consumo
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[3].consumo,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[3],
+                        "consumo",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[3],
+                        "consumo",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[3], "consumo", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[3].vehicular,
+                expression: "central_riesgo[3].vehicular"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[3].vehicular)
+                ? _vm._i(_vm.central_riesgo[3].vehicular, null) > -1
+                : _vm.central_riesgo[3].vehicular
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[3].vehicular,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[3],
+                        "vehicular",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[3],
+                        "vehicular",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[3], "vehicular", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[3].hipoteca,
+                expression: "central_riesgo[3].hipoteca"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[3].hipoteca)
+                ? _vm._i(_vm.central_riesgo[3].hipoteca, null) > -1
+                : _vm.central_riesgo[3].hipoteca
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[3].hipoteca,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[3],
+                        "hipoteca",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[3],
+                        "hipoteca",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[3], "hipoteca", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[3].terceros,
+                expression: "central_riesgo[3].terceros"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[3].terceros)
+                ? _vm._i(_vm.central_riesgo[3].terceros, null) > -1
+                : _vm.central_riesgo[3].terceros
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[3].terceros,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[3],
+                        "terceros",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[3],
+                        "terceros",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[3], "terceros", $$c)
+                }
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[4].entidad_financiera,
+                expression: "central_riesgo[4].entidad_financiera"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.central_riesgo[4].entidad_financiera },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.central_riesgo[4],
+                  "entidad_financiera",
+                  $event.target.value
+                )
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[4].capital,
+                expression: "central_riesgo[4].capital"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[4].capital)
+                ? _vm._i(_vm.central_riesgo[4].capital, null) > -1
+                : _vm.central_riesgo[4].capital
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[4].capital,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[4],
+                        "capital",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[4],
+                        "capital",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[4], "capital", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[4].activo_f,
+                expression: "central_riesgo[4].activo_f"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[4].activo_f)
+                ? _vm._i(_vm.central_riesgo[4].activo_f, null) > -1
+                : _vm.central_riesgo[4].activo_f
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[4].activo_f,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[4],
+                        "activo_f",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[4],
+                        "activo_f",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[4], "activo_f", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[4].consumo,
+                expression: "central_riesgo[4].consumo"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[4].consumo)
+                ? _vm._i(_vm.central_riesgo[4].consumo, null) > -1
+                : _vm.central_riesgo[4].consumo
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[4].consumo,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[4],
+                        "consumo",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[4],
+                        "consumo",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[4], "consumo", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[4].vehicular,
+                expression: "central_riesgo[4].vehicular"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[4].vehicular)
+                ? _vm._i(_vm.central_riesgo[4].vehicular, null) > -1
+                : _vm.central_riesgo[4].vehicular
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[4].vehicular,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[4],
+                        "vehicular",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[4],
+                        "vehicular",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[4], "vehicular", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[4].hipoteca,
+                expression: "central_riesgo[4].hipoteca"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[4].hipoteca)
+                ? _vm._i(_vm.central_riesgo[4].hipoteca, null) > -1
+                : _vm.central_riesgo[4].hipoteca
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[4].hipoteca,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[4],
+                        "hipoteca",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[4],
+                        "hipoteca",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[4], "hipoteca", $$c)
+                }
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.central_riesgo[4].terceros,
+                expression: "central_riesgo[4].terceros"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.central_riesgo[4].terceros)
+                ? _vm._i(_vm.central_riesgo[4].terceros, null) > -1
+                : _vm.central_riesgo[4].terceros
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.central_riesgo[4].terceros,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 &&
+                      _vm.$set(
+                        _vm.central_riesgo[4],
+                        "terceros",
+                        $$a.concat([$$v])
+                      )
+                  } else {
+                    $$i > -1 &&
+                      _vm.$set(
+                        _vm.central_riesgo[4],
+                        "terceros",
+                        $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                      )
+                  }
+                } else {
+                  _vm.$set(_vm.central_riesgo[4], "terceros", $$c)
+                }
+              }
+            }
+          })
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("h2", [
+      _vm._v(
+        "REFERENCIAS PERSONALES(Familiares, compañeros de trabajo, vecinos)"
+      )
+    ]),
+    _vm._v(" "),
+    _c("table", [
+      _vm._m(2),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.referencias[1].tipo_relacion,
+                expression: "referencias[1].tipo_relacion"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.referencias[1].tipo_relacion },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.referencias[1],
+                  "tipo_relacion",
+                  $event.target.value
+                )
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.referencias[1].nombre,
+                expression: "referencias[1].nombre"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.referencias[1].nombre },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.referencias[1], "nombre", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.referencias[1].telefono,
+                expression: "referencias[1].telefono"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.referencias[1].telefono },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.referencias[1], "telefono", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.referencias[2].tipo_relacion,
+                expression: "referencias[2].tipo_relacion"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.referencias[2].tipo_relacion },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.referencias[2],
+                  "tipo_relacion",
+                  $event.target.value
+                )
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.referencias[2].nombre,
+                expression: "referencias[2].nombre"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.referencias[2].nombre },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.referencias[2], "nombre", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.referencias[2].telefono,
+                expression: "referencias[2].telefono"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.referencias[2].telefono },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.referencias[2], "telefono", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.referencias[3].tipo_relacion,
+                expression: "referencias[3].tipo_relacion"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.referencias[3].tipo_relacion },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.referencias[3],
+                  "tipo_relacion",
+                  $event.target.value
+                )
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.referencias[3].nombre,
+                expression: "referencias[3].nombre"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.referencias[3].nombre },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.referencias[3], "nombre", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.referencias[3].telefono,
+                expression: "referencias[3].telefono"
+              }
+            ],
+            attrs: { type: "text" },
+            domProps: { value: _vm.referencias[3].telefono },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.referencias[3], "telefono", $event.target.value)
+              }
+            }
+          })
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("h2", [_vm._v("COLATERAL")]),
+    _vm._v(" "),
+    _c("label", [_vm._v("Aval con casa propia")]),
+    _vm._v(" "),
+    _c(
+      "select",
+      {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.colateral,
+            expression: "colateral"
+          }
+        ],
+        on: {
+          change: function($event) {
+            var $$selectedVal = Array.prototype.filter
+              .call($event.target.options, function(o) {
+                return o.selected
+              })
+              .map(function(o) {
+                var val = "_value" in o ? o._value : o.value
+                return val
+              })
+            _vm.colateral = $event.target.multiple
+              ? $$selectedVal
+              : $$selectedVal[0]
+          }
+        }
+      },
+      [
+        _c("option", { attrs: { value: "1" } }, [
+          _vm._v("Aval con casa propia")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2" } }, [
+          _vm._v("Aval con casa alquilada")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "3" } }, [
+          _vm._v("Garantia liquida liquida")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "4" } }, [_vm._v("Garantia vehicular")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "5" } }, [
+          _vm._v("Hipoteca inmobiliara")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "0" } }, [_vm._v("Sin colateral")])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("Edad")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Colegio")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Grado")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Costo")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("Entidad Financiera")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Capital")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Activo F")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Consumo")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Vehicular")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Hipoteca")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Terceros")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("Tipo de relación")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Nombre")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Telefono")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EvalCuantitativa.vue?vue&type=template&id=6f836608&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/EvalCuantitativa.vue?vue&type=template&id=6f836608& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-general" }, [
+    _c("h1", [_vm._v("Evaluacion cuantitativa")]),
+    _vm._v(" "),
+    _c("h2", [_vm._v("Ingresos del titular")]),
+    _vm._v(" "),
+    _c("h2", [_vm._v("Ingresos del negocio")]),
+    _vm._v(" "),
+    _c(
+      "table",
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._l(_vm.evaluacion.titular.ingresos_negocio, function(val, index) {
+          return _c("tr", { key: index }, [
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.titular.ingresos_negocio[1].concepto,
+                    expression:
+                      "evaluacion.titular.ingresos_negocio[1].concepto"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value: _vm.evaluacion.titular.ingresos_negocio[1].concepto
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.ingresos_negocio[1],
+                      "concepto",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.titular.ingresos_negocio[index].lunes,
+                    expression:
+                      "evaluacion.titular.ingresos_negocio[index].lunes"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.negocioIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.titular.ingresos_negocio[index].lunes
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.ingresos_negocio[index],
+                      "lunes",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.titular.ingresos_negocio[index].martes,
+                    expression:
+                      "evaluacion.titular.ingresos_negocio[index].martes"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.negocioIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.titular.ingresos_negocio[index].martes
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.ingresos_negocio[index],
+                      "martes",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.titular.ingresos_negocio[index].miercoles,
+                    expression:
+                      "evaluacion.titular.ingresos_negocio[index].miercoles"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.negocioIngresosSubtotal(index)
+                },
+                domProps: {
+                  value:
+                    _vm.evaluacion.titular.ingresos_negocio[index].miercoles
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.ingresos_negocio[index],
+                      "miercoles",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.titular.ingresos_negocio[index].jueves,
+                    expression:
+                      "evaluacion.titular.ingresos_negocio[index].jueves"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.negocioIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.titular.ingresos_negocio[index].jueves
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.ingresos_negocio[index],
+                      "jueves",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.titular.ingresos_negocio[index].viernes,
+                    expression:
+                      "evaluacion.titular.ingresos_negocio[index].viernes"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.negocioIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.titular.ingresos_negocio[index].viernes
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.ingresos_negocio[index],
+                      "viernes",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.titular.ingresos_negocio[index].sabado,
+                    expression:
+                      "evaluacion.titular.ingresos_negocio[index].sabado"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.negocioIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.titular.ingresos_negocio[index].sabado
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.ingresos_negocio[index],
+                      "sabado",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.titular.ingresos_negocio[index].domingo,
+                    expression:
+                      "evaluacion.titular.ingresos_negocio[index].domingo"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.negocioIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.titular.ingresos_negocio[index].domingo
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.ingresos_negocio[index],
+                      "domingo",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.titular.ingresos_negocio[index].subtotal,
+                    expression:
+                      "evaluacion.titular.ingresos_negocio[index].subtotal"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.negocioIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.titular.ingresos_negocio[index].subtotal
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.ingresos_negocio[index],
+                      "subtotal",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("Ingresos por 4tao 5ta Categoria")]),
+    _vm._v(" "),
+    _c(
+      "table",
+      [
+        _vm._m(1),
+        _vm._v(" "),
+        _vm._l(_vm.evaluacion.titular.ingresos_por_categoria, function(
+          ingreso,
+          index
+        ) {
+          return _c("tr", { key: index }, [
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.titular.ingresos_por_categoria[index]
+                        .concepto,
+                    expression:
+                      "evaluacion.titular.ingresos_por_categoria[index].concepto"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value:
+                    _vm.evaluacion.titular.ingresos_por_categoria[index]
+                      .concepto
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.ingresos_por_categoria[index],
+                      "concepto",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.titular.ingresos_por_categoria[index].mes,
+                    expression:
+                      "evaluacion.titular.ingresos_por_categoria[index].mes"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value:
+                    _vm.evaluacion.titular.ingresos_por_categoria[index].mes
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.ingresos_por_categoria[index],
+                      "mes",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("GIRO DEL NEGOCIO")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.evaluacion.titular.giro_negocio,
+          expression: "evaluacion.titular.giro_negocio"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.evaluacion.titular.giro_negocio },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.evaluacion.titular, "giro_negocio", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("h2", [_vm._v("MARGEN COSTO")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.evaluacion.titular.margen_costo,
+          expression: "evaluacion.titular.margen_costo"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.evaluacion.titular.margen_costo },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.evaluacion.titular, "margen_costo", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("h2", [_vm._v("VALOR INVENTARIO")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.evaluacion.titular.valor_inventario,
+          expression: "evaluacion.titular.valor_inventario"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.evaluacion.titular.valor_inventario },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(
+            _vm.evaluacion.titular,
+            "valor_inventario",
+            $event.target.value
+          )
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("h2", [_vm._v("GASTO FINANCIERO TITULAR")]),
+    _vm._v(" "),
+    _c(
+      "table",
+      [
+        _vm._m(2),
+        _vm._v(" "),
+        _vm._l(_vm.evaluacion.titular.gasto_financiero, function(gasto, index) {
+          return _c("tr", { key: index }, [
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.titular.gasto_financiero[index].entidad,
+                    expression:
+                      "evaluacion.titular.gasto_financiero[index].entidad"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value: _vm.evaluacion.titular.gasto_financiero[index].entidad
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.gasto_financiero[index],
+                      "entidad",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.titular.gasto_financiero[index]
+                        .saldo_capital,
+                    expression:
+                      "evaluacion.titular.gasto_financiero[index].saldo_capital"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value:
+                    _vm.evaluacion.titular.gasto_financiero[index].saldo_capital
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.gasto_financiero[index],
+                      "saldo_capital",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.titular.gasto_financiero[index].cuota,
+                    expression:
+                      "evaluacion.titular.gasto_financiero[index].cuota"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value: _vm.evaluacion.titular.gasto_financiero[index].cuota
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.gasto_financiero[index],
+                      "cuota",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("GASTO DEL NEGOCIO")]),
+    _vm._v(" "),
+    _c(
+      "table",
+      [
+        _vm._m(3),
+        _vm._v(" "),
+        _vm._l(_vm.evaluacion.titular.gasto_negocio, function(gasto, index) {
+          return _c("tr", { key: index }, [
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.titular.gasto_negocio[index].entidad,
+                    expression:
+                      "evaluacion.titular.gasto_negocio[index].entidad"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value: _vm.evaluacion.titular.gasto_negocio[index].entidad
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.gasto_negocio[index],
+                      "entidad",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.titular.gasto_negocio[index].pago,
+                    expression: "evaluacion.titular.gasto_negocio[index].pago"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value: _vm.evaluacion.titular.gasto_negocio[index].pago
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.titular.gasto_negocio[index],
+                      "pago",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("INGRESOS DEL CONYUGE O CONVIVIENTE (Si tuviese) ")]),
+    _vm._v(" "),
+    _c("h2", [
+      _vm._v(
+        "Ingresos del negocio (LLenar solo si el negocio es distinto al titular)"
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "table",
+      [
+        _vm._m(4),
+        _vm._v(" "),
+        _vm._l(_vm.evaluacion.conyuge.ingresos_negocios, function(
+          ingreso,
+          index
+        ) {
+          return _c("tr", { key: index }, [
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.conyuge.ingresos_negocio[index].concepto,
+                    expression:
+                      "evaluacion.conyuge.ingresos_negocio[index].concepto"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value: _vm.evaluacion.conyuge.ingresos_negocio[index].concepto
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.ingresos_negocio[index],
+                      "concepto",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.conyuge.ingresos_negocio[index].lunes,
+                    expression:
+                      "evaluacion.conyuge.ingresos_negocio[index].lunes"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.conyugeIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.conyuge.ingresos_negocio[index].lunes
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.ingresos_negocio[index],
+                      "lunes",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.conyuge.ingresos_negocio[index].martes,
+                    expression:
+                      "evaluacion.conyuge.ingresos_negocio[index].martes"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.conyugeIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.conyuge.ingresos_negocio[index].martes
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.ingresos_negocio[index],
+                      "martes",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.conyuge.ingresos_negocio[index].miercoles,
+                    expression:
+                      "evaluacion.conyuge.ingresos_negocio[index].miercoles"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.conyugeIngresosSubtotal(index)
+                },
+                domProps: {
+                  value:
+                    _vm.evaluacion.conyuge.ingresos_negocio[index].miercoles
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.ingresos_negocio[index],
+                      "miercoles",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.conyuge.ingresos_negocio[index].jueves,
+                    expression:
+                      "evaluacion.conyuge.ingresos_negocio[index].jueves"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.conyugeIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.conyuge.ingresos_negocio[index].jueves
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.ingresos_negocio[index],
+                      "jueves",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.conyuge.ingresos_negocio[index].viernes,
+                    expression:
+                      "evaluacion.conyuge.ingresos_negocio[index].viernes"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.conyugeIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.conyuge.ingresos_negocio[index].viernes
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.ingresos_negocio[index],
+                      "viernes",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.conyuge.ingresos_negocio[index].sabado,
+                    expression:
+                      "evaluacion.conyuge.ingresos_negocio[index].sabado"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.conyugeIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.conyuge.ingresos_negocio[index].sabado
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.ingresos_negocio[index],
+                      "sabado",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.conyuge.ingresos_negocio[index].domingo,
+                    expression:
+                      "evaluacion.conyuge.ingresos_negocio[index].domingo"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.conyugeIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.conyuge.ingresos_negocio[index].domingo
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.ingresos_negocio[index],
+                      "domingo",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.conyuge.ingresos_negocio[index].subtotal,
+                    expression:
+                      "evaluacion.conyuge.ingresos_negocio[index].subtotal"
+                  }
+                ],
+                attrs: {
+                  type: "number",
+                  change: _vm.conyugeIngresosSubtotal(index)
+                },
+                domProps: {
+                  value: _vm.evaluacion.conyuge.ingresos_negocio[index].subtotal
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.ingresos_negocio[index],
+                      "subtotal",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("Ingresos por 4tao 5ta Categoria")]),
+    _vm._v(" "),
+    _c(
+      "table",
+      [
+        _vm._m(5),
+        _vm._v(" "),
+        _vm._l(_vm.evaluacion.conyuge.ingresos_por_categoria, function(
+          ingresos,
+          index
+        ) {
+          return _c("tr", { key: index }, [
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.conyuge.ingresos_por_categoria[index]
+                        .concepto,
+                    expression:
+                      "evaluacion.conyuge.ingresos_por_categoria[index].concepto"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value:
+                    _vm.evaluacion.conyuge.ingresos_por_categoria[index]
+                      .concepto
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.ingresos_por_categoria[index],
+                      "concepto",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.conyuge.ingresos_por_categoria[index].mes,
+                    expression:
+                      "evaluacion.conyuge.ingresos_por_categoria[index].mes"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value:
+                    _vm.evaluacion.conyuge.ingresos_por_categoria[index].mes
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.ingresos_por_categoria[index],
+                      "mes",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("GIRO DEL NEGOCIO")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.evaluacion.conyuge.giro_negocio_conyuge,
+          expression: "evaluacion.conyuge.giro_negocio_conyuge"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.evaluacion.conyuge.giro_negocio_conyuge },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(
+            _vm.evaluacion.conyuge,
+            "giro_negocio_conyuge",
+            $event.target.value
+          )
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("h2", [_vm._v("MARGEN COSTO")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.evaluacion.conyuge.margen_costo_conyuge,
+          expression: "evaluacion.conyuge.margen_costo_conyuge"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.evaluacion.conyuge.margen_costo_conyuge },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(
+            _vm.evaluacion.conyuge,
+            "margen_costo_conyuge",
+            $event.target.value
+          )
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("h2", [_vm._v("VALOR INVENTARIO")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.evaluacion.conyuge.valor_inventario_conyuge,
+          expression: "evaluacion.conyuge.valor_inventario_conyuge"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.evaluacion.conyuge.valor_inventario_conyuge },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(
+            _vm.evaluacion.conyuge,
+            "valor_inventario_conyuge",
+            $event.target.value
+          )
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("h2", [_vm._v("GASTO FINANCIERO TITULAR")]),
+    _vm._v(" "),
+    _c(
+      "table",
+      [
+        _vm._m(6),
+        _vm._v(" "),
+        _vm._l(_vm.evaluacion.conyuge.gasto_financiero, function(gasto, index) {
+          return _c("tr", { key: index }, [
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.conyuge.gasto_financiero[index].entidad,
+                    expression:
+                      "evaluacion.conyuge.gasto_financiero[index].entidad"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value: _vm.evaluacion.conyuge.gasto_financiero[index].entidad
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.gasto_financiero[index],
+                      "entidad",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value:
+                      _vm.evaluacion.conyuge.gasto_financiero[index]
+                        .saldo_capital,
+                    expression:
+                      "evaluacion.conyuge.gasto_financiero[index].saldo_capital"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value:
+                    _vm.evaluacion.conyuge.gasto_financiero[index].saldo_capital
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.gasto_financiero[index],
+                      "saldo_capital",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.conyuge.gasto_financiero[index].cuota,
+                    expression:
+                      "evaluacion.conyuge.gasto_financiero[index].cuota"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value: _vm.evaluacion.conyuge.gasto_financiero[index].cuota
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.gasto_financiero[index],
+                      "cuota",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("GASTO DEL NEGOCIO")]),
+    _vm._v(" "),
+    _c(
+      "table",
+      [
+        _vm._m(7),
+        _vm._v(" "),
+        _vm._l(_vm.evaluacion.conyuge.gasto_negocio, function(gasto, index) {
+          return _c("tr", { key: index }, [
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.conyuge.gasto_negocio[index].entidad,
+                    expression:
+                      "evaluacion.conyuge.gasto_negocio[index].entidad"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value: _vm.evaluacion.conyuge.gasto_negocio[index].entidad
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.gasto_negocio[index],
+                      "entidad",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.conyuge.gasto_negocio[index].pago,
+                    expression: "evaluacion.conyuge.gasto_negocio[index].pago"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value: _vm.evaluacion.conyuge.gasto_negocio[index].pago
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.conyuge.gasto_negocio[index],
+                      "pago",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("GASTOS SERVICIO DEL HOGAR")]),
+    _vm._v(" "),
+    _c(
+      "table",
+      [
+        _vm._m(8),
+        _vm._v(" "),
+        _vm._l(_vm.evaluacion.gastos_hogar, function(gasto, index) {
+          return _c("tr", { key: index }, [
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.gastos_hogar[index].concepto,
+                    expression: "evaluacion.gastos_hogar[index].concepto"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value: _vm.evaluacion.gastos_hogar[index].concepto
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.gastos_hogar[index],
+                      "concepto",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.gastos_hogar[index].pago,
+                    expression: "evaluacion.gastos_hogar[index].pago"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: { value: _vm.evaluacion.gastos_hogar[index].pago },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.gastos_hogar[index],
+                      "pago",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("PROPIEDADES")]),
+    _vm._v(" "),
+    _c(
+      "table",
+      [
+        _vm._m(9),
+        _vm._v(" "),
+        _vm._l(_vm.evaluacion.propiedades, function(propiedades, index) {
+          return _c("tr", { key: index }, [
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.propiedades[index].concepto,
+                    expression: "evaluacion.propiedades[index].concepto"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: { value: _vm.evaluacion.propiedades[index].concepto },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.propiedades[index],
+                      "concepto",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.evaluacion.propiedades[index].valor_estimado,
+                    expression: "evaluacion.propiedades[index].valor_estimado"
+                  }
+                ],
+                attrs: { type: "text" },
+                domProps: {
+                  value: _vm.evaluacion.propiedades[index].valor_estimado
+                },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.evaluacion.propiedades[index],
+                      "valor_estimado",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ])
+        })
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("PROPUESTA")]),
+    _vm._v(" "),
+    _c("label", [_vm._v("PRODUCTO")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.evaluacion.propuesta.producto,
+          expression: "evaluacion.propuesta.producto"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.evaluacion.propuesta.producto },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.evaluacion.propuesta, "producto", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("label", [_vm._v("MONTO")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.evaluacion.propuesta.monto,
+          expression: "evaluacion.propuesta.monto"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.evaluacion.propuesta.monto },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.evaluacion.propuesta, "monto", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("label", [_vm._v("PLAZO")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.evaluacion.propuesta.plazo,
+          expression: "evaluacion.propuesta.plazo"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.evaluacion.propuesta.plazo },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.evaluacion.propuesta, "plazo", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("label", [_vm._v("NUMERO CUOTAS")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.evaluacion.propuesta.numero_cuotas,
+          expression: "evaluacion.propuesta.numero_cuotas"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.evaluacion.propuesta.numero_cuotas },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(
+            _vm.evaluacion.propuesta,
+            "numero_cuotas",
+            $event.target.value
+          )
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("label", [_vm._v("CUOTAS")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.evaluacion.propuesta.cuotas,
+          expression: "evaluacion.propuesta.cuotas"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.evaluacion.propuesta.cuotas },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.evaluacion.propuesta, "cuotas", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("label", [_vm._v("PROB INFOCORP")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.evaluacion.probabilidad_infocorp,
+          expression: "evaluacion.probabilidad_infocorp"
+        }
+      ],
+      attrs: { type: "text" },
+      domProps: { value: _vm.evaluacion.probabilidad_infocorp },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.$set(_vm.evaluacion, "probabilidad_infocorp", $event.target.value)
+        }
+      }
+    }),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        on: {
+          click: function($event) {
+            return _vm.guardar()
+          }
+        }
+      },
+      [_vm._v("Guardar")]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("Concepto")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Lunes")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Martes")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Miercoles")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Jueves")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Viernes")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Sabado")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Domingo")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Subtotal")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("CONCEPTO")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("MES")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("Entidad")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Saldo capital")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Cuota")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("Entidad")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Cuota")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("Concepto")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Lunes")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Martes")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Miercoles")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Jueves")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Viernes")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Sabado")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Domingo")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Subtotal")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("CONCEPTO")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("MES")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("Entidad")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Saldo capital")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Cuota")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("Entidad")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Cuota")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("Concepto")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Pago")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("Concepto")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Pago")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EvaluacionFinal.vue?vue&type=template&id=23250f3a&":
 /*!*************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/EvaluacionFinal.vue?vue&type=template&id=23250f3a& ***!
@@ -65321,6 +70615,52 @@ var render = function() {
                                                                 [
                                                                   _vm._v(
                                                                     "Documentos"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "router-link",
+                                                                {
+                                                                  staticClass:
+                                                                    "btn btn-def ml-3",
+                                                                  attrs: {
+                                                                    to: {
+                                                                      name:
+                                                                        "evalCualtitativa",
+                                                                      params: {
+                                                                        prestamo:
+                                                                          prestamo.id
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Evaluación Cualitativa"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "router-link",
+                                                                {
+                                                                  staticClass:
+                                                                    "btn btn-def ml-3",
+                                                                  attrs: {
+                                                                    to: {
+                                                                      name:
+                                                                        "evalCuantitativa",
+                                                                      params: {
+                                                                        prestamo:
+                                                                          prestamo.id
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Evaluación Cuantitativa"
                                                                   )
                                                                 ]
                                                               ),
@@ -91639,6 +96979,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: 'clientes',
     component: __webpack_require__(/*! ./views/Clientes */ "./resources/js/views/Clientes.vue")["default"]
   }, {
+    path: '/eval-cualitativa/:prestamo',
+    name: 'evalCualtitativa',
+    component: __webpack_require__(/*! ./views/EvalCualitativa */ "./resources/js/views/EvalCualitativa.vue")["default"]
+  }, {
+    path: '/eval-cuantitativa/:prestamo',
+    name: 'evalCuantitativa',
+    component: __webpack_require__(/*! ./views/EvalCuantitativa */ "./resources/js/views/EvalCuantitativa.vue")["default"]
+  }, {
     path: '/evaluaciones',
     name: 'evaluaciones',
     component: __webpack_require__(/*! ./views/Evaluaciones */ "./resources/js/views/Evaluaciones.vue")["default"]
@@ -91908,6 +97256,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Clientes_vue_vue_type_template_id_144fb958_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Clientes_vue_vue_type_template_id_144fb958_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/views/EvalCualitativa.vue":
+/*!************************************************!*\
+  !*** ./resources/js/views/EvalCualitativa.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EvalCualitativa_vue_vue_type_template_id_32acb5a4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EvalCualitativa.vue?vue&type=template&id=32acb5a4& */ "./resources/js/views/EvalCualitativa.vue?vue&type=template&id=32acb5a4&");
+/* harmony import */ var _EvalCualitativa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EvalCualitativa.vue?vue&type=script&lang=js& */ "./resources/js/views/EvalCualitativa.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EvalCualitativa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EvalCualitativa_vue_vue_type_template_id_32acb5a4___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EvalCualitativa_vue_vue_type_template_id_32acb5a4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/EvalCualitativa.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/EvalCualitativa.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/views/EvalCualitativa.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EvalCualitativa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./EvalCualitativa.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EvalCualitativa.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EvalCualitativa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/EvalCualitativa.vue?vue&type=template&id=32acb5a4&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/views/EvalCualitativa.vue?vue&type=template&id=32acb5a4& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EvalCualitativa_vue_vue_type_template_id_32acb5a4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EvalCualitativa.vue?vue&type=template&id=32acb5a4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EvalCualitativa.vue?vue&type=template&id=32acb5a4&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EvalCualitativa_vue_vue_type_template_id_32acb5a4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EvalCualitativa_vue_vue_type_template_id_32acb5a4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/views/EvalCuantitativa.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/views/EvalCuantitativa.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EvalCuantitativa_vue_vue_type_template_id_6f836608___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EvalCuantitativa.vue?vue&type=template&id=6f836608& */ "./resources/js/views/EvalCuantitativa.vue?vue&type=template&id=6f836608&");
+/* harmony import */ var _EvalCuantitativa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EvalCuantitativa.vue?vue&type=script&lang=js& */ "./resources/js/views/EvalCuantitativa.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EvalCuantitativa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EvalCuantitativa_vue_vue_type_template_id_6f836608___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EvalCuantitativa_vue_vue_type_template_id_6f836608___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/EvalCuantitativa.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/EvalCuantitativa.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/views/EvalCuantitativa.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EvalCuantitativa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./EvalCuantitativa.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EvalCuantitativa.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EvalCuantitativa_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/EvalCuantitativa.vue?vue&type=template&id=6f836608&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/views/EvalCuantitativa.vue?vue&type=template&id=6f836608& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EvalCuantitativa_vue_vue_type_template_id_6f836608___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EvalCuantitativa.vue?vue&type=template&id=6f836608& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/EvalCuantitativa.vue?vue&type=template&id=6f836608&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EvalCuantitativa_vue_vue_type_template_id_6f836608___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EvalCuantitativa_vue_vue_type_template_id_6f836608___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -21,6 +21,16 @@ export default new Router({
             component: require('./views/Clientes').default
         },
         {
+            path: '/eval-cualitativa/:prestamo',
+            name: 'evalCualtitativa',
+            component: require('./views/EvalCualitativa').default
+        },
+        {
+            path: '/eval-cuantitativa/:prestamo',
+            name: 'evalCuantitativa',
+            component: require('./views/EvalCuantitativa').default
+        },
+        {
             path: '/evaluaciones',
             name: 'evaluaciones',
             component: require('./views/Evaluaciones').default

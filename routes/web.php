@@ -10,6 +10,7 @@ Route::group(['middleware'=>['guest']],function(){
 
 });
 
+
 /**
  *  MIDDLEWARE DE INVITADOS
  */
@@ -70,7 +71,9 @@ Route::group(['middleware'=>['auth']],function(){
 
         Route::get('{path}',"HomeController@index")->where('path','([A-z\d-\/_.]+)?'); 
 
-
+        // evaluaciones cuantitativas y cualitativas
+        Route::post('evaluaciones/cuantitativa','EvaluacionesController@saveCuantitativa');
+        Route::get('migrar','EvaluacionController@saveNegocios');
     });
 
     
