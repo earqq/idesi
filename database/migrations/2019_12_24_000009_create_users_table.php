@@ -51,6 +51,11 @@ class CreateUsersTable extends Migration
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
         });
+
+        DB::table('users')->insert(array('id'=>'1','name'=>'Administrador','tipo_documento'=>'DNI','num_documento'=>'77777777','direccion'=>'Jr abtao','telefono'=>'999999999',
+        'email'=>'admin@gmail.com','usuario'=>'admin', 
+        'password'=>'$2y$10$5KqKxxAuvqz.69p7vPryt.bOrVOaZOyCY25LIBIfFmmeutQ7oDH8a', 'condicion'=>'1'
+        ,'idrol'=>'1'));
     }
 
     /**

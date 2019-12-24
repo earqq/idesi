@@ -46,9 +46,7 @@ class CreatePrestamosTable extends Migration
             $table->string('estado', 15)->nullable()->default(null);
             $table->unsignedInteger('clientes_id');
             $table->unsignedInteger('users_id');
-            $table->integer('evaluacion_cuantitativa_id');
 
-            $table->index(["evaluacion_cuantitativa_id"], 'fk_prestamos_evaluacion_cuantitativa1_idx');
 
             $table->index(["clientes_id"], 'fk_prestamos_clientes1_idx');
 
@@ -67,10 +65,7 @@ class CreatePrestamosTable extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('evaluacion_cuantitativa_id', 'fk_prestamos_evaluacion_cuantitativa1_idx')
-                ->references('id')->on('evaluacion_cuantitativa')
-                ->onDelete('no action')
-                ->onUpdate('no action');
+      
         });
     }
 
