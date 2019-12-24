@@ -3868,7 +3868,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.tipo = false;
       this.$http.get("/".concat(this.resource, "/prestamos/detalleF/") + id).then(function (response) {
         console.log(response.data);
-        _this3.cuantitativa = response.data.cuantitativa;
+        if (response.data.cuantitativa) _this3.cuantitativa = response.data.cuantitativa;
         _this3.detalle = response.data.prestamo;
         _this3.form.evaluacion = response.data.evaluacion;
 

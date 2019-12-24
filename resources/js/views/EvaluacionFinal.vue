@@ -339,6 +339,7 @@ export default {
         .get(`/${this.resource}/prestamos/detalleF/` + id)
         .then(response => {
           console.log(response.data)
+          if(response.data.cuantitativa)
           this.cuantitativa = response.data.cuantitativa;
           this.detalle = response.data.prestamo;
           this.form.evaluacion = response.data.evaluacion;
