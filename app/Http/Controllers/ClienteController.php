@@ -12,9 +12,21 @@ use App\Garantia;
 use App\Provincia;
 use App\Conyugue;
 use App\Natural;
+use App\Laboral;
 use App\Juridico;
 use App\Subido;
 use App\Vista;
+use App\Adicional;
+use App\AsociativaNatural;
+use App\Asociativa;
+use App\Familiar;
+use App\Declaracion;
+use App\DeclaracionJuridico;
+use App\Director;
+use App\Accionista;
+use App\Representante;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -105,7 +117,7 @@ class ClienteController extends Controller
 
             DB::beginTransaction();
 
-            
+            // return $request;
             $cliente = Cliente::where('documento',$request->input('documento'))->first();
             if($cliente){
                 DB::rollBack();
@@ -116,31 +128,106 @@ class ClienteController extends Controller
             }
             else{
                 $cliente = new Cliente();
-                $cliente->documento = $request->input('documento');
-                $cliente->codigo = $request->input('codigo');
-                $cliente->tipo_cliente = $request->input('tipo_persona');
-                $cliente->estado = '1';
-                $cliente->departamentos_id = $request->input('departamentos_id');
-                $cliente->distritos_id = $request->input('distritos_id');
-                $cliente->provincias_id = $request->input('provincias_id');
+                $cliente->tipo_documento = $request->cliente['tipo_documento'];
+                $cliente->documento = $request->cliente['documento'];
+                $cliente->codigo = $request->cliente['codigo'];
+                $cliente->tipo_cliente = $request->cliente['tipo_cliente'];
+                $cliente->pais = $request->cliente['pais'];
+                $cliente->departamento = $request->cliente['departamento'];
+                $cliente->provincia = $request->cliente['provincia'];
+                $cliente->distrito = $request->cliente['distrito'];
+                $cliente->numero_registro = $request->cliente['numero_registro'];
+                $cliente->agencia = $request->cliente['agencia'];
                 $cliente->save();
                 
                 $natural = new Natural();
-                $natural->nombres= $request->input('nombres');    
-                $natural->apellidos= $request->input('apellidos');    
-                $natural->nacimiento= $request->input('nacimiento');    
-                $natural->estado_civil= $request->input('estado_civil');    
-                $natural->ocupacion= $request->input('ocupacion');    
-                $natural->telefono= $request->input('telefono');    
-                $natural->celular= $request->input('celular');    
-                $natural->direccion_cliente= $request->input('direccion');    
-                $natural->direccion_registros= $request->input('direccion_registros');    
-                $natural->referencia= $request->input('referencia');    
-                $natural->tipo_domicilio= $request->input('tipo_domicilio');    
-                $natural->centro_laboral= $request->input('centro_laboral');    
-                $natural->direccion_laboral= $request->input('direccion_laboral');    
                 $natural->clientes_id= $cliente->id;
+                $natural->nombres= $request->natural['nombres'];    
+                $natural->apellidos= $request->natural['apellidos'];    
+                $natural->nacimiento= $request->natural['nacimiento'];    
+                $natural->estado_civil= $request->natural['estado_civil'];    
+                $natural->ocupacion= $request->natural['ocupacion'];    
+                $natural->telefono= $request->natural['telefono'];    
+                $natural->celular= $request->natural['celular'];    
+                $natural->direccion_cliente= $request->natural['direccion'];    
+                $natural->direccion_registros= $request->natural['direccion_registros'];    
+                $natural->referencia= $request->natural['referencia'];    
+                $natural->tipo_domicilio= $request->natural['tipo_domicilio'];    
+                $natural->centro_laboral= $request->natural['centro_laboral'];    
+                $natural->direccion_laboral= $request->natural['direccion_laboral'];    
+                $natural->genero= $request->natural['genero'];    
+                $natural->grado_instruccion= $request->natural['grado_instruccion'];    
+                $natural->numero= $request->natural['numero'];    
+                $natural->manzana= $request->natural['manzana'];    
+                $natural->lote= $request->natural['lote'];    
+                $natural->dpto= $request->natural['dpto'];    
+                $natural->int= $request->natural['int'];    
+                $natural->piso= $request->natural['piso'];    
+                $natural->domicilio_distrito= $request->natural['domicilio_distrito'];    
+                $natural->domicilio_provincia= $request->natural['domicilio_provincia'];    
+                $natural->domicilio_departamento= $request->natural['domicilio_departamento'];    
+                $natural->correo= $request->natural['correo'];    
+                
                 $natural->save();
+
+                $laboral = new Laboral();
+                $laboral->estado_laboral= $request->laboral['estado_laboral'];    
+                $laboral->tipo_trabajador= $request->laboral['tipo_trabajador'];    
+                $laboral->razon_social= $request->laboral['razon_social'];    
+                // $laboral->ingreso_mensual= $request->laboral['ingreso_mensual'];    
+                $laboral->cargo_ocupacion= $request->laboral['cargo_ocupacion'];    
+                $laboral->fecha_ingreso= $request->laboral['fecha_ingreso'];    
+                $laboral->giro_negocio= $request->laboral['giro_negocio'];    
+                $laboral->direccion= $request->laboral['direccion'];            
+                $laboral->numero= $request->laboral['numero'];    
+                $laboral->manzana= $request->laboral['manzana'];    
+                $laboral->lote= $request->laboral['lote'];    
+                $laboral->dpto= $request->laboral['dpto'];    
+                $laboral->int= $request->laboral['int'];    
+                $laboral->piso= $request->laboral['piso'];    
+                $laboral->distrito= $request->laboral['distrito'];    
+                $laboral->provincia= $request->laboral['provincia'];    
+                $laboral->departamento= $request->laboral['departamento'];    
+                $laboral->pais= $request->laboral['pais'];    
+                $laboral->referencia= $request->laboral['referencia'];    
+                $laboral->telefono= $request->laboral['telefono'];    
+                $laboral->celular= $request->laboral['celular'];    
+                $laboral->email= $request->laboral['email'];    
+                $laboral->naturals_id= $natural->id;    
+                $laboral->save();
+
+                $familiar = New Familiar;
+                $familiar->hijos= $request->familia['hijos'];    
+                $familiar->numero= $request->familia['numero'];    
+                $familiar->conyugue= $request->familia['conyugue'];    
+                $familiar->naturals_id= $natural->id; 
+                $familiar->save();
+
+                $adicional = New Adicional;
+                $adicional->representante= $request->adicional['representante'];    
+                $adicional->documento= $request->adicional['documento'];    
+                $adicional->numero= $request->adicional['numero'];    
+                $adicional->relacion= $request->adicional['relacion'];    
+                $adicional->naturals_id= $natural->id; 
+                $adicional->save();
+
+                $asociativa = New AsociativaNatural;
+                $asociativa->inscripcion= $request->asociativa['inscripcion'];    
+                $asociativa->aporte= $request->asociativa['aporte'];    
+                $asociativa->fondo= $request->asociativa['fondo'];    
+                $asociativa->fondo_opcional= $request->asociativa['fondo_opcional'];    
+                $asociativa->naturals_id= $natural->id; 
+                $asociativa->save();
+
+                $declaracion = New Declaracion;
+                $declaracion->uif= $request->declaracion['uif'];    
+                $declaracion->pep= $request->declaracion['pep'];    
+                $declaracion->observaciones= $request->declaracion['obervaciones'];    
+                $declaracion->estado= $request->declaracion['estado'];    
+                $declaracion->naturals_id= $natural->id; 
+                $declaracion->save();
+
+
 
                 DB::commit();
                 return [
@@ -171,39 +258,90 @@ class ClienteController extends Controller
             DB::beginTransaction();
 
             
-            $cliente = Cliente::where('documento',$request->input('documento'))->first();
-            if($cliente){
-                DB::rollBack();
-                return [
-                    'success' => false,
-                    'data' => 'Cliente ya existe'
-                ];
-            }
-            else{
+            // $cliente = Cliente::where('documento',$request->input('documento'))->first();
+            // if($cliente){
+            //     DB::rollBack();
+            //     return [
+            //         'success' => false,
+            //         'data' => 'Cliente ya existe'
+            //     ];
+            // }
+            // else{
+                
                 $cliente = new Cliente();
-                $cliente->documento = $request->input('documento');
-                $cliente->codigo = $request->input('codigo');
-                $cliente->tipo_cliente = $request->input('tipo_persona');
-                $cliente->estado = '1';
-                $cliente->departamentos_id = $request->input('departamentos_id');
-                $cliente->distritos_id = $request->input('distritos_id');
-                $cliente->provincias_id = $request->input('provincias_id');
+                $cliente->tipo_documento ='RUC';
+                $cliente->documento = $request->cliente['documento'];
+                $cliente->codigo = $request->cliente['codigo'];
+                $cliente->tipo_cliente = $request->cliente['tipo_cliente'];
+                $cliente->pais = $request->cliente['pais'];
+                $cliente->departamento = $request->cliente['departamento'];
+                $cliente->provincia = $request->cliente['provincia'];
+                $cliente->distrito = $request->cliente['distrito'];
+                $cliente->numero_registro = $request->cliente['numero_registro'];
+                $cliente->agencia = $request->cliente['agencia'];
                 $cliente->save();
                 
                 $juridico = new Juridico();
-                $juridico->razon_social= $request->input('razon_social');    
-                $juridico->tipo_empresa= $request->input('tipo_empresa');    
-                $juridico->fecha_creacion= $request->input('fecha_creacion');    
-                $juridico->empresa_direccion= $request->input('empresa_direccion');    
-                $juridico->empresa_referencia= $request->input('empresa_referencia');    
-                $juridico->representante_doc= $request->input('representante_doc');    
-                $juridico->representante_nombres= $request->input('representante_nombres');    
-                $juridico->representante_apellidos= $request->input('representante_apellidos');    
-                $juridico->representante_direccion= $request->input('representante_direccion');    
-                $juridico->representante_referencia= $request->input('representante_referencia');    
-                $juridico->registros_direccion= $request->input('registros_direccion');
+                $juridico->razon_social= $request->juridico['razon_social'];    
+                $juridico->nombre_comercial= $request->juridico['nombre_comercial'];    
+                $juridico->actividad_principal= $request->juridico['actividad_principal'];    
+                $juridico->partida_registral= $request->juridico['partida_registral'];    
+                $juridico->oficina_principal= $request->juridico['oficina_principal'];    
+                $juridico->tipo_negocio= $request->juridico['tipo_negocio'];    
+                $juridico->direccion= $request->juridico['direccion'];    
+                $juridico->numero= $request->juridico['numero'];    
+                $juridico->manzana= $request->juridico['manzana'];    
+                $juridico->lote= $request->juridico['lote'];    
+                $juridico->pdto= $request->juridico['pdto'];
+                $juridico->int= $request->juridico['int'];
+                $juridico->piso= $request->juridico['piso'];
+                $juridico->telefono= $request->juridico['telefono'];
+                $juridico->celular= $request->juridico['celular'];
+                $juridico->email= $request->juridico['email'];
+                $juridico->referencia= $request->juridico['referencia'];
                 $juridico->clientes_id= $cliente->id;
                 $juridico->save();
+
+                foreach ($request->representante as $ep=>$rp) {
+                    $representante= new Representante;
+                    $representante->nombres = $rp['nombres'];
+                    $representante->documento = $rp['documento'];
+                    $representante->cargo = $rp['cargo'];
+                    $representante->juridicos_id= $juridico->id;
+                    $representante->save();
+                }
+
+                foreach ($request->director as $ep=>$dr) {
+                   $director= new Director;
+                   $director->nombres = $dr['nombres'];
+                   $director->documento = $dr['documento'];
+                   $director->cargo = $dr['cargo'];
+                   $director->juridicos_id= $juridico->id;
+                   $director->save();
+                }
+
+                foreach ($request->accionista as $ep=>$ac) {
+                   $accionista= new Accionista;
+                   $accionista->nombres = $ac['nombres'];
+                   $accionista->documento = $ac['documento'];
+                   $accionista->juridicos_id= $juridico->id;
+                   $accionista->save();
+                }
+
+                $asociativa = New Asociativa;
+                $asociativa->inscripcion= $request->asociativa['inscripcion'];    
+                $asociativa->aporte= $request->asociativa['aporte'];    
+                $asociativa->juridicos_id= $juridico->id;
+                $asociativa->save();
+
+                $declaracion = New DeclaracionJuridico;
+                $declaracion->uif= $request->declaracion['uif'];    
+                $declaracion->observaciones= $request->declaracion['obervaciones'];    
+                $declaracion->estado= $request->declaracion['estado'];    
+                $declaracion->juridicos_id= $juridico->id;
+                $declaracion->save();
+                
+                // return $request; 
 
                 DB::commit();
                 return [
@@ -211,7 +349,7 @@ class ClienteController extends Controller
                     'data' => 'Cliente creado',
                 ];
     
-            }
+            // }
  
 
         } catch (Exception $e){
@@ -295,11 +433,10 @@ class ClienteController extends Controller
 
             DB::beginTransaction();
             
-            // return $request;
             $cliente = Cliente::where('documento',$request->cliente['documento'])->first();
-            $cliente->departamentos_id = $request->cliente['departamentos_id'];
-            $cliente->distritos_id= $request->cliente['distritos_id'];
-            $cliente->provincias_id = $request->cliente['provincias_id'];
+            // $cliente->departamentos_id = $request->cliente['departamentos_id'];
+            // $cliente->distritos_id= $request->cliente['distritos_id'];
+            // $cliente->provincias_id = $request->cliente['provincias_id'];
             $cliente->save();
 
             $natural = Natural::where('clientes_id',$cliente->id)->first();
@@ -346,7 +483,7 @@ class ClienteController extends Controller
                 $prestamo = Prestamo::where('id',$request->input('idprestamo'))->first();
             }
             $prestamo->clientes_id = $cliente->id;
-            $prestamo->users_id = 1;
+            $prestamo->users_id = Auth::user()->id;
             $prestamo->monto_inicial = $request->input('monto_inicial');
             $prestamo->plazo_inicial = $request->input('plazo_inicial');
             $prestamo->disponibilidad_pago_inicial = $request->input('disponibilidad_pago_inicial');
@@ -388,8 +525,12 @@ class ClienteController extends Controller
             foreach ($request->garantias as $ep=>$garantias) {
                 $garantia= new Garantia;
                 $garantia->bien_garantia = $garantias['bien_garantia'];
-                $garantia->inscripcion = $garantias['inscripcion'];
-                $garantia->declaracion_jurada = $garantias['declaracion_jurada'];
+                if($garantias['tipo']=='INS'){
+                    $garantia->inscripcion = 'SI';
+                }else{
+                    $garantia->declaracion_jurada = 'SI';
+                }
+
                 $garantia->prestamos_id = $prestamo->id;
                 $garantia->save();
             }
@@ -401,6 +542,7 @@ class ClienteController extends Controller
 
             $subidos = Subido::find($subido->id);
             $subidos->solicitud_credito=1;
+            $subidos->inscripcion_socio=1;
             $subidos->save();
 
             // $prestamos= Prestamo::find($prestamo->id);

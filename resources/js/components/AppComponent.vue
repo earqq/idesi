@@ -4,18 +4,27 @@
           <ul class="active">
                 <img :src="'../img/crecer.png'" alt="" srcset="">
                 <div class="list-menu">
-                  <li class="current-item">
-                  <router-link :to="{name: 'inicio'}" >  Inicio</router-link>
+
+                  <li class="current-item" v-if="tipo=='1' || tipo=='2' || tipo=='3' || tipo=='4' | tipo=='5' ">
+                  <router-link :to="{name: 'inicio'}" >  Inicio</router-link> 
                   </li>
-                  <li>
+
+                  <li v-if="tipo=='1' || tipo=='2'">
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
-                    </li>
-                  <li>
+                  </li>
+
+                  <li v-if="tipo=='1' || tipo=='3'">
                     <router-link :to="{name: 'evaluaciones'}"  >Evaluaciones</router-link>
                   </li>
-                  <li>
-                    <router-link :to="{name: '/lista-evaluaciones'}"  >Evaluaciones Final</router-link>
+
+                  <li v-if="tipo=='1' || tipo=='4' "> 
+                    <router-link :to="{name: 'evaluaciones_final'}"  >Evaluaciones SD</router-link>
                   </li>
+
+                  <li v-if="tipo=='1'"> 
+                    <router-link :to="{name: 'usuarios'}"  >Usuarios</router-link>
+                  </li>
+
                 </div>
             </ul>
     
@@ -53,7 +62,16 @@
 
 export default {
   data() {
-    return {};
+    return {
+      resource: "user",
+      tipo: 0 
+    };
+  },
+    async created() {
+      await this.$http.get(`/${this.resource}/tipo/`).then(response => {
+          this.tipo = response.data.idrol
+       });
+
   },
   methods: {
     toggleActive(){

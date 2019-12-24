@@ -40,11 +40,12 @@ class CreateNaturalsTable extends Migration
             $table->string('direccion_laboral', 100)->nullable()->default(null);
             $table->string('genero', 10)->nullable();
             $table->string('grado_instruccion', 10)->nullable();
-            $table->string('numero', 45)->nullable();
-            $table->string('manzana', 45)->nullable();
-            $table->string('dpto', 45)->nullable();
-            $table->string('int', 45)->nullable();
-            $table->string('piso', 45)->nullable();
+            $table->string('numero', 5)->nullable();
+            $table->string('manzana', 5)->nullable();
+            $table->string('lote', 5)->nullable();
+            $table->string('dpto', 5)->nullable();
+            $table->string('int', 5)->nullable();
+            $table->string('piso', 5)->nullable();
             $table->string('domicilio_distrito', 45)->nullable();
             $table->string('domicilio_provincia', 45)->nullable();
             $table->string('domicilio_departamento', 45)->nullable();

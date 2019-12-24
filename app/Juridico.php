@@ -38,7 +38,7 @@ class Juridico extends Model
     /**
      * @var array
      */
-    protected $fillable = ['clientes_id', 'razon_social', 'nombre_comercial', 'actividad_principal', 'partida_gesitral', 'oficina_registral', 'tipo_negocio', 'dirección', 'numero', 'manzana', 'lote', 'pdto', 'int', 'piso', 'telefono', 'celular', 'email', 'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['clientes_id', 'razon_social', 'nombre_comercial', 'actividad_principal', 'partida_registral', 'oficina_principal', 'tipo_negocio', 'direccion', 'numero', 'manzana', 'lote', 'pdto', 'int', 'piso', 'referencia','telefono', 'celular', 'email', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

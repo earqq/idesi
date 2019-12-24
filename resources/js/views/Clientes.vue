@@ -1,65 +1,64 @@
 <template>
   <div>
     <div class="container-general" v-if="tipo">
-        <div class="row col-12 box-search">
-            <div class="search">
-               <i class="fas fa-search"></i>
-                <input type="text" class="form-control"  placeholder="Buscar cliente"/>
-            </div>
-            <select name="" id="">
-              <option value="">TODOS</option>
-              <option value="">PERSONA NATURAL</option>
-              <option value="">PERSONA JURIDICA</option>
-            </select>
-         </div>
-      <div class="clients">
-            <div class="card-client new" @click="crearCliente()">
-              <i class="fas fa-plus-circle"></i>
-              <h1>Crear Cliente</h1>
-            </div>
 
-            <div
-              class="card-client d-flex align-items-center flex-column justify-content-center"
-              v-for="cliente in clientes"
-              :key="cliente.id"
-            >
-              <router-link :to="{name:'perfil', params:{documento:cliente.documento}}">
-                <img src="https://picsum.photos/100/100" alt />
-                <p v-text="cliente.nombres"></p>
-                <p v-text="cliente.documento">dni</p>
-              </router-link>
+        <div class="row col-md-12 clients-option">
+
+          <div class="col-md-2 type-view">
+              <button class="btn btn-def form-control">Card</button>
+              <button class="btn btn-def form-control">Lista</button>
+          </div>
+          <div class="col-md-5 search-option">
+              <input type="text" class="form-control" placeholder="Buscar Cliente">
+              <i class="fas fa-search"></i>
+          </div>
+
+          <div class="row col-md-5 more-option">
+             <select class="col-md-4 form-control col-md-3" v-model="form.tipo_persona" >
+              <option value="PN">Persona Natural</option>
+              <option value="PJ">Persona Juridica</option>
+            </select>
+            <button class="btn btn-def col-md-4 form-control" @click="crearCliente()">Crear Solicutd</button>
+          </div>
+
+        </div>
+        <div class="col-md-12 clients-date">
+            <div class="row date">
+                <div class="card-client d-flex align-items-center flex-column justify-content-center" v-for="cliente in clientes" :key="cliente.id" >
+                    <router-link :to="{name:'perfil', params:{documento:cliente.documento}}">
+                      <p class="card-name" v-text="cliente.nombres"></p>
+                      <p class="card-document" v-text="cliente.documento">dni</p>
+                      <img src="https://picsum.photos/100/100" alt />
+                    </router-link>
+                  </div>
+                  <infinite-loading @infinite="infiniteHander">
+                  </infinite-loading>
             </div>
-            <infinite-loading @infinite="infiniteHander">
-            </infinite-loading>
-      </div>
-      
+        </div>
+
     </div>
 
     <!-- +++++++++++++++++++ -->
     <!-- CREAR NUEVO CLIENTE -->
     <!-- +++++++++++++++++++ -->
 
-    <div class="container-general create-client" v-else>
+    <div class="container-general create-client" style="background:#dceaf0" v-else>
       <header>
         <span @click="cancelarCliente()">
           <i class="fas fa-angle-left"></i>
         </span>
-        <h1>Crear Cliente</h1>
+        <h1 v-if="form.tipo_persona=='PN'" >Admision Persona Natural</h1>
+        <h1 v-else > Admision Persona Juridica </h1>
       </header>
 
-      <div class="date-client">
-              <div class="form-group col-md-3">
-                <label>Tipo de persona</label>
-                <select v-model="form.tipo_persona" class="form-control">
-                  <option value="0">SELECCIONE</option>
-                  <option value="PJ">PERSONA JURIDICA</option>
-                  <option value="PN">PERSONA NATURAL</option>
-                </select>
-              </div>
-        <registrar-natural :tipo_persona="form.tipo_persona" v-if="form.tipo_persona=='PN'" ></registrar-natural>
-        <registrar-juridico :tipo_persona="form.tipo_persona"  v-else-if="form.tipo_persona=='PJ'"></registrar-juridico>
+      <div class="date-client">    
+        <div class="col-md-12">
+          <registrar-natural :tipo_persona="form.tipo_persona" v-if="form.tipo_persona=='PN'" ></registrar-natural>
+          <registrar-juridico :tipo_persona="form.tipo_persona"  v-else-if="form.tipo_persona=='PJ'"></registrar-juridico>
+        </div>
 
       </div>
+
     </div>
   </div>
 </template> 
@@ -139,7 +138,7 @@ export default {
     },
     initForm() {
       this.form = {
-        tipo_persona: "0"
+        tipo_persona: "PN"
       };
     },
     resetForm() {

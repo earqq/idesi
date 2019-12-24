@@ -1,36 +1,67 @@
 <template>
-  <div class="container-general">
+  <div class="container-general" style="background: rgb(220, 234, 240);">
     <div class="evaluations">
       <div class="row col-md-12 m-0" v-if="tipo">
-        <div class="card col-md-12 p-0 ">
-          <div class="card-header">PRESTAMOS</div>
-          <div class="card-body p-0"> 
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Cliente</th>
-                    <th>Fecha de registro</th>
-                    <th>Estado</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="prestamo in prestamos" :key="prestamo.id">
-                    <td v-text="prestamo.nombres +' '+ prestamo.apellidos"></td>
-                    <td v-text="prestamo.created_at"></td>
-                    <td v-text="prestamo.estado"></td>
-                    <td>
-                      <button
-                        class="btn btn-success"
-                        style="width:50%"
-                        @click="methodsDetalle(prestamo.id)"
-                      >Evaluar</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-          </div>
-        </div>
+            <div class="container-fluid">
+                <!-- Ejemplo de tabla Listado -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> Lista de Evaluaciones
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <select class="form-control col-md-3" >
+                                      <option value="name">Nombre</option>
+                                      <option value="num_documento">Documento</option>
+                                      <option value="Fecha">FEcha</option>
+                                    </select>
+                                    <input type="text" class="form-control" placeholder="Texto a buscar">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                                <tr>
+                                  <th>Cliente</th>
+                                  <th>Fecha de registro</th>
+                                  <th>Estado</th>
+                                  <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="prestamo in prestamos" :key="prestamo.id">
+                                    <td v-text="prestamo.nombres +' '+ prestamo.apellidos"></td>
+                                    <td v-text="prestamo.created_at"></td>
+                                    <td v-text="prestamo.estado"></td>
+                                    <td>
+                                      <button type="button" @click="methodsDetalle(prestamo.id)" class="btn btn-warning btn-sm">
+                                          <i class="fas fa-pencil-alt"></i> Evalular
+                                        </button> &nbsp;
+                                    </td>
+                                  </tr>
+                                                             
+                            </tbody>
+                        </table>
+                        <!-- <nav>
+                            <ul class="pagination">
+                                <li class="page-item" v-if="pagination.current_page > 1">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
+                                </li>
+                                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
+                                </li>
+                                <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Sig</a>
+                                </li>
+                            </ul>
+                        </nav> -->
+                    </div>
+                </div>
+                <!-- Fin ejemplo de tabla Listado -->
+            </div>
       </div>
 
       <div class="row col-md-12 m-0 evaluations" v-else>
@@ -70,43 +101,32 @@
 
             <div class="col-md-12 p-0">
               <div class="row">
-                <div class="col-md-4">
-                  <div class="card">
-                    <div class="card-header">EVALUACIONES</div>
-                    <div class="card-body">
-                      <h5 class="card-title">Special title treatment</h5>
-                      <p
-                        class="card-text" style="color: #000"
-                      > EVALUAZIONES VACIAS</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-8">
+                <div class="col-md-12">
                   <div class="card">
                     <div class="card-header">PRESTAMO ANALISTA</div>
-                    <div class="card-body">
+                    <div class="card-body p-0">
                       <div class="row loan-date m-0">
-                        <div class="col-md-6">
+                        <div class="col-md-2">
                           <label for>Producto</label>
                           <p v-text="detalle.producto"></p>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-2">
                           <label for>Formas</label>
                           <p v-text="detalle.forma"></p>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                           <label for>Importe</label>
                           <p v-text="detalle.importe"></p>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                           <label for>Plazo</label>
                           <p v-text="detalle.plazo"></p>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                           <label for>Cuotas</label>
                           <p v-text="detalle.cuotas"></p>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                           <label for>Aporte</label>
                           <p v-text="detalle.aporte"></p>
                         </div>
@@ -123,48 +143,21 @@
           </div>
         </div>
 
-        <div class="col-md-3 m-0 views">
+        <div class="col-md-3 m-0 views" style="background:#fff">
           <div class="row m-0">
             <div class="col-md-12 status pt-4 pb-4 pl-3">
-              <input type="radio" id="aprobado" value="APROBADO" v-model="form.tipo" />
-              <label for="uno">Aprobado</label>
-              <input type="radio" id="observado" value="OBSERVADO" v-model="form.tipo" />
-              <label for="Dos">Observado</label>
-              <input type="radio" id="desaprobado" value="DESAPROBADO" v-model="form.tipo" />
-              <label for="Dos">Desaprobado</label>
+              <input type="radio" v-model="form.estado" value="APROBADO">APROBADO
+              <input type="radio" v-model="form.estado" value="OBSERVADO">OBSERVADO
+              <input type="radio" v-model="form.estado" value="DESAPROBADO">DESAPROBADO
+              <textarea  v-model="form.detalle" cols="auto" rows="5" class="w-100"></textarea>
             </div>
 
-            <!-- <div class="col-md-12">
-              <label for>Producto</label>
-              <input type="text" v-model="form.producto" class="form-control" />
-            </div>
-            <div class="col-md-6">
-              <label for>Aporte</label>
-              <input type="text" v-model="form.aporte" class="form-control" />
-            </div>
-            <div class="col-md-6">
-              <label for>Importe</label>
-              <input type="text" v-model="form.importe" class="form-control" />
-            </div>
+
+            
             <div class="col-md-12">
-              <label for>Plazo</label>
-              <input type="text" v-model="form.plazo" class="form-control" />
+              <button class="btn btn-def w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button>
             </div>
-            <div class="col-md-6">
-              <label for>Cuotas</label>
-              <input type="text" v-model="form.cuotas" class="form-control" />
-            </div>
-            <div class="col-md-6">
-              <label for>Tasa</label>
-              <input type="text" v-model="form.tasa" class="form-control" />
-            </div> -->
-            <textarea name="" id="" cols="30" rows="10"></textarea>
-            <div class="col-md-12">
-              <button class="btn btn-success w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button>
-            </div>
-            <!-- <div class="col-md-12">
-              <button class="btn btn-success w-100 mb-1 mt-1">GUARDAR</button>
-            </div>-->
+
             <div class="col-md-12">
               <button class="btn btn-danger w-100 mb-1 mt-1" @click="cancelarEvaluacion()">CANCELAR</button>
             </div>
@@ -201,6 +194,7 @@ export default {
     };
   },
   async created() {
+    await this.formInit()
     await this.methodsPrestamo();
   },
   methods: {
@@ -222,29 +216,20 @@ export default {
         .then(response => {
           this.detalle = response.data;
           this.listFile(id);
-          this.form.producto = this.detalle.producto;
-          this.form.aporte = this.detalle.aporte;
-          this.form.importe = this.detalle.importe;
-          this.form.plazo = this.detalle.plazo;
-          this.form.cuotas = this.detalle.cuotas;
-          this.form.tasa = this.detalle.tasa;
-          this.form.tipo = "";
           this.form.prestamos_id = id;
           this.id_prestamo= id;
         });
     },
     formInit() {
       this.form = {
-        producto: "",
-        aporte: "",
-        importe: "",
-        plazo: "",
-        cuotas: "",
-        tasa: "",
-        tipo: "",
+        detalle: "",
+        estado: "",
         prestamos_id: ""
       };
     },
+    resetForm(){
+      this.formInit()
+    },  
         cargarPdf(){
                 window.open('/clientes/solicitudPdf/'+this.id_prestamo,'_blank'); 
       },
@@ -256,16 +241,12 @@ export default {
       this.$http
         .post(`/${this.resource}/prestamos/evaluar`, this.form)
         .then(response => {
-          if (response.data.success) {
-            console.log();
-          } else {
-            this.resetForm();
-            this.$toast.error(
-              "El cliente ya existe!",
-              "Error",
-              this.notificationSystem.options.error
-            );
-          }
+          this.tipo= true
+          this.$toast.success(
+              "El evaluacion fue exitosa",
+              "Exitoso",
+              this.notificationSystem.options.success
+            ); 
         })
         // .catch(error => {
         //   if (error.response.status === 422) {

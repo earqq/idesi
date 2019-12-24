@@ -10,7 +10,7 @@ Route::group(['middleware'=>['guest']],function(){
 
 });
 
-Route::get('migrar','EvaluacionController@saveNegocios');
+
 /**
  *  MIDDLEWARE DE INVITADOS
  */
@@ -26,6 +26,18 @@ Route::group(['middleware'=>['auth']],function(){
             return view('index');
         });
         
+
+        Route::get('user/tipo','UserController@tipo');
+
+        Route::get('/user', 'UserController@index');
+        Route::post('/user/registrar', 'UserController@store');
+        Route::put('/user/actualizar', 'UserController@update');
+        Route::put('/user/desactivar', 'UserController@desactivar');
+        Route::put('/user/activar', 'UserController@activar');
+
+
+        Route::get('/rol/selectRol', 'RolController@selectRol');
+
         Route::get('clientes/listado','ClienteController@index');
         Route::post('clientes/nuevo', 'ClienteController@store');
         Route::post('clientes/nuevo/natural', 'ClienteController@storeNatural');
@@ -43,6 +55,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('clientes/prestamo/ver/{prestamo}', 'ClienteController@prestamoVer');
         Route::get('evaluaciones/prestamos', 'EvaluacionController@prestamos');
         Route::get('evaluaciones/prestamos/detalle/{prestamo}', 'EvaluacionController@show');
+        Route::get('evaluaciones/prestamos/detalleF/{prestamo}', 'EvaluacionController@showF');
         Route::post('evaluaciones/prestamos/evaluar', 'EvaluacionController@evaluar');
 
         Route::post('/consulta/dni','ConsultaController@dni');
@@ -58,7 +71,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('{path}',"HomeController@index")->where('path','([A-z\d-\/_.]+)?'); 
 
         // evaluaciones cuantitativas y cualitativas
-        Route::post('evaluaciones/cuantitativa','EvaluacionController@saveCuantitativa');
+        Route::post('evaluaciones/cuantitativa','EvaluacionesController@saveCuantitativa');
+        Route::get('migrar','EvaluacionController@saveNegocios');
     });
 
     

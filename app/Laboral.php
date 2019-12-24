@@ -35,7 +35,7 @@ class Laboral extends Model
     /**
      * @var array
      */
-    protected $fillable = ['naturals_id', 'estado_laboral', 'tipo_trabajador', 'razon_social', 'ingreso_mensual', 'cargo_ocupacion', 'fecha_ingreso', 'giro_negocio', 'direccion', 'numero', 'manzana', 'lote', 'dpto', 'int', 'piso', 'distrito', 'provincia', 'departamento', 'pais', 'referencia', 'telefono', 'celular'];
+    protected $fillable = ['naturals_id', 'estado_laboral', 'tipo_trabajador','email', 'razon_social', 'ingreso_mensual', 'cargo_ocupacion', 'fecha_ingreso', 'giro_negocio', 'direccion', 'numero', 'manzana', 'lote', 'dpto', 'int', 'piso', 'distrito', 'provincia', 'departamento', 'pais', 'referencia', 'telefono', 'celular'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

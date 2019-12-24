@@ -199,15 +199,15 @@
         </table>
         <h2>PROPUESTA</h2>
         <label>PRODUCTO</label>
-        <input type='text' v-model='evaluacion.solicitud_credito.producto'>
+        <input type='text' v-model='evaluacion.propuesta.producto'>
         <label>MONTO</label>
-        <input type='text' v-model='evaluacion.solicitud_credito.monto'>
+        <input type='text' v-model='evaluacion.propuesta.monto'>
         <label>PLAZO</label>
-        <input type='text' v-model='evaluacion.solicitud_credito.plazo'>
+        <input type='text' v-model='evaluacion.propuesta.plazo'>
         <label>NUMERO CUOTAS</label>
-        <input type='text' v-model='evaluacion.solicitud_credito.numero_cuotas'>
+        <input type='text' v-model='evaluacion.propuesta.numero_cuotas'>
         <label>CUOTAS</label>
-        <input type='text' v-model='evaluacion.solicitud_credito.cuotas'>
+        <input type='text' v-model='evaluacion.propuesta.cuotas'>
         <label>PROB INFOCORP</label>
         <input type='text' v-model='evaluacion.probabilidad_infocorp'>
         <br>
@@ -219,7 +219,7 @@ export default {
     data(){
         return{
             evaluacion:{
-                solicitud_credito:{
+                propuesta:{
                     producto:"",
                     monto:1,
                     numero_cuotas:0,

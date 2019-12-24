@@ -18447,101 +18447,109 @@ readers do not read off random characters that represent icons */
   }
 }
 
-.box-search {
+.clients-option {
+  height: 85px;
   display: -webkit-box;
   display: flex;
-  margin: 0;
-  padding: 0;
+  -webkit-box-pack: center;
+          justify-content: center;
+  padding: 25px 0;
+  border-bottom: 3px solid #cfcdcd;
+  margin-bottom: 35px;
+  margin: 0 auto;
 }
 
-.box-search .search {
+.clients-option .type-view {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: end;
+          justify-content: flex-end;
+}
+
+.clients-option .type-view button {
+  margin: 0 3px;
+  width: 30%;
+  border-radius: 0;
+}
+
+.clients-option .search-option {
   position: relative;
-  -webkit-box-flex: 1;
-          flex: 1;
-  border-top: 1px solid #171b26;
-  border-bottom: 1px solid #171b26;
 }
 
-.box-search .search i {
+.clients-option .search-option input {
+  background: #dceaf0;
+  border: 1px solid #b2d1de;
+}
+
+.clients-option .search-option i {
   position: absolute;
+  top: 8px;
+  right: 25px;
   font-size: 20px;
-  color: #fff;
-  padding: 9px 22px;
-  background: #171b26;
+  color: #5c9db8;
 }
 
-.box-search .search input {
-  padding: 0px 70px;
-}
-
-.box-search select {
-  width: 200px;
-  border: 1px solid #ced4da;
-  color: #000;
+.clients-option .more-option select {
+  color: #ef8401;
   font-weight: bold;
-  border: 1px solid #171b26;
+  border: 1px solid #ef8401;
+  margin-right: 10px;
 }
 
-.clients {
+.clients-option .more-option button {
+  background: #ef8401;
+  color: white;
+  font-weight: bold;
+}
+
+.clients-date .date {
+  height: 100hv;
+  background: #dceaf0;
+  margin: 21px 7px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-auto-rows: auto;
   grid-gap: 1rem;
   padding: 31px 3%;
 }
 
-.clients .new {
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  -webkit-box-pack: center;
-          justify-content: center;
-}
-
-.clients .new h1 {
-  font-size: 26px;
-  text-align: center;
-  font-weight: bold;
-  color: #7a7878;
-}
-
-.clients .new i {
-  text-align: center;
-  font-size: 70px;
-  margin-bottom: 20px;
-  color: #7a7878;
-}
-
-.clients .card-client {
+.clients-date .date .card-client {
   border: 2px solid #e7e7e7;
   padding: 0.5rem;
-  height: 190px;
+  height: 115px;
   cursor: pointer;
-  background-color: #171b26;
+  background-color: #f9f9f9;
+  border-top: 3px solid #ef8401;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034), 0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06), 0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086), 0 84px 54px rgba(0, 0, 0, 0.12);
 }
 
-.clients .card-client a {
+.clients-date .date .card-client a {
   text-decoration: none;
   position: absolute;
-  padding: 50px 45px;
+  padding: 6px 38px;
 }
 
-.clients .card-client a img {
-  height: 85px;
-  width: 85px;
+.clients-date .date .card-client a .card-name {
+  color: #62c6d9;
+  font-weight: bold;
+}
+
+.clients-date .date .card-client a .card-document {
+  color: #000;
+}
+
+.clients-date .date .card-client a img {
+  height: 50px;
+  width: 50px;
   border-radius: 56px;
-  margin: -10px 0px 11px 7px;
+  margin: 5px 0px -2px -8px;
 }
 
-.clients .card-client a p {
-  text-align: center;
+.clients-date .date .card-client a p {
   margin: 0;
   font-size: 14px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #fff;
 }
 
 .profile h1,
@@ -18863,27 +18871,6 @@ readers do not read off random characters that represent icons */
   font-size: 20px;
 }
 
-.loan .nav-loan {
-  margin: 0;
-}
-
-.loan .nav-loan .nav-item {
-  padding: 0;
-}
-
-.loan .nav-loan .nav-item .nav-link {
-  text-align: center;
-  background-color: transparent;
-  border-color: transparent;
-  color: #171b26;
-  font-size: 16px;
-}
-
-.loan .nav-loan .nav-item .active {
-  border-bottom: 3px solid #171b26;
-  background: #cfcdcd;
-}
-
 .loan .titulo-prestamo-menu {
   background: #cfcdcd;
   padding: 5px 15px;
@@ -18902,26 +18889,6 @@ readers do not read off random characters that represent icons */
 .loan .titulo-prestamo-menu i {
   color: red;
   font-size: 20px;
-}
-
-.loan .loan-cliente .contenedor-titular {
-  margin: 0 !important;
-}
-
-.loan .loan-aval .contenedor-aval {
-  margin: 0 !important;
-}
-
-.loan .loan-garantia .contenedor-garantia {
-  margin: 0 !important;
-}
-
-.loan .loan-propuesta .contenedor-propuesta {
-  margin: 0 !important;
-}
-
-.loan .loan-solicitud .contenedor-solicitud {
-  margin: 0 !important;
 }
 
 .loans-views .views h1 {
@@ -19147,7 +19114,6 @@ html {
 }
 
 .evaluations .loan-date {
-  padding: 25px 0;
   background: #d8d8d8;
 }
 
@@ -19398,7 +19364,6 @@ html {
   display: flex;
   height: 40px;
   border: 1px solid #171b26;
-  margin-bottom: 20px;
   background: #fff;
 }
 
@@ -19576,6 +19541,49 @@ html {
 
 .tree-structure .subido i {
   color: #009688 !important;
+}
+
+.style-tab-menu .nav-tabs {
+  background: #fff;
+  border-bottom: 1px solid #171b26;
+}
+
+.style-tab-menu .nav-tabs li a {
+  font-size: 16px;
+  font-weight: bold;
+  color: #171b26;
+}
+
+.style-tab-menu .nav-tabs .nav-link.active,
+.style-tab-menu .nav-tabs .nav-item.show .nav-link {
+  color: #495057;
+  background-color: transparent;
+  border-color: transparent;
+  border-bottom: 5px solid #171b26;
+}
+
+.body-tabs .tab-content {
+  background: #fff;
+  margin: 5px 16px;
+  padding: 15px 30px;
+}
+
+.btn-orange {
+  width: 10%;
+  background: #ef8401;
+  color: #fff !important;
+  border-color: #ef8401;
+  border-radius: 0;
+  margin: 0 10px;
+}
+
+.btn-dark {
+  border-radius: 0;
+  width: 10%;
+  color: #fff !important;
+  background: #171b26;
+  border-color: #171b26;
+  margin: 0 10px;
 }
 
 input {

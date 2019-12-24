@@ -8,13 +8,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $prestamos_id
  * @property int $users_id
- * @property string $producto
- * @property float $aporte
- * @property float $importe
- * @property int $plazo
- * @property int $cuotas
- * @property float $tasa
+ * @property string $detalle
  * @property string $estado
+ * @property string $deleted_at
+ * @property string $created_at
+ * @property string $updated_at
  * @property Prestamo $prestamo
  * @property User $user
  */
@@ -23,7 +21,7 @@ class Evaluacion extends Model
     /**
      * @var array
      */
-    protected $fillable = ['prestamos_id', 'users_id', 'producto', 'aporte', 'importe', 'plazo', 'cuotas', 'tasa', 'estado'];
+    protected $fillable = ['prestamos_id', 'users_id', 'detalle', 'estado', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

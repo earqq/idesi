@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $grado_instruccion
  * @property string $numero
  * @property string $manzana
+ * @property string $lote
  * @property string $dpto
  * @property string $int
  * @property string $piso
@@ -47,7 +48,7 @@ class Natural extends Model
     /**
      * @var array
      */
-    protected $fillable = ['clientes_id', 'nombres', 'apellidos', 'nacimiento', 'estado_civil', 'ocupacion', 'telefono', 'celular', 'direccion_cliente', 'direccion_registros', 'referencia', 'tipo_domicilio', 'centro_laboral', 'direccion_laboral', 'genero', 'grado_instruccion', 'numero', 'manzana', 'dpto', 'int', 'piso', 'domicilio_distrito', 'domicilio_provincia', 'domicilio_departamento', 'correo', 'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['clientes_id', 'nombres', 'apellidos', 'nacimiento', 'estado_civil', 'ocupacion', 'telefono', 'celular', 'direccion_cliente', 'direccion_registros', 'referencia', 'tipo_domicilio', 'centro_laboral', 'direccion_laboral', 'genero', 'grado_instruccion', 'numero', 'manzana', 'lote', 'dpto', 'int', 'piso', 'domicilio_distrito', 'domicilio_provincia', 'domicilio_departamento', 'correo', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

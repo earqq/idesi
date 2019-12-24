@@ -26,6 +26,7 @@ class CreateDirectoresTable extends Migration
             $table->increments('id');
             $table->string('nombres', 60)->nullable();
             $table->integer('documento')->nullable();
+            $table->string('cargo', 30)->nullable();
             $table->unsignedInteger('juridicos_id');
             $table->softDeletes();
 
