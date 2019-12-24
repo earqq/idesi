@@ -3472,7 +3472,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     guardar: function guardar() {
       axios.post('/evaluaciones/cuantitativa', this.evaluacion).then(function (res) {
-        console.log('volvio');
+        alert('guardado correctamente');
       });
     },
     conyugeIngresosSubtotal: function conyugeIngresosSubtotal(index) {
