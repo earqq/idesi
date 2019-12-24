@@ -14,7 +14,7 @@ Route::group(['middleware'=>['guest']],function(){
 /**
  *  MIDDLEWARE DE INVITADOS
  */
-Route::get('migrar','EvaluacionController@saveNegocios');
+Route::get('migrar','EvaluacionesController@saveNegocios');
 Route::group(['middleware'=>['auth']],function(){
 
     Route::group(['middleware'=>['Administrador']],function(){
