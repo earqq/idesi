@@ -3794,7 +3794,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       id_prestamo: 0,
       prestamos: [],
       detalle: {},
-      cuantitativa: {},
+      cuantitativa: {
+        ratios_endeudamiento: 0,
+        ratios_margen_neto: 0,
+        ratios_liquidez: 0,
+        ratios_solvencia: 0
+      },
       tipo: true,
       form: {},
       notificationSystem: {
