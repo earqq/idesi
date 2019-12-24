@@ -86,23 +86,23 @@
                             <tbody>
                                 <tr >
                                     <td>Endeudamiento</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td v-text="cuantitativa.ratios_endeudamiento"></td>
+                                    <td  v-text="cuantitativa.ratios_endeudamiento_resultado"></td>
                                 </tr> 
                                  <tr >
                                     <td>Margen Neto</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td v-text="cuantitativa.ratios_margen_neto"></td>
+                                    <td v-text="cuantitativa.ratios_margen_neto_resultado"></td>
                                 </tr> 
                                  <tr >
                                     <td>Liquidez</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td v-text="cuantitativa.ratios_liquidez"></td>
+                                    <td v-text="cuantitativa.ratios_liquidez_resultado"></td>
                                 </tr> 
                                  <tr >
                                     <td>Solvencia</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td v-text="cuantitativa.ratios_solvencia"></td>
+                                    <td v-text="cuantitativa.ratios_solvencia_resultado"></td>
                                 </tr>                           
                             </tbody>
                         </table>
@@ -112,34 +112,22 @@
                           <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
-                                  <th colspan="3" class="text-center">Ratio</th>
+                                  <th colspan="3" class="text-center">Resultados</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr >
-                                    <td>Endeudamiento</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td v-text="'Resultado Eva'"></td>
+                                    <td colspan="2" v-text="cuantitativa.resultado_eva"></td>
                                 </tr> 
                                  <tr >
-                                    <td>Margen Neto</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr> 
-                                 <tr >
-                                    <td>Liquidez</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr> 
-                                 <tr >
-                                    <td>Solvencia</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td v-text="'Resultado Sist'"></td>
+                                    <td colspan="2" v-text="cuantitativa.resultado_sist"></td>
                                 </tr>                           
                             </tbody>
                         </table>
 
-                        
+
                         </div>
                       </div>
 
@@ -305,6 +293,7 @@ export default {
       id_prestamo: 0,
       prestamos: [],
       detalle: {},
+      cuantitativa: {},
       tipo: true,
       form: {},
       notificationSystem: {
@@ -344,6 +333,8 @@ export default {
       this.$http
         .get(`/${this.resource}/prestamos/detalleF/` + id)
         .then(response => {
+          console.log(response.data)
+          this.cuantitativa = response.data.cuantitativa;
           this.detalle = response.data.prestamo;
           this.form.evaluacion = response.data.evaluacion;
           this.listFile(id);

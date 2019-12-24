@@ -7,6 +7,7 @@ use App\Prestamo;
 use App\Evaluacion;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\ResultadoCuantitativa;
 
 class EvaluacionController extends Controller
 {
@@ -68,7 +69,10 @@ class EvaluacionController extends Controller
         $evaluacion = Evaluacion::join('users','evaluacions.users_id','=','users.id')
                                     ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name')
                                     ->where('prestamos_id',$prestamo->id)->get();
-         return compact('prestamo','evaluacion');
+        
+        $cuantitativa = ResultadoCuantitativa::where('prestamo_id', $prestamo->id)->first();
+        // $cuantitativa = 
+         return compact('prestamo','evaluacion','cuantitativa');
     }
 
 

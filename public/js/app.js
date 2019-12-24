@@ -3752,18 +3752,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3771,6 +3759,7 @@ __webpack_require__.r(__webpack_exports__);
       id_prestamo: 0,
       prestamos: [],
       detalle: {},
+      cuantitativa: {},
       tipo: true,
       form: {},
       notificationSystem: {
@@ -3828,6 +3817,8 @@ __webpack_require__.r(__webpack_exports__);
 
       this.tipo = false;
       this.$http.get("/".concat(this.resource, "/prestamos/detalleF/") + id).then(function (response) {
+        console.log(response.data);
+        _this3.cuantitativa = response.data.cuantitativa;
         _this3.detalle = response.data.prestamo;
         _this3.form.evaluacion = response.data.evaluacion;
 
@@ -68834,7 +68825,164 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-12 p-0" }, [
                   _c("div", { staticClass: "row" }, [
-                    _vm._m(2),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "card" }, [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "card-body" }, [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c(
+                                "table",
+                                {
+                                  staticClass:
+                                    "table table-bordered table-striped table-sm"
+                                },
+                                [
+                                  _vm._m(3),
+                                  _vm._v(" "),
+                                  _c("tbody", [
+                                    _c("tr", [
+                                      _c("td", [_vm._v("Endeudamiento")]),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.cuantitativa
+                                              .ratios_endeudamiento
+                                          )
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.cuantitativa
+                                              .ratios_endeudamiento_resultado
+                                          )
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _c("td", [_vm._v("Margen Neto")]),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.cuantitativa.ratios_margen_neto
+                                          )
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.cuantitativa
+                                              .ratios_margen_neto_resultado
+                                          )
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _c("td", [_vm._v("Liquidez")]),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.cuantitativa.ratios_liquidez
+                                          )
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.cuantitativa
+                                              .ratios_liquidez_resultado
+                                          )
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _c("td", [_vm._v("Solvencia")]),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.cuantitativa.ratios_solvencia
+                                          )
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.cuantitativa
+                                              .ratios_solvencia_resultado
+                                          )
+                                        }
+                                      })
+                                    ])
+                                  ])
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-6" }, [
+                              _c(
+                                "table",
+                                {
+                                  staticClass:
+                                    "table table-bordered table-striped table-sm"
+                                },
+                                [
+                                  _vm._m(4),
+                                  _vm._v(" "),
+                                  _c("tbody", [
+                                    _c("tr", [
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s("Resultado Eva")
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        attrs: { colspan: "2" },
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.cuantitativa.resultado_eva
+                                          )
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _c("td", {
+                                        domProps: {
+                                          textContent: _vm._s("Resultado Sist")
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("td", {
+                                        attrs: { colspan: "2" },
+                                        domProps: {
+                                          textContent: _vm._s(
+                                            _vm.cuantitativa.resultado_sist
+                                          )
+                                        }
+                                      })
+                                    ])
+                                  ])
+                                ]
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "card" }, [
@@ -68935,7 +69083,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-12" }, [
                       _c("div", { staticClass: "container-fluid" }, [
                         _c("div", { staticClass: "card" }, [
-                          _vm._m(3),
+                          _vm._m(5),
                           _vm._v(" "),
                           _c("div", { staticClass: "card-body" }, [
                             _c(
@@ -68945,7 +69093,7 @@ var render = function() {
                                   "table table-bordered table-striped table-sm"
                               },
                               [
-                                _vm._m(4),
+                                _vm._m(6),
                                 _vm._v(" "),
                                 _c(
                                   "tbody",
@@ -69259,119 +69407,31 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _c("i", { staticClass: "fa fa-align-justify" }),
-          _vm._v("Cuantitativas\n                  ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "table",
-                { staticClass: "table table-bordered table-striped table-sm" },
-                [
-                  _c("thead", [
-                    _c("tr", [
-                      _c(
-                        "th",
-                        { staticClass: "text-center", attrs: { colspan: "3" } },
-                        [_vm._v("Ratio")]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tbody", [
-                    _c("tr", [
-                      _c("td", [_vm._v("Endeudamiento")]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td")
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("Margen Neto")]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td")
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("Liquidez")]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td")
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("Solvencia")]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td")
-                    ])
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "table",
-                { staticClass: "table table-bordered table-striped table-sm" },
-                [
-                  _c("thead", [
-                    _c("tr", [
-                      _c(
-                        "th",
-                        { staticClass: "text-center", attrs: { colspan: "3" } },
-                        [_vm._v("Ratio")]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tbody", [
-                    _c("tr", [
-                      _c("td", [_vm._v("Endeudamiento")]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td")
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("Margen Neto")]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td")
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("Liquidez")]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td")
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("Solvencia")]),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td")
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ])
+    return _c("div", { staticClass: "card-header" }, [
+      _c("i", { staticClass: "fa fa-align-justify" }),
+      _vm._v("Cuantitativas\n                  ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "text-center", attrs: { colspan: "3" } }, [
+          _vm._v("Ratio")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "text-center", attrs: { colspan: "3" } }, [
+          _vm._v("Resultados")
         ])
       ])
     ])

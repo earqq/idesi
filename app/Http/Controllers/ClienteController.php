@@ -596,10 +596,8 @@ class ClienteController extends Controller
         $avals = Aval::where('prestamos_id',$prestamo->id)->get();
         $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
 
-        // $cuantitativa = 
-
         return compact('prestamo','cliente','avals','garantias','natural','conyugue');
-
+   
     }
     /**
      * Show the form for editing the specified resource.
