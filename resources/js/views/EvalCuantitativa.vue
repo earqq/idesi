@@ -219,7 +219,7 @@ export default {
     data(){
         return{
             evaluacion:{
-                prestamo_id:$params.prestamo_id,
+                prestamo_id:this.$params.prestamo_id,
                 propuesta:{
                     producto:"",
                     monto:1,
