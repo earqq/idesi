@@ -17,6 +17,7 @@ use App\Juridico;
 use App\Subido;
 use App\Vista;
 use App\Adicional;
+use App\ResultadoCuantitativa;
 use App\AsociativaNatural;
 use App\Asociativa;
 use App\Familiar;
@@ -545,6 +546,13 @@ class ClienteController extends Controller
             $subidos->inscripcion_socio=1;
             $subidos->save();
 
+            // $cuantitativa = new ResultadoCuantitativa;
+            // $cuantitativa->prestamo_id= $prestamo->id;
+            // $cuantitativa->save();
+
+
+
+
             // $prestamos= Prestamo::find($prestamo->id);
             // $cliente = Cliente::where('id',$prestamos->clientes_id)->first();
             // $avals = Aval::where('prestamos_id',$prestamos->id)->get();
@@ -587,6 +595,8 @@ class ClienteController extends Controller
         $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
         $avals = Aval::where('prestamos_id',$prestamo->id)->get();
         $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+
+        // $cuantitativa = 
 
         return compact('prestamo','cliente','avals','garantias','natural','conyugue');
 

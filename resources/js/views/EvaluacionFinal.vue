@@ -67,7 +67,86 @@
 
             <div class="col-md-12 p-0">
               <div class="row">
-                <div class="col-md-12">
+
+                <div class="col-md-6">
+                     <!-- Ejemplo de tabla Listado -->
+                   <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i>Cuantitativas
+                    </div>
+                    <div class="card-body"> 
+                      <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                                <tr>
+                                  <th colspan="3" class="text-center">Ratio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr >
+                                    <td>Endeudamiento</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr> 
+                                 <tr >
+                                    <td>Margen Neto</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr> 
+                                 <tr >
+                                    <td>Liquidez</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr> 
+                                 <tr >
+                                    <td>Solvencia</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>                           
+                            </tbody>
+                        </table>
+                        </div>
+                        <div class="col-md-6">
+
+                          <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                                <tr>
+                                  <th colspan="3" class="text-center">Ratio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr >
+                                    <td>Endeudamiento</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr> 
+                                 <tr >
+                                    <td>Margen Neto</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr> 
+                                 <tr >
+                                    <td>Liquidez</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr> 
+                                 <tr >
+                                    <td>Solvencia</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>                           
+                            </tbody>
+                        </table>
+
+                        
+                        </div>
+                      </div>
+
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-6">
                   <div class="card">
                     <div class="card-header">PRESTAMO ANALISTA</div>
                     <div class="card-body p-0">
@@ -111,7 +190,8 @@
                     <div class="card-header">
                         <i class="fa fa-align-justify"></i>Evaluaciones
                     </div>
-                    <div class="card-body"> <table class="table table-bordered table-striped table-sm">
+                    <div class="card-body"> 
+                      <table class="table table-bordered table-striped table-sm">
                             <thead>
                                 <tr>
                                   <th>Evaluador</th>
@@ -171,38 +251,38 @@
 
             <div class="col-md-12">
               <label for>Producto</label>
-              <input type="text" v-if="form.estado=='PENDIENTE'" v-model="form.producto" class="form-control" />
-              <input type="text" V-else v-model="form.producto" class="form-control" disabled />
+              <input type="text"  v-model="form.producto" class="form-control" />
+              <!-- <input type="text" V-else v-model="form.producto" class="form-control" disabled /> -->
             </div>
             <div class="col-md-6">
               <label for>Aporte</label>
-              <input type="text" v-if="form.estado=='PENDIENTE'"  v-model="form.aporte" class="form-control" />
-              <input type="text" v-else v-model="form.aporte" class="form-control" disabled />
+              <input type="text"   v-model="form.aporte" class="form-control" />
+              <!-- <input type="text" v-else v-model="form.aporte" class="form-control" disabled /> -->
             </div>
             <div class="col-md-6">
               <label for>Importe</label>
-              <input type="text" v-if="form.estado=='PENDIENTE'"  v-model="form.importe" class="form-control" />
-              <input type="text" v-else  v-model="form.importe" class="form-control" disabled />
+              <input type="text"   v-model="form.importe" class="form-control" />
+              <!-- <input type="text" v-else  v-model="form.importe" class="form-control" disabled /> -->
             </div>
             <div class="col-md-12">
               <label for>Plazo</label>
-              <input type="text" v-if="form.estado=='PENDIENTE'" v-model="form.plazo" class="form-control" />
-              <input type="text" v-else v-model="form.plazo" class="form-control" disabled />
+              <input type="text"  v-model="form.plazo" class="form-control" />
+              <!-- <input type="text" v-else v-model="form.plazo" class="form-control" disabled /> -->
             </div>
             <div class="col-md-6">
               <label for>Cuotas</label>
-              <input type="text" v-if="form.estado=='PENDIENTE'" v-model="form.cuotas" class="form-control" />
-              <input type="text" v-else v-model="form.cuotas" class="form-control" disabled />
+              <input type="text"  v-model="form.cuotas" class="form-control" />
+              <!-- <input type="text" v-else v-model="form.cuotas" class="form-control" disabled /> -->
             </div>
             <div class="col-md-6">
               <label for>Tasa</label>
-              <input type="text" v-if="form.estado=='PENDIENTE'" v-model="form.tasa" class="form-control" />
-              <input type="text" v-else v-model="form.tasa" class="form-control" disabled />
+              <input type="text"  v-model="form.tasa" class="form-control" />
+              <!-- <input type="text" v-else v-model="form.tasa" class="form-control" disabled /> -->
             </div>
             
             <div class="col-md-12">
-              <button class="btn btn-success w-100 mb-1 mt-2" v-if="form.estado=='PENDIENTE'" @click="firmarEvaluacion()">FIRMAR</button>
-              <button class="btn btn-def w-100 mb-1 mt-2" v-else>FIRMAR</button>
+              <button class="btn btn-success w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button>
+              <!-- <button class="btn btn-def w-100 mb-1 mt-2" v-else>FIRMAR</button> -->
             </div>
             <!-- <div class="col-md-12">
               <button class="btn btn-success w-100 mb-1 mt-1">GUARDAR</button>
