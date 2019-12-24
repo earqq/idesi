@@ -86,22 +86,22 @@
                             <tbody>
                                 <tr >
                                     <td>Endeudamiento</td>
-                                    <td v-text="parseFloat(cuantitativa.ratios_endeudamiento,2)"></td>
+                                    <td v-text="cuantitativa.ratios_endeudamiento.toFixed(2)"></td>
                                     <td  v-text="cuantitativa.ratios_endeudamiento_resultado"></td>
                                 </tr> 
                                  <tr >
                                     <td>Margen Neto</td>
-                                    <td v-text="parseFloat(cuantitativa.ratios_margen_neto,2)"></td>
+                                    <td v-text="cuantitativa.ratios_margen_neto.toFixed(2)"></td>
                                     <td v-text="cuantitativa.ratios_margen_neto_resultado"></td>
                                 </tr> 
                                  <tr >
                                     <td>Liquidez</td>
-                                    <td v-text="parseFloat(cuantitativa.ratios_liquidez,2)"></td>
+                                    <td v-text="cuantitativa.ratios_liquidez.toFixed(2)"></td>
                                     <td v-text="cuantitativa.ratios_liquidez_resultado"></td>
                                 </tr> 
                                  <tr >
                                     <td>Solvencia</td>
-                                    <td v-text="parseFloat(cuantitativa.ratios_solvencia,2)"></td>
+                                    <td v-text="cuantitativa.ratios_solvencia.toFixed(2)"></td>
                                     <td v-text="cuantitativa.ratios_solvencia_resultado"></td>
                                 </tr>                           
                             </tbody>
