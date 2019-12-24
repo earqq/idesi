@@ -69060,9 +69060,10 @@ var render = function() {
                                         ? _c("td", {
                                             domProps: {
                                               textContent: _vm._s(
-                                                _vm.cuantitativa.ratios_endeudamiento.toFixed(
-                                                  2
-                                                )
+                                                parseFloat(
+                                                  _vm.cuantitativa
+                                                    .ratios_endeudamiento
+                                                ).toFixed(2)
                                               )
                                             }
                                           })
@@ -69085,9 +69086,10 @@ var render = function() {
                                         ? _c("td", {
                                             domProps: {
                                               textContent: _vm._s(
-                                                _vm.cuantitativa.ratios_margen_neto.toFixed(
-                                                  2
-                                                )
+                                                parseFloat(
+                                                  _vm.cuantitativa
+                                                    .ratios_margen_neto
+                                                ).toFixed(2)
                                               )
                                             }
                                           })
@@ -69110,9 +69112,10 @@ var render = function() {
                                         ? _c("td", {
                                             domProps: {
                                               textContent: _vm._s(
-                                                _vm.cuantitativa.ratios_liquidez.toFixed(
-                                                  2
-                                                )
+                                                parseFloat(
+                                                  _vm.cuantitativa
+                                                    .ratios_liquidez
+                                                ).toFixed(2)
                                               )
                                             }
                                           })
@@ -69135,9 +69138,10 @@ var render = function() {
                                         ? _c("td", {
                                             domProps: {
                                               textContent: _vm._s(
-                                                _vm.cuantitativa.ratios_solvencia.toFixed(
-                                                  2
-                                                )
+                                                parseFloat(
+                                                  _vm.cuantitativa
+                                                    .ratios_solvencia
+                                                ).toFixed(2)
                                               )
                                             }
                                           })
