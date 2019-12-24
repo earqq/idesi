@@ -90,6 +90,17 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
         ],
+        'mongo' => [
+            'driver' => 'mongodb',
+            'host' => env('DB_HOST', 'localhost'),
+            'port' => '27017',
+            'database' => env("DB_MONGO"),
+            'username' => '',
+            'password' => '',
+            'options' => [
+                'database' => 'styde' // sets the authentication database required by mongo 3
+            ]
+        ],
 
     ],
 
