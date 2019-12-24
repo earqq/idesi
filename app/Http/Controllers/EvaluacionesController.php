@@ -192,8 +192,6 @@ class EvaluacionesController extends Controller
         \Log::alert('Costo de venta total: '.$costo_venta_total);
         //Validacion
         $negocio=negocio::where('nombre',$request->titular["giro_negocio"])->first();
-        \Log::alert("negocio");
-        \Log::alert(floatval($negocio->costo));
         $costo_venta_validacion=$ingresos_ventas_validacion/100*floatval($negocio->costo);
         \Log::alert('Costo de venta validacion: '.$costo_venta_validacion);
         //MARGEN BRUTO
