@@ -20,11 +20,8 @@
                     <td v-text="prestamo.created_at"></td>
                     <td v-text="prestamo.estado"></td>
                     <td>
-                      <button
-                        class="btn btn-success"
-                        style="width:50%"
-                        @click="methodsDetalle(prestamo.id)"
-                      >Evaluar</button>
+                      <button v-if="prestamo.estado=='PENDIENTE'" class="btn btn-success" style="width:50%" @click="methodsDetalle(prestamo.id)" >Evaluar</button>
+                      <button v-else class="btn btn-def" style="width:50%" @click="methodsDetalle(prestamo.id)" >Detalles</button>
                     </td>
                   </tr>
                 </tbody>
@@ -159,40 +156,53 @@
 
         <div class="col-md-3 m-0 views">
           <div class="row m-0">
-            <div class="col-md-12 status pt-4 pb-4 pl-3">
+            <div class="col-md-12 status pt-4 pb-4 pl-3" >
               <input type="radio" v-model="form.estado" value="APROBADO">APROBADO
-              <input type="radio" v-model="form.estado" value="OBSERVADO">OBSERVADO
+              <!-- <input type="radio" v-model="form.estado" value="OBSERVADO">OBSERVADO -->
               <input type="radio" v-model="form.estado" value="DESAPROBADO">DESAPROBADO
               <!-- <textarea  v-model="form.detalle" cols="auto" rows="5" class="w-100"></textarea> -->
             </div>
 
+            <!-- <div class="col-md-12 mt-4" v-else>
+              <label v-text="form.estado" v-if="form.estado=='DESAPROBADO'" style="width: 100%;background: #e3342f;text-align: center; padding: 10px 10px; color: #fff;  font-weight: 100;"></label>
+              <label v-text="form.estado" v-else style="width: 100%;background: #009688;text-align: center; padding: 10px 10px; color: #fff;  font-weight: 100;"></label>
+           
+            </div> -->
+
             <div class="col-md-12">
               <label for>Producto</label>
-              <input type="text" v-model="form.producto" class="form-control" />
+              <input type="text" v-if="form.estado=='PENDIENTE'" v-model="form.producto" class="form-control" />
+              <input type="text" V-else v-model="form.producto" class="form-control" disabled />
             </div>
             <div class="col-md-6">
               <label for>Aporte</label>
-              <input type="text" v-model="form.aporte" class="form-control" />
+              <input type="text" v-if="form.estado=='PENDIENTE'"  v-model="form.aporte" class="form-control" />
+              <input type="text" v-else v-model="form.aporte" class="form-control" disabled />
             </div>
             <div class="col-md-6">
               <label for>Importe</label>
-              <input type="text" v-model="form.importe" class="form-control" />
+              <input type="text" v-if="form.estado=='PENDIENTE'"  v-model="form.importe" class="form-control" />
+              <input type="text" v-else  v-model="form.importe" class="form-control" disabled />
             </div>
             <div class="col-md-12">
               <label for>Plazo</label>
-              <input type="text" v-model="form.plazo" class="form-control" />
+              <input type="text" v-if="form.estado=='PENDIENTE'" v-model="form.plazo" class="form-control" />
+              <input type="text" v-else v-model="form.plazo" class="form-control" disabled />
             </div>
             <div class="col-md-6">
               <label for>Cuotas</label>
-              <input type="text" v-model="form.cuotas" class="form-control" />
+              <input type="text" v-if="form.estado=='PENDIENTE'" v-model="form.cuotas" class="form-control" />
+              <input type="text" v-else v-model="form.cuotas" class="form-control" disabled />
             </div>
             <div class="col-md-6">
               <label for>Tasa</label>
-              <input type="text" v-model="form.tasa" class="form-control" />
+              <input type="text" v-if="form.estado=='PENDIENTE'" v-model="form.tasa" class="form-control" />
+              <input type="text" v-else v-model="form.tasa" class="form-control" disabled />
             </div>
             
             <div class="col-md-12">
-              <button class="btn btn-success w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button>
+              <button class="btn btn-success w-100 mb-1 mt-2" v-if="form.estado=='PENDIENTE'" @click="firmarEvaluacion()">FIRMAR</button>
+              <button class="btn btn-def w-100 mb-1 mt-2" v-else>FIRMAR</button>
             </div>
             <!-- <div class="col-md-12">
               <button class="btn btn-success w-100 mb-1 mt-1">GUARDAR</button>
@@ -246,6 +256,7 @@ export default {
     methodsPrestamo() {
       this.$http.get(`/${this.resource}/prestamos/`).then(response => {
         this.prestamos = response.data;
+        console.log(this.prestamos);
       });
     },
     methodsDetalle(id) {
@@ -262,7 +273,7 @@ export default {
           this.form.plazo = this.detalle.plazo;
           this.form.cuotas = this.detalle.cuotas;
           this.form.tasa = this.detalle.tasa;
-          this.form.tipo = "";
+          this.form.estado = this.detalle.estado;
           this.form.prestamos_id = id;
           this.id_prestamo= id;
         });
@@ -289,26 +300,17 @@ export default {
       //  }
 
       this.$http
-        .post(`/${this.resource}/prestamos/evaluar`, this.form)
+        .post(`/${this.resource}/prestamos/evaluarFinal`, this.form)
         .then(response => {
-          if (response.data.success) {
-            console.log();
-          } else {
-            this.resetForm();
-            this.$toast.error(
-              "El cliente ya existe!",
-              "Error",
-              this.notificationSystem.options.error
-            );
-          }
+
+            this.$toast.success(
+              "El evaluacion fue exitosa",
+              "Exitoso",
+              this.notificationSystem.options.success
+            ); 
+
         })
-        // .catch(error => {
-        //   if (error.response.status === 422) {
-        //     this.errors = error.response.data;
-        //   } else {
-        //     this.$message.error(error.response.data.message);
-        //   }
-        // })
+
         .then(() => {
           // this.loading_submit = false;
         });

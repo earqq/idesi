@@ -106,6 +106,57 @@ class EvaluacionController extends Controller
             }
     } 
 
+    public function evaluarFinal(Request $request)
+    {
+      
+            try{
+
+                   DB::beginTransaction();
+
+                //    return $request; 
+                    
+                   $prestamo = Prestamo::find($request['prestamos_id']);
+                   
+                   if($request['estado']=='DESAPROBADO' ){
+
+                    $prestamo->producto_final = 0;
+                    $prestamo->forma_final = 0;
+                    $prestamo->aporte_final = 0;
+                    $prestamo->importe_final = 0;
+                    $prestamo->plazo_final = 0;
+                    $prestamo->cuota_final = 0;
+                    $prestamo->tasa_final = 0;
+                    $prestamo->estado = $request['estado'];
+                    $prestamo->save();
+
+                   }else{
+
+                    $prestamo->producto_final = $request['producto'];
+                    $prestamo->aporte_final = $request['aporte'];
+                    $prestamo->importe_final = $request['importe'];
+                    $prestamo->plazo_final = $request['plazo'];
+                    $prestamo->cuota_final = $request['cuotas'];
+                    $prestamo->tasa_final = $request['tasa'];
+                    $prestamo->estado = $request['estado'];
+                    $prestamo->save();
+
+                   }
+                  
+    
+                    DB::commit();
+                    return [
+                        'success' => true,
+                        'data' => 'Cliente creado',
+                    ];
+    
+            } catch (Exception $e){
+                return [
+                    'success' => false,
+                ];
+                DB::rollBack();
+            }
+    } 
+
     /**
      * Show the form for editing the specified resource.
      *
