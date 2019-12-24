@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Prestamo;
 use App\Evaluacion;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class EvaluacionController extends Controller
 {
@@ -60,6 +62,15 @@ class EvaluacionController extends Controller
         return $prestamo;
     }
 
+    public function showF($id)
+    {
+        $prestamo = Prestamo::find($id);
+        $evaluacion = Evaluacion::join('users','evaluacions.users_id','=','users.id')
+                                    ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name')
+                                    ->where('prestamos_id',$prestamo->id)->get();
+         return compact('prestamo','evaluacion');
+    }
+
 
     // public function evaluar($id)
     // {
@@ -69,40 +80,31 @@ class EvaluacionController extends Controller
 
     public function evaluar(Request $request)
     {
-        if($request['tipo']=='APROBADO'){
-            $evaluacion = new Evaluacion();
-            $evaluacion->producto  = $request['producto'] ;
-            $evaluacion->aporte  = $request['aporte'];
-            $evaluacion->importe  = $request['importe'];
-            $evaluacion->plazo  = $request['plazo'];
-            $evaluacion->cuotas  = $request['cuotas'];
-            $evaluacion->tasa  = $request['tasa'];
-            $evaluacion->estado  = $request['tipo'];
-            $evaluacion->prestamos_id  = $request['prestamos_id'];
-            $evaluacion->users_id  = '1';
-            $evaluacion->save();
-            // $prestamo = Prestamo::find($request['prestamos_id']);
-            // $prestamo->estado = $request['tipo'];
-            // $prestamo->save();
-        }
-        elseif($request['tipo']=='OBSERVADO'){
+      
+            try{
 
-        }
-        elseif($request['tipo']=='DESAPROBADO'){
-            $evaluacion = new Evaluacion();
-            $evaluacion->producto  = 00;
-            $evaluacion->aporte  = 00;
-            $evaluacion->importe  = 00;
-            $evaluacion->plazo  = 00;
-            $evaluacion->cuotas  = 00;
-            $evaluacion->tasa  = 00;
-            $evaluacion->estado  = $request['tipo'];
-            $evaluacion->prestamos_id  = $request['prestamos_id'];
-            $evaluacion->users_id  = '1';
-            $evaluacion->save();
-        }
-        // return $request['tipo'];
-    }
+                   DB::beginTransaction();
+    
+                   $evaluacion = new Evaluacion();
+                   $evaluacion->detalle  = $request['detalle'] ;
+                   $evaluacion->estado  = $request['estado'];
+                   $evaluacion->prestamos_id  = $request['prestamos_id'];
+                   $evaluacion->users_id  = Auth::user()->id;;
+                   $evaluacion->save();
+    
+                    DB::commit();
+                    return [
+                        'success' => true,
+                        'data' => 'Cliente creado',
+                    ];
+    
+            } catch (Exception $e){
+                return [
+                    'success' => false,
+                ];
+                DB::rollBack();
+            }
+    } 
 
     /**
      * Show the form for editing the specified resource.

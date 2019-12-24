@@ -20,8 +20,10 @@ class CreateRolesTable extends Migration
             $table->boolean('condicion')->default(1);          
         });
         DB::table('roles')->insert(array('id'=>'1','nombre'=>'Administrador', 'descripcion'=>'Administradores de área'));
-        DB::table('roles')->insert(array('id'=>'2','nombre'=>'Anaista', 'descripcion'=>'Gestionar Prestamo'));
-        DB::table('roles')->insert(array('id'=>'3','nombre'=>'otro', 'descripcion'=>'otro'));
+        DB::table('roles')->insert(array('id'=>'2','nombre'=>'Analista', 'descripcion'=>'Gestionar Prestamo'));
+        DB::table('roles')->insert(array('id'=>'3','nombre'=>'Evaluador', 'descripcion'=>'Evaluador Común'));
+        DB::table('roles')->insert(array('id'=>'4','nombre'=>'Evaluador Fianl', 'descripcion'=>'Evaluar prestamos'));
+        DB::table('roles')->insert(array('id'=>'5','nombre'=>'Plataforma', 'descripcion'=>'Entregar Prestamo'));
 
     }
 

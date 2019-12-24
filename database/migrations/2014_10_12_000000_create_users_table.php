@@ -16,6 +16,10 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('tipo_documento', 20)->nullable();
+            $table->string('num_documento', 20)->unique();
+            $table->string('direccion', 70)->nullable();
+            $table->string('telefono', 20)->nullable();
             $table->string('email')->unique();
             $table->string('usuario')->unique();
             $table->string('password');
@@ -31,9 +35,9 @@ class CreateUsersTable extends Migration
         });
 
 
-        DB::table('users')->insert(array('id'=>'1','name'=>'gian marco albornoz rimas',
-        'email'=>'albornozrimas123@gmail.com','usuario'=>'admin', 
-        'password'=>'$2y$10$iQU.I7teZQ4Sxt56c/1TouTr4GdGUyBAU7Kgzq7mQahVbbvHvNouS', 'condicion'=>'1'
+        DB::table('users')->insert(array('id'=>'1','name'=>'Administrador','tipo_documento'=>'DNI','num_documento'=>'77777777','direccion'=>'Jr abtao','telefono'=>'999999999',
+        'email'=>'admin@gmail.com','usuario'=>'admin', 
+        'password'=>'$2y$10$5KqKxxAuvqz.69p7vPryt.bOrVOaZOyCY25LIBIfFmmeutQ7oDH8a', 'condicion'=>'1'
         ,'idrol'=>'1'));
 
     }

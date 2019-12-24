@@ -1,184 +1,492 @@
 <template>
   <div class="row d-flex justify-content-center">
-          <div class="col-md-2 image">
-            <img src alt />
-          </div>
+    <div class="col-md-12 p-0">
+      <div class="nav-tabs style-tab-menu">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item col-md-2">
+            <a class="nav-link active text-center " id="personal-tab" data-toggle="tab" href="#personal" role="tab" aria-controls="personal" aria-selected="true" >Datos Personales</a>
+          </li>
 
-          <div class="col-md-10">
-            <div class="row">
-              <div class="form-group col-md-3">
-                <label for="documento">Documento de Identidad</label>
+          <li class="nav-item col-md-2">
+            <a class="nav-link text-center" id="laboral-tab" data-toggle="tab" href="#laboral"  role="tab" aria-controls="laboral" aria-selected="false" >Datos Laborales</a>
+          </li>
+          <li class="nav-item col-md-2">
+            <a class="nav-link text-center" id="familiar-tab"  data-toggle="tab" href="#familiar" role="tab" aria-controls="familiar" aria-selected="false" >Datos Familiares</a>
+          </li>
+          <li class="nav-item col-md-2">
+            <a  class="nav-link text-center" id="adicional-tab" data-toggle="tab"  href="#adicional"   role="tab" aria-controls="adicional" aria-selected="false" >Datos Adicionales</a>
+          </li>
+          <li class="nav-item col-md-2">
+            <a class="nav-link text-center"  id="asociativa-tab"  data-toggle="tab"  href="#asociativa" role="tab" aria-controls="asociativa"  aria-selected="false" >Obligaciones asociativas</a>
+          </li>
+          <li class="nav-item col-md-2">
+            <a  class="nav-link text-center" id="declaracion-tab"  data-toggle="tab"  href="#declaracion" role="tab" aria-controls="declaracion" aria-selected="false" >Declaracion</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-12 body-tabs">
+        <div class="tab-content" id="myTabContent">
+          <div  class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab"  >
+             <div class="row">
+               <div class="form-group col-md-2">
+                <label>Tipo de Documento</label>
+                <select v-model="form.cliente.tipo_documento" class="form-control">
+                  <option value="0">SELECCIONE</option>
+                  <option value="DNI">DNI</option>
+                  <option value="CE">CE</option>
+                  <option value="PASAPORTE">PASAPORTE</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label for="documento">Nro</label>
                 <input
                   type="text"
                   class="form-control letter-5"
-                  v-model="form.documento"
+                  v-model="form.cliente.documento"
                   @change="datosCliente()"
-                  v-mask="{mask: '99999999', greedy: true}"
                 />
               </div>
 
+              <div class="form-group col-md-2">
+                <label for="nacimiento">Fecha de Nacimiento</label>
+                <date-pick v-model="form.natural.nacimiento" :months="mesEs" :weekdays="diaEs"></date-pick>
+              </div>
+
+
               <div class="form-group col-md-3">
                 <label for="nombres">Nombres</label>
-                <input type="text" class="form-control" v-model="form.nombres" placeholder />
+                <input type="text" class="form-control" v-model="form.natural.nombres" placeholder />
               </div>
 
               <div class="form-group col-md-3">
                 <label for="apellidos">Apellidos</label>
-                <input type="text" class="form-control" v-model="form.apellidos" placeholder />
+                <input type="text" class="form-control" v-model="form.natural.apellidos" placeholder />
               </div>
 
               <div class="form-group col-md-3">
-                <label for="nacimiento">Fecha de Nacimiento</label>
-                <date-pick v-model="form.nacimiento" :months="mesEs" :weekdays="diaEs"></date-pick>
-              </div>
-                <div class="form-group col-md-3">
-                <label for="nacimiento">Codigo Cliente</label>
-                <input type="text" class="form-control" v-model="form.codigo" placeholder />
+                <label for="apellidos">Nacionalidad</label>
+                <input type="text" class="form-control" v-model="form.cliente.pais" placeholder />
               </div>
               <div class="form-group col-md-3">
+                <label for="apellidos">Departamento de Nacimiento</label>
+                <input type="text" class="form-control" v-model="form.cliente.departamento" placeholder />
+              </div>
+              <div class="form-group col-md-3">
+                <label for="apellidos">Provincia de Nacimiento</label>
+                <input type="text" class="form-control" v-model="form.cliente.provincia" placeholder />
+              </div>
+              <div class="form-group col-md-3">
+                <label for="apellidos">Distrito de Nacimiento</label>
+                <input type="text" class="form-control" v-model="form.cliente.distrito" placeholder />
+              </div>
+
+
+
+              <div class="form-group col-md-2">
                 <label>Estado Civil</label>
-                <select v-model="form.estado_civil" class="form-control">
-                  <option value="0">SELECCIONE ...</option>
+                <select v-model="form.natural.estado_civil" class="form-control">
+                  <option value="0">SELECCIONE</option>
                   <option value="SOLTERO">SOLTERO</option>
                   <option value="CASADO">CASADO</option>
                   <option value="CONVIVIENTE">CONVIVIENTE</option>
-                  <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
+                  <option value="DIVORCIADO">DIVORCIADO</option>
                   <option value="VIUDO">VIUDO</option>
                 </select>
               </div>
+              <div class="form-group col-md-2">
+                <label>Genero</label>
+                <select v-model="form.natural.genero" class="form-control">
+                  <option value="0">SELECCIONE</option>
+                  <option value="FEMENINO">FEMENINO</option>
+                  <option value="MASCULINO">MASCULINO</option>
+                </select>
+              </div>
+              <div class="form-group col-md-2">
+                <label>Grado de Instrucción</label>
+                <select v-model="form.natural.grado_instruccion" class="form-control">
+                  <option value="0">SELECCIONE</option>
+                  <option value="PRIMARIA">PRIMARIA</option>
+                  <option value="TECNICO">TECNICO</option>
+                  <option value="SUPERIOR">SUPERIOR</option>
+                  <option value="OTRO">OTRO</option>
+                </select>
+              </div>
 
-              <div class="col-md-3">
-                <div class="form-group">
+              <div class="form-group  col-md-6">
                   <label>Ocupación</label>
-                  <input type="text" v-model="form.ocupacion" class="form-control" />
-                </div>
+                  <input type="text" v-model="form.natural.ocupacion" class="form-control" />
               </div>
-              <div class="col-md-3">
-                <div class="form-group">
+
+            <div class="form-group col-md-6">
+                <label>Domicilio Declarado</label>
+                <input type="text" v-model="form.natural.direccion" class="form-control" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label>Domicilio Reniec</label>
+                <input type="text" v-model="form.natural.direccion_registros" class="form-control" disabled/>
+            </div>
+
+            <div class="form-group col-md-2">
+                  <label>Número</label>
+                  <input type="text" v-model="form.natural.numero" class="form-control" />
+              </div>
+              <div class="form-group col-md-2">
+                  <label>Manzana</label>
+                  <input type="text" v-model="form.natural.manzana" class="form-control" />
+              </div>
+              <div class="form-group col-md-2">
+                  <label>Lote</label>
+                  <input type="text" v-model="form.natural.lote" class="form-control" />
+              </div>
+              <div class="form-group col-md-2">
+                  <label>Departamento</label>
+                  <input type="text" v-model="form.natural.dpto" class="form-control" />
+              </div>
+              <div class="form-group col-md-2">
+                  <label>Interior</label>
+                  <input type="text" v-model="form.natural.int" class="form-control" />
+              </div>
+              <div class="form-group col-md-2">
+                  <label>Piso</label>
+                  <input type="text" v-model="form.natural.piso" class="form-control" />
+              </div>
+
+              <div class="form-group col-md-4">
+                  <label>Distrito</label>
+                  <input type="text" v-model="form.natural.domicilio_distrito" class="form-control" />
+              </div>
+              <div class="form-group col-md-4">
+                  <label>Provincia</label>
+                  <input type="text" v-model="form.natural.domicilio_provincia" class="form-control" />
+              </div>
+              <div class="form-group col-md-4">
+                  <label>Departamento</label>
+                  <input type="text" v-model="form.natural.domicilio_departamento" class="form-control" />
+              </div>
+
+
+              <div class="form-group col-md-3">
+                  <label>Referencia</label>
+                  <input type="text" v-model="form.natural.referencia" class="form-control" />
+              </div>
+              <div class="form-group col-md-3">
                   <label>Teléfono</label>
-                  <input type="text" v-model="form.telefono" class="form-control" />
-                </div>
+                  <input type="text" v-model="form.natural.telefono" class="form-control" />
               </div>
-              <div class="col-md-3">
-                <div class="form-group">
+
+              <div class="form-group col-md-3">
                   <label>Celular</label>
                   <input
                     type="text"
-                    v-model="form.celular"
+                    v-model="form.natural.celular"
                     class="form-control letter-5"
                     v-mask="{mask: '+51 999999999', greedy: true}"
                   />
+              </div>
+
+              <div class="form-group col-md-3">
+                  <label>Email</label>
+                  <input type="text" v-model="form.natural.correo" class="form-control" />
+              </div>
+
+
+
+
+            </div>
+
+            <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+              <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="laboral" role="tabpanel" aria-labelledby="laboral-tab">
+            <div class="row">
+
+               <div class="form-group col-md-2">
+                <label>Estado Trabajador</label>
+                <select v-model="form.laboral.estado_laboral" class="form-control">
+                  <option value="0">SELECCIONE</option>
+                  <option value="TRABAJA">TRABAJA</option>
+                  <option value="NO TRABAJA">NO TRABAJA</option>
+                  <option value="JUBILADO">JUBILADO</option>
+                  <option value="AMA DE CASA">AMA DE CASA</option>
+                  <option value="ESTUDIANTE">ESTUDIANTE</option>
+                  <option value="OTROS">OTROS</option>
+                </select>
+              </div>
+              <div class="row col-md-12 m-0 p-0"  v-if="form.laboral.estado_laboral=='TRABAJA'">
+
+                <div class="form-group col-md-3">
+                  <label>Estado Trabajador</label>
+                  <select v-model="form.laboral.tipo_trabajador" class="form-control">
+                    <option value="0">SELECCIONE</option>
+                    <option value="INDEPENDIENTE">INDEPENDIENTE</option>
+                    <option value="DEPENDIENTE">DEPENDIENTE</option>
+                    <option value="AGRICULTOR">AGRICULTOR</option>
+                  </select>
                 </div>
+                <div class="form-group col-md-3">
+                  <label>Razon Social</label>
+                  <input type="text" class="form-control" v-model="form.laboral.razon_social">
+                </div>
+                <div class="form-group col-md-2">
+                  <label>Ingreso Mensual</label>
+                  <select v-model="form.laboral.ingreso_mensual" class="form-control">
+                    <option value="0">SELECCIONE</option>
+                    <option value="HASTA S/. 1000">HASTA S/. 1000</option>
+                    <option value="S/. 1.001 a S/ 2.500">S/. 1000 a S/ 2.500</option>
+                    <option value="S/. 2.500 a S/ 5.000">S/. 2.500 a S/ 5.000</option>
+                    <option value="S/. 5.001 a S/ 10.000">S/. 5.001 a S/ 10.000</option>
+                    <option value="S/ 10.001 A MÀS">S/ 10.001 A MÀS</option>
+                  </select>
+                </div>
+
+                <div class="form-group col-md-2">
+                  <label>Cargo/ Ocupaciòn</label>
+                  <input type="text" class="form-control" v-model="form.laboral.cargo_ocupacion">
+                </div>
+
+                <div class="form-group col-md-2">
+                  <label for="nacimiento">Fecha de Ingreso</label>
+                  <date-pick v-model="form.laboral.fecha_ingreso" :months="mesEs" :weekdays="diaEs"></date-pick>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="nacimiento">Giro del negocio</label>
+                  <input type="text" class="form-control" v-model="form.laboral.giro_negocio">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="nacimiento">Direcciòn</label>
+                  <input type="text" class="form-control" v-model="form.laboral.direccion">
+                </div>
+                <div class="form-group col-md-2">
+                  <label>Número</label>
+                  <input type="text" v-model="form.laboral.numero" class="form-control" />
+              </div>
+              <div class="form-group col-md-2">
+                  <label>Manzana</label>
+                  <input type="text" v-model="form.laboral.manzana" class="form-control" />
+              </div>
+              <div class="form-group col-md-2">
+                  <label>Lote</label>
+                  <input type="text" v-model="form.laboral.lote" class="form-control" />
+              </div>
+              <div class="form-group col-md-2">
+                  <label>Departamento</label>
+                  <input type="text" v-model="form.laboral.dpto" class="form-control" />
+              </div>
+              <div class="form-group col-md-2">
+                  <label>Interior</label>
+                  <input type="text" v-model="form.laboral.int" class="form-control" />
+              </div>
+              <div class="form-group col-md-2">
+                  <label>Piso</label>
+                  <input type="text" v-model="form.laboral.piso" class="form-control" />
               </div>
 
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>Departamento</label>
-                <select
-                  class="form-control"
-                  v-model="form.departamentos_id"
-                  filterable
-                  @change="filterProvince"
-                  dusk="departamentos_id"
-                >
-                  <option value="0">SELECCIONE</option>
-                  <option
-                    v-for="option in all_departments"
-                    :key="option.id"
-                    :value="option.id"
-                    :label="option.descripcion"
-                  >></option>
-                </select>
+              <div class="form-group col-md-4">
+                  <label>Distrito</label>
+                  <input type="text" v-model="form.laboral.distrito" class="form-control" />
               </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>Provincia</label>
-                <select
-                  class="form-control text-uppercase"
-                  v-model="form.provincias_id"
-                  filterable
-                  @change="filterDistrict"
-                  dusk="provincias_id"
-                >
-                  <option value="0">SELECCIONE</option>
-                  <option
-                    v-for="option in provinces"
-                    :key="option.id"
-                    :value="option.id"
-                    :label="option.descripcion"
-                  >></option>
-                </select>
+              <div class="form-group col-md-4">
+                  <label>Provincia</label>
+                  <input type="text" v-model="form.laboral.provincia" class="form-control" />
               </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label>Distrito</label>
-                <select
-                  class="form-control text-uppercase"
-                  v-model="form.distritos_id"
-                  filterable
-                  dusk="distritos_id"
-                >
-                  <option value="0">SELECCIONE</option>
-                  <option
-                    v-for="option in districts"
-                    :key="option.id"
-                    :value="option.id"
-                    :label="option.descripcion"
-                  >></option>
-                </select>
+              <div class="form-group col-md-4">
+                  <label>Departamento</label>
+                  <input type="text" v-model="form.laboral.departamento" class="form-control" />
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Dirección Declarado</label>
-                <input type="text" v-model="form.direccion" class="form-control" />
+              <div class="form-group col-md-4">
+                  <label>Pais</label>
+                  <input type="text" v-model="form.laboral.pais" class="form-control" />
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Dirección Reniec</label>
-                <input type="text" v-model="form.direccion_registros" class="form-control" />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Referencia de domicilio declarado</label>
-                <input type="text" v-model="form.referencia" class="form-control" />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Tipo Domicilio</label>
-                <input type="text" v-model="form.tipo_domicilio" class="form-control" />
-              </div>
-            </div>
 
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Centro Laboral</label>
-                <input type="text" v-model="form.centro_laboral" class="form-control" />
+
+              <div class="form-group col-md-3">
+                  <label>Referencia</label>
+                  <input type="text" v-model="form.laboral.referencia" class="form-control" />
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group"> 
-                <label>Dirección Centro Laboral</label>
-                <input type="text" v-model="form.direccion_laboral" class="form-control" />
+              <div class="form-group col-md-3">
+                  <label>Teléfono</label>
+                  <input type="text" v-model="form.laboral.telefono" class="form-control" />
               </div>
-            </div>
+ 
+              <div class="form-group col-md-3">
+                  <label>Celular</label>
+                  <input
+                    type="text"
+                    v-model="form.laboral.celular"
+                    class="form-control letter-5"
+                    v-mask="{mask: '+51 999999999', greedy: true}"
+                  />
+              </div>
+
+              <div class="form-group col-md-3">
+                  <label>Email</label>
+                  <input type="text" v-model="form.laboral.email" class="form-control" />
+              </div>
+
+
+              </div>
+               
+
 
             </div>
+
+            <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+              <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+              <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="familiar" role="tabpanel" aria-labelledby="familiar-tab">
+
+            <div class="row">
+              <div class="form-group col-md-2">
+                  <label>¿Tiene Hijos?</label>
+                  <select v-model="form.familia.hijos" class="form-control">
+                    <option value="0">SELECCIONE</option>
+                    <option value="SI">SI</option>
+                    <option value="NO">NO</option>
+                  </select>
+                </div>
+              <div class="form-group col-md-2">
+                  <label>Nro de hijos</label>
+                  <input type="text" class="form-control" v-model="form.familia.numero" v-if="form.familia.hijos=='SI'" >
+                  <input type="text" class="form-control" v-else disabled>
+                </div>
+
+
+
+            </div>
+
+            <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+              <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+              <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="adicional" role="tabpanel" aria-labelledby="adicional-tab">
+            
+            <div class="row">
+              <div class="col-md-12 d-flex justify-content-center">
+                <label class="text-center" >Completar esta sección solo si el/la solicitante menor de edad se haya inscrito a través de un(a) representate</label>
+              </div>
+               <div class="form-group col-md-12">
+                  <label>Apellidos y nombres del representate </label>
+                  <input type="text" class="form-control" v-model="form.adicional.representante" >
+                </div>
+                 <div class="form-group col-md-4">
+                  <label>Tipo de Documento</label>
+                  <select v-model="form.adicional.documento" class="form-control">
+                    <option value="0">SELECCIONE</option>
+                    <option value="DNI">DNI</option>
+                    <option value="CE">CE</option>
+                    <option value="PASAPORTE">PASAPORTE</option>
+                  </select>
+                </div>
+
+              <div class="form-group col-md-4">
+                <label for="documento">Nro</label>
+                <input type="text" class="form-control letter-5" v-model="form.adicional.numero" />
+              </div>
+              <div class="form-group col-md-4">
+                  <label>Relación con el solicitante</label>
+                  <select v-model="form.adicional.relacion" class="form-control">
+                    <option value="0">SELECCIONE</option>
+                    <option value="PADRE">PADRE</option>
+                    <option value="MADRE">MADRE</option>
+                    <option value="OTRO">OTRO</option>
+                  </select>
+              </div>
+              <div class="col-md-12 d-flex justify-content-center">
+                <label class="text-center">********* Esta sección debe ser llenada por la Cooperativa **********</label>
+              </div>
+            </div>
+            <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+              <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+              <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="asociativa"  role="tabpanel"  aria-labelledby="asociativa-tab"  >
+            <div class="row">
+              <div class="form-group col-md-3">
+                  <label>Inscripcion </label>
+                  <input type="text" class="form-control" v-model="form.asociativa.inscripcion" >
+              </div>
+              <div class="form-group col-md-3">
+                  <label>Aporte </label>
+                  <input type="text" class="form-control" v-model="form.asociativa.aporte" >
+              </div>
+              <div class="form-group col-md-3">
+                  <label>Fondo de prevencion social </label>
+                  <input type="text" class="form-control" v-model="form.asociativa.fondo" >
+              </div>
+              <div class="form-group col-md-3">
+                  <label>Fondo de prevencion social opcional </label>
+                  <input type="text" class="form-control" v-model="form.asociativa.fondo_opcional" >
+              </div>
+            </div>
+            <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+              <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+              <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="declaracion" role="tabpanel" aria-labelledby="declaracion-tab" >
+            <div class="row">
+              <div class="form-group col-md-12">
+                  <label>Es sujeto a informar a la UIF Perú</label>
+                  <select v-model="form.declaracion.uif" class="form-control">
+                    <option value="0">SELECCIONE</option>
+                    <option value="SI">SI</option>
+                    <option value="NO">NO</option>
+                  </select>
+                </div>
+              <div class="form-group col-md-12">
+                  <label>Es PEP (persona expuesta politicamente)</label>
+                  <select v-model="form.declaracion.pep" class="form-control">
+                    <option value="0">SELECCIONE</option>
+                    <option value="SI">SI</option>
+                    <option value="NO">NO</option>
+                  </select>
+                </div>
+              <div class="form-group col-md-12">
+                  <label>Estado</label>
+                  <select v-model="form.declaracion.estado" class="form-control">
+                    <option value="0">SELECCIONE</option>
+                    <option value="ADMITIDO">ADMITIDO</option>
+                    <option value="RECHAZADO">RECHAZADO</option>
+                  </select>
+                </div>
+              <div class="form-group col-md-12">
+                  <label>OBSERVACIONES</label>
+                  <textarea class="form-control" v-model="form.declaracion.obervaciones" cols="auto" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+              <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+              <a class="btn btn-orange" @click.prevent="submit()">Regsitrar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+              
+          <!-- <div class="col-md-10">
+           
           </div>
 
           <div class="col-md-2 offset-md-8 d-flex justify-content-end">
             <button class="btn btn-success w-100" @click.prevent="submit">Registrar Cliente</button>
-          </div>
-        </div>
+    </div> -->
+  </div>
 </template>
 
 <script>
-import DatePick from 'vue-date-pick';
+import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
 import { serviceNumber } from "../../../mixins/functions";
 
@@ -200,10 +508,10 @@ const mesConf = [
 const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 
 export default {
-mixins: [serviceNumber],
-  components: { DatePick},
-   props: ['tipo_persona'],
-        
+  mixins: [serviceNumber],
+  components: { DatePick },
+  props: ["tipo_persona"],
+
   data() {
     return {
       resource: "clientes",
@@ -229,38 +537,126 @@ mixins: [serviceNumber],
     };
   },
   async created() {
-    
-     await   this.$http.get(`/${this.resource}/datos/`).then(response => {
-      this.all_departments = response.data.departments;
-      this.all_provinces = response.data.provinces;
-      this.all_districts = response.data.districts;
-    });
+    // await this.$http.get(`/${this.resource}/datos/`).then(response => {
+    //   this.all_departments = response.data.departments;
+    //   this.all_provinces = response.data.provinces;
+    //   this.all_districts = response.data.districts;
+    // });
 
     await this.initForm();
   },
   methods: {
-
+    next() {
+      $(".nav-tabs .active")
+        .parent()
+        .next("li")
+        .find("a")
+        .trigger("click");
+    },
+    previous() {
+      $(".nav-tabs .active")
+        .parent()
+        .prev("li")
+        .find("a")
+        .trigger("click");
+    },
     initForm() {
       this.form = {
-        documento: "",
-        nombres: "",
-        apellidos: "",
-        nacimiento: "",
-        departamentos_id: "0",
-        provincias_id: "0",
-        distritos_id: "0",
-        estado_civil: "0",
-        ocupacion: "",
-        telefono: "",
-        celular: "",
-        codigo: "",
-        direccion: "",
-        referencia: "",
-        tipo_domicilio: "",
-        centro_laboral: "",
-        direccion_laboral: "",
-        tipo_persona: this.tipo_persona,
-        direccion_registros: "",
+        cliente:{
+          tipo_documento: 0,
+          documento: "",
+          codigo: "",
+          tipo_cliente: this.tipo_persona,
+          pais: "",
+          departamento: "",
+          provincia: "",
+          distrito: "",
+          numero_registro: "",
+          agencia: ""
+        },
+        natural:{
+          nombres: "",
+          apellidos: "",
+          nacimiento: "",
+          estado_civil: "0",
+          ocupacion: "",
+          telefono: "",
+          celular: "",
+          direccion: "",
+          direccion_registros: "",
+          referencia: "",
+          tipo_domicilio: 0,
+          centro_laboral: "",
+          direccion_laboral: "",
+          genero: 0,
+          grado_instruccion:0,
+          numero: "",
+          manzana: "",
+          lote: "",
+          dpto: "",
+          int: "",
+          piso:"",
+          domicilio_distrito:"",
+          domicilio_provincia:"",
+          domicilio_departamento:"",
+          correo:"",
+        },
+        laboral:{
+          estado_laboral:0,
+          tipo_trabajador:0,
+          razon_social:"",
+          ingreso_mensual: 0,
+          cargo_ocupacion:"",
+          fecha_ingreso:"",
+          giro_negocio: "",
+          direccion: "",
+          numero: "",
+          manzana: "",
+          dpto: "",
+          int: "",
+          piso:"",
+          lote:"",
+          distrito:"",
+          provincia:"",
+          departamento:"",
+          pais:"",
+          referencia:"",
+          telefono:"",
+          celular:"",
+          email:"",
+        
+        },
+         familia:{
+          hijos: "",
+          numero:"",
+          conyugue:0,
+        },
+
+        detalles: [],
+
+        adicional:{
+          representante: "",
+          documento: 0,
+          numero:"",
+          relacion: 0
+        },
+        asociativa:{
+          inscripcion:"",
+          aporte:"",
+          fondo:"",
+          fondo_opcional:"",
+
+        },
+
+        declaracion:{
+          uif: 0,
+          pep:0,
+          obervaciones:"",
+          estado: 0,
+          fecha: ""
+        }
+
+        
       };
     },
     resetForm() {
@@ -271,12 +667,12 @@ mixins: [serviceNumber],
       // me.loader = "true";
       axios
         .post("/consulta/dni", {
-          documento: this.form.documento
+          documento: this.form.cliente.documento
         })
         .then(function(response) {
           console.log(response.data);
-          me.form.nombres = response.data["nombres"];
-          me.form.apellidos = response.data["surnames"];
+          me.form.natural.nombres = response.data["nombres"];
+          me.form.natural.apellidos = response.data["surnames"];
 
           // me.loader = false;
         })

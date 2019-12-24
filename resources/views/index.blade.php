@@ -18,5 +18,6 @@
         </div>
 
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/sweetalert2.js') }}"></script>
     </body>
 </html>

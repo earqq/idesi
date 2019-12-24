@@ -34,17 +34,18 @@ class CreateLaboralsTable extends Migration
             $table->string('direccion', 45)->nullable();
             $table->string('numero', 45)->nullable();
             $table->string('manzana', 45)->nullable();
-            $table->string('lote', 45)->nullable();
-            $table->string('dpto', 45)->nullable();
-            $table->string('int', 45)->nullable();
-            $table->string('piso', 45)->nullable();
+            $table->string('lote', 5)->nullable();
+            $table->string('dpto', 5)->nullable();
+            $table->string('int', 5)->nullable();
+            $table->string('piso', 5)->nullable();
             $table->string('distrito', 45)->nullable();
             $table->string('provincia', 45)->nullable();
             $table->string('departamento', 45)->nullable();
             $table->string('pais', 45)->nullable();
             $table->string('referencia', 45)->nullable();
-            $table->string('telefono', 45)->nullable();
-            $table->string('celular', 45)->nullable();
+            $table->string('telefono', 15)->nullable();
+            $table->string('celular', 15)->nullable();
+            $table->string('email', 45)->nullable();
             $table->unsignedInteger('naturals_id');
             $table->softDeletes();
 

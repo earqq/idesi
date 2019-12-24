@@ -23,7 +23,7 @@ class Director extends Model
     /**
      * @var array
      */
-    protected $fillable = ['juridicos_id', 'nombres', 'documento'];
+    protected $fillable = ['juridicos_id', 'nombres', 'documento','cargo'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
