@@ -69054,9 +69054,7 @@ var render = function() {
                                       _c("td", {
                                         domProps: {
                                           textContent: _vm._s(
-                                            parseFloat(
-                                              _vm.cuantitativa
-                                                .ratios_endeudamiento,
+                                            _vm.cuantitativa.ratios_endeudamiento.toFixed(
                                               2
                                             )
                                           )
@@ -69079,9 +69077,7 @@ var render = function() {
                                       _c("td", {
                                         domProps: {
                                           textContent: _vm._s(
-                                            parseFloat(
-                                              _vm.cuantitativa
-                                                .ratios_margen_neto,
+                                            _vm.cuantitativa.ratios_margen_neto.toFixed(
                                               2
                                             )
                                           )
@@ -69104,8 +69100,7 @@ var render = function() {
                                       _c("td", {
                                         domProps: {
                                           textContent: _vm._s(
-                                            parseFloat(
-                                              _vm.cuantitativa.ratios_liquidez,
+                                            _vm.cuantitativa.ratios_liquidez.toFixed(
                                               2
                                             )
                                           )
@@ -69128,8 +69123,7 @@ var render = function() {
                                       _c("td", {
                                         domProps: {
                                           textContent: _vm._s(
-                                            parseFloat(
-                                              _vm.cuantitativa.ratios_solvencia,
+                                            _vm.cuantitativa.ratios_solvencia.toFixed(
                                               2
                                             )
                                           )
