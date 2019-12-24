@@ -86,22 +86,22 @@
                             <tbody>
                                 <tr >
                                     <td>Endeudamiento</td>
-                                    <td v-text="cuantitativa.ratios_endeudamiento.toFixed(2)"></td>
+                                    <td v-if='cuantitativa.radios_endeudamiento' v-text="cuantitativa.ratios_endeudamiento.toFixed(2)"></td>
                                     <td  v-text="cuantitativa.ratios_endeudamiento_resultado"></td>
                                 </tr> 
                                  <tr >
                                     <td>Margen Neto</td>
-                                    <td v-text="cuantitativa.ratios_margen_neto.toFixed(2)"></td>
+                                    <td v-if='cuantitativa.ratios_margen_neto' v-text="cuantitativa.ratios_margen_neto.toFixed(2)"></td>
                                     <td v-text="cuantitativa.ratios_margen_neto_resultado"></td>
                                 </tr> 
                                  <tr >
                                     <td>Liquidez</td>
-                                    <td v-text="cuantitativa.ratios_liquidez.toFixed(2)"></td>
+                                    <td  v-if='cuantitativa.ratios_liquidez' v-text="cuantitativa.ratios_liquidez.toFixed(2)"></td>
                                     <td v-text="cuantitativa.ratios_liquidez_resultado"></td>
                                 </tr> 
                                  <tr >
                                     <td>Solvencia</td>
-                                    <td v-text="cuantitativa.ratios_solvencia.toFixed(2)"></td>
+                                    <td  v-if='cuantitativa.ratios_solvencia' v-text="cuantitativa.ratios_solvencia.toFixed(2)"></td>
                                     <td v-text="cuantitativa.ratios_solvencia_resultado"></td>
                                 </tr>                           
                             </tbody>

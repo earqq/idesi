@@ -69051,15 +69051,17 @@ var render = function() {
                                     _c("tr", [
                                       _c("td", [_vm._v("Endeudamiento")]),
                                       _vm._v(" "),
-                                      _c("td", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.cuantitativa.ratios_endeudamiento.toFixed(
-                                              2
-                                            )
-                                          )
-                                        }
-                                      }),
+                                      _vm.cuantitativa.radios_endeudamiento
+                                        ? _c("td", {
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.cuantitativa.ratios_endeudamiento.toFixed(
+                                                  2
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e(),
                                       _vm._v(" "),
                                       _c("td", {
                                         domProps: {
@@ -69074,15 +69076,17 @@ var render = function() {
                                     _c("tr", [
                                       _c("td", [_vm._v("Margen Neto")]),
                                       _vm._v(" "),
-                                      _c("td", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.cuantitativa.ratios_margen_neto.toFixed(
-                                              2
-                                            )
-                                          )
-                                        }
-                                      }),
+                                      _vm.cuantitativa.ratios_margen_neto
+                                        ? _c("td", {
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.cuantitativa.ratios_margen_neto.toFixed(
+                                                  2
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e(),
                                       _vm._v(" "),
                                       _c("td", {
                                         domProps: {
@@ -69097,15 +69101,17 @@ var render = function() {
                                     _c("tr", [
                                       _c("td", [_vm._v("Liquidez")]),
                                       _vm._v(" "),
-                                      _c("td", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.cuantitativa.ratios_liquidez.toFixed(
-                                              2
-                                            )
-                                          )
-                                        }
-                                      }),
+                                      _vm.cuantitativa.ratios_liquidez
+                                        ? _c("td", {
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.cuantitativa.ratios_liquidez.toFixed(
+                                                  2
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e(),
                                       _vm._v(" "),
                                       _c("td", {
                                         domProps: {
@@ -69120,15 +69126,17 @@ var render = function() {
                                     _c("tr", [
                                       _c("td", [_vm._v("Solvencia")]),
                                       _vm._v(" "),
-                                      _c("td", {
-                                        domProps: {
-                                          textContent: _vm._s(
-                                            _vm.cuantitativa.ratios_solvencia.toFixed(
-                                              2
-                                            )
-                                          )
-                                        }
-                                      }),
+                                      _vm.cuantitativa.ratios_solvencia
+                                        ? _c("td", {
+                                            domProps: {
+                                              textContent: _vm._s(
+                                                _vm.cuantitativa.ratios_solvencia.toFixed(
+                                                  2
+                                                )
+                                              )
+                                            }
+                                          })
+                                        : _vm._e(),
                                       _vm._v(" "),
                                       _c("td", {
                                         domProps: {
