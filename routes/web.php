@@ -56,6 +56,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('evaluaciones/prestamos/detalle/{prestamo}', 'EvaluacionController@show');
         Route::get('evaluaciones/prestamos/detalleF/{prestamo}', 'EvaluacionController@showF');
         Route::post('evaluaciones/prestamos/evaluar', 'EvaluacionController@evaluar');
+        Route::post('evaluaciones/prestamos/evaluarFinal', 'EvaluacionController@evaluarFinal');
 
         Route::post('/consulta/dni','ConsultaController@dni');
 

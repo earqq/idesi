@@ -13,12 +13,12 @@
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                   </li>
 
-                  <li v-if="tipo=='1' || tipo=='3'">
+                  <li v-if="tipo=='3'">
                     <router-link :to="{name: 'evaluaciones'}"  >Evaluaciones</router-link>
                   </li>
 
                   <li v-if="tipo=='1' || tipo=='4' "> 
-                    <router-link :to="{name: 'evaluaciones_final'}"  >Evaluaciones SD</router-link>
+                    <router-link :to="{name: 'evaluaciones_final'}"  >Evaluaciones</router-link>
                   </li>
 
                   <li v-if="tipo=='1'"> 

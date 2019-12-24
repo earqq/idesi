@@ -44,7 +44,7 @@ class CreatePrestamosTable extends Migration
             $table->integer('plazo_final')->nullable();
             $table->integer('cuota_final')->nullable();
             $table->decimal('tasa_final', 11, 2)->nullable();
-            $table->string('estado', 10)->nullable();
+            $table->string('estado', 15)->nullable();
             $table->integer('clientes_id')->unsigned();
             $table->integer('users_id')->unsigned();
             

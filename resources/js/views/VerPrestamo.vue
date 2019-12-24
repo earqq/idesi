@@ -1,33 +1,122 @@
 <template>
-  <div class="container-general loan">
-    <header class="m-0">
+ <div class="container-general loan" style="background: rgb(220, 234, 240);">
+    <header>
       <span @click="retornar()">
         <i class="fas fa-angle-left"></i>
       </span>
-      <h1>Perfil</h1>
+      <h1>Detalle de prestamo</h1>
     </header>
+    <div class="col-md-12 p-0">
+      <div class="nav-tabs style-tab-menu">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item col-md-2">
+            <a
+              class="nav-link active text-center"
+              id="solicitud-tab"
+              data-toggle="tab"
+              href="#solicitud"
+              role="tab"
+              aria-controls="solicitud"
+              aria-selected="true"
+            >Solicitud</a>
+          </li>
 
-    <ul style="list-style: outside none none;" class="nav nav-tabs row nav-loan" role="tablist">
-      <li class="nav-item col-md-3">
-        <a class="nav-link active" data-toggle="tab" href="#cliente" role="tab" aria-expanded="true" >Cliente</a>
-      </li>
-      <li class="nav-item col-md-3">
-        <a class="nav-link" data-toggle="tab" href="#aval" role="tab" aria-expanded="false">Aval</a>
-      </li>
-      <li class="nav-item col-md-3">
-        <a class="nav-link" data-toggle="tab" href="#garantia" role="tab" aria-expanded="false">Garantia</a>
-      </li>
-      <li class="nav-item col-md-3">
-        <a class="nav-link" data-toggle="tab" href="#propuesta"  role="tab" aria-expanded="false" >Propuesta analista</a>
-      </li>
-    </ul>
+          <li class="nav-item col-md-2">
+            <a
+              class="nav-link text-center"
+              id="cliente-tab"
+              data-toggle="tab"
+              href="#cliente"
+              role="tab"
+              aria-controls="cliente"
+              aria-selected="false"
+            >Cliente</a>
+          </li>
+          <li class="nav-item col-md-2">
+            <a
+              class="nav-link text-center"
+              id="aval-tab"
+              data-toggle="tab"
+              href="#aval"
+              role="tab"
+              aria-controls="aval"
+              aria-selected="false"
+            >Aval</a>
+          </li>
+          <li class="nav-item col-md-3">
+            <a
+              class="nav-link text-center"
+              id="garantia-tab"
+              data-toggle="tab"
+              href="#garantia"
+              role="tab"
+              aria-controls="garantia"
+              aria-selected="false"
+            >Garantia</a>
+          </li>
+          <li class="nav-item col-md-3">
+            <a
+              class="nav-link text-center"
+              id="propuesta-tab"
+              data-toggle="tab"
+              href="#propuesta"
+              role="tab"
+              aria-controls="propuesta"
+              aria-selected="false"
+            >Propuesta de analista</a>
+          </li>
+        </ul>
+      </div>
 
-    <div class="tab-content">
-      <div class="tab-pane active loan-cliente" id="cliente" role="tabpanel" aria-expanded="true">
-        <div class="row p-0 contenedor-titular">
-          <div class="col-md-12 d-flex titulo-prestamo-menu">
-            <p>Titular</p>
+      <div class="col-md-12 body-tabs">
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active"  id="solicitud"  role="tabpanel" aria-labelledby="solicitud-tab" >
+             <div class="row contenedor-solicitud">
+              <div class="col-md-12 d-flex titulo-prestamo-menu">
+                <p>Solicitud de credito</p>
+              </div>
+
+              <div class="col-md-4 form-group">
+                <label>Monto</label>
+                <input type="text" v-model="prestamo.monto_inicial" class="form-control" />
+              </div>
+              <div class="col-md-4 form-group">
+                <label>Plazo</label>
+                <select v-model="prestamo.plazo_inicial" class="form-control">
+                  <option value="0">SELECCIONE</option>
+                  <option v-for="(index) in 36" :key="index" :value="index">{{index}}</option>
+                </select>
+              </div>
+              <div class="col-md-4 form-group">
+                <label>Disponibilidad de pago</label>
+                <input type="text" v-model="prestamo.disponibilidad_pago_inicial" class="form-control" />
+              </div>
+              <div class="col-md-6 form-group">
+                <label>Destino de credito en propuesta cliente</label>
+                <input type="text" v-model="prestamo.destino_inicial" class="form-control" />
+              </div>
+              <div class="col-md-6 form-group">
+                <label>Forma</label>
+                <select v-model="prestamo.forma_inicial" class="form-control">
+                  <option value="0">SELECCIONE</option>
+                  <option value="DIARIO">DIARIO</option>
+                  <option value="SEMANAL">SEMANAL</option>
+                  <option value="QUINCENAL">QUINCENAL</option>
+                  <option value="MENSUAL">MENSUAL</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+              <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+            </div>
           </div>
+
+          <div class="tab-pane fade" id="cliente" role="tabpanel" aria-labelledby="cliente-tab">
+            <div class="row p-0 contenedor-titular">
+              <div class="col-md-12 d-flex titulo-prestamo-menu">
+                <p>Titular</p>
+              </div>
 
           <div class="col-md-3">
             <div class="form-group">
@@ -76,60 +165,19 @@
           <div class="col-md-2">
             <div class="form-group">
               <label>Departamento</label>
-              <select
-                class="form-control"
-                v-model="form.natural.departamentos_id"
-                filterable
-                @change="filterProvince"
-                dusk="departamentos_id"
-              >
-                <option value="0">SELECCIONE</option>
-                <option
-                  v-for="option in all_departments"
-                  :key="option.id"
-                  :value="option.id"
-                  :label="option.descripcion"
-                >></option>
-              </select>
+              <input type="text" v-model="form.cliente.departamento" class="form-control" />
             </div>
           </div>
           <div class="col-md-2">
             <div class="form-group">
               <label>Provincia</label>
-              <select
-                class="form-control text-uppercase"
-                v-model="form.natural.provincias_id"
-                filterable
-                @change="filterDistrict"
-                dusk="provincias_id"
-              >
-                <option value="0">SELECCIONE</option>
-                <option
-                  v-for="option in provinces"
-                  :key="option.id"
-                  :value="option.id"
-                  :label="option.descripcion"
-                >></option>
-              </select>
+              <input type="text" v-model="form.cliente.provincia" class="form-control" />
             </div>
           </div>
           <div class="col-md-2">
             <div class="form-group">
               <label>Distrito</label>
-              <select
-                class="form-control text-uppercase"
-                v-model="form.natural.distritos_id"
-                filterable
-                dusk="distritos_id"
-              >
-                <option value="0">SELECCIONE</option>
-                <option
-                  v-for="option in districts"
-                  :key="option.id"
-                  :value="option.id"
-                  :label="option.descripcion"
-                >></option>
-              </select>
+              <input type="text" v-model="form.cliente.distrito" class="form-control" />
             </div>
           </div>
           <div class="col-md-6">
@@ -247,13 +295,15 @@
             </div>
           </div>
 
-          <div class="col-md-12 d-flex justify-content-end mt-3 mb-4">
-            <a class="nav-link" data-toggle="tab" href="#garantia" role="tab" aria-expanded="false" >CONUTNIAR</a>
-          </div>
         </div>
-      </div>
-      <div class="tab-pane loan-aval" id="aval" role="tabpanel" aria-expanded="false">
-        <div v-for="(row, index) in form.avals" :key="index" class="row p-0 contenedor-aval">
+            <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+              <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+              <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="aval" role="tabpanel" aria-labelledby="aval-tab">
+            <div v-for="(row, index) in form.avals" :key="index" class="row p-0 contenedor-aval">
           <div class="col-md-12 d-flex titulo-prestamo-menu">
             <p>Aval</p>
             <i class="fas fa-trash" @click.prevent="clickRemoveAval(index)"></i>
@@ -288,7 +338,6 @@
           <div class="col-md-3">
             <div class="form-group">
               <label>Fecha de Nacimiento</label>
-              <!-- <input type="text" v-model="row.nacimiento" class="form-control" /> -->
               <date-pick v-model="row.nacimiento" :months="mesEs" :weekdays="diaEs"></date-pick>
             </div>
           </div>
@@ -352,16 +401,15 @@
             <button type="button" @click.prevent="clickAddAval" class="btn btn-crecer more-option w-100">
               <i class="fas fa-plus"></i> Agregar Aval
             </button>
-          </div>
-          <div class="col-md-12 d-flex justify-content-end mb-4">
-            <button
-              class="btn btn-success btn-sm "
-              @click.prevent="handleClick('garantia')"
-            >Continuar</button>
-          </div>
         </div>
-      </div>
-      <div class="tab-pane loan-garantia" id="garantia"  role="tabpanel" aria-expanded="false" > 
+        </div>
+            <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+              <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+              <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="garantia" role="tabpanel" aria-labelledby="garantia-tab">
             <div v-for="(row, index) in form.garantias" :key="index" class="row contenedor-garantia">
               <div class="col-md-12 d-flex titulo-prestamo-menu">
                 <p>Garantía</p>
@@ -398,31 +446,22 @@
                   <i class="fas fa-plus"></i> Agregar Garantia
                 </button>
               </div>
-              <div class="col-md-12 d-flex justify-content-end mb-4">
-                <button
-                  class="btn btn-success btn-sm"
-                  @click.prevent="handleClick('propuesta')"
-                >Continuar</button>
-              </div>
             </div>
-      </div>
+            <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+              <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+              <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+            </div>
+          </div>
 
-      <div class="tab-pane loan-propuesta" id="propuesta" role="tabpanel" aria-expanded="false" >
-            <div class="row contenedor-propuesta">
+          <div class="tab-pane fade" id="propuesta" role="tabpanel" aria-labelledby="propuesta-tab">
+             <div class="row contenedor-propuesta">
               <div class="col-md-12 d-flex titulo-prestamo-menu">
                 <p>Propuesta</p>
               </div>
-              <div class="col-md-8">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label>Producto</label>
                   <input type="text" v-model="prestamo.producto" class="form-control" />
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label>Forma</label>
-                  <input type="text" v-model="prestamo.forma" class="form-control" />
                 </div>
               </div>
 
@@ -433,19 +472,19 @@
                 </div>
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <label>Plazo</label>
                 <input type="text" v-model="prestamo.plazo" class="form-control" />
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <div class="form-group">
                   <label>Cuotas</label>
                   <input type="text" v-model="prestamo.cuotas" class="form-control" />
                 </div>
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <div class="form-group">
                   <label>Aporte</label>
                   <input type="text" v-model="prestamo.aporte" class="form-control" />
@@ -459,10 +498,15 @@
                 </div>
               </div>
 
-              <div class="col-md-12 d-flex justify-content-end mt-3 mb-4">
-                <button class="btn btn-success btn-sm" @click.prevent="submit">Guardar</button>
-              </div>
             </div> 
+            <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+              <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+              <a class="btn btn-orange btnNext" @click.prevent="submit()">Guardar</a>
+            </div>
+          </div>
+
+
+        </div>
       </div>
     </div>
   </div>
@@ -534,11 +578,11 @@ export default {
     /**
      * LISTAR CIUDADES
      */
-    await this.$http.get(`/${this.resource}/datos/`).then(response => {
-      this.all_departments = response.data.departments;
-      this.all_provinces = response.data.provinces;
-      this.all_districts = response.data.districts;
-    });
+    // await this.$http.get(`/${this.resource}/datos/`).then(response => {
+    //   this.all_departments = response.data.departments;
+    //   this.all_provinces = response.data.provinces;
+    //   this.all_districts = response.data.districts;
+    // });
 
     await this.initFormPrestamo();
 
@@ -550,9 +594,9 @@ export default {
       .then(response => {
         console.log(response.data);
 
-        this.form.cliente.departamentos_id = response.data['cliente']["departamentos_id"];
-        this.form.cliente.provincias_id = response.data['cliente']["provincias_id"];
-        this.form.cliente.distritos_id = response.data['cliente']["distritos_id"];
+        this.form.cliente.departamento = response.data['cliente']["departamento"];
+        this.form.cliente.provincia = response.data['cliente']["provincia"];
+        this.form.cliente.distrito = response.data['cliente']["distrito"];
         this.form.cliente.documento = response.data['cliente']["documento"];
 
         this.form.natural.estado_civil = response.data['natural']["estado_civil"]; 
@@ -591,6 +635,20 @@ export default {
     await this.initForm();
   },
   methods: {
+      next() {
+      $(".nav-tabs .active")
+        .parent()
+        .next("li")
+        .find("a")
+        .trigger("click");
+    },
+    previous() {
+      $(".nav-tabs .active")
+        .parent()
+        .prev("li")
+        .find("a")
+        .trigger("click");
+    },
     stringDate(date) {
       var string = moment(date)
         .locale("es")
@@ -659,9 +717,9 @@ export default {
         garantias: [],
         avals: [],
         cliente:{
-                departamentos_id: "0",
-                provincias_id: "0",
-                distritos_id: "0",
+                departamento: "",
+                provincia: "",
+                distrito: "",
                 documento: '',
         },
         natural:{
@@ -696,7 +754,7 @@ export default {
         aporte: 0,
         plazo: 0,
         coutas: 0,
-        tasa: 0.0,
+        tasa: 0.0, 
         comentarios: "",
         estado: "PENDIENTE"
       };
