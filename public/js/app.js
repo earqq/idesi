@@ -3285,7 +3285,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       evaluacion: {
-        prestamo_id: this.$params.prestamo,
+        prestamo_id: this.$route.params.prestamo,
         propuesta: {
           producto: "",
           monto: 1,
