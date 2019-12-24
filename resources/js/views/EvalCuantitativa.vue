@@ -219,7 +219,7 @@ export default {
     data(){
         return{
             evaluacion:{
-                prestamo_id:$params.prestamo_id,
+                prestamo_id:this.$route.params.prestamo,
                 propuesta:{
                     producto:"",
                     monto:1,
@@ -460,7 +460,7 @@ export default {
         guardar(){
             axios.post('/evaluaciones/cuantitativa',this.evaluacion)
             .then(res=>{
-                console.log('volvio')
+                alert('guardado correctamente');
             })
         },  
         conyugeIngresosSubtotal(index){

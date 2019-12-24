@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Database\Seeder;
-// use App\Database\seeds\UsersSeeder;
+use App\Database\Seeds\UsersSeeder;
 class DatabaseSeeder extends Seeder
 {
+    // use User
     /**
      * Seed the application's database.
      *
