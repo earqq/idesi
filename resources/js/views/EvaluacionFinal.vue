@@ -105,7 +105,7 @@
                                     <td v-text="cuantitativa.ratios_solvencia_resultado"></td>
                                 </tr>                           
                             </tbody>
-                        </table>
+                        </table> 
                         </div>
                         <div class="col-md-6">
 
