@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class ResultadoCuantitativa extends Model
 {
     protected $table="evaluacion_cuantitativa";
-    protected $timestamps=false;
+    public $timestamps=false;
 }
