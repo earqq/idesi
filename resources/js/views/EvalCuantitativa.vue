@@ -460,7 +460,7 @@ export default {
         guardar(){
             axios.post('/evaluaciones/cuantitativa',this.evaluacion)
             .then(res=>{
-                console.log('volvio')
+                alert('guardado correctamente');
             })
         },  
         conyugeIngresosSubtotal(index){
