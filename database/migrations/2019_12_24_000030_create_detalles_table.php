@@ -10,7 +10,7 @@ class CreateDetallesTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'detalles';
+    public $tableName = 'detalles';
 
     /**
      * Run the migrations.
@@ -20,20 +20,18 @@ class CreateDetallesTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('nombres', 45)->nullable();
-            $table->integer('documento')->nullable();
-            $table->string('parentesco', 30)->nullable();
-            $table->char('socio', 2)->nullable();
+            $table->string('nombres', 45)->nullable()->default(null);
+            $table->integer('documento')->nullable()->default(null);
+            $table->string('parentesco', 30)->nullable()->default(null);
+            $table->char('socio', 2)->nullable()->default(null);
             $table->unsignedInteger('familiars_id');
-            $table->softDeletes();
-
-            $table->timestamps();
 
             $table->index(["familiars_id"], 'fk_detalles_familiars1_idx');
+            $table->softDeletes();
+            $table->nullableTimestamps();
 
 
             $table->foreign('familiars_id', 'fk_detalles_familiars1_idx')
@@ -50,6 +48,6 @@ class CreateDetallesTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }

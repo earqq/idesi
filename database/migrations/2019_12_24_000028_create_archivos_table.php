@@ -10,7 +10,7 @@ class CreateArchivosTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'archivos';
+    public $tableName = 'archivos';
 
     /**
      * Run the migrations.
@@ -20,21 +20,19 @@ class CreateArchivosTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('nombre', 50);
-            $table->string('tipo', 10)->nullable();
-            $table->string('extension', 5)->nullable();
-            $table->string('codigo', 5)->nullable();
-            $table->char('estado', 1)->nullable();
-            $table->integer('prestamos_id')->unsigned();
- 
-            $table->softDeletes();
+            $table->string('tipo', 10)->nullable()->default(null);
+            $table->string('extension', 5)->nullable()->default(null);
+            $table->string('codigo', 5)->nullable()->default(null);
+            $table->char('estado', 1)->nullable()->default(null);
+            $table->unsignedInteger('prestamos_id');
 
-            $table->timestamps();
             $table->index(["prestamos_id"], 'fk_archivos_prestamos1_idx');
+            $table->softDeletes();
+            $table->nullableTimestamps();
 
 
             $table->foreign('prestamos_id', 'fk_archivos_prestamos1_idx')
@@ -42,8 +40,6 @@ class CreateArchivosTable extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
         });
-
-
     }
 
     /**
@@ -53,6 +49,6 @@ class CreateArchivosTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }

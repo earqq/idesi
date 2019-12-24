@@ -10,7 +10,7 @@ class CreateEvaluacionsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'evaluacions';
+    public $tableName = 'evaluacions';
 
     /**
      * Run the migrations.
@@ -20,23 +20,19 @@ class CreateEvaluacionsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-           
-            $table->string('detalle', 100)->nullable();
-            $table->string('estado', 15)->nullable();
-            $table->integer('prestamos_id')->unsigned();
-            $table->integer('users_id')->unsigned();
+            $table->string('detalle', 100)->nullable()->default(null);
+            $table->string('estado', 15)->nullable()->default(null);
+            $table->unsignedInteger('prestamos_id');
+            $table->unsignedInteger('users_id');
 
-            $table->softDeletes();
-
-            $table->timestamps();
-            
             $table->index(["users_id"], 'fk_evaluacions_users1_idx');
 
             $table->index(["prestamos_id"], 'fk_evaluacions_prestamos1_idx');
+            $table->softDeletes();
+            $table->nullableTimestamps();
 
 
             $table->foreign('prestamos_id', 'fk_evaluacions_prestamos1_idx')
@@ -58,6 +54,6 @@ class CreateEvaluacionsTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }

@@ -3285,6 +3285,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       evaluacion: {
+        prestamo_id: $params.prestamo_id,
         propuesta: {
           producto: "",
           monto: 1,
@@ -3368,15 +3369,15 @@ __webpack_require__.r(__webpack_exports__);
           }],
           gasto_financiero: [{
             entidad: "",
-            saldo: 0,
+            saldo_capital: 0,
             cuota: 0
           }, {
             entidad: "",
-            saldo: 0,
+            saldo_capital: 0,
             cuota: 0
           }, {
             entidad: "",
-            saldo: 0,
+            saldo_capital: 0,
             cuota: 0
           }],
           gasto_negocio: [{
@@ -3437,15 +3438,15 @@ __webpack_require__.r(__webpack_exports__);
           valor_inventario: 0,
           gasto_financiero: [{
             entidad: "",
-            saldo: 0,
+            saldo_capital: 0,
             cuota: 0
           }, {
             entidad: "",
-            saldo: 0,
+            saldo_capital: 0,
             cuota: 0
           }, {
             entidad: "",
-            saldo: 0,
+            saldo_capital: 0,
             cuota: 0
           }],
           gasto_negocio: [{
@@ -66986,25 +66987,18 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.evaluacion.titular.ingresos_negocio[1].concepto,
-                    expression:
-                      "evaluacion.titular.ingresos_negocio[1].concepto"
+                    value: val.concepto,
+                    expression: "val.concepto"
                   }
                 ],
                 attrs: { type: "text" },
-                domProps: {
-                  value: _vm.evaluacion.titular.ingresos_negocio[1].concepto
-                },
+                domProps: { value: val.concepto },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(
-                      _vm.evaluacion.titular.ingresos_negocio[1],
-                      "concepto",
-                      $event.target.value
-                    )
+                    _vm.$set(val, "concepto", $event.target.value)
                   }
                 }
               })

@@ -10,7 +10,7 @@ class CreateNaturalsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'naturals';
+    public $tableName = 'naturals';
 
     /**
      * Run the migrations.
@@ -20,8 +20,7 @@ class CreateNaturalsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('clientes_id');
@@ -38,18 +37,18 @@ class CreateNaturalsTable extends Migration
             $table->string('tipo_domicilio', 30)->nullable()->default(null);
             $table->string('centro_laboral', 40)->nullable()->default(null);
             $table->string('direccion_laboral', 100)->nullable()->default(null);
-            $table->string('genero', 10)->nullable();
-            $table->string('grado_instruccion', 10)->nullable();
-            $table->string('numero', 5)->nullable();
-            $table->string('manzana', 5)->nullable();
-            $table->string('lote', 5)->nullable();
-            $table->string('dpto', 5)->nullable();
-            $table->string('int', 5)->nullable();
-            $table->string('piso', 5)->nullable();
-            $table->string('domicilio_distrito', 45)->nullable();
-            $table->string('domicilio_provincia', 45)->nullable();
-            $table->string('domicilio_departamento', 45)->nullable();
-            $table->string('correo', 45)->nullable();
+            $table->string('genero', 10)->nullable()->default(null);
+            $table->string('grado_instruccion', 10)->nullable()->default(null);
+            $table->string('numero', 5)->nullable()->default(null);
+            $table->string('manzana', 5)->nullable()->default(null);
+            $table->string('lote', 5)->nullable()->default(null);
+            $table->string('dpto', 5)->nullable()->default(null);
+            $table->string('int', 5)->nullable()->default(null);
+            $table->string('piso', 5)->nullable()->default(null);
+            $table->string('domicilio_distrito', 45)->nullable()->default(null);
+            $table->string('domicilio_provincia', 45)->nullable()->default(null);
+            $table->string('domicilio_departamento', 45)->nullable()->default(null);
+            $table->string('correo', 45)->nullable()->default(null);
 
             $table->index(["clientes_id"], 'fk_naturals_clientes1_idx');
             $table->softDeletes();
@@ -70,6 +69,6 @@ class CreateNaturalsTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }

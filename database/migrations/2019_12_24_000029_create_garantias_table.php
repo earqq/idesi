@@ -10,7 +10,7 @@ class CreateGarantiasTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'garantias';
+    public $tableName = 'garantias';
 
     /**
      * Run the migrations.
@@ -20,19 +20,17 @@ class CreateGarantiasTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('bien_garantia', 50)->nullable();
-            $table->string('inscripcion', 50)->nullable();
-            $table->string('declaracion_jurada', 100)->nullable();
-            $table->integer('prestamos_id')->unsigned();
+            $table->string('bien_garantia', 50)->nullable()->default(null);
+            $table->string('inscripcion', 50)->nullable()->default(null);
+            $table->string('declaracion_jurada', 100)->nullable()->default(null);
+            $table->unsignedInteger('prestamos_id');
 
-            $table->softDeletes();
-
-            $table->timestamps();
             $table->index(["prestamos_id"], 'fk_garantias_prestamos1_idx');
+            $table->softDeletes();
+            $table->nullableTimestamps();
 
 
             $table->foreign('prestamos_id', 'fk_garantias_prestamos1_idx')
@@ -49,6 +47,6 @@ class CreateGarantiasTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }

@@ -10,7 +10,7 @@ class CreateVistasTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'vistas';
+    public $tableName = 'vistas';
 
     /**
      * Run the migrations.
@@ -20,24 +20,21 @@ class CreateVistasTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('imagen', 45)->nullable();
-            $table->date('fecha')->nullable();
-            $table->string('hora', 10)->nullable();
-            $table->string('motivo', 50)->nullable();
-            $table->string('latitud', 50)->nullable();
-            $table->string('altitud', 50)->nullable();
-            $table->char('estado', 1)->nullable();
-            $table->integer('prestamos_id')->unsigned();
+            $table->string('imagen', 45)->nullable()->default(null);
+            $table->date('fecha')->nullable()->default(null);
+            $table->string('hora', 10)->nullable()->default(null);
+            $table->string('motivo', 50)->nullable()->default(null);
+            $table->string('latitud', 50)->nullable()->default(null);
+            $table->string('altitud', 50)->nullable()->default(null);
+            $table->char('estado', 1)->nullable()->default(null);
+            $table->unsignedInteger('prestamos_id');
 
-            $table->softDeletes();
-
-            $table->timestamps();
-            
             $table->index(["prestamos_id"], 'fk_vistas_prestamos1_idx');
+            $table->softDeletes();
+            $table->nullableTimestamps();
 
 
             $table->foreign('prestamos_id', 'fk_vistas_prestamos1_idx')
@@ -54,6 +51,6 @@ class CreateVistasTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }

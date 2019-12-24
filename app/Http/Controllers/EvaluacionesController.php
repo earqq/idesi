@@ -7,6 +7,7 @@ use App\Prestamo;
 use App\Negocio;
 use App\Evaluacion;
 use App\Cuantitativa;
+use App\ResultadoCuantitativa;
 class EvaluacionesController extends Controller
 {
     /**
@@ -99,14 +100,7 @@ class EvaluacionesController extends Controller
 
     }
     public function saveCuantitativa(Request $request){
-        $cuantitativa= new cuantitativa;  
-        $cuantitativa->propuesta=$request->propuesta;
-        $cuantitativa->titular=$request->titular;
-        $cuantitativa->conyuge=$request->conyuge;
-        $cuantitativa->probabilidad_infocorp=$request->probabilidad_infocorp;
-        $cuantitativa->gastos_hogar=$request->gastos_hogar;
-        $cuantitativa->propiedades=$request->propiedades;
-        $cuantitativa->save();      
+    
         $resultado_eva='';
         $resultado_sist='';
         $participacion_cuota_titular=0;
@@ -413,6 +407,114 @@ class EvaluacionesController extends Controller
             $resultado_sist='TIENE CAPACIDAD';
         
         \Log::alert("resultado eva: ".$resultado_sist);
+
+        $balance=0;
+        $caja=0;
+        $inventario=0;
+        $activo_f=0;
+        $deudas=0;
+        $capital=0;
+        $utilidad=0;
+        $total_activo=0;
+        $total_pasivo=0;
+
+        $endeudamiento=0;
+        $margen_neto=0;
+        $liquidez=0;
+        $solvencia=0;
+
+        //PASIVO DEUDAS
+        //titular
+        foreach($request->titular["gasto_financiero"] as $gasto){
+            $deudas+=$gasto["saldo_capital"];
+        }//conyuge
+        foreach($request->conyuge["gasto_financiero"] as $gasto){
+            $deudas+=$gasto["saldo_capital"];
+        }
+        \Log::alert('PASIVO DEUDA: '.$deudas);
+        
+        //PATRIMONIO CAPITAL
+        foreach($request->propiedades as $propiedad){
+            $capital+=$propiedad["valor_estimado"];
+        }
+        \Log::alert('PATRIMONIO CAPITAL: '.$capital);
+
+        //PATRIMONIO UTILIDAD
+        $utilidad=$utilidad_despues_cuota_total;
+        \Log::alert('PATRIMONIO UTILIDAD: '.$utilidad);
+
+        //TOTAL PASIVO Y PATRIMONIO
+        $total_pasivo=$deudas+$capital+$utilidad;
+        \Log::alert("TOTAL PASIVO: ".$total_pasivo);
+
+        //ACTIVO F
+        $activo_f=$capital;
+        \Log::alert('ACTIVO F: '.$activo_f);
+
+        //ACTIVO INVENTARIO
+        $inventario=$request->titular["valor_inventario"]+$request->conyuge["valor_inventario"];
+        \Log::alert('ACTIVO INVENTARIO: '.$inventario);
+
+        //TOTAL ACTIVO
+        $total_activo=$total_pasivo;
+        \Log::alert('TOTAL ACTIVO: '.$total_activo);
+
+        //CAJA ACTIVO
+        $caja=$total_activo-$activo_f-$inventario;
+        \Log::alert('ACTIVO CAJA: '.$caja);
+
+        //RATIOS
+        //ENDEUDAMIENTO
+        $endeudamiento=$deudas/($capital+$utilidad);
+        \Log::alert('RATIOS ENDEUDAMIENTO: '.$endeudamiento);
+        $endeudamiento_resultado='MAL';
+        if($endeudamiento<0.4) $endeudamiento_resultado='BIEN';
+        \Log::alert('ENDEUDAMIENTO RESULTADO: '.$endeudamiento_resultado);
+        //MARGEN NETO
+        $margen_neto=$utilidad_despues_cuota_total/$ingresos_ventas_total;
+        \Log::alert('RATIOS MARGEN NETO: '.$margen_neto);
+        $margen_neto_resultado='MAL';
+        if($margen_neto>0.05) $margen_neto_resultado='BIEN';
+        \Log::alert('MARGEN NETO RESULTADO: '.$margen_neto_resultado);
+        //LIQUIDEZ
+        
+        $liquidez=($caja+$inventario)/$deudas;
+        \Log::alert('RATIOS LIQUIDEZ: '.$liquidez);
+        $liquidez_resultado='MAL';
+        if($liquidez>1) $liquidez_resultado='BIEN';
+        \Log::alert('LIQUIDEZ RESULTADO: '.$liquidez_resultado);
+        //SOLVENCIA
+        $solvencia=$total_activo/$deudas;
+        \Log::alert('RATIOS SOLVENCIA: '.$solvencia);
+        $solvencia_resultado='MAL';
+        if($solvencia>1.5) $solvencia_resultado='BIEN';
+        \Log::alert('SOLVENCIA RESULTADO: '.$solvencia_resultado);
+
+        $resultado_cuantitativa= new ResultadoCuantitativa;
+        $resultado_cuantitativa->prestamo_id=$request->prestamo_id;
+        $resultado_cuantitativa->participacion_cuota_titular=$participacion_cuota_titular;
+        $resultado_cuantitativa->participacion_cuota_total=$participacion_cuota_total;
+        $resultado_cuantitativa->participacion_cuota_validacion=$participacion_cuota_validacion;
+        $resultado_cuantitativa->resultado_eva=$resultado_eva;
+        $resultado_cuantitativa->resultado_sist=$resultado_sist;
+        $resultado_cuantitativa->ratios_endeudamiento=$endeudamiento;
+        $resultado_cuantitativa->ratios_endeudamiento_resultado=$endeudamiento_resultado;
+        $resultado_cuantitativa->ratios_margen_neto=$margen_neto;
+        $resultado_cuantitativa->ratios_margen_neto_resultado=$margen_neto_resultado;
+        $resultado_cuantitativa->ratios_liquidez=$liquidez;
+        $resultado_cuantitativa->ratios_liquidez_resultado=$liquidez_resultado;
+        $resultado_cuantitativa->ratios_solvencia=$solvencia;
+        $resultado_cuantitativa->ratios_solvencia_resultado=$solvencia_resultado;
+        $resultado_cuantitativa->save();
+        $cuantitativa= new cuantitativa;  
+        $cuantitativa->resultado_cuantitativa_id=$resultado_cuantitativa->id;
+        $cuantitativa->propuesta=$request->propuesta;
+        $cuantitativa->titular=$request->titular;
+        $cuantitativa->conyuge=$request->conyuge;
+        $cuantitativa->probabilidad_infocorp=$request->probabilidad_infocorp;
+        $cuantitativa->gastos_hogar=$request->gastos_hogar;
+        $cuantitativa->propiedades=$request->propiedades;
+        $cuantitativa->save();      
     }
 
     /**

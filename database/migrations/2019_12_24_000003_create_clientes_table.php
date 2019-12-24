@@ -10,7 +10,7 @@ class CreateClientesTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'clientes';
+    public $tableName = 'clientes';
 
     /**
      * Run the migrations.
@@ -20,20 +20,19 @@ class CreateClientesTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('tipo_documento', 10)->nullable()->default(null);
-            $table->string('documento', 15)->nullable()->default(null);
+            $table->string('documento', 11)->nullable()->default(null);
             $table->string('codigo', 10)->nullable()->default(null);
             $table->string('tipo_cliente', 5)->nullable()->default(null);
             $table->string('numero_registro', 15)->nullable()->default(null);
             $table->string('agencia', 50)->nullable()->default(null);
-            $table->string('pais', 15)->nullable();
-            $table->string('departamento', 45)->nullable();
-            $table->string('provincia', 45)->nullable();
-            $table->string('distrito', 45)->nullable();
+            $table->string('pais', 15)->nullable()->default(null);
+            $table->string('departamento', 45)->nullable()->default(null);
+            $table->string('provincia', 45)->nullable()->default(null);
+            $table->string('distrito', 45)->nullable()->default(null);
             $table->char('estado', 1)->default('1');
             $table->softDeletes();
             $table->nullableTimestamps();
@@ -47,6 +46,6 @@ class CreateClientesTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }

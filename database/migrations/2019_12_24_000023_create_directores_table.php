@@ -4,37 +4,36 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAsociativasTable extends Migration
+class CreateDirectoresTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'asociativas';
+    public $tableName = 'directores';
 
     /**
      * Run the migrations.
-     * @table asociativas
+     * @table directores
      *
      * @return void
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->double('inscripcion')->nullable();
-            $table->double('aporte')->nullable();
+            $table->string('nombres', 60)->nullable()->default(null);
+            $table->integer('documento')->nullable()->default(null);
+            $table->string('cargo', 30)->nullable()->default(null);
             $table->unsignedInteger('juridicos_id');
+
+            $table->index(["juridicos_id"], 'fk_directores_juridicos1_idx');
             $table->softDeletes();
-
-            $table->timestamps();
-            
-            $table->index(["juridicos_id"], 'fk_asociativas_juridicos1_idx');
+            $table->nullableTimestamps();
 
 
-            $table->foreign('juridicos_id', 'fk_asociativas_juridicos1_idx')
+            $table->foreign('juridicos_id', 'fk_directores_juridicos1_idx')
                 ->references('id')->on('juridicos')
                 ->onDelete('no action')
                 ->onUpdate('no action');
@@ -48,6 +47,6 @@ class CreateAsociativasTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }

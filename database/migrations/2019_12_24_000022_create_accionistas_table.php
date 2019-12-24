@@ -10,7 +10,7 @@ class CreateAccionistasTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'accionistas';
+    public $tableName = 'accionistas';
 
     /**
      * Run the migrations.
@@ -20,18 +20,16 @@ class CreateAccionistasTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('nombres', 60)->nullable();
-            $table->integer('documento')->nullable();
+            $table->string('nombres', 60)->nullable()->default(null);
+            $table->integer('documento')->nullable()->default(null);
             $table->unsignedInteger('juridicos_id');
-            $table->softDeletes();
 
-            $table->timestamps();
-            
             $table->index(["juridicos_id"], 'fk_accionistas_juridicos1_idx');
+            $table->softDeletes();
+            $table->nullableTimestamps();
 
 
             $table->foreign('juridicos_id', 'fk_accionistas_juridicos1_idx')
@@ -48,6 +46,6 @@ class CreateAccionistasTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }

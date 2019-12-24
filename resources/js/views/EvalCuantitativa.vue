@@ -17,7 +17,7 @@
             </tr>
             <tr v-for='(val,index) in evaluacion.titular.ingresos_negocio' v-bind:key='index'>
                 <td>
-                    <input type='text' v-model='evaluacion.titular.ingresos_negocio[1].concepto'>
+                    <input type='text' v-model='val.concepto'>
                 </td>
                 <td>
                     <input type='number' :change='negocioIngresosSubtotal(index)'  v-model='evaluacion.titular.ingresos_negocio[index].lunes'>
@@ -219,6 +219,7 @@ export default {
     data(){
         return{
             evaluacion:{
+                prestamo_id:$params.prestamo_id,
                 propuesta:{
                     producto:"",
                     monto:1,
@@ -324,17 +325,17 @@ export default {
                     gasto_financiero:[
                         {
                             entidad:"",
-                            saldo:0,
+                            saldo_capital:0,
                             cuota:0,
                         },
                         {
                             entidad:"",
-                            saldo:0,
+                            saldo_capital:0,
                             cuota:0,
                         },
                         {
                             entidad:"",
-                            saldo:0,
+                            saldo_capital:0,
                             cuota:0,
                         }
                     ],
@@ -410,17 +411,17 @@ export default {
                     gasto_financiero:[
                         {
                             entidad:"",
-                            saldo:0,
+                            saldo_capital:0,
                             cuota:0,
                         },
                         {
                             entidad:"",
-                            saldo:0,
+                            saldo_capital:0,
                             cuota:0,
                         },
                         {
                             entidad:"",
-                            saldo:0,
+                            saldo_capital:0,
                             cuota:0,
                         }
                     ],
