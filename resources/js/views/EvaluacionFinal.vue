@@ -86,22 +86,22 @@
                             <tbody>
                                 <tr >
                                     <td>Endeudamiento</td>
-                                    <td v-text="cuantitativa.ratios_endeudamiento.toFixed(2)"></td>
+                                    <td v-if='cuantitativa.radios_endeudamiento' v-text="parseFloat(cuantitativa.ratios_endeudamiento).toFixed(2)"></td>
                                     <td  v-text="cuantitativa.ratios_endeudamiento_resultado"></td>
                                 </tr> 
                                  <tr >
                                     <td>Margen Neto</td>
-                                    <td v-text="cuantitativa.ratios_margen_neto.toFixed(2)"></td>
+                                    <td v-if='cuantitativa.ratios_margen_neto' v-text="parseFloat(cuantitativa.ratios_margen_neto).toFixed(2)"></td>
                                     <td v-text="cuantitativa.ratios_margen_neto_resultado"></td>
                                 </tr> 
                                  <tr >
                                     <td>Liquidez</td>
-                                    <td v-text="cuantitativa.ratios_liquidez.toFixed(2)"></td>
+                                    <td  v-if='cuantitativa.ratios_liquidez' v-text="parseFloat(cuantitativa.ratios_liquidez).toFixed(2)"></td>
                                     <td v-text="cuantitativa.ratios_liquidez_resultado"></td>
                                 </tr> 
                                  <tr >
                                     <td>Solvencia</td>
-                                    <td v-text="cuantitativa.ratios_solvencia.toFixed(2)"></td>
+                                    <td  v-if='cuantitativa.ratios_solvencia' v-text="parseFloat(cuantitativa.ratios_solvencia).toFixed(2)"></td>
                                     <td v-text="cuantitativa.ratios_solvencia_resultado"></td>
                                 </tr>                           
                             </tbody>
@@ -293,7 +293,12 @@ export default {
       id_prestamo: 0,
       prestamos: [],
       detalle: {},
-      cuantitativa: {},
+      cuantitativa: {
+        ratios_endeudamiento:0,
+        ratios_margen_neto:0,
+        ratios_liquidez:0,
+        ratios_solvencia:0
+      },
       tipo: true,
       form: {},
       notificationSystem: {
@@ -334,6 +339,7 @@ export default {
         .get(`/${this.resource}/prestamos/detalleF/` + id)
         .then(response => {
           console.log(response.data)
+          if(response.data.cuantitativa)
           this.cuantitativa = response.data.cuantitativa;
           this.detalle = response.data.prestamo;
           this.form.evaluacion = response.data.evaluacion;
