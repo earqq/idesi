@@ -46,12 +46,28 @@ class ClienteController extends Controller
         // $pretamos = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
         // ->select('clientes.nombres','clientes.apellidos','prestamos.estado','prestamos.id')->get();
 
-        $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
-                            //   ->join('juridicos','clientes.id','=','juridicos.clientes_id')
-                              ->select('clientes.documento','naturals.nombres','naturals.apellidos')
-                              ->orderBy('clientes.id','desc')->paginate(10);
-        return $clientes;
+        if(Auth::user()->id == '1'){
+
+            $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
+            //   ->join('juridicos','clientes.id','=','juridicos.clientes_id')
+              ->select('clientes.documento','naturals.nombres','naturals.apellidos')
+              ->orderBy('clientes.id','desc')
+              ->paginate(10);
+            return $clientes;
+
+        }
+        else{
+            $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
+            //   ->join('juridicos','clientes.id','=','juridicos.clientes_id')
+              ->select('clientes.documento','naturals.nombres','naturals.apellidos')
+              ->orderBy('clientes.id','desc')
+              ->where('users_id','=',Auth::user()->id)
+              ->paginate(10);
+            return $clientes;
+        }
+
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -129,6 +145,7 @@ class ClienteController extends Controller
             }
             else{
                 $cliente = new Cliente();
+                $cliente->users_id = Auth::user()->id;
                 $cliente->tipo_documento = $request->cliente['tipo_documento'];
                 $cliente->documento = $request->cliente['documento'];
                 $cliente->codigo = $request->cliente['codigo'];
@@ -175,7 +192,16 @@ class ClienteController extends Controller
                 $laboral->estado_laboral= $request->laboral['estado_laboral'];    
                 $laboral->tipo_trabajador= $request->laboral['tipo_trabajador'];    
                 $laboral->razon_social= $request->laboral['razon_social'];    
-                // $laboral->ingreso_mensual= $request->laboral['ingreso_mensual'];    
+                // $laboral->ingreso_mensual= $request->laboral['ingreso_mensual'];  
+                if($request->laboral['estado_laboral']=='OTROS'){
+                     $laboral->especificacion= $request->laboral['especificacion'];
+                }
+                else
+                {
+                    $laboral->especificacion= $request->laboral['estado_laboral'];
+                }
+                 
+
                 $laboral->cargo_ocupacion= $request->laboral['cargo_ocupacion'];    
                 $laboral->fecha_ingreso= $request->laboral['fecha_ingreso'];    
                 $laboral->giro_negocio= $request->laboral['giro_negocio'];    
@@ -271,6 +297,7 @@ class ClienteController extends Controller
                 
                 $cliente = new Cliente();
                 $cliente->tipo_documento ='RUC';
+                $cliente->users_id = Auth::user()->id;
                 $cliente->documento = $request->cliente['documento'];
                 $cliente->codigo = $request->cliente['codigo'];
                 $cliente->tipo_cliente = $request->cliente['tipo_cliente'];

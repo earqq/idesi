@@ -474,9 +474,9 @@
                   </div>
                   
               </div>
-                <div class="row">
+                <div class="row mt-3" v-if="form.garantias.length<=1">
                   <div class="col-md-12">
-                    <button
+                    <button 
                       type="button"
                       @click.prevent="clickAddGarantia"
                       class="btn btn-outline-dark more-option w-100"

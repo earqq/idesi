@@ -38,15 +38,12 @@
                   <option value="PASAPORTE">PASAPORTE</option>
                 </select>
               </div>
-
+ 
               <div class="form-group col-md-2">
                 <label for="documento">Nro</label>
-                <input
-                  type="text"
-                  class="form-control letter-5"
-                  v-model="form.cliente.documento"
-                  @change="datosCliente()"
-                />
+                <input type="text" class="form-control letter-5"  v-if="form.cliente.tipo_documento=='DNI'" v-model="form.cliente.documento"  @change="datosCliente()"  v-mask="{mask: '99999999'}" />
+                <input type="text" class="form-control letter-5"  v-else-if="form.cliente.tipo_documento=='CE'" v-model="form.cliente.documento"  v-mask="{mask: '999999999999'}" />
+                <input type="text" class="form-control letter-5"  v-else   disabled/>
               </div>
 
               <div class="form-group col-md-2">
@@ -205,7 +202,7 @@
           <div class="tab-pane fade" id="laboral" role="tabpanel" aria-labelledby="laboral-tab">
             <div class="row">
 
-               <div class="form-group col-md-2">
+              <div class="form-group col-md-2">
                 <label>Estado Trabajador</label>
                 <select v-model="form.laboral.estado_laboral" class="form-control">
                   <option value="0">SELECCIONE</option>
@@ -217,6 +214,11 @@
                   <option value="OTROS">OTROS</option>
                 </select>
               </div>
+              <div class="form-group col-md-4" v-if="form.laboral.estado_laboral=='OTROS'">
+                <label>Especifique</label>
+                <input type="text" class="form-control" v-model="form.laboral.especificacion">
+              </div>
+              
               <div class="row col-md-12 m-0 p-0"  v-if="form.laboral.estado_laboral=='TRABAJA'">
 
                 <div class="form-group col-md-3">
@@ -287,19 +289,19 @@
                   <input type="text" v-model="form.laboral.piso" class="form-control" />
               </div>
 
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-3">
                   <label>Distrito</label>
                   <input type="text" v-model="form.laboral.distrito" class="form-control" />
               </div>
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-3">
                   <label>Provincia</label>
                   <input type="text" v-model="form.laboral.provincia" class="form-control" />
               </div>
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-3">
                   <label>Departamento</label>
                   <input type="text" v-model="form.laboral.departamento" class="form-control" />
               </div>
-              <div class="form-group col-md-4">
+              <div class="form-group col-md-3">
                   <label>Pais</label>
                   <input type="text" v-model="form.laboral.pais" class="form-control" />
               </div>
@@ -414,20 +416,20 @@
           <div class="tab-pane fade" id="asociativa"  role="tabpanel"  aria-labelledby="asociativa-tab"  >
             <div class="row">
               <div class="form-group col-md-3">
-                  <label>Inscripcion </label>
-                  <input type="text" class="form-control" v-model="form.asociativa.inscripcion" >
+                  <label>Inscripción </label>
+                  <money   v-model="form.asociativa.inscripcion"  v-bind="money" class="form-control"  ></money>
               </div>
               <div class="form-group col-md-3">
                   <label>Aporte </label>
-                  <input type="text" class="form-control" v-model="form.asociativa.aporte" >
+                   <money   v-model="form.asociativa.aporte" v-bind="money" class="form-control"  ></money>
               </div>
               <div class="form-group col-md-3">
                   <label>Fondo de prevencion social </label>
-                  <input type="text" class="form-control" v-model="form.asociativa.fondo" >
+                  <money   v-model="form.asociativa.fondo"  v-bind="money" class="form-control"  ></money>
               </div>
               <div class="form-group col-md-3">
                   <label>Fondo de prevencion social opcional </label>
-                  <input type="text" class="form-control" v-model="form.asociativa.fondo_opcional" >
+                  <money v-model="form.asociativa.fondo_opcional"  v-bind="money" class="form-control"  ></money>
               </div>
             </div>
             <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
@@ -437,7 +439,7 @@
           </div>
           <div class="tab-pane fade" id="declaracion" role="tabpanel" aria-labelledby="declaracion-tab" >
             <div class="row">
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-4">
                   <label>Es sujeto a informar a la UIF Perú</label>
                   <select v-model="form.declaracion.uif" class="form-control">
                     <option value="0">SELECCIONE</option>
@@ -445,7 +447,7 @@
                     <option value="NO">NO</option>
                   </select>
                 </div>
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-4">
                   <label>Es PEP (persona expuesta politicamente)</label>
                   <select v-model="form.declaracion.pep" class="form-control">
                     <option value="0">SELECCIONE</option>
@@ -453,7 +455,7 @@
                     <option value="NO">NO</option>
                   </select>
                 </div>
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-4">
                   <label>Estado</label>
                   <select v-model="form.declaracion.estado" class="form-control">
                     <option value="0">SELECCIONE</option>
@@ -522,6 +524,14 @@ export default {
       provinces: [],
       districts: [],
       form: {},
+      money: {
+          decimal: ',',
+          thousands: '.',
+          prefix: 'S/. ',
+          suffix: '',
+          precision: 2,
+          masked: false
+      },
       notificationSystem: {
         options: {
           success: {
@@ -624,6 +634,7 @@ export default {
           telefono:"",
           celular:"",
           email:"",
+          especificacion:""
         
         },
          familia:{

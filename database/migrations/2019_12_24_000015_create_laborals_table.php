@@ -25,6 +25,7 @@ class CreateLaboralsTable extends Migration
             $table->increments('id');
             $table->string('estado_laboral', 45)->nullable()->default(null);
             $table->string('tipo_trabajador', 45)->nullable()->default(null);
+            $table->string('especificacion', 45)->nullable()->default(null);
             $table->string('razon_social', 45)->nullable()->default(null);
             $table->double('ingreso_mensual')->nullable()->default(null);
             $table->string('cargo_ocupacion', 45)->nullable()->default(null);

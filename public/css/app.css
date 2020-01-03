@@ -19294,6 +19294,24 @@ html {
   margin: 0 10px;
 }
 
+/** ESTILO DE CALENDARIO ***/
+
+.vdpInnerWrap header {
+  display: -webkit-box;
+  display: flex;
+  height: 70px;
+  border: transparent;
+  background: #fff;
+}
+
+.vdpInnerWrap header .vdpPeriodControls {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
 input {
   border-radius: 0 !important;
 }
