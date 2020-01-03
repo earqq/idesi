@@ -18,7 +18,7 @@ class Detalle extends Model
     /**
      * @var array
      */
-    protected $fillable = ['familiars_id', 'nombres', 'documento', 'parentesco', 'socio'];
+    protected $fillable = ['familiars_id', 'nombres', 'documento', 'parentesco','nacimiento', 'socio'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

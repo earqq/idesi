@@ -78,7 +78,8 @@
 
               <div class="col-md-4 form-group">
                 <label>Monto</label>
-                <input type="text" v-model="form.monto_inicial" class="form-control" />
+                <!-- <input type="text" v-model="form.monto_inicial" class="form-control" /> -->
+                <money   v-model="form.monto_inicial" v-bind="money" class="form-control"  ></money>
               </div>
               <div class="col-md-4 form-group">
                 <label>Plazo</label>
@@ -197,18 +198,18 @@
                   <option value="ALQUILADO">ALQUILADO</option>
                 </select>
               </div>
-
+ 
               <div class="col-md-6 form-group">
                 <label>Centro Laboral</label>
                 <input type="text" v-model="form.natural.centro_laboral" class="form-control" />
               </div>
               <div class="col-md-6 form-group">
-                <label>Dirección</label>
+                <label>Dirección centro laboral</label>
                 <input type="text" v-model="form.natural.direccion_laboral" class="form-control" />
               </div>
 
               <div class="col-md-12 d-flex titulo-prestamo-menu">
-                <p>Conyugue o Conviviente</p>
+                <p>Conyuge o Conviviente</p>
               </div>
 
               <div class="col-md-4 form-group">
@@ -259,27 +260,21 @@
                 <label>Socio</label>
                 <select v-model="form.conyugue.socio_conyugue" class="form-control">
                   <option value="0">SELECCIONE ...</option>
-                  <option value="si">si</option>
-                  <option value="no">no</option>
+                  <option value="SI">SI</option>
+                  <option value="NO">NO</option>
                 </select>
               </div>
 
               <div class="col-md-4 form-group">
                 <label>Codigo</label>
-                <input
-                  type="text"
-                  v-model="form.conyugue.codigo_socio_conyugue"
-                  class="form-control"
-                />
+                <input type="text" v-model="form.conyugue.codigo_socio_conyugue" class="form-control"  v-if="form.conyugue.socio_conyugue=='SI'"/>
+                <input type="text"  class="form-control" disabled v-else>
               </div>
 
               <div class="col-md-4 form-group">
                 <label>Aporte</label>
-                <input
-                  type="text"
-                  v-model="form.conyugue.aporte_socio_conyugue"
-                  class="form-control"
-                />
+                <money   v-model="form.conyugue.aporte_socio_conyugue" v-bind="money" class="form-control" v-if="form.conyugue.socio_conyugue=='SI'" ></money>
+                <input type="text"  class="form-control" disabled v-else>
               </div>
 
               <div class="col-md-4 form-group">
@@ -306,7 +301,7 @@
                 />
               </div>
               <div class="col-md-12 form-group">
-                <label>Dirección</label>
+                <label>Dirección centro laboral</label>
                 <input
                   type="text"
                   v-model="form.conyugue.direccion_laboral_conyugue"
@@ -327,7 +322,7 @@
                   <p>Aval</p>
                   <i class="fas fa-trash" @click.prevent="clickRemoveAval(index)"></i>
                 </div>
-                <div class="col-md-1 form-group"> 
+                <div class="col-md-2 form-group"> 
                     <label>Tipo Persona</label>
                     <select  v-model="row.tipo_persona"  class="form-control">
                       <option value="0">SELECCIONE ...</option>
@@ -355,7 +350,7 @@
                     <input type="text" v-model="row.apellidos" class="form-control" /> 
                 </div>
 
-                <div class="col-md-3 form-group"> 
+                <div class="col-md-2 form-group"> 
                     <label>Fecha de Nacimiento</label>
                       <date-pick
                                     v-model="row.nacimiento" 
@@ -390,19 +385,21 @@
                     <label>Socio</label>
                     <select v-model="row.socio" class="form-control">
                       <option value="0">SELECCIONE ...</option>
-                      <option value="si">si</option>
-                      <option value="no">no</option>
+                      <option value="SI">SI</option>
+                      <option value="NO">NO</option>
                     </select> 
                 </div>
                 
                 <div class="col-md-4 form-group"> 
                     <label>Codigo</label>
-                    <input type="text" v-model="row.codigo_socio" class="form-control"/> 
+                    <input type="text" v-model="row.codigo_socio" class="form-control" v-if="row.socio=='SI'"/> 
+                    <input type="text" class="form-control" v-else disabled/> 
                 </div>
 
                 <div class="col-md-4 form-group"> 
                     <label>Aporte</label>
-                    <input type="text" v-model="row.aporte_socio" class="form-control" /> 
+                    <money   v-model="row.aporte_socio" v-bind="money" class="form-control" v-if="row.socio=='SI'" ></money>
+                    <input type="text" class="form-control" v-else disabled/> 
                 </div>
 
 
@@ -424,12 +421,12 @@
                     <input type="text" v-model="row.centro_laboral" class="form-control" />
                 </div>
                 <div class="col-md-6 form-group">
-                    <label>Dirección</label>
+                    <label>Dirección centro laboral</label>
                     <input type="text" v-model="row.direccion_laboral" class="form-control" />
                 </div>
               </div>
 
-              <div class="row">
+              <div class="row mt-3">
                 <div class="col-md-12">
                   <button
                     type="button"
@@ -525,7 +522,7 @@
 
                 <div class="col-md-3 form-group">
                     <label>Importe</label>
-                    <input type="text" v-model="form.importe" class="form-control" />
+                    <money   v-model="form.importe" v-bind="money" class="form-control"></money>
                 </div>
 
                 <div class="col-md-2 form-group">
@@ -535,13 +532,13 @@
                 </div>
 
                 <div class="col-md-2 form-group">
-                    <label>Cuotas</label>
+                    <label>Cuotas del sistema</label>
                     <input type="text" v-model="form.cuotas" class="form-control" />
                 </div>
 
                 <div class="col-md-2 form-group">
                     <label>Aporte</label>
-                    <input type="text" v-model="form.aporte" class="form-control" />
+                    <money  v-model="form.aporte" v-bind="money" class="form-control"></money>
                 </div>
 
                 <div class="col-md-12 form-group">
@@ -599,6 +596,22 @@ export default {
       contador_garantia: 0,
       mesEs: mesConf,
       diaEs: diaConf,
+      money: {
+          decimal: ',',
+          thousands: '.',
+          prefix: 'S/. ',
+          suffix: '',
+          precision: 2,
+          masked: false
+      },
+      money: {
+          decimal: ',',
+          thousands: '.',
+          prefix: 'S/. ',
+          suffix: '',
+          precision: 2,
+          masked: false
+      },
       notificationSystem: {
         options: {
           success: {

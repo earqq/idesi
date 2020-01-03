@@ -101,7 +101,7 @@
                 <td>Domingo</td>
                 <td>Subtotal</td>
             </tr>
-            <tr v-for='(ingreso,index) in evaluacion.conyuge.ingresos_negocios' v-bind:key='index'>
+            <tr v-for='(ingreso,index) in evaluacion.conyuge.ingresos_negocio' v-bind:key='index'>
                 <td>
                     <input type='text' v-model='evaluacion.conyuge.ingresos_negocio[index].concepto'>
                 </td>
@@ -447,13 +447,15 @@ export default {
             }
         }
     },
-     async mounted() {
-           return this.$http 
-                            .get(
-                            `/${this.resource}/listado?search_input=${this.search_input}`
-                            )
-                            .then(response => {
-                            this.clientes = response.data.data;
+
+     async mounted() { 
+                     this.$http.get(`/evaluaciones/propuestaAnalista/` + this.$route.params.prestamo)
+                            .then(response => { 
+                            console.log(response.data);
+                                    this.evaluacion.propuesta.producto=response.data.producto
+                                    this.evaluacion.propuesta.monto=response.data.importe
+                                    this.evaluacion.propuesta.cuotas=response.data.cuotas
+                                    this.evaluacion.propuesta.plazo=response.data.plazo
                             });
         },
     methods:{

@@ -259,6 +259,18 @@ class ClienteController extends Controller
                 $familiar->naturals_id= $natural->id; 
                 $familiar->save();
 
+                foreach ($request->detalles as $ep=>$rp) {
+                    $detalle= new Detalle;
+                    $detalle->nombres = $rp['nombres'];
+                    $detalle->documento = $rp['documento'];
+                    $detalle->parentesco = $rp['parentesco'];
+                    $detalle->nacimiento = $rp['nacimiento'];
+                    $detalle->socio = $rp['socio'];
+                    $detalle->familiars_id= $familiar->id;
+                    $detalle->save();
+                } 
+
+
                 $adicional = New Adicional;
                 $adicional->representante= $request->adicional['representante'];    
                 $adicional->documento= $request->adicional['documento'];    

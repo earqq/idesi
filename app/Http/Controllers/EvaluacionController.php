@@ -78,9 +78,10 @@ class EvaluacionController extends Controller
 
     public function propuestaAnalista($id)
     {
-        $prestamo = Prestamo::find($id);
-        
-         return compact('prestamo');
+        $prestamo = Prestamo::where('id',$id)
+                            ->select('producto','importe','plazo','cuotas')->first();
+
+         return $prestamo;
     }
 
 

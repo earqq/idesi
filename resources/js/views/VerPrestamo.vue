@@ -201,13 +201,13 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label>Dirección</label>
+              <label>Dirección de centro laboral</label>
               <input type="text" v-model="form.natural.direccion_laboral" class="form-control" />
             </div>
           </div>
 
           <div class="col-md-12 d-flex titulo-prestamo-menu">
-            <p>Conyugue o Conviviente</p>
+            <p>Conyuge o Conviviente</p>
           </div>
 
           <div class="col-md-4">
@@ -290,7 +290,7 @@
           </div>
           <div class="col-md-12">
             <div class="form-group">
-              <label>Dirección</label>
+              <label>Dirección centro laboral</label>
               <input type="text" v-model="form.conyugue.direccion_laboral_conyugue" class="form-control" />
             </div>
           </div>
@@ -390,7 +390,7 @@
           </div>
           <div class="col-md-6 pr-0">
             <div class="form-group">
-              <label>Dirección</label>
+              <label>Dirección centro laboral</label>
               <input type="text" v-model="row.direccion_laboral" class="form-control" />
             </div>
           </div>
@@ -479,7 +479,7 @@
 
               <div class="col-md-2">
                 <div class="form-group">
-                  <label>Cuotas</label>
+                  <label>Cuotas del sistema</label>
                   <input type="text" v-model="prestamo.cuotas" class="form-control" />
                 </div>
               </div>
