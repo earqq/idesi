@@ -14,7 +14,7 @@ Route::group(['middleware'=>['guest']],function(){
 /**
  *  MIDDLEWARE DE INVITADOS
  */
-Route::get('migrar','EvaluacionesController@saveNegocios');
+Route::get('charge/data','EvaluacionesController@chargeData');
 Route::group(['middleware'=>['auth']],function(){
 
     Route::group(['middleware'=>['Administrador']],function(){
@@ -80,6 +80,7 @@ Route::group(['middleware'=>['auth']],function(){
 
         // evaluaciones cuantitativas y cualitativas
         Route::post('evaluaciones/cuantitativa','EvaluacionesController@saveCuantitativa');
+        Route::post('evaluaciones/cualitativa','EvaluacionesController@saveCualitativa');
         
     });
 
