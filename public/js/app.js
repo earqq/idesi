@@ -2958,99 +2958,110 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      principal: {
-        destino_credito_descripcion: "",
-        destino_credito: 1,
-        fuente_ingreso: ""
-      },
-      negocio: {
-        ubicacion: "",
-        antiguedad: '1',
-        local: 1,
-        licencia_funcionamiento: 1,
-        horario_atencion: "",
-        mejoras_local: 0
-      },
-      vehiculo: {
-        marca: "",
-        modelo: "",
-        año: "",
-        tipo_servicio_brinda: "",
-        antiguedad_servicio: "",
-        permiso_servicio: 1,
-        horario_trabajo: ""
-      },
-      familiar: {
-        tipo_vivienda: 1,
-        situacion_familiar: 1,
-        miembros_familia: 1,
-        hijos: {
-          1: {},
-          2: {},
-          3: {},
-          4: {}
-        }
-      },
-      central_riesgo: {
-        1: {
-          entidad_financiera: "",
-          capital: false,
-          activo_f: false,
-          consumo: false,
-          vehicular: false,
-          hipoteca: false,
-          terceros: false
+      evaluacion: {
+        prestamo_id: this.$route.params.prestamo,
+        principal: {
+          destino_credito_descripcion: "",
+          destino_credito: 1,
+          fuente_ingreso: ""
         },
-        2: {
-          entidad_financiera: "",
-          capital: false,
-          activo_f: false,
-          consumo: false,
-          vehicular: false,
-          hipoteca: false,
-          terceros: false
+        negocio: {
+          ubicacion: "",
+          antiguedad: '1',
+          local: 1,
+          licencia_funcionamiento: 1,
+          horario_atencion: "",
+          mejoras_local: 0
         },
-        3: {
-          entidad_financiera: "",
-          capital: false,
-          activo_f: false,
-          consumo: false,
-          vehicular: false,
-          hipoteca: false,
-          terceros: false
+        vehiculo: {
+          marca: "",
+          modelo: "",
+          año: "",
+          tipo_servicio_brinda: "",
+          antiguedad_servicio: "",
+          permiso_servicio: 1,
+          horario_trabajo: ""
         },
-        4: {
-          entidad_financiera: "",
-          capital: false,
-          activo_f: false,
-          consumo: false,
-          vehicular: false,
-          hipoteca: false,
-          terceros: false
-        }
-      },
-      referencias: {
-        1: {
-          tipo_relacion: "",
-          nombre: "",
-          telefono: ""
+        familiar: {
+          tipo_vivienda: 1,
+          situacion_familiar: 1,
+          miembros_familia: 1,
+          hijos: {
+            1: {},
+            2: {},
+            3: {},
+            4: {}
+          }
         },
-        2: {
-          tipo_relacion: "",
-          nombre: "",
-          telefono: ""
+        central_riesgo: {
+          1: {
+            entidad_financiera: "",
+            capital: false,
+            activo_f: false,
+            consumo: false,
+            vehicular: false,
+            hipoteca: false,
+            terceros: false
+          },
+          2: {
+            entidad_financiera: "",
+            capital: false,
+            activo_f: false,
+            consumo: false,
+            vehicular: false,
+            hipoteca: false,
+            terceros: false
+          },
+          3: {
+            entidad_financiera: "",
+            capital: false,
+            activo_f: false,
+            consumo: false,
+            vehicular: false,
+            hipoteca: false,
+            terceros: false
+          },
+          4: {
+            entidad_financiera: "",
+            capital: false,
+            activo_f: false,
+            consumo: false,
+            vehicular: false,
+            hipoteca: false,
+            terceros: false
+          }
         },
-        3: {
-          tipo_relacion: "",
-          nombre: "",
-          telefono: ""
-        }
-      },
-      colateral: 0
+        referencias: {
+          1: {
+            tipo_relacion: "",
+            nombre: "",
+            telefono: ""
+          },
+          2: {
+            tipo_relacion: "",
+            nombre: "",
+            telefono: ""
+          },
+          3: {
+            tipo_relacion: "",
+            nombre: "",
+            telefono: ""
+          }
+        },
+        colateral: 0
+      }
     };
+  },
+  methods: {
+    guardar: function guardar() {
+      axios.post('/evaluaciones/cualitativa', this.evaluacion).then(function (res) {
+        alert('guardado correctamente');
+      });
+    }
   }
 });
 
@@ -64478,18 +64489,22 @@ var render = function() {
         {
           name: "model",
           rawName: "v-model",
-          value: _vm.principal.fuente_ingreso,
-          expression: "principal.fuente_ingreso"
+          value: _vm.evaluacion.principal.fuente_ingreso,
+          expression: "evaluacion.principal.fuente_ingreso"
         }
       ],
       attrs: { type: "text" },
-      domProps: { value: _vm.principal.fuente_ingreso },
+      domProps: { value: _vm.evaluacion.principal.fuente_ingreso },
       on: {
         input: function($event) {
           if ($event.target.composing) {
             return
           }
-          _vm.$set(_vm.principal, "fuente_ingreso", $event.target.value)
+          _vm.$set(
+            _vm.evaluacion.principal,
+            "fuente_ingreso",
+            $event.target.value
+          )
         }
       }
     }),
@@ -64503,8 +64518,8 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.principal.destino_credito,
-            expression: "principal.destino_credito"
+            value: _vm.evaluacion.principal.destino_credito,
+            expression: "evaluacion.principal.destino_credito"
           }
         ],
         on: {
@@ -64518,7 +64533,7 @@ var render = function() {
                 return val
               })
             _vm.$set(
-              _vm.principal,
+              _vm.evaluacion.principal,
               "destino_credito",
               $event.target.multiple ? $$selectedVal : $$selectedVal[0]
             )
@@ -64551,19 +64566,19 @@ var render = function() {
         {
           name: "model",
           rawName: "v-model",
-          value: _vm.principal.destino_credito_descripcion,
-          expression: "principal.destino_credito_descripcion"
+          value: _vm.evaluacion.principal.destino_credito_descripcion,
+          expression: "evaluacion.principal.destino_credito_descripcion"
         }
       ],
       attrs: { type: "text" },
-      domProps: { value: _vm.principal.destino_credito_descripcion },
+      domProps: { value: _vm.evaluacion.principal.destino_credito_descripcion },
       on: {
         input: function($event) {
           if ($event.target.composing) {
             return
           }
           _vm.$set(
-            _vm.principal,
+            _vm.evaluacion.principal,
             "destino_credito_descripcion",
             $event.target.value
           )
@@ -64580,18 +64595,18 @@ var render = function() {
         {
           name: "model",
           rawName: "v-model",
-          value: _vm.negocio.ubicacion,
-          expression: "negocio.ubicacion"
+          value: _vm.evaluacion.negocio.ubicacion,
+          expression: "evaluacion.negocio.ubicacion"
         }
       ],
       attrs: { type: "text" },
-      domProps: { value: _vm.negocio.ubicacion },
+      domProps: { value: _vm.evaluacion.negocio.ubicacion },
       on: {
         input: function($event) {
           if ($event.target.composing) {
             return
           }
-          _vm.$set(_vm.negocio, "ubicacion", $event.target.value)
+          _vm.$set(_vm.evaluacion.negocio, "ubicacion", $event.target.value)
         }
       }
     }),
@@ -64605,8 +64620,8 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.negocio.antiguedad,
-            expression: "negocio.antiguedad"
+            value: _vm.evaluacion.negocio.antiguedad,
+            expression: "evaluacion.negocio.antiguedad"
           }
         ],
         on: {
@@ -64620,7 +64635,7 @@ var render = function() {
                 return val
               })
             _vm.$set(
-              _vm.negocio,
+              _vm.evaluacion.negocio,
               "antiguedad",
               $event.target.multiple ? $$selectedVal : $$selectedVal[0]
             )
@@ -64653,8 +64668,8 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.negocio.local,
-            expression: "negocio.local"
+            value: _vm.evaluacion.negocio.local,
+            expression: "evaluacion.negocio.local"
           }
         ],
         on: {
@@ -64668,7 +64683,7 @@ var render = function() {
                 return val
               })
             _vm.$set(
-              _vm.negocio,
+              _vm.evaluacion.negocio,
               "local",
               $event.target.multiple ? $$selectedVal : $$selectedVal[0]
             )
@@ -64697,8 +64712,8 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.negocio.licencia_funcionamiento,
-            expression: "negocio.licencia_funcionamiento"
+            value: _vm.evaluacion.negocio.licencia_funcionamiento,
+            expression: "evaluacion.negocio.licencia_funcionamiento"
           }
         ],
         on: {
@@ -64712,7 +64727,7 @@ var render = function() {
                 return val
               })
             _vm.$set(
-              _vm.negocio,
+              _vm.evaluacion.negocio,
               "licencia_funcionamiento",
               $event.target.multiple ? $$selectedVal : $$selectedVal[0]
             )
@@ -64735,8 +64750,8 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.negocio.mejoras_local,
-            expression: "negocio.mejoras_local"
+            value: _vm.evaluacion.negocio.mejoras_local,
+            expression: "evaluacion.negocio.mejoras_local"
           }
         ],
         on: {
@@ -64750,7 +64765,7 @@ var render = function() {
                 return val
               })
             _vm.$set(
-              _vm.negocio,
+              _vm.evaluacion.negocio,
               "mejoras_local",
               $event.target.multiple ? $$selectedVal : $$selectedVal[0]
             )
@@ -64773,18 +64788,18 @@ var render = function() {
         {
           name: "model",
           rawName: "v-model",
-          value: _vm.vehiculo.marca,
-          expression: "vehiculo.marca"
+          value: _vm.evaluacion.vehiculo.marca,
+          expression: "evaluacion.vehiculo.marca"
         }
       ],
       attrs: { type: "text" },
-      domProps: { value: _vm.vehiculo.marca },
+      domProps: { value: _vm.evaluacion.vehiculo.marca },
       on: {
         input: function($event) {
           if ($event.target.composing) {
             return
           }
-          _vm.$set(_vm.vehiculo, "marca", $event.target.value)
+          _vm.$set(_vm.evaluacion.vehiculo, "marca", $event.target.value)
         }
       }
     }),
@@ -64796,18 +64811,18 @@ var render = function() {
         {
           name: "model",
           rawName: "v-model",
-          value: _vm.vehiculo.modelo,
-          expression: "vehiculo.modelo"
+          value: _vm.evaluacion.vehiculo.modelo,
+          expression: "evaluacion.vehiculo.modelo"
         }
       ],
       attrs: { type: "text" },
-      domProps: { value: _vm.vehiculo.modelo },
+      domProps: { value: _vm.evaluacion.vehiculo.modelo },
       on: {
         input: function($event) {
           if ($event.target.composing) {
             return
           }
-          _vm.$set(_vm.vehiculo, "modelo", $event.target.value)
+          _vm.$set(_vm.evaluacion.vehiculo, "modelo", $event.target.value)
         }
       }
     }),
@@ -64821,8 +64836,8 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.vehiculo.año,
-            expression: "vehiculo.año"
+            value: _vm.evaluacion.vehiculo.año,
+            expression: "evaluacion.vehiculo.año"
           }
         ],
         on: {
@@ -64836,7 +64851,7 @@ var render = function() {
                 return val
               })
             _vm.$set(
-              _vm.vehiculo,
+              _vm.evaluacion.vehiculo,
               "año",
               $event.target.multiple ? $$selectedVal : $$selectedVal[0]
             )
@@ -64903,18 +64918,22 @@ var render = function() {
         {
           name: "model",
           rawName: "v-model",
-          value: _vm.vehiculo.tipo_servicio_brinda,
-          expression: "vehiculo.tipo_servicio_brinda"
+          value: _vm.evaluacion.vehiculo.tipo_servicio_brinda,
+          expression: "evaluacion.vehiculo.tipo_servicio_brinda"
         }
       ],
       attrs: { type: "text" },
-      domProps: { value: _vm.vehiculo.tipo_servicio_brinda },
+      domProps: { value: _vm.evaluacion.vehiculo.tipo_servicio_brinda },
       on: {
         input: function($event) {
           if ($event.target.composing) {
             return
           }
-          _vm.$set(_vm.vehiculo, "tipo_servicio_brinda", $event.target.value)
+          _vm.$set(
+            _vm.evaluacion.vehiculo,
+            "tipo_servicio_brinda",
+            $event.target.value
+          )
         }
       }
     }),
@@ -64926,18 +64945,22 @@ var render = function() {
         {
           name: "model",
           rawName: "v-model",
-          value: _vm.vehiculo.antiguedad_servicio,
-          expression: "vehiculo.antiguedad_servicio"
+          value: _vm.evaluacion.vehiculo.antiguedad_servicio,
+          expression: "evaluacion.vehiculo.antiguedad_servicio"
         }
       ],
       attrs: { type: "text" },
-      domProps: { value: _vm.vehiculo.antiguedad_servicio },
+      domProps: { value: _vm.evaluacion.vehiculo.antiguedad_servicio },
       on: {
         input: function($event) {
           if ($event.target.composing) {
             return
           }
-          _vm.$set(_vm.vehiculo, "antiguedad_servicio", $event.target.value)
+          _vm.$set(
+            _vm.evaluacion.vehiculo,
+            "antiguedad_servicio",
+            $event.target.value
+          )
         }
       }
     }),
@@ -64951,8 +64974,8 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.vehiculo.permiso_servicio,
-            expression: "vehiculo.permiso_servicio"
+            value: _vm.evaluacion.vehiculo.permiso_servicio,
+            expression: "evaluacion.vehiculo.permiso_servicio"
           }
         ],
         on: {
@@ -64966,7 +64989,7 @@ var render = function() {
                 return val
               })
             _vm.$set(
-              _vm.vehiculo,
+              _vm.evaluacion.vehiculo,
               "permiso_servicio",
               $event.target.multiple ? $$selectedVal : $$selectedVal[0]
             )
@@ -64987,18 +65010,22 @@ var render = function() {
         {
           name: "model",
           rawName: "v-model",
-          value: _vm.vehiculo.horario_servicio,
-          expression: "vehiculo.horario_servicio"
+          value: _vm.evaluacion.vehiculo.horario_servicio,
+          expression: "evaluacion.vehiculo.horario_servicio"
         }
       ],
       attrs: { type: "text" },
-      domProps: { value: _vm.vehiculo.horario_servicio },
+      domProps: { value: _vm.evaluacion.vehiculo.horario_servicio },
       on: {
         input: function($event) {
           if ($event.target.composing) {
             return
           }
-          _vm.$set(_vm.vehiculo, "horario_servicio", $event.target.value)
+          _vm.$set(
+            _vm.evaluacion.vehiculo,
+            "horario_servicio",
+            $event.target.value
+          )
         }
       }
     }),
@@ -65014,8 +65041,8 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.familiar.tipo_vivienda,
-            expression: "familiar.tipo_vivienda"
+            value: _vm.evaluacion.familiar.tipo_vivienda,
+            expression: "evaluacion.familiar.tipo_vivienda"
           }
         ],
         on: {
@@ -65029,7 +65056,7 @@ var render = function() {
                 return val
               })
             _vm.$set(
-              _vm.familiar,
+              _vm.evaluacion.familiar,
               "tipo_vivienda",
               $event.target.multiple ? $$selectedVal : $$selectedVal[0]
             )
@@ -65058,8 +65085,8 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.familiar.situacion_familiar,
-            expression: "familiar.situacion_familiar"
+            value: _vm.evaluacion.familiar.situacion_familiar,
+            expression: "evaluacion.familiar.situacion_familiar"
           }
         ],
         on: {
@@ -65073,7 +65100,7 @@ var render = function() {
                 return val
               })
             _vm.$set(
-              _vm.familiar,
+              _vm.evaluacion.familiar,
               "situacion_familiar",
               $event.target.multiple ? $$selectedVal : $$selectedVal[0]
             )
@@ -65096,18 +65123,22 @@ var render = function() {
         {
           name: "model",
           rawName: "v-model",
-          value: _vm.familiar.miembros_familia,
-          expression: "familiar.miembros_familia"
+          value: _vm.evaluacion.familiar.miembros_familia,
+          expression: "evaluacion.familiar.miembros_familia"
         }
       ],
       attrs: { type: "number" },
-      domProps: { value: _vm.familiar.miembros_familia },
+      domProps: { value: _vm.evaluacion.familiar.miembros_familia },
       on: {
         input: function($event) {
           if ($event.target.composing) {
             return
           }
-          _vm.$set(_vm.familiar, "miembros_familia", $event.target.value)
+          _vm.$set(
+            _vm.evaluacion.familiar,
+            "miembros_familia",
+            $event.target.value
+          )
         }
       }
     }),
@@ -65126,18 +65157,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[1].edad,
-                expression: "familiar.hijos[1].edad"
+                value: _vm.evaluacion.familiar.hijos[1].edad,
+                expression: "evaluacion.familiar.hijos[1].edad"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[1].edad },
+            domProps: { value: _vm.evaluacion.familiar.hijos[1].edad },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[1], "edad", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[1],
+                  "edad",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65149,18 +65184,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[1].colegio,
-                expression: "familiar.hijos[1].colegio"
+                value: _vm.evaluacion.familiar.hijos[1].colegio,
+                expression: "evaluacion.familiar.hijos[1].colegio"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[1].colegio },
+            domProps: { value: _vm.evaluacion.familiar.hijos[1].colegio },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[1], "colegio", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[1],
+                  "colegio",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65172,18 +65211,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[1].grado,
-                expression: "familiar.hijos[1].grado"
+                value: _vm.evaluacion.familiar.hijos[1].grado,
+                expression: "evaluacion.familiar.hijos[1].grado"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[1].grado },
+            domProps: { value: _vm.evaluacion.familiar.hijos[1].grado },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[1], "grado", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[1],
+                  "grado",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65195,18 +65238,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[1].costo,
-                expression: "familiar.hijos[1].costo"
+                value: _vm.evaluacion.familiar.hijos[1].costo,
+                expression: "evaluacion.familiar.hijos[1].costo"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[1].costo },
+            domProps: { value: _vm.evaluacion.familiar.hijos[1].costo },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[1], "costo", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[1],
+                  "costo",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65220,18 +65267,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[2].edad,
-                expression: "familiar.hijos[2].edad"
+                value: _vm.evaluacion.familiar.hijos[2].edad,
+                expression: "evaluacion.familiar.hijos[2].edad"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[2].edad },
+            domProps: { value: _vm.evaluacion.familiar.hijos[2].edad },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[2], "edad", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[2],
+                  "edad",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65243,18 +65294,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[2].colegio,
-                expression: "familiar.hijos[2].colegio"
+                value: _vm.evaluacion.familiar.hijos[2].colegio,
+                expression: "evaluacion.familiar.hijos[2].colegio"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[2].colegio },
+            domProps: { value: _vm.evaluacion.familiar.hijos[2].colegio },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[2], "colegio", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[2],
+                  "colegio",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65266,18 +65321,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[2].grado,
-                expression: "familiar.hijos[2].grado"
+                value: _vm.evaluacion.familiar.hijos[2].grado,
+                expression: "evaluacion.familiar.hijos[2].grado"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[2].grado },
+            domProps: { value: _vm.evaluacion.familiar.hijos[2].grado },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[2], "grado", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[2],
+                  "grado",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65289,18 +65348,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[2].costo,
-                expression: "familiar.hijos[2].costo"
+                value: _vm.evaluacion.familiar.hijos[2].costo,
+                expression: "evaluacion.familiar.hijos[2].costo"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[2].costo },
+            domProps: { value: _vm.evaluacion.familiar.hijos[2].costo },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[2], "costo", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[2],
+                  "costo",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65314,18 +65377,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[3].edad,
-                expression: "familiar.hijos[3].edad"
+                value: _vm.evaluacion.familiar.hijos[3].edad,
+                expression: "evaluacion.familiar.hijos[3].edad"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[3].edad },
+            domProps: { value: _vm.evaluacion.familiar.hijos[3].edad },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[3], "edad", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[3],
+                  "edad",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65337,18 +65404,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[3].colegio,
-                expression: "familiar.hijos[3].colegio"
+                value: _vm.evaluacion.familiar.hijos[3].colegio,
+                expression: "evaluacion.familiar.hijos[3].colegio"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[3].colegio },
+            domProps: { value: _vm.evaluacion.familiar.hijos[3].colegio },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[3], "colegio", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[3],
+                  "colegio",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65360,18 +65431,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[3].grado,
-                expression: "familiar.hijos[3].grado"
+                value: _vm.evaluacion.familiar.hijos[3].grado,
+                expression: "evaluacion.familiar.hijos[3].grado"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[3].grado },
+            domProps: { value: _vm.evaluacion.familiar.hijos[3].grado },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[3], "grado", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[3],
+                  "grado",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65383,18 +65458,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[3].costo,
-                expression: "familiar.hijos[3].costo"
+                value: _vm.evaluacion.familiar.hijos[3].costo,
+                expression: "evaluacion.familiar.hijos[3].costo"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[3].costo },
+            domProps: { value: _vm.evaluacion.familiar.hijos[3].costo },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[3], "costo", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[3],
+                  "costo",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65408,18 +65487,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[4].edad,
-                expression: "familiar.hijos[4].edad"
+                value: _vm.evaluacion.familiar.hijos[4].edad,
+                expression: "evaluacion.familiar.hijos[4].edad"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[4].edad },
+            domProps: { value: _vm.evaluacion.familiar.hijos[4].edad },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[4], "edad", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[4],
+                  "edad",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65431,18 +65514,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[4].colegio,
-                expression: "familiar.hijos[4].colegio"
+                value: _vm.evaluacion.familiar.hijos[4].colegio,
+                expression: "evaluacion.familiar.hijos[4].colegio"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[4].colegio },
+            domProps: { value: _vm.evaluacion.familiar.hijos[4].colegio },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[4], "colegio", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[4],
+                  "colegio",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65454,18 +65541,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[4].grado,
-                expression: "familiar.hijos[4].grado"
+                value: _vm.evaluacion.familiar.hijos[4].grado,
+                expression: "evaluacion.familiar.hijos[4].grado"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[4].grado },
+            domProps: { value: _vm.evaluacion.familiar.hijos[4].grado },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[4], "grado", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[4],
+                  "grado",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65477,18 +65568,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.familiar.hijos[4].costo,
-                expression: "familiar.hijos[4].costo"
+                value: _vm.evaluacion.familiar.hijos[4].costo,
+                expression: "evaluacion.familiar.hijos[4].costo"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.familiar.hijos[4].costo },
+            domProps: { value: _vm.evaluacion.familiar.hijos[4].costo },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.familiar.hijos[4], "costo", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.familiar.hijos[4],
+                  "costo",
+                  $event.target.value
+                )
               }
             }
           })
@@ -65508,19 +65603,21 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[1].entidad_financiera,
-                expression: "central_riesgo[1].entidad_financiera"
+                value: _vm.evaluacion.central_riesgo[1].entidad_financiera,
+                expression: "evaluacion.central_riesgo[1].entidad_financiera"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.central_riesgo[1].entidad_financiera },
+            domProps: {
+              value: _vm.evaluacion.central_riesgo[1].entidad_financiera
+            },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
                 _vm.$set(
-                  _vm.central_riesgo[1],
+                  _vm.evaluacion.central_riesgo[1],
                   "entidad_financiera",
                   $event.target.value
                 )
@@ -65535,19 +65632,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[1].capital,
-                expression: "central_riesgo[1].capital"
+                value: _vm.evaluacion.central_riesgo[1].capital,
+                expression: "evaluacion.central_riesgo[1].capital"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[1].capital)
-                ? _vm._i(_vm.central_riesgo[1].capital, null) > -1
-                : _vm.central_riesgo[1].capital
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[1].capital)
+                ? _vm._i(_vm.evaluacion.central_riesgo[1].capital, null) > -1
+                : _vm.evaluacion.central_riesgo[1].capital
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[1].capital,
+                var $$a = _vm.evaluacion.central_riesgo[1].capital,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -65556,20 +65653,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[1],
+                        _vm.evaluacion.central_riesgo[1],
                         "capital",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[1],
+                        _vm.evaluacion.central_riesgo[1],
                         "capital",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[1], "capital", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[1], "capital", $$c)
                 }
               }
             }
@@ -65582,19 +65679,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[1].activo_f,
-                expression: "central_riesgo[1].activo_f"
+                value: _vm.evaluacion.central_riesgo[1].activo_f,
+                expression: "evaluacion.central_riesgo[1].activo_f"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[1].activo_f)
-                ? _vm._i(_vm.central_riesgo[1].activo_f, null) > -1
-                : _vm.central_riesgo[1].activo_f
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[1].activo_f)
+                ? _vm._i(_vm.evaluacion.central_riesgo[1].activo_f, null) > -1
+                : _vm.evaluacion.central_riesgo[1].activo_f
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[1].activo_f,
+                var $$a = _vm.evaluacion.central_riesgo[1].activo_f,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -65603,20 +65700,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[1],
+                        _vm.evaluacion.central_riesgo[1],
                         "activo_f",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[1],
+                        _vm.evaluacion.central_riesgo[1],
                         "activo_f",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[1], "activo_f", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[1], "activo_f", $$c)
                 }
               }
             }
@@ -65629,19 +65726,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[1].consumo,
-                expression: "central_riesgo[1].consumo"
+                value: _vm.evaluacion.central_riesgo[1].consumo,
+                expression: "evaluacion.central_riesgo[1].consumo"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[1].consumo)
-                ? _vm._i(_vm.central_riesgo[1].consumo, null) > -1
-                : _vm.central_riesgo[1].consumo
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[1].consumo)
+                ? _vm._i(_vm.evaluacion.central_riesgo[1].consumo, null) > -1
+                : _vm.evaluacion.central_riesgo[1].consumo
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[1].consumo,
+                var $$a = _vm.evaluacion.central_riesgo[1].consumo,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -65650,20 +65747,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[1],
+                        _vm.evaluacion.central_riesgo[1],
                         "consumo",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[1],
+                        _vm.evaluacion.central_riesgo[1],
                         "consumo",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[1], "consumo", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[1], "consumo", $$c)
                 }
               }
             }
@@ -65676,19 +65773,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[1].vehicular,
-                expression: "central_riesgo[1].vehicular"
+                value: _vm.evaluacion.central_riesgo[1].vehicular,
+                expression: "evaluacion.central_riesgo[1].vehicular"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[1].vehicular)
-                ? _vm._i(_vm.central_riesgo[1].vehicular, null) > -1
-                : _vm.central_riesgo[1].vehicular
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[1].vehicular)
+                ? _vm._i(_vm.evaluacion.central_riesgo[1].vehicular, null) > -1
+                : _vm.evaluacion.central_riesgo[1].vehicular
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[1].vehicular,
+                var $$a = _vm.evaluacion.central_riesgo[1].vehicular,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -65697,20 +65794,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[1],
+                        _vm.evaluacion.central_riesgo[1],
                         "vehicular",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[1],
+                        _vm.evaluacion.central_riesgo[1],
                         "vehicular",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[1], "vehicular", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[1], "vehicular", $$c)
                 }
               }
             }
@@ -65723,19 +65820,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[1].hipoteca,
-                expression: "central_riesgo[1].hipoteca"
+                value: _vm.evaluacion.central_riesgo[1].hipoteca,
+                expression: "evaluacion.central_riesgo[1].hipoteca"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[1].hipoteca)
-                ? _vm._i(_vm.central_riesgo[1].hipoteca, null) > -1
-                : _vm.central_riesgo[1].hipoteca
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[1].hipoteca)
+                ? _vm._i(_vm.evaluacion.central_riesgo[1].hipoteca, null) > -1
+                : _vm.evaluacion.central_riesgo[1].hipoteca
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[1].hipoteca,
+                var $$a = _vm.evaluacion.central_riesgo[1].hipoteca,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -65744,20 +65841,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[1],
+                        _vm.evaluacion.central_riesgo[1],
                         "hipoteca",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[1],
+                        _vm.evaluacion.central_riesgo[1],
                         "hipoteca",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[1], "hipoteca", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[1], "hipoteca", $$c)
                 }
               }
             }
@@ -65770,19 +65867,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[1].terceros,
-                expression: "central_riesgo[1].terceros"
+                value: _vm.evaluacion.central_riesgo[1].terceros,
+                expression: "evaluacion.central_riesgo[1].terceros"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[1].terceros)
-                ? _vm._i(_vm.central_riesgo[1].terceros, null) > -1
-                : _vm.central_riesgo[1].terceros
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[1].terceros)
+                ? _vm._i(_vm.evaluacion.central_riesgo[1].terceros, null) > -1
+                : _vm.evaluacion.central_riesgo[1].terceros
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[1].terceros,
+                var $$a = _vm.evaluacion.central_riesgo[1].terceros,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -65791,20 +65888,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[1],
+                        _vm.evaluacion.central_riesgo[1],
                         "terceros",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[1],
+                        _vm.evaluacion.central_riesgo[1],
                         "terceros",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[1], "terceros", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[1], "terceros", $$c)
                 }
               }
             }
@@ -65819,19 +65916,21 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[2].entidad_financiera,
-                expression: "central_riesgo[2].entidad_financiera"
+                value: _vm.evaluacion.central_riesgo[2].entidad_financiera,
+                expression: "evaluacion.central_riesgo[2].entidad_financiera"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.central_riesgo[2].entidad_financiera },
+            domProps: {
+              value: _vm.evaluacion.central_riesgo[2].entidad_financiera
+            },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
                 _vm.$set(
-                  _vm.central_riesgo[2],
+                  _vm.evaluacion.central_riesgo[2],
                   "entidad_financiera",
                   $event.target.value
                 )
@@ -65846,19 +65945,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[2].capital,
-                expression: "central_riesgo[2].capital"
+                value: _vm.evaluacion.central_riesgo[2].capital,
+                expression: "evaluacion.central_riesgo[2].capital"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[2].capital)
-                ? _vm._i(_vm.central_riesgo[2].capital, null) > -1
-                : _vm.central_riesgo[2].capital
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[2].capital)
+                ? _vm._i(_vm.evaluacion.central_riesgo[2].capital, null) > -1
+                : _vm.evaluacion.central_riesgo[2].capital
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[2].capital,
+                var $$a = _vm.evaluacion.central_riesgo[2].capital,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -65867,20 +65966,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[2],
+                        _vm.evaluacion.central_riesgo[2],
                         "capital",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[2],
+                        _vm.evaluacion.central_riesgo[2],
                         "capital",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[2], "capital", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[2], "capital", $$c)
                 }
               }
             }
@@ -65893,19 +65992,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[2].activo_f,
-                expression: "central_riesgo[2].activo_f"
+                value: _vm.evaluacion.central_riesgo[2].activo_f,
+                expression: "evaluacion.central_riesgo[2].activo_f"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[2].activo_f)
-                ? _vm._i(_vm.central_riesgo[2].activo_f, null) > -1
-                : _vm.central_riesgo[2].activo_f
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[2].activo_f)
+                ? _vm._i(_vm.evaluacion.central_riesgo[2].activo_f, null) > -1
+                : _vm.evaluacion.central_riesgo[2].activo_f
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[2].activo_f,
+                var $$a = _vm.evaluacion.central_riesgo[2].activo_f,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -65914,20 +66013,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[2],
+                        _vm.evaluacion.central_riesgo[2],
                         "activo_f",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[2],
+                        _vm.evaluacion.central_riesgo[2],
                         "activo_f",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[2], "activo_f", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[2], "activo_f", $$c)
                 }
               }
             }
@@ -65940,19 +66039,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[2].consumo,
-                expression: "central_riesgo[2].consumo"
+                value: _vm.evaluacion.central_riesgo[2].consumo,
+                expression: "evaluacion.central_riesgo[2].consumo"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[2].consumo)
-                ? _vm._i(_vm.central_riesgo[2].consumo, null) > -1
-                : _vm.central_riesgo[2].consumo
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[2].consumo)
+                ? _vm._i(_vm.evaluacion.central_riesgo[2].consumo, null) > -1
+                : _vm.evaluacion.central_riesgo[2].consumo
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[2].consumo,
+                var $$a = _vm.evaluacion.central_riesgo[2].consumo,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -65961,20 +66060,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[2],
+                        _vm.evaluacion.central_riesgo[2],
                         "consumo",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[2],
+                        _vm.evaluacion.central_riesgo[2],
                         "consumo",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[2], "consumo", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[2], "consumo", $$c)
                 }
               }
             }
@@ -65987,19 +66086,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[2].vehicular,
-                expression: "central_riesgo[2].vehicular"
+                value: _vm.evaluacion.central_riesgo[2].vehicular,
+                expression: "evaluacion.central_riesgo[2].vehicular"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[2].vehicular)
-                ? _vm._i(_vm.central_riesgo[2].vehicular, null) > -1
-                : _vm.central_riesgo[2].vehicular
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[2].vehicular)
+                ? _vm._i(_vm.evaluacion.central_riesgo[2].vehicular, null) > -1
+                : _vm.evaluacion.central_riesgo[2].vehicular
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[2].vehicular,
+                var $$a = _vm.evaluacion.central_riesgo[2].vehicular,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66008,20 +66107,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[2],
+                        _vm.evaluacion.central_riesgo[2],
                         "vehicular",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[2],
+                        _vm.evaluacion.central_riesgo[2],
                         "vehicular",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[2], "vehicular", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[2], "vehicular", $$c)
                 }
               }
             }
@@ -66034,19 +66133,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[2].hipoteca,
-                expression: "central_riesgo[2].hipoteca"
+                value: _vm.evaluacion.central_riesgo[2].hipoteca,
+                expression: "evaluacion.central_riesgo[2].hipoteca"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[2].hipoteca)
-                ? _vm._i(_vm.central_riesgo[2].hipoteca, null) > -1
-                : _vm.central_riesgo[2].hipoteca
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[2].hipoteca)
+                ? _vm._i(_vm.evaluacion.central_riesgo[2].hipoteca, null) > -1
+                : _vm.evaluacion.central_riesgo[2].hipoteca
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[2].hipoteca,
+                var $$a = _vm.evaluacion.central_riesgo[2].hipoteca,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66055,20 +66154,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[2],
+                        _vm.evaluacion.central_riesgo[2],
                         "hipoteca",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[2],
+                        _vm.evaluacion.central_riesgo[2],
                         "hipoteca",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[2], "hipoteca", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[2], "hipoteca", $$c)
                 }
               }
             }
@@ -66081,19 +66180,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[2].terceros,
-                expression: "central_riesgo[2].terceros"
+                value: _vm.evaluacion.central_riesgo[2].terceros,
+                expression: "evaluacion.central_riesgo[2].terceros"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[2].terceros)
-                ? _vm._i(_vm.central_riesgo[2].terceros, null) > -1
-                : _vm.central_riesgo[2].terceros
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[2].terceros)
+                ? _vm._i(_vm.evaluacion.central_riesgo[2].terceros, null) > -1
+                : _vm.evaluacion.central_riesgo[2].terceros
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[2].terceros,
+                var $$a = _vm.evaluacion.central_riesgo[2].terceros,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66102,20 +66201,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[2],
+                        _vm.evaluacion.central_riesgo[2],
                         "terceros",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[2],
+                        _vm.evaluacion.central_riesgo[2],
                         "terceros",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[2], "terceros", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[2], "terceros", $$c)
                 }
               }
             }
@@ -66130,19 +66229,21 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[3].entidad_financiera,
-                expression: "central_riesgo[3].entidad_financiera"
+                value: _vm.evaluacion.central_riesgo[3].entidad_financiera,
+                expression: "evaluacion.central_riesgo[3].entidad_financiera"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.central_riesgo[3].entidad_financiera },
+            domProps: {
+              value: _vm.evaluacion.central_riesgo[3].entidad_financiera
+            },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
                 _vm.$set(
-                  _vm.central_riesgo[3],
+                  _vm.evaluacion.central_riesgo[3],
                   "entidad_financiera",
                   $event.target.value
                 )
@@ -66157,19 +66258,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[3].capital,
-                expression: "central_riesgo[3].capital"
+                value: _vm.evaluacion.central_riesgo[3].capital,
+                expression: "evaluacion.central_riesgo[3].capital"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[3].capital)
-                ? _vm._i(_vm.central_riesgo[3].capital, null) > -1
-                : _vm.central_riesgo[3].capital
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[3].capital)
+                ? _vm._i(_vm.evaluacion.central_riesgo[3].capital, null) > -1
+                : _vm.evaluacion.central_riesgo[3].capital
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[3].capital,
+                var $$a = _vm.evaluacion.central_riesgo[3].capital,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66178,20 +66279,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[3],
+                        _vm.evaluacion.central_riesgo[3],
                         "capital",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[3],
+                        _vm.evaluacion.central_riesgo[3],
                         "capital",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[3], "capital", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[3], "capital", $$c)
                 }
               }
             }
@@ -66204,19 +66305,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[3].activo_f,
-                expression: "central_riesgo[3].activo_f"
+                value: _vm.evaluacion.central_riesgo[3].activo_f,
+                expression: "evaluacion.central_riesgo[3].activo_f"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[3].activo_f)
-                ? _vm._i(_vm.central_riesgo[3].activo_f, null) > -1
-                : _vm.central_riesgo[3].activo_f
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[3].activo_f)
+                ? _vm._i(_vm.evaluacion.central_riesgo[3].activo_f, null) > -1
+                : _vm.evaluacion.central_riesgo[3].activo_f
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[3].activo_f,
+                var $$a = _vm.evaluacion.central_riesgo[3].activo_f,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66225,20 +66326,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[3],
+                        _vm.evaluacion.central_riesgo[3],
                         "activo_f",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[3],
+                        _vm.evaluacion.central_riesgo[3],
                         "activo_f",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[3], "activo_f", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[3], "activo_f", $$c)
                 }
               }
             }
@@ -66251,19 +66352,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[3].consumo,
-                expression: "central_riesgo[3].consumo"
+                value: _vm.evaluacion.central_riesgo[3].consumo,
+                expression: "evaluacion.central_riesgo[3].consumo"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[3].consumo)
-                ? _vm._i(_vm.central_riesgo[3].consumo, null) > -1
-                : _vm.central_riesgo[3].consumo
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[3].consumo)
+                ? _vm._i(_vm.evaluacion.central_riesgo[3].consumo, null) > -1
+                : _vm.evaluacion.central_riesgo[3].consumo
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[3].consumo,
+                var $$a = _vm.evaluacion.central_riesgo[3].consumo,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66272,20 +66373,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[3],
+                        _vm.evaluacion.central_riesgo[3],
                         "consumo",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[3],
+                        _vm.evaluacion.central_riesgo[3],
                         "consumo",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[3], "consumo", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[3], "consumo", $$c)
                 }
               }
             }
@@ -66298,19 +66399,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[3].vehicular,
-                expression: "central_riesgo[3].vehicular"
+                value: _vm.evaluacion.central_riesgo[3].vehicular,
+                expression: "evaluacion.central_riesgo[3].vehicular"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[3].vehicular)
-                ? _vm._i(_vm.central_riesgo[3].vehicular, null) > -1
-                : _vm.central_riesgo[3].vehicular
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[3].vehicular)
+                ? _vm._i(_vm.evaluacion.central_riesgo[3].vehicular, null) > -1
+                : _vm.evaluacion.central_riesgo[3].vehicular
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[3].vehicular,
+                var $$a = _vm.evaluacion.central_riesgo[3].vehicular,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66319,20 +66420,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[3],
+                        _vm.evaluacion.central_riesgo[3],
                         "vehicular",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[3],
+                        _vm.evaluacion.central_riesgo[3],
                         "vehicular",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[3], "vehicular", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[3], "vehicular", $$c)
                 }
               }
             }
@@ -66345,19 +66446,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[3].hipoteca,
-                expression: "central_riesgo[3].hipoteca"
+                value: _vm.evaluacion.central_riesgo[3].hipoteca,
+                expression: "evaluacion.central_riesgo[3].hipoteca"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[3].hipoteca)
-                ? _vm._i(_vm.central_riesgo[3].hipoteca, null) > -1
-                : _vm.central_riesgo[3].hipoteca
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[3].hipoteca)
+                ? _vm._i(_vm.evaluacion.central_riesgo[3].hipoteca, null) > -1
+                : _vm.evaluacion.central_riesgo[3].hipoteca
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[3].hipoteca,
+                var $$a = _vm.evaluacion.central_riesgo[3].hipoteca,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66366,20 +66467,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[3],
+                        _vm.evaluacion.central_riesgo[3],
                         "hipoteca",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[3],
+                        _vm.evaluacion.central_riesgo[3],
                         "hipoteca",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[3], "hipoteca", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[3], "hipoteca", $$c)
                 }
               }
             }
@@ -66392,19 +66493,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[3].terceros,
-                expression: "central_riesgo[3].terceros"
+                value: _vm.evaluacion.central_riesgo[3].terceros,
+                expression: "evaluacion.central_riesgo[3].terceros"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[3].terceros)
-                ? _vm._i(_vm.central_riesgo[3].terceros, null) > -1
-                : _vm.central_riesgo[3].terceros
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[3].terceros)
+                ? _vm._i(_vm.evaluacion.central_riesgo[3].terceros, null) > -1
+                : _vm.evaluacion.central_riesgo[3].terceros
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[3].terceros,
+                var $$a = _vm.evaluacion.central_riesgo[3].terceros,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66413,20 +66514,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[3],
+                        _vm.evaluacion.central_riesgo[3],
                         "terceros",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[3],
+                        _vm.evaluacion.central_riesgo[3],
                         "terceros",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[3], "terceros", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[3], "terceros", $$c)
                 }
               }
             }
@@ -66441,19 +66542,21 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[4].entidad_financiera,
-                expression: "central_riesgo[4].entidad_financiera"
+                value: _vm.evaluacion.central_riesgo[4].entidad_financiera,
+                expression: "evaluacion.central_riesgo[4].entidad_financiera"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.central_riesgo[4].entidad_financiera },
+            domProps: {
+              value: _vm.evaluacion.central_riesgo[4].entidad_financiera
+            },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
                 _vm.$set(
-                  _vm.central_riesgo[4],
+                  _vm.evaluacion.central_riesgo[4],
                   "entidad_financiera",
                   $event.target.value
                 )
@@ -66468,19 +66571,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[4].capital,
-                expression: "central_riesgo[4].capital"
+                value: _vm.evaluacion.central_riesgo[4].capital,
+                expression: "evaluacion.central_riesgo[4].capital"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[4].capital)
-                ? _vm._i(_vm.central_riesgo[4].capital, null) > -1
-                : _vm.central_riesgo[4].capital
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[4].capital)
+                ? _vm._i(_vm.evaluacion.central_riesgo[4].capital, null) > -1
+                : _vm.evaluacion.central_riesgo[4].capital
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[4].capital,
+                var $$a = _vm.evaluacion.central_riesgo[4].capital,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66489,20 +66592,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[4],
+                        _vm.evaluacion.central_riesgo[4],
                         "capital",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[4],
+                        _vm.evaluacion.central_riesgo[4],
                         "capital",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[4], "capital", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[4], "capital", $$c)
                 }
               }
             }
@@ -66515,19 +66618,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[4].activo_f,
-                expression: "central_riesgo[4].activo_f"
+                value: _vm.evaluacion.central_riesgo[4].activo_f,
+                expression: "evaluacion.central_riesgo[4].activo_f"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[4].activo_f)
-                ? _vm._i(_vm.central_riesgo[4].activo_f, null) > -1
-                : _vm.central_riesgo[4].activo_f
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[4].activo_f)
+                ? _vm._i(_vm.evaluacion.central_riesgo[4].activo_f, null) > -1
+                : _vm.evaluacion.central_riesgo[4].activo_f
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[4].activo_f,
+                var $$a = _vm.evaluacion.central_riesgo[4].activo_f,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66536,20 +66639,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[4],
+                        _vm.evaluacion.central_riesgo[4],
                         "activo_f",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[4],
+                        _vm.evaluacion.central_riesgo[4],
                         "activo_f",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[4], "activo_f", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[4], "activo_f", $$c)
                 }
               }
             }
@@ -66562,19 +66665,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[4].consumo,
-                expression: "central_riesgo[4].consumo"
+                value: _vm.evaluacion.central_riesgo[4].consumo,
+                expression: "evaluacion.central_riesgo[4].consumo"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[4].consumo)
-                ? _vm._i(_vm.central_riesgo[4].consumo, null) > -1
-                : _vm.central_riesgo[4].consumo
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[4].consumo)
+                ? _vm._i(_vm.evaluacion.central_riesgo[4].consumo, null) > -1
+                : _vm.evaluacion.central_riesgo[4].consumo
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[4].consumo,
+                var $$a = _vm.evaluacion.central_riesgo[4].consumo,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66583,20 +66686,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[4],
+                        _vm.evaluacion.central_riesgo[4],
                         "consumo",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[4],
+                        _vm.evaluacion.central_riesgo[4],
                         "consumo",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[4], "consumo", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[4], "consumo", $$c)
                 }
               }
             }
@@ -66609,19 +66712,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[4].vehicular,
-                expression: "central_riesgo[4].vehicular"
+                value: _vm.evaluacion.central_riesgo[4].vehicular,
+                expression: "evaluacion.central_riesgo[4].vehicular"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[4].vehicular)
-                ? _vm._i(_vm.central_riesgo[4].vehicular, null) > -1
-                : _vm.central_riesgo[4].vehicular
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[4].vehicular)
+                ? _vm._i(_vm.evaluacion.central_riesgo[4].vehicular, null) > -1
+                : _vm.evaluacion.central_riesgo[4].vehicular
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[4].vehicular,
+                var $$a = _vm.evaluacion.central_riesgo[4].vehicular,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66630,20 +66733,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[4],
+                        _vm.evaluacion.central_riesgo[4],
                         "vehicular",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[4],
+                        _vm.evaluacion.central_riesgo[4],
                         "vehicular",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[4], "vehicular", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[4], "vehicular", $$c)
                 }
               }
             }
@@ -66656,19 +66759,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[4].hipoteca,
-                expression: "central_riesgo[4].hipoteca"
+                value: _vm.evaluacion.central_riesgo[4].hipoteca,
+                expression: "evaluacion.central_riesgo[4].hipoteca"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[4].hipoteca)
-                ? _vm._i(_vm.central_riesgo[4].hipoteca, null) > -1
-                : _vm.central_riesgo[4].hipoteca
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[4].hipoteca)
+                ? _vm._i(_vm.evaluacion.central_riesgo[4].hipoteca, null) > -1
+                : _vm.evaluacion.central_riesgo[4].hipoteca
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[4].hipoteca,
+                var $$a = _vm.evaluacion.central_riesgo[4].hipoteca,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66677,20 +66780,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[4],
+                        _vm.evaluacion.central_riesgo[4],
                         "hipoteca",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[4],
+                        _vm.evaluacion.central_riesgo[4],
                         "hipoteca",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[4], "hipoteca", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[4], "hipoteca", $$c)
                 }
               }
             }
@@ -66703,19 +66806,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.central_riesgo[4].terceros,
-                expression: "central_riesgo[4].terceros"
+                value: _vm.evaluacion.central_riesgo[4].terceros,
+                expression: "evaluacion.central_riesgo[4].terceros"
               }
             ],
             attrs: { type: "checkbox" },
             domProps: {
-              checked: Array.isArray(_vm.central_riesgo[4].terceros)
-                ? _vm._i(_vm.central_riesgo[4].terceros, null) > -1
-                : _vm.central_riesgo[4].terceros
+              checked: Array.isArray(_vm.evaluacion.central_riesgo[4].terceros)
+                ? _vm._i(_vm.evaluacion.central_riesgo[4].terceros, null) > -1
+                : _vm.evaluacion.central_riesgo[4].terceros
             },
             on: {
               change: function($event) {
-                var $$a = _vm.central_riesgo[4].terceros,
+                var $$a = _vm.evaluacion.central_riesgo[4].terceros,
                   $$el = $event.target,
                   $$c = $$el.checked ? true : false
                 if (Array.isArray($$a)) {
@@ -66724,20 +66827,20 @@ var render = function() {
                   if ($$el.checked) {
                     $$i < 0 &&
                       _vm.$set(
-                        _vm.central_riesgo[4],
+                        _vm.evaluacion.central_riesgo[4],
                         "terceros",
                         $$a.concat([$$v])
                       )
                   } else {
                     $$i > -1 &&
                       _vm.$set(
-                        _vm.central_riesgo[4],
+                        _vm.evaluacion.central_riesgo[4],
                         "terceros",
                         $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                       )
                   }
                 } else {
-                  _vm.$set(_vm.central_riesgo[4], "terceros", $$c)
+                  _vm.$set(_vm.evaluacion.central_riesgo[4], "terceros", $$c)
                 }
               }
             }
@@ -66762,19 +66865,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.referencias[1].tipo_relacion,
-                expression: "referencias[1].tipo_relacion"
+                value: _vm.evaluacion.referencias[1].tipo_relacion,
+                expression: "evaluacion.referencias[1].tipo_relacion"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.referencias[1].tipo_relacion },
+            domProps: { value: _vm.evaluacion.referencias[1].tipo_relacion },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
                 _vm.$set(
-                  _vm.referencias[1],
+                  _vm.evaluacion.referencias[1],
                   "tipo_relacion",
                   $event.target.value
                 )
@@ -66789,18 +66892,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.referencias[1].nombre,
-                expression: "referencias[1].nombre"
+                value: _vm.evaluacion.referencias[1].nombre,
+                expression: "evaluacion.referencias[1].nombre"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.referencias[1].nombre },
+            domProps: { value: _vm.evaluacion.referencias[1].nombre },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.referencias[1], "nombre", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.referencias[1],
+                  "nombre",
+                  $event.target.value
+                )
               }
             }
           })
@@ -66812,18 +66919,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.referencias[1].telefono,
-                expression: "referencias[1].telefono"
+                value: _vm.evaluacion.referencias[1].telefono,
+                expression: "evaluacion.referencias[1].telefono"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.referencias[1].telefono },
+            domProps: { value: _vm.evaluacion.referencias[1].telefono },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.referencias[1], "telefono", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.referencias[1],
+                  "telefono",
+                  $event.target.value
+                )
               }
             }
           })
@@ -66837,19 +66948,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.referencias[2].tipo_relacion,
-                expression: "referencias[2].tipo_relacion"
+                value: _vm.evaluacion.referencias[2].tipo_relacion,
+                expression: "evaluacion.referencias[2].tipo_relacion"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.referencias[2].tipo_relacion },
+            domProps: { value: _vm.evaluacion.referencias[2].tipo_relacion },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
                 _vm.$set(
-                  _vm.referencias[2],
+                  _vm.evaluacion.referencias[2],
                   "tipo_relacion",
                   $event.target.value
                 )
@@ -66864,18 +66975,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.referencias[2].nombre,
-                expression: "referencias[2].nombre"
+                value: _vm.evaluacion.referencias[2].nombre,
+                expression: "evaluacion.referencias[2].nombre"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.referencias[2].nombre },
+            domProps: { value: _vm.evaluacion.referencias[2].nombre },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.referencias[2], "nombre", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.referencias[2],
+                  "nombre",
+                  $event.target.value
+                )
               }
             }
           })
@@ -66887,18 +67002,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.referencias[2].telefono,
-                expression: "referencias[2].telefono"
+                value: _vm.evaluacion.referencias[2].telefono,
+                expression: "evaluacion.referencias[2].telefono"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.referencias[2].telefono },
+            domProps: { value: _vm.evaluacion.referencias[2].telefono },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.referencias[2], "telefono", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.referencias[2],
+                  "telefono",
+                  $event.target.value
+                )
               }
             }
           })
@@ -66912,19 +67031,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.referencias[3].tipo_relacion,
-                expression: "referencias[3].tipo_relacion"
+                value: _vm.evaluacion.referencias[3].tipo_relacion,
+                expression: "evaluacion.referencias[3].tipo_relacion"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.referencias[3].tipo_relacion },
+            domProps: { value: _vm.evaluacion.referencias[3].tipo_relacion },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
                 _vm.$set(
-                  _vm.referencias[3],
+                  _vm.evaluacion.referencias[3],
                   "tipo_relacion",
                   $event.target.value
                 )
@@ -66939,18 +67058,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.referencias[3].nombre,
-                expression: "referencias[3].nombre"
+                value: _vm.evaluacion.referencias[3].nombre,
+                expression: "evaluacion.referencias[3].nombre"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.referencias[3].nombre },
+            domProps: { value: _vm.evaluacion.referencias[3].nombre },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.referencias[3], "nombre", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.referencias[3],
+                  "nombre",
+                  $event.target.value
+                )
               }
             }
           })
@@ -66962,18 +67085,22 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.referencias[3].telefono,
-                expression: "referencias[3].telefono"
+                value: _vm.evaluacion.referencias[3].telefono,
+                expression: "evaluacion.referencias[3].telefono"
               }
             ],
             attrs: { type: "text" },
-            domProps: { value: _vm.referencias[3].telefono },
+            domProps: { value: _vm.evaluacion.referencias[3].telefono },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.referencias[3], "telefono", $event.target.value)
+                _vm.$set(
+                  _vm.evaluacion.referencias[3],
+                  "telefono",
+                  $event.target.value
+                )
               }
             }
           })
@@ -66992,8 +67119,8 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.colateral,
-            expression: "colateral"
+            value: _vm.evaluacion.colateral,
+            expression: "evaluacion.colateral"
           }
         ],
         on: {
@@ -67006,9 +67133,11 @@ var render = function() {
                 var val = "_value" in o ? o._value : o.value
                 return val
               })
-            _vm.colateral = $event.target.multiple
-              ? $$selectedVal
-              : $$selectedVal[0]
+            _vm.$set(
+              _vm.evaluacion,
+              "colateral",
+              $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+            )
           }
         }
       },

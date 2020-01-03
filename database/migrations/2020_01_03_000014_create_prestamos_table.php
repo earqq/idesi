@@ -47,7 +47,6 @@ class CreatePrestamosTable extends Migration
             $table->unsignedInteger('clientes_id');
             $table->unsignedInteger('users_id');
 
-
             $table->index(["clientes_id"], 'fk_prestamos_clientes1_idx');
 
             $table->index(["users_id"], 'fk_prestamos_users1_idx');
@@ -64,8 +63,6 @@ class CreatePrestamosTable extends Migration
                 ->references('id')->on('users')
                 ->onDelete('no action')
                 ->onUpdate('no action');
-
-      
         });
     }
 

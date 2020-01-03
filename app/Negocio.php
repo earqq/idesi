@@ -2,10 +2,11 @@
 
 namespace App;
 
-use Jenssegers\Mongodb\Eloquent\Model as MongoModel;
 
-class Negocio extends MongoModel
+use Illuminate\Database\Eloquent\Model;
+
+
+class Negocio extends Model
 {	
-    protected $connection='mongo';     
     protected $guarded = [''];
 }

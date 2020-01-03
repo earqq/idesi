@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Prestamo;
 use App\Negocio;
+use App\Imports\NegociosImport;
 use App\Evaluacion;
 use App\Cuantitativa;
+use App\Cualitativa;
 use App\ResultadoCuantitativa;
+use Maatwebsite\Excel\Facades\Excel;
 class EvaluacionesController extends Controller
 {
     /**
@@ -40,65 +43,20 @@ class EvaluacionesController extends Controller
     {
         //
     }
-
-    public function saveNegocios(){
-        $negocio= new Negocio;
-        $negocio->nombre='ABARROTES POR MAYOR';
-        $negocio->margen=11;
-        $negocio->costo=89;
-        $negocio->save();
-        $negocio= new Negocio;
-        $negocio->nombre='ABARROTES POR MENOR';
-        $negocio->margen=16;
-        $negocio->costo=84;
-        $negocio->save();
-        $negocio= new Negocio;
-        $negocio->nombre='ALIMENTO BALANCEADO';
-        $negocio->margen=36;
-        $negocio->costo=64;
-        $negocio->save();
-        $negocio= new Negocio;
-        $negocio->nombre='TRANSPORTE BAJAJ';
-        $negocio->margen=30;
-        $negocio->costo=70;
-        $negocio->save();
-        $negocio= new Negocio;
-        $negocio->nombre='ALIMENTOS PREPARADOS';
-        $negocio->margen=55;
-        $negocio->costo=45;
-        $negocio->save();
-        $negocio= new Negocio;
-        $negocio->nombre='ALQUILER DE INMUEBLES';
-        $negocio->margen=90;
-        $negocio->costo=10;
-        $negocio->save();
-        $negocio= new Negocio;
-        $negocio->nombre='ALQUILER TRAJES Y EQUIPOS';
-        $negocio->margen=95;
-        $negocio->costo=5;
-        $negocio->save();
-        $negocio= new Negocio;
-        $negocio->nombre='ARTESANIA';
-        $negocio->margen=42;
-        $negocio->costo=58;
-        $negocio->save();
-        $negocio= new Negocio;
-        $negocio->nombre='ARTICULOS DE HOGAR VENTA';
-        $negocio->margen=50;
-        $negocio->costo=50;
-        $negocio->save();
-        $negocio= new Negocio;
-        $negocio->nombre='ARTICULOS DE LIMPIEZA';
-        $negocio->margen=32;
-        $negocio->costo=68;
-        $negocio->save();
-        $negocio= new Negocio;
-        $negocio->nombre='BAZAR LIBRERIA';
-        $negocio->margen=35;
-        $negocio->costo=65;
-        $negocio->save();      
-
+    public function chargeData(){
+        // Excel::load('data_negocios.xlsx', function($reader) {
+        //     foreach ($reader->get() as $line) {     
+        //       $negocio= new negocio;
+        //       $negocio->giro_negocio=$line->giro_negocio;                
+        //       $negocio->margen_maximo=$line->margen_maximo;                
+        //       $negocio->costo_ventas=$line->costo_ventas;                
+        //       $negocio->save();
+        //     }
+        //   });
+          Excel::import(new NegociosImport, 'data_negocios.xlsx');
+          return "si";
     }
+   
     public function saveCuantitativa(Request $request){
     
         $resultado_eva='';
@@ -514,7 +472,19 @@ class EvaluacionesController extends Controller
         $cuantitativa->propiedades=$request->propiedades;
         $cuantitativa->save();      
     }
-
+    
+    public function saveCualitativa(Request $request){
+        $cualitativa= new cualitativa;
+        $cualitativa->prestamo_id=$request->prestamo_id;
+        $cualitativa->principal=$request->principal;
+        $cualitativa->negocio=$request->negocio;
+        $cualitativa->vehiculo=$request->vehiculo;
+        $cualitativa->familiar=$request->familiar;
+        $cualitativa->central_riesgo=$request->central_riesgo;
+        $cualitativa->referencias=$request->referencias;
+        $cualitativa->colateral=$request->colateral;
+        $cualitativa->save();
+    }
     /**
      * Show the form for editing the specified resource.
      *
