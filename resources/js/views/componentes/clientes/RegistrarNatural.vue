@@ -638,7 +638,7 @@ export default {
         
         },
          familia:{
-          hijos: "",
+          hijos: 0,
           numero:"",
           conyugue:0,
         },

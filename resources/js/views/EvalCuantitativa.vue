@@ -101,7 +101,7 @@
                 <td>Domingo</td>
                 <td>Subtotal</td>
             </tr>
-            <tr v-for='(ingreso,index) in evaluacion.conyuge.ingresos_negocios' v-bind:key='index'>
+            <tr v-for='(ingreso,index) in evaluacion.conyuge.ingresos_negocio' v-bind:key='index'>
                 <td>
                     <input type='text' v-model='evaluacion.conyuge.ingresos_negocio[index].concepto'>
                 </td>
