@@ -76,6 +76,16 @@ class EvaluacionController extends Controller
     }
 
 
+    public function propuestaAnalista($id)
+    {
+        $prestamo = Prestamo::find($id);
+        
+         return compact('prestamo');
+    }
+
+
+
+
     // public function evaluar($id)
     // {
     //     $prestamo = Prestamo::find($id);

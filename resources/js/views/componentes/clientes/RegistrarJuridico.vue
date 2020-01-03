@@ -516,6 +516,10 @@ mixins: [serviceNumber],
               "Exitoso",
               this.notificationSystem.options.success
             );
+
+            this.$parent.getRecords();
+            this.$parent.tipo = true;
+            
           } else {
             // this.resetForm();
             this.$toast.error(

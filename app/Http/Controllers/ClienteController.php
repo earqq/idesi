@@ -48,9 +48,13 @@ class ClienteController extends Controller
 
         if(Auth::user()->id == '1'){
 
+
+
             $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
-            //   ->join('juridicos','clientes.id','=','juridicos.clientes_id')
               ->select('clientes.documento','naturals.nombres','naturals.apellidos')
+              ->where('clientes.documento', 'LIKE', "%{$request->search_input}%")
+              ->orWhere('naturals.nombres', 'LIKE', "%{$request->search_input}%")
+              ->orWhere('naturals.apellidos', 'LIKE', "%{$request->search_input}%")
               ->orderBy('clientes.id','desc')
               ->paginate(10);
             return $clientes;
@@ -58,8 +62,33 @@ class ClienteController extends Controller
         }
         else{
             $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
-            //   ->join('juridicos','clientes.id','=','juridicos.clientes_id')
               ->select('clientes.documento','naturals.nombres','naturals.apellidos')
+              ->orderBy('clientes.id','desc')
+              ->where('users_id','=',Auth::user()->id)
+              ->paginate(10);
+            return $clientes;
+        }
+
+    }
+
+
+    public function indexJuridico(Request $request)
+    {
+        if(Auth::user()->id == '1'){
+
+
+            $clientes = Cliente::join('juridicos','clientes.id','=','juridicos.clientes_id')
+              ->select('clientes.documento')
+              ->where('juridicos.razon_social', 'LIKE', "%{$request->search_input}%")
+              ->orWhere('clientes.documento', 'LIKE', "%{$request->search_input}%")
+              ->orderBy('clientes.id','desc')
+              ->paginate(10);
+            return $clientes;
+
+        }
+        else{
+            $clientes = Cliente::join('juridicos','clientes.id','=','juridicos.clientes_id')
+              ->select('clientes.documento','juridicos.razon_social')
               ->orderBy('clientes.id','desc')
               ->where('users_id','=',Auth::user()->id)
               ->paginate(10);
@@ -420,11 +449,12 @@ class ClienteController extends Controller
 
         $clientes = Cliente::where('documento',$documento)
                              ->join('naturals','clientes.id','=','naturals.clientes_id')
-                             ->select('clientes.documento','naturals.id','naturals.nombres','naturals.direccion_cliente','naturals.celular','naturals.apellidos','naturals.nacimiento')
+                             ->select('clientes.id AS idcliente','clientes.documento','naturals.id','naturals.nombres','naturals.direccion_cliente','naturals.celular','naturals.apellidos','naturals.nacimiento')
                              ->first();
 
-        $prestamos = Prestamo::where('clientes_id',$clientes->id)->get();
+        $prestamos = Prestamo::where('clientes_id',"=",$clientes->idcliente)->get();
 
+        // return 'cliente'=>$clientes;
         return ['cliente'=>$clientes, 'prestamos'=>$prestamos];
         
     }

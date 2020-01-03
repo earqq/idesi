@@ -2503,6 +2503,7 @@ __webpack_require__.r(__webpack_exports__);
 var mesConf = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 var diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'clients',
   components: {
     InfiniteLoading: vue_infinite_loading__WEBPACK_IMPORTED_MODULE_1___default.a,
     DatePick: vue_date_pick__WEBPACK_IMPORTED_MODULE_2___default.a,
@@ -2515,6 +2516,7 @@ var diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
       clientes: [],
       page: 0,
       tipo: true,
+      search_input: "",
       last_page: 1,
       form: {},
       notificationSystem: {
@@ -2546,26 +2548,55 @@ var diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
       }
     }, null, this);
   },
+  mounted: function mounted() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function mounted$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.getRecords());
+
+          case 2:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, null, this);
+  },
   methods: {
-    infiniteHander: function infiniteHander($estado) {
+    search_product: function search_product() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function search_product$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(this.getRecords());
+
+            case 2:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, null, this);
+    },
+    getType: function getType() {
+      this.getRecords();
+    },
+    getRecords: function getRecords() {
       var _this = this;
 
-      this.page++;
-      console.log($estado);
-      var url = "/clientes/listado?page=" + this.page;
-      axios.get(url).then(function (response) {
-        var datos = response.data.data;
-        console.log(response.data.data);
+      console.log(this.form.tipo_persona);
+      this.clientes = [];
 
-        if (_this.page <= _this.last_page) {
-          _this.clientes = _this.clientes.concat(datos);
-          $estado.loaded();
-        } else {
-          $estado.complete();
-        }
-
-        _this.last_page = response.data.last_page;
-      });
+      if (this.form.tipo_persona == 'PN') {
+        return this.$http.get("/".concat(this.resource, "/listado?search_input=").concat(this.search_input)).then(function (response) {
+          _this.clientes = response.data.data;
+        });
+      } else {
+        return this.$http.get("/".concat(this.resource, "/listado/juridico?search_input=").concat(this.search_input)).then(function (response) {
+          _this.clientes = response.data.data;
+        });
+      }
     },
     crearCliente: function crearCliente() {
       this.tipo = false;
@@ -3035,6 +3066,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
 //
 //
 //
@@ -3435,6 +3469,24 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function mounted$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            return _context.abrupt("return", this.$http.get("/".concat(this.resource, "/listado?search_input=").concat(this.search_input)).then(function (response) {
+              _this.clientes = response.data.data;
+            }));
+
+          case 1:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, null, this);
   },
   methods: {
     negocioIngresosSubtotal: function negocioIngresosSubtotal(index) {
@@ -7473,6 +7525,10 @@ var diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
           _this.resetForm();
 
           _this.$toast.success("El cliente fue creado", "Exitoso", _this.notificationSystem.options.success);
+
+          _this.$parent.getRecords();
+
+          _this.$parent.tipo = true;
         } else {
           // this.resetForm();
           _this.$toast.error("El cliente ya existe!", "Error", _this.notificationSystem.options.error);
@@ -8007,6 +8063,7 @@ __webpack_require__.r(__webpack_exports__);
 var mesConf = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 var diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'natural',
   mixins: [_mixins_functions__WEBPACK_IMPORTED_MODULE_3__["serviceNumber"]],
   components: {
     DatePick: vue_date_pick__WEBPACK_IMPORTED_MODULE_1___default.a
@@ -8187,6 +8244,10 @@ var diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
           _this.resetForm();
 
           _this.$toast.success("El cliente fue creado", "Exitoso", _this.notificationSystem.options.success);
+
+          _this.$parent.getRecords();
+
+          _this.$parent.tipo = true;
         } else {
           // this.resetForm();
           _this.$toast.error("El cliente ya existe!", "Error", _this.notificationSystem.options.error);
@@ -64044,7 +64105,34 @@ var render = function() {
           _c("div", { staticClass: "row col-md-12 clients-option" }, [
             _vm._m(0),
             _vm._v(" "),
-            _vm._m(1),
+            _c("div", { staticClass: "col-md-5 search-option" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search_input,
+                    expression: "search_input"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Buscar Cliente" },
+                domProps: { value: _vm.search_input },
+                on: {
+                  input: [
+                    function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.search_input = $event.target.value
+                    },
+                    _vm.search_product
+                  ]
+                }
+              }),
+              _vm._v(" "),
+              _c("i", { staticClass: "fas fa-search" })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "row col-md-5 more-option" }, [
               _c(
@@ -64060,23 +64148,28 @@ var render = function() {
                   ],
                   staticClass: "col-md-4 form-control col-md-3",
                   on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        _vm.form,
-                        "tipo_persona",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    }
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.form,
+                          "tipo_persona",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                      function($event) {
+                        return _vm.getType()
+                      }
+                    ]
                   }
                 },
                 [
@@ -64109,59 +64202,53 @@ var render = function() {
             _c(
               "div",
               { staticClass: "row date" },
-              [
-                _vm._l(_vm.clientes, function(cliente) {
-                  return _c(
-                    "div",
-                    {
-                      key: cliente.id,
-                      staticClass:
-                        "card-client d-flex align-items-center flex-column justify-content-center"
-                    },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          attrs: {
-                            to: {
-                              name: "perfil",
-                              params: { documento: cliente.documento }
-                            }
+              _vm._l(_vm.clientes, function(cliente) {
+                return _c(
+                  "div",
+                  {
+                    key: cliente.id,
+                    staticClass:
+                      "card-client d-flex align-items-center flex-column justify-content-center"
+                  },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            name: "perfil",
+                            params: { documento: cliente.documento }
                           }
-                        },
-                        [
-                          _c("p", {
-                            staticClass: "card-name",
-                            domProps: { textContent: _vm._s(cliente.nombres) }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            {
-                              staticClass: "card-document",
-                              domProps: {
-                                textContent: _vm._s(cliente.documento)
-                              }
-                            },
-                            [_vm._v("dni")]
-                          ),
-                          _vm._v(" "),
-                          _c("img", {
-                            attrs: {
-                              src: "https://picsum.photos/100/100",
-                              alt: ""
-                            }
-                          })
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                }),
-                _vm._v(" "),
-                _c("infinite-loading", { on: { infinite: _vm.infiniteHander } })
-              ],
-              2
+                        }
+                      },
+                      [
+                        _c("p", {
+                          staticClass: "card-name",
+                          domProps: { textContent: _vm._s(cliente.nombres) }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "p",
+                          {
+                            staticClass: "card-document",
+                            domProps: { textContent: _vm._s(cliente.documento) }
+                          },
+                          [_vm._v("dni")]
+                        ),
+                        _vm._v(" "),
+                        _c("img", {
+                          attrs: {
+                            src: "https://picsum.photos/100/100",
+                            alt: ""
+                          }
+                        })
+                      ]
+                    )
+                  ],
+                  1
+                )
+              }),
+              0
             )
           ])
         ])
@@ -64225,19 +64312,6 @@ var staticRenderFns = [
       _c("button", { staticClass: "btn btn-def form-control" }, [
         _vm._v("Lista")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-5 search-option" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "text", placeholder: "Buscar Cliente" }
-      }),
-      _vm._v(" "),
-      _c("i", { staticClass: "fas fa-search" })
     ])
   }
 ]

@@ -510,6 +510,7 @@ const mesConf = [
 const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 
 export default {
+  name: 'natural',
   mixins: [serviceNumber],
   components: { DatePick },
   props: ["tipo_persona"],
@@ -708,6 +709,11 @@ export default {
               "Exitoso",
               this.notificationSystem.options.success
             );
+ 
+            this.$parent.getRecords();
+            this.$parent.tipo = true;
+
+            
           } else {
             // this.resetForm();
             this.$toast.error(

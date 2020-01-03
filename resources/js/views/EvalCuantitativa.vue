@@ -447,6 +447,15 @@ export default {
             }
         }
     },
+     async mounted() {
+           return this.$http 
+                            .get(
+                            `/${this.resource}/listado?search_input=${this.search_input}`
+                            )
+                            .then(response => {
+                            this.clientes = response.data.data;
+                            });
+        },
     methods:{
         negocioIngresosSubtotal(index){
             this.evaluacion.titular.ingresos_negocio[index].subtotal=parseFloat(this.evaluacion.titular.ingresos_negocio[index].lunes,2)+
