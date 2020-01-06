@@ -1,9 +1,17 @@
 <template >
     <div class="container-general">
-        <h1>Evaluacion cuantitativa</h1>
-        <h2>Ingresos del titular</h2>        
-        <h2>Ingresos del negocio</h2>
-        <table>
+        <div class="row m-0">
+            <div class="col-md-12">
+                        <h1>Evaluacion cuantitativa</h1>
+            </div>
+            <div class="col-md-12">
+                        <h2>Ingresos del titular</h2>  
+            </div>
+            <div class="col-md-12">
+                        <h2>Ingresos del negocio</h2>
+            </div>
+            <div class="col-md-12">
+                        <table>
             <tr>
                 <td>Concepto</td>
                 <td>Lunes</td>
@@ -45,7 +53,15 @@
                 </td>
             </tr>            
         </table>    
+            </div>
+
+            <div class="col-md-12">
+                
         <h2>Ingresos por 4tao 5ta Categoria</h2>
+            </div>
+
+            <div class="col-md-12">
+                
         <table>
             <tr>
                 <td>CONCEPTO</td>
@@ -56,13 +72,36 @@
                 <td><input type='text' v-model='evaluacion.titular.ingresos_por_categoria[index].mes'></td>
             </tr>           
         </table>
-        <h2>GIRO DEL NEGOCIO</h2>
-        <input type='text' v-model='evaluacion.titular.giro_negocio'>
-        <h2>MARGEN COSTO</h2>
-        <input type='text' v-model='evaluacion.titular.margen_costo'>
-        <h2>VALOR INVENTARIO</h2>
-        <input type='text' v-model='evaluacion.titular.valor_inventario'>
-        <h2>GASTO FINANCIERO TITULAR</h2>
+            </div>
+
+            <div class="col-md-12">
+                        <h2>GIRO DEL NEGOCIO</h2>
+            </div>
+
+                  <div class="form-group col-md-4">
+        <label>Aval con casa propia</label>
+                      <input type='text' v-model='evaluacion.titular.giro_negocio' class="form-control">
+      </div>
+
+            <div class="form-group col-md-4">
+        <label>Aval con casa propia</label>
+                      <input type='text' v-model='evaluacion.titular.giro_negocio' class="form-control">
+      </div>
+      
+                  <div class="form-group col-md-4">
+        <label>MARGEN COSTO</label>
+                <input type='text' v-model='evaluacion.titular.margen_costo' class="form-control">
+      </div>
+
+                        <div class="form-group col-md-4">
+        <label>VALOR INVENTARIO</label>
+        
+        <input type='text' v-model='evaluacion.titular.valor_inventario' class="form-control">
+      </div>
+      
+                              <div class="form-group col-md-12">
+        <label>GASTO FINANCIERO TITULAR</label>
+            
         <table>
             <tr>
                 <td>Entidad</td>
@@ -76,20 +115,28 @@
             </tr>
 
         </table>
-        <h2>GASTO DEL NEGOCIO</h2>
-        <table>
-            <tr>
-                <td>Entidad</td>
-                <td>Cuota</td>
-            </tr>
-            <tr v-for='(gasto, index) in evaluacion.titular.gasto_negocio' v-bind:key='index'>
-                <td><input type='text' v-model='evaluacion.titular.gasto_negocio[index].entidad'></td>
-                <td><input type='text' v-model='evaluacion.titular.gasto_negocio[index].pago'></td>
-            </tr>         
-        </table>
-        <h2>INGRESOS DEL CONYUGE O CONVIVIENTE (Si tuviese) </h2>
-        <h2>Ingresos del negocio (LLenar solo si el negocio es distinto al titular)</h2>
-        <table>
+      </div>
+
+                                    <div class="form-group col-md-12">
+                    <label>GASTO DEL NEGOCIO</label>
+                                <table>
+                            <tr>
+                                <td>Entidad</td>
+                                <td>Cuota</td>
+                            </tr>
+                            <tr v-for='(gasto, index) in evaluacion.titular.gasto_negocio' v-bind:key='index'>
+                                <td><input type='text' v-model='evaluacion.titular.gasto_negocio[index].entidad'></td>
+                                <td><input type='text' v-model='evaluacion.titular.gasto_negocio[index].pago'></td>
+                            </tr>         
+                        </table>
+                </div>
+
+                
+            <div class="form-group col-md-12">
+                    <label>INGRESOS DEL CONYUGE O CONVIVIENTE (Si tuviese)</label>
+                    <label>Ingresos del negocio (LLenar solo si el negocio es distinto al titular)</label>
+
+                        <table>
             <tr>
                 <td>Concepto</td>
                 <td>Lunes</td>
@@ -101,7 +148,7 @@
                 <td>Domingo</td>
                 <td>Subtotal</td>
             </tr>
-            <tr v-for='(ingreso,index) in evaluacion.conyuge.ingresos_negocios' v-bind:key='index'>
+            <tr v-for='(ingreso,index) in evaluacion.conyuge.ingresos_negocio' v-bind:key='index'>
                 <td>
                     <input type='text' v-model='evaluacion.conyuge.ingresos_negocio[index].concepto'>
                 </td>
@@ -132,7 +179,13 @@
             </tr>
             
         </table>  
-        <h2>Ingresos por 4tao 5ta Categoria</h2>
+                </div>
+
+
+     <div class="form-group col-md-12">
+                    <label>Ingresos por 4tao 5ta Categoria</label>
+        
+
         <table>
             <tr>
                 <td>CONCEPTO</td>
@@ -143,14 +196,34 @@
                 <td><input type='text' v-model='evaluacion.conyuge.ingresos_por_categoria[index].mes'></td>
             </tr>            
         </table>
-        <h2>GIRO DEL NEGOCIO</h2>
-        <input type='text' v-model='evaluacion.conyuge.giro_negocio_conyuge'>
-        <h2>MARGEN COSTO</h2>
-        <input type='text' v-model='evaluacion.conyuge.margen_costo_conyuge'>
-        <h2>VALOR INVENTARIO</h2>
-        <input type='text' v-model='evaluacion.conyuge.valor_inventario_conyuge'>
-        <h2>GASTO FINANCIERO TITULAR</h2>
-        <table>
+                </div>
+
+             <div class="form-group col-md-12">
+                    <label>GIRO DEL NEGOCIO</label>
+        <model-select :options="giros"
+                        :text="giros.giro_negocio"
+                                v-model="evaluacion.conyuge.giro_negocio_conyuge"
+                                placeholder="selecciona giro ">
+         </model-select>
+                </div>
+
+             <div class="form-group col-md-12">
+                    <label>MARGEN COSTO</label>
+                    
+        <input type='text' v-model='evaluacion.conyuge.margen_costo_conyuge' class="form-control">
+                </div>
+
+                
+             <div class="form-group col-md-12">
+                    <label>VALOR INVENTARIO</label>
+                    
+        <input type='text' v-model='evaluacion.conyuge.valor_inventario_conyuge' class="form-control">
+                </div>
+
+                       
+             <div class="form-group col-md-12">
+                    <label>GASTO FINANCIERO TITULAR</label>
+                            <table>
             <tr>
                 <td>Entidad</td>
                 <td>Saldo capital</td>
@@ -162,8 +235,11 @@
                 <td><input type='text' v-model='evaluacion.conyuge.gasto_financiero[index].cuota'></td>
             </tr>            
         </table>
-        <h2>GASTO DEL NEGOCIO</h2>
-        <table>
+                </div>
+
+                     <div class="form-group col-md-12">
+                    <label>GASTO DEL NEGOCIO</label>
+                            <table>
             <tr>
                 <td>Entidad</td>
                 <td>Cuota</td>
@@ -174,7 +250,10 @@
             </tr>
             
         </table>
-        <h2>GASTOS SERVICIO DEL HOGAR</h2>
+                </div>
+                                     <div class="form-group col-md-12">
+                    <label>GASTOS SERVICIO DEL HOGAR</label>
+                    
         <table>
             <tr>
                 <td>Concepto</td>
@@ -185,8 +264,13 @@
                 <td><input type='text' v-model='evaluacion.gastos_hogar[index].pago'> </td>
             </tr>            
         </table>
-        <h2>PROPIEDADES</h2>
-        <table>
+                   
+                </div>
+
+                                     <div class="form-group col-md-12">
+                    <label>PROPIEDADES</label>
+                    
+            <table>
             <tr>
                 <td>Concepto</td>
                 <td>Pago</td>
@@ -197,27 +281,67 @@
             </tr>
             
         </table>
-        <h2>PROPUESTA</h2>
-        <label>PRODUCTO</label>
-        <input type='text' v-model='evaluacion.propuesta.producto'>
-        <label>MONTO</label>
-        <input type='text' v-model='evaluacion.propuesta.monto'>
-        <label>PLAZO</label>
-        <input type='text' v-model='evaluacion.propuesta.plazo'>
-        <label>NUMERO CUOTAS</label>
-        <input type='text' v-model='evaluacion.propuesta.numero_cuotas'>
-        <label>CUOTAS</label>
-        <input type='text' v-model='evaluacion.propuesta.cuotas'>
-        <label>PROB INFOCORP</label>
-        <input type='text' v-model='evaluacion.probabilidad_infocorp'>
-        <br>
-        <button @click='guardar()'>Guardar</button>
+                   
+                </div>
+
+
+                                     <div class="form-group col-md-12">
+                    <label>PROPUESTA</label>
+                   
+                </div>
+
+                               <div class="form-group col-md-12">
+                    <label>PRODUCTO</label>
+                   
+        <input type='text' v-model='evaluacion.propuesta.producto' class="form-control">
+                </div>
+
+                            <div class="form-group col-md-12">
+                    <label>MONTO</label>
+                   
+        <input type='text' v-model='evaluacion.propuesta.monto' class="form-control">
+                </div>
+
+                           <div class="form-group col-md-12">
+                    <label>PLAZO</label>
+                   
+        <input type='text' v-model='evaluacion.propuesta.plazo' class="form-control">
+                </div>
+
+                         <div class="form-group col-md-12">
+                    <label>NUMERO CUOTAS</label>
+                   
+        <input type='text' v-model='evaluacion.propuesta.numero_cuotas' class="form-control">
+                </div>
+                         <div class="form-group col-md-12">
+                    <label>CUOTAS</label>
+                   
+        <input type='text' v-model='evaluacion.propuesta.cuotas' class="form-control">
+                </div>
+                       <div class="form-group col-md-12">
+                    <label>PROB INFOCORP</label>
+                   
+        <input type='text' v-model='evaluacion.probabilidad_infocorp' class="form-control">
+                </div>
+
+                   <div class="form-group col-md-12">
+                       <button @click='guardar()' class="btn btn-crecer">Guardar</button>
+                </div>
+
+
+        </div>
     </div>
 </template>
 <script>
+import { ModelSelect } from 'vue-search-select'
+
 export default {
+        components: {
+      ModelSelect
+    },
     data(){
         return{
+            giros: [],
             evaluacion:{
                 prestamo_id:this.$route.params.prestamo,
                 propuesta:{
@@ -447,6 +571,23 @@ export default {
             }
         }
     },
+
+     async mounted() { 
+                     this.$http.get(`/evaluaciones/propuestaAnalista/` + this.$route.params.prestamo)
+                            .then(response => { 
+                            console.log(response.data);
+                                    this.evaluacion.propuesta.producto=response.data.producto
+                                    this.evaluacion.propuesta.monto=response.data.importe
+                                    this.evaluacion.propuesta.cuotas=response.data.cuotas
+                                    this.evaluacion.propuesta.plazo=response.data.plazo
+                            });
+
+                   this.$http.get(`/evaluaciones/giro/`)
+                            .then(response => { 
+                            console.log(response.data);
+                            this.giros = response.data;
+                            });
+        },
     methods:{
         negocioIngresosSubtotal(index){
             this.evaluacion.titular.ingresos_negocio[index].subtotal=parseFloat(this.evaluacion.titular.ingresos_negocio[index].lunes,2)+

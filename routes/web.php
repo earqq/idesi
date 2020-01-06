@@ -14,7 +14,7 @@ Route::group(['middleware'=>['guest']],function(){
 /**
  *  MIDDLEWARE DE INVITADOS
  */
-Route::get('migrar','EvaluacionesController@saveNegocios');
+Route::get('charge/data','EvaluacionesController@chargeData');
 Route::group(['middleware'=>['auth']],function(){
 
     Route::group(['middleware'=>['Administrador']],function(){
@@ -40,6 +40,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('/rol/selectRol', 'RolController@selectRol');
 
         Route::get('clientes/listado','ClienteController@index');
+        Route::get('clientes/listado/juridico','ClienteController@indexJuridico');
         Route::post('clientes/nuevo', 'ClienteController@store');
         Route::post('clientes/nuevo/natural', 'ClienteController@storeNatural');
         Route::post('clientes/nuevo/juridico', 'ClienteController@storeJuridico');
@@ -57,6 +58,13 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('evaluaciones/prestamos', 'EvaluacionController@prestamos');
         Route::get('evaluaciones/prestamos/detalle/{prestamo}', 'EvaluacionController@show');
         Route::get('evaluaciones/prestamos/detalleF/{prestamo}', 'EvaluacionController@showF');
+
+
+        Route::get('evaluaciones/propuestaAnalista/{prestamo}', 'EvaluacionController@propuestaAnalista');
+
+        Route::get('evaluaciones/giro', 'EvaluacionController@giro');
+
+        
         Route::post('evaluaciones/prestamos/evaluar', 'EvaluacionController@evaluar');
         Route::post('evaluaciones/prestamos/evaluarFinal', 'EvaluacionController@evaluarFinal');
 
@@ -74,6 +82,7 @@ Route::group(['middleware'=>['auth']],function(){
 
         // evaluaciones cuantitativas y cualitativas
         Route::post('evaluaciones/cuantitativa','EvaluacionesController@saveCuantitativa');
+        Route::post('evaluaciones/cualitativa','EvaluacionesController@saveCualitativa');
         
     });
 

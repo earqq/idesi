@@ -6,7 +6,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Negocio extends Model
+class Colegio extends Model
 {	
     protected $guarded = [''];
 }
