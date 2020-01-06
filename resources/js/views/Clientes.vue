@@ -9,12 +9,12 @@
               <button class="btn btn-def form-control">Lista</button>
           </div>
           <div class="col-md-5 search-option">
-              <input type="text" class="form-control" placeholder="Buscar Cliente">
+              <input type="text" class="form-control" placeholder="Buscar Cliente" v-model="search_input" @input="search_product">
               <i class="fas fa-search"></i>
           </div>
 
           <div class="row col-md-5 more-option">
-             <select class="col-md-4 form-control col-md-3" v-model="form.tipo_persona" >
+             <select class="col-md-4 form-control col-md-3" v-model="form.tipo_persona" @change="getType()" >
               <option value="PN">Persona Natural</option>
               <option value="PJ">Persona Juridica</option>
             </select>
@@ -31,8 +31,8 @@
                       <img src="https://picsum.photos/100/100" alt />
                     </router-link>
                   </div>
-                  <infinite-loading @infinite="infiniteHander">
-                  </infinite-loading>
+                  <!-- <infinite-loading @infinite="infiniteHander">
+                  </infinite-loading> -->
             </div>
         </div>
 
@@ -86,6 +86,7 @@ const mesConf = [
 ];
 const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
+  name: 'clients',
   components: { InfiniteLoading, DatePick,RegistrarNatural,RegistrarJuridico },
   data() {
     return {
@@ -93,6 +94,7 @@ export default {
       clientes: [],
       page: 0,
       tipo: true,
+      search_input: "",
       last_page: 1,
       form: {},
       notificationSystem: {
@@ -112,23 +114,38 @@ export default {
   async created() {
     await this.initForm();
   },
+  async mounted() {
+    await this.getRecords();
+  },
   methods: {
-    infiniteHander($estado) {
-      this.page++;
-      console.log($estado);
-      let url = "/clientes/listado?page=" + this.page;
-      axios.get(url).then(response => {
-        let datos = response.data.data;
-          console.log(response.data.data)
-        if (this.page <= this.last_page) {
-          this.clientes = this.clientes.concat(datos);
-          $estado.loaded();
-        } else {
-          $estado.complete();
-        }
-
-        this.last_page = response.data.last_page;
-      });
+    async search_product() {
+      // this.search_status = 0;
+      await this.getRecords();
+      // this.search_status = 1;
+    },
+    getType(){
+      this.getRecords()
+    },
+    getRecords() {
+      console.log(this.form.tipo_persona)
+      this.clientes= [];
+      if(this.form.tipo_persona=='PN'){
+        return this.$http 
+        .get(
+          `/${this.resource}/listado?search_input=${this.search_input}`
+        )
+        .then(response => {
+          this.clientes = response.data.data;
+        });
+      }else{
+        return this.$http 
+        .get(
+          `/${this.resource}/listado/juridico?search_input=${this.search_input}`
+        )
+        .then(response => {
+          this.clientes = response.data.data;
+        });
+      }
     },
     crearCliente() {
       this.tipo = false;

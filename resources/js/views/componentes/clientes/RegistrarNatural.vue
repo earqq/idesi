@@ -354,12 +354,65 @@
                     <option value="SI">SI</option>
                     <option value="NO">NO</option>
                   </select>
-                </div>
+                </div> 
               <div class="form-group col-md-2">
                   <label>Nro de hijos</label>
                   <input type="text" class="form-control" v-model="form.familia.numero" v-if="form.familia.hijos=='SI'" >
                   <input type="text" class="form-control" v-else disabled>
-                </div>
+              </div>
+
+              <div class="col-md-12 mt-3" v-if="form.detalles.length>0">
+                          <table class="table table-bordered table-striped table-sm">
+                                  <thead>
+                                      <tr>
+                                          <th></th>
+                                          <th>Dc. Identidad</th>
+                                          <th>Apellidos y Nombres</th>
+                                          <th>Parentesco</th>
+                                          <th>Fecha de nacimiento</th>
+                                          <th>¿Socio?</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr v-for="(row, index) in form.detalles" :key="index">
+                                          <td>
+                                              
+                                              <template>
+                                                  <button type="button" class="btn btn-danger btn-sm"  @click.prevent="clickRemoveFamiliar(index)">
+                                                      <i class="fas fa-trash"></i>
+                                                  </button>
+                                              </template>
+                                          </td>
+                                          <td><input type="text" v-model="row.documento" class="form-control letter-5" v-mask="{mask: '99999999'}" /></td>
+                                          <td><input type="text" v-model="row.nombres" class="form-control" /></td>
+                                          <td>
+                                            <select v-model="row.parentesco" class="form-control">
+                                              <option value="0">SELECCIONE</option>
+                                              <option value="CONYUGE">CONYUGE</option>
+                                              <option value="CONVIVIENTE">CONVIVIENTE</option>
+                                              <option value="HIJOS">HIJOS</option>
+                                            </select>
+                                          </td>
+                                          <td>
+                                            <date-pick v-model="row.nacimiento" :months="mesEs" :weekdays="diaEs"></date-pick>
+                                          </td>
+                                          <td>
+                                            <select v-model="row.socio" class="form-control">
+                                              <option value="0">SELECCIONE</option>
+                                              <option value="SI">SI</option>
+                                              <option value="NO">NO</option>
+                                            </select>
+                                          </td>
+                                      </tr>                                
+                                  </tbody>
+                            </table>
+              </div>
+
+              <div class="col-md-12 mt-3">
+                  <button type="button"  @click.prevent="clickAddFamiliar"  class="btn btn-outline-dark more-option w-100" >
+                    <i class="fas fa-plus"></i> Agregar Familiar
+                  </button>
+              </div>
 
 
 
@@ -510,6 +563,7 @@ const mesConf = [
 const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 
 export default {
+  name: 'natural',
   mixins: [serviceNumber],
   components: { DatePick },
   props: ["tipo_persona"],
@@ -569,6 +623,19 @@ export default {
         .prev("li")
         .find("a")
         .trigger("click");
+    },
+    clickRemoveFamiliar(index) {
+      this.form.detalles.splice(index, 1);
+    },
+
+    clickAddFamiliar() {
+      this.form.detalles.push({
+          nombres: "",
+          documento:"",
+          parentesco:"0",
+          nacimiento:"",
+          socio:"0",
+      });
     },
     initForm() {
       this.form = {
@@ -708,6 +775,11 @@ export default {
               "Exitoso",
               this.notificationSystem.options.success
             );
+ 
+            this.$parent.getRecords();
+            this.$parent.tipo = true;
+
+            
           } else {
             // this.resetForm();
             this.$toast.error(

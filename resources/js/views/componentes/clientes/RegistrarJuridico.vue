@@ -487,7 +487,7 @@ mixins: [serviceNumber],
       axios
         .post("/consulta/dni", {
           documento: this.form.documento
-        })
+        }) 
         .then(function(response) {
           console.log(response.data);
           me.form.nombres = response.data["nombres"];
@@ -516,6 +516,10 @@ mixins: [serviceNumber],
               "Exitoso",
               this.notificationSystem.options.success
             );
+
+            this.$parent.getRecords();
+            this.$parent.tipo = true;
+            
           } else {
             // this.resetForm();
             this.$toast.error(
