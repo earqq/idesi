@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Imports\NegociosImport;
+
+use App\Imports\ColegiosImport;
 use Maatwebsite\Excel\Facades\Excel;
-class DataNegociosSeeder extends Seeder
+class DataColegioSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +13,6 @@ class DataNegociosSeeder extends Seeder
      */
     public function run()
     {
-        Excel::import(new NegociosImport, env('RUTA').'/public/data_negocios.xlsx');
+        Excel::import(new ColegiosImport, env('RUTA').'/public/data_colegios.xlsx');
     }
 }
