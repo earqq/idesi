@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Prestamo;
+use App\Negocio;
 use App\Evaluacion;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -119,6 +120,14 @@ class EvaluacionController extends Controller
                 ];
                 DB::rollBack();
             }
+    } 
+
+    public function giro(Request $request)
+    {
+      
+        $negocios = Negocio::all();
+        return $negocios;
+           
     } 
 
     public function evaluarFinal(Request $request)
