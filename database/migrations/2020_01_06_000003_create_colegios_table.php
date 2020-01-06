@@ -24,9 +24,8 @@ class CreateColegiosTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('nombre', 200)->nullable();
-            $table->string('nivel', 45)->nullable();
-            $table->double('inscripcion')->nullable();
-            $table->double('mensualidad')->nullable();
+            $table->string('nivel', 50)->nullable();
+            $table->double('costo')->nullable();
             $table->nullableTimestamps();
         });
     }

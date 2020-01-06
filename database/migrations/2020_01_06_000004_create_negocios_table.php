@@ -23,7 +23,7 @@ class CreateNegociosTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('giro_negocio', 100)->nullable();
+            $table->string('giro_negocio', 200)->nullable();
             $table->double('margen_maximo')->nullable();
             $table->double('costo_ventas')->nullable();
             $table->nullableTimestamps();
