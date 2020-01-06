@@ -211,8 +211,10 @@
               <div class="col-md-12 d-flex titulo-prestamo-menu">
                 <p>Conyuge o Conviviente</p>
               </div>
+              
 
-              <div class="col-md-4 form-group">
+              <div class="col-md-12 row" v-if="form.conyugue.conyuge_tiene=='1'">
+                <div class="col-md-4 form-group">
                 <label>Documento de Identidad</label>
                 <input
                   type="text"
@@ -307,6 +309,25 @@
                   v-model="form.conyugue.direccion_laboral_conyugue"
                   class="form-control"
                 />
+              </div>
+              </div>
+                <div class="col-md-12 mt-2">
+                  <button
+                    type="button"
+                    @click.prevent="clickAddConyuge"
+                    class="btn btn-outline-dark more-option w-100"
+                    v-if="form.conyugue.conyuge_tiene=='0'"
+                  >
+                    <i class="fas fa-plus"></i> Agregar Conyuge
+                  </button>
+                  <button
+                    type="button"
+                    @click.prevent="clickRemoveConyuge"
+                    class="btn btn-outline-dark more-option w-100"
+                    v-else
+                  >
+                    <i class="fas fa-plus"></i> Remover Conyuge
+                  </button>
               </div>
             </div>
             <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
@@ -715,6 +736,12 @@ export default {
         .find("a")
         .trigger("click");
     },
+    clickAddConyuge(){
+      this.form.conyugue.conyuge_tiene=1
+    },
+    clickRemoveConyuge(){
+      this.form.conyugue.conyuge_tiene=0
+    },
     clickAddAval() {
       // this.contador_aval++;
       this.form.avals.push({
@@ -794,7 +821,8 @@ export default {
           direccion_laboral_conyugue: "",
           socio_conyugue: 0,
           codigo_socio_conyugue: "",
-          aporte_socio_conyugue: ""
+          aporte_socio_conyugue: "",
+          conyuge_tiene: 0,
         },
         monto_inicial: "",
         plazo_inicial: "0",

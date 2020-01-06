@@ -6,7 +6,7 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-
+@import "vue-select/src/scss/vue-select.scss";
 //FontAwesome
 $fa-font-path: "../webfonts";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
@@ -17,7 +17,7 @@ $fa-font-path: "../webfonts";
 @import 'menu';
 @import 'clients';
 @import 'profile';
-@import 'grid-profile';
+@import 'grid-profile'; 
 @import 'home';
 @import 'loan';
 @import 'view';

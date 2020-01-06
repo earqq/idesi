@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Prestamo;
 use App\Negocio;
+use App\Colegio;
 use App\Evaluacion;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -125,10 +126,21 @@ class EvaluacionController extends Controller
     public function giro(Request $request)
     {
       
+
         $negocios = Negocio::all();
         return $negocios;
            
     } 
+
+    public function colegio(Request $request)
+    {
+      
+
+        $colegio = Colegio::all();
+        return $colegio;
+           
+    } 
+
 
     public function evaluarFinal(Request $request)
     {

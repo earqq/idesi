@@ -34,10 +34,12 @@ class CreateConyugueTable extends Migration
             $table->string('centro_laboral', 10)->nullable()->default(null);
             $table->string('direccion', 50)->nullable()->default(null);
             $table->string('socio', 5)->nullable()->default(null);
+            $table->string('conyuge_tiene', 1)->nullable()->default(null);
             $table->string('codigo_socio', 10)->nullable()->default(null);
             $table->decimal('aporte_socio', 11, 2)->nullable()->default(null);
             $table->unsignedInteger('naturals_id');
 
+            
             $table->index(["naturals_id"], 'fk_conyugue_naturals1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
