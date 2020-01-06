@@ -201,7 +201,8 @@
              <div class="form-group col-md-12">
                     <label>GIRO DEL NEGOCIO</label>
         <model-select :options="giros"
-                        :text="giros.giro_negocio"
+                            option-value="giro_negocio"
+                     option-text="id"
                                 v-model="evaluacion.conyuge.giro_negocio_conyuge"
                                 placeholder="selecciona giro ">
          </model-select>

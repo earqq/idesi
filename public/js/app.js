@@ -3507,6 +3507,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -68862,7 +68863,8 @@ var render = function() {
           _c("model-select", {
             attrs: {
               options: _vm.giros,
-              text: _vm.giros.giro_negocio,
+              "option-value": "giro_negocio",
+              "option-text": "id",
               placeholder: "selecciona giro "
             },
             model: {
