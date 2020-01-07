@@ -51,13 +51,11 @@ export default new Router({
             path: '/perfil/:documento',
             name: 'perfil',
             component: require('./views/Perfil').default,
-            // children: [
-            //     {
-            //         path: '/archivos/:prestamo',
-            //         name: 'archivos',
-            //         component: require('./views/Archivos').default
-            //     }
-            // ]
+        },
+        {
+            path: '/perfiljuridico/:documento',
+            name: 'perfiljuridico',
+            component: require('./views/PerfilJuridico').default,
         },
         {
             path: '/ver/:prestamo',
@@ -78,6 +76,11 @@ export default new Router({
             path: '/prestamo/:dni',
             name: 'prestamo',
             component: require('./views/Prestamo').default
+        },
+        {
+            path: '/prestamojuridico/:dni',
+            name: 'prestamojuridico',
+            component: require('./views/PrestamoJuridico').default
         },
         {
             path: '*',

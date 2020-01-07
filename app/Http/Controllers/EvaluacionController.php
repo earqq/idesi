@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Prestamo;
 use App\Negocio;
+use App\Cliente;
+use App\Natural;
+use App\Familiar;
 use App\Colegio;
 use App\Evaluacion;
 use Illuminate\Support\Facades\DB;
@@ -76,7 +79,7 @@ class EvaluacionController extends Controller
         // $cuantitativa = 
          return compact('prestamo','evaluacion','cuantitativa');
     }
-
+    
 
     public function propuestaAnalista($id)
     {
@@ -84,6 +87,19 @@ class EvaluacionController extends Controller
                             ->select('producto','importe','plazo','cuotas')->first();
 
          return $prestamo;
+    }
+
+    public function numeroHijos($id)
+    {
+        $prestamo = Prestamo::where('id',$id)
+                            ->select('clientes_id')->first();
+        $clientes = Cliente::find($prestamo->clientes_id);
+
+        $natural = Natural::where('clientes_id',$clientes->id)->first();
+
+        $familia = Familiar::where('naturals_id',$natural->id)->select('numero')->first();
+
+        return $familia;
     }
 
 

@@ -23,16 +23,23 @@
 
         </div>
         <div class="col-md-12 clients-date">
-            <div class="row date">
+            <div class="row date"  v-if="form.tipo_persona=='PN'">
                 <div class="card-client d-flex align-items-center flex-column justify-content-center" v-for="cliente in clientes" :key="cliente.id" >
                     <router-link :to="{name:'perfil', params:{documento:cliente.documento}}">
                       <p class="card-name" v-text="cliente.nombres"></p>
                       <p class="card-document" v-text="cliente.documento">dni</p>
                       <img src="https://picsum.photos/100/100" alt />
                     </router-link>
-                  </div>
-                  <!-- <infinite-loading @infinite="infiniteHander">
-                  </infinite-loading> -->
+                </div>     
+            </div>
+            <div class="row date"  v-else>
+                <div class="card-client d-flex align-items-center flex-column justify-content-center" v-for="cliente in clientes" :key="cliente.id" >
+                    <router-link :to="{name:'perfiljuridico', params:{documento:cliente.documento}}">
+                      <p class="card-name" v-text="cliente.nombres"></p>
+                      <p class="card-document" v-text="cliente.documento">dni</p>
+                      <img src="https://picsum.photos/100/100" alt />
+                    </router-link>
+                </div>     
             </div>
         </div>
 

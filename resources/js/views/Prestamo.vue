@@ -4,7 +4,7 @@
       <span @click="retornar()">
         <i class="fas fa-angle-left"></i>
       </span>
-      <h1>Nuevo prestamo</h1>
+      <h1>Nuevo prestamssso</h1>
     </header>
     <div class="col-md-12 p-0">
       <div class="nav-tabs style-tab-menu">
@@ -617,14 +617,6 @@ export default {
       contador_garantia: 0,
       mesEs: mesConf,
       diaEs: diaConf,
-      money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'S/. ',
-          suffix: '',
-          precision: 2,
-          masked: false
-      },
       money: {
           decimal: ',',
           thousands: '.',

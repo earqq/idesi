@@ -472,6 +472,22 @@ class ClienteController extends Controller
         
     }
 
+    public function showClienteJuridico($documento)
+    {
+        // $cliente = Cliente::where('documento',$documento)
+        // ->select('id','documento','nombres','apellidos','nacimiento')
+        // ->first();
+
+        $clientes = Cliente::where('documento',$documento)
+                             ->join('juridicos','clientes.id','=','juridicos.clientes_id')->first();
+
+        $prestamos = Prestamo::where('clientes_id',"=",$clientes->id)->get();
+
+        // return 'cliente'=>$clientes;
+        return ['cliente'=>$clientes, 'prestamos'=>$prestamos];
+        
+    }
+ 
     public function visitas($documento)
     {
         // if (!$request->ajax()) return redirect('/');
@@ -488,9 +504,19 @@ class ClienteController extends Controller
 
         $natural = Natural::where('clientes_id',$cliente->id)->first();
 
-        $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
 
-        return compact('cliente','natural','conyugue');
+        return compact('cliente','natural');
+    }
+
+    public function generalJuridico($documento)
+    {
+
+        $cliente = Cliente::where('documento',$documento)->first();
+
+        $juridico = Juridico::where('clientes_id',$cliente->id)->first();
+
+
+        return compact('cliente','juridico');
     }
 
 
@@ -546,6 +572,161 @@ class ClienteController extends Controller
             $conyugue->aporte_socio =  $request->conyugue['aporte_socio_conyugue'];
             $conyugue->naturals_id = $natural->id;   
             $conyugue->save();
+
+            if($request->input('idprestamo')<0){
+               $prestamo = new Prestamo();
+            }
+            else{
+                $prestamo = Prestamo::where('id',$request->input('idprestamo'))->first();
+            }
+            $prestamo->clientes_id = $cliente->id;
+            $prestamo->users_id = Auth::user()->id;
+            $prestamo->monto_inicial = $request->input('monto_inicial');
+            $prestamo->plazo_inicial = $request->input('plazo_inicial');
+            $prestamo->disponibilidad_pago_inicial = $request->input('disponibilidad_pago_inicial');
+            $prestamo->destino_inicial = $request->input('destino_inicial');
+            $prestamo->forma_inicial = $request->input('forma_inicial');
+            $prestamo->producto = $request->input('producto');
+            $prestamo->forma = $request->input('forma');
+            $prestamo->importe = $request->input('importe');
+            $prestamo->aporte = $request->input('aporte');
+            $prestamo->plazo = $request->input('plazo');
+            $prestamo->cuotas = $request->input('cuotas');
+            $prestamo->tasa = $request->input('tasa');
+            $prestamo->comentarios = $request->input('comentarios');
+            $prestamo->estado = $request->input('estado');
+            $prestamo->save();
+
+            foreach ($request->avals as $ep=>$avals) {
+                $aval= new Aval;
+                $aval->documento = $avals['documento'];
+                $aval->tipo_persona = $avals['tipo_persona'];
+                $aval->nombres = $avals['nombres'];
+                $aval->apellidos = $avals['apellidos'];
+                $aval->nacimiento = $avals['nacimiento'];
+                $aval->estado_civil = $avals['estado_civil'];
+                $aval->ocupacion = $avals['ocupacion'];
+                $aval->telefono = $avals['telefono'];
+                $aval->celular = $avals['celular'];
+                $aval->direccion = $avals['direccion'];
+                $aval->distrito = $avals['distrito'];
+                $aval->centro_laboral = $avals['centro_laboral'];
+                $aval->direccion_laboral = $avals['direccion_laboral'];
+                $aval->socio = $avals['socio'];
+                $aval->codigo_socio = $avals['codigo_socio'];
+                $aval->aporte_socio = $avals['aporte_socio'];
+                $aval->prestamos_id = $prestamo->id;
+                $aval->save();
+            }
+
+            foreach ($request->garantias as $ep=>$garantias) {
+                $garantia= new Garantia;
+                $garantia->bien_garantia = $garantias['bien_garantia'];
+                if($garantias['tipo']=='INS'){
+                    $garantia->inscripcion = 'SI';
+                }else{
+                    $garantia->declaracion_jurada = 'SI';
+                }
+
+                $garantia->prestamos_id = $prestamo->id;
+                $garantia->save();
+            }
+
+
+            $subido= new Subido;
+            $subido->prestamos_id=$prestamo->id;
+            $subido->save();
+
+            $subidos = Subido::find($subido->id);
+            $subidos->solicitud_credito=1;
+            $subidos->inscripcion_socio=1;
+            $subidos->save();
+
+            // $cuantitativa = new ResultadoCuantitativa;
+            // $cuantitativa->prestamo_id= $prestamo->id;
+            // $cuantitativa->save();
+
+
+
+
+            // $prestamos= Prestamo::find($prestamo->id);
+            // $cliente = Cliente::where('id',$prestamos->clientes_id)->first();
+            // $avals = Aval::where('prestamos_id',$prestamos->id)->get();
+            // $garantias = Garantia::where('prestamos_id',$prestamos->id)->get();
+
+            // // return $cliente;
+            // $pdf = PDF::loadView('reportes.prestamo',compact('prestamos','cliente','avals','garantias'));
+
+            // if (Storage::put('public/'.$this->getUserDir($prestamos->id) .'/prestamo_'.$prestamo->id.'/documento/prestamo_'.$prestamo->id.'.pdf', $pdf->output())) {
+            //     $file= new Archivo;
+            //     $file->nombre = 'prestamo_'.$prestamo->id;
+            //     $file->tipo = 'documento';
+            //     $file->extension = 'pdf';
+            //     $file->prestamos_id =  $prestamos->id;
+            //     $file->save();
+            // }
+    
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => 'Cliente creado',
+            ];
+
+        } catch (Exception $e){
+            return [
+                'success' => false,
+            ];
+            DB::rollBack();
+        }
+
+        
+    }
+
+
+
+    public function prestamoJuridico(Request $request)
+    {
+        if (!$request->ajax()) return redirect('/');
+
+        try{
+
+            DB::beginTransaction();
+            
+            $cliente = Cliente::where('documento',$request->cliente['documento'])->first();
+            // $cliente->departamentos_id = $request->cliente['departamentos_id'];
+            // $cliente->distritos_id= $request->cliente['distritos_id'];
+            // $cliente->provincias_id = $request->cliente['provincias_id'];
+            $cliente->save();
+
+  
+
+            $juridico = Juridico::where('clientes_id',$cliente->id)->first();
+            $juridico->razon_social = $request->juridico['razon_social'];
+            $juridico->nombre_comercial = $request->juridico['nombre_comercial'];
+            $juridico->actividad_principal = $request->juridico['actividad_principal'];
+            $juridico->partida_registral = $request->juridico['partida_registral'];
+            $juridico->telefono = $request->juridico['telefono'];
+            $juridico->direccion = $request->juridico['direccion'];
+            $juridico->email = $request->juridico['email'];
+
+            $juridico->nombres_representante = $request->representante['nombres_representante'];
+            $juridico->documento_representante = $request->representante['documento_representante'];
+            $juridico->nacimiento_representante = $request->representante['nacimiento_representante'];
+            $juridico->estado_civil_representante = $request->representante['estado_civil_representante'];
+            $juridico->ocupacion_representante = $request->representante['ocupacion_representante'];
+            $juridico->telefono_representante = $request->representante['telefono_representante'];
+            $juridico->celular_representante = $request->representante['celular_representante'];
+            $juridico->direccion_representante = $request->representante['direccion_representante'];
+            $juridico->distrito_representante = $request->representante['distrito_representante'];
+            $juridico->provincia_representante = $request->representante['provincia_representante'];
+            $juridico->departamento_representante = $request->representante['departamento_representante'];
+            $juridico->referencia_representante = $request->representante['referencia_representante'];
+            $juridico->tipo_domicilio_representante = $request->representante['tipo_domicilio_representante'];
+            $juridico->poderes_representante = $request->representante['poderes_representante'];
+            $juridico->fecha_inicio_representante = $request->representante['fecha_inicio_representante'];
+            $juridico->save();
+
 
             if($request->input('idprestamo')<0){
                $prestamo = new Prestamo();

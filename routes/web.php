@@ -46,9 +46,12 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('clientes/nuevo/juridico', 'ClienteController@storeJuridico');
         Route::get('clientes/datos', 'ClienteController@datos');
         Route::get('clientes/datos/prestamo/{documento}', 'ClienteController@general');
-        Route::get('clientes/perfil/cliente/{documento}', 'ClienteController@showCliente'); 
+        Route::get('clientes/datos/prestamo/juridico/{documento}', 'ClienteController@generalJuridico');
+        Route::get('clientes/perfil/cliente/{documento}', 'ClienteController@showCliente');
+        Route::get('clientes/perfil/juridico/cliente/{documento}', 'ClienteController@showClienteJuridico');
         Route::get('clientes/perfil/{documento}', 'ClienteController@show');
         Route::post('clientes/prestamo', 'ClienteController@prestamo');
+        Route::post('clientes/prestamo/juridico', 'ClienteController@prestamoJuridico');
         Route::post('clientes/visita/nuevo', 'ClienteController@visitaStore');
         Route::get('clientes/visitas/{prestamo}', 'ClienteController@visitas');
 
@@ -61,6 +64,7 @@ Route::group(['middleware'=>['auth']],function(){
 
 
         Route::get('evaluaciones/propuestaAnalista/{prestamo}', 'EvaluacionController@propuestaAnalista');
+        Route::get('evaluaciones/numerohijos/{prestamo}', 'EvaluacionController@numeroHijos');
 
         Route::get('evaluaciones/giro', 'EvaluacionController@giro');
         Route::get('evaluaciones/colegio', 'EvaluacionController@colegio');
