@@ -222,113 +222,21 @@
               />
             </div>
 
-  <div class="form-group col-md-12">
-        <label>Hijos</label>
-        <table  class="table ingresos-table table-bordered table-striped table-sm">
-          <tr>
-            <td>Edad</td>
-            <td style="    width: 20%;
-">Colegio</td>
-            <td>Grado</td>
-            <td>Costo</td>
-          </tr>
-          <tr>
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.familiar.hijos[1].edad" />
-            </td>
-            <td>
-              <v-select
-                label="nombre"
-                :options="colegios"
-                :reduce="colegios => colegios.nombre"
-                placeholder="Buscar Colegio..."
-                v-model="evaluacion.familiar.hijos[1].colegio"
-              ></v-select>
-            </td>
-            <td>
-              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[1].grado" />
-            </td>
-            <td>
-              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[1].costo" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[2].edad" />
-            </td>
-            <td>
-              <v-select
-                label="nombre"
-                :options="colegios"
-                :reduce="colegios => colegios.nombre"
-                placeholder="Buscar Colegio..."
-                v-model="evaluacion.familiar.hijos[2].colegio"
-              ></v-select>
-            </td>
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.familiar.hijos[2].grado" />
-            </td>
-            <td>
-              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[2].costo" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[3].edad" />
-            </td>
-            <td>
-              <v-select
-                label="nombre"
-                :options="colegios"
-                :reduce="colegios => colegios.nombre"
-                placeholder="Buscar Colegio..."
-                v-model="evaluacion.familiar.hijos[3].colegio"
-              ></v-select>
-            </td>
-            <td>
-              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[3].grado" />
-            </td>
-            <td>
-              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[3].costo" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[4].edad" />
-            </td>
-            <td>
-              <v-select
-                label="nombre"
-                :options="colegios"
-                :reduce="colegios => colegios.nombre"
-                placeholder="Buscar Colegio..."
-                v-model="evaluacion.familiar.hijos[4].colegio"
-              ></v-select>
-            </td>
-            <td>
-              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[4].grado" />
-            </td>
-            <td>
-              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[4].costo" />
-            </td>
-          </tr>
-        </table>
-      </div>
-            <!-- <div class="form-group col-md-12">
+            <div class="form-group col-md-12">
               <table class="table table-bordered table-striped table-sm">
                 <thead>
                   <tr>
-                    <th>Edad</th>
-                    <th>Colsegio</th>
-                    <th>Costo</th>
+                    <th style="width: 25%;">Edad</th>
+                    <th style="width: 25%;">Colegio</th>
+                    <th style="width: 25%;">Grado</th>
+                    <th style="width: 25%;">Costo</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="(n, index) in evaluacion.familiar.numero_hijos" :key="index">
-                      <p>{{n}}</p> 
                        <td>
                          
-                          <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[n].edad" />
+                          <input type="text"  class="form-control" v-model="evaluacion.familiar.hijos[index].edad" />
                         </td>
                         <td>
                           <v-select
@@ -336,19 +244,19 @@
                             :options="colegios"
                             :reduce="colegios => colegios.nombre"
                             placeholder="Buscar Colegio..."
-                            v-model="evaluacion.familiar.hijos[n].colegio"
+                            v-model="evaluacion.familiar.hijos[index].colegio"
                           ></v-select>
                         </td>
                         <td>
-                          <input type="text" v-model="evaluacion.familiar.hijos[n].grado" />
+                          <input type="text" class="form-control" v-model="evaluacion.familiar.hijos[index].grado" />
                         </td>
                         <td>
-                          <input type="text" v-model="evaluacion.familiar.hijos[n].costo" />
+                          <input type="text" class="form-control" v-model="evaluacion.familiar.hijos[index].costo" />
                         </td>
                   </tr>
                 </tbody>
               </table>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
@@ -672,6 +580,7 @@ export default {
     return {
       giros: [],
       colegios: [],
+      i:0,
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
         principal: {
@@ -701,12 +610,7 @@ export default {
           tipo_vivienda: 1,
           situacion_familiar: 1,
           miembros_familia: 1,
-          hijos: {
-            1: {},
-            2: {},
-            3: {},
-            4: {}
-          }
+          hijos: []
         },
         central_riesgo: {
           1: {
@@ -794,8 +698,19 @@ export default {
       .get(`/evaluaciones/numerohijos/` + this.$route.params.prestamo)
       .then(response => {
         this.evaluacion.familiar.numero_hijos =response.data.numero
-        // console.log(response.data)
+          for (this.i = 0; this.i < this.evaluacion.familiar.numero_hijos; this.i++) {
+                this.evaluacion.familiar.hijos.push({
+            edad: "",
+            colegio:"",
+            grado:"",
+            costo:""
+          });
+      }
       });
+
+
+  
+
   }
 };
 </script>
