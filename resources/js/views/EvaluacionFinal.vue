@@ -2,139 +2,129 @@
   <div class="container-general">
     <div class="evaluations">
       <div class="row col-md-12 m-0" v-if="tipo">
-        <div class="card col-md-12 p-0 ">
+        <div class="card col-md-12 p-0">
           <div class="card-header">PRESTAMOS</div>
-          <div class="card-body p-0"> 
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Cliente</th>
-                    <th>Fecha de registro</th>
-                    <th>Estado</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="prestamo in prestamos" :key="prestamo.id">
-                    <td v-text="prestamo.nombres +' '+ prestamo.apellidos"></td>
-                    <td v-text="prestamo.created_at"></td>
-                    <td v-text="prestamo.estado"></td>
-                    <td>
-                      <button v-if="prestamo.estado=='PENDIENTE'" class="btn btn-success" style="width:50%" @click="methodsDetalle(prestamo.id)" >Evaluar</button>
-                      <button v-else class="btn btn-def" style="width:50%" @click="methodsDetalle(prestamo.id)" >Detalles</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="card-body p-0">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Fecha de registro</th>
+                  <th>Estado</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="prestamo in prestamos" :key="prestamo.id">
+                  <td v-text="prestamo.nombres +' '+ prestamo.apellidos"></td>
+                  <td v-text="prestamo.created_at"></td>
+                  <td v-text="prestamo.estado"></td>
+                  <td>
+                    <button
+                      v-if="prestamo.estado=='PENDIENTE'"
+                      class="btn btn-success"
+                      style="width:50%"
+                      @click="methodsDetalle(prestamo.id)"
+                    >Evaluar</button>
+                    <button
+                      v-else
+                      class="btn btn-def"
+                      style="width:50%"
+                      @click="methodsDetalle(prestamo.id)"
+                    >Detalles</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
 
-      <div class="row col-md-12 m-0 evaluations" v-else>
-        <div class="col-md-9 p-0">
+      <div class="row col-md-12 m-0 evaluations p-0" v-else>
+        <div class="col-md-9 p-0" style="overflow-y: auto;height: calc(100vh - 66px);">
           <div class="row m-0">
-            <div class="card loans w-100">
-              <div class="card-header">ARCHIVOS</div>
-              <div class="card-body">
-                <div class="col-md-12 file p-0">
-                  <div class="row m-0">
+            <div class="nav-tabs style-tab-menu col-md-12">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item col-md-2">
+                  <a
+                    class="nav-link active text-center"
+                    id="personal-tab"
+                    data-toggle="tab"
+                    href="#personal"
+                    role="tab"
+                    aria-controls="personal"
+                    aria-selected="true"
+                  >Detalles</a>
+                </li>
 
-                      <div class="file-type " @click="cargarPdf()">
-                          <div class="type file-document" >
-                            <p>solicitud_credito.pdf</p> 
-                              <div class="mask">
-                                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M17.656 4c-1.336 0-2.59.52-3.535 1.465L5.465 14.12A4.964 4.964 0 0 0 4 17.656V57c0 1.652 1.348 3 3 3h40c1.652 0 3-1.348 3-3V46h8c1.102 0 2-.898 2-2V24c0-1.102-.898-2-2-2h-8V7c0-1.652-1.348-3-3-3zM18 6h29c.55 0 1 .45 1 1v15H16c-1.102 0-2 .898-2 2v20c0 1.102.898 2 2 2h32v11c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1V18h9c1.652 0 3-1.348 3-3zm-2 .5V15c0 .55-.45 1-1 1H6.5c.11-.164.234-.32.379-.465l8.656-8.656c.145-.145.3-.27.465-.379zM16 24h42v20H16zm9 4a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3c1.652 0 3-1.348 3-3v-2c0-1.652-1.348-3-3-3zm10 0a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3c2.207 0 4-1.793 4-4v-4c0-2.207-1.793-4-4-4zm10 0a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-4h4a1 1 0 1 0 0-2zm-19 2h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-3zm10 0h2c1.102 0 2 .898 2 2v4c0 1.102-.898 2-2 2h-2zM9 52a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1z"></path></svg>
-                              </div>
-                          </div>
-                        </div>
-
-                    <div class="files" v-for="(archivo, index) in archivos" :key="index">
-                      <i class="fas fa-eye eye"></i>
-                      <a
-                        :href="'../storage/'+person.documento+'_'+person.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
-                        target="_blank"
-                      >
-                        <p v-text="archivo.nombre+'.'+archivo.extension"></p>
-                        <div class="mask">
-                          <i class="fas fa-file-download file-one"></i>
-                        </div>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <li class="nav-item col-md-2">
+                  <a
+                    class="nav-link text-center"
+                    id="representantes-tab"
+                    data-toggle="tab"
+                    href="#representantes"
+                    role="tab"
+                    aria-controls="representantes"
+                    aria-selected="false"
+                  >Evaluaciones</a>
+                </li>
+              </ul>
             </div>
 
-            <div class="col-md-12 p-0">
-              <div class="row">
+            <div class="col-md-12 body-tabs p-0">
+              <div class="tab-content" id="myTabContent">
+                <div
+                  class="tab-pane fade show active"
+                  id="personal"
+                  role="tabpanel"
+                  aria-labelledby="personal-tab"
+                >
+                  <div class="card loans w-100">
+                    <div class="card-header">ARCHIVOS</div>
+                    <div class="card-body">
+                      <div class="col-md-12 file p-0">
+                        <div class="row m-0">
+                          <div class="file-type" @click="cargarPdf()">
+                            <div class="type file-document">
+                              <p>solicitud_credito.pdf</p>
+                              <div class="mask">
+                                <svg
+                                  viewBox="0 0 64 64"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fit
+                                  height="100%"
+                                  width="100%"
+                                  preserveAspectRatio="xMidYMid meet"
+                                  focusable="false"
+                                >
+                                  <path
+                                    d="M17.656 4c-1.336 0-2.59.52-3.535 1.465L5.465 14.12A4.964 4.964 0 0 0 4 17.656V57c0 1.652 1.348 3 3 3h40c1.652 0 3-1.348 3-3V46h8c1.102 0 2-.898 2-2V24c0-1.102-.898-2-2-2h-8V7c0-1.652-1.348-3-3-3zM18 6h29c.55 0 1 .45 1 1v15H16c-1.102 0-2 .898-2 2v20c0 1.102.898 2 2 2h32v11c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1V18h9c1.652 0 3-1.348 3-3zm-2 .5V15c0 .55-.45 1-1 1H6.5c.11-.164.234-.32.379-.465l8.656-8.656c.145-.145.3-.27.465-.379zM16 24h42v20H16zm9 4a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3c1.652 0 3-1.348 3-3v-2c0-1.652-1.348-3-3-3zm10 0a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3c2.207 0 4-1.793 4-4v-4c0-2.207-1.793-4-4-4zm10 0a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-4h4a1 1 0 1 0 0-2zm-19 2h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-3zm10 0h2c1.102 0 2 .898 2 2v4c0 1.102-.898 2-2 2h-2zM9 52a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1z"
+                                  />
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
 
-                <div class="col-md-6">
-                     <!-- Ejemplo de tabla Listado -->
-                   <div class="card">
-                    <div class="card-header">
-                        <i class="fa fa-align-justify"></i>Cuantitativas
-                    </div>
-                    <div class="card-body"> 
-                      <div class="row">
-                        <div class="col-md-6">
-                            <table class="table table-bordered table-striped table-sm">
-                            <thead>
-                                <tr>
-                                  <th colspan="3" class="text-center">Ratio</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr >
-                                    <td>Endeudamiento</td>
-                                    <td v-if='cuantitativa.radios_endeudamiento' v-text="parseFloat(cuantitativa.ratios_endeudamiento).toFixed(2)"></td>
-                                    <td  v-text="cuantitativa.ratios_endeudamiento_resultado"></td>
-                                </tr> 
-                                 <tr >
-                                    <td>Margen Neto</td>
-                                    <td v-if='cuantitativa.ratios_margen_neto' v-text="parseFloat(cuantitativa.ratios_margen_neto).toFixed(2)"></td>
-                                    <td v-text="cuantitativa.ratios_margen_neto_resultado"></td>
-                                </tr> 
-                                 <tr >
-                                    <td>Liquidez</td>
-                                    <td  v-if='cuantitativa.ratios_liquidez' v-text="parseFloat(cuantitativa.ratios_liquidez).toFixed(2)"></td>
-                                    <td v-text="cuantitativa.ratios_liquidez_resultado"></td>
-                                </tr> 
-                                 <tr >
-                                    <td>Solvencia</td>
-                                    <td  v-if='cuantitativa.ratios_solvencia' v-text="parseFloat(cuantitativa.ratios_solvencia).toFixed(2)"></td>
-                                    <td v-text="cuantitativa.ratios_solvencia_resultado"></td>
-                                </tr>                           
-                            </tbody>
-                        </table> 
-                        </div>
-                        <div class="col-md-6">
-
-                          <table class="table table-bordered table-striped table-sm">
-                            <thead>
-                                <tr>
-                                  <th colspan="3" class="text-center">Resultados</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr >
-                                    <td v-text="'Resultado Eva'"></td>
-                                    <td colspan="2" v-text="cuantitativa.resultado_eva"></td>
-                                </tr> 
-                                 <tr >
-                                    <td v-text="'Resultado Sist'"></td>
-                                    <td colspan="2" v-text="cuantitativa.resultado_sist"></td>
-                                </tr>                           
-                            </tbody>
-                        </table>
-
-
+                          <div class="files" v-for="(archivo, index) in archivos" :key="index">
+                            <i class="fas fa-eye eye"></i>
+                            <a
+                              :href="'../storage/'+person.documento+'_'+person.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+                              target="_blank"
+                            >
+                              <p v-text="archivo.nombre+'.'+archivo.extension"></p>
+                              <div class="mask">
+                                <i class="fas fa-file-download file-one"></i>
+                              </div>
+                            </a>
+                          </div>
                         </div>
                       </div>
-
                     </div>
-                </div>
-                </div>
-                <div class="col-md-6">
+                  </div>
+
+                  <div class="col-md-12 p-0">
+              <div class="row">
+                <div class="col-md-12">
                   <div class="card">
                     <div class="card-header">PRESTAMO ANALISTA</div>
                     <div class="card-body p-0">
@@ -173,101 +163,318 @@
                 </div>
                 <div class="col-md-12">
                   <div class="container-fluid">
-                <!-- Ejemplo de tabla Listado -->
-                <div class="card">
-                    <div class="card-header">
+                    <!-- Ejemplo de tabla Listado -->
+                    <div class="card">
+                      <div class="card-header">
                         <i class="fa fa-align-justify"></i>Evaluaciones
-                    </div>
-                    <div class="card-body"> 
-                      <table class="table table-bordered table-striped table-sm">
-                            <thead>
-                                <tr>
-                                  <th>Evaluador</th>
-                                  <th>Observaciones</th>
-                                  <th>Fecha</th>
-                                  <th>Estado</th>
-                                  <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="evaluacion in form.evaluacion" :key="evaluacion.id">
-                                    <td  v-text="evaluacion.name"></td>
-                                    <td  v-text="evaluacion.detalle"></td>
-                                    <td  v-text="evaluacion.created_at"></td>
-                                    <td v-text="evaluacion.estado"></td>
-                                  </tr>
-                                                             
-                            </tbody>
+                      </div>
+                      <div class="card-body">
+                        <table class="table table-bordered table-striped table-sm">
+                          <thead>
+                            <tr>
+                              <th>Evaluador</th>
+                              <th>Observaciones</th>
+                              <th>Fecha</th>
+                              <th>Estado</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="evaluacion in form.evaluacion" :key="evaluacion.id">
+                              <td v-text="evaluacion.name"></td>
+                              <td v-text="evaluacion.detalle"></td>
+                              <td v-text="evaluacion.created_at"></td>
+                              <td v-text="evaluacion.estado"></td>
+                            </tr>
+                          </tbody>
                         </table>
-                        <!-- <nav>
-                            <ul class="pagination">
-                                <li class="page-item" v-if="pagination.current_page > 1">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
-                                </li>
-                                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
-                                </li>
-                                <li class="page-item" v-if="pagination.current_page < pagination.last_page">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Sig</a>
-                                </li>
-                            </ul>
-                        </nav> -->
+                      </div>
                     </div>
-                </div>
-                <!-- Fin ejemplo de tabla Listado -->
-            </div>
+                  </div>
                 </div>
               </div>
             </div>
+                </div>
+
+                <div
+                  class="tab-pane fade"
+                  id="representantes"
+                  role="tabpanel"
+                  aria-labelledby="representantes-tab"
+                >
+                  <div class="row">
+                    <div class="col-md-6 p-0">
+                       <div class="card-body p-0">
+                            <table
+                              class="table table-responsive-sm table-bordered table-striped table-sm"
+                            >
+                              <tbody>
+                                <tr style="background: rgb(157, 157, 157);" class="mt-3">
+                                  <td colspan="3" class="pt-2 text-center">RATIOS</td>
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2" style="width: 11%;">ENDEUDAMIENTO</td>
+                                  <td class="font-weight-bold pt-2"
+                                   v-if="cuantitativa.radios_endeudamiento" 
+                                   v-text="parseFloat(cuantitativa.ratios_endeudamiento).toFixed(2)"
+                                  >
+                                  </td>
+                                  <td v-else>0</td>
+                                <td class="font-weight-bold pt-2" v-text="cuantitativa.ratios_endeudamiento_resultado"></td>
+
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2" style="width: 11%;">MARGEN NETO</td>
+                                  <td
+                                  v-if="cuantitativa.ratios_margen_neto"
+                                  v-text="parseFloat(cuantitativa.ratios_margen_neto).toFixed(2)"
+                                ></td>
+                                <td v-else>0</td>
+                                <td v-text="cuantitativa.ratios_margen_neto_resultado"></td>
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2" style="width: 11%;">LIQUIDEZ</td>
+                                  <td
+                                  v-if="cuantitativa.ratios_liquidez"
+                                  v-text="parseFloat(cuantitativa.ratios_liquidez).toFixed(2)"
+                                ></td>
+                                <td v-else>0</td>
+                                <td v-text="cuantitativa.ratios_liquidez_resultado"></td>
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2" style="width: 11%;"> SOLVENCIA</td>
+                                  <td
+                                  v-if="cuantitativa.ratios_solvencia"
+                                  v-text="parseFloat(cuantitativa.ratios_solvencia).toFixed(2)"
+                                ></td>
+                                <td v-else>0</td>
+                                <td v-text="cuantitativa.ratios_solvencia_resultado"></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                    </div>
+                    <div class="col-md-6 p-0">
+                         <div class="card-body p-0">
+                            <table
+                              class="table table-responsive-sm table-bordered table-striped table-sm"
+                            >
+                              <tbody>
+                                <tr style="background: rgb(157, 157, 157);">
+                                  <td colspan="4" class="pt-2 text-center">BALANCE</td>
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2 text-center" colspan="2">ACTIVO</td>
+                                  <td class="pt-2 text-center" colspan="2">PASIVO</td>
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2">CAJA</td>
+                                  <td class="font-weight-bold pt-2;" v-text="cuantitativa.balance_activo_caja"></td>
+                                   <td class="pt-2">DEUDAS</td>
+                                  <td class="font-weight-bold pt-2;" v-text="cuantitativa.balance_pasivo_deudas"></td>
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2">INVENTARIO</td>
+                                  <td class="font-weight-bold pt-2" v-text="cuantitativa.balance_activo_inventario">0</td>
+                                  <td class="font-weight-bold pt-2 text-center" colspan="2">PATRIMONIO</td>
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2">ACTIVO F</td>
+                                  <td class="font-weight-bold pt-2" v-text="cuantitativa.balance_activo_f"></td>
+                                   <td class="pt-2">CAPITAL</td>
+                                  <td class="font-weight-bold pt-2;" v-text="cuantitativa.balance_patrimonio_capital"></td>
+                                </tr>
+                                <tr style="background: white;">
+                                  
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2 text-center" colspan="2"></td>
+                                   <td class="pt-2">UTILIDAD</td>
+                                  <td class="font-weight-bold pt-2;" v-text="cuantitativa.balance_patrimonio_utilidad"></td>
+                                </tr>
+
+                                <tr style="background: white;">
+                                  <td class="pt-2">TOTAL</td>
+                                  <td class="font-weight-bold pt-2" v-text="cuantitativa.balance_activo_total"></td>
+                                   <td class="pt-2">TOTAL</td>
+                                  <td class="font-weight-bold pt-2;" v-text="cuantitativa.balance_patrimonio_total"></td>
+                                </tr>
+                                
+                              </tbody>
+                            </table>
+                          </div>
+                    </div>
+                    <div class="col-md-12 p-0">
+                      <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                          EVALUACION CUANTITATIVA
+                        </div>
+                        <div class="card-body p-0">
+                          <table
+                            class="table table-responsive-sm table-bordered table-striped table-sm"
+                          >
+                            <tbody>
+                              <tr>
+                                <td>FLUJO DE CAJA MENSUAL</td>
+                                <td>Titular</td>
+                                <td>Conyuge</td>
+                                <td>TOTAL</td>
+                                <td>Validación</td>
+                              </tr>
+                              <tr>
+                                <td class="">INGRESOS/ VENTAS</td>
+                                <td v-text="cuantitativa.ingresos_ventas_titular"></td>
+                                <td v-text="cuantitativa.ingresos_ventas_conyuge"></td>
+                                <td v-text="cuantitativa.ingresos_ventas_total"></td>
+                                <td v-text="cuantitativa.ingresos_ventas_validacion"></td>
+                              </tr>
+                              <tr>
+                                <td class="">Costo de venta</td>
+                                <td v-text="cuantitativa.costo_venta_titular"></td>
+                                <td v-text="cuantitativa.costo_venta_conyuge">0</td>
+                                <td v-text="cuantitativa.consto_venta_total"></td>
+                                <td v-text="cuantitativa.costo_venta_validacion"></td>
+                              </tr>
+                              <tr style="background: rgb(155, 155, 155);">
+                                <td class="font-weight-bold">Margen Bruto</td>
+                                <td v-text="cuantitativa.margen_bruto_titular"></td>
+                                <td v-text="cuantitativa.margen_bruto_conyuge"></td>
+                                <td v-text="cuantitativa.margen_bruto_total"></td>
+                                <td v-text="cuantitativa.margen_bruto_validacion"></td>
+                              </tr>
+                              <tr>
+                                <td>Otros ingresos</td>
+                                <td v-text="cuantitativa.otros_ingresos_titular"></td>
+                                <td v-text="cuantitativa.otros_ingresos_conyuge"></td>
+                                <td v-text="cuantitativa.otros_ingresos_total"></td>
+                                <td v-text="cuantitativa.otros_ingresos_validacion"></td>
+                              </tr>
+                              <tr>
+                                <td>Servicios LAT</td>
+                                <td v-text="cuantitativa.servicios_lat_titular"></td>
+                                <td v-text="cuantitativa.servicios_lat_conyuge"></td>
+                                <td v-text="cuantitativa.servicios_lat_total"></td>
+                                <td v-text="cuantitativa.servicios_lat_validacion"></td>
+                              </tr>
+                              <tr>
+                                <td>Alquiler</td>
+                                <td v-text="cuantitativa.alquiler_titular"></td>
+                                <td v-text="cuantitativa.alquiler_conyuge"></td>
+                                <td v-text="cuantitativa.alquiler_total"></td>
+                                <td v-text="cuantitativa.alquiler_validacion"></td>
+                              </tr>
+                              <tr>
+                                <td>Empleados</td>
+                                <td v-text="cuantitativa.empleados_titular"></td>
+                                <td v-text="cuantitativa.empleados_conyuge"></td>
+                                <td v-text="cuantitativa.empleados_total"></td>
+                                <td v-text="cuantitativa.empleados_validacion"></td>
+                              </tr>
+
+                               <tr>
+                                <td>Gasto Financiero</td>
+                                <td v-text="cuantitativa.gasto_financiero_titular"></td>
+                                <td v-text="cuantitativa.gasto_financiero_conyuge"></td>
+                                <td v-text="cuantitativa.gasto_financiero_total"></td>
+                                <td v-text="cuantitativa.gasto_financiero_validacion"></td>
+                              </tr>
+
+                                <tr>
+                                <td>Gasto Hogar</td>
+                                <td v-text="cuantitativa.gasto_hogar_titular"></td>
+                                <td v-text="cuantitativa.gasto_hogar_conyuge"></td>
+                                <td v-text="cuantitativa.gasto_hogar_total"></td>
+                                <td v-text="cuantitativa.gasto_hogar_validacion"></td>
+                              </tr>
+                              
+                              <tr style="background: rgb(155, 155, 155);">
+                                <td class="font-weight-bold">UTILIDAD</td>
+                                <td v-text="cuantitativa.utilidad_titular"></td>
+                                <td v-text="cuantitativa.utilidad_conyuge"></td>
+                                <td v-text="cuantitativa.utilidad_total"></td>
+                                <td v-text="cuantitativa.utilidad_validacion"></td>
+                              </tr>
+                              <tr>
+                                <td>CUOTA INSITUTCION</td>
+                                <td v-text="cuantitativa.cuota_institucion_titular"></td>
+                                <td v-text="cuantitativa.cuota_institucion_conyuge"></td>
+                                <td v-text="cuantitativa.cuota_institucion_total"></td>
+                                <td v-text="cuantitativa.cuota_institucion_validacion"></td>
+                              </tr>
+                              <tr style="background: rgb(155, 155, 155);">
+                                <td class="font-weight-bold">UTILIDAD DESP CUOTA</td>
+                                <td v-text="cuantitativa.utilidad_desp_cuota_titular"></td>
+                                <td v-text="cuantitativa.utilidad_desp_cuota_conyuge"></td>
+                                <td v-text="cuantitativa.utilidad_desp_cuota_total"></td>
+                                <td v-text="cuantitativa.utilidad_desp_cuota_validacion"></td>
+                              </tr>
+                              <tr>
+                                <td>Participacion de la cuota</td>
+                                <td v-text="cuantitativa.participacion_cuota_titular"></td>
+                                <td></td>
+                                <td v-text="cuantitativa.participacion_cuota_total"></td>
+                                <td v-text="cuantitativa.participacion_cuota_validacion"></td>
+                              </tr>
+                              <tr>
+                                <td colspan="5">RESULTADO EVA <span v-text="cuantitativa.resultado_eva" ></span></td>
+                              </tr>
+                              <tr>
+                                <td colspan="5">RESULTADO SIST <span v-text="cuantitativa.resultado_sist"></span></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
           </div>
         </div>
 
         <div class="col-md-3 m-0 views">
           <div class="row m-0">
-            <div class="col-md-12 status pt-4 pb-4 pl-3" >
-              <input type="radio" v-model="form.estado" value="APROBADO">APROBADO
+            <div class="col-md-12 status pt-4 pb-4 pl-3">
+              <input type="radio" v-model="form.estado" value="APROBADO" />APROBADO
               <!-- <input type="radio" v-model="form.estado" value="OBSERVADO">OBSERVADO -->
-              <input type="radio" v-model="form.estado" value="DESAPROBADO">DESAPROBADO
+              <input type="radio" v-model="form.estado" value="DESAPROBADO" />DESAPROBADO
               <!-- <textarea  v-model="form.detalle" cols="auto" rows="5" class="w-100"></textarea> -->
             </div>
 
-            <!-- <div class="col-md-12 mt-4" v-else>
-              <label v-text="form.estado" v-if="form.estado=='DESAPROBADO'" style="width: 100%;background: #e3342f;text-align: center; padding: 10px 10px; color: #fff;  font-weight: 100;"></label>
-              <label v-text="form.estado" v-else style="width: 100%;background: #009688;text-align: center; padding: 10px 10px; color: #fff;  font-weight: 100;"></label>
-           
-            </div> -->
 
             <div class="col-md-12">
               <label for>Producto</label>
-              <input type="text"  v-model="form.producto" class="form-control" />
+              <input type="text" v-model="form.producto" class="form-control" />
               <!-- <input type="text" V-else v-model="form.producto" class="form-control" disabled /> -->
             </div>
             <div class="col-md-6">
               <label for>Aporte</label>
-              <input type="text"   v-model="form.aporte" class="form-control" />
+              <input type="text" v-model="form.aporte" class="form-control" />
               <!-- <input type="text" v-else v-model="form.aporte" class="form-control" disabled /> -->
             </div>
             <div class="col-md-6">
               <label for>Importe</label>
-              <input type="text"   v-model="form.importe" class="form-control" />
+              <input type="text" v-model="form.importe" class="form-control" />
               <!-- <input type="text" v-else  v-model="form.importe" class="form-control" disabled /> -->
             </div>
             <div class="col-md-12">
               <label for>Plazo</label>
-              <input type="text"  v-model="form.plazo" class="form-control" />
+              <input type="text" v-model="form.plazo" class="form-control" />
               <!-- <input type="text" v-else v-model="form.plazo" class="form-control" disabled /> -->
             </div>
             <div class="col-md-6">
               <label for>Cuotas</label>
-              <input type="text"  v-model="form.cuotas" class="form-control" />
+              <input type="text" v-model="form.cuotas" class="form-control" />
               <!-- <input type="text" v-else v-model="form.cuotas" class="form-control" disabled /> -->
             </div>
             <div class="col-md-6">
               <label for>Tasa</label>
-              <input type="text"  v-model="form.tasa" class="form-control" />
+              <input type="text" v-model="form.tasa" class="form-control" />
               <!-- <input type="text" v-else v-model="form.tasa" class="form-control" disabled /> -->
             </div>
-            
+
             <div class="col-md-12">
               <button class="btn btn-success w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button>
               <!-- <button class="btn btn-def w-100 mb-1 mt-2" v-else>FIRMAR</button> -->
@@ -286,6 +493,7 @@
 </template>
 
 <script>
+import vSelect from 'vue-select'
 export default {
   data() {
     return {
@@ -294,10 +502,11 @@ export default {
       prestamos: [],
       detalle: {},
       cuantitativa: {
-        ratios_endeudamiento:0,
-        ratios_margen_neto:0,
-        ratios_liquidez:0,
-        ratios_solvencia:0
+        ratios_endeudamiento: 0,
+        ratios_margen_neto: 0, 
+        ratios_liquidez: 0,
+        ratios_solvencia: 0,
+        
       },
       tipo: true,
       form: {},
@@ -317,7 +526,7 @@ export default {
     };
   },
   async created() {
-    await this.formInit()
+    await this.formInit();
     await this.methodsPrestamo();
   },
   methods: {
@@ -338,9 +547,9 @@ export default {
       this.$http
         .get(`/${this.resource}/prestamos/detalleF/` + id)
         .then(response => {
-          console.log(response.data)
-          if(response.data.cuantitativa)
-          this.cuantitativa = response.data.cuantitativa;
+          console.log(response.data);
+          if (response.data.cuantitativa)
+            this.cuantitativa = response.data.cuantitativa;
           this.detalle = response.data.prestamo;
           this.form.evaluacion = response.data.evaluacion;
           this.listFile(id);
@@ -352,7 +561,7 @@ export default {
           this.form.tasa = this.detalle.tasa;
           this.form.estado = this.detalle.estado;
           this.form.prestamos_id = id;
-          this.id_prestamo= id;
+          this.id_prestamo = id;
         });
     },
     formInit() {
@@ -365,12 +574,12 @@ export default {
         tasa: "",
         estado: "",
         prestamos_id: "",
-        evaluacion:[]
+        evaluacion: []
       };
     },
-        cargarPdf(){
-                window.open('/clientes/solicitudPdf/'+this.id_prestamo,'_blank'); 
-      },
+    cargarPdf() {
+      window.open("/clientes/solicitudPdf/" + this.id_prestamo, "_blank");
+    },
     firmarEvaluacion() {
       // if() {
       //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
@@ -379,13 +588,11 @@ export default {
       this.$http
         .post(`/${this.resource}/prestamos/evaluarFinal`, this.form)
         .then(response => {
-
-            this.$toast.success(
-              "El evaluacion fue exitosa",
-              "Exitoso",
-              this.notificationSystem.options.success
-            ); 
-
+          this.$toast.success(
+            "El evaluacion fue exitosa",
+            "Exitoso",
+            this.notificationSystem.options.success
+          );
         })
 
         .then(() => {
@@ -396,8 +603,5 @@ export default {
       this.tipo = true;
     }
   },
-  mounted() {
-    console.log("Component mounted.");
-  }
 };
 </script>

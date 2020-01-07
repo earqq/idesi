@@ -16,6 +16,7 @@ use App\Laboral;
 use App\Juridico;
 use App\Subido;
 use App\Vista;
+use App\Detalle;
 use App\Adicional;
 use App\ResultadoCuantitativa;
 use App\AsociativaNatural;

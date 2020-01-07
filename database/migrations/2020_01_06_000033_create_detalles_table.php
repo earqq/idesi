@@ -12,7 +12,7 @@ class CreateDetallesTable extends Migration
      */
     public $tableName = 'detalles';
 
-    /**
+    /** 
      * Run the migrations.
      * @table detalles
      *
@@ -26,6 +26,7 @@ class CreateDetallesTable extends Migration
             $table->string('nombres', 45)->nullable()->default(null);
             $table->integer('documento')->nullable()->default(null);
             $table->string('parentesco', 30)->nullable()->default(null);
+            $table->date('nacimiento')->nullable()->default(null);
             $table->char('socio', 2)->nullable()->default(null);
             $table->unsignedInteger('familiars_id');
 

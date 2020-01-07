@@ -67,6 +67,17 @@
       <div class="row col-md-12 m-0 evaluations" v-else>
         <div class="col-md-9 p-0">
           <div class="row m-0">
+                    <div class="nav-tabs style-tab-menu">
+                      <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item col-md-2">
+                          <a class="nav-link active text-center " id="personal-tab" data-toggle="tab" href="#personal" role="tab" aria-controls="personal" aria-selected="true" >Detalles</a>
+                        </li>
+
+                        <li class="nav-item col-md-2">
+                          <a class="nav-link text-center" id="representantes-tab" data-toggle="tab" href="#representantes"  role="tab" aria-controls="representantes" aria-selected="false" >Evaluaciones</a>
+                        </li>
+                      </ul>
+                    </div>
             <div class="card loans w-100">
               <div class="card-header">ARCHIVOS</div>
               <div class="card-body">

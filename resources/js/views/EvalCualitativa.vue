@@ -1,15 +1,28 @@
 <template >
   <div class="container-general">
+    <header>
+      <span @click="retornar()">
+        <i class="fas fa-angle-left"></i>
+      </span>
+      <h1>Evaluacion Cualitativa</h1>
+    </header>
     <div class="row m-0">
       <div class="col-md-12">
-        <h2>Datos principales</h2>
+        <h4>Datos principales</h4>
       </div>
 
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
         <label>Fuente de ingreso</label>
-        <input v-model="evaluacion.principal.fuente_ingreso" type="text" class="form-control" />
+        <v-select
+          label="giro_negocio"
+          :options="giros"
+          :reduce="giros => giros.giro_negocio"
+          placeholder="Buscar Giro..."
+           v-model="evaluacion.principal.fuente_ingreso"
+        >
+        </v-select>
       </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
         <label>Destino del credito</label>
         <select v-model="evaluacion.principal.destino_credito" class="form-control">
           <option value="1">Capital de trabajo</option>
@@ -21,7 +34,8 @@
           <option value="7">Compra de deuda</option>
         </select>
       </div>
-      <div class="form-group col-md-4">
+
+      <div class="form-group col-md-3">
         <label>Descripcion destino</label>
         <input
           type="text"
@@ -30,8 +44,10 @@
         />
       </div>
 
-      <div class="col-md-12">
-        <h2>Datos del negocio</h2>
+        <p>{{evaluacion.principal.fuente_ingreso}}</p>
+      <div class="col-md-12 row" v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES'">
+          <div class="col-md-12">
+        <h4>Datos del negocio</h4>
       </div>
 
       <div class="form-group col-md-4">
@@ -78,9 +94,11 @@
           <option value="0">No realizo</option>
         </select>
       </div>
+      </div>
 
-      <div class="col-md-12">
-        <h2>Datos del vehiculo</h2>
+      <div class="col-md-12 row" v-else>
+          <div class="col-md-12">
+        <h4>Datos del vehiculo</h4>
       </div>
 
       <div class="form-group col-md-2">
@@ -146,9 +164,10 @@
         <label>Horario trabajo</label>
         <input type="text" v-model="evaluacion.vehiculo.horario_servicio" class="form-control" />
       </div>
+      </div>
 
       <div class="col-md-12">
-        <h2>Informacion familiar</h2>
+        <h4>Informacion familiar</h4>
       </div>
 
       <div class="form-group col-md-4">
@@ -189,7 +208,14 @@
               <input type="text" v-model="evaluacion.familiar.hijos[1].edad" />
             </td>
             <td>
-              <input type="text" v-model="evaluacion.familiar.hijos[1].colegio" />
+                     <v-select
+                        label="nombre"
+                        :options="colegios"
+                        :reduce="colegios => colegios.nombre"
+                        placeholder="Buscar Colegio..."
+                        v-model="evaluacion.familiar.hijos[1].colegio"
+                        >
+                        </v-select>
             </td>
             <td>
               <input type="text" v-model="evaluacion.familiar.hijos[1].grado" />
@@ -203,7 +229,14 @@
               <input type="text" v-model="evaluacion.familiar.hijos[2].edad" />
             </td>
             <td>
-              <input type="text" v-model="evaluacion.familiar.hijos[2].colegio" />
+              <v-select
+                        label="nombre"
+                        :options="colegios"
+                        :reduce="colegios => colegios.nombre"
+                        placeholder="Buscar Colegio..."
+                        v-model="evaluacion.familiar.hijos[2].colegio"
+                        >
+                        </v-select>
             </td>
             <td>
               <input type="text" v-model="evaluacion.familiar.hijos[2].grado" />
@@ -217,7 +250,14 @@
               <input type="text" v-model="evaluacion.familiar.hijos[3].edad" />
             </td>
             <td>
-              <input type="text" v-model="evaluacion.familiar.hijos[3].colegio" />
+                <v-select
+                        label="nombre"
+                        :options="colegios"
+                        :reduce="colegios => colegios.nombre"
+                        placeholder="Buscar Colegio..."
+                        v-model="evaluacion.familiar.hijos[3].colegio"
+                        >
+                        </v-select>
             </td>
             <td>
               <input type="text" v-model="evaluacion.familiar.hijos[3].grado" />
@@ -231,7 +271,14 @@
               <input type="text" v-model="evaluacion.familiar.hijos[4].edad" />
             </td>
             <td>
-              <input type="text" v-model="evaluacion.familiar.hijos[4].colegio" />
+                <v-select
+                        label="nombre"
+                        :options="colegios"
+                        :reduce="colegios => colegios.nombre"
+                        placeholder="Buscar Colegio..."
+                        v-model="evaluacion.familiar.hijos[4].colegio"
+                        >
+                        </v-select>
             </td>
             <td>
               <input type="text" v-model="evaluacion.familiar.hijos[4].grado" />
@@ -244,7 +291,7 @@
       </div>
 
       <div class="col-md-12">
-        <h2>COMENTARIOS (CENTRAL DE RIESGO)</h2>
+        <h4>COMENTARIOS (CENTRAL DE RIESGO)</h4>
       </div>
 
       <div class="form-group col-md-4">
@@ -354,7 +401,7 @@
       </div>
 
       <div class="col-md-12">
-        <h2>REFERENCIAS PERSONALES(Familiares, compañeros de trabajo, vecinos)</h2>
+        <h4>REFERENCIAS PERSONALES(Familiares, compañeros de trabajo, vecinos)</h4>
       </div>
 
       <div class="col-md-12">
@@ -402,7 +449,7 @@
       </div>
 
       <div class="col-md-12">
-        <h2>COLATERAL</h2>
+        <h4>COLATERAL</h4>
       </div>
 
       <div class="form-group col-md-4">
@@ -417,16 +464,26 @@
                 </select>
       </div>
 
+          <div class="form-group col-md-12">
+                       <button @click='guardar()' class="btn btn-crecer">Guardar</button>
+        </div>
+
 
     </div>
 
   </div>
-  
+
 </template>
 <script>
+import vSelect from 'vue-select'
 export default {
+      components: {
+    vSelect
+  },
   data() {
     return {
+        giros: [],
+        colegios: [],
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
         principal: {
@@ -527,6 +584,22 @@ export default {
         alert("guardado correctamente");
       });
     }
-  }
+  },
+async mounted() {
+
+    this.$http
+      .get(`/evaluaciones/giro`)
+      .then(response => {
+          this.giros = response.data
+      });
+
+      this.$http
+      .get(`/evaluaciones/colegio`)
+      .then(response => {
+          this.colegios = response.data
+      });
+
+
+  },
 };
 </script>
