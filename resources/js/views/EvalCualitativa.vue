@@ -6,195 +6,566 @@
       </span>
       <h1>Evaluacion Cualitativa</h1>
     </header>
-    <div class="row m-0">
-      <div class="col-md-12">
-        <h4>Datos principales</h4>
+
+    <div class="row m-0 p-3" style="background: white">
+      <div class="col-md-12 p-0">
+        <div class="card" style>
+          <div class="card-header d-flex justify-content-between">
+            <strong>Datos principales</strong>
+          </div>
+          <div class="card-body row">
+            <div class="form-group col-md-4">
+              <label>Fuente de ingreso</label>
+              <v-select
+                label="giro_negocio"
+                :options="giros"
+                :reduce="giros => giros.giro_negocio"
+                placeholder="Buscar Giro..."
+                v-model="evaluacion.principal.fuente_ingreso"
+              ></v-select>
+            </div>
+            <div class="form-group col-md-4">
+              <label>Destino del credito</label>
+              <select v-model="evaluacion.principal.destino_credito" class="form-control">
+                <option value="1">Capital de trabajo</option>
+                <option value="2">Activo Fijo</option>
+                <option value="3">Consumo</option>
+                <option value="4">Vehiculo</option>
+                <option value="5">Hipotecario</option>
+                <option value="6">Mejoramiento de vivienda</option>
+                <option value="7">Compra de deuda</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label>Descripcion destino</label>
+              <input
+                type="text"
+                v-model="evaluacion.principal.destino_credito_descripcion"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group col-md-3">
-        <label>Fuente de ingreso</label>
-        <v-select
-          label="giro_negocio"
-          :options="giros"
-          :reduce="giros => giros.giro_negocio"
-          placeholder="Buscar Giro..."
-           v-model="evaluacion.principal.fuente_ingreso"
-        >
-        </v-select>
-      </div>
-      <div class="form-group col-md-3">
-        <label>Destino del credito</label>
-        <select v-model="evaluacion.principal.destino_credito" class="form-control">
-          <option value="1">Capital de trabajo</option>
-          <option value="2">Activo Fijo</option>
-          <option value="3">Consumo</option>
-          <option value="4">Vehiculo</option>
-          <option value="5">Hipotecario</option>
-          <option value="6">Mejoramiento de vivienda</option>
-          <option value="7">Compra de deuda</option>
-        </select>
+      <div class="col-md-12 p-0">
+        <div class="card" style>
+          <div class="card-header d-flex justify-content-between">
+            <strong>Datos del negocio</strong>
+          </div>
+          <div class="card-body row">
+            <div class="col-md-12 row" v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES'">
+              <div class="form-group col-md-4">
+                <label>Ubicacion del negocio</label>
+                <input type="text" v-model="evaluacion.negocio.ubicacion" class="form-control" />
+              </div>
+
+              <div class="form-group col-md-2">
+                <label>Antiguedad</label>
+                <select v-model="evaluacion.negocio.antiguedad" class="form-control">
+                  <option value="0">Menos de 1 año</option>
+                  <option value="1">1 año</option>
+                  <option value="2">2 años</option>
+                  <option value="3">3 años</option>
+                  <option value="4">4 años</option>
+                  <option value="5">5 años</option>
+                  <option value="6">Más de 5 años</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label>Local</label>
+                <select v-model="evaluacion.negocio.local" class="form-control">
+                  <option value="1">Propio</option>
+                  <option value="2">Alquilado</option>
+                  <option value="3">Módulo V. pública</option>
+                  <option value="4">Familiar</option>
+                  <option value="5">Hipotec/anticresis</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label>Licencia de Funcionamiento</label>
+                <select v-model="evaluacion.negocio.licencia_funcionamiento" class="form-control">
+                  <option value="1">Si cuenta</option>
+                  <option value="0">No cuenta</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label>Realizo mejoras en el local</label>
+                <select v-model="evaluacion.negocio.mejoras_local" class="form-control">
+                  <option value="1">Si realizo</option>
+                  <option value="0">No realizo</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-12 row" v-else>
+              <div class="col-md-12">
+                <h4>Datos del vehiculo</h4>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label>Marca</label>
+                <input type="text" v-model="evaluacion.vehiculo.marca" class="form-control" />
+              </div>
+
+              <div class="form-group col-md-2">
+                <label>Modelo</label>
+                <input type="text" v-model="evaluacion.vehiculo.modelo" class="form-control" />
+              </div>
+
+              <div class="form-group col-md-1">
+                <label>Año fabricación</label>
+                <select v-model="evaluacion.vehiculo.año" class="form-control">
+                  <option value="1995">1995</option>
+                  <option value="1996">1996</option>
+                  <option value="1997">1997</option>
+                  <option value="1998">1998</option>
+                  <option value="1999">1999</option>
+                  <option value="2001">2001</option>
+                  <option value="2002">2002</option>
+                  <option value="2003">2003</option>
+                  <option value="2004">2004</option>
+                  <option value="2005">2005</option>
+                  <option value="2006">2006</option>
+                  <option value="2007">2007</option>
+                  <option value="2008">2008</option>
+                  <option value="2009">2009</option>
+                  <option value="2010">2010</option>
+                  <option value="2011">2011</option>
+                  <option value="2012">2012</option>
+                  <option value="2013">2013</option>
+                  <option value="2014">2014</option>
+                  <option value="2015">2015</option>
+                  <option value="2016">2016</option>
+                  <option value="2017">2017</option>
+                  <option value="2018">2018</option>
+                  <option value="2018">2018</option>
+                  <option value="2019">2019</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-2">
+                <label>Tipo servicio que brinda</label>
+                <input
+                  type="text"
+                  v-model="evaluacion.vehiculo.tipo_servicio_brinda"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="form-group col-md-2">
+                <label>Antiguedad realizando el servicio</label>
+                <input
+                  type="text"
+                  v-model="evaluacion.vehiculo.antiguedad_servicio"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="form-group col-md-2">
+                <label>Permiso para brindar servicio</label>
+                <select v-model="evaluacion.vehiculo.permiso_servicio" class="form-control">
+                  <option value="1">Si cuenta</option>
+                  <option value="0">No cuenta</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-1">
+                <label>Horario trabajo</label>
+                <input
+                  type="text"
+                  v-model="evaluacion.vehiculo.horario_servicio"
+                  class="form-control"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group col-md-3">
-        <label>Descripcion destino</label>
-        <input
-          type="text"
-          v-model="evaluacion.principal.destino_credito_descripcion"
-          class="form-control"
-        />
+      <div class="col-md-12 p-0">
+        <div class="card" style>
+          <div class="card-header d-flex justify-content-between">
+            <strong>Informacion Familiar</strong>
+          </div>
+          <div class="card-body row">
+            <div class="form-group col-md-4">
+              <label>Tipo de vivienda</label>
+              <select v-model="evaluacion.familiar.tipo_vivienda" class="form-control">
+                <option value="1">Propia Cancelada</option>
+                <option value="2">Propia (hipoteca)</option>
+                <option value="3">De los padres</option>
+                <option value="4">De familiares</option>
+                <option value="5">Alquilada</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label>Situacion familiar</label>
+              <select v-model="evaluacion.familiar.situacion_familiar" class="form-control">
+                <option value="1">Soltero</option>
+                <option value="2">Casado</option>
+                <option value="3">Conviviente</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label>Miembros de familia</label>
+              <input
+                type="number"
+                v-model="evaluacion.familiar.miembros_familia"
+                class="form-control"
+              />
+            </div>
+
+  <div class="form-group col-md-12">
+        <label>Hijos</label>
+        <table  class="table ingresos-table table-bordered table-striped table-sm">
+          <tr>
+            <td>Edad</td>
+            <td style="    width: 20%;
+">Colegio</td>
+            <td>Grado</td>
+            <td>Costo</td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" class="form-control" v-model="evaluacion.familiar.hijos[1].edad" />
+            </td>
+            <td>
+              <v-select
+                label="nombre"
+                :options="colegios"
+                :reduce="colegios => colegios.nombre"
+                placeholder="Buscar Colegio..."
+                v-model="evaluacion.familiar.hijos[1].colegio"
+              ></v-select>
+            </td>
+            <td>
+              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[1].grado" />
+            </td>
+            <td>
+              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[1].costo" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[2].edad" />
+            </td>
+            <td>
+              <v-select
+                label="nombre"
+                :options="colegios"
+                :reduce="colegios => colegios.nombre"
+                placeholder="Buscar Colegio..."
+                v-model="evaluacion.familiar.hijos[2].colegio"
+              ></v-select>
+            </td>
+            <td>
+              <input type="text" class="form-control" v-model="evaluacion.familiar.hijos[2].grado" />
+            </td>
+            <td>
+              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[2].costo" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[3].edad" />
+            </td>
+            <td>
+              <v-select
+                label="nombre"
+                :options="colegios"
+                :reduce="colegios => colegios.nombre"
+                placeholder="Buscar Colegio..."
+                v-model="evaluacion.familiar.hijos[3].colegio"
+              ></v-select>
+            </td>
+            <td>
+              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[3].grado" />
+            </td>
+            <td>
+              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[3].costo" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[4].edad" />
+            </td>
+            <td>
+              <v-select
+                label="nombre"
+                :options="colegios"
+                :reduce="colegios => colegios.nombre"
+                placeholder="Buscar Colegio..."
+                v-model="evaluacion.familiar.hijos[4].colegio"
+              ></v-select>
+            </td>
+            <td>
+              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[4].grado" />
+            </td>
+            <td>
+              <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[4].costo" />
+            </td>
+          </tr>
+        </table>
+      </div>
+            <!-- <div class="form-group col-md-12">
+              <table class="table table-bordered table-striped table-sm">
+                <thead>
+                  <tr>
+                    <th>Edad</th>
+                    <th>Colsegio</th>
+                    <th>Costo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(n, index) in evaluacion.familiar.numero_hijos" :key="index">
+                      <p>{{n}}</p> 
+                       <td>
+                         
+                          <input type="text" class="form-control"  v-model="evaluacion.familiar.hijos[n].edad" />
+                        </td>
+                        <td>
+                          <v-select
+                            label="nombre"
+                            :options="colegios"
+                            :reduce="colegios => colegios.nombre"
+                            placeholder="Buscar Colegio..."
+                            v-model="evaluacion.familiar.hijos[n].colegio"
+                          ></v-select>
+                        </td>
+                        <td>
+                          <input type="text" v-model="evaluacion.familiar.hijos[n].grado" />
+                        </td>
+                        <td>
+                          <input type="text" v-model="evaluacion.familiar.hijos[n].costo" />
+                        </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> -->
+          </div>
+        </div>
       </div>
 
-        <p>{{evaluacion.principal.fuente_ingreso}}</p>
-      <div class="col-md-12 row" v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES'">
-          <div class="col-md-12">
-        <h4>Datos del negocio</h4>
+      <div class="col-md-12 p-0">
+        <div class="card" style>
+          <div class="card-header d-flex justify-content-between">
+            <strong>COMENTARIOS (CENTRAL DE RIESGO)</strong>
+          </div>
+          <div class="card-body row">
+            <div class="form-group col-md-12">
+              <table class="table table-bordered table-striped table-sm">
+                <tr>
+                  <td>Entidad Financiera</td>
+                  <td>Capital</td>
+                  <td>Activo F</td>
+                  <td>Consumo</td>
+                  <td>Vehicular</td>
+                  <td>Hipoteca</td>
+                  <td>Terceros</td>
+                </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="evaluacion.central_riesgo[1].entidad_financiera"
+                    />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[1].capital" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[1].activo_f" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[1].consumo" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[1].vehicular" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[1].hipoteca" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[1].terceros" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="evaluacion.central_riesgo[2].entidad_financiera"
+                    />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[2].capital" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[2].activo_f" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[2].consumo" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[2].vehicular" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[2].hipoteca" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[2].terceros" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="evaluacion.central_riesgo[3].entidad_financiera"
+                    />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[3].capital" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[3].activo_f" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[3].consumo" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[3].vehicular" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[3].hipoteca" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[3].terceros" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="evaluacion.central_riesgo[4].entidad_financiera"
+                    />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[4].capital" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[4].activo_f" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[4].consumo" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[4].vehicular" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[4].hipoteca" />
+                  </td>
+                  <td>
+                    <input type="checkbox" v-model="evaluacion.central_riesgo[4].terceros" />
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group col-md-4">
-        <label>Ubicacion del negocio</label>
-        <input type="text" v-model="evaluacion.negocio.ubicacion" class="form-control" />
+      <div class="col-md-12 p-0">
+        <div class="card" style>
+          <div class="card-header d-flex justify-content-between">
+            <strong>REFERENCIAS PERSONALES(Familiares, compañeros de trabajo, vecinos)</strong>
+          </div>
+          <div class="card-body row">
+            <div class="form-group col-md-12">
+              <table class="table table-bordered table-striped table-sm">
+                <tr>
+                  <td>Tipo de relación</td>
+                  <td>Nombre</td>
+                  <td>Telefono</td>
+                </tr>
+                <tr>
+                  <td>
+                    <input v-model="evaluacion.referencias[1].tipo_relacion" type="text" class="form-control" />
+                  </td>
+                  <td>
+                    <input v-model="evaluacion.referencias[1].nombre" type="text" class="form-control" />
+                  </td>
+                  <td>
+                    <input v-model="evaluacion.referencias[1].telefono" type="text" class="form-control" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input v-model="evaluacion.referencias[2].tipo_relacion" type="text" class="form-control" />
+                  </td>
+                  <td>
+                    <input v-model="evaluacion.referencias[2].nombre" type="text" class="form-control" />
+                  </td>
+                  <td>
+                    <input v-model="evaluacion.referencias[2].telefono" type="text" class="form-control" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input v-model="evaluacion.referencias[3].tipo_relacion" type="text" class="form-control" />
+                  </td>
+                  <td>
+                    <input v-model="evaluacion.referencias[3].nombre" type="text" class="form-control" />
+                  </td>
+                  <td>
+                    <input v-model="evaluacion.referencias[3].telefono" type="text" class="form-control" />
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group col-md-2">
-        <label>Antiguedad</label>
-        <select v-model="evaluacion.negocio.antiguedad" class="form-control">
-          <option value="0">Menos de 1 año</option>
-          <option value="1">1 año</option>
-          <option value="2">2 años</option>
-          <option value="3">3 años</option>
-          <option value="4">4 años</option>
-          <option value="5">5 años</option>
-          <option value="6">Más de 5 años</option>
-        </select>
+      <div class="col-md-12 p-0">
+        <div class="card" style>
+          <div class="card-header d-flex justify-content-between">
+            <strong>Colateral</strong>
+          </div>
+          <div class="card-body row">
+               <div class="form-group col-md-12">
+                <label>Aval con casa propia</label>
+                <select v-model="evaluacion.colateral" class="form-control">
+                  <option value="1">Aval con casa propia</option>
+                  <option value="2">Aval con casa alquilada</option>
+                  <option value="3">Garantia liquida liquida</option>
+                  <option value="4">Garantia vehicular</option>
+                  <option value="5">Hipoteca inmobiliara</option>
+                  <option value="0">Sin colateral</option>
+                </select>
+              </div>
+
+          </div>
+        </div>
       </div>
 
-      <div class="form-group col-md-2">
-        <label>Local</label>
-        <select v-model="evaluacion.negocio.local" class="form-control">
-          <option value="1">Propio</option>
-          <option value="2">Alquilado</option>
-          <option value="3">Módulo V. pública</option>
-          <option value="4">Familiar</option>
-          <option value="5">Hipotec/anticresis</option>
-        </select>
+      <div class="form-group col-md-12 d-flex justify-content-center mt-3">
+        <button @click="guardar()" class="btn btn-crecer w-25">Guardar</button>
       </div>
 
-      <div class="form-group col-md-2">
-        <label>Licencia de Funcionamiento</label>
-        <select v-model="evaluacion.negocio.licencia_funcionamiento" class="form-control">
-          <option value="1">Si cuenta</option>
-          <option value="0">No cuenta</option>
-        </select>
-      </div>
+    </div>
 
-      <div class="form-group col-md-2">
-        <label>Realizo mejoras en el local</label>
-        <select v-model="evaluacion.negocio.mejoras_local" class="form-control">
-          <option value="1">Si realizo</option>
-          <option value="0">No realizo</option>
-        </select>
-      </div>
-      </div>
-
-      <div class="col-md-12 row" v-else>
-          <div class="col-md-12">
-        <h4>Datos del vehiculo</h4>
-      </div>
-
-      <div class="form-group col-md-2">
-        <label>Marca</label>
-        <input type="text" v-model="evaluacion.vehiculo.marca" class="form-control" />
-      </div>
-
-      <div class="form-group col-md-2">
-        <label>Modelo</label>
-        <input type="text" v-model="evaluacion.vehiculo.modelo" class="form-control" />
-      </div>
-
-      <div class="form-group col-md-1">
-        <label>Año fabricación</label>
-        <select v-model="evaluacion.vehiculo.año" class="form-control">
-          <option value="1995">1995</option>
-          <option value="1996">1996</option>
-          <option value="1997">1997</option>
-          <option value="1998">1998</option>
-          <option value="1999">1999</option>
-          <option value="2001">2001</option>
-          <option value="2002">2002</option>
-          <option value="2003">2003</option>
-          <option value="2004">2004</option>
-          <option value="2005">2005</option>
-          <option value="2006">2006</option>
-          <option value="2007">2007</option>
-          <option value="2008">2008</option>
-          <option value="2009">2009</option>
-          <option value="2010">2010</option>
-          <option value="2011">2011</option>
-          <option value="2012">2012</option>
-          <option value="2013">2013</option>
-          <option value="2014">2014</option>
-          <option value="2015">2015</option>
-          <option value="2016">2016</option>
-          <option value="2017">2017</option>
-          <option value="2018">2018</option>
-          <option value="2018">2018</option>
-          <option value="2019">2019</option>
-        </select>
-      </div>
-
-      <div class="form-group col-md-2">
-        <label>Tipo servicio que brinda</label>
-        <input type="text" v-model="evaluacion.vehiculo.tipo_servicio_brinda" class="form-control" />
-      </div>
-
-      <div class="form-group col-md-2">
-        <label>Antiguedad realizando el servicio</label>
-        <input type="text" v-model="evaluacion.vehiculo.antiguedad_servicio" class="form-control" />
-      </div>
-
-      <div class="form-group col-md-2">
-        <label>Permiso para brindar servicio</label>
-        <select v-model="evaluacion.vehiculo.permiso_servicio" class="form-control">
-          <option value="1">Si cuenta</option>
-          <option value="0">No cuenta</option>
-        </select>
-      </div>
-
-      <div class="form-group col-md-1">
-        <label>Horario trabajo</label>
-        <input type="text" v-model="evaluacion.vehiculo.horario_servicio" class="form-control" />
-      </div>
-      </div>
-
-      <div class="col-md-12">
-        <h4>Informacion familiar</h4>
-      </div>
-
-      <div class="form-group col-md-4">
-        <label>Tipo de vivienda</label>
-        <select v-model="evaluacion.familiar.tipo_vivienda" class="form-control">
-          <option value="1">Propia Cancelada</option>
-          <option value="2">Propia (hipoteca)</option>
-          <option value="3">De los padres</option>
-          <option value="4">De familiares</option>
-          <option value="5">Alquilada</option>
-        </select>
-      </div>
-
-      <div class="form-group col-md-4">
-        <label>Situacion familiar</label>
-        <select v-model="evaluacion.familiar.situacion_familiar" class="form-control">
-          <option value="1">Soltero</option>
-          <option value="2">Casado</option>
-          <option value="3">Conviviente</option>
-        </select>
-      </div>
-
-      <div class="form-group col-md-4">
-        <label>Miembros de familia</label>
-        <input type="number" v-model="evaluacion.familiar.miembros_familia" class="form-control" />
-      </div>
-      <div class="form-group col-md-12">
+      
+      <!-- <div class="form-group col-md-12">
         <label>Hijos</label>
         <table>
           <tr>
@@ -208,14 +579,13 @@
               <input type="text" v-model="evaluacion.familiar.hijos[1].edad" />
             </td>
             <td>
-                     <v-select
-                        label="nombre"
-                        :options="colegios"
-                        :reduce="colegios => colegios.nombre"
-                        placeholder="Buscar Colegio..."
-                        v-model="evaluacion.familiar.hijos[1].colegio"
-                        >
-                        </v-select>
+              <v-select
+                label="nombre"
+                :options="colegios"
+                :reduce="colegios => colegios.nombre"
+                placeholder="Buscar Colegio..."
+                v-model="evaluacion.familiar.hijos[1].colegio"
+              ></v-select>
             </td>
             <td>
               <input type="text" v-model="evaluacion.familiar.hijos[1].grado" />
@@ -230,13 +600,12 @@
             </td>
             <td>
               <v-select
-                        label="nombre"
-                        :options="colegios"
-                        :reduce="colegios => colegios.nombre"
-                        placeholder="Buscar Colegio..."
-                        v-model="evaluacion.familiar.hijos[2].colegio"
-                        >
-                        </v-select>
+                label="nombre"
+                :options="colegios"
+                :reduce="colegios => colegios.nombre"
+                placeholder="Buscar Colegio..."
+                v-model="evaluacion.familiar.hijos[2].colegio"
+              ></v-select>
             </td>
             <td>
               <input type="text" v-model="evaluacion.familiar.hijos[2].grado" />
@@ -250,14 +619,13 @@
               <input type="text" v-model="evaluacion.familiar.hijos[3].edad" />
             </td>
             <td>
-                <v-select
-                        label="nombre"
-                        :options="colegios"
-                        :reduce="colegios => colegios.nombre"
-                        placeholder="Buscar Colegio..."
-                        v-model="evaluacion.familiar.hijos[3].colegio"
-                        >
-                        </v-select>
+              <v-select
+                label="nombre"
+                :options="colegios"
+                :reduce="colegios => colegios.nombre"
+                placeholder="Buscar Colegio..."
+                v-model="evaluacion.familiar.hijos[3].colegio"
+              ></v-select>
             </td>
             <td>
               <input type="text" v-model="evaluacion.familiar.hijos[3].grado" />
@@ -271,14 +639,13 @@
               <input type="text" v-model="evaluacion.familiar.hijos[4].edad" />
             </td>
             <td>
-                <v-select
-                        label="nombre"
-                        :options="colegios"
-                        :reduce="colegios => colegios.nombre"
-                        placeholder="Buscar Colegio..."
-                        v-model="evaluacion.familiar.hijos[4].colegio"
-                        >
-                        </v-select>
+              <v-select
+                label="nombre"
+                :options="colegios"
+                :reduce="colegios => colegios.nombre"
+                placeholder="Buscar Colegio..."
+                v-model="evaluacion.familiar.hijos[4].colegio"
+              ></v-select>
             </td>
             <td>
               <input type="text" v-model="evaluacion.familiar.hijos[4].grado" />
@@ -288,202 +655,23 @@
             </td>
           </tr>
         </table>
-      </div>
+      </div> -->
 
-      <div class="col-md-12">
-        <h4>COMENTARIOS (CENTRAL DE RIESGO)</h4>
-      </div>
-
-      <div class="form-group col-md-4">
-        <table>
-          <tr>
-            <td>Entidad Financiera</td>
-            <td>Capital</td>
-            <td>Activo F</td>
-            <td>Consumo</td>
-            <td>Vehicular</td>
-            <td>Hipoteca</td>
-            <td>Terceros</td>
-          </tr>
-          <tr>
-            <td>
-              <input type="text" v-model="evaluacion.central_riesgo[1].entidad_financiera" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[1].capital" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[1].activo_f" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[1].consumo" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[1].vehicular" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[1].hipoteca" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[1].terceros" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="text" v-model="evaluacion.central_riesgo[2].entidad_financiera" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[2].capital" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[2].activo_f" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[2].consumo" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[2].vehicular" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[2].hipoteca" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[2].terceros" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="text" v-model="evaluacion.central_riesgo[3].entidad_financiera" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[3].capital" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[3].activo_f" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[3].consumo" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[3].vehicular" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[3].hipoteca" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[3].terceros" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="text" v-model="evaluacion.central_riesgo[4].entidad_financiera" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[4].capital" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[4].activo_f" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[4].consumo" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[4].vehicular" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[4].hipoteca" />
-            </td>
-            <td>
-              <input type="checkbox" v-model="evaluacion.central_riesgo[4].terceros" />
-            </td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="col-md-12">
-        <h4>REFERENCIAS PERSONALES(Familiares, compañeros de trabajo, vecinos)</h4>
-      </div>
-
-      <div class="col-md-12">
-          
-    <table>
-      <tr>
-        <td>Tipo de relación</td>
-        <td>Nombre</td>
-        <td>Telefono</td>
-      </tr>
-      <tr>
-        <td>
-          <input v-model="evaluacion.referencias[1].tipo_relacion" type="text" />
-        </td>
-        <td>
-          <input v-model="evaluacion.referencias[1].nombre" type="text" />
-        </td>
-        <td>
-          <input v-model="evaluacion.referencias[1].telefono" type="text" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input v-model="evaluacion.referencias[2].tipo_relacion" type="text" />
-        </td>
-        <td>
-          <input v-model="evaluacion.referencias[2].nombre" type="text" />
-        </td>
-        <td>
-          <input v-model="evaluacion.referencias[2].telefono" type="text" />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input v-model="evaluacion.referencias[3].tipo_relacion" type="text" />
-        </td>
-        <td>
-          <input v-model="evaluacion.referencias[3].nombre" type="text" />
-        </td>
-        <td>
-          <input v-model="evaluacion.referencias[3].telefono" type="text" />
-        </td>
-      </tr>
-    </table>
-      </div>
-
-      <div class="col-md-12">
-        <h4>COLATERAL</h4>
-      </div>
-
-      <div class="form-group col-md-4">
-        <label>Aval con casa propia</label>
-                <select v-model="evaluacion.colateral" class="form-control">
-                <option value="1">Aval con casa propia</option>
-                <option value="2">Aval con casa alquilada</option>
-                <option value="3">Garantia liquida liquida</option>
-                <option value="4">Garantia vehicular</option>
-                <option value="5">Hipoteca inmobiliara</option>
-                <option value="0">Sin colateral</option>
-                </select>
-      </div>
-
-          <div class="form-group col-md-12">
-                       <button @click='guardar()' class="btn btn-crecer">Guardar</button>
-        </div>
-
-
-    </div>
-
+     
   </div>
-
 </template>
 <script>
-import vSelect from 'vue-select'
+import vSelect from "vue-select";
+import { serviceNumber } from "../mixins/functions";
 export default {
-      components: {
+    mixins: [serviceNumber],
+  components: {
     vSelect
   },
   data() {
     return {
-        giros: [],
-        colegios: [],
+      giros: [],
+      colegios: [],
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
         principal: {
@@ -509,6 +697,7 @@ export default {
           horario_trabajo: ""
         },
         familiar: {
+          numero_hijos: 0,
           tipo_vivienda: 1,
           situacion_familiar: 1,
           miembros_familia: 1,
@@ -578,28 +767,35 @@ export default {
       }
     };
   },
+
+
+
+
   methods: {
+        retornar() {
+      this.backMixin_handleBack("");
+    },
     guardar() {
       axios.post("/evaluaciones/cualitativa", this.evaluacion).then(res => {
-        alert("guardado correctamente");
+        alert("guardado correctamente"); 
       });
     }
   },
-async mounted() {
+  async mounted() { 
+    this.$http.get(`/evaluaciones/giro`).then(response => {
+      this.giros = response.data;
+    });
 
+    this.$http.get(`/evaluaciones/colegio`).then(response => {
+      this.colegios = response.data;
+    });
+    
     this.$http
-      .get(`/evaluaciones/giro`)
+      .get(`/evaluaciones/numerohijos/` + this.$route.params.prestamo)
       .then(response => {
-          this.giros = response.data
+        this.evaluacion.familiar.numero_hijos =response.data.numero
+        // console.log(response.data)
       });
-
-      this.$http
-      .get(`/evaluaciones/colegio`)
-      .then(response => {
-          this.colegios = response.data
-      });
-
-
-  },
+  }
 };
 </script>
