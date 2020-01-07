@@ -1,8 +1,14 @@
 <template >
   <div class="container-general">
+        <header>
+      <span @click="retornar()">
+        <i class="fas fa-angle-left"></i>
+      </span>
+      <h1>Evaluacion Cuantitativa</h1>
+    </header>
     <div class="row row m-0 p-3" style="background: white">
       <div class="col-md-12 p-0">
-        <div class="card" style>
+        <div class="card" style> 
           <div class="card-header d-flex justify-content-between">
             <strong>Evaluacion cuantitativa</strong>
             <strong>Ingresos del titular</strong>
@@ -445,8 +451,9 @@
 </template>
 <script>
 import vSelect from "vue-select";
-
+import { serviceNumber } from "../mixins/functions";
 export default {
+    mixins: [serviceNumber],
   components: {
     vSelect
   },
@@ -707,6 +714,9 @@ export default {
     });
   },
   methods: {
+            retornar() {
+      this.backMixin_handleBack("");
+    },
     negocioIngresosSubtotal(index) {
       this.evaluacion.titular.ingresos_negocio[index].subtotal =
         parseFloat(this.evaluacion.titular.ingresos_negocio[index].lunes, 2) +
