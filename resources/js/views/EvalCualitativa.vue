@@ -263,7 +263,9 @@
                 </tbody>
               </table>
             </div>
-            <div class="form-group col-md-12">
+
+            
+            <div class="form-group col-md-12" v-else>
                 <p class="text-center">No registra hijos</p>
             </div>
           </div>

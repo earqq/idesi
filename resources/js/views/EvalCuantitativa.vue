@@ -684,9 +684,14 @@ export default {
       });
 
     this.$http.get(`/evaluaciones/giro`).then(response => {
-      console.log(response.data);
       this.giros = response.data;
     });
+
+        this.$http.get(`/evaluaciones/datosCualitativas?prestamo=` + this.$route.params.prestamo).then(response => {
+            console.log(response.data)
+    });
+
+
   },
   methods: {
             retornar() {

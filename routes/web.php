@@ -67,6 +67,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('evaluaciones/numerohijos/{prestamo}', 'EvaluacionController@numeroHijos');
 
         Route::get('evaluaciones/giro', 'EvaluacionController@giro');
+        Route::get('/evaluaciones/datosCualitativas', 'EvaluacionController@datosCualitativas');
         Route::get('evaluaciones/colegio', 'EvaluacionController@colegio');
         Route::get('evaluaciones/colegio/costo', 'EvaluacionController@colegioCosto');
 
