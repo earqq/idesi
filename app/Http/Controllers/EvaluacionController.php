@@ -152,7 +152,19 @@ class EvaluacionController extends Controller
     {
       
 
-        $colegio = Colegio::all();
+        $colegio = Colegio::where("nivel",$request->filtro)->get();
+        return $colegio;
+           
+    } 
+
+    public function colegioCosto(Request $request)
+    {
+      
+        // return $request;
+
+        $colegio = Colegio::where("nivel",$request->grado)
+                            ->where('nombre',$request->colegio)
+                            ->select('costo')->first();
         return $colegio;
            
     } 

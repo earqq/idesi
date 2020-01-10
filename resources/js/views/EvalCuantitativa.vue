@@ -373,24 +373,24 @@
               <div class="form-group col-md-2">
                 <label>PRODUCTO</label>
 
-                <input type="text" v-model="evaluacion.propuesta.producto" class="form-control" />
-              </div>
+                <input type="text" v-model="evaluacion.propuesta.producto" class="form-control" disabled />
+              </div> 
 
               <div class="form-group col-md-2">
                 <label>MONTO</label>
-                <input type="text" v-model="evaluacion.propuesta.monto" class="form-control" />
+                <input type="text" v-model="evaluacion.propuesta.monto" class="form-control" disabled/>
               </div>
 
               <div class="form-group col-md-2">
                 <label>PLAZO</label>
 
-                <input type="text" v-model="evaluacion.propuesta.plazo" class="form-control" />
+                <input type="text" v-model="evaluacion.propuesta.plazo" class="form-control" disabled/>
               </div>
 
               <div class="form-group col-md-2">
                 <label>NUMERO CUOTAS</label>
 
-                <input type="text" v-model="evaluacion.propuesta.numero_cuotas" class="form-control" />
+                <input type="text" v-model="evaluacion.propuesta.numero_cuotas" class="form-control" disabled/>
               </div>
               <div class="form-group col-md-2">
                 <label>CUOTAS</label>
