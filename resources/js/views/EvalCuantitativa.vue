@@ -18,19 +18,19 @@
             <div class="form-group col-md-12">
               <table class="table ingresos-table table-bordered table-striped table-sm">
                 <tr>
-                  <td>Concepto</td>
-                  <td>Lunes</td>
-                  <td>Martes</td>
-                  <td>Miercoles</td>
-                  <td>Jueves</td>
-                  <td>Viernes</td>
-                  <td>Sabado</td>
-                  <td>Domingo</td>
-                  <td>Subtotal</td>
+                  <td class="title-table">Concepto</td>
+                  <td class="title-table">Lunes</td>
+                  <td class="title-table">Martes</td>
+                  <td class="title-table">Miercoles</td>
+                  <td class="title-table">Jueves</td>
+                  <td class="title-table">Viernes</td>
+                  <td class="title-table">Sabado</td>
+                  <td class="title-table">Domingo</td>
+                  <td class="title-table">Subtotal</td>
                 </tr>
                 <tr v-for="(val,index) in evaluacion.titular.ingresos_negocio" v-bind:key="index">
                   <td>
-                    <input type="text" class="from-control" v-model="val.concepto" />
+                    <input type="text" class="form-control" v-model="val.concepto" /> 
                   </td>
                   <td>
                     <money  :change="negocioIngresosSubtotal(index)" v-model="evaluacion.titular.ingresos_negocio[index].lunes" v-bind="money" class="form-control"></money>
@@ -75,14 +75,14 @@
       <div class="col-md-12 p-0">
         <div class="card" style>
           <div class="card-header d-flex justify-content-between">
-            <strong>Ingresos por 4tao 5ta Categoria</strong>
+            <strong>Ingresos por 2da,  4ta y/o  5ta Categoria</strong>
           </div>
           <div class="card-body row">
             <div class="form-group col-md-12">
               <table class="table ingresos-table table-bordered table-striped table-sm">
                   <tr>
-                    <td>CONCEPTO</td>
-                    <td>MES</td>
+                    <td class="title-table">CONCEPTO</td>
+                    <td class="title-table">MONTO MENSUAL</td>
                   </tr>
                   <tr
                     v-for="(ingreso,index) in evaluacion.titular.ingresos_por_categoria"
@@ -137,9 +137,9 @@
 
         <table class="table ingresos-table table-bordered table-striped table-sm">
           <tr>
-            <td>Entidad</td>
-            <td>Saldo capital</td>
-            <td>Cuota</td>
+            <td class="title-table">Entidad</td>
+            <td class="title-table">Saldo capital</td>
+            <td class="title-table">Cuota</td>
           </tr>
           <tr v-for="(gasto,index) in evaluacion.titular.gasto_financiero" v-bind:key="index">
             <td>
@@ -159,8 +159,8 @@
         <label>GASTO DEL NEGOCIO</label>
         <table class="table ingresos-table table-bordered table-striped table-sm">
           <tr>
-            <td>Entidad</td>
-            <td>Cuota</td>
+            <td class="title-table">Entidad</td>
+            <td class="title-table">Cuota</td>
           </tr>
           <tr v-for="(gasto, index) in evaluacion.titular.gasto_negocio" v-bind:key="index">
             <td>
@@ -180,83 +180,50 @@
 
         <table class="table ingresos-table table-bordered table-striped table-sm">
           <tr>
-            <td>Concepto</td>
-            <td>Lunes</td>
-            <td>Martes</td>
-            <td>Miercoles</td>
-            <td>Jueves</td>
-            <td>Viernes</td>
-            <td>Sabado</td>
-            <td>Domingo</td>
-            <td>Subtotal</td>
+            <td class="title-table">Concepto</td>
+            <td class="title-table">Lunes</td>
+            <td class="title-table">Martes</td>
+            <td class="title-table">Miercoles</td>
+            <td class="title-table">Jueves</td>
+            <td class="title-table">Viernes</td>
+            <td class="title-table">Sabado</td>
+            <td class="title-table">Domingo</td>
+            <td class="title-table">Subtotal</td>
           </tr>
           <tr v-for="(ingreso,index) in evaluacion.conyuge.ingresos_negocio" v-bind:key="index">
             <td>
-              <input type="text form-control" v-model="evaluacion.conyuge.ingresos_negocio[index].concepto" />
+              <input type="text" class="form-control" v-model="evaluacion.conyuge.ingresos_negocio[index].concepto" />
             </td>
             <td>
-              <input
-                class="input-w form-control"
-                type="number"
-                :change="conyugeIngresosSubtotal(index)"
-                v-model="evaluacion.conyuge.ingresos_negocio[index].lunes"
-              />
+                <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].lunes" v-bind="money" class="form-control"></money>
+         
             </td>
             <td>
-              <input
-                class="input-w form-control"
-                type="number"
-                :change="conyugeIngresosSubtotal(index)"
-                v-model="evaluacion.conyuge.ingresos_negocio[index].martes"
-              />
+              <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].martes" v-bind="money" class="form-control"></money>
+         
             </td>
             <td>
-              <input
-                class="input-w form-control"
-                type="number"
-                :change="conyugeIngresosSubtotal(index)"
-                v-model="evaluacion.conyuge.ingresos_negocio[index].miercoles"
-              />
+               <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].miercoles" v-bind="money" class="form-control"></money>
+         
             </td>
             <td>
-              <input
-                class="input-w form-control"
-                type="number"
-                :change="conyugeIngresosSubtotal(index)"
-                v-model="evaluacion.conyuge.ingresos_negocio[index].jueves"
-              />
+               <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].jueves" v-bind="money" class="form-control"></money>
+         
             </td>
             <td>
-              <input
-                class="input-w form-control"
-                type="number"
-                :change="conyugeIngresosSubtotal(index)"
-                v-model="evaluacion.conyuge.ingresos_negocio[index].viernes"
-              />
+                 <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].viernes" v-bind="money" class="form-control"></money>
+         
             </td>
             <td>
-              <input
-                class="input-w form-control"
-                type="number"
-                :change="conyugeIngresosSubtotal(index)"
-                v-model="evaluacion.conyuge.ingresos_negocio[index].sabado"
-              />
+                <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].sabado" v-bind="money" class="form-control"></money>
+         
             </td>
             <td>
-              <input
-                class="input-w form-control"
-                type="number"
-                :change="conyugeIngresosSubtotal(index)"
-                v-model="evaluacion.conyuge.ingresos_negocio[index].domingo"
-              />
+               <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].domingo" v-bind="money" class="form-control"></money>
+         
             </td>
             <td>
-              <input
-                class="input-w form-control"
-                type="number"
-                :change="conyugeIngresosSubtotal(index)"
-                v-model="evaluacion.conyuge.ingresos_negocio[index].subtotal"
-              />
+                 <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].subtotal" v-bind="money" class="form-control"></money>
             </td>
           </tr>
         </table>
@@ -268,8 +235,8 @@
 
         <table class="table ingresos-table table-bordered table-striped table-sm">
           <tr>
-            <td>CONCEPTO</td>
-            <td>MES</td>
+            <td class="title-table">CONCEPTO</td>
+            <td class="title-table">MES</td>
           </tr>
           <tr
             v-for="(ingresos,index) in evaluacion.conyuge.ingresos_por_categoria"
@@ -320,9 +287,9 @@
         <label>GASTO FINANCIERO TITULAR</label>
         <table class="table ingresos-table table-bordered table-striped table-sm">
           <tr>
-            <td>Entidad</td>
-            <td>Saldo capital</td>
-            <td>Cuota</td>
+            <td class="title-table">Entidad</td>
+            <td class="title-table">Saldo capital</td>
+            <td class="title-table">Cuota</td>
           </tr>
           <tr v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero" v-bind:key="index">
             <td>
@@ -342,8 +309,8 @@
         <label>GASTO DEL NEGOCIO</label>
         <table class="table ingresos-table table-bordered table-striped table-sm">
           <tr>
-            <td>Entidad</td>
-            <td>Cuota</td>
+            <td class="title-table">Entidad</td>
+            <td class="title-table">Cuota</td>
           </tr>
           <tr v-for="(gasto,index) in evaluacion.conyuge.gasto_negocio" v-bind:key="index">
             <td>
@@ -360,8 +327,8 @@
 
         <table class="table ingresos-table table-bordered table-striped table-sm">
           <tr>
-            <td>Concepto</td>
-            <td>Pago</td>
+            <td class="title-table">Concepto</td>
+            <td class="title-table">Pago</td>
           </tr>
           <tr v-for="(gasto,index) in evaluacion.gastos_hogar" v-bind:key="index">
             <td>
@@ -379,8 +346,8 @@
 
         <table class="table ingresos-table table-bordered table-striped table-sm">
           <tr>
-            <td>Concepto</td>
-            <td>Pago</td>
+            <td class="title-table">Concepto</td>
+            <td class="title-table">Pago</td>
           </tr>
           <tr v-for="(propiedades,index) in evaluacion.propiedades" v-bind:key="index">
             <td>
@@ -411,7 +378,6 @@
 
               <div class="form-group col-md-2">
                 <label>MONTO</label>
-
                 <input type="text" v-model="evaluacion.propuesta.monto" class="form-control" />
               </div>
 
@@ -465,7 +431,7 @@ export default {
           thousands: '.',
           prefix: 'S/. ',
           suffix: '',
-          precision: 2,
+          precision: 0,
           masked: false
       },
       evaluacion: {
@@ -550,16 +516,6 @@ export default {
               viernes: 0,
               sabado: 0,
               domingo: 0
-            },
-            {
-              concepto: "",
-              lunes: 0,
-              martes: 0,
-              miercoles: 0,
-              jueves: 0,
-              viernes: 0,
-              sabado: 0,
-              domingo: 0
             }
           ],
           ingresos_por_categoria: [
@@ -587,6 +543,16 @@ export default {
               entidad: "",
               saldo_capital: 0,
               cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
             }
           ],
           gasto_negocio: [
@@ -599,11 +565,16 @@ export default {
               pago: 0
             },
             {
-              entidad: "IMPUESTOS",
+              entidad: "AGUA",
               pago: 0
             },
             {
-              entidad: "SERVICIOS LAT",
+              entidad: "LUZ",
+              pago: 0
+            }
+            ,
+            {
+              entidad: "IMPUESTOS",
               pago: 0
             }
           ],
@@ -613,16 +584,6 @@ export default {
         },
         conyuge: {
           ingresos_negocio: [
-            {
-              concepto: "",
-              lunes: 0,
-              martes: 0,
-              miercoles: 0,
-              jueves: 0,
-              viernes: 0,
-              sabado: 0,
-              domingo: 0
-            },
             {
               concepto: "",
               lunes: 0,
@@ -673,6 +634,16 @@ export default {
               entidad: "",
               saldo_capital: 0,
               cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
             }
           ],
           gasto_negocio: [
@@ -685,11 +656,15 @@ export default {
               pago: 0
             },
             {
-              entidad: "IMPUESTOS",
+              entidad: "AGUA",
               pago: 0
             },
             {
-              entidad: "SERVICIOS LAT",
+              entidad: "LUZ",
+              pago: 0
+            },
+            {
+              entidad: "IMPUESTOS",
               pago: 0
             }
           ]
@@ -756,4 +731,27 @@ export default {
 .input-w {
   width: 100%;
 }
+.form-group label{
+  margin-bottom: 0;
+  color: #000000;
+  font-weight: 500;
+}
+
+.card-header{
+  padding: 0.2rem 1.25rem!important;
+}
+.card-body {
+  padding: 10pX 0px!important;
+  margin: 0!important;
+}
+.form-control{
+  height: 27px !important;
+    font-size: 14px !important;
+}
+
+.title-table{
+    background: #dfdede;
+    text-align: center;
+    border: 1px solid #bababa;
+} 
 </style>

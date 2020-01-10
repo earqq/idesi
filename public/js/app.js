@@ -3121,94 +3121,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3336,6 +3248,7 @@ __webpack_require__.r(__webpack_exports__);
             });
             this.$http.get("/evaluaciones/numerohijos/" + this.$route.params.prestamo).then(function (response) {
               _this.evaluacion.familiar.numero_hijos = response.data.numero;
+              _this.evaluacion.familiar.miembros_familia = _this.evaluacion.familiar.numero_hijos;
 
               for (_this.i = 0; _this.i < _this.evaluacion.familiar.numero_hijos; _this.i++) {
                 _this.evaluacion.familiar.hijos.push({
@@ -3790,40 +3703,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3839,7 +3718,7 @@ __webpack_require__.r(__webpack_exports__);
         thousands: '.',
         prefix: 'S/. ',
         suffix: '',
-        precision: 2,
+        precision: 0,
         masked: false
       },
       evaluacion: {
@@ -3908,15 +3787,6 @@ __webpack_require__.r(__webpack_exports__);
             viernes: 0,
             sabado: 0,
             domingo: 0
-          }, {
-            concepto: "",
-            lunes: 0,
-            martes: 0,
-            miercoles: 0,
-            jueves: 0,
-            viernes: 0,
-            sabado: 0,
-            domingo: 0
           }],
           ingresos_por_categoria: [{
             concepto: "",
@@ -3937,6 +3807,14 @@ __webpack_require__.r(__webpack_exports__);
             entidad: "",
             saldo_capital: 0,
             cuota: 0
+          }, {
+            entidad: "",
+            saldo_capital: 0,
+            cuota: 0
+          }, {
+            entidad: "",
+            saldo_capital: 0,
+            cuota: 0
           }],
           gasto_negocio: [{
             entidad: "ALQUILER",
@@ -3945,10 +3823,13 @@ __webpack_require__.r(__webpack_exports__);
             entidad: "EMPLEADOS",
             pago: 0
           }, {
-            entidad: "IMPUESTOS",
+            entidad: "AGUA",
             pago: 0
           }, {
-            entidad: "SERVICIOS LAT",
+            entidad: "LUZ",
+            pago: 0
+          }, {
+            entidad: "IMPUESTOS",
             pago: 0
           }],
           giro_negocio: "",
@@ -3957,15 +3838,6 @@ __webpack_require__.r(__webpack_exports__);
         },
         conyuge: {
           ingresos_negocio: [{
-            concepto: "",
-            lunes: 0,
-            martes: 0,
-            miercoles: 0,
-            jueves: 0,
-            viernes: 0,
-            sabado: 0,
-            domingo: 0
-          }, {
             concepto: "",
             lunes: 0,
             martes: 0,
@@ -4006,6 +3878,14 @@ __webpack_require__.r(__webpack_exports__);
             entidad: "",
             saldo_capital: 0,
             cuota: 0
+          }, {
+            entidad: "",
+            saldo_capital: 0,
+            cuota: 0
+          }, {
+            entidad: "",
+            saldo_capital: 0,
+            cuota: 0
           }],
           gasto_negocio: [{
             entidad: "ALQUILER",
@@ -4014,10 +3894,13 @@ __webpack_require__.r(__webpack_exports__);
             entidad: "EMPLEADOS",
             pago: 0
           }, {
-            entidad: "IMPUESTOS",
+            entidad: "AGUA",
             pago: 0
           }, {
-            entidad: "SERVICIOS LAT",
+            entidad: "LUZ",
+            pago: 0
+          }, {
+            entidad: "IMPUESTOS",
             pago: 0
           }]
         }
@@ -5221,6 +5104,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _componentes_loader_perfil_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./componentes/loader/perfil.vue */ "./resources/js/views/componentes/loader/perfil.vue");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -14816,7 +14708,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.input-w[data-v-6f836608] {\r\n  width: 100%;\n}\r\n", ""]);
+exports.push([module.i, "\n.input-w[data-v-6f836608] {\r\n  width: 100%;\n}\n.form-group label[data-v-6f836608]{\r\n  margin-bottom: 0;\r\n  color: #000000;\r\n  font-weight: 500;\n}\n.card-header[data-v-6f836608]{\r\n  padding: 0.2rem 1.25rem!important;\n}\n.card-body[data-v-6f836608] {\r\n  padding: 10pX 0px!important;\r\n  margin: 0!important;\n}\n.form-control[data-v-6f836608]{\r\n  height: 27px !important;\r\n    font-size: 14px !important;\n}\n.title-table[data-v-6f836608]{\r\n    background: #dfdede;\r\n    text-align: center;\r\n    border: 1px solid #bababa;\n} \r\n", ""]);
 
 // exports
 
@@ -67307,7 +67199,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "number" },
+                  attrs: { type: "number", disabled: "" },
                   domProps: { value: _vm.evaluacion.familiar.miembros_familia },
                   on: {
                     input: function($event) {
@@ -67404,36 +67296,62 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _c("td", [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value:
-                                    _vm.evaluacion.familiar.hijos[index].grado,
-                                  expression:
-                                    "evaluacion.familiar.hijos[index].grado"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { type: "text" },
-                              domProps: {
-                                value:
-                                  _vm.evaluacion.familiar.hijos[index].grado
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value:
+                                      _vm.evaluacion.familiar.hijos[index]
+                                        .grado,
+                                    expression:
+                                      "evaluacion.familiar.hijos[index].grado"
                                   }
-                                  _vm.$set(
-                                    _vm.evaluacion.familiar.hijos[index],
-                                    "grado",
-                                    $event.target.value
-                                  )
+                                ],
+                                staticClass: "form-control",
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.evaluacion.familiar.hijos[index],
+                                      "grado",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
                                 }
-                              }
-                            })
+                              },
+                              [
+                                _c("option", { attrs: { value: "0" } }, [
+                                  _vm._v("SELECCIONE")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "INICIAL" } }, [
+                                  _vm._v("INICIAL")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "PRIMARIA" } }, [
+                                  _vm._v("PRIMARIA")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "SECUANDARIA" } },
+                                  [_vm._v("SECUANDARIA")]
+                                )
+                              ]
+                            )
                           ]),
                           _vm._v(" "),
                           _c("td", [
@@ -69549,15 +69467,15 @@ var staticRenderFns = [
     return _c("tr", [
       _c("td", [_vm._v("Entidad Financiera")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Capital")]),
+      _c("td", [_vm._v("Capital de Trabajo")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Activo F")]),
+      _c("td", [_vm._v("Activo Fijo")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Consumo")]),
+      _c("td", [_vm._v("Consumo Fijo")]),
       _vm._v(" "),
       _c("td", [_vm._v("Vehicular")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Hipoteca")]),
+      _c("td", [_vm._v("Hipotecario")]),
       _vm._v(" "),
       _c("td", [_vm._v("Terceros")])
     ])
@@ -69673,7 +69591,7 @@ var render = function() {
                                 expression: "val.concepto"
                               }
                             ],
-                            staticClass: "from-control",
+                            staticClass: "form-control",
                             attrs: { type: "text" },
                             domProps: { value: val.concepto },
                             on: {
@@ -70459,7 +70377,8 @@ var render = function() {
                                   "evaluacion.conyuge.ingresos_negocio[index].concepto"
                               }
                             ],
-                            attrs: { type: "text form-control" },
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
                             domProps: {
                               value:
                                 _vm.evaluacion.conyuge.ingresos_negocio[index]
@@ -70482,325 +70401,309 @@ var render = function() {
                           })
                         ]),
                         _vm._v(" "),
-                        _c("td", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value:
-                                  _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                    .lunes,
-                                expression:
-                                  "evaluacion.conyuge.ingresos_negocio[index].lunes"
-                              }
-                            ],
-                            staticClass: "input-w form-control",
-                            attrs: {
-                              type: "number",
-                              change: _vm.conyugeIngresosSubtotal(index)
-                            },
-                            domProps: {
-                              value:
-                                _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                  .lunes
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.evaluacion.conyuge.ingresos_negocio[
-                                    index
-                                  ],
-                                  "lunes",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ]),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "money",
+                              _vm._b(
+                                {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    change: _vm.conyugeIngresosSubtotal(index)
+                                  },
+                                  model: {
+                                    value:
+                                      _vm.evaluacion.conyuge.ingresos_negocio[
+                                        index
+                                      ].lunes,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.evaluacion.conyuge.ingresos_negocio[
+                                          index
+                                        ],
+                                        "lunes",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "evaluacion.conyuge.ingresos_negocio[index].lunes"
+                                  }
+                                },
+                                "money",
+                                _vm.money,
+                                false
+                              )
+                            )
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
-                        _c("td", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value:
-                                  _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                    .martes,
-                                expression:
-                                  "evaluacion.conyuge.ingresos_negocio[index].martes"
-                              }
-                            ],
-                            staticClass: "input-w form-control",
-                            attrs: {
-                              type: "number",
-                              change: _vm.conyugeIngresosSubtotal(index)
-                            },
-                            domProps: {
-                              value:
-                                _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                  .martes
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.evaluacion.conyuge.ingresos_negocio[
-                                    index
-                                  ],
-                                  "martes",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ]),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "money",
+                              _vm._b(
+                                {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    change: _vm.conyugeIngresosSubtotal(index)
+                                  },
+                                  model: {
+                                    value:
+                                      _vm.evaluacion.conyuge.ingresos_negocio[
+                                        index
+                                      ].martes,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.evaluacion.conyuge.ingresos_negocio[
+                                          index
+                                        ],
+                                        "martes",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "evaluacion.conyuge.ingresos_negocio[index].martes"
+                                  }
+                                },
+                                "money",
+                                _vm.money,
+                                false
+                              )
+                            )
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
-                        _c("td", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value:
-                                  _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                    .miercoles,
-                                expression:
-                                  "evaluacion.conyuge.ingresos_negocio[index].miercoles"
-                              }
-                            ],
-                            staticClass: "input-w form-control",
-                            attrs: {
-                              type: "number",
-                              change: _vm.conyugeIngresosSubtotal(index)
-                            },
-                            domProps: {
-                              value:
-                                _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                  .miercoles
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.evaluacion.conyuge.ingresos_negocio[
-                                    index
-                                  ],
-                                  "miercoles",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ]),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "money",
+                              _vm._b(
+                                {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    change: _vm.conyugeIngresosSubtotal(index)
+                                  },
+                                  model: {
+                                    value:
+                                      _vm.evaluacion.conyuge.ingresos_negocio[
+                                        index
+                                      ].miercoles,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.evaluacion.conyuge.ingresos_negocio[
+                                          index
+                                        ],
+                                        "miercoles",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "evaluacion.conyuge.ingresos_negocio[index].miercoles"
+                                  }
+                                },
+                                "money",
+                                _vm.money,
+                                false
+                              )
+                            )
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
-                        _c("td", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value:
-                                  _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                    .jueves,
-                                expression:
-                                  "evaluacion.conyuge.ingresos_negocio[index].jueves"
-                              }
-                            ],
-                            staticClass: "input-w form-control",
-                            attrs: {
-                              type: "number",
-                              change: _vm.conyugeIngresosSubtotal(index)
-                            },
-                            domProps: {
-                              value:
-                                _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                  .jueves
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.evaluacion.conyuge.ingresos_negocio[
-                                    index
-                                  ],
-                                  "jueves",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ]),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "money",
+                              _vm._b(
+                                {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    change: _vm.conyugeIngresosSubtotal(index)
+                                  },
+                                  model: {
+                                    value:
+                                      _vm.evaluacion.conyuge.ingresos_negocio[
+                                        index
+                                      ].jueves,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.evaluacion.conyuge.ingresos_negocio[
+                                          index
+                                        ],
+                                        "jueves",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "evaluacion.conyuge.ingresos_negocio[index].jueves"
+                                  }
+                                },
+                                "money",
+                                _vm.money,
+                                false
+                              )
+                            )
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
-                        _c("td", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value:
-                                  _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                    .viernes,
-                                expression:
-                                  "evaluacion.conyuge.ingresos_negocio[index].viernes"
-                              }
-                            ],
-                            staticClass: "input-w form-control",
-                            attrs: {
-                              type: "number",
-                              change: _vm.conyugeIngresosSubtotal(index)
-                            },
-                            domProps: {
-                              value:
-                                _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                  .viernes
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.evaluacion.conyuge.ingresos_negocio[
-                                    index
-                                  ],
-                                  "viernes",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ]),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "money",
+                              _vm._b(
+                                {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    change: _vm.conyugeIngresosSubtotal(index)
+                                  },
+                                  model: {
+                                    value:
+                                      _vm.evaluacion.conyuge.ingresos_negocio[
+                                        index
+                                      ].viernes,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.evaluacion.conyuge.ingresos_negocio[
+                                          index
+                                        ],
+                                        "viernes",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "evaluacion.conyuge.ingresos_negocio[index].viernes"
+                                  }
+                                },
+                                "money",
+                                _vm.money,
+                                false
+                              )
+                            )
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
-                        _c("td", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value:
-                                  _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                    .sabado,
-                                expression:
-                                  "evaluacion.conyuge.ingresos_negocio[index].sabado"
-                              }
-                            ],
-                            staticClass: "input-w form-control",
-                            attrs: {
-                              type: "number",
-                              change: _vm.conyugeIngresosSubtotal(index)
-                            },
-                            domProps: {
-                              value:
-                                _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                  .sabado
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.evaluacion.conyuge.ingresos_negocio[
-                                    index
-                                  ],
-                                  "sabado",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ]),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "money",
+                              _vm._b(
+                                {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    change: _vm.conyugeIngresosSubtotal(index)
+                                  },
+                                  model: {
+                                    value:
+                                      _vm.evaluacion.conyuge.ingresos_negocio[
+                                        index
+                                      ].sabado,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.evaluacion.conyuge.ingresos_negocio[
+                                          index
+                                        ],
+                                        "sabado",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "evaluacion.conyuge.ingresos_negocio[index].sabado"
+                                  }
+                                },
+                                "money",
+                                _vm.money,
+                                false
+                              )
+                            )
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
-                        _c("td", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value:
-                                  _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                    .domingo,
-                                expression:
-                                  "evaluacion.conyuge.ingresos_negocio[index].domingo"
-                              }
-                            ],
-                            staticClass: "input-w form-control",
-                            attrs: {
-                              type: "number",
-                              change: _vm.conyugeIngresosSubtotal(index)
-                            },
-                            domProps: {
-                              value:
-                                _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                  .domingo
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.evaluacion.conyuge.ingresos_negocio[
-                                    index
-                                  ],
-                                  "domingo",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ]),
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "money",
+                              _vm._b(
+                                {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    change: _vm.conyugeIngresosSubtotal(index)
+                                  },
+                                  model: {
+                                    value:
+                                      _vm.evaluacion.conyuge.ingresos_negocio[
+                                        index
+                                      ].domingo,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.evaluacion.conyuge.ingresos_negocio[
+                                          index
+                                        ],
+                                        "domingo",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "evaluacion.conyuge.ingresos_negocio[index].domingo"
+                                  }
+                                },
+                                "money",
+                                _vm.money,
+                                false
+                              )
+                            )
+                          ],
+                          1
+                        ),
                         _vm._v(" "),
-                        _c("td", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value:
-                                  _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                    .subtotal,
-                                expression:
-                                  "evaluacion.conyuge.ingresos_negocio[index].subtotal"
-                              }
-                            ],
-                            staticClass: "input-w form-control",
-                            attrs: {
-                              type: "number",
-                              change: _vm.conyugeIngresosSubtotal(index)
-                            },
-                            domProps: {
-                              value:
-                                _vm.evaluacion.conyuge.ingresos_negocio[index]
-                                  .subtotal
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.evaluacion.conyuge.ingresos_negocio[
-                                    index
-                                  ],
-                                  "subtotal",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ])
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "money",
+                              _vm._b(
+                                {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    change: _vm.conyugeIngresosSubtotal(index)
+                                  },
+                                  model: {
+                                    value:
+                                      _vm.evaluacion.conyuge.ingresos_negocio[
+                                        index
+                                      ].subtotal,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.evaluacion.conyuge.ingresos_negocio[
+                                          index
+                                        ],
+                                        "subtotal",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "evaluacion.conyuge.ingresos_negocio[index].subtotal"
+                                  }
+                                },
+                                "money",
+                                _vm.money,
+                                false
+                              )
+                            )
+                          ],
+                          1
+                        )
                       ])
                     })
                   ],
@@ -71632,23 +71535,23 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", [_vm._v("Concepto")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Concepto")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Lunes")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Lunes")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Martes")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Martes")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Miercoles")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Miercoles")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Jueves")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Jueves")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Viernes")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Viernes")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Sabado")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Sabado")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Domingo")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Domingo")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Subtotal")])
+      _c("td", { staticClass: "title-table" }, [_vm._v("Subtotal")])
     ])
   },
   function() {
@@ -71658,7 +71561,7 @@ var staticRenderFns = [
     return _c(
       "div",
       { staticClass: "card-header d-flex justify-content-between" },
-      [_c("strong", [_vm._v("Ingresos por 4tao 5ta Categoria")])]
+      [_c("strong", [_vm._v("Ingresos por 2da,  4ta y/o  5ta Categoria")])]
     )
   },
   function() {
@@ -71666,9 +71569,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", [_vm._v("CONCEPTO")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("CONCEPTO")]),
       _vm._v(" "),
-      _c("td", [_vm._v("MES")])
+      _c("td", { staticClass: "title-table" }, [_vm._v("MONTO MENSUAL")])
     ])
   },
   function() {
@@ -71686,11 +71589,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", [_vm._v("Entidad")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Entidad")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Saldo capital")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Saldo capital")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Cuota")])
+      _c("td", { staticClass: "title-table" }, [_vm._v("Cuota")])
     ])
   },
   function() {
@@ -71698,9 +71601,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", [_vm._v("Entidad")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Entidad")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Cuota")])
+      _c("td", { staticClass: "title-table" }, [_vm._v("Cuota")])
     ])
   },
   function() {
@@ -71708,23 +71611,23 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", [_vm._v("Concepto")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Concepto")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Lunes")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Lunes")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Martes")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Martes")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Miercoles")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Miercoles")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Jueves")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Jueves")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Viernes")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Viernes")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Sabado")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Sabado")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Domingo")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Domingo")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Subtotal")])
+      _c("td", { staticClass: "title-table" }, [_vm._v("Subtotal")])
     ])
   },
   function() {
@@ -71732,9 +71635,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", [_vm._v("CONCEPTO")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("CONCEPTO")]),
       _vm._v(" "),
-      _c("td", [_vm._v("MES")])
+      _c("td", { staticClass: "title-table" }, [_vm._v("MES")])
     ])
   },
   function() {
@@ -71742,11 +71645,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", [_vm._v("Entidad")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Entidad")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Saldo capital")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Saldo capital")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Cuota")])
+      _c("td", { staticClass: "title-table" }, [_vm._v("Cuota")])
     ])
   },
   function() {
@@ -71754,9 +71657,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", [_vm._v("Entidad")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Entidad")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Cuota")])
+      _c("td", { staticClass: "title-table" }, [_vm._v("Cuota")])
     ])
   },
   function() {
@@ -71764,9 +71667,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", [_vm._v("Concepto")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Concepto")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Pago")])
+      _c("td", { staticClass: "title-table" }, [_vm._v("Pago")])
     ])
   },
   function() {
@@ -71774,9 +71677,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", [_vm._v("Concepto")]),
+      _c("td", { staticClass: "title-table" }, [_vm._v("Concepto")]),
       _vm._v(" "),
-      _c("td", [_vm._v("Pago")])
+      _c("td", { staticClass: "title-table" }, [_vm._v("Pago")])
     ])
   },
   function() {
@@ -74675,8 +74578,7 @@ var render = function() {
                     "\n          " +
                       _vm._s(_vm.cliente.nombres + "" + _vm.cliente.apellidos) +
                       "\n          "
-                  ),
-                  _c("span", [_c("i", { staticClass: "fas fa-edit" })])
+                  )
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "access" }, [
@@ -74824,6 +74726,14 @@ var render = function() {
                           ])
                         ]
                       )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card" }, [
+                      _c("div", { staticClass: "card-header" }, [
+                        _c("i", { staticClass: "fas fa-print" }),
+                        _vm._v(" "),
+                        _c("span", [_vm._v("Solicitud de admisión")])
+                      ])
                     ])
                   ]
                 )
