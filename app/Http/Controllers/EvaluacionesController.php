@@ -69,9 +69,13 @@ class EvaluacionesController extends Controller
         $gasto_hogar_total=0;
         $gasto_financieros_validacion=0;
         $gasto_financieros_titular=0;
+        $gasto_financieros_personal_titular=0;
         $gasto_financieros_conyuge=0;
+        $gasto_financieros_personal_conyuge=0;
         $gasto_financieros_total=0;
+        $gasto_financieros_personal_total=0;
         $gasto_financieros_validacion=0;
+        $gasto_financieros_personal_validacion=0;
         $empleados_titular=0;
         $empleados_conyuge=0;
         $empleados_total=0;
@@ -244,6 +248,25 @@ class EvaluacionesController extends Controller
         $gasto_hogar_validacion=$gasto_hogar_titular;
         \Log::alert('gasto hogar validacion: '.$gasto_hogar_validacion);
 
+         //GASTOS_FINANCIERO PERSONAL
+        //titular
+        foreach($request->titular["gasto_financiero_personal"] as $gastos){
+            $gasto_financieros_personal_titular+=$gastos["cuota"];
+        }
+        $gasto_financieros_personal_titular=$gasto_financieros_personal_titular*-1;
+        \Log::alert('gasto financiero personal titular: '.$gasto_hogar_titular);
+        //conyuge        
+        foreach($request->conyuge["gasto_financiero_personal"] as $gastos){
+            $gasto_financieros_personal_conyuge+=$gastos["cuota"];
+        }
+        $gasto_financieros_personal_conyuge=$gasto_financieros_personal_conyuge*-1;
+        \Log::alert('gasto financiero personal conyuge: '.$gasto_financieros_personal_conyuge);
+        //Total
+        $gasto_financieros_personal_total=$gasto_financieros_personal_titular+$gasto_financieros_personal_conyuge;
+        \Log::alert('gasto financiero personal total: '.$gasto_financieros_personal_total);
+        //validacion
+        $gasto_financieros_personal_validacion=$gasto_financieros_personal_total;
+        \Log::alert('gasto financiero personal validacion: '.$gasto_financieros_personal_validacion);
         //UTILIDAD
         //titular
     
@@ -252,6 +275,7 @@ class EvaluacionesController extends Controller
                         +$alquiler_titular
                         +$empleados_titular
                         +$gasto_financieros_titular
+                        +$gasto_financieros_personal_titular
                         +$gasto_hogar_titular);
         \Log::alert("utilidad titular: ".$utilidad_titular);
         //conyuge
@@ -260,6 +284,7 @@ class EvaluacionesController extends Controller
                         +$alquiler_conyuge
                         +$empleados_conyuge
                         +$gasto_financieros_conyuge
+                        +$gasto_financieros_personal_conyuge
                         +$gasto_hogar_conyuge);
         \Log::alert("utilidad conyuge: ".$utilidad_conyuge);
         //total
@@ -268,6 +293,7 @@ class EvaluacionesController extends Controller
                         +$alquiler_total
                         +$empleados_total
                         +$gasto_financieros_total
+                        +$gasto_financieros_personal_total
                         +$gasto_hogar_total);
         \Log::alert("utilidad total: ".$utilidad_total);
         //validacion
@@ -276,6 +302,7 @@ class EvaluacionesController extends Controller
                         +$alquiler_validacion
                         +$empleados_validacion
                         +$gasto_financieros_validacion
+                        +$gasto_financieros_personal_validacion
                         +$gasto_hogar_validacion);
         \Log::alert("utilidad validacion: ".$utilidad_validacion);        
         
