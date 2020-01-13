@@ -21,9 +21,9 @@
 
           <h3 class="profile-username text-center">
             {{cliente.nombres+''+cliente.apellidos}}
-            <span>
+            <!-- <span>
               <i class="fas fa-edit"></i>
-            </span>
+            </span> -->
           </h3>
 
           <div class="access">
@@ -92,8 +92,17 @@
                 <div class="card-body">Anim pariatur</div>
               </div>
             </div>
+
+            <div class="card">
+              <div   class="card-header" >
+                <i class="fas fa-print"></i>
+                <span>Solicitud de admisión</span>
+              </div>
+            </div>
+
+
           </div>
-        </div>
+        </div> 
       </div>
 
       <div class="general " v-if="option_loan">

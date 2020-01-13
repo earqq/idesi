@@ -411,8 +411,20 @@ class ClienteController extends Controller
                 $declaracion->juridicos_id= $juridico->id;
                 $declaracion->save();
                 
-                // return $request; 
 
+
+            // return $cliente;
+           // $pdf = PDF::loadView('reportes.prestamo',compact('prestamos','cliente','avals','garantias'));
+            $pdf = PDF::loadView('reportes.inscripcion');
+
+            if (Storage::put('public/72114126/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
+                // $file= new Archivo;
+                // $file->nombre = 'prestamo_'.$prestamo->id;
+                // $file->tipo = 'documento';
+                // $file->extension = 'pdf';
+                // $file->prestamos_id =  $prestamos->id;
+                // $file->save();
+            }
                 DB::commit();
                 return [
                     'success' => true,
