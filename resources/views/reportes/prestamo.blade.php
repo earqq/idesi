@@ -124,43 +124,54 @@
                         <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">CONYUGE O CONVIVIENTE</th>
                     </tr>
                 </thead>
+                @if ($tiene_conyuge=='SI')
                 <tbody>
-                        <tr>
-                            <td colspan="3">
-                            <span class="title"> Apellidos y Nombres</span>  <span > {{$conyugue->nombres}}</span>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td colspan="3">
+                        <span class="title"> Apellidos y Nombres</span>  <span > {{$conyugue->nombres}}</span>
+                        </td>
+                    </tr>
 
-                        <tr>
-                            <td> <span class="title">Dni</span> <span > {{$conyugue->documento}}</span> </td>
-                            <td> <span class="title">F. Nacimiento</span> <span > {{$conyugue->nacimiento}}</span> </td>
-                            <td> <span class="title">Estado civil</span> <span > {{$conyugue->estado_civil}} </span> </td>
-                        </tr>
-                        <tr>
-                            <td> <span class="title">Ocupación</span> <span > {{$conyugue->ocupacion}}</span> </td>
-                            <td> <span class="title">Teléfono</span> <span > {{$conyugue->telefono}}</span> </td>
-                            <td> <span class="title">Celular</span> <span > {{$conyugue->celular}} </span> </td>
-                        </tr>
-                        <tr>
-                            @if ($conyugue->socio == 'si')
-                            <td> <span class="title">¿Es socio?</span> SI <span > [ X ] </span>  NO <span > [  ] </span> </td>
-                            <td> <span class="title">Codigo de socio </span><span > {{$conyugue->codigo_socio}}</span> </td>
-                            <td> <span class="title">Aporte</span> <span > S/. {{$conyugue->aporte_socio}}</span> </td>
-                            @else
-                            <td> <span class="title">¿Es socio?</span> SI <span > [  ] </span>  NO <span > [ X ] </span> </td>
-                            <td> <span class="title">Codigo de socio </span><span > -- --</span> </td>
-                            <td> <span class="title">Aporte</span> <span > -- -- </span> </td>
-                            @endif
-                            
-                            
-                        </tr>
+                    <tr>
+                        <td> <span class="title">Dni</span> <span > {{$conyugue->documento}}</span> </td>
+                        <td> <span class="title">F. Nacimiento</span> <span > {{$conyugue->nacimiento}}</span> </td>
+                        <td> <span class="title">Estado civil</span> <span > {{$conyugue->estado_civil}} </span> </td>
+                    </tr>
+                    <tr>
+                        <td> <span class="title">Ocupación</span> <span > {{$conyugue->ocupacion}}</span> </td>
+                        <td> <span class="title">Teléfono</span> <span > {{$conyugue->telefono}}</span> </td>
+                        <td> <span class="title">Celular</span> <span > {{$conyugue->celular}} </span> </td>
+                    </tr>
+                    <tr>
+                        @if ($conyugue->socio == 'si')
+                        <td> <span class="title">¿Es socio?</span> SI <span > [ X ] </span>  NO <span > [  ] </span> </td>
+                        <td> <span class="title">Codigo de socio </span><span > {{$conyugue->codigo_socio}}</span> </td>
+                        <td> <span class="title">Aporte</span> <span > S/. {{$conyugue->aporte_socio}}</span> </td>
+                        @else
+                        <td> <span class="title">¿Es socio?</span> SI <span > [  ] </span>  NO <span > [ X ] </span> </td>
+                        <td> <span class="title">Codigo de socio </span><span > -- --</span> </td>
+                        <td> <span class="title">Aporte</span> <span > -- -- </span> </td>
+                        @endif
+                        
+                        
+                    </tr>
 
-                        <tr>
-                            <td > <span class="title">Centro laboral</span>  <span > {{$conyugue->centro_laboral}}</span> </td>
-                            <td colspan="2" > <span class="title">Dirección</span> <span > {{$conyugue->direccion}} </span> </td>
-                        </tr>
+                    <tr>
+                        <td > <span class="title">Centro laboral</span>  <span > {{$conyugue->centro_laboral}}</span> </td>
+                        <td colspan="2" > <span class="title">Dirección</span> <span > {{$conyugue->direccion}} </span> </td>
+                    </tr>
 
-                </tbody>
+            </tbody>
+            @else
+            <tbody>
+                <tr>
+                    <td colspan="3">
+                        <span>*************NO REGISTRA CONYUGE**********</span>
+                    </td>
+                </tr>
+
+            </tbody>
+            @endif
             </table>
 
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
