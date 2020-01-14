@@ -166,7 +166,7 @@
             <tbody>
                 <tr>
                     <td colspan="3">
-                        <span>*************NO REGISTRA CONYUGE**********</span>
+                        <span>*****************************************  NO REGISTRA CONYUGE  **********************************</span>
                     </td>
                 </tr>
 

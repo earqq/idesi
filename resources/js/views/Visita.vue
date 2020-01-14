@@ -172,6 +172,7 @@ export default {
   methods: {
    retornar() {
      this.$parent.view = false; 
+     this.$parent.idprestamo = 0; 
     },
     stringDate(date) {
       var string = moment(date)
@@ -224,7 +225,7 @@ export default {
           this.clearform()
 
           this.$toast.success(
-              "El prestamo fue creado",
+              "La visita fue registrada",
               "Exitoso",
               this.notificationSystem.options.success
             ); 

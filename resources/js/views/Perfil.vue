@@ -155,7 +155,7 @@
                             :to="{name:'visitas', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
                           >Visitas</router-link> -->
-                          <button class="btn btn-def ml-3" @click="cambiarView()">
+                          <button class="btn btn-def ml-3" @click="cambiarView(prestamo.id)">
                             visitas
                           </button>
                         </div>
@@ -204,7 +204,7 @@
       </div> 
       
       <div class="general-view" v-else>
-          <visitas :prestamo="2" ></visitas>
+          <visitas :prestamo="idprestamo" ></visitas>
       </div>
       
     </div>
@@ -227,6 +227,7 @@ export default {
       resource: "clientes",
       view:false,
       cliente: {},
+      idprestamo: 0,
       prestamos: {},
       loader: 1,
       loader_loan: 1,
@@ -246,7 +247,8 @@ export default {
       });
   },
   methods: {
-    cambiarView(){
+    cambiarView(id){
+      this.idprestamo= id
       this.view=true
     },
     retornar() {
