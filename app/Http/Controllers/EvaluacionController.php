@@ -145,7 +145,11 @@ class EvaluacionController extends Controller
         $negocios = Negocio::all();
         return $negocios;
     } 
-
+    public function searchGiro($giro)
+    {
+        $negocios = Negocio::where('giro_negocio',$giro)->first();
+        return $negocios->toJson();
+    } 
     public function colegio(Request $request)
     {
         $colegio = Colegio::where("nivel",$request->filtro)->get();
@@ -162,8 +166,7 @@ class EvaluacionController extends Controller
 
     public function datosCualitativas(Request $request)
     {
-
-        $cualitativa = Cualitativa::where('prestamo_id',$request->prestamo)->first();
+        $cualitativa = Cualitativa::where('prestamo_id',intval($request->prestamo))->first();
         return $cualitativa;
 
     } 

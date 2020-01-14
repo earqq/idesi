@@ -140,7 +140,7 @@ class EvaluacionesController extends Controller
         $costo_venta_total=$costo_venta_titular+$costo_venta_conyuge;
         \Log::alert('Costo de venta total: '.$costo_venta_total);
         //Validacion
-        $negocio=negocio::where('nombre',$request->titular["giro_negocio"])->first();
+        $negocio=negocio::where('giro_negocio',$request->titular["giro_negocio"])->first();
         $costo_venta_validacion=$ingresos_ventas_validacion/100*floatval($negocio->costo);
         \Log::alert('Costo de venta validacion: '.$costo_venta_validacion);
         //MARGEN BRUTO
@@ -173,10 +173,10 @@ class EvaluacionesController extends Controller
 
         //SERVICIO LAT
         //titular
-        $servicios_lat_titular=floatval($request->titular["gasto_negocio"][3]["pago"])*-1;
+        $servicios_lat_titular=(floatval($request->titular["gasto_negocio"][3]["pago"])+floatval($request->titular["gasto_negocio"][4]["pago"]))*-1;
         \Log::alert('servicios latinos titular: '.$servicios_lat_titular);
         //conyuge
-        $servicios_lat_conyuge=floatval($request->conyuge["gasto_negocio"][3]["pago"])*-1;
+        $servicios_lat_conyuge=(floatval($request->conyuge["gasto_negocio"][3]["pago"])+floatval($request->conyuge["gasto_negocio"][4]["pago"]))*-1;
         \Log::alert('servicios latinos conyuge: '.$servicios_lat_conyuge);
         //total
         $servicios_lat_total=$servicios_lat_titular+$servicios_lat_conyuge;
