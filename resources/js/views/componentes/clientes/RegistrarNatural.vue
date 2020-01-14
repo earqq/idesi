@@ -59,31 +59,32 @@
 
               <div class="form-group col-md-3">
                 <label for="apellidos">Apellidos</label>
-                <input type="text" class="form-control" v-model="form.natural.apellidos" placeholder />
+                <input type="text"  class="form-control" v-model="form.natural.apellidos" placeholder />
               </div>
 
               <div class="form-group col-md-3">
                 <label for="apellidos">Nacionalidad</label>
-                <input type="text" class="form-control" v-model="form.cliente.pais" placeholder />
+                <input type="text"  :maxlength="15" class="form-control" v-model="form.cliente.pais"/>
+                      <!-- <input type="text" class="form-control" placeholder="Build Something Awesome" :maxlength="10" v-model="form.cliente.pais" /> -->
               </div>
               <div class="form-group col-md-3">
                 <label for="apellidos">Departamento de Nacimiento</label>
-                <input type="text" class="form-control" v-model="form.cliente.departamento" placeholder />
+                <input type="text" class="form-control" v-model="form.cliente.departamento" :maxlength="45"  />
               </div>
               <div class="form-group col-md-3">
                 <label for="apellidos">Provincia de Nacimiento</label>
-                <input type="text" class="form-control" v-model="form.cliente.provincia" placeholder />
+                <input type="text" class="form-control" v-model="form.cliente.provincia" :maxlength="45"  />
               </div>
               <div class="form-group col-md-3">
                 <label for="apellidos">Distrito de Nacimiento</label>
-                <input type="text" class="form-control" v-model="form.cliente.distrito" placeholder />
+                <input type="text" class="form-control" v-model="form.cliente.distrito" :maxlength="45"  />
               </div>
 
 
 
               <div class="form-group col-md-2">
                 <label>Estado Civil</label>
-                <select v-model="form.natural.estado_civil" class="form-control">
+                <select v-model="form.natural.estado_civil" :maxlength="25"  class="form-control">
                   <option value="0">SELECCIONE</option>
                   <option value="SOLTERO">SOLTERO</option>
                   <option value="CASADO">CASADO</option>
@@ -94,7 +95,7 @@
               </div>
               <div class="form-group col-md-2">
                 <label>Genero</label>
-                <select v-model="form.natural.genero" class="form-control">
+                <select v-model="form.natural.genero" :maxlength="10" class="form-control">
                   <option value="0">SELECCIONE</option>
                   <option value="FEMENINO">FEMENINO</option>
                   <option value="MASCULINO">MASCULINO</option>
@@ -102,7 +103,7 @@
               </div>
               <div class="form-group col-md-2">
                 <label>Grado de Instrucción</label>
-                <select v-model="form.natural.grado_instruccion" class="form-control">
+                <select v-model="form.natural.grado_instruccion" :maxlength="10" class="form-control">
                   <option value="0">SELECCIONE</option>
                   <option value="PRIMARIA">PRIMARIA</option>
                   <option value="TECNICO">TECNICO</option>
@@ -113,65 +114,65 @@
 
               <div class="form-group  col-md-6">
                   <label>Ocupación</label>
-                  <input type="text" v-model="form.natural.ocupacion" class="form-control" />
+                  <input type="text" v-model="form.natural.ocupacion" :maxlength="50" class="form-control" />
               </div>
 
             <div class="form-group col-md-6">
                 <label>Domicilio Declarado</label>
-                <input type="text" v-model="form.natural.direccion" class="form-control" />
+                <input type="text" v-model="form.natural.direccion" :maxlength="70" class="form-control" />
             </div>
 
             <div class="form-group col-md-6">
                 <label>Domicilio Reniec</label>
-                <input type="text" v-model="form.natural.direccion_registros" class="form-control" disabled/>
+                <input type="text" v-model="form.natural.direccion_registros" :maxlength="70" class="form-control" disabled/>
             </div>
 
             <div class="form-group col-md-2">
                   <label>Número</label>
-                  <input type="text" v-model="form.natural.numero" class="form-control" />
+                  <input type="text" v-model="form.natural.numero" :maxlength="5" class="form-control" />
               </div>
               <div class="form-group col-md-2">
                   <label>Manzana</label>
-                  <input type="text" v-model="form.natural.manzana" class="form-control" />
+                  <input type="text" v-model="form.natural.manzana" :maxlength="5" class="form-control" />
               </div>
               <div class="form-group col-md-2">
                   <label>Lote</label>
-                  <input type="text" v-model="form.natural.lote" class="form-control" />
+                  <input type="text" v-model="form.natural.lote" :maxlength="5" class="form-control" />
               </div>
               <div class="form-group col-md-2">
                   <label>Departamento</label>
-                  <input type="text" v-model="form.natural.dpto" class="form-control" />
+                  <input type="text" v-model="form.natural.dpto" :maxlength="5" class="form-control" />
               </div>
               <div class="form-group col-md-2">
                   <label>Interior</label>
-                  <input type="text" v-model="form.natural.int" class="form-control" />
+                  <input type="text" v-model="form.natural.int" :maxlength="5" class="form-control" />
               </div>
               <div class="form-group col-md-2">
                   <label>Piso</label>
-                  <input type="text" v-model="form.natural.piso" class="form-control" />
+                  <input type="text" v-model="form.natural.piso" :maxlength="5" class="form-control" />
               </div>
 
               <div class="form-group col-md-4">
                   <label>Distrito</label>
-                  <input type="text" v-model="form.natural.domicilio_distrito" class="form-control" />
+                  <input type="text" v-model="form.natural.domicilio_distrito" :maxlength="45" class="form-control" />
               </div>
               <div class="form-group col-md-4">
                   <label>Provincia</label>
-                  <input type="text" v-model="form.natural.domicilio_provincia" class="form-control" />
+                  <input type="text" v-model="form.natural.domicilio_provincia" :maxlength="45" class="form-control" />
               </div>
               <div class="form-group col-md-4">
                   <label>Departamento</label>
-                  <input type="text" v-model="form.natural.domicilio_departamento" class="form-control" />
+                  <input type="text" v-model="form.natural.domicilio_departamento" :maxlength="45" class="form-control" />
               </div>
 
 
               <div class="form-group col-md-3">
                   <label>Referencia</label>
-                  <input type="text" v-model="form.natural.referencia" class="form-control" />
+                  <input type="text" v-model="form.natural.referencia" :maxlength="50" class="form-control" />
               </div>
               <div class="form-group col-md-3">
                   <label>Teléfono</label>
-                  <input type="text" v-model="form.natural.telefono" class="form-control" />
+                  <input type="text" v-model="form.natural.telefono" :maxlength="10" class="form-control" />
               </div>
 
               <div class="form-group col-md-3">
@@ -186,7 +187,7 @@
 
               <div class="form-group col-md-3">
                   <label>Email</label>
-                  <input type="text" v-model="form.natural.correo" class="form-control" />
+                  <input type="text" v-model="form.natural.correo" :maxlength="45" class="form-control" />
               </div>
 
 
@@ -204,7 +205,7 @@
 
               <div class="form-group col-md-2">
                 <label>Estado Trabajador</label>
-                <select v-model="form.laboral.estado_laboral" class="form-control">
+                <select v-model="form.laboral.estado_laboral" :maxlength="15" class="form-control">
                   <option value="0">SELECCIONE</option>
                   <option value="TRABAJA">TRABAJA</option>
                   <option value="NO TRABAJA">NO TRABAJA</option>
@@ -216,14 +217,14 @@
               </div>
               <div class="form-group col-md-4" v-if="form.laboral.estado_laboral=='OTROS'">
                 <label>Especifique</label>
-                <input type="text" class="form-control" v-model="form.laboral.especificacion">
+                <input type="text" class="form-control"  :maxlength="45" v-model="form.laboral.especificacion">
               </div>
               
               <div class="row col-md-12 m-0 p-0"  v-if="form.laboral.estado_laboral=='TRABAJA'">
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-3"> 
                   <label>Estado Trabajador</label>
-                  <select v-model="form.laboral.tipo_trabajador" class="form-control">
+                  <select v-model="form.laboral.tipo_trabajador" :maxlength="15" class="form-control">
                     <option value="0">SELECCIONE</option>
                     <option value="INDEPENDIENTE">INDEPENDIENTE</option>
                     <option value="DEPENDIENTE">DEPENDIENTE</option>
@@ -232,11 +233,11 @@
                 </div>
                 <div class="form-group col-md-3">
                   <label>Razon Social</label>
-                  <input type="text" class="form-control" v-model="form.laboral.razon_social">
+                  <input type="text" class="form-control" :maxlength="45" v-model="form.laboral.razon_social">
                 </div>
                 <div class="form-group col-md-2">
                   <label>Ingreso Mensual</label>
-                  <select v-model="form.laboral.ingreso_mensual" class="form-control">
+                  <select v-model="form.laboral.ingreso_mensual" :maxlength="25" class="form-control">
                     <option value="0">SELECCIONE</option>
                     <option value="HASTA S/. 1000">HASTA S/. 1000</option>
                     <option value="S/. 1.001 a S/ 2.500">S/. 1000 a S/ 2.500</option>
@@ -248,7 +249,7 @@
 
                 <div class="form-group col-md-2">
                   <label>Cargo/ Ocupaciòn</label>
-                  <input type="text" class="form-control" v-model="form.laboral.cargo_ocupacion">
+                  <input type="text" class="form-control" :maxlength="20" v-model="form.laboral.cargo_ocupacion">
                 </div>
 
                 <div class="form-group col-md-2">
@@ -257,63 +258,71 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                  <label for="nacimiento">Giro del negocio</label>
-                  <input type="text" class="form-control" v-model="form.laboral.giro_negocio">
+                  <label>GIRO DEL NEGOCIO</label>
+                  <v-select
+                    label="giro_negocio"
+                    :options="giros"
+                    :reduce="giros => giros.giro_negocio"
+                    placeholder="Buscar Giro..."
+                    v-model="form.laboral.giro_negocio"
+                  >
+                  </v-select>
                 </div>
+
                 <div class="form-group col-md-6">
                   <label for="nacimiento">Direcciòn</label>
-                  <input type="text" class="form-control" v-model="form.laboral.direccion">
+                  <input type="text" class="form-control" :maxlength="45" v-model="form.laboral.direccion">
                 </div>
                 <div class="form-group col-md-2">
                   <label>Número</label>
-                  <input type="text" v-model="form.laboral.numero" class="form-control" />
+                  <input type="text" v-model="form.laboral.numero" :maxlength="5" class="form-control" />
               </div>
               <div class="form-group col-md-2">
                   <label>Manzana</label>
-                  <input type="text" v-model="form.laboral.manzana" class="form-control" />
+                  <input type="text" v-model="form.laboral.manzana" :maxlength="5" class="form-control" />
               </div>
               <div class="form-group col-md-2">
                   <label>Lote</label>
-                  <input type="text" v-model="form.laboral.lote" class="form-control" />
+                  <input type="text" v-model="form.laboral.lote" :maxlength="5" class="form-control" />
               </div>
               <div class="form-group col-md-2">
                   <label>Departamento</label>
-                  <input type="text" v-model="form.laboral.dpto" class="form-control" />
+                  <input type="text" v-model="form.laboral.dpto" :maxlength="5" class="form-control" />
               </div>
               <div class="form-group col-md-2">
                   <label>Interior</label>
-                  <input type="text" v-model="form.laboral.int" class="form-control" />
+                  <input type="text" v-model="form.laboral.int" :maxlength="5" class="form-control" />
               </div>
               <div class="form-group col-md-2">
                   <label>Piso</label>
-                  <input type="text" v-model="form.laboral.piso" class="form-control" />
+                  <input type="text" v-model="form.laboral.piso" :maxlength="5" class="form-control" />
               </div>
 
               <div class="form-group col-md-3">
                   <label>Distrito</label>
-                  <input type="text" v-model="form.laboral.distrito" class="form-control" />
+                  <input type="text" v-model="form.laboral.distrito"  :maxlength="45" class="form-control" />
               </div>
               <div class="form-group col-md-3">
                   <label>Provincia</label>
-                  <input type="text" v-model="form.laboral.provincia" class="form-control" />
+                  <input type="text" v-model="form.laboral.provincia" :maxlength="45" class="form-control" />
               </div>
               <div class="form-group col-md-3">
                   <label>Departamento</label>
-                  <input type="text" v-model="form.laboral.departamento" class="form-control" />
+                  <input type="text" v-model="form.laboral.departamento" :maxlength="45" class="form-control" />
               </div>
               <div class="form-group col-md-3">
                   <label>Pais</label>
-                  <input type="text" v-model="form.laboral.pais" class="form-control" />
+                  <input type="text" v-model="form.laboral.pais" :maxlength="20" class="form-control" />
               </div>
 
 
               <div class="form-group col-md-3">
                   <label>Referencia</label>
-                  <input type="text" v-model="form.laboral.referencia" class="form-control" />
+                  <input type="text" v-model="form.laboral.referencia" :maxlength="45" class="form-control" />
               </div>
               <div class="form-group col-md-3">
                   <label>Teléfono</label>
-                  <input type="text" v-model="form.laboral.telefono" class="form-control" />
+                  <input type="text" v-model="form.laboral.telefono" :maxlength="10" class="form-control" />
               </div>
  
               <div class="form-group col-md-3">
@@ -328,7 +337,7 @@
 
               <div class="form-group col-md-3">
                   <label>Email</label>
-                  <input type="text" v-model="form.laboral.email" class="form-control" />
+                  <input type="text" v-model="form.laboral.email" :maxlength="45" class="form-control" />
               </div>
 
 
@@ -347,7 +356,7 @@
           <div class="tab-pane fade" id="familiar" role="tabpanel" aria-labelledby="familiar-tab">
 
             <div class="row">
-              <div class="form-group col-md-2">
+              <div class="form-group col-md-3">
                   <label>¿Tiene Hijos?</label>
                   <select v-model="form.familia.hijos" class="form-control">
                     <option value="0">SELECCIONE</option>
@@ -355,11 +364,30 @@
                     <option value="NO">NO</option>
                   </select>
                 </div> 
-              <div class="form-group col-md-2">
+              <div class="form-group col-md-3" v-if="form.familia.hijos=='SI'">
                   <label>Nro de hijos</label>
-                  <input type="text" class="form-control" v-model="form.familia.numero" v-if="form.familia.hijos=='SI'" >
-                  <input type="text" class="form-control" v-else disabled>
+                  <input type="text" class="form-control" :maxlength="2" v-model="form.familia.numero"  @change="hijosAsignacion()" >
               </div>
+
+               <div class="form-group col-md-3">
+                  <label>¿Tiene cónyuge ó conviviente?</label>
+                  <select v-model="form.familia.conyugue" class="form-control" @change="conyugeAsignacion()">
+                    <option value="0">SELECCIONE</option>
+                    <option value="SI">SI</option>
+                    <option value="NO">NO</option>
+                  </select>
+                </div> 
+
+                <div class="form-group col-md-3" v-if="form.familia.conyugue=='SI'">
+                  <label>Ocupación del cónyuge ó conviviente?</label>
+                  <select v-model="form.familia.ocupacion" :maxlength="15" class="form-control">
+                    <option value="0">SELECCIONE</option>
+                    <option value="AMA DE CASA">AMA DE CASA</option>
+                    <option value="DEPENDIENTE">DEPENDIENTE</option>
+                    <option value="INDEPENDIENTE">INDEPENDIENTE</option>
+                  </select>
+                </div> 
+
 
               <div class="col-md-12 mt-3" v-if="form.detalles.length>0">
                           <table class="table table-bordered table-striped table-sm">
@@ -384,7 +412,7 @@
                                               </template>
                                           </td>
                                           <td><input type="text" v-model="row.documento" class="form-control letter-5" v-mask="{mask: '99999999'}" /></td>
-                                          <td><input type="text" v-model="row.nombres" class="form-control" /></td>
+                                          <td><input type="text" v-model="row.nombres" :maxlength="45" class="form-control" /></td>
                                           <td>
                                             <select v-model="row.parentesco" class="form-control">
                                               <option value="0">SELECCIONE</option>
@@ -431,7 +459,7 @@
               </div>
                <div class="form-group col-md-12">
                   <label>Apellidos y nombres del representate </label>
-                  <input type="text" class="form-control" v-model="form.adicional.representante" >
+                  <input type="text" class="form-control" :maxlength="45" v-model="form.adicional.representante" >
                 </div>
                  <div class="form-group col-md-4">
                   <label>Tipo de Documento</label>
@@ -445,7 +473,7 @@
 
               <div class="form-group col-md-4">
                 <label for="documento">Nro</label>
-                <input type="text" class="form-control letter-5" v-model="form.adicional.numero" />
+                <input type="text" class="form-control letter-5" :maxlength="15" v-model="form.adicional.numero" />
               </div>
               <div class="form-group col-md-4">
                   <label>Relación con el solicitante</label>
@@ -484,7 +512,7 @@
                   <label>Fondo de prevencion social opcional </label>
                   <money v-model="form.asociativa.fondo_opcional"  v-bind="money" class="form-control"  ></money>
               </div>
-            </div>
+            </div> 
             <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
               <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
               <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
@@ -523,20 +551,14 @@
             </div>
             <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
               <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-              <a class="btn btn-orange" @click.prevent="submit()">Regsitrar</a>
+              <a class="btn btn-orange" @click.prevent="submit()" v-if="loading_submit=='0'">Registrar Solicitud</a>
+                <div class="container-load-register" v-else ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-lg"><path fill="currentColor" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z" class=""></path></svg> <span class="fw6 f4 ml3">Registrando</span></div>
             </div>
           </div>
         </div>
       </div>
     </div>
               
-          <!-- <div class="col-md-10">
-           
-          </div>
-
-          <div class="col-md-2 offset-md-8 d-flex justify-content-end">
-            <button class="btn btn-success w-100" @click.prevent="submit">Registrar Cliente</button>
-    </div> -->
   </div>
 </template>
 
@@ -544,6 +566,7 @@
 import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
 import { serviceNumber } from "../../../mixins/functions";
+import vSelect from "vue-select";
 
 const mesConf = [
   "Enero",
@@ -565,17 +588,19 @@ const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   name: 'natural',
   mixins: [serviceNumber],
-  components: { DatePick },
+  components: { DatePick , vSelect},
   props: ["tipo_persona"],
 
   data() {
     return {
+      giros: [],
       resource: "clientes",
       clientes: [],
       all_departments: [],
       all_provinces: [],
       all_districts: [],
       provinces: [],
+      loading_submit:'0',
       districts: [],
       form: {},
       money: {
@@ -608,6 +633,10 @@ export default {
     // });
 
     await this.initForm();
+    
+    this.$http.get(`/evaluaciones/giro`).then(response => {
+      this.giros = response.data;
+    });
   },
   methods: {
     next() {
@@ -706,8 +735,9 @@ export default {
         },
          familia:{
           hijos: 0,
-          numero:"",
+          numero:0,
           conyugue:0,
+          ocupacion:0,
         },
 
         detalles: [],
@@ -737,6 +767,29 @@ export default {
         
       };
     },
+    conyugeAsignacion(){
+      this.form.detalles.push({
+          nombres: "",
+          documento:"",
+          parentesco:"CONYUGE",
+          nacimiento:"",
+          socio:"0",
+      });
+    },
+
+    hijosAsignacion(){
+      
+      for (var i = 0; i < this.form.familia.hijos; i++) {
+          this.form.detalles.push({
+                  nombres: "",
+                  documento:"",
+                  parentesco:"HIJOS",
+                  nacimiento:"",
+                  socio:"0",
+              });
+        } 
+    },
+
     resetForm() {
       this.initForm();
     },
@@ -764,18 +817,19 @@ export default {
       // if() {
       //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
       //  }
-
+      this.loading_submit=1;
       this.$http
         .post(`/${this.resource}/nuevo/natural`, this.form)
         .then(response => {
           if (response.data.success) {
             this.resetForm();
             this.$toast.success(
-              "El cliente fue creado",
+              "La solicitud fue admitida",
               "Exitoso",
               this.notificationSystem.options.success
             );
- 
+
+            this.loading_submit=0;
             this.$parent.getRecords();
             this.$parent.tipo = true;
 
@@ -800,9 +854,6 @@ export default {
           // this.loading_submit = false;
         });
     }
-  },
-  mounted() {
-    console.log("Component mounted.");
   }
 };
 </script>

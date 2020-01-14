@@ -62,7 +62,12 @@ export default new Router({
             name: 'ver',
             component: require('./views/VerPrestamo').default
         },
-        { 
+        {
+            path: '/verjuridico/:prestamo',
+            name: 'verjuridico',
+            component: require('./views/VerPrestamoJuridico').default
+        },
+        {  
             path: '/archivos/:prestamo', 
             name: 'archivos',
             component: require('./views/Archivos').default

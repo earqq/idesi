@@ -1,13 +1,20 @@
 <template>
-<div class="container-general">
+<div class="views-list">
+    <header>
+      <span @click="retornar()">
+        <i class="fas fa-angle-left"></i>
+      </span>
+      <h1>Lista de visitas</h1>
+    </header>
+
     <div class="loans-views">
       <div class="row m-0" v-if="tipo">
-            <div class="col-md-12 d-flex justify-content-between">
-              <p>Lista de Visitas</p>
-              <button class="btn btn-success" @click="crearVisita()">Crear Visita</button>
+            <div class="col-md-12 d-flex justify-content-between p-0 ">
+              <p></p>
+              <button class="btn btn-def " style="width:15%"  @click="crearVisita()">Crear Visita</button>
             </div>
             <div class="col-md-12 views p-0">
-              <h1>Visitas</h1>
+              <h1>Visitas Programadas</h1>
               <table style="width:100%">
                 <tr>
                   <th>Fecha</th>
@@ -23,9 +30,9 @@
                   <td>
                     <i class="fas fa-map-marked-alt"></i>
                   </td>
-                  <td>
+                  <td class="d-flex justify-content-end">
                     <button
-                      class="btn btn-success"
+                      class="btn btn-orange"
                       style="width:50%"
                       v-if="visita.estado==1"
                     >Completar</button>
@@ -37,43 +44,64 @@
           </div>
 
           <div class="new-view" v-else>
-            <div class="row d-flex justify-content-center">
-              <div class="col-md-10">
-                <div class="form-group">
+            <div class="row">
+              <div class="form-group col-md-8">
                   <label for="motivo">Motivo</label>
                   <input
                     type="text"
                     class="form-control documento-input"
                     v-model="formViews.motivo"
                   />
-                </div>
-
-                <div class="row">
-                  <div class="form-group col-md-3">
+              </div>
+              <div class="form-group col-md-2">
                     <label for="fecha">Fecha</label>
                     <date-pick v-model="formViews.fecha" :months="mesEs" :weekdays="diaEs"></date-pick>
-                  </div>
-
-                  <div class="form-group col-md-3">
-                    <label for="hora">Hora</label>
-                    <input type="text" class="form-control" v-model="formViews.hora" placeholder />
-                  </div>
-
-                  <div class="form-group col-md-3">
-                    <label for="altitud">Altitud</label>
-                    <input type="text" class="form-control" v-model="formViews.altitud" placeholder />
-                  </div>
-
-                  <div class="form-group col-md-3">
-                    <label for="latitud">Latitud</label>
-                    <input type="text" class="form-control" v-model="formViews.latitud" placeholder />
-                  </div>
-                </div>
               </div>
 
-              <div class="col-md-2 offset-md-8 d-flex justify-content-end">
-                <button class="btn btn-danger w-100" @click="cancelarVisita">Cancelar</button>
-                <button class="btn btn-success w-100" @click.prevent="submit">Registrar Visita</button>
+              <div class="form-group col-md-2">
+                    <label for="hora">Hora</label>
+                    <input type="text" class="form-control" v-model="formViews.hora" placeholder />
+              </div>
+
+              <div class="form-group col-md-12 d-flex justify-content-center mt-2 mb-2">
+                    <label for="">
+                        <gmap-autocomplete
+                            @place_changed="setPlace">
+                          </gmap-autocomplete>
+                          <button @click="addMarker">Agregar Ubicación</button>
+                    </label>
+              </div>
+
+                <div class="form-group col-md-12">
+                           <gmap-map
+                            :center="formViews.center"
+                            :zoom="12"
+                            style="width:100%;  height: 400px;"
+                             :options="{
+                                zoomControl: true,
+                                mapTypeControl: false,
+                                scaleControl: false,
+                                streetViewControl: false,
+                                rotateControl: false,
+                                fullscreenControl: true,
+                                disableDefaultUi: false,
+                                click:true,
+                                dblclick:true
+                              }"
+                          >
+                            <gmap-marker
+                              :key="index"
+                              v-for="(m, index) in formViews.markers"
+                              :position="m.position"
+                              @click="formViews.center=m.position"
+                            ></gmap-marker>
+                          </gmap-map>
+                    
+            </div>
+
+              <div class="col-md-12 mt-3 d-flex justify-content-end">
+                <button class="btn btn-dark  w-25" @click="cancelarVisita">Cancelar</button>
+                <button class="btn btn-orange w-25" @click.prevent="submit">Registrar Visita</button>
               </div>
             </div>
           </div>
@@ -81,11 +109,12 @@
 </div>
 
 </template>
-
+ 
 <script>
 import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
 import moment from "moment";
+
 
 
 const mesConf = [
@@ -104,7 +133,9 @@ const mesConf = [
 ];
 const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
+  name: 'visita',
   components: { DatePick },
+  props: ["prestamo"],
   data() {
     return {
       resource: "clientes",
@@ -135,7 +166,13 @@ export default {
      */
     await this.initForm();
   },
+  mounted() {
+    this.geolocate();
+  },
   methods: {
+   retornar() {
+     this.$parent.view = false; 
+    },
     stringDate(date) {
       var string = moment(date)
         .locale("es")
@@ -155,10 +192,12 @@ export default {
         fecha: "",
         hora: "",
         motivo: "",
-        latitud: "",
-        altitud: "",
-        prestamos_id: this.$route.params.prestamo,
-        estado: 1
+        prestamos_id: this.prestamo,
+        estado: 1,
+        center: { lat: -9.9207648, lng: -76.2410843 },
+        markers: [],
+        places: [],
+        currentPlace: null,
       };
     },
     clearform(){
@@ -166,7 +205,7 @@ export default {
     },
     views() {
       this.$http
-        .get(`/${this.resource}/visitas/` + this.$route.params.prestamo)
+        .get(`/${this.resource}/visitas/` + this.prestamo)
         .then(response => {
           this.list_vistas = response.data;
         });
@@ -205,11 +244,31 @@ export default {
     resetForm() {
       this.initForm(); 
     },
-
-
-        retornar(){
-      this.backMixin_handleBack()
+     // receives a place object via the autocomplete component
+    setPlace(place) {
+      this.formViews.currentPlace = place;
+    },
+    addMarker() {
+      if (this.formViews.currentPlace) {
+        const marker = {
+          lat: this.formViews.currentPlace.geometry.location.lat(),
+          lng: this.formViews.currentPlace.geometry.location.lng()
+        };
+        this.formViews.markers.push({ position: marker });
+        this.formViews.places.push(this.formViews.currentPlace);
+        this.formViews.center = marker;
+        this.formViews.currentPlace = null;
+      }
+    },
+    geolocate: function() {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.formViews.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+      });
     }
+
   }
 };
 </script>

@@ -32,22 +32,22 @@
 
                 <div class="form-group col-md-3">
                   <label>Ruc</label>
-                  <input type="number" class="form-control letter-5" v-model="form.cliente.documento" />
+                  <input type="text" class="form-control letter-5" v-model="form.cliente.documento"  v-mask="{mask: '99999999999'}"  />
                 </div>
 
                 <div class="form-group col-md-3">
                   <label >Razon Social</label>
-                  <input type="text" class="form-control" v-model="form.juridico.razon_social" placeholder />
+                  <input type="text" class="form-control" :maxlength="45" v-model="form.juridico.razon_social" placeholder />
                 </div>
 
                 <div class="form-group col-md-3">
                   <label>Nombre Comercial</label>
-                  <input type="text" class="form-control" v-model="form.juridico.nombre_comercial" placeholder />
+                  <input type="text" class="form-control" :maxlength="45" v-model="form.juridico.nombre_comercial" placeholder />
                 </div>
 
                 <div class="form-group col-md-3">
                   <label>Actividad Principal</label>
-                  <input type="text" class="form-control" v-model="form.juridico.actividad_principal" placeholder />
+                  <input type="text" class="form-control" :maxlength="30" v-model="form.juridico.actividad_principal" placeholder />
                 </div>
                 <div class="form-group col-md-2">
                   <label>Nro. de Partida Registral</label>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="form-group col-md-2">
                   <label>Oficina Principal</label>
-                  <input type="text" class="form-control" v-model="form.juridico.oficina_principal" placeholder />
+                  <input type="number" :maxlength="11" class="form-control" v-model="form.juridico.oficina_principal" placeholder />
                 </div>
 
                 <div class="form-group col-md-2">
@@ -72,59 +72,59 @@
 
               <div class="form-group col-md-6">
                   <label>Dirección</label>
-                  <input type="text" v-model="form.juridico.direccion" class="form-control" />
+                  <input type="text" :maxlength="45"  v-model="form.juridico.direccion" class="form-control" />
               </div>
 
               <div class="form-group col-md-2">
                     <label>Número</label>
-                    <input type="text" v-model="form.juridico.numero" class="form-control" />
+                    <input type="text" v-model="form.juridico.numero"  :maxlength="5" class="form-control" />
                 </div>
                 <div class="form-group col-md-2">
                     <label>Manzana</label>
-                    <input type="text" v-model="form.juridico.manzana" class="form-control" />
+                    <input type="text" v-model="form.juridico.manzana"  :maxlength="5" class="form-control" />
                 </div>
                 <div class="form-group col-md-2">
                     <label>Lote</label>
-                    <input type="text" v-model="form.juridico.lote" class="form-control" />
+                    <input type="text" v-model="form.juridico.lote"  :maxlength="5" class="form-control" />
                 </div>
                 <div class="form-group col-md-2">
                     <label>Departamento</label>
-                    <input type="text" v-model="form.juridico.pdto" class="form-control" />
+                    <input type="text" v-model="form.juridico.pdto"  :maxlength="5" class="form-control" />
                 </div>
                 <div class="form-group col-md-2">
                     <label>Interior</label>
-                    <input type="text" v-model="form.juridico.int" class="form-control" />
+                    <input type="text" v-model="form.juridico.int" :maxlength="5"  class="form-control" />
                 </div>
                 <div class="form-group col-md-2">
                     <label>Piso</label>
-                    <input type="text" v-model="form.juridico.piso" class="form-control" />
+                    <input type="text" v-model="form.juridico.piso"  :maxlength="5" class="form-control" />
                 </div>
 
                 <div class="form-group col-md-3">
                     <label>Distrito</label>
-                    <input type="text" v-model="form.cliente.distrito" class="form-control" />
+                    <input type="text" v-model="form.cliente.distrito" :maxlength="45" class="form-control" />
                 </div>
                 <div class="form-group col-md-3">
                     <label>Provincia</label>
-                    <input type="text" v-model="form.cliente.provincia" class="form-control" />
+                    <input type="text" v-model="form.cliente.provincia" :maxlength="45" class="form-control" />
                 </div>
                 <div class="form-group col-md-3">
                     <label>Departamento</label>
-                    <input type="text" v-model="form.cliente.departamento" class="form-control" />
+                    <input type="text" v-model="form.cliente.departamento" :maxlength="45" class="form-control" />
                 </div>
                 <div class="form-group col-md-3">
                     <label>País</label>
-                    <input type="text" v-model="form.cliente.pais" class="form-control" />
+                    <input type="text" v-model="form.cliente.pais" :maxlength="15" class="form-control" />
                 </div>
 
 
                 <div class="form-group col-md-3">
                     <label>Referencia</label>
-                    <input type="text" v-model="form.juridico.referencia" class="form-control" />
+                    <input type="text" :maxlength="45" v-model="form.juridico.referencia" class="form-control" />
                 </div>
                 <div class="form-group col-md-3">
                     <label>Teléfono</label>
-                    <input type="text" v-model="form.juridico.telefono" class="form-control" />
+                    <input type="text" :maxlength="15" v-model="form.juridico.telefono" class="form-control" />
                 </div>
 
                 <div class="form-group col-md-3">
@@ -139,7 +139,7 @@
 
                 <div class="form-group col-md-3"> 
                     <label>Email</label>
-                    <input type="text" v-model="form.juridico.email" class="form-control" />
+                    <input type="text" :maxlength="45" v-model="form.juridico.email" class="form-control" />
                 </div>
 
               </div>
@@ -171,9 +171,9 @@
                                                   </button>
                                               </template>
                                           </td>
-                                          <td><input type="text" v-model="row.nombres" class="form-control" /></td>
-                                          <td><input type="number" v-model="row.documento" class="form-control" /></td>
-                                          <td><input type="text" v-model="row.cargo" class="form-control" /></td>
+                                          <td><input type="text" :maxlength="60" v-model="row.nombres" class="form-control" /></td>
+                                          <td><input type="number" :maxlength="8"  v-model="row.documento" class="form-control" /></td>
+                                          <td><input type="text" :maxlength="15" v-model="row.cargo" class="form-control" /></td>
                                       </tr>                                
                                   </tbody>
                               </table>
@@ -212,9 +212,9 @@
                                                   </button>
                                               </template>
                                           </td>
-                                          <td><input type="text" v-model="row.nombres" class="form-control" /></td>
-                                          <td><input type="number" v-model="row.documento" class="form-control" /></td>
-                                          <td><input type="text" v-model="row.cargo" class="form-control" /></td>
+                                          <td><input type="text" :maxlength="60" v-model="row.nombres" class="form-control" /></td>
+                                          <td><input type="number" :maxlength="8" v-model="row.documento" class="form-control" /></td>
+                                          <td><input type="text" :maxlength="15" v-model="row.cargo" class="form-control" /></td>
                                       </tr>                                
                                   </tbody>
                               </table>
@@ -250,8 +250,8 @@
                                                   </button>
                                               </template>
                                           </td>
-                                          <td><input type="text" v-model="row.nombres" class="form-control" /></td>
-                                          <td><input type="number" v-model="row.documento" class="form-control" /></td>
+                                          <td><input type="text" :maxlength="60" v-model="row.nombres" class="form-control" /></td>
+                                          <td><input type="number" :maxlength="8" v-model="row.documento" class="form-control" /></td>
                                       </tr>                                
                                   </tbody>
                               </table>
@@ -271,11 +271,11 @@
               <div class="row">
                 <div class="form-group col-md-3">
                     <label>Inscripcion </label>
-                    <input type="number" class="form-control" v-model="form.asociativa.inscripcion" >
+                    <money   v-model="form.asociativa.inscripcion"  v-bind="money" class="form-control"  ></money>
                 </div>
                 <div class="form-group col-md-3">
                     <label>Aporte </label>
-                    <input type="number" class="form-control" v-model="form.asociativa.aporte" >
+                    <money   v-model="form.asociativa.aporte" v-bind="money" class="form-control"  ></money>
                 </div>
               </div>
               <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
@@ -286,7 +286,7 @@
 
             <div class="tab-pane fade" id="declaracion" role="tabpanel" aria-labelledby="declaracion-tab" >
               <div class="row">
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
                     <label>Es sujeto a informar a la UIF Perú</label>
                     <select v-model="form.declaracion.uif" class="form-control">
                       <option value="0">SELECCIONE</option>
@@ -294,7 +294,7 @@
                       <option value="NO">NO</option>
                     </select>
                   </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
                     <label>Estado</label>
                     <select v-model="form.declaracion.estado" class="form-control">
                       <option value="0">SELECCIONE</option>
@@ -308,9 +308,11 @@
                   </div>
               </div>
               <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a class="btn btn-orange" @click.prevent="submit()">Regsitrar</a>
-              </div>
+              <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+              <a class="btn btn-orange" @click.prevent="submit()" v-if="loading_submit=='0'">Registrar Solicitud</a>
+                <div class="container-load-register" v-else ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-lg"><path fill="currentColor" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z" class=""></path></svg> <span class="fw6 f4 ml3">Registrando</span></div>
+            </div>
+
             </div>
 
           </div>
@@ -354,9 +356,18 @@ mixins: [serviceNumber],
       all_departments: [],
       all_provinces: [],
       all_districts: [],
+      loading_submit:'0',
       provinces: [],
       districts: [],
       form: {},
+      money: {
+          decimal: ',',
+          thousands: '.',
+          prefix: 'S/. ',
+          suffix: '',
+          precision: 2,
+          masked: false
+      },
       notificationSystem: {
         options: {
           success: {
@@ -505,18 +516,18 @@ mixins: [serviceNumber],
       // if() {
       //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
       //  }
-
+      this.loading_submit=1;
       this.$http
         .post(`/${this.resource}/nuevo/juridico`, this.form)
         .then(response => {
           if (response.data.success) {
             this.resetForm();
             this.$toast.success(
-              "El cliente fue creado",
+              "La solicitud fue admitida",
               "Exitoso",
               this.notificationSystem.options.success
             );
-
+            this.loading_submit=0;
             this.$parent.getRecords();
             this.$parent.tipo = true;
             
