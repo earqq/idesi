@@ -221,7 +221,7 @@
               
               <div class="row col-md-12 m-0 p-0"  v-if="form.laboral.estado_laboral=='TRABAJA'">
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-3"> 
                   <label>Estado Trabajador</label>
                   <select v-model="form.laboral.tipo_trabajador" class="form-control">
                     <option value="0">SELECCIONE</option>
@@ -257,9 +257,17 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                  <label for="nacimiento">Giro del negocio</label>
-                  <input type="text" class="form-control" v-model="form.laboral.giro_negocio">
+                  <label>GIRO DEL NEGOCIO</label>
+                  <v-select
+                    label="giro_negocio"
+                    :options="giros"
+                    :reduce="giros => giros.giro_negocio"
+                    placeholder="Buscar Giro..."
+                    v-model="form.laboral.giro_negocio"
+                  >
+                  </v-select>
                 </div>
+
                 <div class="form-group col-md-6">
                   <label for="nacimiento">Direcciòn</label>
                   <input type="text" class="form-control" v-model="form.laboral.direccion">
@@ -347,7 +355,7 @@
           <div class="tab-pane fade" id="familiar" role="tabpanel" aria-labelledby="familiar-tab">
 
             <div class="row">
-              <div class="form-group col-md-2">
+              <div class="form-group col-md-3">
                   <label>¿Tiene Hijos?</label>
                   <select v-model="form.familia.hijos" class="form-control">
                     <option value="0">SELECCIONE</option>
@@ -355,11 +363,30 @@
                     <option value="NO">NO</option>
                   </select>
                 </div> 
-              <div class="form-group col-md-2">
+              <div class="form-group col-md-3" v-if="form.familia.hijos=='SI'">
                   <label>Nro de hijos</label>
-                  <input type="text" class="form-control" v-model="form.familia.numero" v-if="form.familia.hijos=='SI'" >
-                  <input type="text" class="form-control" v-else disabled>
+                  <input type="text" class="form-control" v-model="form.familia.numero"  @change="hijosAsignacion()" >
               </div>
+
+               <div class="form-group col-md-3">
+                  <label>¿Tiene cónyuge ó conviviente?</label>
+                  <select v-model="form.familia.conyugue" class="form-control" @change="conyugeAsignacion()">
+                    <option value="0">SELECCIONE</option>
+                    <option value="SI">SI</option>
+                    <option value="NO">NO</option>
+                  </select>
+                </div> 
+
+                <div class="form-group col-md-3" v-if="form.familia.conyugue=='SI'">
+                  <label>Ocupación del cónyuge ó conviviente?</label>
+                  <select v-model="form.familia.ocupacion" class="form-control">
+                    <option value="0">SELECCIONE</option>
+                    <option value="AMA DE CASA">AMA DE CASA</option>
+                    <option value="DEPENDIENTE">DEPENDIENTE</option>
+                    <option value="INDEPENDIENTE">INDEPENDIENTE</option>
+                  </select>
+                </div> 
+
 
               <div class="col-md-12 mt-3" v-if="form.detalles.length>0">
                           <table class="table table-bordered table-striped table-sm">
@@ -523,20 +550,14 @@
             </div>
             <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
               <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-              <a class="btn btn-orange" @click.prevent="submit()">Regsitrar</a>
+              <a class="btn btn-orange" @click.prevent="submit()" v-if="loading_submit=='0'">Regsitrar</a>
+                <div class="container-load-register" v-else ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-lg"><path fill="currentColor" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z" class=""></path></svg> <span class="fw6 f4 ml3">Registrando</span></div>
             </div>
           </div>
         </div>
       </div>
     </div>
               
-          <!-- <div class="col-md-10">
-           
-          </div>
-
-          <div class="col-md-2 offset-md-8 d-flex justify-content-end">
-            <button class="btn btn-success w-100" @click.prevent="submit">Registrar Cliente</button>
-    </div> -->
   </div>
 </template>
 
@@ -544,6 +565,7 @@
 import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
 import { serviceNumber } from "../../../mixins/functions";
+import vSelect from "vue-select";
 
 const mesConf = [
   "Enero",
@@ -565,17 +587,19 @@ const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   name: 'natural',
   mixins: [serviceNumber],
-  components: { DatePick },
+  components: { DatePick , vSelect},
   props: ["tipo_persona"],
 
   data() {
     return {
+      giros: [],
       resource: "clientes",
       clientes: [],
       all_departments: [],
       all_provinces: [],
       all_districts: [],
       provinces: [],
+      loading_submit:'0',
       districts: [],
       form: {},
       money: {
@@ -608,6 +632,10 @@ export default {
     // });
 
     await this.initForm();
+    
+    this.$http.get(`/evaluaciones/giro`).then(response => {
+      this.giros = response.data;
+    });
   },
   methods: {
     next() {
@@ -706,8 +734,9 @@ export default {
         },
          familia:{
           hijos: 0,
-          numero:"",
+          numero:0,
           conyugue:0,
+          ocupacion:0,
         },
 
         detalles: [],
@@ -737,6 +766,29 @@ export default {
         
       };
     },
+    conyugeAsignacion(){
+      this.form.detalles.push({
+          nombres: "",
+          documento:"",
+          parentesco:"CONYUGE",
+          nacimiento:"",
+          socio:"0",
+      });
+    },
+
+    hijosAsignacion(){
+      
+      for (var i = 0; i < this.form.familia.hijos; i++) {
+          this.form.detalles.push({
+                  nombres: "",
+                  documento:"",
+                  parentesco:"HIJOS",
+                  nacimiento:"",
+                  socio:"0",
+              });
+        } 
+    },
+
     resetForm() {
       this.initForm();
     },
@@ -764,7 +816,7 @@ export default {
       // if() {
       //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
       //  }
-
+      this.loading_submit=1;
       this.$http
         .post(`/${this.resource}/nuevo/natural`, this.form)
         .then(response => {
@@ -775,7 +827,8 @@ export default {
               "Exitoso",
               this.notificationSystem.options.success
             );
- 
+
+            this.loading_submit=0;
             this.$parent.getRecords();
             this.$parent.tipo = true;
 
@@ -800,9 +853,6 @@ export default {
           // this.loading_submit = false;
         });
     }
-  },
-  mounted() {
-    console.log("Component mounted.");
   }
 };
 </script>

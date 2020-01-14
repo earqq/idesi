@@ -18796,6 +18796,7 @@ readers do not read off random characters that represent icons */
 .gm-grid-container .general .prestamos {
   grid-area: prestamos;
   padding: 10px 12px;
+  overflow: auto;
 }
 
 .gm-grid-container .general .prestamos nav {
@@ -19710,6 +19711,22 @@ html {
   -webkit-box-pack: center;
           justify-content: center;
   width: 100%;
+}
+
+.container-load-register {
+  display: -webkit-box;
+  display: flex;
+  background: #ffb152;
+  color: #fff;
+  padding: 0 13px;
+}
+
+.container-load-register svg {
+  width: 20px;
+}
+
+.container-load-register span {
+  margin: 6px 9px;
 }
 
 input {

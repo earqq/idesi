@@ -17,7 +17,7 @@ class Garantia extends Model
     /**
      * @var array
      */
-    protected $fillable = ['prestamos_id', 'bien_garantia', 'inscripcion', 'declaracion_jurada'];
+    protected $fillable = ['prestamos_id','tipo' ,'bien_garantia', 'inscripcion', 'declaracion_jurada'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -59,15 +59,44 @@
                     <input type="text" class="form-control" v-model="formViews.hora" placeholder />
                   </div>
 
-                  <div class="form-group col-md-3">
-                    <label for="altitud">Altitud</label>
-                    <input type="text" class="form-control" v-model="formViews.altitud" placeholder />
+                  <div class="form-group col-md-12">
+                    <label for="">
+                        <gmap-autocomplete
+                            @place_changed="setPlace">
+                          </gmap-autocomplete>
+                          <button @click="addMarker">Add</button>
+                    </label>
+
+                    
                   </div>
 
-                  <div class="form-group col-md-3">
-                    <label for="latitud">Latitud</label>
-                    <input type="text" class="form-control" v-model="formViews.latitud" placeholder />
+                  <div class="form-group col-md-12">
+                           <gmap-map
+                            :center="formViews.center"
+                            :zoom="12"
+                            style="width:100%;  height: 400px;"
+                             :options="{
+                                zoomControl: true,
+                                mapTypeControl: false,
+                                scaleControl: false,
+                                streetViewControl: false,
+                                rotateControl: false,
+                                fullscreenControl: true,
+                                disableDefaultUi: false,
+                                click:true,
+                                dblclick:true
+                              }"
+                          >
+                            <gmap-marker
+                              :key="index"
+                              v-for="(m, index) in formViews.markers"
+                              :position="m.position"
+                              @click="formViews.center=m.position"
+                            ></gmap-marker>
+                          </gmap-map>
+                    
                   </div>
+
                 </div>
               </div>
 
@@ -81,11 +110,12 @@
 </div>
 
 </template>
-
+ 
 <script>
 import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
 import moment from "moment";
+
 
 
 const mesConf = [
@@ -135,6 +165,9 @@ export default {
      */
     await this.initForm();
   },
+  mounted() {
+    this.geolocate();
+  },
   methods: {
     stringDate(date) {
       var string = moment(date)
@@ -155,10 +188,12 @@ export default {
         fecha: "",
         hora: "",
         motivo: "",
-        latitud: "",
-        altitud: "",
         prestamos_id: this.$route.params.prestamo,
-        estado: 1
+        estado: 1,
+        center: { lat: -9.9207648, lng: -76.2410843 },
+        markers: [],
+        places: [],
+        currentPlace: null,
       };
     },
     clearform(){
@@ -209,7 +244,34 @@ export default {
 
         retornar(){
       this.backMixin_handleBack()
+    },
+
+
+     // receives a place object via the autocomplete component
+    setPlace(place) {
+      this.formViews.currentPlace = place;
+    },
+    addMarker() {
+      if (this.formViews.currentPlace) {
+        const marker = {
+          lat: this.formViews.currentPlace.geometry.location.lat(),
+          lng: this.formViews.currentPlace.geometry.location.lng()
+        };
+        this.formViews.markers.push({ position: marker });
+        this.formViews.places.push(this.formViews.currentPlace);
+        this.formViews.center = marker;
+        this.formViews.currentPlace = null;
+      }
+    },
+    geolocate: function() {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.formViews.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+      });
     }
+
   }
 };
 </script>

@@ -1,11 +1,107 @@
 <template >
   <div class="container-general">
         <header>
-      <span @click="retornar()">
-        <i class="fas fa-angle-left"></i>
-      </span>
-      <h1>Evaluacion Cuantitativa</h1>
-    </header>
+            <span @click="retornar()">
+              <i class="fas fa-angle-left"></i>
+            </span>
+            <h1>Evaluacion Cuantitativa</h1>
+          </header>
+
+          
+    <div class="row m-0 d-flex justify-content-center">
+      <div class="col-md-12 p-0">
+        <div class="nav-tabs style-tab-menu">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item col-md-2">
+              <a
+                class="nav-link active text-center"
+                id="personal-tab"
+                data-toggle="tab"
+                href="#personal"
+                role="tab"
+                aria-controls="personal"
+                aria-selected="true"
+              >Datos Negocio</a>
+            </li>
+
+            <li class="nav-item col-md-2">
+              <a
+                class="nav-link text-center"
+                id="laboral-tab"
+                data-toggle="tab"
+                href="#laboral"
+                role="tab"
+                aria-controls="laboral"
+                aria-selected="false"
+              >Datos Titular</a>
+            </li> 
+            <li class="nav-item col-md-2">
+              <a
+                class="nav-link text-center"
+                id="declaracion-tab"
+                data-toggle="tab"
+                href="#declaracion"
+                role="tab"
+                aria-controls="declaracion"
+                aria-selected="false"
+              >Datos Conyuge</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-12 body-tabs">
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab" >
+               
+              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="laboral" role="tabpanel" aria-labelledby="laboral-tab">
+               
+              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+              </div>
+            </div>
+  
+            <div  class="tab-pane fade" id="declaracion" role="tabpanel"  aria-labelledby="declaracion-tab" >
+              <div class="row">
+                     
+              </div>
+              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+                <a
+                  class="btn btn-orange"
+                  @click.prevent="guardar()"
+                  v-if="loading_submit=='0'"
+                >Regsitrar</a>
+                <div class="container-load-register" v-else>
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    data-prefix="fas"
+                    data-icon="spinner"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                    class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-lg"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"
+                      class
+                    />
+                  </svg>
+                  <span class="fw6 f4 ml3">Registrando</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row row m-0 p-3" style="background: white">
       <div class="col-md-12 p-0">
         <div class="card" style> 
@@ -426,6 +522,7 @@ export default {
   data() {
     return {
       giros: [],
+      loading_submit:0,
       money: {
           decimal: ',',
           thousands: '.',
@@ -696,6 +793,20 @@ export default {
   methods: {
             retornar() {
       this.backMixin_handleBack("");
+    },
+        next() {
+      $(".nav-tabs .active")
+        .parent()
+        .next("li")
+        .find("a")
+        .trigger("click");
+    },
+    previous() {
+      $(".nav-tabs .active")
+        .parent()
+        .prev("li")
+        .find("a")
+        .trigger("click");
     },
     negocioIngresosSubtotal(index) {
       this.evaluacion.titular.ingresos_negocio[index].subtotal =

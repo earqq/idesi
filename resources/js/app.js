@@ -11,6 +11,7 @@ import Axios from 'axios'
 import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.css';
 import money from 'v-money'
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 // import WebCam from "vue-web-cam";
 
@@ -37,9 +38,16 @@ Vue.use(VueInputMask)
 Vue.prototype.$http = Axios
 Vue.use(VueIziToast);
 Vue.use(money)
+Vue.use(VueGoogleMaps, {
+    load: {
+      key: 'AIzaSyBWbQ5eFoNQClbQuWWN7DvPHA5QsQS66Uc',
+      libraries: 'places', // This is required if you use the Autocomplete plugin
+    },
+   
+});
 
 Vue.component('app', require('./components/AppComponent.vue').default);
-
+ 
 
 
 const app = new Vue({

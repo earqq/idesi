@@ -213,7 +213,7 @@
               </div>
               
 
-              <div class="col-md-12 row" v-if="form.conyugue.conyuge_tiene=='1'">
+              <div class="col-md-12 row" v-if="form.conyugue.conyuge_tiene=='SI'">
                 <div class="col-md-4 form-group">
                 <label>Documento de Identidad</label>
                 <input
@@ -225,13 +225,9 @@
                 />
               </div>
 
-              <div class="col-md-4 form-group">
-                <label>Nombres</label>
+              <div class="col-md-8 form-group">
+                <label>Nombres y Apellidos</label>
                 <input type="text" v-model="form.conyugue.nombres_conyugue" class="form-control" />
-              </div>
-              <div class="col-md-4 form-group">
-                <label>Apellidos</label>
-                <input type="text" v-model="form.conyugue.apellidos_conyugue" class="form-control" />
               </div>
 
               <div class="col-md-4 form-group">
@@ -316,9 +312,9 @@
                     type="button"
                     @click.prevent="clickAddConyuge"
                     class="btn btn-outline-dark more-option w-100"
-                    v-if="form.conyugue.conyuge_tiene=='0'"
+                    v-if="form.conyugue.conyuge_tiene=='NO'"
                   >
-                    <i class="fas fa-plus"></i> Agregar Conyuge
+                    <i class="fas fa-plus"></i> Agregar Conyuge ó Conviviente
                   </button>
                   <button
                     type="button"
@@ -561,7 +557,7 @@
                     <label>Aporte</label>
                     <money  v-model="form.aporte" v-bind="money" class="form-control"></money>
                 </div>
-
+ 
                 <div class="col-md-12 form-group">
                     <label>Comentarios</label>
                     <textarea type="text" v-model="form.comentarios" class="form-control"></textarea>
@@ -569,7 +565,8 @@
             </div>
             <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
               <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-              <a class="btn btn-orange btnNext" @click.prevent="submit()">Registrar</a>
+              <a class="btn btn-orange btnNext" @click.prevent="submit()" v-if="loading_submit=='0'">Registrar</a>
+              <div class="container-load-register" v-else ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-lg"><path fill="currentColor" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z" class=""></path></svg> <span class="fw6 f4 ml3">Registrando</span></div>
             </div>
           </div>
         </div>
@@ -582,8 +579,6 @@
 import { serviceNumber } from "../mixins/functions";
 import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
-
-// import BackMixin from `vue-router-back-mixin`;
 
 const mesConf = [
   "Enero",
@@ -612,6 +607,7 @@ export default {
       provinces: [],
       districts: [],
       errors: {},
+      loading_submit: 0,
       form: {},
       contador_aval: 0,
       contador_garantia: 0,
@@ -682,13 +678,12 @@ export default {
         this.form.natural.direccion_laboral =
           response.data["natural"]["direccion_laboral"];
 
-        if (response.data["conyugue"]) {
+        if (response.data["tiene_conyuge"]=='SI') {
+          console.log(response.data["conyugue"])
           this.form.conyugue.documento_conyugue =
             response.data["conyugue"]["documento"];
           this.form.conyugue.nombres_conyugue =
             response.data["conyugue"]["nombres"];
-          this.form.conyugue.apellidos_conyugue =
-            response.data["conyugue"]["apellidos"];
           this.form.conyugue.nacimiento_conyugue =
             response.data["conyugue"]["nacimiento"];
           this.form.conyugue.estado_civil_conyugue =
@@ -709,6 +704,11 @@ export default {
             response.data["conyugue"]["codigo_socio"];
           this.form.conyugue.aporte_socio_conyugue =
             response.data["conyugue"]["aporte_socio"];
+            this.form.conyugue.conyuge_tiene='SI';
+        }else{
+            
+          this.form.conyugue.conyuge_tiene='NO';
+          console.log(this.form.conyugue.conyuge_tiene)
         }
       });
   },
@@ -729,10 +729,10 @@ export default {
         .trigger("click");
     },
     clickAddConyuge(){
-      this.form.conyugue.conyuge_tiene=1
+      this.form.conyugue.conyuge_tiene='SI'
     },
     clickRemoveConyuge(){
-      this.form.conyugue.conyuge_tiene=0
+      this.form.conyugue.conyuge_tiene='NO'
     },
     clickAddAval() {
       // this.contador_aval++;
@@ -803,7 +803,6 @@ export default {
         conyugue: {
           documento_conyugue: "",
           nombres_conyugue: "",
-          apellidos_conyugue: "",
           nacimiento_conyugue: "",
           estado_civil_conyugue: "0",
           ocupacion_conyugue: "",
@@ -841,8 +840,7 @@ export default {
         })
         .then(function(response) {
           console.log(response.data);
-          me.form.conyugue.nombres_conyugue = response.data["nombres"];
-          me.form.conyugue.apellidos_conyugue = response.data["surnames"];
+          me.form.conyugue.nombres_conyugue = response.data["nombres"] +' '+ response.data["surnames"];
 
           // me.loader = false;
         })
@@ -874,17 +872,18 @@ export default {
       // if() {
       //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
       //  }
+      this.loading_submit=1;
 
       this.$http
         .post(`/${this.resource}/prestamo`, this.form)
         .then(response => {
-          this.clearForm();
           this.$toast.success(
             "El prestamo fue creado",
             "Exitoso",
             this.notificationSystem.options.success
           );
-          this.retornar();
+        this.loading_submit=0;
+        this.retornar();
         })
         // .catch(error => {
         //   if (error.response.status === 422) {
