@@ -67,14 +67,14 @@ class EvaluacionesController extends Controller
         $gasto_hogar_titular=0;
         $gasto_hogar_conyuge=0;
         $gasto_hogar_total=0;
-        $gasto_financieros_validacion=0;
-        $gasto_financieros_titular=0;
-        $gasto_financieros_personal_titular=0;
-        $gasto_financieros_conyuge=0;
+        $gasto_financiero_validacion=0;
+        $gasto_financiero_titular=0;
+        $gasto_financiero_personal_titular=0;
+        $gasto_financiero_conyuge=0;
         $gasto_financiero_personal_conyuge=0;
-        $gasto_financieros_total=0;
+        $gasto_financiero_total=0;
         $gasto_financiero_personal_total=0;
-        $gasto_financieros_validacion=0;
+        $gasto_financiero_validacion=0;
         $gasto_financiero_personal_validacion=0;
         $empleados_titular=0;
         $empleados_conyuge=0;
@@ -214,23 +214,23 @@ class EvaluacionesController extends Controller
         //GASTOS_FINANCIEROS
         //titular
         foreach($request->titular["gasto_financiero"] as $gastos){
-            $gasto_financieros_titular+=$gastos["cuota"];
+            $gasto_financiero_titular+=$gastos["cuota"];
         }
-        $gasto_financieros_titular=$gasto_financieros_titular*-1;
-        \Log::alert('gasto financiero titular: '.$gasto_financieros_titular);
+        $gasto_financiero_titular=$gasto_financiero_titular*-1;
+        \Log::alert('gasto financiero titular: '.$gasto_financiero_titular);
         //conyuge
         foreach($request->conyuge["gasto_financiero"] as $gastos){
-            $gasto_financieros_conyuge+=$gastos["cuota"];
+            $gasto_financiero_conyuge+=$gastos["cuota"];
         }
-        $gasto_financieros_conyuge=$gasto_financieros_conyuge*-1;
-        \Log::alert('gasto financiero conyuge: '.$gasto_financieros_conyuge);
+        $gasto_financiero_conyuge=$gasto_financiero_conyuge*-1;
+        \Log::alert('gasto financiero conyuge: '.$gasto_financiero_conyuge);
         //Total
-        $gasto_financieros_total=$gasto_financieros_titular+$gasto_financieros_conyuge;
-        \Log::alert('gasto financiero total: '.$gasto_financieros_total);
+        $gasto_financiero_total=$gasto_financiero_titular+$gasto_financiero_conyuge;
+        \Log::alert('gasto financiero total: '.$gasto_financiero_total);
         //validacion
-        $gasto_financieros_validacion=$gasto_financieros_titular;
-        $gasto_financieros_validacion=$gasto_financieros_validacion;
-        \Log::alert('gasto financiero validacion: '.$gasto_financieros_validacion);
+        $gasto_financiero_validacion=$gasto_financiero_titular;
+        $gasto_financiero_validacion=$gasto_financiero_validacion;
+        \Log::alert('gasto financiero validacion: '.$gasto_financiero_validacion);
         //GASTOS_HOGAR
         //titular
         foreach($request->gastos_hogar as $gastos){
@@ -251,9 +251,9 @@ class EvaluacionesController extends Controller
          //GASTOS_FINANCIERO PERSONAL
         //titular
         foreach($request->titular["gasto_financiero_personal"] as $gastos){
-            $gasto_financieros_personal_titular+=$gastos["cuota"];
+            $gasto_financiero_personal_titular+=$gastos["cuota"];
         }
-        $gasto_financieros_personal_titular=$gasto_financieros_personal_titular*-1;
+        $gasto_financiero_personal_titular=$gasto_financiero_personal_titular*-1;
         \Log::alert('gasto financiero personal titular: '.$gasto_hogar_titular);
         //conyuge        
         foreach($request->conyuge["gasto_financiero_personal"] as $gastos){
@@ -262,7 +262,7 @@ class EvaluacionesController extends Controller
         $gasto_financiero_personal_conyuge=$gasto_financiero_personal_conyuge*-1;
         \Log::alert('gasto financiero personal conyuge: '.$gasto_financiero_personal_conyuge);
         //Total
-        $gasto_financiero_personal_total=$gasto_financieros_personal_titular+$gasto_financiero_personal_conyuge;
+        $gasto_financiero_personal_total=$gasto_financiero_personal_titular+$gasto_financiero_personal_conyuge;
         \Log::alert('gasto financiero personal total: '.$gasto_financiero_personal_total);
         //validacion
         $gasto_financiero_personal_validacion=$gasto_financiero_personal_total;
@@ -274,8 +274,8 @@ class EvaluacionesController extends Controller
                         +$servicios_lat_titular
                         +$alquiler_titular
                         +$empleados_titular
-                        +$gasto_financieros_titular
-                        +$gasto_financieros_personal_titular
+                        +$gasto_financiero_titular
+                        +$gasto_financiero_personal_titular
                         +$gasto_hogar_titular);
         \Log::alert("utilidad titular: ".$utilidad_titular);
         //conyuge
@@ -283,7 +283,7 @@ class EvaluacionesController extends Controller
                         +$servicios_lat_conyuge
                         +$alquiler_conyuge
                         +$empleados_conyuge
-                        +$gasto_financieros_conyuge
+                        +$gasto_financiero_conyuge
                         +$gasto_financiero_personal_conyuge
                         +$gasto_hogar_conyuge);
         \Log::alert("utilidad conyuge: ".$utilidad_conyuge);
@@ -292,7 +292,7 @@ class EvaluacionesController extends Controller
                         +$servicios_lat_total
                         +$alquiler_total
                         +$empleados_total
-                        +$gasto_financieros_total
+                        +$gasto_financiero_total
                         +$gasto_financiero_personal_total
                         +$gasto_hogar_total);
         \Log::alert("utilidad total: ".$utilidad_total);
@@ -301,7 +301,7 @@ class EvaluacionesController extends Controller
                         +$servicios_lat_validacion
                         +$alquiler_validacion
                         +$empleados_validacion
-                        +$gasto_financieros_validacion
+                        +$gasto_financiero_validacion
                         +$gasto_financiero_personal_validacion
                         +$gasto_hogar_validacion);
         \Log::alert("utilidad validacion: ".$utilidad_validacion);        
@@ -600,7 +600,29 @@ class EvaluacionesController extends Controller
         $resultado_cuantitativa->balance_patrimonio_capital=$balance_patrimonio_capital;
         $resultado_cuantitativa->balance_patrimonio_utilidad=$balance_patrimonio_utilidad;
         $resultado_cuantitativa->balance_patrimonio_total=$balance_patrimonio_total;
+        //gastos financieros perosnales
+        $resultado_cuantitativa->gasto_financiero_personal_titular=$gasto_financiero_personal_titular;
+        $resultado_cuantitativa->gasto_financiero_personal_conyuge=$gasto_financiero_personal_conyuge;
+        $resultado_cuantitativa->gasto_financiero_personal_total=$gasto_financiero_personal_total;
+        $resultado_cuantitativa->gasto_financiero_personal_validacion=$gasto_financiero_personal_validacion;
+
+
+        $resultado_cuantitativa->fc_diario_minimo_ingreso=$fc_diario_minimo_ingreso;
+        $resultado_cuantitativa->fc_diario_cuota=$fc_diario_cuota;
+        $resultado_cuantitativa->fc_diario_disponible_diario=$fc_diario_disponible_diario;
+        $resultado_cuantitativa->fc_diario_participacion_cuota=$fc_diario_participacion_cuota;
+        $resultado_cuantitativa->fc_diario_resultado=$fc_diario_resultado;
+
+        $resultado_cuantitativa->fc_semanal_minimo_ingreso=$fc_semanal_minimo_ingreso;
+        $resultado_cuantitativa->fc_semanal_cuota=$fc_semanal_cuota;
+        $resultado_cuantitativa->fc_semanal_participacion_cuota=$fc_semanal_participacion_cuota;
+        $resultado_cuantitativa->fc_semanal_resultado=$fc_semanal_resultado;
+        $resultado_cuantitativa->fc_semanal_disponible_semana=$fc_semanal_disponible_semana;
+
         $resultado_cuantitativa->save();
+
+
+
         
         $cuantitativa= new cuantitativa;  
         $cuantitativa->resultado_cuantitativa_id=$resultado_cuantitativa->id;

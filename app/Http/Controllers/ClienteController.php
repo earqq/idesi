@@ -201,8 +201,8 @@ class ClienteController extends Controller
                 $natural->direccion_registros= $request->natural['direccion_registros'];    
                 $natural->referencia= $request->natural['referencia'];    
                 $natural->tipo_domicilio= $request->natural['tipo_domicilio'];    
-                $natural->centro_laboral= $request->natural['centro_laboral'];    
-                $natural->direccion_laboral= $request->natural['direccion_laboral'];    
+                $natural->centro_laboral= $request->laboral['razon_social'];    
+                $natural->direccion_laboral= $request->laboral['direccion'];    
                 $natural->genero= $request->natural['genero'];    
                 $natural->grado_instruccion= $request->natural['grado_instruccion'];    
                 $natural->numero= $request->natural['numero'];    
@@ -222,7 +222,7 @@ class ClienteController extends Controller
                 $laboral->estado_laboral= $request->laboral['estado_laboral'];    
                 $laboral->tipo_trabajador= $request->laboral['tipo_trabajador'];    
                 $laboral->razon_social= $request->laboral['razon_social'];    
-                // $laboral->ingreso_mensual= $request->laboral['ingreso_mensual'];  
+                $laboral->ingreso_mensual= $request->laboral['ingreso_mensual'];  
                 if($request->laboral['estado_laboral']=='OTROS'){
                      $laboral->especificacion= $request->laboral['especificacion'];
                 }
@@ -230,8 +230,6 @@ class ClienteController extends Controller
                 {
                     $laboral->especificacion= $request->laboral['estado_laboral'];
                 }
-                 
-
                 $laboral->cargo_ocupacion= $request->laboral['cargo_ocupacion'];    
                 $laboral->fecha_ingreso= $request->laboral['fecha_ingreso'];    
                 $laboral->giro_negocio= $request->laboral['giro_negocio'];    
@@ -254,9 +252,10 @@ class ClienteController extends Controller
                 $laboral->save();
 
                 $familiar = New Familiar;
-                $familiar->hijos= $request->familia['hijos'];    
+                $familiar->hijos= $request->familia['hijos'];
                 $familiar->numero= $request->familia['numero'];    
-                $familiar->conyugue= $request->familia['conyugue'];    
+                $familiar->conyugue= $request->familia['conyugue'];  
+                $familiar->ocupacion= $request->familia['ocupacion'];    
                 $familiar->naturals_id= $natural->id; 
                 $familiar->save();
 
@@ -269,6 +268,17 @@ class ClienteController extends Controller
                     $detalle->socio = $rp['socio'];
                     $detalle->familiars_id= $familiar->id;
                     $detalle->save();
+
+                    if($rp['parentesco']=='CONYUGE')
+                    {
+                        $conyuge= new Conyugue;
+                        $conyuge->nombres= $rp['nombres'];
+                        $conyuge->documento= $rp['documento'];
+                        $conyuge->nacimiento = $rp['nacimiento'];
+                        $conyuge->socio = $rp['socio'];
+                        $conyuge->naturals_id = $natural->id;   
+                        $conyuge->save();
+                    }
                 } 
 
 
@@ -296,7 +306,17 @@ class ClienteController extends Controller
                 $declaracion->naturals_id= $natural->id; 
                 $declaracion->save();
 
+                $pdf = PDF::loadView('reportes.inscripcion');
 
+                if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
+                    // $file= new Archivo;
+                    // $file->nombre = 'prestamo_'.$prestamo->id;
+                    // $file->tipo = 'documento';
+                    // $file->extension = 'pdf';
+                    // $file->prestamos_id =  $prestamos->id;
+                    // $file->save();
+                }
+                
 
                 DB::commit();
                 return [
@@ -415,16 +435,16 @@ class ClienteController extends Controller
 
             // return $cliente;
            // $pdf = PDF::loadView('reportes.prestamo',compact('prestamos','cliente','avals','garantias'));
-            $pdf = PDF::loadView('reportes.inscripcion');
+           $pdf = PDF::loadView('reportes.inscripcion');
 
-            if (Storage::put('public/72114126/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
-                // $file= new Archivo;
-                // $file->nombre = 'prestamo_'.$prestamo->id;
-                // $file->tipo = 'documento';
-                // $file->extension = 'pdf';
-                // $file->prestamos_id =  $prestamos->id;
-                // $file->save();
-            }
+           if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
+               // $file= new Archivo;
+               // $file->nombre = 'prestamo_'.$prestamo->id;
+               // $file->tipo = 'documento';
+               // $file->extension = 'pdf';
+               // $file->prestamos_id =  $prestamos->id;
+               // $file->save();
+           }
                 DB::commit();
                 return [
                     'success' => true,
@@ -446,7 +466,17 @@ class ClienteController extends Controller
     public function visitaStore(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-        $visita = new Vista($request->all());
+ 
+
+        $visita = new Vista();
+        $visita->fecha=$request->fecha;
+        $visita->hora=$request->hora;
+        $visita->motivo=$request->motivo;
+        $visita->latitud= $request->center['lat'];
+        $visita->altitud=$request->center['lng'];
+        $visita->estado=$request->estado;
+        $visita->prestamos_id=$request->prestamos_id;
+
         $visita->save();
         return [
             'success' => true,
@@ -486,9 +516,6 @@ class ClienteController extends Controller
 
     public function showClienteJuridico($documento)
     {
-        // $cliente = Cliente::where('documento',$documento)
-        // ->select('id','documento','nombres','apellidos','nacimiento')
-        // ->first();
 
         $clientes = Cliente::where('documento',$documento)
                              ->join('juridicos','clientes.id','=','juridicos.clientes_id')->first();
@@ -513,11 +540,16 @@ class ClienteController extends Controller
     {
 
         $cliente = Cliente::where('documento',$documento)->first();
-
         $natural = Natural::where('clientes_id',$cliente->id)->first();
-
-
-        return compact('cliente','natural');
+        $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
+        $tiene_conyuge = '';
+        if($conyugue){
+            $tiene_conyuge='SI'; 
+        }
+        else{
+            $tiene_conyuge='NO';
+        }     
+        return compact('cliente','natural','conyugue','tiene_conyuge');
     }
 
     public function generalJuridico($documento)
@@ -562,35 +594,36 @@ class ClienteController extends Controller
             $natural->telefono = $request->natural['telefono'];
             $natural->tipo_domicilio =  $request->natural['tipo_domicilio'];
             $natural->save();
-
-
-            $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
-
-            if(!$conyugue){
-             $conyugue = new Conyugue;
+            
+            if($request->conyugue['conyuge_tiene']=='SI'){
+                $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
+                if(!$conyugue){
+                    $conyugue = new Conyugue;
+                   }
+                   $conyugue->centro_laboral= $request->conyugue['centro_laboral_conyugue'];
+                   $conyugue->direccion = $request->conyugue['direccion_laboral_conyugue'] ;
+                   $conyugue->documento = $request->conyugue['documento_conyugue'] ;
+                   $conyugue->estado_civil =  $request->conyugue['estado_civil_conyugue'] ;
+                   $conyugue->nacimiento =  $request->conyugue['nacimiento_conyugue'];
+                   $conyugue->nombres =  $request->conyugue['nombres_conyugue'];
+                   $conyugue->ocupacion =  $request->conyugue['ocupacion_conyugue'];
+                   $conyugue->telefono =  $request->conyugue['telefono_conyugue'] ;
+                   $conyugue->celular =  $request->conyugue['celular_conyugue'];
+                   $conyugue->socio =  $request->conyugue['socio_conyugue'];
+                   $conyugue->codigo_socio =  $request->conyugue['codigo_socio_conyugue'];
+                   $conyugue->aporte_socio =  $request->conyugue['aporte_socio_conyugue'];
+                   $conyugue->naturals_id = $natural->id;   
+                   $conyugue->save();
             }
-            $conyugue->centro_laboral= $request->conyugue['centro_laboral_conyugue'];
-            $conyugue->direccion = $request->conyugue['direccion_laboral_conyugue'] ;
-            $conyugue->documento = $request->conyugue['documento_conyugue'] ;
-            $conyugue->estado_civil =  $request->conyugue['estado_civil_conyugue'] ;
-            $conyugue->nacimiento =  $request->conyugue['nacimiento_conyugue'];
-            $conyugue->nombres =  $request->conyugue['nombres_conyugue'];
-            $conyugue->apellidos =  $request->conyugue['apellidos_conyugue'];
-            $conyugue->ocupacion =  $request->conyugue['ocupacion_conyugue'];
-            $conyugue->telefono =  $request->conyugue['telefono_conyugue'] ;
-            $conyugue->celular =  $request->conyugue['celular_conyugue'];
-            $conyugue->socio =  $request->conyugue['socio_conyugue'];
-            $conyugue->codigo_socio =  $request->conyugue['codigo_socio_conyugue'];
-            $conyugue->aporte_socio =  $request->conyugue['aporte_socio_conyugue'];
-            $conyugue->naturals_id = $natural->id;   
-            $conyugue->save();
 
+            
             if($request->input('idprestamo')<0){
                $prestamo = new Prestamo();
             }
             else{
                 $prestamo = Prestamo::where('id',$request->input('idprestamo'))->first();
             }
+
             $prestamo->clientes_id = $cliente->id;
             $prestamo->users_id = Auth::user()->id;
             $prestamo->monto_inicial = $request->input('monto_inicial');
@@ -609,50 +642,54 @@ class ClienteController extends Controller
             $prestamo->estado = $request->input('estado');
             $prestamo->save();
 
-            foreach ($request->avals as $ep=>$avals) {
-                $aval= new Aval;
-                $aval->documento = $avals['documento'];
-                $aval->tipo_persona = $avals['tipo_persona'];
-                $aval->nombres = $avals['nombres'];
-                $aval->apellidos = $avals['apellidos'];
-                $aval->nacimiento = $avals['nacimiento'];
-                $aval->estado_civil = $avals['estado_civil'];
-                $aval->ocupacion = $avals['ocupacion'];
-                $aval->telefono = $avals['telefono'];
-                $aval->celular = $avals['celular'];
-                $aval->direccion = $avals['direccion'];
-                $aval->distrito = $avals['distrito'];
-                $aval->centro_laboral = $avals['centro_laboral'];
-                $aval->direccion_laboral = $avals['direccion_laboral'];
-                $aval->socio = $avals['socio'];
-                $aval->codigo_socio = $avals['codigo_socio'];
-                $aval->aporte_socio = $avals['aporte_socio'];
-                $aval->prestamos_id = $prestamo->id;
-                $aval->save();
-            }
-
-            foreach ($request->garantias as $ep=>$garantias) {
-                $garantia= new Garantia;
-                $garantia->bien_garantia = $garantias['bien_garantia'];
-                if($garantias['tipo']=='INS'){
-                    $garantia->inscripcion = 'SI';
-                }else{
-                    $garantia->declaracion_jurada = 'SI';
+            if($request->input('idprestamo')<0){
+                foreach ($request->avals as $ep=>$avals) {
+                    $aval= new Aval;
+                    $aval->documento = $avals['documento'];
+                    $aval->tipo_persona = $avals['tipo_persona'];
+                    $aval->nombres = $avals['nombres'];
+                    $aval->apellidos = $avals['apellidos'];
+                    $aval->nacimiento = $avals['nacimiento'];
+                    $aval->estado_civil = $avals['estado_civil'];
+                    $aval->ocupacion = $avals['ocupacion'];
+                    $aval->telefono = $avals['telefono'];
+                    $aval->celular = $avals['celular'];
+                    $aval->direccion = $avals['direccion'];
+                    $aval->distrito = $avals['distrito'];
+                    $aval->centro_laboral = $avals['centro_laboral'];
+                    $aval->direccion_laboral = $avals['direccion_laboral'];
+                    $aval->socio = $avals['socio'];
+                    $aval->codigo_socio = $avals['codigo_socio'];
+                    $aval->aporte_socio = $avals['aporte_socio'];
+                    $aval->prestamos_id = $prestamo->id;
+                    $aval->save();
                 }
-
-                $garantia->prestamos_id = $prestamo->id;
-                $garantia->save();
+    
+                foreach ($request->garantias as $ep=>$garantias) {
+                    $garantia= new Garantia;
+                    $garantia->bien_garantia = $garantias['bien_garantia'];
+                    if($garantias['tipo']=='INS'){
+                        $garantia->inscripcion = 'SI';
+                        $garantia->tipo = $garantias['tipo'];
+                    }else{
+                        $garantia->declaracion_jurada = 'SI';
+                        $garantia->tipo = $garantias['tipo'];
+                    }
+    
+                    $garantia->prestamos_id = $prestamo->id;
+                    $garantia->save();
+                }
+    
+    
+                $subido= new Subido;
+                $subido->prestamos_id=$prestamo->id;
+                $subido->save();
+    
+                $subidos = Subido::find($subido->id);
+                $subidos->solicitud_credito=1;
+                $subidos->inscripcion_socio=1;
+                $subidos->save();
             }
-
-
-            $subido= new Subido;
-            $subido->prestamos_id=$prestamo->id;
-            $subido->save();
-
-            $subidos = Subido::find($subido->id);
-            $subidos->solicitud_credito=1;
-            $subidos->inscripcion_socio=1;
-            $subidos->save();
 
             // $cuantitativa = new ResultadoCuantitativa;
             // $cuantitativa->prestamo_id= $prestamo->id;
@@ -852,16 +889,38 @@ class ClienteController extends Controller
 
     public function prestamoVer($prestamo)
     {
+
         $prestamo= Prestamo::find($prestamo);
         $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
         $natural = Natural::where('clientes_id',$cliente->id)->first();
         $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
         $avals = Aval::where('prestamos_id',$prestamo->id)->get();
         $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+        $tiene_conyuge = '';
+        if($conyugue){
+            $tiene_conyuge='SI'; 
+        }
+        else{
+            $tiene_conyuge='NO';
+        }    
 
-        return compact('prestamo','cliente','avals','garantias','natural','conyugue');
+        return compact('prestamo', 'cliente','avals','garantias','natural','conyugue','tiene_conyuge');
    
     }
+
+    public function prestamoVerJuridico($prestamo)
+    {
+
+        $prestamo= Prestamo::find($prestamo);
+        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        $juridico = Juridico::where('clientes_id',$cliente->id)->first();
+        $avals = Aval::where('prestamos_id',$prestamo->id)->get();
+        $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+     
+        return compact('prestamo', 'cliente','avals','garantias','juridico');
+   
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

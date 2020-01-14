@@ -93,19 +93,12 @@
               </div>
             </div>
 
-            <div class="card">
-              <div   class="card-header" >
-                <i class="fas fa-print"></i>
-                <span>Solicitud de admisión</span>
-              </div>
-            </div>
-
 
           </div>
         </div> 
       </div>
 
-      <div class="general " v-if="option_loan">
+      <div class="general " v-if="option_loan &&  view==false">
         <div class="prestamos scroll-style" v-if="tipo_general" style="background:#dceaf0;">
           <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -158,10 +151,13 @@
                             :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
                           >Evaluación Cuantitativa</router-link>
-                          <router-link
+                          <!-- <router-link
                             :to="{name:'visitas', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
-                          >Visitas</router-link>
+                          >Visitas</router-link> -->
+                          <button class="btn btn-def ml-3" @click="cambiarView()">
+                            visitas
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -183,13 +179,33 @@
               :to="{name: 'prestamo', params:{dni:cliente.documento}}"
               class="btn btn-def w-100 p13"
             >
-              <i class="fas fa-plus"></i> Nuevo Prestamo
+              <i class="fas fa-plus"></i> Solicitud de Credito
             </router-link>
           </div>
-          <div class="date-body"></div>
+          
+          <div class="date-body">
+            <a
+                :href="'../storage/'+cliente.documento+'_'+cliente.id+'/general/documento/inscripcion_de_socio.pdf'"
+                target="_blank"
+              >
+
+            <div class="card">
+                <div class="card-header text-center" >
+                  <i class="fas fa-print"></i>
+                  <span>Solicitud de admisión</span>
+            </div>
+
+            </div>
+
+            </a>
+          </div>
+
         </div>
       </div> 
-
+      
+      <div class="general-view" v-else>
+          <visitas :prestamo="2" ></visitas>
+      </div>
       
     </div>
   </div>
@@ -199,13 +215,17 @@
 import { serviceNumber } from "../mixins/functions";
 import LoaderPrestamo from "./componentes/loader/prestamos.vue";
 import LoaderPerfil from "./componentes/loader/perfil.vue";
+import Visitas from "./Visita.vue";
 import moment from "moment";
+
+
 export default {
   mixins: [serviceNumber],
-  components: {  LoaderPrestamo, LoaderPerfil },
+  components: {  LoaderPrestamo, LoaderPerfil, Visitas },
   data() {
     return {
       resource: "clientes",
+      view:false,
       cliente: {},
       prestamos: {},
       loader: 1,
@@ -218,14 +238,17 @@ export default {
     this.$http
       .get(`/${this.resource}/perfil/cliente/` + this.$route.params.documento)
       .then(response => {
-        console.log(response.data);
         this.cliente = response.data["cliente"];
         this.prestamos = response.data["prestamos"];
         this.loader = 0;
         this.loader_loan = 0;
+        console.log(this.cliente);
       });
   },
   methods: {
+    cambiarView(){
+      this.view=true
+    },
     retornar() {
       this.backMixin_handleBack("/clientes");
     },

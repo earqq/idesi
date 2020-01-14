@@ -3,7 +3,7 @@
     <div class="evaluations">
       <div class="row col-md-12 m-0" v-if="tipo">
         <div class="card col-md-12 p-0">
-          <div class="card-header">PRESTAMOS</div>
+          <div class="card-header">PRESTsAMOS</div>
           <div class="card-body p-0">
             <table class="table table-striped">
               <thead>
@@ -539,7 +539,7 @@ export default {
     methodsPrestamo() {
       this.$http.get(`/${this.resource}/prestamos/`).then(response => {
         this.prestamos = response.data;
-        console.log(this.prestamos);
+        console.log(response.data);
       });
     },
     methodsDetalle(id) {
