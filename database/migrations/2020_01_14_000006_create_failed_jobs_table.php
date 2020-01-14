@@ -10,7 +10,7 @@ class CreateFailedJobsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'failed_jobs';
+    public $set_schema_table = 'failed_jobs';
 
     /**
      * Run the migrations.
@@ -20,7 +20,8 @@ class CreateFailedJobsTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->tableName, function (Blueprint $table) {
+        if (Schema::hasTable($this->set_schema_table)) return;
+        Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigIncrements('id');
             $table->text('connection');
@@ -38,6 +39,6 @@ class CreateFailedJobsTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->tableName);
+       Schema::dropIfExists($this->set_schema_table);
      }
 }

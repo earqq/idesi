@@ -206,6 +206,7 @@
                   <v-select
                     label="giro_negocio"
                     :options="giros"
+                    disabled
                     :reduce="giros => giros.giro_negocio"
                     placeholder="Buscar Giro..."
                     v-model="evaluacion.titular.giro_negocio"
@@ -1118,11 +1119,14 @@ export default {
 
     this.$http
       .get(
-        `/evaluaciones/datosCualitativas?prestamo=` +
-          this.$route.params.prestamo
+        `/evaluaciones/datosCualitativas?prestamo=`+this.$route.params.prestamo
       )
       .then(response => {
-        console.log(response.data);
+        this.evaluacion.titular.giro_negocio=response.data.principal.fuente_ingreso
+        this.$http.get(`/evaluaciones/giro/search/`+this.evaluacion.titular.giro_negocio).then(res => {
+            this.evaluacion.titular.giro_negocio=res.data["giro_negocio"]
+            this.evaluacion.titular.margen_costo=res.data["margen_maximo"]
+        });
       });
   },
   methods: {

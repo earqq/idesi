@@ -88,10 +88,10 @@
                           </td>
                           <td v-text="cliente.documento"></td>
                           <td v-text="cliente.documento"></td>
-                          <td>
+                          <td> 
                              <router-link :to="{name:'perfil', params:{documento:cliente.documento}}" class="btn btn-orange w-25">
                                 Ver cliente
-                              </router-link>
+                              </router-link> 
                           </td>
                         </tr>
                       </tbody>

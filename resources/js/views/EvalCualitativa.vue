@@ -206,8 +206,12 @@
                             <option value="0">No realizo</option>
                           </select>
                         </div>
+                        <div class="form-group col-md-2">
+                          <label>Horario de atención</label>
+                          <input type='text' v-model='evaluacion.negocio.horario_atencion' class='form-control'>
+                        </div>
                       </div>
-
+                      
                       <div class="col-md-12 row" v-else>
                         <div class="form-group col-md-2">
                           <label>Marca</label>

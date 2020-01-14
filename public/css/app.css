@@ -19353,6 +19353,34 @@ html {
   font-size: 20px;
 }
 
+.evaluations .ratios .title-table {
+  background: #171b26;
+  color: #fff;
+}
+
+.evaluations .ratios tr td {
+  font-size: 10px;
+}
+
+.evaluations .balance .title-table {
+  background: #171b26;
+  color: #fff;
+}
+
+.evaluations .balance tr td {
+  font-size: 10px;
+}
+
+.evaluations .cuantitativa .title-table {
+  background: #171b26;
+  color: #fff;
+  padding: 4px 10px;
+}
+
+.evaluations .cuantitativa tr td {
+  font-size: 10px;
+}
+
 .gm-grid-container-file {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;

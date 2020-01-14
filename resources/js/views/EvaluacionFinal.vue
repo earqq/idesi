@@ -3,7 +3,7 @@
     <div class="evaluations">
       <div class="row col-md-12 m-0" v-if="tipo">
         <div class="card col-md-12 p-0">
-          <div class="card-header">PRESTsAMOS</div>
+          <div class="card-header">PRESTAMOS</div>
           <div class="card-body p-0">
             <table class="table table-striped">
               <thead>
@@ -203,13 +203,13 @@
                   aria-labelledby="representantes-tab"
                 >
                   <div class="row">
-                    <div class="col-md-6 p-0">
+                    <div class="col-md-3 ratios p-0">
                        <div class="card-body p-0">
                             <table
                               class="table table-responsive-sm table-bordered table-striped table-sm"
                             >
                               <tbody>
-                                <tr style="background: rgb(157, 157, 157);" class="mt-3">
+                                <tr  class="mt-3 title-table">
                                   <td colspan="3" class="pt-2 text-center">RATIOS</td>
                                 </tr>
                                 <tr style="background: white;">
@@ -220,7 +220,7 @@
                                   >
                                   </td>
                                   <td v-else>0</td>
-                                <td class="font-weight-bold pt-2" v-text="cuantitativa.ratios_endeudamiento_resultado"></td>
+                                  <td class="font-weight-bold pt-2" v-text="cuantitativa.ratios_endeudamiento_resultado"></td>
 
                                 </tr>
                                 <tr style="background: white;">
@@ -254,13 +254,13 @@
                             </table>
                           </div>
                     </div>
-                    <div class="col-md-6 p-0">
+                    <div class="col-md-3 balance p-0">
                          <div class="card-body p-0">
                             <table
                               class="table table-responsive-sm table-bordered table-striped table-sm"
                             >
                               <tbody>
-                                <tr style="background: rgb(157, 157, 157);">
+                                <tr class="title-table">
                                   <td colspan="4" class="pt-2 text-center">BALANCE</td>
                                 </tr>
                                 <tr style="background: white;">
@@ -269,20 +269,20 @@
                                 </tr>
                                 <tr style="background: white;">
                                   <td class="pt-2">CAJA</td>
-                                  <td class="font-weight-bold pt-2;" v-text="cuantitativa.balance_activo_caja"></td>
+                                  <td class="font-weight-bold pt-2 " v-text="cuantitativa.balance_activo_caja"></td>
                                    <td class="pt-2">DEUDAS</td>
-                                  <td class="font-weight-bold pt-2;" v-text="cuantitativa.balance_pasivo_deudas"></td>
+                                  <td class="font-weight-bold pt-2" v-text="cuantitativa.balance_pasivo_deudas"></td>
                                 </tr>
                                 <tr style="background: white;">
                                   <td class="pt-2">INVENTARIO</td>
-                                  <td class="font-weight-bold pt-2" v-text="cuantitativa.balance_activo_inventario">0</td>
+                                  <td class="font-weight-bold pt-2 " v-text="cuantitativa.balance_activo_inventario">0</td>
                                   <td class="font-weight-bold pt-2 text-center" colspan="2">PATRIMONIO</td>
                                 </tr>
                                 <tr style="background: white;">
                                   <td class="pt-2">ACTIVO F</td>
-                                  <td class="font-weight-bold pt-2" v-text="cuantitativa.balance_activo_f"></td>
+                                  <td class="font-weight-bold pt-2 " v-text="cuantitativa.balance_activo_f"></td>
                                    <td class="pt-2">CAPITAL</td>
-                                  <td class="font-weight-bold pt-2;" v-text="cuantitativa.balance_patrimonio_capital"></td>
+                                  <td class="font-weight-bold pt-2" v-text="cuantitativa.balance_patrimonio_capital"></td>
                                 </tr>
                                 <tr style="background: white;">
                                   
@@ -290,23 +290,104 @@
                                 <tr style="background: white;">
                                   <td class="pt-2 text-center" colspan="2"></td>
                                    <td class="pt-2">UTILIDAD</td>
-                                  <td class="font-weight-bold pt-2;" v-text="cuantitativa.balance_patrimonio_utilidad"></td>
+                                  <td class="font-weight-bold pt-2 " v-text="cuantitativa.balance_patrimonio_utilidad"></td>
                                 </tr>
 
                                 <tr style="background: white;">
                                   <td class="pt-2">TOTAL</td>
-                                  <td class="font-weight-bold pt-2" v-text="cuantitativa.balance_activo_total"></td>
+                                  <td class="font-weight-bold pt-2 " v-text="cuantitativa.balance_activo_total"></td>
                                    <td class="pt-2">TOTAL</td>
-                                  <td class="font-weight-bold pt-2;" v-text="cuantitativa.balance_patrimonio_total"></td>
+                                  <td class="font-weight-bold pt-2 " v-text="cuantitativa.balance_patrimonio_total"></td>
                                 </tr>
                                 
                               </tbody>
                             </table>
                           </div>
                     </div>
-                    <div class="col-md-12 p-0">
+
+                    <div class="col-md-3 ratios p-0">
+                       <div class="card-body p-0">
+                            <table
+                              class="table table-responsive-sm table-bordered table-striped table-sm"
+                            >
+                              <tbody>
+                                <tr  class="mt-3 title-table">
+                                  <td colspan="3" class="pt-2 text-center">FLUJO PARA CREDITOS DIARIOS</td>
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2 w-50">MINIMO INGRESO</td>
+                                  <td v-text="cuantitativa.fc_diario_minimo_ingreso"></td>
+
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2 w-50">CUOTA</td>
+                                  <td v-text="cuantitativa.fc_diario_cuota"></td>
+
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2 w-50">DISPONIBLE DIARIO</td>
+                                  <td v-text="cuantitativa.fc_diario_disponible_diario"></td>
+
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2 w-50">PARTICIPACION DE LA CUOTA</td>
+                                  <td v-text="cuantitativa.fc_diario_participacion_cuota"></td>
+
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2 w-50">RESULTADO</td>
+                                  <td v-text="cuantitativa.fc_diario_resultado"></td>
+
+                                </tr>
+
+                              </tbody>
+                            </table>
+                          </div>
+                    </div>
+
+                    <div class="col-md-3 ratios p-0">
+                       <div class="card-body p-0">
+                            <table
+                              class="table table-responsive-sm table-bordered table-striped table-sm"
+                            >
+                              <tbody>
+                                <tr  class="mt-3 title-table">
+                                  <td colspan="3" class="pt-2 text-center">FLUJO PARA CREDITOS SEMANA</td>
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2 w-50">MINIMO INGRESO</td>
+                                  <td v-text="cuantitativa.fc_semanal_minimo_ingreso"></td>
+
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2 w-50">CUOTA</td>
+                                  <td v-text="cuantitativa.fc_semanal_cuota"></td>
+
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2 w-50">DISPONIBLE SEMANA</td>
+                                  <td v-text="cuantitativa.fc_semanal_disponible_semana"></td>
+
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2 w-50">PARTICIPACION DE LA CUOTA</td>
+                                  <td v-text="cuantitativa.fc_semanal_"></td>
+
+                                </tr>
+                                <tr style="background: white;">
+                                  <td class="pt-2 w-50">RESULTADO</td>
+                                  <td v-text="cuantitativa.fc_semanal_resultado"></td>
+
+                                </tr>
+
+                              </tbody>
+                            </table>
+                          </div>
+                    </div>
+
+                    <div class="col-md-12 cuantitativa p-0">
                       <div class="card">
-                        <div class="card-header d-flex justify-content-between">
+                        <div class="d-flex justify-content-between title-table">
                           EVALUACION CUANTITATIVA
                         </div>
                         <div class="card-body p-0">
@@ -318,8 +399,8 @@
                                 <td>FLUJO DE CAJA MENSUAL</td>
                                 <td>Titular</td>
                                 <td>Conyuge</td>
-                                <td>TOTAL</td>
-                                <td>Validación</td>
+                                <td>Unidad Familiar</td>
+                                <td>Comprobación</td>
                               </tr>
                               <tr>
                                 <td class="">INGRESOS/ VENTAS</td>

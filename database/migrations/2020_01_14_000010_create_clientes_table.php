@@ -10,7 +10,7 @@ class CreateClientesTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'clientes';
+    public $set_schema_table = 'clientes';
 
     /**
      * Run the migrations.
@@ -20,7 +20,8 @@ class CreateClientesTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->tableName, function (Blueprint $table) {
+        if (Schema::hasTable($this->set_schema_table)) return;
+        Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('users_id');
@@ -55,6 +56,6 @@ class CreateClientesTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->tableName);
+       Schema::dropIfExists($this->set_schema_table);
      }
 }

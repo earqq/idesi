@@ -41,9 +41,7 @@
             <table style="width: 100%;    margin: 30px 0 5px 0;"   cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px">Solicitud de Crèdito- Persona Natural</th>
-                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px;text-align: end;">Nº <span> 15 </span></th>
-                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px;text-align: end;">Aporte a la fecha <span> S/. 2500</span></th>
+                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px">SOLICITUD DE ADMISIÓN PERSONA NATURAL</th>
                     </tr>
                 </thead>
             </table>
@@ -59,7 +57,7 @@
                 <tbody>
                         <tr>
                             <td colspan="3">
-                            <span class="title">Apellidos y Nombres</span> {{$natural->nombres}} <span > </span>
+                            <span class="title">APELLIDOS Y NOMBRES</span> {{$natural->nombres}} <span > </span>
                             </td>
                         </tr>
 

@@ -10,7 +10,7 @@ class CreateAsociativaNaturalTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'asociativa_natural';
+    public $set_schema_table = 'asociativa_natural';
 
     /**
      * Run the migrations.
@@ -20,7 +20,8 @@ class CreateAsociativaNaturalTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->tableName, function (Blueprint $table) {
+        if (Schema::hasTable($this->set_schema_table)) return;
+        Schema::create($this->set_schema_table, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->decimal('inscripcion', 11, 2)->nullable()->default('0.00');
@@ -48,6 +49,6 @@ class CreateAsociativaNaturalTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->tableName);
+       Schema::dropIfExists($this->set_schema_table);
      }
 }
