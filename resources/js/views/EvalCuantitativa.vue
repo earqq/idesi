@@ -531,7 +531,7 @@ export default {
           precision: 0,
           masked: false
       },
-      evaluacion: {
+      evaluacion: {   
         prestamo_id: this.$route.params.prestamo,
         propuesta: {
           producto: "",

@@ -18713,7 +18713,7 @@ readers do not read off random characters that represent icons */
   cursor: pointer;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
-  top: 20px;
+  top: 8px;
 }
 
 .gm-grid-container .profile .return p {
@@ -18857,11 +18857,11 @@ readers do not read off random characters that represent icons */
 }
 
 .gm-grid-container .general-view {
-  background: #f0f2f3;
+  background: #dceaf0;
   grid-area: content;
   display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-template-areas: "prestamos datos";
+  grid-template-columns: 1fr;
+  grid-template-areas: "visitas";
   overflow: auto;
 }
 
@@ -19000,25 +19000,36 @@ readers do not read off random characters that represent icons */
   font-size: 20px;
 }
 
+.views-list {
+  padding: 0 25px;
+  margin: 7px 0;
+}
+
+.loans-views {
+  background: #fff;
+  padding: 20px 15px;
+}
+
+.loans-views .views {
+  margin: 15px 0;
+}
+
 .loans-views .views h1 {
   font-size: 1.3rem;
-  background: #e7e5e5;
+  background: #171b26 !important;
   margin: 0;
   padding: 7px 10px;
+  color: white;
 }
 
 .loans-views .views table th {
   height: 45px;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 .loans-views .views table tr {
   border: 1px solid #c6d0da;
   text-align: center;
-}
-
-.loans-views .new-view {
-  padding: 2% 4%;
 }
 
 .loans-views .new-view .image {
@@ -19472,7 +19483,7 @@ html {
   display: -webkit-box;
   display: flex;
   height: 40px;
-  border: 1px solid #171b26;
+  border: 1px solid #c8d5da;
   background: #fff;
 }
 
@@ -19483,20 +19494,20 @@ html {
 .container-general header span i {
   padding: 9px 27px;
   font-size: 20px;
-  background: #171b26;
+  background: #c8d5da;
   color: #fff;
   -webkit-transition: 0.5s;
   transition: 0.5s;
 }
 
 .container-general header span i:hover {
-  background: #30374a;
+  background: #171b26;
   color: #fff;
 }
 
 .container-general header h1 {
   margin: 9px 8px;
-  font-size: 21px;
+  font-size: 18px;
   color: #171b26;
   -webkit-box-flex: 1;
           flex: 1;

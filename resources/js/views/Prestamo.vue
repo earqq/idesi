@@ -164,9 +164,13 @@
                 />
               </div>
 
-              <div class="col-md-6 form-group">
-                <label>Dirección</label>
+              <div class="col-md-3 form-group">
+                <label>Dirección Consignado</label>
                 <input type="text" v-model="form.natural.direccion" class="form-control" />
+              </div>
+              <div class="col-md-3 form-group">
+                <label>Dirección Reniec</label>
+                <input type="text"  class="form-control"  disabled/>
               </div>
 
               <div class="col-md-2 form-group">

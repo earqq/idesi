@@ -222,7 +222,7 @@ class ClienteController extends Controller
                 $laboral->estado_laboral= $request->laboral['estado_laboral'];    
                 $laboral->tipo_trabajador= $request->laboral['tipo_trabajador'];    
                 $laboral->razon_social= $request->laboral['razon_social'];    
-                // $laboral->ingreso_mensual= $request->laboral['ingreso_mensual'];  
+                $laboral->ingreso_mensual= $request->laboral['ingreso_mensual'];  
                 if($request->laboral['estado_laboral']=='OTROS'){
                      $laboral->especificacion= $request->laboral['especificacion'];
                 }
@@ -306,7 +306,17 @@ class ClienteController extends Controller
                 $declaracion->naturals_id= $natural->id; 
                 $declaracion->save();
 
+                $pdf = PDF::loadView('reportes.inscripcion');
 
+                if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
+                    // $file= new Archivo;
+                    // $file->nombre = 'prestamo_'.$prestamo->id;
+                    // $file->tipo = 'documento';
+                    // $file->extension = 'pdf';
+                    // $file->prestamos_id =  $prestamos->id;
+                    // $file->save();
+                }
+                
 
                 DB::commit();
                 return [
@@ -425,16 +435,16 @@ class ClienteController extends Controller
 
             // return $cliente;
            // $pdf = PDF::loadView('reportes.prestamo',compact('prestamos','cliente','avals','garantias'));
-            $pdf = PDF::loadView('reportes.inscripcion');
+           $pdf = PDF::loadView('reportes.inscripcion');
 
-            if (Storage::put('public/72114126/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
-                // $file= new Archivo;
-                // $file->nombre = 'prestamo_'.$prestamo->id;
-                // $file->tipo = 'documento';
-                // $file->extension = 'pdf';
-                // $file->prestamos_id =  $prestamos->id;
-                // $file->save();
-            }
+           if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
+               // $file= new Archivo;
+               // $file->nombre = 'prestamo_'.$prestamo->id;
+               // $file->tipo = 'documento';
+               // $file->extension = 'pdf';
+               // $file->prestamos_id =  $prestamos->id;
+               // $file->save();
+           }
                 DB::commit();
                 return [
                     'success' => true,
@@ -897,6 +907,20 @@ class ClienteController extends Controller
         return compact('prestamo', 'cliente','avals','garantias','natural','conyugue','tiene_conyuge');
    
     }
+
+    public function prestamoVerJuridico($prestamo)
+    {
+
+        $prestamo= Prestamo::find($prestamo);
+        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        $juridico = Juridico::where('clientes_id',$cliente->id)->first();
+        $avals = Aval::where('prestamos_id',$prestamo->id)->get();
+        $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+     
+        return compact('prestamo', 'cliente','avals','garantias','juridico');
+   
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
