@@ -815,6 +815,7 @@ export default {
           miembros_familia: 1,
           hijos: []
         },
+        comentario_central_riesgo:'',
         central_riesgo: {
           1: {
             entidad_financiera: "",

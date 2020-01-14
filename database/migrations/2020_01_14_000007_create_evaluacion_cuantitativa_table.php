@@ -10,7 +10,7 @@ class CreateEvaluacionCuantitativaTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'evaluacion_cuantitativa';
+    public $tableName = 'evaluacion_cuantitativa';
 
     /**
      * Run the migrations.
@@ -20,8 +20,7 @@ class CreateEvaluacionCuantitativaTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('prestamo_id');
@@ -94,6 +93,20 @@ class CreateEvaluacionCuantitativaTable extends Migration
             $table->decimal('balance_patrimonio_capital', 11, 2)->nullable()->default('0.00');
             $table->decimal('balance_patrimonio_utilidad', 11, 2)->nullable()->default('0.00');
             $table->decimal('balance_patrimonio_total', 11, 2)->nullable()->default('0.00');
+            $table->decimal('gasto_financiero_personal_titular', 11, 2)->nullable()->default('0.00');
+            $table->decimal('gasto_financiero_personal_conyuge', 11, 2)->nullable()->default('0.00');
+            $table->decimal('gasto_financiero_personal_total', 11, 2)->nullable()->default('0.00');
+            $table->decimal('gasto_financiero_personal_validacion', 11, 2)->nullable()->default('0.00');
+            $table->decimal('fc_diario_minimo_ingreso', 11, 2)->nullable()->default('0.00');
+            $table->decimal('fc_diario_cuota', 11, 2)->nullable()->default('0.00');
+            $table->decimal('fc_diario_disponible_diario', 11, 2)->nullable()->default('0.00');
+            $table->decimal('fc_diario_participacion_cuota', 11, 2)->nullable()->default('0.00');
+            $table->string('fc_diario_resultado', 200)->nullable();
+            $table->decimal('fc_semanal_minimo_ingreso', 11, 2)->nullable()->default('0.00');
+            $table->decimal('fc_semanal_cuota', 11, 2)->nullable()->default('0.00');
+            $table->decimal('fc_semanal_participacion_cuota', 11, 2)->nullable()->default('0.00');
+            $table->string('fc_semanal_resultado', 200)->nullable();
+            $table->decimal('fc_semanal_disponible_semana', 11, 2)->nullable()->default('0.00');
         });
     }
 
@@ -104,6 +117,6 @@ class CreateEvaluacionCuantitativaTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }

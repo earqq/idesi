@@ -10,7 +10,7 @@ class CreateJuridicosTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'juridicos';
+    public $tableName = 'juridicos';
 
     /**
      * Run the migrations.
@@ -20,8 +20,7 @@ class CreateJuridicosTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('clientes_id');
@@ -42,7 +41,6 @@ class CreateJuridicosTable extends Migration
             $table->string('telefono', 15)->nullable()->default(null);
             $table->string('celular', 15)->nullable()->default(null);
             $table->string('email', 45)->nullable()->default(null);
-
             $table->string('nombres_representante', 60)->nullable()->default(null);
             $table->string('documento_representante', 10)->nullable()->default(null);
             $table->date('nacimiento_representante')->nullable()->default(null);
@@ -50,7 +48,7 @@ class CreateJuridicosTable extends Migration
             $table->string('ocupacion_representante', 10)->nullable()->default(null);
             $table->string('telefono_representante', 10)->nullable()->default(null);
             $table->string('celular_representante', 15)->nullable()->default(null);
-            $table->string('direccion_representante', 258)->nullable()->default(null);
+            $table->string('direccion_representante')->nullable()->default(null);
             $table->string('distrito_representante', 25)->nullable()->default(null);
             $table->string('provincia_representante', 25)->nullable()->default(null);
             $table->string('departamento_representante', 25)->nullable()->default(null);
@@ -58,7 +56,6 @@ class CreateJuridicosTable extends Migration
             $table->string('tipo_domicilio_representante', 15)->nullable()->default(null);
             $table->string('poderes_representante', 10)->nullable()->default(null);
             $table->date('fecha_inicio_representante')->nullable()->default(null);
-            
 
             $table->index(["clientes_id"], 'fk_juridicos_clientes1_idx');
             $table->softDeletes();
@@ -79,6 +76,6 @@ class CreateJuridicosTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }

@@ -455,7 +455,43 @@
           </tr>
         </table>
       </div>
+      <div class="form-group col-md-6">
+        <label>GASTO FINANCIERO PERSONAL DEL TITULAR</label>
 
+        <table class="table ingresos-table table-bordered table-striped table-sm">
+          <tr>
+            <td class="title-table">Concepto</td>
+            <td class="title-table">Pago</td>
+          </tr>
+          <tr v-for="(gasto,index) in evaluacion.titular.gasto_financiero_personal" v-bind:key="index">
+            <td>
+              <input type="text" class="form-control" v-model="evaluacion.titular.gasto_financiero_personal[index].concepto" />
+            </td>
+            <td>
+              <input type="text" class="form-control" v-model="evaluacion.titular.gasto_financiero_personal[index].pago" />
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label>GASTO FINANCIERO PERSONAL CONYUGE O CONVIVIENTE</label>
+
+        <table class="table ingresos-table table-bordered table-striped table-sm">
+          <tr>
+            <td class="title-table">Concepto</td>
+            <td class="title-table">Pago</td>
+          </tr>
+         <tr v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero_personal" v-bind:key="index">
+            <td>
+              <input type="text" class="form-control" v-model="evaluacion.conyuge.gasto_financiero_personal[index].concepto" />
+            </td>
+            <td>
+              <input type="text" class="form-control" v-model="evaluacion.conyuge.gasto_financiero_personal[index].pago" />
+            </td>
+          </tr>
+        </table>
+      </div>
           </div>
         </div>
       </div>
@@ -615,6 +651,7 @@ export default {
               domingo: 0
             }
           ],
+
           ingresos_por_categoria: [
             {
               concepto: "",
@@ -652,6 +689,33 @@ export default {
               cuota: 0
             }
           ],
+          gasto_financiero_personal: [
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            }
+          ],
           gasto_negocio: [
             {
               entidad: "ALQUILER",
@@ -662,18 +726,17 @@ export default {
               pago: 0
             },
             {
+              entidad: "IMPUESTOS",
+              pago: 0
+            },
+            {
               entidad: "AGUA",
               pago: 0
             },
             {
               entidad: "LUZ",
               pago: 0
-            }
-            ,
-            {
-              entidad: "IMPUESTOS",
-              pago: 0
-            }
+            }                       
           ],
           giro_negocio: "",
           margen_costo: 0,
@@ -743,6 +806,33 @@ export default {
               cuota: 0
             }
           ],
+          gasto_financiero_personal: [
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            }
+          ],
           gasto_negocio: [
             {
               entidad: "ALQUILER",
@@ -753,15 +843,15 @@ export default {
               pago: 0
             },
             {
+              entidad: "IMPUESTOS",
+              pago: 0
+            },
+            {
               entidad: "AGUA",
               pago: 0
             },
             {
               entidad: "LUZ",
-              pago: 0
-            },
-            {
-              entidad: "IMPUESTOS",
               pago: 0
             }
           ]

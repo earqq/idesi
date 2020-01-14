@@ -10,7 +10,7 @@ class CreateDirectoresTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'directores';
+    public $tableName = 'directores';
 
     /**
      * Run the migrations.
@@ -20,8 +20,7 @@ class CreateDirectoresTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('nombres', 60)->nullable()->default(null);
@@ -48,6 +47,6 @@ class CreateDirectoresTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }

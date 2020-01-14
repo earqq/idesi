@@ -10,7 +10,7 @@ class CreateObligacionsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $set_schema_table = 'obligacions';
+    public $tableName = 'obligacions';
 
     /**
      * Run the migrations.
@@ -20,8 +20,7 @@ class CreateObligacionsTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable($this->set_schema_table)) return;
-        Schema::create($this->set_schema_table, function (Blueprint $table) {
+        Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->double('inscripcion')->nullable()->default(null);
@@ -49,6 +48,6 @@ class CreateObligacionsTable extends Migration
      */
      public function down()
      {
-       Schema::dropIfExists($this->set_schema_table);
+       Schema::dropIfExists($this->tableName);
      }
 }
