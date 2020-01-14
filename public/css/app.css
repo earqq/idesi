@@ -18660,6 +18660,24 @@ readers do not read off random characters that represent icons */
   text-transform: uppercase;
 }
 
+.clients-date .list-table {
+  padding: 20px 70px;
+  background: #dceaf0;
+}
+
+.clients-date .list-table table {
+  background: #fff;
+}
+
+.clients-date .list-table table th {
+  background: #171b26;
+  color: #fff;
+}
+
+.clients-date .list-table table tr td img {
+  width: 50px;
+}
+
 .profile h1,
 .profile h2,
 .profile h3,
@@ -19333,6 +19351,34 @@ html {
 
 .evaluations .info .row .col-md-3 .text .title {
   font-size: 20px;
+}
+
+.evaluations .ratios .title-table {
+  background: #171b26;
+  color: #fff;
+}
+
+.evaluations .ratios tr td {
+  font-size: 10px;
+}
+
+.evaluations .balance .title-table {
+  background: #171b26;
+  color: #fff;
+}
+
+.evaluations .balance tr td {
+  font-size: 10px;
+}
+
+.evaluations .cuantitativa .title-table {
+  background: #171b26;
+  color: #fff;
+  padding: 4px 10px;
+}
+
+.evaluations .cuantitativa tr td {
+  font-size: 10px;
 }
 
 .gm-grid-container-file {

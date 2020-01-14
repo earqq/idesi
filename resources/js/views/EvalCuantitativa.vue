@@ -1,13 +1,12 @@
 <template >
   <div class="container-general">
-        <header>
-            <span @click="retornar()">
-              <i class="fas fa-angle-left"></i>
-            </span>
-            <h1>Evaluacion Cuantitativa</h1>
-          </header>
+    <header>
+      <span @click="retornar()">
+        <i class="fas fa-angle-left"></i>
+      </span>
+      <h1>Evaluacion Cuantitativa</h1>
+    </header>
 
-          
     <div class="row m-0 d-flex justify-content-center">
       <div class="col-md-12 p-0">
         <div class="nav-tabs style-tab-menu">
@@ -15,26 +14,14 @@
             <li class="nav-item col-md-2">
               <a
                 class="nav-link active text-center"
-                id="personal-tab"
-                data-toggle="tab"
-                href="#personal"
-                role="tab"
-                aria-controls="personal"
-                aria-selected="true"
-              >Datos Negocio</a>
-            </li>
-
-            <li class="nav-item col-md-2">
-              <a
-                class="nav-link text-center"
                 id="laboral-tab"
                 data-toggle="tab"
                 href="#laboral"
                 role="tab"
                 aria-controls="laboral"
-                aria-selected="false"
+                aria-selected="true"
               >Datos Titular</a>
-            </li> 
+            </li>
             <li class="nav-item col-md-2">
               <a
                 class="nav-link text-center"
@@ -46,29 +33,718 @@
                 aria-selected="false"
               >Datos Conyuge</a>
             </li>
+            <li class="nav-item col-md-2">
+              <a
+                class="nav-link text-center"
+                id="hogar-tab"
+                data-toggle="tab"
+                href="#hogar"
+                role="tab"
+                aria-controls="hogar"
+                aria-selected="false"
+              >Datos Hogar</a>
+            </li>
+            <li class="nav-item col-md-2">
+              <a
+                class="nav-link text-center"
+                id="propuesta-tab"
+                data-toggle="tab"
+                href="#propuesta"
+                role="tab"
+                aria-controls="propuesta"
+                aria-selected="false"
+              >Datos Propuesta</a>
+            </li>
           </ul>
         </div>
 
         <div class="col-md-12 body-tabs">
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab" >
-               
+            <div
+              class="tab-pane fade show active"
+              id="laboral"
+              role="tabpanel"
+              aria-labelledby="laboral-tab"
+            >
+              <div class="row">
+                <div class="col-md-12 p-0">
+                  <div class="card" style>
+                    <div class="card-header">
+                      <strong>Ingresos del negocio</strong>
+                    </div>
+                    <div class="card-body row">
+                      <div class="form-group col-md-12">
+                        <table class="table ingresos-table table-bordered table-striped table-sm">
+                          <tr>
+                            <td class="title-table">Concepto</td>
+                            <td class="title-table">Lunes</td>
+                            <td class="title-table">Martes</td>
+                            <td class="title-table">Miercoles</td>
+                            <td class="title-table">Jueves</td>
+                            <td class="title-table">Viernes</td>
+                            <td class="title-table">Sabado</td>
+                            <td class="title-table">Domingo</td>
+                            <td class="title-table">Subtotal</td>
+                          </tr>
+                          <tr
+                            v-for="(val,index) in evaluacion.titular.ingresos_negocio"
+                            v-bind:key="index"
+                          >
+                            <td>
+                              <input type="text" class="form-control" v-model="val.concepto" />
+                            </td>
+                            <td>
+                              <money
+                                :change="negocioIngresosSubtotal(index)"
+                                v-model="evaluacion.titular.ingresos_negocio[index].lunes"
+                                v-bind="money"
+                                class="form-control"
+                              ></money>
+                            </td>
+                            <td>
+                              <money
+                                :change="negocioIngresosSubtotal(index)"
+                                v-model="evaluacion.titular.ingresos_negocio[index].martes"
+                                v-bind="money"
+                                class="form-control"
+                              ></money>
+                            </td>
+                            <td>
+                              <money
+                                :change="negocioIngresosSubtotal(index)"
+                                v-model="evaluacion.titular.ingresos_negocio[index].miercoles"
+                                v-bind="money"
+                                class="form-control"
+                              ></money>
+                            </td>
+                            <td>
+                              <money
+                                :change="negocioIngresosSubtotal(index)"
+                                v-model="evaluacion.titular.ingresos_negocio[index].jueves"
+                                v-bind="money"
+                                class="form-control"
+                              ></money>
+                            </td>
+                            <td>
+                              <money
+                                :change="negocioIngresosSubtotal(index)"
+                                v-model="evaluacion.titular.ingresos_negocio[index].viernes"
+                                v-bind="money"
+                                class="form-control"
+                              ></money>
+                            </td>
+                            <td>
+                              <money
+                                :change="negocioIngresosSubtotal(index)"
+                                v-model="evaluacion.titular.ingresos_negocio[index].sabado"
+                                v-bind="money"
+                                class="form-control"
+                              ></money>
+                            </td>
+                            <td>
+                              <money
+                                :change="negocioIngresosSubtotal(index)"
+                                v-model="evaluacion.titular.ingresos_negocio[index].domingo"
+                                v-bind="money"
+                                class="form-control"
+                              ></money>
+                            </td>
+                            <td>
+                              <money
+                                :change="negocioIngresosSubtotal(index)"
+                                v-model="evaluacion.titular.ingresos_negocio[index].subtotal"
+                                v-bind="money"
+                                class="form-control"
+                              ></money>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-12 p-0">
+                  <div class="card" style>
+                    <div class="card-header d-flex justify-content-between">
+                      <strong>Ingresos por 2da, 4ta y/o 5ta Categoria</strong>
+                    </div>
+                    <div class="card-body row">
+                      <div class="form-group col-md-12">
+                        <table class="table ingresos-table table-bordered table-striped table-sm">
+                          <tr>
+                            <td class="title-table">CONCEPTO</td>
+                            <td class="title-table">MONTO MENSUAL</td>
+                          </tr>
+                          <tr
+                            v-for="(ingreso,index) in evaluacion.titular.ingresos_por_categoria"
+                            v-bind:key="index"
+                          >
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="evaluacion.titular.ingresos_por_categoria[index].concepto"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="evaluacion.titular.ingresos_por_categoria[index].mes"
+                              />
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>Giro de negocio</label>
+                  <v-select
+                    label="giro_negocio"
+                    :options="giros"
+                    disabled
+                    :reduce="giros => giros.giro_negocio"
+                    placeholder="Buscar Giro..."
+                    v-model="evaluacion.titular.giro_negocio"
+                  ></v-select>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>MARGEN COSTO</label>
+                  <input type="text" v-model="evaluacion.titular.margen_costo" class="form-control" />
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>VALOR INVENTARIO</label>
+
+                  <input
+                    type="text"
+                    v-model="evaluacion.titular.valor_inventario"
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>GASTO FINANCIERO TITULAR</label>
+
+                  <table class="table ingresos-table table-bordered table-striped table-sm">
+                    <tr>
+                      <td class="title-table">Entidad</td>
+                      <td class="title-table">Saldo capital</td>
+                      <td class="title-table">Cuota</td>
+                    </tr>
+                    <tr
+                      v-for="(gasto,index) in evaluacion.titular.gasto_financiero"
+                      v-bind:key="index"
+                    >
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.titular.gasto_financiero[index].entidad"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.titular.gasto_financiero[index].saldo_capital"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.titular.gasto_financiero[index].cuota"
+                        />
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>GASTO DEL NEGOCIO</label>
+                  <table class="table ingresos-table table-bordered table-striped table-sm">
+                    <tr>
+                      <td class="title-table">Entidad</td>
+                      <td class="title-table">Cuota</td>
+                    </tr>
+                    <tr
+                      v-for="(gasto, index) in evaluacion.titular.gasto_negocio"
+                      v-bind:key="index"
+                    >
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.titular.gasto_negocio[index].entidad"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.titular.gasto_negocio[index].pago"
+                        />
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
               <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
                 <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
               </div>
             </div>
 
-            <div class="tab-pane fade" id="laboral" role="tabpanel" aria-labelledby="laboral-tab">
-               
+            <div
+              class="tab-pane fade"
+              id="declaracion"
+              role="tabpanel"
+              aria-labelledby="declaracion-tab"
+            >
+              <div class="row">
+                <div class="form-group col-md-12">
+                  <label>INGRESOS DEL CONYUGE O CONVIVIENTE (Si tuviese)</label>
+                  <label>Ingresos del negocio (LLenar solo si el negocio es distinto al titular)</label>
+
+                  <table class="table ingresos-table table-bordered table-striped table-sm">
+                    <tr>
+                      <td class="title-table">Concepto</td>
+                      <td class="title-table">Lunes</td>
+                      <td class="title-table">Martes</td>
+                      <td class="title-table">Miercoles</td>
+                      <td class="title-table">Jueves</td>
+                      <td class="title-table">Viernes</td>
+                      <td class="title-table">Sabado</td>
+                      <td class="title-table">Domingo</td>
+                      <td class="title-table">Subtotal</td>
+                    </tr>
+                    <tr
+                      v-for="(ingreso,index) in evaluacion.conyuge.ingresos_negocio"
+                      v-bind:key="index"
+                    >
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.conyuge.ingresos_negocio[index].concepto"
+                        />
+                      </td>
+                      <td>
+                        <money
+                          :change="conyugeIngresosSubtotal(index)"
+                          v-model="evaluacion.conyuge.ingresos_negocio[index].lunes"
+                          v-bind="money"
+                          class="form-control"
+                        ></money>
+                      </td>
+                      <td>
+                        <money
+                          :change="conyugeIngresosSubtotal(index)"
+                          v-model="evaluacion.conyuge.ingresos_negocio[index].martes"
+                          v-bind="money"
+                          class="form-control"
+                        ></money>
+                      </td>
+                      <td>
+                        <money
+                          :change="conyugeIngresosSubtotal(index)"
+                          v-model="evaluacion.conyuge.ingresos_negocio[index].miercoles"
+                          v-bind="money"
+                          class="form-control"
+                        ></money>
+                      </td>
+                      <td>
+                        <money
+                          :change="conyugeIngresosSubtotal(index)"
+                          v-model="evaluacion.conyuge.ingresos_negocio[index].jueves"
+                          v-bind="money"
+                          class="form-control"
+                        ></money>
+                      </td>
+                      <td>
+                        <money
+                          :change="conyugeIngresosSubtotal(index)"
+                          v-model="evaluacion.conyuge.ingresos_negocio[index].viernes"
+                          v-bind="money"
+                          class="form-control"
+                        ></money>
+                      </td>
+                      <td>
+                        <money
+                          :change="conyugeIngresosSubtotal(index)"
+                          v-model="evaluacion.conyuge.ingresos_negocio[index].sabado"
+                          v-bind="money"
+                          class="form-control"
+                        ></money>
+                      </td>
+                      <td>
+                        <money
+                          :change="conyugeIngresosSubtotal(index)"
+                          v-model="evaluacion.conyuge.ingresos_negocio[index].domingo"
+                          v-bind="money"
+                          class="form-control"
+                        ></money>
+                      </td>
+                      <td>
+                        <money
+                          :change="conyugeIngresosSubtotal(index)"
+                          v-model="evaluacion.conyuge.ingresos_negocio[index].subtotal"
+                          v-bind="money"
+                          class="form-control"
+                        ></money>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="form-group col-md-12">
+                  <label>Ingresos por 4tao 5ta Categoria</label>
+
+                  <table class="table ingresos-table table-bordered table-striped table-sm">
+                    <tr>
+                      <td class="title-table">CONCEPTO</td>
+                      <td class="title-table">MES</td>
+                    </tr>
+                    <tr
+                      v-for="(ingresos,index) in evaluacion.conyuge.ingresos_por_categoria"
+                      v-bind:key="index"
+                    >
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.conyuge.ingresos_por_categoria[index].concepto"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.conyuge.ingresos_por_categoria[index].mes"
+                        />
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>GIRO DEL NEGOCIO</label>
+                  <v-select
+                    label="giro_negocio"
+                    :options="giros"
+                    :reduce="giros => giros.giro_negocio"
+                    placeholder="Buscar Giro..."
+                    v-model="evaluacion.conyuge.giro_negocio"
+                  ></v-select>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>MARGEN COSTO</label>
+
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="evaluacion.conyuge.margen_costo_conyuge"
+                  />
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>VALOR INVENTARIO</label>
+
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="evaluacion.conyuge.valor_inventario_conyuge"
+                  />
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>GASTO FINANCIERO CONYUGE</label>
+                  <table class="table ingresos-table table-bordered table-striped table-sm">
+                    <tr>
+                      <td class="title-table">Entidad</td>
+                      <td class="title-table">Saldo capital</td>
+                      <td class="title-table">Cuota</td>
+                    </tr>
+                    <tr
+                      v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero"
+                      v-bind:key="index"
+                    >
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.conyuge.gasto_financiero[index].entidad"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.conyuge.gasto_financiero[index].saldo_capital"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.conyuge.gasto_financiero[index].cuota"
+                        />
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label>GASTO DEL NEGOCIO</label>
+                  <table class="table ingresos-table table-bordered table-striped table-sm">
+                    <tr>
+                      <td class="title-table">Entidad</td>
+                      <td class="title-table">Cuota</td>
+                    </tr>
+                    <tr
+                      v-for="(gasto,index) in evaluacion.conyuge.gasto_negocio"
+                      v-bind:key="index"
+                    >
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.conyuge.gasto_negocio[index].entidad"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="form-control"
+                          v-model="evaluacion.conyuge.gasto_negocio[index].pago"
+                        />
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
               <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
                 <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
                 <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
               </div>
             </div>
-  
-            <div  class="tab-pane fade" id="declaracion" role="tabpanel"  aria-labelledby="declaracion-tab" >
+
+            <div class="tab-pane fade" id="hogar" role="tabpanel" aria-labelledby="hogar-tab">
               <div class="row">
-                     
+                <div class="col-md-12 p-0">
+                  <div class="card" style>
+                    <div class="card-header d-flex justify-content-between">
+                      <strong>GIRO DEL NEGOCIO</strong>
+                    </div>
+                    <div class="card-body row">
+                      <div class="form-group col-md-6">
+                        <label>GASTOS SERVICIO DEL HOGAR</label>
+
+                        <table class="table ingresos-table table-bordered table-striped table-sm">
+                          <tr>
+                            <td class="title-table">Concepto</td>
+                            <td class="title-table">Pago</td>
+                          </tr>
+                          <tr v-for="(gasto,index) in evaluacion.gastos_hogar" v-bind:key="index">
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="evaluacion.gastos_hogar[index].concepto"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="evaluacion.gastos_hogar[index].pago"
+                              />
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label>PROPIEDADES</label>
+
+                        <table class="table ingresos-table table-bordered table-striped table-sm">
+                          <tr>
+                            <td class="title-table">Concepto</td>
+                            <td class="title-table">Pago</td>
+                          </tr>
+                          <tr
+                            v-for="(propiedades,index) in evaluacion.propiedades"
+                            v-bind:key="index"
+                          >
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="evaluacion.propiedades[index].concepto"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="evaluacion.propiedades[index].valor_estimado"
+                              />
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label>GASTO FINANCIERO PERSONAL DEL TITULAR</label>
+
+                        <table class="table ingresos-table table-bordered table-striped table-sm">
+                          <tr>
+                            <td class="title-table">Concepto</td>
+                            <td class="title-table">Pago</td>
+                          </tr>
+                          <tr
+                            v-for="(gasto,index) in evaluacion.titular.gasto_financiero_personal"
+                            v-bind:key="index"
+                          >
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="evaluacion.titular.gasto_financiero_personal[index].concepto"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="evaluacion.titular.gasto_financiero_personal[index].pago"
+                              />
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label>GASTO FINANCIERO PERSONAL CONYUGE O CONVIVIENTE</label>
+
+                        <table class="table ingresos-table table-bordered table-striped table-sm">
+                          <tr>
+                            <td class="title-table">Concepto</td>
+                            <td class="title-table">Pago</td>
+                          </tr>
+                          <tr
+                            v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero_personal"
+                            v-bind:key="index"
+                          >
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="evaluacion.conyuge.gasto_financiero_personal[index].concepto"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="evaluacion.conyuge.gasto_financiero_personal[index].pago"
+                              />
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
+                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+              </div>
+            </div>
+
+            <div
+              class="tab-pane fade"
+              id="propuesta"
+              role="tabpanel"
+              aria-labelledby="propuesta-tab"
+            >
+              <div class="row">
+                <div class="col-md-12 p-0">
+                  <div class="card" style>
+                    <div class="card-header d-flex justify-content-between">
+                      <strong>Propuesta</strong>
+                    </div>
+                    <div class="card-body row">
+                      <div class="form-group col-md-2">
+                        <label>PRODUCTO</label>
+
+                        <input
+                          type="text"
+                          v-model="evaluacion.propuesta.producto"
+                          class="form-control"
+                          disabled
+                        />
+                      </div>
+
+                      <div class="form-group col-md-2">
+                        <label>MONTO</label>
+                        <input
+                          type="text"
+                          v-model="evaluacion.propuesta.monto"
+                          class="form-control"
+                          disabled
+                        />
+                      </div>
+
+                      <div class="form-group col-md-2">
+                        <label>PLAZO</label>
+
+                        <input
+                          type="text"
+                          v-model="evaluacion.propuesta.plazo"
+                          class="form-control"
+                          disabled
+                        />
+                      </div>
+
+                      <div class="form-group col-md-2">
+                        <label>NUMERO CUOTAS</label>
+
+                        <input
+                          type="text"
+                          v-model="evaluacion.propuesta.numero_cuotas"
+                          class="form-control"
+                          disabled
+                        />
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>CUOTAS</label>
+
+                        <input
+                          type="text"
+                          v-model="evaluacion.propuesta.cuotas"
+                          class="form-control"
+                        />
+                      </div>
+                      <div class="form-group col-md-2">
+                        <label>PROB INFOCORP</label>
+
+                        <input
+                          type="text"
+                          v-model="evaluacion.probabilidad_infocorp"
+                          class="form-control"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
                 <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
@@ -76,7 +752,7 @@
                   class="btn btn-orange"
                   @click.prevent="guardar()"
                   v-if="loading_submit=='0'"
-                >Regsitrar</a>
+                >Registrar</a>
                 <div class="container-load-register" v-else>
                   <svg
                     aria-hidden="true"
@@ -102,436 +778,39 @@
         </div>
       </div>
     </div>
-    <div class="row row m-0 p-3" style="background: white">
-      <div class="col-md-12 p-0">
-        <div class="card" style> 
-          <div class="card-header d-flex justify-content-between">
-            <strong>Evaluacion cuantitativa</strong>
-            <strong>Ingresos del titular</strong>
-            <strong>Ingresos del negocio</strong>
-          </div>
-          <div class="card-body row">
-            <div class="form-group col-md-12">
-              <table class="table ingresos-table table-bordered table-striped table-sm">
-                <tr>
-                  <td class="title-table">Concepto</td>
-                  <td class="title-table">Lunes</td>
-                  <td class="title-table">Martes</td>
-                  <td class="title-table">Miercoles</td>
-                  <td class="title-table">Jueves</td>
-                  <td class="title-table">Viernes</td>
-                  <td class="title-table">Sabado</td>
-                  <td class="title-table">Domingo</td>
-                  <td class="title-table">Subtotal</td>
-                </tr>
-                <tr v-for="(val,index) in evaluacion.titular.ingresos_negocio" v-bind:key="index">
-                  <td>
-                    <input type="text" class="form-control" v-model="val.concepto" /> 
-                  </td>
-                  <td>
-                    <money  :change="negocioIngresosSubtotal(index)" v-model="evaluacion.titular.ingresos_negocio[index].lunes" v-bind="money" class="form-control"></money>
-          
-                  </td>
-                  <td>
-                    <money  :change="negocioIngresosSubtotal(index)" v-model="evaluacion.titular.ingresos_negocio[index].martes" v-bind="money" class="form-control"></money>
-          
-                  </td>
-                  <td>
-                    <money  :change="negocioIngresosSubtotal(index)" v-model="evaluacion.titular.ingresos_negocio[index].miercoles" v-bind="money" class="form-control"></money>
-          
-                  </td>
-                  <td>
-                     <money  :change="negocioIngresosSubtotal(index)" v-model="evaluacion.titular.ingresos_negocio[index].jueves" v-bind="money" class="form-control"></money>
-          
-                    
-                  </td>
-                  <td>
-                     <money  :change="negocioIngresosSubtotal(index)" v-model="evaluacion.titular.ingresos_negocio[index].viernes" v-bind="money" class="form-control"></money>
-          
-                  </td>
-                  <td>
-                    <money  :change="negocioIngresosSubtotal(index)" v-model="evaluacion.titular.ingresos_negocio[index].sabado" v-bind="money" class="form-control"></money>
-          
-                  </td>
-                  <td>
-                    <money  :change="negocioIngresosSubtotal(index)" v-model="evaluacion.titular.ingresos_negocio[index].domingo" v-bind="money" class="form-control"></money>
-          
-                  </td>
-                  <td>
-                    <money  :change="negocioIngresosSubtotal(index)" v-model="evaluacion.titular.ingresos_negocio[index].subtotal" v-bind="money" class="form-control"></money>
-          
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-12 p-0">
-        <div class="card" style>
-          <div class="card-header d-flex justify-content-between">
-            <strong>Ingresos por 2da,  4ta y/o  5ta Categoria</strong>
-          </div>
-          <div class="card-body row">
-            <div class="form-group col-md-12">
-              <table class="table ingresos-table table-bordered table-striped table-sm">
-                  <tr>
-                    <td class="title-table">CONCEPTO</td>
-                    <td class="title-table">MONTO MENSUAL</td>
-                  </tr>
-                  <tr
-                    v-for="(ingreso,index) in evaluacion.titular.ingresos_por_categoria"
-                    v-bind:key="index"
-                  >
-                    <td>
-                      <input
-                        type="text" class="form-control"
-                        v-model="evaluacion.titular.ingresos_por_categoria[index].concepto"
-                      />
-                    </td>
-                    <td>
-                      <input type="text" class="form-control" v-model="evaluacion.titular.ingresos_por_categoria[index].mes" />
-                    </td>
-                  </tr>
-                </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12 p-0">
-        <div class="card" style>
-          <div class="card-header d-flex justify-content-between">
-            <strong>GIRO DEL NEGOCIO</strong>
-          </div>
-          <div class="card-body row">
-
-             <div class="form-group col-md-4">
-        <label>Giro de negocio</label>
-        <v-select
-          label="giro_negocio"
-          :options="giros"
-          :reduce="giros => giros.giro_negocio"
-          placeholder="Buscar Giro..."
-          v-model="evaluacion.titular.giro_negocio"
-        ></v-select>
-      </div>
-
-      <div class="form-group col-md-4">
-        <label>MARGEN COSTO</label>
-        <input type="text" v-model="evaluacion.titular.margen_costo" class="form-control" />
-      </div>
-
-      <div class="form-group col-md-4">
-        <label>VALOR INVENTARIO</label>
-
-        <input type="text" v-model="evaluacion.titular.valor_inventario" class="form-control" />
-      </div>
-
-  <div class="form-group col-md-6">
-        <label>GASTO FINANCIERO TITULAR</label>
-
-        <table class="table ingresos-table table-bordered table-striped table-sm">
-          <tr>
-            <td class="title-table">Entidad</td>
-            <td class="title-table">Saldo capital</td>
-            <td class="title-table">Cuota</td>
-          </tr>
-          <tr v-for="(gasto,index) in evaluacion.titular.gasto_financiero" v-bind:key="index">
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.titular.gasto_financiero[index].entidad" />
-            </td>
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.titular.gasto_financiero[index].saldo_capital" />
-            </td>
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.titular.gasto_financiero[index].cuota" />
-            </td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label>GASTO DEL NEGOCIO</label>
-        <table class="table ingresos-table table-bordered table-striped table-sm">
-          <tr>
-            <td class="title-table">Entidad</td>
-            <td class="title-table">Cuota</td>
-          </tr>
-          <tr v-for="(gasto, index) in evaluacion.titular.gasto_negocio" v-bind:key="index">
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.titular.gasto_negocio[index].entidad" />
-            </td>
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.titular.gasto_negocio[index].pago" />
-            </td>
-          </tr>
-        </table>
-      </div>
-
- 
-      <div class="form-group col-md-12">
-        <label>INGRESOS DEL CONYUGE O CONVIVIENTE (Si tuviese)</label>
-        <label>Ingresos del negocio (LLenar solo si el negocio es distinto al titular)</label>
-
-        <table class="table ingresos-table table-bordered table-striped table-sm">
-          <tr>
-            <td class="title-table">Concepto</td>
-            <td class="title-table">Lunes</td>
-            <td class="title-table">Martes</td>
-            <td class="title-table">Miercoles</td>
-            <td class="title-table">Jueves</td>
-            <td class="title-table">Viernes</td>
-            <td class="title-table">Sabado</td>
-            <td class="title-table">Domingo</td>
-            <td class="title-table">Subtotal</td>
-          </tr>
-          <tr v-for="(ingreso,index) in evaluacion.conyuge.ingresos_negocio" v-bind:key="index">
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.conyuge.ingresos_negocio[index].concepto" />
-            </td>
-            <td>
-                <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].lunes" v-bind="money" class="form-control"></money>
-         
-            </td>
-            <td>
-              <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].martes" v-bind="money" class="form-control"></money>
-         
-            </td>
-            <td>
-               <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].miercoles" v-bind="money" class="form-control"></money>
-         
-            </td>
-            <td>
-               <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].jueves" v-bind="money" class="form-control"></money>
-         
-            </td>
-            <td>
-                 <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].viernes" v-bind="money" class="form-control"></money>
-         
-            </td>
-            <td>
-                <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].sabado" v-bind="money" class="form-control"></money>
-         
-            </td>
-            <td>
-               <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].domingo" v-bind="money" class="form-control"></money>
-         
-            </td>
-            <td>
-                 <money  :change="conyugeIngresosSubtotal(index)" v-model="evaluacion.conyuge.ingresos_negocio[index].subtotal" v-bind="money" class="form-control"></money>
-            </td>
-          </tr>
-        </table>
-      </div>
-
-
-  <div class="form-group col-md-12">
-        <label>Ingresos por 4tao 5ta Categoria</label>
-
-        <table class="table ingresos-table table-bordered table-striped table-sm">
-          <tr>
-            <td class="title-table">CONCEPTO</td>
-            <td class="title-table">MES</td>
-          </tr>
-          <tr
-            v-for="(ingresos,index) in evaluacion.conyuge.ingresos_por_categoria"
-            v-bind:key="index"
-          >
-            <td>
-              <input
-                type="text" class="form-control"
-                v-model="evaluacion.conyuge.ingresos_por_categoria[index].concepto"
-              />
-            </td>
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.conyuge.ingresos_por_categoria[index].mes" />
-            </td>
-          </tr>
-        </table>
-      </div>
-
-
-      <div class="form-group col-md-4">
-        <label>GIRO DEL NEGOCIO</label>
-        <v-select
-          label="giro_negocio"
-          :options="giros"
-          :reduce="giros => giros.giro_negocio"
-          placeholder="Buscar Giro..."
-          v-model="evaluacion.conyuge.giro_negocio"
-        >
-        </v-select>
-      </div>
-
-      <div class="form-group col-md-4">
-        <label>MARGEN COSTO</label>
-
-        <input type="text" class="form-control" v-model="evaluacion.conyuge.margen_costo_conyuge"  />
-      </div>
-
-      <div class="form-group col-md-4">
-        <label>VALOR INVENTARIO</label>
-
-        <input
-          type="text" class="form-control"
-          v-model="evaluacion.conyuge.valor_inventario_conyuge"
-        />
-      </div>
-
-      <div class="form-group col-md-6">
-        <label>GASTO FINANCIERO TITULAR</label>
-        <table class="table ingresos-table table-bordered table-striped table-sm">
-          <tr>
-            <td class="title-table">Entidad</td>
-            <td class="title-table">Saldo capital</td>
-            <td class="title-table">Cuota</td>
-          </tr>
-          <tr v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero" v-bind:key="index">
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.conyuge.gasto_financiero[index].entidad" />
-            </td>
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.conyuge.gasto_financiero[index].saldo_capital" />
-            </td>
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.conyuge.gasto_financiero[index].cuota" />
-            </td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label>GASTO DEL NEGOCIO</label>
-        <table class="table ingresos-table table-bordered table-striped table-sm">
-          <tr>
-            <td class="title-table">Entidad</td>
-            <td class="title-table">Cuota</td>
-          </tr>
-          <tr v-for="(gasto,index) in evaluacion.conyuge.gasto_negocio" v-bind:key="index">
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.conyuge.gasto_negocio[index].entidad" />
-            </td>
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.conyuge.gasto_negocio[index].pago" />
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div class="form-group col-md-6">
-        <label>GASTOS SERVICIO DEL HOGAR</label>
-
-        <table class="table ingresos-table table-bordered table-striped table-sm">
-          <tr>
-            <td class="title-table">Concepto</td>
-            <td class="title-table">Pago</td>
-          </tr>
-          <tr v-for="(gasto,index) in evaluacion.gastos_hogar" v-bind:key="index">
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.gastos_hogar[index].concepto" />
-            </td>
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.gastos_hogar[index].pago" />
-            </td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label>PROPIEDADES</label>
-
-        <table class="table ingresos-table table-bordered table-striped table-sm">
-          <tr>
-            <td class="title-table">Concepto</td>
-            <td class="title-table">Pago</td>
-          </tr>
-          <tr v-for="(propiedades,index) in evaluacion.propiedades" v-bind:key="index">
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.propiedades[index].concepto" />
-            </td>
-            <td>
-              <input type="text" class="form-control" v-model="evaluacion.propiedades[index].valor_estimado" />
-            </td>
-          </tr>
-        </table>
-      </div>
-
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12 p-0">
-        <div class="card" style>
-          <div class="card-header d-flex justify-content-between">
-            <strong>Propuesta</strong>
-          </div>
-          <div class="card-body row">
-                    
-              <div class="form-group col-md-2">
-                <label>PRODUCTO</label>
-
-                <input type="text" v-model="evaluacion.propuesta.producto" class="form-control" disabled />
-              </div> 
-
-              <div class="form-group col-md-2">
-                <label>MONTO</label>
-                <input type="text" v-model="evaluacion.propuesta.monto" class="form-control" disabled/>
-              </div>
-
-              <div class="form-group col-md-2">
-                <label>PLAZO</label>
-
-                <input type="text" v-model="evaluacion.propuesta.plazo" class="form-control" disabled/>
-              </div>
-
-              <div class="form-group col-md-2">
-                <label>NUMERO CUOTAS</label>
-
-                <input type="text" v-model="evaluacion.propuesta.numero_cuotas" class="form-control" disabled/>
-              </div>
-              <div class="form-group col-md-2">
-                <label>CUOTAS</label>
-
-                <input type="text" v-model="evaluacion.propuesta.cuotas" class="form-control" />
-              </div>
-              <div class="form-group col-md-2">
-                <label>PROB INFOCORP</label>
-
-                <input type="text" v-model="evaluacion.probabilidad_infocorp" class="form-control" />
-              </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-md-12 d-flex justify-content-center mt-3">
-        <button @click="guardar()" class="btn btn-crecer w-25">Guardar</button>
-      </div>
-
-
-    </div>
-
   </div>
 </template>
 <script>
 import vSelect from "vue-select";
 import { serviceNumber } from "../mixins/functions";
 export default {
-    mixins: [serviceNumber],
+  mixins: [serviceNumber],
   components: {
     vSelect
   },
   data() {
     return {
       giros: [],
-      loading_submit:0,
-      money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'S/. ',
-          suffix: '',
-          precision: 0,
-          masked: false
+      notificationSystem: {
+        options: {
+          success: {
+            position: "topRight"
+          },
+          error: {
+            position: "topRight"
+          }
+        }
       },
-      evaluacion: {   
+      loading_submit: 0,
+      money: {
+        decimal: ",",
+        thousands: ".",
+        prefix: "S/. ",
+        suffix: "",
+        precision: 0,
+        masked: false
+      },
+      evaluacion: {
         prestamo_id: this.$route.params.prestamo,
         propuesta: {
           producto: "",
@@ -615,6 +894,7 @@ export default {
               domingo: 0
             }
           ],
+
           ingresos_por_categoria: [
             {
               concepto: "",
@@ -652,6 +932,33 @@ export default {
               cuota: 0
             }
           ],
+          gasto_financiero_personal: [
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            }
+          ],
           gasto_negocio: [
             {
               entidad: "ALQUILER",
@@ -662,16 +969,15 @@ export default {
               pago: 0
             },
             {
+              entidad: "IMPUESTOS",
+              pago: 0
+            },
+            {
               entidad: "AGUA",
               pago: 0
             },
             {
               entidad: "LUZ",
-              pago: 0
-            }
-            ,
-            {
-              entidad: "IMPUESTOS",
               pago: 0
             }
           ],
@@ -743,6 +1049,33 @@ export default {
               cuota: 0
             }
           ],
+          gasto_financiero_personal: [
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            },
+            {
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+            }
+          ],
           gasto_negocio: [
             {
               entidad: "ALQUILER",
@@ -753,15 +1086,15 @@ export default {
               pago: 0
             },
             {
+              entidad: "IMPUESTOS",
+              pago: 0
+            },
+            {
               entidad: "AGUA",
               pago: 0
             },
             {
               entidad: "LUZ",
-              pago: 0
-            },
-            {
-              entidad: "IMPUESTOS",
               pago: 0
             }
           ]
@@ -784,17 +1117,23 @@ export default {
       this.giros = response.data;
     });
 
-        this.$http.get(`/evaluaciones/datosCualitativas?prestamo=` + this.$route.params.prestamo).then(response => {
-            console.log(response.data)
-    });
-
-
+    this.$http
+      .get(
+        `/evaluaciones/datosCualitativas?prestamo=`+this.$route.params.prestamo
+      )
+      .then(response => {
+        this.evaluacion.titular.giro_negocio=response.data.principal.fuente_ingreso
+        this.$http.get(`/evaluaciones/giro/search/`+this.evaluacion.titular.giro_negocio).then(res => {
+            this.evaluacion.titular.giro_negocio=res.data["giro_negocio"]
+            this.evaluacion.titular.margen_costo=res.data["margen_maximo"]
+        });
+      });
   },
   methods: {
-            retornar() {
+    retornar() {
       this.backMixin_handleBack("");
     },
-        next() {
+    next() {
       $(".nav-tabs .active")
         .parent()
         .next("li")
@@ -823,8 +1162,17 @@ export default {
     },
     guardar() {
       axios.post("/evaluaciones/cuantitativa", this.evaluacion).then(res => {
+        this.$toast.success(
+            "La evaluación fue realizada",
+            "Exitoso",
+            this.notificationSystem.options.success
+          )
+        this.retornar()
         alert("guardado correctamente");
       });
+    },
+    retornar() {
+      this.backMixin_handleBack();
     },
     conyugeIngresosSubtotal(index) {
       this.evaluacion.conyuge.ingresos_negocio[index].subtotal =
@@ -847,27 +1195,27 @@ export default {
 .input-w {
   width: 100%;
 }
-.form-group label{
+.form-group label {
   margin-bottom: 0;
   color: #000000;
   font-weight: 500;
 }
 
-.card-header{
-  padding: 0.2rem 1.25rem!important;
+.card-header {
+  padding: 0.2rem 1.25rem !important;
 }
 .card-body {
-  padding: 10pX 0px!important;
-  margin: 0!important;
+  padding: 10px 0px !important;
+  margin: 0 !important;
 }
-.form-control{
+.form-control {
   height: 27px !important;
-    font-size: 14px !important;
+  font-size: 14px !important;
 }
 
-.title-table{
-    background: #dfdede;
-    text-align: center;
-    border: 1px solid #bababa;
-} 
+.title-table {
+  background: #dfdede;
+  text-align: center;
+  border: 1px solid #bababa;
+}
 </style>

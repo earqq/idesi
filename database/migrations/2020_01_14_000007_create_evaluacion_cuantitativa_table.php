@@ -94,6 +94,20 @@ class CreateEvaluacionCuantitativaTable extends Migration
             $table->decimal('balance_patrimonio_capital', 11, 2)->nullable()->default('0.00');
             $table->decimal('balance_patrimonio_utilidad', 11, 2)->nullable()->default('0.00');
             $table->decimal('balance_patrimonio_total', 11, 2)->nullable()->default('0.00');
+            $table->decimal('gasto_financiero_personal_titular', 11, 2)->nullable()->default('0.00');
+            $table->decimal('gasto_financiero_personal_conyuge', 11, 2)->nullable()->default('0.00');
+            $table->decimal('gasto_financiero_personal_total', 11, 2)->nullable()->default('0.00');
+            $table->decimal('gasto_financiero_personal_validacion', 11, 2)->nullable()->default('0.00');
+            $table->decimal('fc_diario_minimo_ingreso', 11, 2)->nullable()->default('0.00');
+            $table->decimal('fc_diario_cuota', 11, 2)->nullable()->default('0.00');
+            $table->decimal('fc_diario_disponible_diario', 11, 2)->nullable()->default('0.00');
+            $table->decimal('fc_diario_participacion_cuota', 11, 2)->nullable()->default('0.00');
+            $table->string('fc_diario_resultado', 200)->nullable();
+            $table->decimal('fc_semanal_minimo_ingreso', 11, 2)->nullable()->default('0.00');
+            $table->decimal('fc_semanal_cuota', 11, 2)->nullable()->default('0.00');
+            $table->decimal('fc_semanal_participacion_cuota', 11, 2)->nullable()->default('0.00');
+            $table->string('fc_semanal_resultado', 200)->nullable();
+            $table->decimal('fc_semanal_disponible_semana', 11, 2)->nullable()->default('0.00');
         });
     }
 

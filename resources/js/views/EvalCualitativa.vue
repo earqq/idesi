@@ -32,7 +32,18 @@
                 role="tab"
                 aria-controls="laboral"
                 aria-selected="false"
-              >Datos Negocio</a>
+                v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ' "
+              >Datos Negocio</a> 
+              <a
+                class="nav-link text-center"
+                id="laboral-tab"
+                data-toggle="tab"
+                href="#laboral"
+                role="tab"
+                aria-controls="laboral"
+                aria-selected="false"
+                v-else
+              >Datos Vehiculo</a>
             </li>
             <li class="nav-item col-md-2">
               <a
@@ -136,12 +147,13 @@
                 <div class="col-md-12 p-0">
                   <div class="card" style>
                     <div class="card-header d-flex justify-content-between">
-                      <strong>Datos del negocio</strong>
+                      <strong v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ'">Datos del negocio</strong>
+                      <strong v-else>Datos del Vehiculo</strong>
                     </div>
                     <div class="card-body row">
                       <div
                         class="col-md-12 row"
-                        v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES'"
+                        v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ' "
                       >
                         <div class="form-group col-md-4">
                           <label>Ubicacion del negocio</label>
@@ -194,13 +206,13 @@
                             <option value="0">No realizo</option>
                           </select>
                         </div>
-                      </div>
-
-                      <div class="col-md-12 row" v-else>
-                        <div class="col-md-12">
-                          <h4>Datos del vehiculo</h4>
+                        <div class="form-group col-md-2">
+                          <label>Horario de atención</label>
+                          <input type='text' v-model='evaluacion.negocio.horario_atencion' class='form-control'>
                         </div>
-
+                      </div>
+                      
+                      <div class="col-md-12 row" v-else>
                         <div class="form-group col-md-2">
                           <label>Marca</label>
                           <input
@@ -765,6 +777,7 @@
 <script>
 import vSelect from "vue-select";
 import { serviceNumber } from "../mixins/functions";
+ 
 export default {
   mixins: [serviceNumber],
   components: {
@@ -773,6 +786,16 @@ export default {
   data() {
     return {
       giros: [],
+      notificationSystem: {
+        options: {
+          success: {
+            position: "topRight"
+          },
+          error: {
+            position: "topRight"
+          }
+        }
+      },
       colegios: [],
       i: 0,
       loading_submit:0,
@@ -807,6 +830,7 @@ export default {
           miembros_familia: 1,
           hijos: []
         },
+        comentario_central_riesgo:'',
         central_riesgo: {
           1: {
             entidad_financiera: "",
@@ -893,8 +917,17 @@ export default {
       this.loading_submit=1
       axios.post("/evaluaciones/cualitativa", this.evaluacion).then(res => {
         this.loading_submit=0
+        this.$toast.success(
+            "La evaluación fue realizada",
+            "Exitoso",
+            this.notificationSystem.options.success
+          )
+        this.retornar()
         alert("guardado correctamente");
       });
+    },
+    retornar() {
+      this.backMixin_handleBack();
     },
     seleccionColegios(index) {
       this.colegios = [];
