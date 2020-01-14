@@ -263,7 +263,9 @@
                 </tbody>
               </table>
             </div>
-            <div class="form-group col-md-12">
+
+            
+            <div class="form-group col-md-12" v-else>
                 <p class="text-center">No registra hijos</p>
             </div>
           </div>
@@ -399,7 +401,7 @@
             </div>
             <div class="form-group col-md-12">
                 <label for="">Comentarios</label>
-                 <textarea class="form-control" v-model="evaluacion.comentario_colateral"></textarea>
+                 <textarea class="form-control" v-model="evaluacion.comentario_central_riesgo"></textarea>
             </div>
           </div>
         </div>
@@ -537,6 +539,7 @@ export default {
           miembros_familia: 1,
           hijos: []
         },
+        comentario_central_riesgo:'',
         central_riesgo: {
           1: {
             entidad_financiera: "",

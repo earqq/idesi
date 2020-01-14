@@ -71,11 +71,11 @@ class EvaluacionesController extends Controller
         $gasto_financieros_titular=0;
         $gasto_financieros_personal_titular=0;
         $gasto_financieros_conyuge=0;
-        $gasto_financieros_personal_conyuge=0;
+        $gasto_financiero_personal_conyuge=0;
         $gasto_financieros_total=0;
-        $gasto_financieros_personal_total=0;
+        $gasto_financiero_personal_total=0;
         $gasto_financieros_validacion=0;
-        $gasto_financieros_personal_validacion=0;
+        $gasto_financiero_personal_validacion=0;
         $empleados_titular=0;
         $empleados_conyuge=0;
         $empleados_total=0;
@@ -257,16 +257,16 @@ class EvaluacionesController extends Controller
         \Log::alert('gasto financiero personal titular: '.$gasto_hogar_titular);
         //conyuge        
         foreach($request->conyuge["gasto_financiero_personal"] as $gastos){
-            $gasto_financieros_personal_conyuge+=$gastos["cuota"];
+            $gasto_financiero_personal_conyuge+=$gastos["cuota"];
         }
-        $gasto_financieros_personal_conyuge=$gasto_financieros_personal_conyuge*-1;
-        \Log::alert('gasto financiero personal conyuge: '.$gasto_financieros_personal_conyuge);
+        $gasto_financiero_personal_conyuge=$gasto_financiero_personal_conyuge*-1;
+        \Log::alert('gasto financiero personal conyuge: '.$gasto_financiero_personal_conyuge);
         //Total
-        $gasto_financieros_personal_total=$gasto_financieros_personal_titular+$gasto_financieros_personal_conyuge;
-        \Log::alert('gasto financiero personal total: '.$gasto_financieros_personal_total);
+        $gasto_financiero_personal_total=$gasto_financieros_personal_titular+$gasto_financiero_personal_conyuge;
+        \Log::alert('gasto financiero personal total: '.$gasto_financiero_personal_total);
         //validacion
-        $gasto_financieros_personal_validacion=$gasto_financieros_personal_total;
-        \Log::alert('gasto financiero personal validacion: '.$gasto_financieros_personal_validacion);
+        $gasto_financiero_personal_validacion=$gasto_financiero_personal_total;
+        \Log::alert('gasto financiero personal validacion: '.$gasto_financiero_personal_validacion);
         //UTILIDAD
         //titular
     
@@ -284,7 +284,7 @@ class EvaluacionesController extends Controller
                         +$alquiler_conyuge
                         +$empleados_conyuge
                         +$gasto_financieros_conyuge
-                        +$gasto_financieros_personal_conyuge
+                        +$gasto_financiero_personal_conyuge
                         +$gasto_hogar_conyuge);
         \Log::alert("utilidad conyuge: ".$utilidad_conyuge);
         //total
@@ -293,7 +293,7 @@ class EvaluacionesController extends Controller
                         +$alquiler_total
                         +$empleados_total
                         +$gasto_financieros_total
-                        +$gasto_financieros_personal_total
+                        +$gasto_financiero_personal_total
                         +$gasto_hogar_total);
         \Log::alert("utilidad total: ".$utilidad_total);
         //validacion
@@ -302,7 +302,7 @@ class EvaluacionesController extends Controller
                         +$alquiler_validacion
                         +$empleados_validacion
                         +$gasto_financieros_validacion
-                        +$gasto_financieros_personal_validacion
+                        +$gasto_financiero_personal_validacion
                         +$gasto_hogar_validacion);
         \Log::alert("utilidad validacion: ".$utilidad_validacion);        
         
@@ -459,6 +459,75 @@ class EvaluacionesController extends Controller
         if($solvencia>1.5) $solvencia_resultado='BIEN';
         \Log::alert('SOLVENCIA RESULTADO: '.$solvencia_resultado);
 
+        //FLUJO PARA CREDITOS DIARIOS
+        $fc_diario_minimo_ingreso=0;
+        $fc_diario_cuota=0;
+        $fc_diario_disponible_diario=0;
+        $fc_diario_participacion_cuota=0;
+        $fc_diario_resultado=0;
+
+        $fc_semanal_minimo_ingreso=0;
+        $fc_semanal_cuota=0;
+        $fc_semanal_participacion_cuota=0;
+        $fc_semanal_resultado=0;
+        $fc_semanal_disponible_semana=0;
+
+        // FLUJO PARA CREDITOS DIARIOS MINIMO INGRESO
+        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['lunes'];
+        if($request->titular["ingresos_negocio"][0]['martes'] < $fc_diario_minimo_ingreso);
+        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['martes'];
+        if($request->titular["ingresos_negocio"][0]['miercoles']<$fc_diario_minimo_ingreso)
+        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['miercoles'];
+        if($request->titular["ingresos_negocio"][0]['jueves']<$fc_diario_minimo_ingreso)
+        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['jueves'];
+        if($request->titular["ingresos_negocio"][0]['viernes']<$fc_diario_minimo_ingreso)
+        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['viernes'];
+        if($request->titular["ingresos_negocio"][0]['sabado']<$fc_diario_minimo_ingreso)
+        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['sabado'];
+        if($request->titular["ingresos_negocio"][0]['domingo']<$fc_diario_minimo_ingreso)
+        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['domingo'];    
+
+        \Log::alert("FLUJO PARA CREDITOS DIARIOS MINIMO INGRESO: ".$fc_diario_minimo_ingreso);
+        
+        $fc_diario_cuota=$request->evaluacion["propuesta"]["cuotas"];
+        \Log::alert("FLUJO PARA CREDITOS DIARIOS CUOTA: ".$fc_diario_cuota);
+        
+        $fc_diario_disponible_diario=$fc_diario_minimo_ingreso-$fc_diario_cuota;
+        \Log::alert("FLUJO PARA CREDITOS DIARIOS DISPONIBLE DIARIOS: ".$fc_diario_disponible_diario);
+        
+        $fc_diario_participacion_cuota=$fc_diario_cuota/$fc_diario_minimo_ingreso;
+        \Log::alert("FLUJO PARA CREDITOS DIARIOS PARTICIPACION CUOTA: ".$fc_diario_participacion_cuota);
+
+        if($fc_diario_participacion_cuota>100 || $fc_diario_participacion_cuota<0)
+        $fc_diario_resultado='NO TIENE CAPACIDAD';
+        else if($fc_diario_participacion_cuota>50)
+        $fc_diario_resultado='POCA CAPACIDAD';
+        else
+        $fc_diario_resultado='CAPACIDAD PERMITIDA SEGUN PARAMETRO';
+        \Log::alert("FLUJO PARA CREDITOS DIARIOS RESULTADO: ".$fc_diario_resultado);
+
+        // FLUJO PARA CREDITOS SEMANALES
+        $fc_semanal_minimo_ingreso=$request->titular["ingresos_negocio"][0]['subtotal']/100*80;
+        \Log::alert("FLUJO PARA CREDITOS SEMANALES MINIMO INGRESO: ".$fc_semanal_minimo_ingreso);
+
+        $fc_semanal_cuota=$request->evaluacion["propuesta"]["cuotas"];
+        \Log::alert("FLUJO PARA CREDITOS SEMANAL CUOTA: ".$fc_semanal_cuota);
+        
+        $fc_semanal_disponible_semanal=$fc_semanal_minimo_ingreso-$fc_semanal_cuota;
+        \Log::alert("FLUJO PARA CREDITOS SEMANAL DISPONIBLE SEMANAL: ".$fc_semanal_disponible_semanal);
+        
+        $fc_semanal_participacion_cuota=$fc_semanal_cuota/$fc_semanal_minimo_ingreso;
+        \Log::alert("FLUJO PARA CREDITOS DIARIOS PARTICIPACION CUOTA: ".$fc_semanal_participacion_cuota);
+
+        if($fc_semanal_participacion_cuota>100 || $fc_semanal_participacion_cuota<0)
+        $fc_semanal_resultado='NO TIENE CAPACIDAD';
+        else if($fc_semanal_participacion_cuota>50)
+        $fc_semanal_resultado='POCA CAPACIDAD';
+        else
+        $fc_semanal_resultado='CAPACIDAD PERMITIDA SEGUN PARAMETRO';
+        \Log::alert("FLUJO PARA CREDITOS DIARIOS RESULTADO: ".$fc_semanal_resultado);        
+
+        
         $resultado_cuantitativa= new ResultadoCuantitativa;
         $resultado_cuantitativa->prestamo_id=$request->prestamo_id;
         $resultado_cuantitativa->participacion_cuota_titular=$participacion_cuota_titular;
@@ -552,8 +621,10 @@ class EvaluacionesController extends Controller
         $cualitativa->vehiculo=$request->vehiculo;
         $cualitativa->familiar=$request->familiar;
         $cualitativa->central_riesgo=$request->central_riesgo;
+        $cualitativa->comentario_central_riesgo=$request->comentario_central_riesgo;
         $cualitativa->referencias=$request->referencias;
         $cualitativa->colateral=$request->colateral;
+        $cualitativa->comentario_colateral=$request->comentario_colateral;
         $cualitativa->save();
     }
     /**

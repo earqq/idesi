@@ -9,6 +9,7 @@ use App\Cliente;
 use App\Natural;
 use App\Familiar;
 use App\Colegio;
+use App\Cualitativa;
 use App\Evaluacion;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -141,32 +142,30 @@ class EvaluacionController extends Controller
 
     public function giro(Request $request)
     {
-      
-
         $negocios = Negocio::all();
         return $negocios;
-           
     } 
 
     public function colegio(Request $request)
     {
-      
-
         $colegio = Colegio::where("nivel",$request->filtro)->get();
         return $colegio;
-           
     } 
 
     public function colegioCosto(Request $request)
     {
-      
-        // return $request;
-
         $colegio = Colegio::where("nivel",$request->grado)
                             ->where('nombre',$request->colegio)
                             ->select('costo')->first();
         return $colegio;
-           
+    } 
+
+    public function datosCualitativas(Request $request)
+    {
+
+        $cualitativa = Cualitativa::where('prestamo_id',$request->prestamo)->first();
+        return $cualitativa;
+
     } 
 
 
@@ -176,8 +175,6 @@ class EvaluacionController extends Controller
             try{
 
                    DB::beginTransaction();
-
-                //    return $request; 
                     
                    $prestamo = Prestamo::find($request['prestamos_id']);
                    
