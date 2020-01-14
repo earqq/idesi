@@ -32,7 +32,18 @@
                 role="tab"
                 aria-controls="laboral"
                 aria-selected="false"
+                v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ' "
               >Datos Negocio</a>
+              <a
+                class="nav-link text-center"
+                id="laboral-tab"
+                data-toggle="tab"
+                href="#laboral"
+                role="tab"
+                aria-controls="laboral"
+                aria-selected="false"
+                v-else
+              >Datos Vehiculo</a>
             </li>
             <li class="nav-item col-md-2">
               <a
@@ -136,12 +147,13 @@
                 <div class="col-md-12 p-0">
                   <div class="card" style>
                     <div class="card-header d-flex justify-content-between">
-                      <strong>Datos del negocio</strong>
+                      <strong v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ'">Datos del negocio</strong>
+                      <strong v-else>Datos del Vehiculo</strong>
                     </div>
                     <div class="card-body row">
                       <div
                         class="col-md-12 row"
-                        v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES'"
+                        v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ' "
                       >
                         <div class="form-group col-md-4">
                           <label>Ubicacion del negocio</label>
@@ -197,10 +209,6 @@
                       </div>
 
                       <div class="col-md-12 row" v-else>
-                        <div class="col-md-12">
-                          <h4>Datos del vehiculo</h4>
-                        </div>
-
                         <div class="form-group col-md-2">
                           <label>Marca</label>
                           <input

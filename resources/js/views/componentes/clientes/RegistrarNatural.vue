@@ -411,7 +411,7 @@
                                                   </button>
                                               </template>
                                           </td>
-                                          <td><input type="text" v-model="row.documento" class="form-control letter-5" v-mask="{mask: '99999999'}" /></td>
+                                          <td><input type="text" v-model="row.documento" class="form-control letter-5" v-mask="{mask: '99999999'}" @change="datosFamiliar(index)" /></td>
                                           <td><input type="text" v-model="row.nombres" :maxlength="45" class="form-control" /></td>
                                           <td>
                                             <select v-model="row.parentesco" class="form-control">
@@ -768,13 +768,17 @@ export default {
       };
     },
     conyugeAsignacion(){
-      this.form.detalles.push({
-          nombres: "",
-          documento:"",
-          parentesco:"CONYUGE",
-          nacimiento:"",
-          socio:"0",
-      });
+
+      if(this.form.familia.conyugue=='SI'){
+            this.form.detalles.push({
+                nombres: "",
+                documento:"",
+                parentesco:"CONYUGE",
+                nacimiento:"",
+                socio:"0",
+            });
+      }
+
     },
 
     hijosAsignacion(){
@@ -812,6 +816,24 @@ export default {
           me.initForm();
         });
     },
+
+    datosFamiliar(index) {
+      let me = this;
+      // me.loader = "true";
+      axios
+        .post("/consulta/dni", {
+          documento: this.form.detalles[index].documento
+        })
+        .then(function(response) {
+          console.log(response.data);
+          me.form.detalles[index].nombres = response.data["nombres"]  + ' ' +  response.data["surnames"];
+        })
+        .catch(function(error) {
+          console.log(error);
+          me.initForm();
+        });
+    },
+
 
     submit() {
       // if() {
