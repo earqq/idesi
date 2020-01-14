@@ -43,7 +43,7 @@ class CreateEvaluacionCuantitativaTable extends Migration
             $table->decimal('ingresos_ventas_validacion', 11, 2)->nullable()->default('0.00');
             $table->decimal('costo_venta_titular', 11, 2)->nullable()->default('0.00');
             $table->decimal('costo_venta_conyuge', 11, 2)->nullable()->default('0.00');
-            $table->decimal('consto_venta_total', 11, 2)->nullable()->default('0.00');
+            $table->decimal('costo_venta_total', 11, 2)->nullable()->default('0.00');
             $table->decimal('costo_venta_validacion', 11, 2)->nullable()->default('0.00');
             $table->decimal('margen_bruto_titular', 11, 2)->nullable()->default('0.00');
             $table->decimal('margen_bruto_conyuge', 11, 2)->nullable()->default('0.00');
