@@ -437,16 +437,16 @@ class ClienteController extends Controller
 
             // return $cliente;
         //    $pdf = PDF::loadView('reportes.inscripcion',compact('prestamos','cliente','avals','garantias'));
-           $pdf = PDF::loadView('reportes.inscripcion');
+        //    $pdf = PDF::loadView('reportes.inscripcionJuridico');
 
-           if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
-               // $file= new Archivo;
-               // $file->nombre = 'prestamo_'.$prestamo->id;
-               // $file->tipo = 'documento';
-               // $file->extension = 'pdf';
-               // $file->prestamos_id =  $prestamos->id;
-               // $file->save();
-           }
+        //    if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
+        //        // $file= new Archivo;
+        //        // $file->nombre = 'prestamo_'.$prestamo->id;
+        //        // $file->tipo = 'documento';
+        //        // $file->extension = 'pdf';
+        //        // $file->prestamos_id =  $prestamos->id;
+        //        // $file->save();
+        //    }
             DB::commit();
                 return [
                     'success' => true,
