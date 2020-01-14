@@ -33,7 +33,7 @@
                 aria-controls="laboral"
                 aria-selected="false"
                 v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ' "
-              >Datos Negocio</a>
+              >Datos Negocio</a> 
               <a
                 class="nav-link text-center"
                 id="laboral-tab"
@@ -773,6 +773,7 @@
 <script>
 import vSelect from "vue-select";
 import { serviceNumber } from "../mixins/functions";
+ 
 export default {
   mixins: [serviceNumber],
   components: {
@@ -781,6 +782,16 @@ export default {
   data() {
     return {
       giros: [],
+      notificationSystem: {
+        options: {
+          success: {
+            position: "topRight"
+          },
+          error: {
+            position: "topRight"
+          }
+        }
+      },
       colegios: [],
       i: 0,
       loading_submit:0,
@@ -902,8 +913,17 @@ export default {
       this.loading_submit=1
       axios.post("/evaluaciones/cualitativa", this.evaluacion).then(res => {
         this.loading_submit=0
+        this.$toast.success(
+            "La evaluación fue realizada",
+            "Exitoso",
+            this.notificationSystem.options.success
+          )
+        this.retornar()
         alert("guardado correctamente");
       });
+    },
+    retornar() {
+      this.backMixin_handleBack();
     },
     seleccionColegios(index) {
       this.colegios = [];

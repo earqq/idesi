@@ -790,6 +790,16 @@ export default {
   data() {
     return {
       giros: [],
+      notificationSystem: {
+        options: {
+          success: {
+            position: "topRight"
+          },
+          error: {
+            position: "topRight"
+          }
+        }
+      },
       loading_submit: 0,
       money: {
         decimal: ",",
@@ -1148,8 +1158,17 @@ export default {
     },
     guardar() {
       axios.post("/evaluaciones/cuantitativa", this.evaluacion).then(res => {
+        this.$toast.success(
+            "La evaluación fue realizada",
+            "Exitoso",
+            this.notificationSystem.options.success
+          )
+        this.retornar()
         alert("guardado correctamente");
       });
+    },
+    retornar() {
+      this.backMixin_handleBack();
     },
     conyugeIngresosSubtotal(index) {
       this.evaluacion.conyuge.ingresos_negocio[index].subtotal =

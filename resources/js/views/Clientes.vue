@@ -5,8 +5,8 @@
         <div class="row col-md-12 clients-option">
 
           <div class="col-md-2 type-view">
-              <button class="btn btn-def form-control">Card</button>
-              <button class="btn btn-def form-control">Lista</button>
+              <button class="btn btn-def form-control" @click="type_list_card">Card</button>
+              <button class="btn btn-def form-control" @click="type_list_list">Lista</button>
           </div>
           <div class="col-md-5 search-option">
               <input type="text" class="form-control" placeholder="Buscar Cliente" v-model="search_input" @input="search_product">
@@ -23,24 +23,80 @@
 
         </div>
         <div class="col-md-12 clients-date">
-            <div class="row date"  v-if="form.tipo_persona=='PN'">
-                <div class="card-client d-flex align-items-center flex-column justify-content-center" v-for="cliente in clientes" :key="cliente.id" >
-                    <router-link :to="{name:'perfil', params:{documento:cliente.documento}}">
-                      <p class="card-name" v-text="cliente.nombres"></p>
-                      <p class="card-document" v-text="cliente.documento">dni</p>
-                      <img src="https://picsum.photos/100/100" alt />
-                    </router-link>
-                </div>     
+
+            <div class="row date"  v-if="form.tipo_persona=='PN' && type_list=='1'">
+                    <div class="card-client d-flex align-items-center flex-column justify-content-center"  v-for="cliente in clientes" :key="cliente.id" >
+                        <router-link :to="{name:'perfil', params:{documento:cliente.documento}}">
+                          <p class="card-name" v-text="cliente.nombres"></p>
+                          <p class="card-document" v-text="cliente.documento">dni</p>
+                          <img src="https://picsum.photos/100/100" alt />
+                        </router-link> 
+                    </div>
             </div>
-            <div class="row date"  v-else>
+
+            <div class="list-table" v-if="form.tipo_persona=='PN' && type_list=='0'">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>FOTO</th>
+                          <th>DOCUMENTO</th>
+                          <th>NOMBRES</th>
+                          <th>OPCIONES</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr  v-for="cliente in clientes" :key="cliente.id">
+                          <td>
+                            <img src="https://picsum.photos/100/100" alt />
+                          </td>
+                          <td v-text="cliente.nombres"></td>
+                          <td v-text="cliente.documento"></td>
+                          <td>
+                             <router-link :to="{name:'perfil', params:{documento:cliente.documento}}" class="btn btn-orange w-25">
+                                Ver cliente
+                              </router-link>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+              </div>
+
+            <div class="row date"  v-if="form.tipo_persona=='PJ' && type_list=='1'">
                 <div class="card-client d-flex align-items-center flex-column justify-content-center" v-for="cliente in clientes" :key="cliente.id" >
                     <router-link :to="{name:'perfiljuridico', params:{documento:cliente.documento}}">
                       <p class="card-name" v-text="cliente.nombres"></p>
                       <p class="card-document" v-text="cliente.documento">dni</p>
                       <img src="https://picsum.photos/100/100" alt />
                     </router-link>
-                </div>     
+                </div>
             </div>
+
+            <div class="list-table" v-if="form.tipo_persona=='PJ' && type_list=='0'">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>FOTO</th>
+                          <th>RUC</th>
+                          <th>RAZON SOCIAL</th>
+                          <th>OPCIONES</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr  v-for="cliente in clientes" :key="cliente.id">
+                          <td>
+                            <img src="https://picsum.photos/100/100" alt />
+                          </td>
+                          <td v-text="cliente.documento"></td>
+                          <td v-text="cliente.documento"></td>
+                          <td>
+                             <router-link :to="{name:'perfil', params:{documento:cliente.documento}}" class="btn btn-orange w-25">
+                                Ver cliente
+                              </router-link>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+              </div>
         </div>
 
     </div>
@@ -99,6 +155,7 @@ export default {
     return {
       resource: "clientes",
       clientes: [],
+      type_list: 1,
       page: 0,
       tipo: true,
       search_input: "",
@@ -129,6 +186,12 @@ export default {
       // this.search_status = 0;
       await this.getRecords();
       // this.search_status = 1;
+    },
+    type_list_card(){
+      this.type_list=1
+    },
+    type_list_list(){
+      this.type_list=0
     },
     getType(){
       this.getRecords()

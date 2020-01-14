@@ -18660,6 +18660,24 @@ readers do not read off random characters that represent icons */
   text-transform: uppercase;
 }
 
+.clients-date .list-table {
+  padding: 20px 70px;
+  background: #dceaf0;
+}
+
+.clients-date .list-table table {
+  background: #fff;
+}
+
+.clients-date .list-table table th {
+  background: #171b26;
+  color: #fff;
+}
+
+.clients-date .list-table table tr td img {
+  width: 50px;
+}
+
 .profile h1,
 .profile h2,
 .profile h3,

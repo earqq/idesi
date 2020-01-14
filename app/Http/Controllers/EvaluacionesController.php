@@ -620,9 +620,6 @@ class EvaluacionesController extends Controller
         $resultado_cuantitativa->fc_semanal_disponible_semana=$fc_semanal_disponible_semana;
 
         $resultado_cuantitativa->save();
-
-
-
         
         $cuantitativa= new cuantitativa;  
         $cuantitativa->resultado_cuantitativa_id=$resultado_cuantitativa->id;
@@ -632,7 +629,20 @@ class EvaluacionesController extends Controller
         $cuantitativa->probabilidad_infocorp=$request->probabilidad_infocorp;
         $cuantitativa->gastos_hogar=$request->gastos_hogar;
         $cuantitativa->propiedades=$request->propiedades;
-        $cuantitativa->save();      
+        $cuantitativa->save();
+
+        //    // $pdf = PDF::loadView('reportes.prestamo',compact('prestamos','cliente','avals','garantias'));
+        //    $pdf = PDF::loadView('reportes.cuantitativa');
+
+        //    if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
+        //        // $file= new Archivo;
+        //        // $file->nombre = 'prestamo_'.$prestamo->id;
+        //        // $file->tipo = 'documento';
+        //        // $file->extension = 'pdf';
+        //        // $file->prestamos_id =  $prestamos->id;
+        //        // $file->save();
+        //    }
+
     }
     
     public function saveCualitativa(Request $request){
