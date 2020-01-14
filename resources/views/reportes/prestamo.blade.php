@@ -121,13 +121,13 @@
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">CONYUGUE O CONVIVIENTE</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">CONYUGE O CONVIVIENTE</th>
                     </tr>
                 </thead>
                 <tbody>
                         <tr>
                             <td colspan="3">
-                            <span class="title"> Apellidos y Nombres</span>  <span > {{$conyugue->apellidos}} {{$conyugue->nombres}}</span>
+                            <span class="title"> Apellidos y Nombres</span>  <span > {{$conyugue->nombres}}</span>
                             </td>
                         </tr>
 
