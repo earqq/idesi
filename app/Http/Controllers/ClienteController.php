@@ -949,11 +949,19 @@ class ClienteController extends Controller
         $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
         $natural = Natural::where('clientes_id',$cliente->id)->first();
         $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
+        $tiene_conyuge = '';
+        if($conyugue){
+            $tiene_conyuge='SI'; 
+        }
+        else{
+            $tiene_conyuge='NO';
+        }     
+
         $avals = Aval::where('prestamos_id',$prestamo->id)->get();
         $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
 
 
-        $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue'));
+        $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge'));
         return $pdf->stream('solicitud_de_credito.pdf');
     }
 
