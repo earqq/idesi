@@ -618,7 +618,7 @@ export default {
       mesEs: mesConf,
       diaEs: diaConf,
       money: {
-          decimal: ',',
+          decimal: ',', 
           thousands: '.',
           prefix: 'S/. ',
           suffix: '',
