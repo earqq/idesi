@@ -139,24 +139,25 @@
                             :to="{name:'ver', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
                           >Prestamo</router-link>
-                          <router-link
-                            :to="{name:'archivos', params:{prestamo:prestamo.id}}"
-                            class="btn btn-def ml-3"
-                          >Documentos</router-link>
+                        
                           <router-link
                             :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
-                          >Evaluación Cualitativa</router-link>
+                          >Ev. Cualitativa</router-link>
                           <router-link
                             :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
-                          >Evaluación Cuantitativa</router-link>
+                          >Ev. Cuantitativa</router-link>
+                            <router-link
+                            :to="{name:'archivos', params:{prestamo:prestamo.id}}"
+                            class="btn btn-def ml-3"
+                          >Documentos</router-link>
                           <!-- <router-link
                             :to="{name:'visitas', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
                           >Visitas</router-link> -->
                           <button class="btn btn-def ml-3" @click="cambiarView(prestamo.id)">
-                            visitas
+                            Ubicación
                           </button>
                         </div>
                       </div>

@@ -198,8 +198,11 @@
                 <label>Tipo Domicilio</label>
                 <select v-model="form.natural.tipo_domicilio" class="form-control">
                   <option value="0">SELECCIONE</option>
-                  <option value="PROPIO">PROPIO</option>
-                  <option value="ALQUILADO">ALQUILADO</option>
+                  <option value="PROPIA">PROPIA</option>
+                  <option value="PROPIA HIPOTECA">PROPIA HIPOTECA</option>
+                  <option value="DE LOS PADRES">DE LOS PADRES</option>
+                  <option value="DE LOS FAMILIARES">DE LOS FAMILIARES</option>
+                  <option value="ALQUILADA">ALQUILADA</option>
                 </select>
               </div>
  
