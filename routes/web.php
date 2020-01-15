@@ -57,7 +57,7 @@ Route::group(['middleware'=>['auth']],function(){
 
         Route::get('/clientes/solicitudPdf/{prestamo}','ClienteController@SolicitudPdf')->name('solicitud_pdf');
 
-
+     
         Route::get('/evaluacion/cualitativaPdf/{prestamo}','EvaluacionesController@CualitativaPdf')->name('cualitativa_pdf');
 
         Route::get('clientes/prestamo/ver/{prestamo}', 'ClienteController@prestamoVer');
