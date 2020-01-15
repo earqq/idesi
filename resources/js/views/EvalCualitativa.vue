@@ -857,7 +857,6 @@ export default {
             this.notificationSystem.options.success
           )
         this.retornar()
-        alert("guardado correctamente");
       });
     },
     retornar() {
