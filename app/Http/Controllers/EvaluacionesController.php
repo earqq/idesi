@@ -8,8 +8,15 @@ use App\Negocio;
 use App\Imports\NegociosImport;
 use App\Evaluacion;
 use App\Cuantitativa;
+use App\Cliente;
+use App\Subido;
+use App\Archivos;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Storage;
+
 use App\Cualitativa;
 use App\ResultadoCuantitativa;
+use DB;
 use Maatwebsite\Excel\Facades\Excel;
 class EvaluacionesController extends Controller
 {
@@ -662,9 +669,9 @@ class EvaluacionesController extends Controller
             $cualitativa->colateral=$request->colateral;
             $cualitativa->comentario_colateral=$request->comentario_colateral;
             $cualitativa->save();
-
+            
             $prestamos = Prestamo::find($request->prestamo_id);
-            $cliente = Cliente::fin($prestamo->clientes_id);
+            $cliente = Cliente::find($prestamos->clientes_id);
 
             $pdf = PDF::loadView('reportes.cualitativa',compact('cualitativa'));
 
