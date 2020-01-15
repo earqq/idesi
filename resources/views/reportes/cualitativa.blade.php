@@ -21,7 +21,7 @@
 </head>
 <body>
 
-    {{$cualitativa}}
+    
             <table style="border: none;" width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
                 <tr style="border: none;">
                     <th style="border: none;"></th>
