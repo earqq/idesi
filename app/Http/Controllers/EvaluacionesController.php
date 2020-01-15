@@ -8,8 +8,15 @@ use App\Negocio;
 use App\Imports\NegociosImport;
 use App\Evaluacion;
 use App\Cuantitativa;
+use App\Cliente;
+use App\Subido;
+use App\Archivos;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Storage;
+
 use App\Cualitativa;
 use App\ResultadoCuantitativa;
+use DB;
 use Maatwebsite\Excel\Facades\Excel;
 class EvaluacionesController extends Controller
 {
@@ -646,18 +653,55 @@ class EvaluacionesController extends Controller
     }
     
     public function saveCualitativa(Request $request){
-        $cualitativa= new cualitativa;
-        $cualitativa->prestamo_id=$request->prestamo_id;
-        $cualitativa->principal=$request->principal;
-        $cualitativa->negocio=$request->negocio;
-        $cualitativa->vehiculo=$request->vehiculo;
-        $cualitativa->familiar=$request->familiar;
-        $cualitativa->central_riesgo=$request->central_riesgo;
-        $cualitativa->comentario_central_riesgo=$request->comentario_central_riesgo;
-        $cualitativa->referencias=$request->referencias;
-        $cualitativa->colateral=$request->colateral;
-        $cualitativa->comentario_colateral=$request->comentario_colateral;
-        $cualitativa->save();
+        try{
+
+            DB::beginTransaction();
+            
+            $cualitativa= new cualitativa;
+            $cualitativa->prestamo_id=$request->prestamo_id;
+            $cualitativa->principal=$request->principal;
+            $cualitativa->negocio=$request->negocio;
+            $cualitativa->vehiculo=$request->vehiculo;
+            $cualitativa->familiar=$request->familiar;
+            $cualitativa->central_riesgo=$request->central_riesgo;
+            $cualitativa->comentario_central_riesgo=$request->comentario_central_riesgo;
+            $cualitativa->referencias=$request->referencias;
+            $cualitativa->colateral=$request->colateral;
+            $cualitativa->comentario_colateral=$request->comentario_colateral;
+            $cualitativa->save();
+            
+            $prestamos = Prestamo::find($request->prestamo_id);
+            $cliente = Cliente::find($prestamos->clientes_id);
+
+            $pdf = PDF::loadView('reportes.cualitativa',compact('cualitativa'));
+
+            if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output()))
+            {
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->evaluacion_cualitativa=1;
+                $subidos->save();
+
+                $archivo = new Archivo();
+                $archivo->nombre = 'evaluacion_cualitativa' ;
+                $archivo->tipo =  'documento';
+                $archivo->extension =  'pdf';
+                $archivo->prestamos_id =  $request->prestamo_id;
+                $archivo->save();
+            }
+
+            DB::commit();
+                return [
+                    'success' => true,
+                    'data' => 'Cliente creado',
+                ];
+
+        } catch (Exception $e){
+            return [
+                'success' => false,
+            ];
+            DB::rollBack();
+        }
+
     }
     /**
      * Show the form for editing the specified resource.

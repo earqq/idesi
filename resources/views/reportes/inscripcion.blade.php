@@ -27,21 +27,22 @@
                     <th style="border: none;"></th>
                 </tr>
                 <tr >
-                    <td  rowspan="2" valign="middle" align="left"  style="width: 70%">lgo</td>
+                    <td  colspan="2" valign="middle" align="left"  style="width: 70%;border: none;"><span>SOLICITUD DE ADMISIÓN - PERSONA NATURAL</span></td>
                 
-                <td colspan="2" style="padding: 10px 0;"><span class="title">Fecha</span> </td>
+                    <td rowspan="2" style="padding: 10px 0;"><span class="title"> ***  Logo ****</span> </td>
                 </tr>
                     
                 <tr>
-                <td colspan="2" style="padding: 10px 0;"><span class="title">Codigo de socio</span></td>
+                <td colspan="2" style="padding: 10px 0;border: none;"><span class="title">Nro de Registro</span> 45222  <span class="title">Agencia</span> Huánuco </td>
                 </tr>
             </table>
 
 
-            <table style="width: 100%;    margin: 30px 0 5px 0;"   cellspacing="0">
+            <table style="width: 100%; margin: 4px 0 27px 0px;"   cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px">SOLICITUD DE ADMISIÓN PERSONA NATURAL</th>
+                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px">Sr. Presidente del Consejo de Administración de la Cooperativa de Ahorro
+                         y Crédito Sembrar, solicito ser aceptado(a) como socio(a), asimismo me comprometo a cumplir con las disposiciones del Estatuto y Leyes vigentes.</th>
                     </tr>
                 </thead>
             </table>
@@ -110,10 +111,11 @@
                         <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS LABORALES</th>
                     </tr>
                 </thead>
-                <tbody>
+                @if ($laboral->estado_laboral=='TRABAJA')
+                    <tbody>
                         <tr>
-                            <td > <span class="title"> Estado laboral</span> {{$laboral->estado_laboral}} <span ></span>  </td>
-                            <td > <span class="title"> Tipo de trabajador</span> {{$laboral->tipo_trabajador}} <span ></span>  </td>
+                            <td > <span class="title">ESTADO LABORAL</span> {{$laboral->estado_laboral}} <span ></span>  </td>
+                            <td > <span class="title"> TIPO DE TRABAJADO</span> {{$laboral->tipo_trabajador}} <span ></span>  </td>
 
                         </tr>
 
@@ -128,26 +130,37 @@
                             <td> <span class="title">GIRO DE NEGOCIO</span>  {{$laboral->giro_negocio}} <span >  </span> </td>
                         </tr>
                         <tr>
-                            <td colspan="3"> <span class="title">Número</span> [ {{$laboral->numero}} ]  <span class="title">Mz</span>  [ {{$laboral->manzana}} ]   <span class="title">Lote </span> [ {{$laboral->lote}} ]  <span class="title">Dpto</span> [ {{$laboral->dpto}} ] <span class="title">Int</span> [ {{$laboral->int}} ] <span class="title">Piso</span> [ {{$laboral->piso}} ] </td>
-                        </tr>
-                           
-                        <tr>
-                            <td> <span class="title">Distrito</span> <span > {{$laboral->distrito}} </span> </td>
-                            <td> <span class="title">Provincia</span> {{$laboral->provincia}} <span > </span> </td>
-                            <td> <span class="title">Depatamento</span> {{$laboral->departamento}} <span class="title"> PAIS </span> {{$laboral->pais}} </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="3"> <span class="title">Referencia</span> {{$laboral->referencia}} <span > </span> </td>
+                            <td colspan="3"> <span class="title">NÚMERO</span> [ {{$laboral->numero}} ]  <span class="title">Mz</span>  [ {{$laboral->manzana}} ]   <span class="title">Lote </span> [ {{$laboral->lote}} ]  <span class="title">Dpto</span> [ {{$laboral->dpto}} ] <span class="title">Int</span> [ {{$laboral->int}} ] <span class="title">Piso</span> [ {{$laboral->piso}} ] </td>
                         </tr>
                         
                         <tr>
-                            <td> <span class="title">Teléfono</span> <span > {{$laboral->telefono}} </span> </td>
-                            <td> <span class="title">Celular</span> {{$laboral->cdelular}} <span > </span> </td>
-                            <td> <span class="title">Email</span> {{$laboral->email}} <span >  </span> </td>
+                            <td> <span class="title">DISTRITO</span> <span > {{$laboral->distrito}} </span> </td>
+                            <td> <span class="title">PROVINCIA</span> {{$laboral->provincia}} <span > </span> </td>
+                            <td> <span class="title">DEPARTAMENTO</span> {{$laboral->departamento}} <span class="title"> PAIS </span> {{$laboral->pais}} </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="3"> <span class="title">REFERENCIA</span> {{$laboral->referencia}} <span > </span> </td>
+                        </tr>
+                        
+                        <tr>
+                            <td> <span class="title">TÉLEFONO</span> <span > {{$laboral->telefono}} </span> </td>
+                            <td> <span class="title">CELULAR</span> {{$laboral->cdelular}} <span > </span> </td>
+                            <td> <span class="title">EMAIL</span> {{$laboral->email}} <span >  </span> </td>
                         </tr>
 
                 </tbody>
+                @else
+                    <tbody>
+                        <tr>
+                            <td > <span class="title"> ESTADO LABORAL</span> {{$laboral->estado_laboral}} <span ></span>  </td>
+                            @if ($laboral->estado_laboral=='OTROS')
+                            <td > <span class="title"> ESPECIFICACIÓN</span> {{$laboral->especificacion}} <span ></span>  </td>   
+                            @endif
+                        </tr>
+                    </tbody>
+                @endif
+                
             </table>
 
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
@@ -160,11 +173,21 @@
                           
                             <tr>
                                     <td> <span class="title">¿TIENE HIJOS?</span> {{$familiar->hijos}} <span ></td>
-                                    <td> <span class="title">CUANTOS</span> <span > {{$familiar->numero}} </span> </td>
+                                    @if ($familiar->hijos=='si')
+                                        <td> <span class="title">CUANTOS</span> <span > {{$familiar->numero}} </span> </td>
+                                    @else
+                                    <td><span >No cuenta con hijos actualmente</span> </td>    
+                                    @endif
+                                    
                             </tr>
                             <tr>
                                 <td> <span class="title">¿TIENE CONYUGE?</span> {{$familiar->conyugue}} <span ></td>
+                             @if ($familiar->conyugue=='SI')
                                 <td> <span class="title">OCUPACIÓN</span> <span > {{$familiar->ocupacion}} </span> </td>
+                             @else
+                             <td> <span > No cuenta con conyuge ó conviviente </span> </td> 
+                             @endif
+                                
                             </tr>
     
                             <tr>
@@ -172,16 +195,16 @@
                             </tr>
                             
                             <tr colspan="3" >
-                                <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
+                                <table style="width: 100%;margin-bottom: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                                         <thead>
 
                                             
                                             <tr>
-                                                <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">Apellidos y nombre</th>
-                                                <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">Doc. Identidad</th>
-                                                <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">Parentesco</th>
-                                                <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">Nacimiento</th>
-                                                <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">¿Socio?</th>
+                                                <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none; font-size: 10px">Apellidos y nombre</th>
+                                                <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Doc. Identidad</th>
+                                                <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Parentesco</th>
+                                                <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Nacimiento</th>
+                                                <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">¿Socio?</th>
                                             </tr>
                                            
                                         </thead>
@@ -226,7 +249,7 @@
                                 <td><span class="title">RELACIÓN CON EL SOLICITANTE</span> {{$adicional->relacion}}</td>
                             </tr>
                             <tr>
-                                <td colspan="3"> ********* Esta sección debe ser llenada por la Cooperativa ***********</td>
+                                <td colspan="3"> ******************** Esta sección debe ser llenada por la Cooperativa **********************</td>
                             </tr>
                 </tbody>
             </table>
