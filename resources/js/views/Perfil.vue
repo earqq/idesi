@@ -144,12 +144,12 @@
                             class="btn btn-def ml-3"
                           >Documentos</router-link>
                           <router-link
-                            v-if="prestamo.cualitativa"
+                            v-if="prestamo.cualitativa =='0'"
                             :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
                           >Evaluación Cualitativa</router-link>
                           <router-link
-                          v-if="prestamo.cuantitativa"
+                          v-if="prestamo.cuantitativa=='0'"
                             :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
                           >Evaluación Cuantitativa</router-link>
