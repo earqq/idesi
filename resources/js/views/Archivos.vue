@@ -472,7 +472,7 @@ export default {
                 window.open('/clientes/solicitudPdf/'+this.$route.params.prestamo,'_blank'); 
       },
       cualitativaPdf(){
-        
+               window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamo,'_blank'); 
       }
   }
 };

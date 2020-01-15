@@ -721,25 +721,10 @@ class EvaluacionesController extends Controller
 
     public function CualitativaPdf($prestamo){
 
+        $cualitativa= cualitativa::where('prestamo_id',$prestamo);
 
-        $prestamo= Prestamo::find($prestamo);
-        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
-        $natural = Natural::where('clientes_id',$cliente->id)->first();
-        $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
-        $tiene_conyuge = '';
-        if($conyugue){
-            $tiene_conyuge='SI'; 
-        }
-        else{
-            $tiene_conyuge='NO';
-        }     
-
-        $avals = Aval::where('prestamos_id',$prestamo->id)->get();
-        $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
-
-
-        $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge'));
-        return $pdf->stream('solicitud_de_credito.pdf');
+        $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
+        return $pdf->stream('evaluacion_cualitativa.pdf');
 
 
     }
