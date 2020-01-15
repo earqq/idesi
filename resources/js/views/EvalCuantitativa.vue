@@ -80,7 +80,7 @@
                             v-bind:key="index"
                           >
                             <td>
-                              <input type="text" class="form-control" v-model="val.concepto" />
+                              <input  :disabled='index==0' type="text" class="form-control" v-model="val.concepto" />
                             </td>
                             <td>
                               <money
@@ -1030,6 +1030,7 @@ export default {
       )
       .then(response => {
         console.log(response.data)
+        this.evaluacion.titular.ingresos_negocio[0].concepto=response.data.principal.fuente_ingreso
         this.evaluacion.titular.giro_negocio=response.data.principal.fuente_ingreso
         this.$http.get(`/evaluaciones/giro/search/`+this.evaluacion.titular.giro_negocio).then(res => {
             this.evaluacion.titular.giro_negocio=res.data["giro_negocio"]
