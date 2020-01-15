@@ -16,6 +16,7 @@ use App\Cualitativa;
 use App\ResultadoCuantitativa;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class EvaluacionesController extends Controller
 {
