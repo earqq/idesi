@@ -633,6 +633,8 @@ class ClienteController extends Controller
             
             if($request->input('idprestamo')<0){
                $prestamo = new Prestamo();
+               $prestamo->cualitativa = 0;
+               $prestamo->cuantitativa = 0;
             }
             else{
                 $prestamo = Prestamo::where('id',$request->input('idprestamo'))->first();
@@ -654,6 +656,7 @@ class ClienteController extends Controller
             $prestamo->tasa = $request->input('tasa');
             $prestamo->comentarios = $request->input('comentarios');
             $prestamo->estado = $request->input('estado');
+            
             $prestamo->save();
 
             if($request->input('idprestamo')<0){
