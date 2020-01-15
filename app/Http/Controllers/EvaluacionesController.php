@@ -10,8 +10,12 @@ use App\Negocio;
 use App\Imports\NegociosImport;
 use App\Evaluacion;
 use App\Cuantitativa;
+use App\Cliente;
+use App\Subido;
+use App\Archivos; 
 use App\Cualitativa;
 use App\ResultadoCuantitativa;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 class EvaluacionesController extends Controller
 {
