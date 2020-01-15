@@ -311,12 +311,6 @@ class ClienteController extends Controller
                 $pdf = PDF::loadView('reportes.inscripcion',compact('laboral','adicional','asociativa','declaracion','familiar','cliente','detallesfam','natural'));
 
                 if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
-                    // $file= new Archivo;
-                    // $file->nombre = 'prestamo_'.$prestamo->id;
-                    // $file->tipo = 'documento';
-                    // $file->extension = 'pdf';
-                    // $file->prestamos_id =  $prestamos->id;
-                    // $file->save();
                 }
                 
 
@@ -402,6 +396,16 @@ class ClienteController extends Controller
                     $representante->juridicos_id= $juridico->id;
                     $representante->save();
                 }
+                
+                $listaRepresentante= Representante::where('juridicos_id',$juridico->id)->get();
+                $tiene_representantes = '';
+
+                if($listaRepresentante){
+                    $tiene_representantes='SI'; 
+                }
+                else{
+                    $tiene_representantes='NO';
+                }  
 
                 foreach ($request->director as $ep=>$dr) {
                    $director= new Director;
@@ -412,6 +416,16 @@ class ClienteController extends Controller
                    $director->save();
                 }
 
+                $listaDirector= Director::where('juridicos_id',$juridico->id)->get();
+                $tiene_directores = '';
+
+                if($listaDirector){
+                    $tiene_directores='SI'; 
+                }
+                else{
+                    $tiene_directores='NO';
+                }  
+
                 foreach ($request->accionista as $ep=>$ac) {
                    $accionista= new Accionista;
                    $accionista->nombres = $ac['nombres'];
@@ -419,6 +433,15 @@ class ClienteController extends Controller
                    $accionista->juridicos_id= $juridico->id;
                    $accionista->save();
                 }
+                $listaAccionista= Accionista::where('juridicos_id',$juridico->id)->get();
+                $tiene_accionistas = '';
+
+                if($listaAccionista){
+                    $tiene_accionistas='SI'; 
+                }
+                else{
+                    $tiene_accionistas='NO';
+                }  
 
                 $asociativa = New Asociativa;
                 $asociativa->inscripcion= $request->asociativa['inscripcion'];    
@@ -433,20 +456,10 @@ class ClienteController extends Controller
                 $declaracion->juridicos_id= $juridico->id;
                 $declaracion->save();
                 
+                $pdf = PDF::loadView('reportes.inscripcionJuridico',compact('cliente','juridico','asociativa','declaracion','listaAccionista','tiene_accionistas','listaDirector','tiene_directores','listaRepresentante','tiene_representantes'));
 
-
-            // return $cliente;
-        //    $pdf = PDF::loadView('reportes.inscripcion',compact('prestamos','cliente','avals','garantias'));
-        //    $pdf = PDF::loadView('reportes.inscripcionJuridico');
-
-        //    if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
-        //        // $file= new Archivo;
-        //        // $file->nombre = 'prestamo_'.$prestamo->id;
-        //        // $file->tipo = 'documento';
-        //        // $file->extension = 'pdf';
-        //        // $file->prestamos_id =  $prestamos->id;
-        //        // $file->save();
-        //    }
+                if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
+                }
             DB::commit();
                 return [
                     'success' => true,
@@ -520,9 +533,11 @@ class ClienteController extends Controller
     {
 
         $clientes = Cliente::where('documento',$documento)
-                             ->join('juridicos','clientes.id','=','juridicos.clientes_id')->first();
+                             ->join('juridicos','clientes.id','=','juridicos.clientes_id')
+                             ->select('clientes.id AS idcliente','clientes.documento','juridicos.id','juridicos.razon_social','juridicos.partida_registral','juridicos.celular','juridicos.direccion')
+                             ->first();
 
-        $prestamos = Prestamo::where('clientes_id',"=",$clientes->id)->get();
+        $prestamos = Prestamo::where('clientes_id',"=",$clientes->idcliente)->get();
 
         // return 'cliente'=>$clientes;
         return ['cliente'=>$clientes, 'prestamos'=>$prestamos];
@@ -564,9 +579,6 @@ class ClienteController extends Controller
 
         return compact('cliente','juridico');
     }
-
-
-
 
     public function prestamo(Request $request)
     {
@@ -733,8 +745,6 @@ class ClienteController extends Controller
 
         
     }
-
-
 
     public function prestamoJuridico(Request $request)
     {
@@ -923,12 +933,6 @@ class ClienteController extends Controller
    
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Cliente  $cliente
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Cliente $cliente)
     {
         //
@@ -941,28 +945,42 @@ class ClienteController extends Controller
         return $cliente->nombres.'_'. $cliente->apellidos .'_' . $cliente->id;
     }
 
-
     public function SolicitudPdf($prestamo){
 
 
         $prestamo= Prestamo::find($prestamo);
         $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
-        $natural = Natural::where('clientes_id',$cliente->id)->first();
-        $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
-        $tiene_conyuge = '';
-        if($conyugue){
-            $tiene_conyuge='SI'; 
+
+        if($cliente->tipo_documento == 'RUC'){
+            $juridico = Juridico::where('clientes_id',$cliente->id)->first();
+            $avals = Aval::where('prestamos_id',$prestamo->id)->get();
+            $garantias = Garantia::where('prestamos_id',$prestamo->id)->get(); 
+
+            $pdf = \PDF::loadView('reportes.prestamoJuridico',compact('prestamo','cliente','avals','garantias','juridico'));
+            return $pdf->stream('solicitud_de_credito.pdf');
+
         }
-        else{
-            $tiene_conyuge='NO';
-        }     
+        else
+        {
+            $natural = Natural::where('clientes_id',$cliente->id)->first();
+            $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
+            $tiene_conyuge = '';
+            if($conyugue){
+                $tiene_conyuge='SI'; 
+            }
+            else{
+                $tiene_conyuge='NO';
+            }     
+    
+            $avals = Aval::where('prestamos_id',$prestamo->id)->get();
+            $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+    
+    
+            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge'));
+            return $pdf->stream('solicitud_de_credito.pdf');
 
-        $avals = Aval::where('prestamos_id',$prestamo->id)->get();
-        $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+        }
 
-
-        $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge'));
-        return $pdf->stream('solicitud_de_credito.pdf');
     }
 
 }

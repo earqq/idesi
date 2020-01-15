@@ -181,7 +181,7 @@
           <div class="date-body">
             <div class="date-body">
             <a
-                :href="'../storage/'+cliente.documento+'_'+cliente.id+'/general/documento/inscripcion_de_socio.pdf'"
+                :href="'../storage/'+cliente.documento+'_'+cliente.idcliente+'/general/documento/inscripcion_de_socio.pdf'"
                 target="_blank"
               >
 
