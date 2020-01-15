@@ -646,12 +646,6 @@ class EvaluacionesController extends Controller
         $prestamo->cuantitativa=1;
         $prestamo->save();
 
-        $archivo = new Archivo();
-        $archivo->nombre = 'evaluacion_cuantitativa' ;
-        $archivo->tipo =  'documento';
-        $archivo->extension =  'pdf';
-        $archivo->prestamos_id =  $request->prestamo_id;
-        $archivo->save(); 
 
         $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
         $subidos->evaluacion_cuantitativa=1;
@@ -693,13 +687,6 @@ class EvaluacionesController extends Controller
             $prestamo = Prestamo::find($request->prestamo_id); 
             $prestamo->cualitativa=1;
             $prestamo->save();
-
-            $archivo = new Archivo();
-            $archivo->nombre = 'evaluacion_cualitativa' ;
-            $archivo->tipo =  'documento';
-            $archivo->extension =  'pdf';
-            $archivo->prestamos_id =  $request->prestamo_id;
-            $archivo->save(); 
 
             $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
             $subidos->evaluacion_cualitativa=1;
