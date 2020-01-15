@@ -141,10 +141,12 @@
                           >Prestamo</router-link>
                         
                           <router-link
+                            v-if="prestamo.cualitativa"
                             :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
                           >Ev. Cualitativa</router-link>
                           <router-link
+                          v-if="prestamo.cuantitativa"
                             :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
                           >Ev. Cuantitativa</router-link>
@@ -244,7 +246,7 @@ export default {
         this.prestamos = response.data["prestamos"];
         this.loader = 0;
         this.loader_loan = 0;
-        console.log(this.cliente);
+        console.log(this.prestamos);
       });
   },
   methods: {

@@ -32,7 +32,7 @@ class Prestamo extends Model
     /**
      * @var array
      */
-    protected $fillable = ['clientes_id', 'users_id', 'producto', 'forma', 'importe', 'aporte', 'plazo', 'cuotas', 'tasa', 'comentarios', 'producto_final', 'forma_final', 'aporte_final', 'importe_final', 'plazo_final', 'cuota_final', 'tasa_final', 'estado'];
+    protected $fillable = ['clientes_id', 'users_id', 'producto', 'forma','cuantitativa','cualitativa','importe', 'aporte', 'plazo', 'cuotas', 'tasa', 'comentarios', 'producto_final', 'forma_final', 'aporte_final', 'importe_final', 'plazo_final', 'cuota_final', 'tasa_final', 'estado'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
