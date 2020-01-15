@@ -122,7 +122,7 @@
                 <i class="fas fa-trash"></i> ELIMINAR
               </button>
 
-              <a v-if="archivo.nombre=='evaluacion_cualitativa'" @click="cualitativaPdf()" target="_blank"
+              <a href="#" v-if="archivo.nombre=='evaluacion_cualitativa'" @click="cualitativaPdf()" target="_blank"
               >
               <p v-text="archivo.nombre+'.'+archivo.extension"></p>
                 <div class="mask">
@@ -130,7 +130,7 @@
                 </div>
               </a>
 
-              <a v-if="archivo.nombre=='evaluacion_cuantitativa'" @click="cualitativaPdf()" target="_blank"
+              <a href="#" v-if="archivo.nombre=='evaluacion_cuantitativa'" @click="cualitativaPdf()" target="_blank"
               >
               <p v-text="archivo.nombre+'.'+archivo.extension"></p>
                 <div class="mask">
@@ -472,7 +472,7 @@ export default {
                 window.open('/clientes/solicitudPdf/'+this.$route.params.prestamo,'_blank'); 
       },
       cualitativaPdf(){
-               window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamo,'_blank'); 
+                window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamo,'_blank'); 
       }
   }
 };

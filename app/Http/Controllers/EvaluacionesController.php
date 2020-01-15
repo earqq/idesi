@@ -726,6 +726,7 @@ class EvaluacionesController extends Controller
 
         $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
         return $pdf->stream('evaluacion_cualitativa.pdf');
+
     }
 
 
@@ -736,6 +737,8 @@ class EvaluacionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function edit($id)
     {
         //
