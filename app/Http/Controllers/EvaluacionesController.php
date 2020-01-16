@@ -704,14 +704,13 @@ class EvaluacionesController extends Controller
             ];
             DB::rollBack();
         }
-
+ 
     }
 
     public function CualitativaPdf($prestamo){
 
-        $cualitativa= cualitativa::where('prestamo_id',$prestamo);
-
-        $pdf = \PDF::loadView('reportes.cualitativa');
+        $cualitativa= cualitativa::where('prestamo_id',intval($prestamo))->first();
+        $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
         return $pdf->stream('evaluacion_cualitativa.pdf');
 
     }

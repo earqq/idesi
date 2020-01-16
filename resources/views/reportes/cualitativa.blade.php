@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>EVALUACION CUALITATIVA</title>
     <style>
         body{
             font-family: monospace;
@@ -20,6 +20,7 @@
     </style>
 </head>
 <body>
+
 
     
             <table style="border: none;" width="100%" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
@@ -47,9 +48,9 @@
                 </thead>
                 <tbody>
                         <tr>
-                            <td> <span class="title">FUENTE DE INGRESO </span> $natural->nombres <span > </span> </td>
-                            <td > <span class="title">DESTINO DE CREDITO</span> $natural->nombres <span > </span> </td>
-                            <td > <span class="title">DESCRIPCIÓN DE DESTINO</span> $natural->nombres <span > </span> </td>
+                            <td> <span class="title">FUENTE DE INGRESO </span> {{$cualitativa->principal['destino_credito_descripcion']}} <span > </span> </td>
+                            <td > <span class="title">DESTINO DE CREDITO</span> {{$cualitativa->principal['destino_credito']}} <span > </span> </td>
+                            <td > <span class="title">DESCRIPCIÓN DE DESTINO</span> {{$cualitativa->principal['fuente_ingreso']}} <span > </span> </td>
                         </tr>
                 </tbody>
             </table>
@@ -57,21 +58,48 @@
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS PRINCIPALES</th>
+                        @if ($cualitativa->principal['fuente_ingreso'] == 'TRANSPORTE BAJAJ' || $cualitativa->principal['fuente_ingreso'] == 'TRANSPORTES')
+                            <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS VEHICULO</th>
+                        @else
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS NEGOCIO</th>
+                        @endif
+                        
                     </tr>
                 </thead>
-                <tbody>
+                @if ($cualitativa->principal['fuente_ingreso'] == 'TRANSPORTE BAJAJ' || $cualitativa->principal['fuente_ingreso'] == 'TRANSPORTES')
+                    <tbody>
                         <tr>
-                            <td> <span class="title">UBICACIÓN DE INGRESO </span> $natural->nombres <span > </span> </td>
-                            <td > <span class="title">ANITGUEDAD</span> $natural->nombres <span > </span> </td> 
-                            <td > <span class="title">LOCAL</span> $natural->nombres <span > </span> </td> 
+                            <td> <span class="title">MARCA</span> {{$cualitativa->negocio['ubicacion']}} <span > </span> </td>
+                            <td > <span class="title">MODELO</span> {{$cualitativa->negocio['antiguedad']}} <span > </span> </td> 
+                            <td > <span class="title">AÑO</span> {{$cualitativa->negocio['local']}} <span > </span> </td> 
                         </tr>
                         <tr>
-                            <td > <span class="title">LICENCIA FUNCIONAMIENTO</span> $natural->nombres <span > </span> </td>
-                            <td > <span class="title">REALIZO MEJORAS</span> $natural->nombres <span > </span> </td> 
-                            <td > <span class="title">HORARIO DE ANTENCION</span> $natural->nombres <span > </span> </td> 
+                            <td > <span class="title">TIPO DE SERVICIO</span> {{$cualitativa->negocio['licencia_funcionamiento']}} <span > </span> </td>
+                            <td > <span class="title">ANTIGUEDAD DE SERVICIO</span> {{$cualitativa->negocio['mejoras_local']}} <span > </span> </td> 
+                            <td > <span class="title">PERMISO SERVICIO</span> {{$cualitativa->negocio['horario_atencion']}} <span > </span> </td> 
                         </tr>
-                </tbody>
+                        <tr>
+                            <td > <span class="title">LICENCIA FUNCIONAMIENTO</span> {{$cualitativa->negocio['licencia_funcionamiento']}} <span > </span> </td>
+                            <td > <span class="title">REALIZO MEJORAS</span> {{$cualitativa->negocio['mejoras_local']}} <span > </span> </td> 
+                            <td ></td> 
+                        </tr>
+                    
+                    </tbody>        
+                @else
+                 <tbody>
+                    <tr>
+                        <td> <span class="title">UBICACIÓN DE INGRESO </span> {{$cualitativa->negocio['ubicacion']}} <span > </span> </td>
+                        <td > <span class="title">ANITGUEDAD</span> {{$cualitativa->negocio['antiguedad']}} <span > </span> </td> 
+                        <td > <span class="title">LOCAL</span> {{$cualitativa->negocio['local']}} <span > </span> </td> 
+                    </tr>
+                    <tr>
+                        <td > <span class="title">LICENCIA FUNCIONAMIENTO</span> {{$cualitativa->negocio['licencia_funcionamiento']}} <span > </span> </td>
+                        <td > <span class="title">REALIZO MEJORAS</span> {{$cualitativa->negocio['mejoras_local']}} <span > </span> </td> 
+                        <td > <span class="title">HORARIO DE ANTENCION</span> {{$cualitativa->negocio['horario_atencion']}} <span > </span> </td> 
+                    </tr>
+                 </tbody> 
+                @endif
+                
             </table>
 
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
@@ -82,9 +110,9 @@
                 </thead>
                 <tbody>
                         <tr>
-                            <td> <span class="title">TIPO DE VIVIENDA </span> $natural->nombres <span > </span> </td>
-                            <td > <span class="title">SITUACIÓN FAMILIAR</span> $natural->nombres <span > </span> </td> 
-                            <td > <span class="title">MIEMBROS DE FAMILIA</span> $natural->nombres <span > </span> </td> 
+                            <td> <span class="title">TIPO DE VIVIENDA </span> naturalnombres <span > </span> </td>
+                            <td > <span class="title">SITUACIÓN FAMILIAR</span> naturalnombres <span > </span> </td> 
+                            <td > <span class="title">MIEMBROS DE FAMILIA</span> naturalnombres <span > </span> </td> 
                         </tr> 
                 </tbody>
             </table>
@@ -98,8 +126,9 @@
                 </thead>
                 <tbody>
 
-                    <tr colspan="3" >
-                        <table style="width: 100%;margin-bottom: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
+                    <tr  >
+                        <td colspan="3">
+                            <table style="width: 100%;margin-bottom: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                                 <thead>
 
                                     
@@ -116,22 +145,25 @@
                                 </thead>
                                 <tbody>
                                             <tr>
-                                                <td>$detalles->nombres</td>
-                                                <td>$detalles->documento</td>
-                                                <td>$detalles->parentesco</td>
-                                                <td>$detalles->nacimiento</td>
-                                                <td>$detalles->socio</td>
-                                                <td>$detalles->socio</td>
-                                                <td>$detalles->socio</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>        
                                 </tbody>
                             </table>
+                        </td>
                     </tr>
-                    <tr colspan="3" >
-                         <span class="title">COMENTARIOS</span>
-                         <span>
-
-                         </span>
+                    <tr  >
+                         <td colspan="3">
+                            <span class="title">COMENTARIOS</span>
+                            <span>
+   
+                            </span>
+                         </td>
                     </tr>
 
                 </tbody>
@@ -159,9 +191,9 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>$detalles->nombres</td>
-                                        <td>$detalles->documento</td>
-                                        <td>$detalles->parentesco</td> 
+                                        <td>detallesnombres</td>
+                                        <td>detallesdocumento</td>
+                                        <td>detallesparentesco</td> 
                                     </tr>       
                                 </tbody>
                             </table>
@@ -169,7 +201,8 @@
                 </tbody>
             </table>
 
-
+           
+            
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
@@ -191,8 +224,8 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>$detalles->nombres</td>
-                                        <td>$detalles->documento</td> 
+                                        <td>detallesnombres</td>
+                                        <td>detallesdocumento</td> 
                                     </tr>       
                                 </tbody>
                             </table>
