@@ -389,7 +389,6 @@
                                   class="form-control"
                                   @change="seleccionColegios(index)"
                                 >
-                                  <option value="0">SELECCIONE</option>
                                   <option value="INICIAL">INICIAL</option>
                                   <option value="PRIMARIA">PRIMARIA</option>
                                   <option value="SECUNDARIA">SECUNDARIA</option>
@@ -402,7 +401,6 @@
                                   class="form-control"
                                   @change="seleccionColegiosCosto(index)"
                                 >
-                                  <option value="0">SELECCIONE</option>
                                   <option
                                     v-for="colegio in colegios"
                                     v-bind:value="colegio.nombre"

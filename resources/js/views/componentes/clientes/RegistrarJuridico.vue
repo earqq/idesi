@@ -61,7 +61,6 @@
                 <div class="form-group col-md-2">
                   <label>P.N con negocio</label>
                   <select v-model="form.juridico.tipo_negocio" class="form-control">
-                    <option value="0">SELECCIONE</option>
                     <option value="E.I.R.L">E.I.R.L</option>
                     <option value="S.A.C">S.A.C</option>
                     <option value="S.A">S.A</option>
@@ -289,7 +288,6 @@
                 <div class="form-group col-md-6">
                     <label>Es sujeto a informar a la UIF Perú</label>
                     <select v-model="form.declaracion.uif" class="form-control">
-                      <option value="0">SELECCIONE</option>
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
                     </select>
@@ -297,7 +295,6 @@
                 <div class="form-group col-md-6">
                     <label>Estado</label>
                     <select v-model="form.declaracion.estado" class="form-control">
-                      <option value="0">SELECCIONE</option>
                       <option value="ADMITIDO">ADMITIDO</option>
                       <option value="RECHAZADO">RECHAZADO</option>
                     </select>
