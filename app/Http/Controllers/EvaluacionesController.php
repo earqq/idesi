@@ -632,7 +632,8 @@ class EvaluacionesController extends Controller
 
         $resultado_cuantitativa->save();
         
-        $cuantitativa= new cuantitativa;  
+        $cuantitativa= new cuantitativa;
+        $cuantitativa->prestamo_id=$request->prestamo_id;
         $cuantitativa->resultado_cuantitativa_id=$resultado_cuantitativa->id;
         $cuantitativa->propuesta=$request->propuesta;
         $cuantitativa->titular=$request->titular;
@@ -710,7 +711,17 @@ class EvaluacionesController extends Controller
     public function CualitativaPdf($prestamo){
 
         $cualitativa= cualitativa::where('prestamo_id',intval($prestamo))->first();
+        // return $cualitativa;
         $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
+        return $pdf->stream('evaluacion_cualitativa.pdf');
+
+    }
+
+    public function CuantitativaPdf($prestamo){
+
+        $cuantitativa= cuantitativa::where('prestamo_id',$prestamo)->first();
+        // return $cuantitativa;
+        $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
         return $pdf->stream('evaluacion_cualitativa.pdf');
 
     }

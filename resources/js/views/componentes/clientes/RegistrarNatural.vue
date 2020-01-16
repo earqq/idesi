@@ -32,7 +32,6 @@
                <div class="form-group col-md-2">
                 <label>Tipo de Documento</label>
                 <select v-model="form.cliente.tipo_documento" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="DNI">DNI</option>
                   <option value="CE">CE</option>
                   <option value="PASAPORTE">PASAPORTE</option>
@@ -85,7 +84,6 @@
               <div class="form-group col-md-2">
                 <label>Estado Civil</label>
                 <select v-model="form.natural.estado_civil" :maxlength="25"  class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="SOLTERO">SOLTERO</option>
                   <option value="CASADO">CASADO</option>
                   <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -96,7 +94,6 @@
               <div class="form-group col-md-2">
                 <label>Genero</label>
                 <select v-model="form.natural.genero" :maxlength="10" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="FEMENINO">FEMENINO</option>
                   <option value="MASCULINO">MASCULINO</option>
                 </select>
@@ -104,7 +101,6 @@
               <div class="form-group col-md-2">
                 <label>Grado de Instrucción</label>
                 <select v-model="form.natural.grado_instruccion" :maxlength="10" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="PRIMARIA">PRIMARIA</option>
                   <option value="TECNICO">TECNICO</option>
                   <option value="SUPERIOR">SUPERIOR</option>
@@ -206,7 +202,6 @@
               <div class="form-group col-md-2">
                 <label>Estado Trabajador</label>
                 <select v-model="form.laboral.estado_laboral" :maxlength="15" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="TRABAJA">TRABAJA</option>
                   <option value="NO TRABAJA">NO TRABAJA</option>
                   <option value="JUBILADO">JUBILADO</option>
@@ -225,7 +220,6 @@
                 <div class="form-group col-md-3"> 
                   <label>Estado Trabajador</label>
                   <select v-model="form.laboral.tipo_trabajador" :maxlength="15" class="form-control">
-                    <option value="0">SELECCIONE</option>
                     <option value="INDEPENDIENTE">INDEPENDIENTE</option>
                     <option value="DEPENDIENTE">DEPENDIENTE</option>
                     <option value="AGRICULTOR">AGRICULTOR</option>
@@ -238,7 +232,6 @@
                 <div class="form-group col-md-2">
                   <label>Ingreso Mensual</label>
                   <select v-model="form.laboral.ingreso_mensual" :maxlength="25" class="form-control">
-                    <option value="0">SELECCIONE</option>
                     <option value="HASTA S/. 1000">HASTA S/. 1000</option>
                     <option value="S/. 1.001 a S/ 2.500">S/. 1000 a S/ 2.500</option>
                     <option value="S/. 2.500 a S/ 5.000">S/. 2.500 a S/ 5.000</option>
@@ -359,7 +352,6 @@
               <div class="form-group col-md-3">
                   <label>¿Tiene Hijos?</label>
                   <select v-model="form.familia.hijos" class="form-control">
-                    <option value="0">SELECCIONE</option>
                     <option value="SI">SI</option>
                     <option value="NO">NO</option>
                   </select>
@@ -372,7 +364,6 @@
                <div class="form-group col-md-3">
                   <label>¿Tiene cónyuge ó conviviente?</label>
                   <select v-model="form.familia.conyugue" class="form-control" @change="conyugeAsignacion()">
-                    <option value="0">SELECCIONE</option>
                     <option value="SI">SI</option>
                     <option value="NO">NO</option>
                   </select>
@@ -381,7 +372,7 @@
                 <div class="form-group col-md-3" v-if="form.familia.conyugue=='SI'">
                   <label>Ocupación del cónyuge ó conviviente?</label>
                   <select v-model="form.familia.ocupacion" :maxlength="15" class="form-control">
-                    <option value="0">SELECCIONE</option>
+                    
                     <option value="AMA DE CASA">AMA DE CASA</option>
                     <option value="DEPENDIENTE">DEPENDIENTE</option>
                     <option value="INDEPENDIENTE">INDEPENDIENTE</option>
@@ -415,7 +406,7 @@
                                           <td><input type="text" v-model="row.nombres" :maxlength="45" class="form-control" /></td>
                                           <td>
                                             <select v-model="row.parentesco" class="form-control">
-                                              <option value="0">SELECCIONE</option>
+                                              
                                               <option value="CONYUGE">CONYUGE</option>
                                               <option value="CONVIVIENTE">CONVIVIENTE</option>
                                               <option value="HIJOS">HIJOS</option>
@@ -426,7 +417,7 @@
                                           </td>
                                           <td>
                                             <select v-model="row.socio" class="form-control">
-                                              <option value="0">SELECCIONE</option>
+                                              
                                               <option value="SI">SI</option>
                                               <option value="NO">NO</option>
                                             </select>
@@ -464,7 +455,7 @@
                  <div class="form-group col-md-4">
                   <label>Tipo de Documento</label>
                   <select v-model="form.adicional.documento" class="form-control">
-                    <option value="0">SELECCIONE</option>
+                    
                     <option value="DNI">DNI</option>
                     <option value="CE">CE</option>
                     <option value="PASAPORTE">PASAPORTE</option>
@@ -478,7 +469,7 @@
               <div class="form-group col-md-4">
                   <label>Relación con el solicitante</label>
                   <select v-model="form.adicional.relacion" class="form-control">
-                    <option value="0">SELECCIONE</option>
+                    
                     <option value="PADRE">PADRE</option>
                     <option value="MADRE">MADRE</option>
                     <option value="OTRO">OTRO</option>
@@ -523,7 +514,7 @@
               <div class="form-group col-md-4">
                   <label>Es sujeto a informar a la UIF Perú</label>
                   <select v-model="form.declaracion.uif" class="form-control">
-                    <option value="0">SELECCIONE</option>
+                    
                     <option value="SI">SI</option>
                     <option value="NO">NO</option>
                   </select>
@@ -531,7 +522,7 @@
               <div class="form-group col-md-4">
                   <label>Es PEP (persona expuesta politicamente)</label>
                   <select v-model="form.declaracion.pep" class="form-control">
-                    <option value="0">SELECCIONE</option>
+                    
                     <option value="SI">SI</option>
                     <option value="NO">NO</option>
                   </select>
@@ -539,7 +530,7 @@
               <div class="form-group col-md-4">
                   <label>Estado</label>
                   <select v-model="form.declaracion.estado" class="form-control">
-                    <option value="0">SELECCIONE</option>
+                    
                     <option value="ADMITIDO">ADMITIDO</option>
                     <option value="RECHAZADO">RECHAZADO</option>
                   </select>

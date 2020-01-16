@@ -21,7 +21,6 @@
 
            <label>Seleccione Formato</label>
             <select class="form-control" v-model="fileName">
-              <option value="0">Seleccione...</option>
               <option value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
               <option value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
               <option value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option>
@@ -82,7 +81,7 @@
                 </div>
             </div>
           </div>
-           <div class="file-type " @click="cualitativaPdf()">
+           <div class="file-type " @click="cuantitativaPdf()">
             <div class="type file-document" >          
               <p>evaluacion_cuantitativa.pdf</p> 
                 <div class="mask">
@@ -462,6 +461,9 @@ export default {
       },
       cualitativaPdf(){
                 window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamo,'_blank'); 
+      },
+      cuantitativaPdf(){
+               window.open('/evaluacion/cuantitativaPdf/'+this.$route.params.prestamo,'_blank'); 
       }
   }
 };

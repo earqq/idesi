@@ -43,18 +43,7 @@
                 aria-controls="hogar"
                 aria-selected="false"
               >Datos Hogar</a>
-            </li>
-            <li class="nav-item col-md-2">
-              <a
-                class="nav-link text-center"
-                id="propuesta-tab"
-                data-toggle="tab"
-                href="#propuesta"
-                role="tab"
-                aria-controls="propuesta"
-                aria-selected="false"
-              >Datos Propuesta</a>
-            </li>
+            </li>           
           </ul>
         </div>
 
@@ -91,7 +80,7 @@
                             v-bind:key="index"
                           >
                             <td>
-                              <input type="text" class="form-control" v-model="val.concepto" />
+                              <input  :disabled='index==0' type="text" class="form-control" v-model="val.concepto" />
                             </td>
                             <td>
                               <money
@@ -663,90 +652,7 @@
                 </div>
               </div>
 
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
-              </div>
-            </div>
-
-            <div
-              class="tab-pane fade"
-              id="propuesta"
-              role="tabpanel"
-              aria-labelledby="propuesta-tab"
-            >
-              <div class="row">
-                <div class="col-md-12 p-0">
-                  <div class="card" style>
-                    <div class="card-header d-flex justify-content-between">
-                      <strong>Propuesta</strong>
-                    </div>
-                    <div class="card-body row">
-                      <div class="form-group col-md-2">
-                        <label>PRODUCTO</label>
-
-                        <input
-                          type="text"
-                          v-model="evaluacion.propuesta.producto"
-                          class="form-control"
-                          disabled
-                        />
-                      </div>
-
-                      <div class="form-group col-md-2">
-                        <label>MONTO</label>
-                        <input
-                          type="text"
-                          v-model="evaluacion.propuesta.monto"
-                          class="form-control"
-                          disabled
-                        />
-                      </div>
-
-                      <div class="form-group col-md-2">
-                        <label>PLAZO</label>
-
-                        <input
-                          type="text"
-                          v-model="evaluacion.propuesta.plazo"
-                          class="form-control"
-                          disabled
-                        />
-                      </div>
-
-                      <div class="form-group col-md-2">
-                        <label>NUMERO CUOTAS</label>
-
-                        <input
-                          type="text"
-                          v-model="evaluacion.propuesta.numero_cuotas"
-                          class="form-control"
-                          disabled
-                        />
-                      </div>
-                      <div class="form-group col-md-2">
-                        <label>CUOTAS</label>
-
-                        <input
-                          type="text"
-                          v-model="evaluacion.propuesta.cuotas"
-                          class="form-control"
-                        />
-                      </div>
-                      <div class="form-group col-md-2">
-                        <label>PROB INFOCORP</label>
-
-                        <input
-                          type="text"
-                          v-model="evaluacion.probabilidad_infocorp"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
+             <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
                 <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
                 <a
                   class="btn btn-orange"
@@ -774,6 +680,7 @@
                 </div>
               </div>
             </div>
+          
           </div>
         </div>
       </div>
@@ -1123,6 +1030,7 @@ export default {
       )
       .then(response => {
         console.log(response.data)
+        this.evaluacion.titular.ingresos_negocio[0].concepto=response.data.principal.fuente_ingreso
         this.evaluacion.titular.giro_negocio=response.data.principal.fuente_ingreso
         this.$http.get(`/evaluaciones/giro/search/`+this.evaluacion.titular.giro_negocio).then(res => {
             this.evaluacion.titular.giro_negocio=res.data["giro_negocio"]
@@ -1169,7 +1077,6 @@ export default {
             this.notificationSystem.options.success
           )
         this.retornar()
-        alert("guardado correctamente");
       });
     },
     retornar() {

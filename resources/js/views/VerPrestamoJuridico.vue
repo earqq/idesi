@@ -84,7 +84,6 @@
               <div class="col-md-4 form-group">
                 <label>Plazo</label>
                 <select v-model="form.plazo_inicial" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option v-for="(index) in 36" :key="index" :value="index">{{index}}</option>
                 </select>
               </div>
@@ -99,7 +98,6 @@
               <div class="col-md-6 form-group">
                 <label>Forma</label>
                 <select v-model="form.forma_inicial" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="DIARIO">DIARIO</option>
                   <option value="SEMANAL">SEMANAL</option>
                   <option value="QUINCENAL">QUINCENAL</option>
@@ -249,7 +247,6 @@
               <div class="col-md-3 form-group">
                 <label>Tipo Domicilio</label>
                 <select v-model="form.representante.tipo_domicilio_representante" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="PROPIO">PROPIO</option>
                   <option value="ALQUILADO">ALQUILADO</option>
                 </select>
@@ -457,7 +454,6 @@
                 <div class="col-md-3 form-group">
                     <label>Producto</label>
                     <select v-model="form.producto" class="form-control">
-                      <option value="0">SELECCIONE</option>
                       <option value="CREDIDIARIO">CREDIDIARIO</option>
                       <option value="CREDISEMANA">CREDISEMANA</option>
                       <option value="CREDIQUINCENA">CREDIQUINCENA</option>
@@ -469,16 +465,7 @@
 
                 </div>
 
-                <!-- <div class="col-md-4 form-group">
-                    <label>Forma</label>
-                    <select v-model="form.forma" class="form-control">
-                      <option value="0">SELECCIONE</option>
-                      <option value="DIARIO">DIARIO</option>
-                      <option value="SEMANAL">SEMANAL</option>
-                      <option value="QUINCENAL">QUINCENAL</option>
-                      <option value="MENSUAL">MENSUAL</option>
-                    </select>
-                </div> -->
+           
 
 
                 <div class="col-md-3 form-group">
