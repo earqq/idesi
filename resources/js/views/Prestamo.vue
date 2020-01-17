@@ -4,11 +4,7 @@
       <span @click="retornar()">
         <i class="fas fa-angle-left"></i>
       </span>
-<<<<<<< HEAD
       <h1>Solicitd de Credito</h1>
-=======
-      <h1>Nuevo prestamo</h1>
->>>>>>> b4d88612bc35a2cf2ef973d85c548e1ffe98b3f1
     </header>
     <div class="col-md-12 p-0">
       <div class="nav-tabs style-tab-menu">
@@ -140,11 +136,7 @@
 
               <div class="col-md-3 form-group">
                 <label>Estado Civil</label>
-<<<<<<< HEAD
                 <select v-model="form.natural.estado_civil" class="form-control"> 
-=======
-                <select v-model="form.natural.estado_civil" class="form-control">
->>>>>>> b4d88612bc35a2cf2ef973d85c548e1ffe98b3f1
                   <option value="SOLTERO">SOLTERO</option>
                   <option value="CASADO">CASADO</option>
                   <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -253,10 +245,7 @@
               <div class="col-md-4 form-group">
                 <label>Estado Civil</label>
                 <select v-model="form.conyugue.estado_civil_conyugue" class="form-control">
-<<<<<<< HEAD
                   
-=======
->>>>>>> b4d88612bc35a2cf2ef973d85c548e1ffe98b3f1
                   <option value="SOLTERO">SOLTERO</option>
                   <option value="CASADO">CASADO</option>
                   <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -355,11 +344,7 @@
                 </div>
                 <div class="col-md-2 form-group"> 
                     <label>Tipo Persona</label>
-<<<<<<< HEAD
                     <select  v-model="row.tipo_persona"  class="form-control"> 
-=======
-                    <select  v-model="row.tipo_persona"  class="form-control">
->>>>>>> b4d88612bc35a2cf2ef973d85c548e1ffe98b3f1
                       <option value="pn">Persona Natural</option>
                       <option value="pj">Persona Juridica</option>
                     </select> 
@@ -395,11 +380,7 @@
 
                 <div class="col-md-4 form-group"> 
                     <label>Estado Civil</label>
-<<<<<<< HEAD
                     <select  v-model="row.estado_civil"  class="form-control"> 
-=======
-                    <select  v-model="row.estado_civil"  class="form-control">
->>>>>>> b4d88612bc35a2cf2ef973d85c548e1ffe98b3f1
                       <option value="SOLTERO">SOLTERO</option>
                       <option value="CASADO">CASADO</option>
                       <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -826,11 +807,7 @@ export default {
           celular_conyugue: "",
           centro_laboral_conyugue: "",
           direccion_laboral_conyugue: "",
-<<<<<<< HEAD
           socio_conyugue: 'NO',
-=======
-          socio_conyugue: "NO",
->>>>>>> b4d88612bc35a2cf2ef973d85c548e1ffe98b3f1
           codigo_socio_conyugue: "",
           aporte_socio_conyugue: "",
           conyuge_tiene: 0,
