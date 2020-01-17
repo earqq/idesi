@@ -4,7 +4,7 @@
       <span @click="retornar()">
         <i class="fas fa-angle-left"></i>
       </span>
-      <h1>Nuevo prestamssso</h1>
+      <h1>Nuevo prestamo</h1>
     </header>
     <div class="col-md-12 p-0">
       <div class="nav-tabs style-tab-menu">
@@ -136,7 +136,6 @@
               <div class="col-md-3 form-group">
                 <label>Estado Civil</label>
                 <select v-model="form.natural.estado_civil" class="form-control">
-                  <option value="0">SELECCIONE ...</option>
                   <option value="SOLTERO">SOLTERO</option>
                   <option value="CASADO">CASADO</option>
                   <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -245,7 +244,6 @@
               <div class="col-md-4 form-group">
                 <label>Estado Civil</label>
                 <select v-model="form.conyugue.estado_civil_conyugue" class="form-control">
-                  <option value="0">SELECCIONE ...</option>
                   <option value="SOLTERO">SOLTERO</option>
                   <option value="CASADO">CASADO</option>
                   <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -261,7 +259,6 @@
               <div class="col-md-4 form-group">
                 <label>Socio</label>
                 <select v-model="form.conyugue.socio_conyugue" class="form-control">
-                  <option value="0">SELECCIONE ...</option>
                   <option value="SI">SI</option>
                   <option value="NO">NO</option>
                 </select>
@@ -346,7 +343,6 @@
                 <div class="col-md-2 form-group"> 
                     <label>Tipo Persona</label>
                     <select  v-model="row.tipo_persona"  class="form-control">
-                      <option value="0">SELECCIONE ...</option>
                       <option value="pn">Persona Natural</option>
                       <option value="pj">Persona Juridica</option>
                     </select> 
@@ -383,7 +379,6 @@
                 <div class="col-md-4 form-group"> 
                     <label>Estado Civil</label>
                     <select  v-model="row.estado_civil"  class="form-control">
-                      <option value="0">SELECCIONE ...</option>
                       <option value="SOLTERO">SOLTERO</option>
                       <option value="CASADO">CASADO</option>
                       <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -405,7 +400,6 @@
                   <div class="col-md-4 form-group"> 
                     <label>Socio</label>
                     <select v-model="row.socio" class="form-control">
-                      <option value="0">SELECCIONE ...</option>
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
                     </select> 
@@ -737,7 +731,7 @@ export default {
         nombres: "",
         apellidos: "",
         nacimiento: "",
-        estado_civil: "0",
+        estado_civil: "SOLTERO",
         ocupacion: "",
         telefono: "",
         celular: "",
@@ -745,10 +739,10 @@ export default {
         distrito: "",
         centro_laboral: "",
         direccion_laboral: "",
-        socio: 0,
+        socio: 'NO',
         codigo_socio: "",
         aporte_socio: "",
-        tipo_persona: 0
+        tipo_persona: "pn"
       });
     },
     clickRemoveAval(index) {
@@ -783,7 +777,7 @@ export default {
           nombres: "",
           apellidos: "",
           nacimiento: "",
-          estado_civil: "0",
+          estado_civil: "SOLTERO",
           ocupacion: "",
           telefono: "",
           celular: "",
@@ -800,13 +794,13 @@ export default {
           documento_conyugue: "",
           nombres_conyugue: "",
           nacimiento_conyugue: "",
-          estado_civil_conyugue: "0",
+          estado_civil_conyugue: "SOLTERO",
           ocupacion_conyugue: "",
           telefono_conyugue: "",
           celular_conyugue: "",
           centro_laboral_conyugue: "",
           direccion_laboral_conyugue: "",
-          socio_conyugue: 0,
+          socio_conyugue: "NO",
           codigo_socio_conyugue: "",
           aporte_socio_conyugue: "",
           conyuge_tiene: 0,
