@@ -191,7 +191,6 @@
               <div class="col-md-4 form-group">
                 <label>Estado Civil</label>
                 <select v-model="form.representante.estado_civil_representante" class="form-control">
-                  <option value="0">SELECCIONE ...</option>
                   <option value="SOLTERO">SOLTERO</option>
                   <option value="CASADO">CASADO</option>
                   <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -284,7 +283,6 @@
                 <div class="col-md-2 form-group"> 
                     <label>Tipo Persona</label>
                     <select  v-model="row.tipo_persona"  class="form-control">
-                      <option value="0">SELECCIONE ...</option>
                       <option value="pn">Persona Natural</option>
                       <option value="pj">Persona Juridica</option>
                     </select> 
@@ -321,7 +319,6 @@
                 <div class="col-md-4 form-group"> 
                     <label>Estado Civil</label>
                     <select  v-model="row.estado_civil"  class="form-control">
-                      <option value="0">SELECCIONE ...</option>
                       <option value="SOLTERO">SOLTERO</option>
                       <option value="CASADO">CASADO</option>
                       <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -343,7 +340,6 @@
                   <div class="col-md-4 form-group"> 
                     <label>Socio</label>
                     <select v-model="row.socio" class="form-control">
-                      <option value="0">SELECCIONE ...</option>
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
                     </select> 
