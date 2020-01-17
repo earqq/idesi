@@ -369,25 +369,39 @@
                           <thead>
                             <tr>
                               <th style="width: 25%;">Edad</th>
-                              <th style="width: 25%;">Grado</th>
                               <th style="width: 25%;">Colegio</th>
+                              <th style="width: 25%;">Grado</th>
                               <th style="width: 25%;">Costo</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr v-for="(n, index) in evaluacion.familiar.numero_hijos" :key="index">
+                            <tr v-for="(hijo, index) in evaluacion.familiar.hijos" :key="index">
                               <td>
                                 <input
                                   type="text"
                                   class="form-control"
-                                  v-model="evaluacion.familiar.hijos[index].edad"
+                                  v-model="hijo.edad"
                                 />
                               </td>
                               <td>
                                 <select
-                                  v-model="evaluacion.familiar.hijos[index].grado"
+                                  v-model="hijo.colegio"
                                   class="form-control"
-                                  @change="seleccionColegios(index)"
+                                  @change="seleccionColegiosCosto(index)"
+                                >
+                                  <option
+                                    v-for="(colegio,index) in colegios"
+                                    v-bind:value="colegio.nombre"
+                                    :key="index"
+                                  >{{ colegio.nombre }}</option>
+                                </select>
+
+                              </td>
+                              <td>
+                                <select
+                                  v-model="hijo.grado"
+                                  class="form-control"
+                                  @change="seleccionColegiosCosto(index)"
                                 >
                                   <option value="INICIAL">INICIAL</option>
                                   <option value="PRIMARIA">PRIMARIA</option>
@@ -395,26 +409,10 @@
                                 </select>
                               </td>
                               <td>
-                                <select
-                                  v-if="evaluacion.familiar.hijos[index].grado!='0'"
-                                  v-model="evaluacion.familiar.hijos[index].colegio"
-                                  class="form-control"
-                                  @change="seleccionColegiosCosto(index)"
-                                >
-                                  <option
-                                    v-for="colegio in colegios"
-                                    v-bind:value="colegio.nombre"
-                                    :key="colegio.id"
-                                  >{{ colegio.nombre }}</option>
-                                </select>
-
-                                <input type="text" class="form-control" disabled v-else />
-                              </td>
-                              <td>
                                 <input
                                   type="text"
                                   class="form-control"
-                                  :value="'S/. '+evaluacion.familiar.hijos[index].costo"
+                                  :value="'S/. '+hijo.costo"
                                   disabled
                                 />
                               </td>
@@ -525,75 +523,29 @@
                                     <td>Nombre</td>
                                     <td>Telefono</td>
                                   </tr>
-                                  <tr>
+                                  <tr v-for='(referencia,index) in evaluacion.referencias' :key='index'>
                                     <td>
                                       <input
-                                        v-model="evaluacion.referencias[1].tipo_relacion"
+                                        v-model="referencia.tipo_relacion"
                                         type="text"
                                         class="form-control"
                                       />
                                     </td>
                                     <td>
                                       <input
-                                        v-model="evaluacion.referencias[1].nombre"
+                                        v-model="referencia.nombre"
                                         type="text"
                                         class="form-control"
                                       />
                                     </td>
                                     <td>
                                       <input
-                                        v-model="evaluacion.referencias[1].telefono"
+                                        v-model="referencia.telefono"
                                         type="text"
                                         class="form-control"
                                       />
                                     </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <input
-                                        v-model="evaluacion.referencias[2].tipo_relacion"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                    <td>
-                                      <input
-                                        v-model="evaluacion.referencias[2].nombre"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                    <td>
-                                      <input
-                                        v-model="evaluacion.referencias[2].telefono"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <input
-                                        v-model="evaluacion.referencias[3].tipo_relacion"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                    <td>
-                                      <input
-                                        v-model="evaluacion.referencias[3].nombre"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                    <td>
-                                      <input
-                                        v-model="evaluacion.referencias[3].telefono"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                  </tr>
+                                  </tr>                                  
                                 </table>
                               </div>
                             </div>
@@ -640,7 +592,7 @@
                   class="btn btn-orange"
                   @click.prevent="guardar()"
                   v-if="loading_submit=='0'"
-                >Regsitrar</a>
+                >Registrar</a>
                 <div class="container-load-register" v-else>
                   <svg
                     aria-hidden="true"
@@ -712,7 +664,7 @@ export default {
         vehiculo: {
           marca: "",
           modelo: "",
-          año: "",
+          año: "2010",
           tipo_servicio_brinda: "",
           antiguedad_servicio: "",
           permiso_servicio: 1,
@@ -727,8 +679,8 @@ export default {
           hijos: []
         },
         comentario_central_riesgo:'',
-        central_riesgo: {
-          1: {
+        central_riesgo: [
+          {
             entidad_financiera: "",
             capital: false,
             activo_f: false,
@@ -737,7 +689,7 @@ export default {
             hipoteca: false,
             terceros: false
           },
-          2: {
+          {
             entidad_financiera: "",
             capital: false,
             activo_f: false,
@@ -746,7 +698,7 @@ export default {
             hipoteca: false,
             terceros: false
           },
-          3: {
+          {
             entidad_financiera: "",
             capital: false,
             activo_f: false,
@@ -755,7 +707,7 @@ export default {
             hipoteca: false,
             terceros: false
           },
-          4: {
+          {
             entidad_financiera: "",
             capital: false,
             activo_f: false,
@@ -764,7 +716,7 @@ export default {
             hipoteca: false,
             terceros: false
           },
-          5: {
+          {
             entidad_financiera: "",
             capital: false,
             activo_f: false,
@@ -773,7 +725,7 @@ export default {
             hipoteca: false,
             terceros: false
           },
-          6: {
+          {
             entidad_financiera: "",
             capital: false,
             activo_f: false,
@@ -782,7 +734,7 @@ export default {
             hipoteca: false,
             terceros: false
           },
-          7: {
+          {
             entidad_financiera: "",
             capital: false,
             activo_f: false,
@@ -791,7 +743,7 @@ export default {
             hipoteca: false,
             terceros: false
           },
-          8: {
+          {
             entidad_financiera: "",
             capital: false,
             activo_f: false,
@@ -800,24 +752,24 @@ export default {
             hipoteca: false,
             terceros: false
           }
-        },
-        referencias: {
-          1: {
+        ],
+        referencias: [
+          {
             tipo_relacion: "",
             nombre: "",
             telefono: ""
           },
-          2: {
+          {
             tipo_relacion: "",
             nombre: "",
             telefono: ""
           },
-          3: {
+          {
             tipo_relacion: "",
             nombre: "",
             telefono: ""
           }
-        },
+        ],
         colateral: 0,
         comentario_colateral: ""
       }
@@ -859,23 +811,8 @@ export default {
     },
     retornar() {
       this.backMixin_handleBack();
-    },
-    seleccionColegios(index) {
-      this.colegios = [];
-      this.evaluacion.familiar.hijos[index].colegio = "0";
-      this.evaluacion.familiar.hijos[index].costo = "";
-      this.$http
-        .get(
-          `/evaluaciones/colegio?filtro=` +
-            this.evaluacion.familiar.hijos[index].grado
-        )
-        .then(response => {
-          this.colegios = response.data;
-        });
-      // console.log(this.evaluacion.familiar.hijos[index].grado)
-    },
+    },   
     seleccionColegiosCosto(index) {
-      console.log("asdad");
       this.$http
         .get(
           `/evaluaciones/colegio/costo?grado=` +
@@ -895,7 +832,17 @@ export default {
     });
 
     this.$http.get(`/evaluaciones/colegio`).then(response => {
-      this.colegios = response.data;
+      this.colegios=[]
+      response.data.map(colegio=>{
+        let found = this.colegios.find(element => element.nombre == colegio.nombre)
+        if(found==undefined){
+          this.colegios.push({
+            nombre: colegio.nombre,
+            nivel: colegio.nivel,
+            costo: colegio.costo
+          })
+        }
+      })
     });
 
     this.$http
@@ -910,10 +857,11 @@ export default {
         ) {
           this.evaluacion.familiar.hijos.push({
             edad: "",
-            colegio: "0",
-            grado: "0",
-            costo: ""
+            colegio: "PRINCIPITO",
+            grado: "INICIAL",
+            costo: 0
           });
+          this.seleccionColegiosCosto(this.i)
         }
       });
   }

@@ -197,7 +197,7 @@
                     :options="giros"
                     disabled
                     :reduce="giros => giros.giro_negocio"
-                    placeholder="Buscar Giro..."
+                    placeholder="Giro negocio.."
                     v-model="evaluacion.titular.giro_negocio"
                   ></v-select>
                 </div>
@@ -234,6 +234,7 @@
                         <input
                           type="text"
                           class="form-control"
+                          disabled='disabled'
                           v-model="evaluacion.titular.gasto_financiero[index].entidad"
                         />
                       </td>
@@ -270,6 +271,7 @@
                         <input
                           type="text"
                           class="form-control"
+                          disabled='disabled'
                           v-model="evaluacion.titular.gasto_negocio[index].entidad"
                         />
                       </td>
@@ -504,6 +506,7 @@
                         <input
                           type="text"
                           class="form-control"
+                          disabled='disabled'
                           v-model="evaluacion.conyuge.gasto_negocio[index].entidad"
                         />
                       </td>
@@ -545,11 +548,13 @@
                               <input
                                 type="text"
                                 class="form-control"
+                                disabled='disabled'
                                 v-model="evaluacion.gastos_hogar[index].concepto"
                               />
                             </td>
                             <td>
                               <input
+                                :disabled='index==5'
                                 type="text"
                                 class="form-control"
                                 v-model="evaluacion.gastos_hogar[index].pago"
@@ -593,8 +598,9 @@
 
                         <table class="table ingresos-table table-bordered table-striped table-sm">
                           <tr>
-                            <td class="title-table">Concepto</td>
-                            <td class="title-table">Pago</td>
+                            <td class="title-table">Entidad</td>
+                            <td class="title-table">Saldo Capital</td>
+                            <td class="title-table">Cuota</td>
                           </tr>
                           <tr
                             v-for="(gasto,index) in evaluacion.titular.gasto_financiero_personal"
@@ -604,14 +610,21 @@
                               <input
                                 type="text"
                                 class="form-control"
-                                v-model="evaluacion.titular.gasto_financiero_personal[index].concepto"
+                                v-model="evaluacion.titular.gasto_financiero_personal[index].entidad"
                               />
                             </td>
                             <td>
                               <input
                                 type="text"
                                 class="form-control"
-                                v-model="evaluacion.titular.gasto_financiero_personal[index].pago"
+                                v-model="evaluacion.titular.gasto_financiero_personal[index].saldo_capital"
+                              />
+                            </td>
+                            <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="evaluacion.titular.gasto_financiero_personal[index].cuota"
                               />
                             </td>
                           </tr>
@@ -623,8 +636,9 @@
 
                         <table class="table ingresos-table table-bordered table-striped table-sm">
                           <tr>
-                            <td class="title-table">Concepto</td>
-                            <td class="title-table">Pago</td>
+                            <td class="title-table">Entidad</td>
+                            <td class="title-table">Saldo Capital</td>
+                            <td class="title-table">Cuota</td>
                           </tr>
                           <tr
                             v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero_personal"
@@ -634,14 +648,21 @@
                               <input
                                 type="text"
                                 class="form-control"
-                                v-model="evaluacion.conyuge.gasto_financiero_personal[index].concepto"
+                                v-model="evaluacion.conyuge.gasto_financiero_personal[index].entidad"
                               />
                             </td>
                             <td>
                               <input
                                 type="text"
                                 class="form-control"
-                                v-model="evaluacion.conyuge.gasto_financiero_personal[index].pago"
+                                v-model="evaluacion.conyuge.gasto_financiero_personal[index].saldo_capital"
+                              />
+                            </td>
+                             <td>
+                              <input
+                                type="text"
+                                class="form-control"
+                                v-model="evaluacion.conyuge.gasto_financiero_personal[index].cuota"
                               />
                             </td>
                           </tr>
@@ -728,27 +749,27 @@ export default {
         probabilidad_infocorp: 0,
         gastos_hogar: [
           {
-            concepto: "",
+            concepto: "LUZ",
             pago: 0
           },
           {
-            concepto: "",
+            concepto: "AGUA",
             pago: 0
           },
           {
-            concepto: "",
+            concepto: "TELEFONO FIJO",
             pago: 0
           },
           {
-            concepto: "",
+            concepto: "ALQUILER",
             pago: 0
           },
           {
-            concepto: "",
+            concepto: "ALIMENTACION Y TRANSPORTE",
             pago: 0
           },
           {
-            concepto: "",
+            concepto: "EDUCACION",
             pago: 0
           }
         ],
@@ -813,31 +834,7 @@ export default {
             }
           ],
           gasto_financiero: [
-            {
-              entidad: "",
-              saldo_capital: 0,
-              cuota: 0
-            },
-            {
-              entidad: "",
-              saldo_capital: 0,
-              cuota: 0
-            },
-            {
-              entidad: "",
-              saldo_capital: 0,
-              cuota: 0
-            },
-            {
-              entidad: "",
-              saldo_capital: 0,
-              cuota: 0
-            },
-            {
-              entidad: "",
-              saldo_capital: 0,
-              cuota: 0
-            }
+            
           ],
           gasto_financiero_personal: [
             {
@@ -1030,12 +1027,23 @@ export default {
       )
       .then(response => {
         console.log(response.data)
+        //Total de costo en educacion
+        response.data.familiar.hijos.map(element=>{
+          this.evaluacion.gastos_hogar[5].pago+=parseFloat(element.costo)
+        })
+        // entidades financieras
+        response.data.central_riesgo.map(element=>{
+          if(element.entidad_financiera){
+
+            this.evaluacion.titular.gasto_financiero.push({
+              entidad: element.entidad_financiera,
+              saldo_capital: 0,
+              cuota: 0
+            })
+          }
+        })
         this.evaluacion.titular.ingresos_negocio[0].concepto=response.data.principal.fuente_ingreso
         this.evaluacion.titular.giro_negocio=response.data.principal.fuente_ingreso
-        this.$http.get(`/evaluaciones/giro/search/`+this.evaluacion.titular.giro_negocio).then(res => {
-            this.evaluacion.titular.giro_negocio=res.data["giro_negocio"]
-            this.evaluacion.titular.margen_costo=res.data["margen_maximo"]
-        });
       });
   },
   methods: {

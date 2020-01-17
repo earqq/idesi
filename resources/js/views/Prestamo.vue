@@ -541,13 +541,17 @@
                 </div>
 
                 <div class="col-md-2 form-group">
-                    <label>Cuotas del sistema</label>
-                    <input type="text" v-model="form.cuotas" class="form-control" />
+                    <label>Cuota del sistema</label>
+                    <input type="number" v-model="form.cuotas" class="form-control" />
                 </div>
 
                 <div class="col-md-2 form-group">
                     <label>Aporte</label>
                     <money  v-model="form.aporte" v-bind="money" class="form-control"></money>
+                </div>
+                <div class="col-md-2 form-group">
+                    <label>Prob. Infocorp</label>
+                    <input type='number' v-model='form.probabilidad_infocorp' class='form-control'>
                 </div>
  
                 <div class="col-md-12 form-group">
@@ -808,12 +812,12 @@ export default {
           conyuge_tiene: 0,
         },
         monto_inicial: "",
-        plazo_inicial: "0",
+        plazo_inicial: "5",
         disponibilidad_pago_inicial: "",
         destino_inicial: "",
-        forma_inicial: "0",
-        producto: 0,
-        forma: "0",
+        forma_inicial: "DIARIO",
+        producto: "CREDIDIARIO",
+        forma: "DIARIO",
         importe: 0,
         aporte: 0,
         plazo: 0,

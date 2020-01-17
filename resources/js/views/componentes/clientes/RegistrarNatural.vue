@@ -660,7 +660,7 @@ export default {
     initForm() {
       this.form = {
         cliente:{
-          tipo_documento: 0,
+          tipo_documento: "DNI",
           documento: "",
           codigo: "",
           tipo_cliente: this.tipo_persona,
@@ -675,7 +675,7 @@ export default {
           nombres: "",
           apellidos: "",
           nacimiento: "",
-          estado_civil: "0",
+          estado_civil: "SOLTERO",
           ocupacion: "",
           telefono: "",
           celular: "",
@@ -685,8 +685,8 @@ export default {
           tipo_domicilio: 0,
           centro_laboral: "",
           direccion_laboral: "",
-          genero: 0,
-          grado_instruccion:0,
+          genero: "MASCULINO",
+          grado_instruccion:"PRIMARIA",
           numero: "",
           manzana: "",
           lote: "",
@@ -699,10 +699,10 @@ export default {
           correo:"",
         },
         laboral:{
-          estado_laboral:0,
-          tipo_trabajador:0,
+          estado_laboral:"TRABAJA",
+          tipo_trabajador:"INDEPENDIENTE",
           razon_social:"",
-          ingreso_mensual: 0,
+          ingreso_mensual: "HASTA S/. 1000",
           cargo_ocupacion:"",
           fecha_ingreso:"",
           giro_negocio: "",
@@ -725,10 +725,10 @@ export default {
         
         },
          familia:{
-          hijos: 0,
+          hijos: "SI",
           numero:0,
-          conyugue:0,
-          ocupacion:0,
+          conyugue:"NO",
+          ocupacion:"",
         },
 
         detalles: [],
@@ -748,10 +748,10 @@ export default {
         },
 
         declaracion:{
-          uif: 0,
-          pep:0,
+          uif: "NO",
+          pep:"NO",
           obervaciones:"",
-          estado: 0,
+          estado: "ADMITIDO",
           fecha: ""
         }
 

@@ -488,7 +488,11 @@
                     <label>Aporte</label>
                     <money  v-model="form.aporte" v-bind="money" class="form-control"></money>
                 </div>
-
+                <div class="col-md-2 form-group">
+                    <label>Prob. Infocorp</label>
+                    <input type='number' v-model='form.probabilidad_infocorp' class='form-control'>
+                </div>
+ 
                 <div class="col-md-12 form-group">
                     <label>Comentarios</label>
                     <textarea type="text" v-model="form.comentarios" class="form-control"></textarea>
@@ -746,6 +750,7 @@ export default {
         importe: 0,
         aporte: 0,
         plazo: 0,
+        probabilidad_infocorp:'',
         coutas: 0,
         tasa: 0.0,
         comentarios: "",

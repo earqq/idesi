@@ -651,6 +651,7 @@ class ClienteController extends Controller
             $prestamo->forma = $request->input('forma');
             $prestamo->importe = $request->input('importe');
             $prestamo->aporte = $request->input('aporte');
+            $prestamo->probabilidad_infocorp = $request->input('probabilidad_infocorp');
             $prestamo->plazo = $request->input('plazo');
             $prestamo->cuotas = $request->input('cuotas');
             $prestamo->tasa = $request->input('tasa');
@@ -809,6 +810,7 @@ class ClienteController extends Controller
             $prestamo->forma = $request->input('forma');
             $prestamo->importe = $request->input('importe');
             $prestamo->aporte = $request->input('aporte');
+            $prestamo->probabilidad_infocorp = $request->input('probabilidad_infocorp');
             $prestamo->plazo = $request->input('plazo');
             $prestamo->cuotas = $request->input('cuotas');
             $prestamo->tasa = $request->input('tasa');
