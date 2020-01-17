@@ -388,13 +388,22 @@ class ClienteController extends Controller
                 $juridico->clientes_id= $cliente->id;
                 $juridico->save();
 
-                foreach ($request->representante as $ep=>$rp) {
+                foreach ($request->representante as $ep=>$rp) { 
+
                     $representante= new Representante;
                     $representante->nombres = $rp['nombres'];
                     $representante->documento = $rp['documento'];
                     $representante->cargo = $rp['cargo'];
                     $representante->juridicos_id= $juridico->id;
                     $representante->save();
+
+                    if($representante->id==1){
+                        $jur_rep = Juridico::find($representante->juridicos_id);
+                        $jur_rep->documento_representante = $rp['documento'];
+                        $jur_rep->nombres_representante = $rp['nombres'] ;
+                        $jur_rep->save();
+                    }
+                    
                 }
                 
                 $listaRepresentante= Representante::where('juridicos_id',$juridico->id)->get();
@@ -647,6 +656,7 @@ class ClienteController extends Controller
             $prestamo->disponibilidad_pago_inicial = $request->input('disponibilidad_pago_inicial');
             $prestamo->destino_inicial = $request->input('destino_inicial');
             $prestamo->forma_inicial = $request->input('forma_inicial');
+            $prestamo->meses = $request->input('meses');
             $prestamo->producto = $request->input('producto');
             $prestamo->forma = $request->input('forma');
             $prestamo->importe = $request->input('importe');
@@ -806,6 +816,7 @@ class ClienteController extends Controller
             $prestamo->disponibilidad_pago_inicial = $request->input('disponibilidad_pago_inicial');
             $prestamo->destino_inicial = $request->input('destino_inicial');
             $prestamo->forma_inicial = $request->input('forma_inicial');
+            $prestamo->meses = $request->input('meses');
             $prestamo->producto = $request->input('producto');
             $prestamo->forma = $request->input('forma');
             $prestamo->importe = $request->input('importe');

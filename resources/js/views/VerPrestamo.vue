@@ -511,9 +511,9 @@
                 <div class="col-md-12 d-flex titulo-prestamo-menu">
                   <p>Propuesta</p>
                 </div>
-                <div class="col-md-3 form-group">
+                <div class="col-md-2 form-group">
                     <label>Producto</label>
-                    <select v-model="form.producto" class="form-control">
+                    <select v-model="form.producto" class="form-control" @change="meses_numero">
                       <option value="CREDIDIARIO">CREDIDIARIO</option>
                       <option value="CREDISEMANA">CREDISEMANA</option>
                       <option value="CREDIQUINCENA">CREDIQUINCENA</option>
@@ -527,16 +527,20 @@
 
             
 
-                <div class="col-md-3 form-group">
+                <div class="col-md-2 form-group">
                     <label>Importe</label>
                     <money   v-model="form.importe" v-bind="money" class="form-control"></money>
                 </div>
 
                 <div class="col-md-2 form-group">
                     <label>Plazo</label>
-                    <input type="number" class="form-control" v-model="form.plazo" :min="1" :max='48'>
+                    <input type="number" class="form-control" v-model="form.plazo" :min="1" :max='48' @keyup="meses_numero">
 
                 </div>
+                <div class="col-md-2 form-group">
+                <label>Meses</label>
+                <input type="text" v-model="form.meses" class="form-control" disabled />
+              </div>
 
                 <div class="col-md-2 form-group">
                     <label>Cuotas del sistema</label>
@@ -686,6 +690,7 @@ export default {
         this.form.forma_inicial=response.data['prestamo']['forma_inicial'];
         this.form.producto= response.data['prestamo']['producto'];
         this.form.forma=response.data['prestamo']['forma'];
+        this.form.meses=response.data['prestamo']['meses'];
         this.form.importe= response.data['prestamo']['importe'];
         this.form.aporte= response.data['prestamo']['aporte'];
         this.form.plazo= response.data['prestamo']['plazo'];
@@ -740,6 +745,20 @@ export default {
         aporte_socio: "",
         tipo_persona: 0
       });
+    },
+    meses_numero(){
+
+        if(this.form.producto=='CREDIDIARIO'){
+          console.log('diario')
+          this.form.meses = (Number(this.form.plazo)/30).toFixed(2)
+        }
+        else if(this.form.producto=='CREDISEMANA'){
+          this.form.meses = (Number(this.form.plazo)/4).toFixed(2)
+        }
+        else{
+          this.form.meses = (Number(this.form.plazo)/1).toFixed(2)
+    }
+
     },
     clickRemoveAval(index) {
       this.form.avals.splice(index, 1);
@@ -808,6 +827,7 @@ export default {
         forma_inicial: "0",
         producto: 0,
         forma: "0",
+        meses: 0,
         importe: 0,
         aporte: 0,
         plazo: 0,

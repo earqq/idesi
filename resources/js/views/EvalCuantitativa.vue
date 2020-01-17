@@ -1026,7 +1026,6 @@ export default {
         `/evaluaciones/datosCualitativas?prestamo=`+this.$route.params.prestamo
       )
       .then(response => {
-        console.log(response.data)
         //Total de costo en educacion
         response.data.familiar.hijos.map(element=>{
           this.evaluacion.gastos_hogar[5].pago+=parseFloat(element.costo)

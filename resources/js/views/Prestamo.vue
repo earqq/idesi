@@ -4,7 +4,7 @@
       <span @click="retornar()">
         <i class="fas fa-angle-left"></i>
       </span>
-      <h1>Nuevo prestamssso</h1>
+      <h1>Solicitd de Credito</h1>
     </header>
     <div class="col-md-12 p-0">
       <div class="nav-tabs style-tab-menu">
@@ -82,28 +82,29 @@
                 <money   v-model="form.monto_inicial" v-bind="money" class="form-control"  ></money>
               </div>
               <div class="col-md-4 form-group">
-                <label>Plazo</label>
-                <select v-model="form.plazo_inicial" class="form-control">
-                  <option v-for="(index) in 36" :key="index" :value="index">{{index}}</option>
-                </select>
-              </div>
-              <div class="col-md-4 form-group">
-                <label>Disponibilidad de pago</label>
-                <input type="text" v-model="form.disponibilidad_pago_inicial" class="form-control" />
-              </div>
-              <div class="col-md-6 form-group">
-                <label>Destino de credito en propuesta cliente</label>
-                <input type="text" v-model="form.destino_inicial" class="form-control" />
-              </div>
-              <div class="col-md-6 form-group">
                 <label>Forma</label>
-                <select v-model="form.forma_inicial" class="form-control">
+                <select v-model="form.forma_inicial" class="form-control" >
                   <option value="DIARIO">DIARIO</option>
                   <option value="SEMANAL">SEMANAL</option>
                   <option value="QUINCENAL">QUINCENAL</option>
                   <option value="MENSUAL">MENSUAL</option>
                 </select>
               </div>
+              <div class="col-md-4 form-group">
+                <label>Plazo</label>
+                <select v-model="form.plazo_inicial" class="form-control" >
+                  <option v-for="(index) in 36" :key="index" :value="index">{{index}}</option>
+                </select>
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label>Disponibilidad de pago</label>
+                <input type="text" v-model="form.disponibilidad_pago_inicial" class="form-control" />
+              </div>
+              <div class="col-md-6 form-group">
+                <label>Destino de credito en propuesta cliente</label>
+                <input type="text" v-model="form.destino_inicial" class="form-control" />
+              </div> 
             </div>
 
             <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
@@ -135,8 +136,7 @@
 
               <div class="col-md-3 form-group">
                 <label>Estado Civil</label>
-                <select v-model="form.natural.estado_civil" class="form-control">
-                  <option value="0">SELECCIONE ...</option>
+                <select v-model="form.natural.estado_civil" class="form-control"> 
                   <option value="SOLTERO">SOLTERO</option>
                   <option value="CASADO">CASADO</option>
                   <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -245,7 +245,7 @@
               <div class="col-md-4 form-group">
                 <label>Estado Civil</label>
                 <select v-model="form.conyugue.estado_civil_conyugue" class="form-control">
-                  <option value="0">SELECCIONE ...</option>
+                  
                   <option value="SOLTERO">SOLTERO</option>
                   <option value="CASADO">CASADO</option>
                   <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -261,7 +261,6 @@
               <div class="col-md-4 form-group">
                 <label>Socio</label>
                 <select v-model="form.conyugue.socio_conyugue" class="form-control">
-                  <option value="0">SELECCIONE ...</option>
                   <option value="SI">SI</option>
                   <option value="NO">NO</option>
                 </select>
@@ -345,8 +344,7 @@
                 </div>
                 <div class="col-md-2 form-group"> 
                     <label>Tipo Persona</label>
-                    <select  v-model="row.tipo_persona"  class="form-control">
-                      <option value="0">SELECCIONE ...</option>
+                    <select  v-model="row.tipo_persona"  class="form-control"> 
                       <option value="pn">Persona Natural</option>
                       <option value="pj">Persona Juridica</option>
                     </select> 
@@ -382,8 +380,7 @@
 
                 <div class="col-md-4 form-group"> 
                     <label>Estado Civil</label>
-                    <select  v-model="row.estado_civil"  class="form-control">
-                      <option value="0">SELECCIONE ...</option>
+                    <select  v-model="row.estado_civil"  class="form-control"> 
                       <option value="SOLTERO">SOLTERO</option>
                       <option value="CASADO">CASADO</option>
                       <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -405,7 +402,6 @@
                   <div class="col-md-4 form-group"> 
                     <label>Socio</label>
                     <select v-model="row.socio" class="form-control">
-                      <option value="0">SELECCIONE ...</option>
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
                     </select> 
@@ -514,9 +510,9 @@
                 <div class="col-md-12 d-flex titulo-prestamo-menu">
                   <p>Propuesta</p>
                 </div>
-                <div class="col-md-3 form-group">
+                <div class="col-md-2 form-group">
                     <label>Producto</label>
-                    <select v-model="form.producto" class="form-control">
+                    <select v-model="form.producto" class="form-control" @change="meses_numero">
                       <option value="CREDIDIARIO">CREDIDIARIO</option>
                       <option value="CREDISEMANA">CREDISEMANA</option>
                       <option value="CREDIQUINCENA">CREDIQUINCENA</option>
@@ -529,16 +525,21 @@
                 </div>
 
           
-                <div class="col-md-3 form-group">
+                <div class="col-md-2 form-group">
                     <label>Importe</label>
                     <money   v-model="form.importe" v-bind="money" class="form-control"></money>
                 </div>
-
+ 
                 <div class="col-md-2 form-group">
                     <label>Plazo</label>
-                    <input type="number" class="form-control" v-model="form.plazo" :min="1" :max='48'>
+                    <input type="number" class="form-control" v-model="form.plazo" :min="1" :max='48' @keyup="meses_numero">
 
                 </div>
+
+              <div class="col-md-2 form-group">
+                <label>Meses</label>
+                <input type="text" v-model="form.meses" class="form-control" disabled />
+              </div>
 
                 <div class="col-md-2 form-group">
                     <label>Cuota del sistema</label>
@@ -737,7 +738,7 @@ export default {
         nombres: "",
         apellidos: "",
         nacimiento: "",
-        estado_civil: "0",
+        estado_civil: "SOLTERO",
         ocupacion: "",
         telefono: "",
         celular: "",
@@ -745,10 +746,10 @@ export default {
         distrito: "",
         centro_laboral: "",
         direccion_laboral: "",
-        socio: 0,
+        socio: 'NO',
         codigo_socio: "",
         aporte_socio: "",
-        tipo_persona: 0
+        tipo_persona: "pn"
       });
     },
     clickRemoveAval(index) {
@@ -783,7 +784,7 @@ export default {
           nombres: "",
           apellidos: "",
           nacimiento: "",
-          estado_civil: "0",
+          estado_civil: "SOLTERO",
           ocupacion: "",
           telefono: "",
           celular: "",
@@ -800,13 +801,13 @@ export default {
           documento_conyugue: "",
           nombres_conyugue: "",
           nacimiento_conyugue: "",
-          estado_civil_conyugue: "0",
+          estado_civil_conyugue: "SOLTERO",
           ocupacion_conyugue: "",
           telefono_conyugue: "",
           celular_conyugue: "",
           centro_laboral_conyugue: "",
           direccion_laboral_conyugue: "",
-          socio_conyugue: 0,
+          socio_conyugue: 'NO',
           codigo_socio_conyugue: "",
           aporte_socio_conyugue: "",
           conyuge_tiene: 0,
@@ -818,6 +819,7 @@ export default {
         forma_inicial: "DIARIO",
         producto: "CREDIDIARIO",
         forma: "DIARIO",
+        meses: 0,
         importe: 0,
         aporte: 0,
         plazo: 0,
@@ -844,6 +846,20 @@ export default {
           console.log(error);
           // me.initForm();
         });
+    },
+    meses_numero(){
+
+        if(this.form.producto=='CREDIDIARIO'){
+          console.log('diario')
+          this.form.meses = (Number(this.form.plazo)/30).toFixed(2)
+        }
+        else if(this.form.producto=='CREDISEMANA'){
+          this.form.meses = (Number(this.form.plazo)/4).toFixed(2)
+        }
+        else{
+          this.form.meses = (Number(this.form.plazo)/1).toFixed(2)
+        }
+
     },
     datosAval(index) {
       let me = this;
@@ -897,7 +913,19 @@ export default {
     }
   },
   mounted() {
-    console.log("Component mounted.");
+
+
+    if(this.form.producto=='CREDIDIARIO'){
+
+      this.form.meses = (Number(this.form.plazo)/30).toFixed(2)
+    }
+    else if(this.form.producto=='CREDISEMANA'){
+      this.form.meses = (Number(this.form.plazo)/4).toFixed(2)
+    }
+    else if(this.form.producto=='MENSUAL'){
+      this.form.meses = Number(this.form.plazo)/1 
+    }
+    
   }
 };
 </script>

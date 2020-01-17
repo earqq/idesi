@@ -9,6 +9,7 @@ use App\Cliente;
 use App\Natural;
 use App\Familiar;
 use App\Colegio;
+use App\EntidadFinanciera;
 use App\Cualitativa;
 use App\Evaluacion;
 use Illuminate\Support\Facades\DB;
@@ -144,16 +145,24 @@ class EvaluacionController extends Controller
     {
         $negocios = Negocio::all();
         return $negocios;
-    } 
-    public function searchGiro($giro)
-    {
-        $negocios = Negocio::where('giro_negocio',$giro)->first();
-        return $negocios->toJson();
-    } 
+    }
+
+    // public function searchGiro($giro)
+    // {
+    //     $negocios = Negocio::where('giro_negocio',$giro)->first();
+    //     return $negocios->toJson();
+    // } 
+
     public function colegios()
     {
         $colegio = Colegio::all();
         return $colegio;
+    }
+
+    public function entidades()
+    {
+        $entidades = EntidadFinanciera::all();
+        return $entidades;
     } 
 
     public function colegioCosto(Request $request)

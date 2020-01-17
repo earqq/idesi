@@ -290,23 +290,26 @@
                   <label>Piso</label>
                   <input type="text" v-model="form.laboral.piso" :maxlength="5" class="form-control" />
               </div>
-
-              <div class="form-group col-md-3">
-                  <label>Distrito</label>
-                  <input type="text" v-model="form.laboral.distrito"  :maxlength="45" class="form-control" />
-              </div>
-              <div class="form-group col-md-3">
-                  <label>Provincia</label>
-                  <input type="text" v-model="form.laboral.provincia" :maxlength="45" class="form-control" />
-              </div>
-              <div class="form-group col-md-3">
-                  <label>Departamento</label>
-                  <input type="text" v-model="form.laboral.departamento" :maxlength="45" class="form-control" />
-              </div>
+              
               <div class="form-group col-md-3">
                   <label>Pais</label>
                   <input type="text" v-model="form.laboral.pais" :maxlength="20" class="form-control" />
               </div>
+
+              <div class="form-group col-md-3">
+                  <label>Departamento</label>
+                  <input type="text" v-model="form.laboral.departamento" :maxlength="45" class="form-control" />
+              </div>
+
+              <div class="form-group col-md-3">
+                  <label>Provincia</label>
+                  <input type="text" v-model="form.laboral.provincia" :maxlength="45" class="form-control" />
+              </div>
+
+              <div class="form-group col-md-3">
+                  <label>Distrito</label>
+                  <input type="text" v-model="form.laboral.distrito"  :maxlength="45" class="form-control" />
+              </div> 
 
 
               <div class="form-group col-md-3">
@@ -654,7 +657,7 @@ export default {
           documento:"",
           parentesco:"0",
           nacimiento:"",
-          socio:"0",
+          socio:"NO",
       });
     },
     initForm() {
@@ -716,7 +719,7 @@ export default {
           distrito:"",
           provincia:"",
           departamento:"",
-          pais:"",
+          pais:"PERÚ",
           referencia:"",
           telefono:"",
           celular:"",
@@ -735,9 +738,9 @@ export default {
 
         adicional:{
           representante: "",
-          documento: 0,
+          documento: 'DNI',
           numero:"",
-          relacion: 0
+          relacion: 'PADRE'
         },
         asociativa:{
           inscripcion:"",
@@ -766,7 +769,7 @@ export default {
                 documento:"",
                 parentesco:"CONYUGE",
                 nacimiento:"",
-                socio:"0",
+                socio:"NO",
             });
       }
 

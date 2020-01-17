@@ -455,11 +455,13 @@
                           </tr>
                           <tr v-for='(entidad_financiera,index) in evaluacion.central_riesgo' :key="index">
                             <td>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="entidad_financiera.entidad_financiera"
-                              />
+                              <v-select
+                                  label="nombre"
+                                  :options="entidades"
+                                  :reduce="entidades => entidades.nombre"
+                                  placeholder="Buscar Entidad"
+                                  v-model="entidad_financiera.entidad_financiera"
+                                ></v-select> 
                             </td>
                             <td>
                               <input type="checkbox" v-model="entidad_financiera.capital" />
@@ -632,6 +634,7 @@ export default {
   data() {
     return {
       giros: [],
+      entidades: [],
       notificationSystem: {
         options: {
           success: {
@@ -827,8 +830,13 @@ export default {
     }
   },
   async mounted() {
+
     this.$http.get(`/evaluaciones/giro`).then(response => {
       this.giros = response.data;
+    });
+
+    this.$http.get(`/evaluaciones/entidades`).then(response => {
+      this.entidades = response.data;
     });
 
     this.$http.get(`/evaluaciones/colegio`).then(response => {
@@ -845,7 +853,7 @@ export default {
       })
     });
 
-    this.$http
+    this.$http 
       .get(`/evaluaciones/numerohijos/` + this.$route.params.prestamo)
       .then(response => {
         this.evaluacion.familiar.numero_hijos = response.data.numero;

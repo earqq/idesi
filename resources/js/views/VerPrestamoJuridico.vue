@@ -453,7 +453,7 @@
                 </div>
                 <div class="col-md-3 form-group">
                     <label>Producto</label>
-                    <select v-model="form.producto" class="form-control">
+                    <select v-model="form.producto" class="form-control" @change="meses_numero">
                       <option value="CREDIDIARIO">CREDIDIARIO</option>
                       <option value="CREDISEMANA">CREDISEMANA</option>
                       <option value="CREDIQUINCENA">CREDIQUINCENA</option>
@@ -475,7 +475,7 @@
 
                 <div class="col-md-2 form-group">
                     <label>Plazo</label>
-                    <input type="number" class="form-control" v-model="form.plazo" :min="1" :max='48'>
+                    <input type="number" class="form-control" v-model="form.plazo" :min="1" :max='48' @keyup="meses_numero">
 
                 </div>
 
@@ -627,6 +627,7 @@ export default {
         this.form.disponibilidad_pago_inicial=response.data['prestamo']['disponibilidad_pago_inicial'];
         this.form.destino_inicial=response.data['prestamo']['destino_inicial'];
         this.form.forma_inicial=response.data['prestamo']['forma_inicial'];
+        this.form.meses=response.data['prestamo']['meses'];
         this.form.producto= response.data['prestamo']['producto'];
         this.form.forma=response.data['prestamo']['forma'];
         this.form.importe= response.data['prestamo']['importe'];
@@ -688,6 +689,18 @@ export default {
     clickRemoveAval(index) {
       this.form.avals.splice(index, 1);
     },
+    numero_meses(){
+       if(this.form.producto=='CREDIDIARIO'){
+          console.log('diario')
+          this.form.meses = (Number(this.form.plazo)/30).toFixed(2)
+        }
+        else if(this.form.producto=='CREDISEMANA'){
+          this.form.meses = (Number(this.form.plazo)/4).toFixed(2)
+        }
+        else {
+          this.form.meses = (Number(this.form.plazo)/1).toFixed(2)
+        }
+    },
     clickAddGarantia() {
       // this.contador_garantia++;
       this.form.garantias.push({
@@ -747,6 +760,7 @@ export default {
         forma_inicial: "0",
         producto: 0,
         forma: "0",
+        meses: 0,
         importe: 0,
         aporte: 0,
         plazo: 0,

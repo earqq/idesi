@@ -81,21 +81,7 @@
                 <!-- <input type="text" v-model="form.monto_inicial" class="form-control" /> -->
                 <money   v-model="form.monto_inicial" v-bind="money" class="form-control"  ></money>
               </div>
-              <div class="col-md-4 form-group">
-                <label>Plazo</label>
-                <select v-model="form.plazo_inicial" class="form-control">
-                  <option v-for="(index) in 36" :key="index" :value="index">{{index}}</option>
-                </select>
-              </div>
-              <div class="col-md-4 form-group">
-                <label>Disponibilidad de pago</label>
-                <input type="text" v-model="form.disponibilidad_pago_inicial" class="form-control" />
-              </div>
-              <div class="col-md-6 form-group">
-                <label>Destino de credito en propuesta cliente</label>
-                <input type="text" v-model="form.destino_inicial" class="form-control" />
-              </div>
-              <div class="col-md-6 form-group">
+                <div class="col-md-4 form-group">
                 <label>Forma</label>
                 <select v-model="form.forma_inicial" class="form-control">
                   <option value="DIARIO">DIARIO</option>
@@ -104,6 +90,21 @@
                   <option value="MENSUAL">MENSUAL</option>
                 </select>
               </div>
+              <div class="col-md-4 form-group">
+                <label>Plazo</label>
+                <select v-model="form.plazo_inicial" class="form-control">
+                  <option v-for="(index) in 36" :key="index" :value="index">{{index}}</option>
+                </select>
+              </div>
+
+              <div class="col-md-6 form-group">
+                <label>Disponibilidad de pago</label>
+                <input type="text" v-model="form.disponibilidad_pago_inicial" class="form-control" />
+              </div>
+              <div class="col-md-6 form-group">
+                <label>Destino de credito en propuesta cliente</label>
+                <input type="text" v-model="form.destino_inicial" class="form-control" />
+              </div> 
             </div>
 
             <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
@@ -451,31 +452,34 @@
                 <div class="col-md-12 d-flex titulo-prestamo-menu">
                   <p>Propuesta</p>
                 </div>
-                <div class="col-md-3 form-group">
+                <div class="col-md-2 form-group">
                     <label>Producto</label>
-                    <select v-model="form.producto" class="form-control">
+                    <select v-model="form.producto" class="form-control" @change="meses_numero">
                       <option value="CREDIDIARIO">CREDIDIARIO</option>
                       <option value="CREDISEMANA">CREDISEMANA</option>
                       <option value="CREDIQUINCENA">CREDIQUINCENA</option>
                       <option value="PYME">PYME</option>
                       <option value="PYME ESPECIAL">PYME ESPECIAL</option>
-                      <option value="CONSUMO">CONSUMO</option>
+                      <option value="CONSUMO">CONSUMO</option> 
                       <option value="CONSUMO ESPECIAL">CONSUMO ESPECIAL</option>
                     </select>
 
                 </div>
 
-            
-
-                <div class="col-md-3 form-group">
+                <div class="col-md-2 form-group">
                     <label>Importe</label>
                     <money   v-model="form.importe" v-bind="money" class="form-control"></money>
                 </div>
 
                 <div class="col-md-2 form-group">
                     <label>Plazo</label>
-                    <input type="number" class="form-control" v-model="form.plazo" :min="1" :max='48'>
+                    <input type="number" class="form-control" v-model="form.plazo" :min="1" :max='48'  @keyup="meses_numero">
 
+                </div>
+
+                <div class="col-md-2 form-group">
+                  <label>Meses</label>
+                  <input type="text" v-model="form.meses" class="form-control" disabled />
                 </div>
 
                 <div class="col-md-2 form-group">
@@ -602,20 +606,20 @@ export default {
          this.form.juridico.email = response.data["juridico"]["email"];
 
 
-         this.form.juridico.nombres_representante = response.data["juridico"]["nombres_representante"];
-         this.form.juridico.documento_representante = response.data["juridico"]["documento_representante"];
-         this.form.juridico.nacimiento_representante =  response.data["juridico"]["nacimiento_representante"];
-         this.form.juridico.estado_civil_representante = response.data["juridico"]["estado_civil_representante"];
-         this.form.juridico.ocupacion_representante =  response.data["juridico"]["ocupacion_representante"];
-         this.form.juridico.telefono_representante =  response.data["juridico"]["telefono_representante"];
-         this.form.juridico.celular_representante =  response.data["juridico"]["celular_representante"];
-         this.form.juridico.direccion_representante =  response.data["juridico"]["direccion_representante"];
-         this.form.juridico.distrito_representante =  response.data["juridico"]["distrito_representante"];
-         this.form.juridico.departamento_representante =  response.data["juridico"]["departamento_representante"];
-         this.form.juridico.referencia_representante =  response.data["juridico"]["referencia_representante"];
-         this.form.juridico.tipo_domicilio_representante =  response.data["juridico"]["tipo_domicilio_representante"];
-         this.form.juridico.poderes_representante =  response.data["juridico"]["poderes_representante"];
-         this.form.juridico.fecha_inicio_representante =  response.data["juridico"]["fecha_inicio_representante"];
+         this.form.representante.nombres_representante = response.data["juridico"]["nombres_representante"];
+         this.form.representante.documento_representante = response.data["juridico"]["documento_representante"];
+         this.form.representante.nacimiento_representante =  response.data["juridico"]["nacimiento_representante"];
+         this.form.representante.estado_civil_representante = response.data["juridico"]["estado_civil_representante"];
+         this.form.representante.ocupacion_representante =  response.data["juridico"]["ocupacion_representante"];
+         this.form.representante.telefono_representante =  response.data["juridico"]["telefono_representante"];
+         this.form.representante.celular_representante =  response.data["juridico"]["celular_representante"];
+         this.form.representante.direccion_representante =  response.data["juridico"]["direccion_representante"];
+         this.form.representante.distrito_representante =  response.data["juridico"]["distrito_representante"];
+         this.form.representante.departamento_representante =  response.data["juridico"]["departamento_representante"];
+         this.form.representante.referencia_representante =  response.data["juridico"]["referencia_representante"];
+         this.form.representante.tipo_domicilio_representante =  response.data["juridico"]["tipo_domicilio_representante"];
+         this.form.representante.poderes_representante =  response.data["juridico"]["poderes_representante"];
+         this.form.representante.fecha_inicio_representante =  response.data["juridico"]["fecha_inicio_representante"];
         
 
 
@@ -664,6 +668,20 @@ export default {
         aporte_socio: "",
         tipo_persona: 0
       });
+    },
+        meses_numero(){
+
+        if(this.form.producto=='CREDIDIARIO'){
+          console.log('diario')
+          this.form.meses = (Number(this.form.plazo)/30).toFixed(2)
+        }
+        else if(this.form.producto=='CREDISEMANA'){
+          this.form.meses = (Number(this.form.plazo)/4).toFixed(2)
+        }
+        else{
+          this.form.meses = (Number(this.form.plazo)/1).toFixed(2)
+        }
+
     },
     clickRemoveAval(index) {
       this.form.avals.splice(index, 1);
@@ -727,6 +745,7 @@ export default {
         forma_inicial: "DIARIO",
         producto: "CREDIDIARIO",
         forma: "DIARIO",
+        meses: 0,
         importe: 0,
         aporte: 0,
         plazo: 5,
@@ -806,7 +825,18 @@ export default {
     }
   },
   mounted() {
-    console.log("Component mounted.");
+
+    if(this.form.producto=='CREDIDIARIO'){
+
+      this.form.meses = (Number(this.form.plazo)/30).toFixed(2)
+    }
+    else if(this.form.producto=='CREDISEMANA'){
+      this.form.meses = (Number(this.form.plazo)/4).toFixed(2)
+    }
+    else if(this.form.producto=='MENSUAL'){
+      this.form.meses = Number(this.form.plazo)/1 
+    }
+
   }
 };
 </script>

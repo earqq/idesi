@@ -447,7 +447,7 @@ mixins: [serviceNumber],
         },
         declaracion:{
           uif: "NO",
-          estado: "NO",
+          estado: "ADMITIDO",
           observaciones: "",
         },
       };
