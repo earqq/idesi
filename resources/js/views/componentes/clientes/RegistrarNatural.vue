@@ -298,17 +298,61 @@
 
               <div class="form-group col-md-3">
                   <label>Departamento</label>
-                  <input type="text" v-model="form.laboral.departamento" :maxlength="45" class="form-control" />
+                  <select
+                  class="form-control"
+                  v-model="form.laboral.departamento"
+                  filterable
+                  @change="filterProvince"
+                  dusk="departamentos_id"
+                >
+                  <option value="0">SELECCIONE</option>
+                  <option
+                    v-for="option in all_departments"
+                    :key="option.id"
+                    :value="option.id"
+                    :label="option.descripcion"
+                  >></option>
+                </select>
+
               </div>
 
               <div class="form-group col-md-3">
                   <label>Provincia</label>
-                  <input type="text" v-model="form.laboral.provincia" :maxlength="45" class="form-control" />
+                  <select
+                  class="form-control text-uppercase"
+                  v-model="form.laboral.provincia"
+                  filterable
+                  @change="filterDistrict"
+                  dusk="provincias_id"
+                >
+                  <option value="0">SELECCIONE</option>
+                  <option
+                    v-for="option in provinces"
+                    :key="option.id"
+                    :value="option.id"
+                    :label="option.descripcion"
+                  >></option>
+                </select>
+
               </div>
 
               <div class="form-group col-md-3">
                   <label>Distrito</label>
-                  <input type="text" v-model="form.laboral.distrito"  :maxlength="45" class="form-control" />
+                  <select
+                  class="form-control text-uppercase"
+                  v-model="form.laboral.distrito"
+                  filterable
+                  dusk="distritos_id"
+                >
+                  <option value="0">SELECCIONE</option>
+                  <option
+                    v-for="option in districts"
+                    :key="option.id"
+                    :value="option.id"
+                    :label="option.descripcion"
+                  >></option>
+                </select>
+
               </div> 
 
 
@@ -361,7 +405,7 @@
                 </div> 
               <div class="form-group col-md-3" v-if="form.familia.hijos=='SI'">
                   <label>Nro de hijos</label>
-                  <input type="text" class="form-control" :maxlength="2" v-model="form.familia.numero"  @change="hijosAsignacion()" >
+                  <input type="text" class="form-control" :maxlength="2" v-model="form.familia.numero">
               </div>
 
                <div class="form-group col-md-3">
@@ -386,8 +430,7 @@
               <div class="col-md-12 mt-3" v-if="form.detalles.length>0">
                           <table class="table table-bordered table-striped table-sm">
                                   <thead>
-                                      <tr>
-                                          <th></th>
+                                      <tr> 
                                           <th>Dc. Identidad</th>
                                           <th>Apellidos y Nombres</th>
                                           <th>Parentesco</th>
@@ -397,14 +440,7 @@
                                   </thead>
                                   <tbody>
                                       <tr v-for="(row, index) in form.detalles" :key="index">
-                                          <td>
-                                              
-                                              <template>
-                                                  <button type="button" class="btn btn-danger btn-sm"  @click.prevent="clickRemoveFamiliar(index)">
-                                                      <i class="fas fa-trash"></i>
-                                                  </button>
-                                              </template>
-                                          </td>
+                                          
                                           <td><input type="text" v-model="row.documento" class="form-control letter-5" v-mask="{mask: '99999999'}" @change="datosFamiliar(index)" /></td>
                                           <td><input type="text" v-model="row.nombres" :maxlength="45" class="form-control" /></td>
                                           <td>
@@ -430,12 +466,7 @@
                             </table>
               </div>
 
-              <div class="col-md-12 mt-3">
-                  <button type="button"  @click.prevent="clickAddFamiliar"  class="btn btn-outline-dark more-option w-100" >
-                    <i class="fas fa-plus"></i> Agregar Familiar
-                  </button>
-              </div>
-
+        
 
 
             </div>
@@ -492,19 +523,19 @@
             <div class="row">
               <div class="form-group col-md-3">
                   <label>Inscripción </label>
-                  <money   v-model="form.asociativa.inscripcion"  v-bind="money" class="form-control"  ></money>
+                   <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.inscripcion"  v-bind:precision="2"></vue-numeric>
               </div>
               <div class="form-group col-md-3">
                   <label>Aporte </label>
-                   <money   v-model="form.asociativa.aporte" v-bind="money" class="form-control"  ></money>
+                  <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.aporte"  v-bind:precision="2"></vue-numeric>
               </div>
               <div class="form-group col-md-3">
                   <label>Fondo de prevencion social </label>
-                  <money   v-model="form.asociativa.fondo"  v-bind="money" class="form-control"  ></money>
+                  <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.fondo"  v-bind:precision="2"></vue-numeric>
               </div>
               <div class="form-group col-md-3">
                   <label>Fondo de prevencion social opcional </label>
-                  <money v-model="form.asociativa.fondo_opcional"  v-bind="money" class="form-control"  ></money>
+                  <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.fondo_opcional" v-bind:precision="2"></vue-numeric>
               </div>
             </div> 
             <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
@@ -561,6 +592,7 @@ import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
 import { serviceNumber } from "../../../mixins/functions";
 import vSelect from "vue-select";
+import VueNumeric from 'vue-numeric'
 
 const mesConf = [
   "Enero",
@@ -582,7 +614,7 @@ const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   name: 'natural',
   mixins: [serviceNumber],
-  components: { DatePick , vSelect},
+  components: { DatePick , vSelect,VueNumeric},
   props: ["tipo_persona"],
 
   data() {
@@ -597,14 +629,6 @@ export default {
       loading_submit:'0',
       districts: [],
       form: {},
-      money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'S/. ',
-          suffix: '',
-          precision: 2,
-          masked: false
-      },
       notificationSystem: {
         options: {
           success: {
@@ -620,17 +644,24 @@ export default {
     };
   },
   async created() {
-    // await this.$http.get(`/${this.resource}/datos/`).then(response => {
-    //   this.all_departments = response.data.departments;
-    //   this.all_provinces = response.data.provinces;
-    //   this.all_districts = response.data.districts;
-    // });
+
+    this.$http.get(`/${this.resource}/datos/`).then(response => {
+      this.all_departments = response.data.departments;
+      this.all_provinces = response.data.provinces;
+      this.all_districts = response.data.districts;
+    });
+
 
     await this.initForm();
     
     this.$http.get(`/evaluaciones/giro`).then(response => {
       this.giros = response.data;
     });
+  },
+  watch: {
+    'form.familia.numero'(new_value,old_value){ 
+      this.hijosAsignacion(new_value,old_value)
+    }
   },
   methods: {
     next() {
@@ -646,19 +677,6 @@ export default {
         .prev("li")
         .find("a")
         .trigger("click");
-    },
-    clickRemoveFamiliar(index) {
-      this.form.detalles.splice(index, 1);
-    },
-
-    clickAddFamiliar() {
-      this.form.detalles.push({
-          nombres: "",
-          documento:"",
-          parentesco:"0",
-          nacimiento:"",
-          socio:"NO",
-      });
     },
     initForm() {
       this.form = {
@@ -771,21 +789,41 @@ export default {
                 nacimiento:"",
                 socio:"NO",
             });
+      }else{
+        for (var i = 0; i < this.form.detalles.length; i++) {  
+            if(this.form.detalles[i].parentesco!='HIJOS'){ 
+              this.form.detalles.splice(i,1)
+            } 
+      }
       }
 
     },
 
-    hijosAsignacion(){
-      
-      for (var i = 0; i < this.form.familia.hijos; i++) {
-          this.form.detalles.push({
+    hijosAsignacion(new_value,old_value){
+       old_value = old_value || 0
+       new_value = new_value || 0 
+      var conyuge=null
+
+      for (var i = 0; i < this.form.detalles.length; i++) {  
+            if(this.form.detalles[i].parentesco!='HIJOS'){ 
+              conyuge= this.form.detalles[i] 
+            } 
+      }
+
+      this.form.detalles=[]
+
+      for (var i = 0; i < new_value; i++) { 
+              this.form.detalles.push({
                   nombres: "",
                   documento:"",
                   parentesco:"HIJOS",
                   nacimiento:"",
                   socio:"0",
-              });
+              })
+
         } 
+        if (conyuge) this.form.detalles.push(conyuge)
+
     },
 
     resetForm() {

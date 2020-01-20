@@ -78,8 +78,7 @@
 
               <div class="col-md-4 form-group">
                 <label>Monto</label>
-                <!-- <input type="text" v-model="form.monto_inicial" class="form-control" /> -->
-                <money   v-model="form.monto_inicial" v-bind="money" class="form-control"  ></money>
+                <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.monto_inicial"  v-bind:precision="2"></vue-numeric>
               </div>
               <div class="col-md-4 form-group">
                 <label>Plazo</label>
@@ -269,7 +268,7 @@
 
               <div class="col-md-4 form-group">
                 <label>Aporte</label>
-                <money   v-model="form.conyugue.aporte_socio_conyugue" v-bind="money" class="form-control" v-if="form.conyugue.socio_conyugue=='SI'" ></money>
+                <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.conyugue.aporte_socio_conyugue"  v-bind:precision="2" v-if="form.conyugue.socio_conyugue=='SI'"></vue-numeric>
                 <input type="text"  class="form-control" disabled v-else>
               </div>
 
@@ -410,7 +409,7 @@
 
                 <div class="col-md-4 form-group"> 
                     <label>Aporte</label>
-                    <money   v-model="row.aporte_socio" v-bind="money" class="form-control" v-if="row.socio=='SI'" ></money>
+                    <vue-numeric class="form-control" currency="S/. " separator="," v-model="row.aporte_socio"  v-bind:precision="2" v-if="row.socio=='SI'"></vue-numeric>
                     <input type="text" class="form-control" v-else disabled/> 
                 </div>
 
@@ -523,7 +522,7 @@
 
                 <div class="col-md-2 form-group">
                     <label>Importe</label>
-                    <money   v-model="form.importe" v-bind="money" class="form-control"></money>
+                    <vue-numeric class="form-control" currency="S/. " separator=","  v-model="form.importe"   v-bind:precision="2" ></vue-numeric>
                 </div>
 
                 <div class="col-md-2 form-group">
@@ -543,7 +542,7 @@
 
                 <div class="col-md-2 form-group">
                     <label>Aporte</label>
-                    <money  v-model="form.aporte" v-bind="money" class="form-control"></money>
+                    <vue-numeric class="form-control" currency="S/. " separator=","  v-model="form.aporte"  v-bind:precision="2" ></vue-numeric>
                 </div>
                 <div class="col-md-2 form-group">
                     <label>Prob. Infocorp</label>
@@ -571,6 +570,7 @@
 import { serviceNumber } from "../mixins/functions";
 import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
+import VueNumeric from 'vue-numeric'
 
 const mesConf = [
   "Enero",
@@ -589,7 +589,7 @@ const mesConf = [
 const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   mixins: [serviceNumber],
-  components: { DatePick },
+  components: { DatePick ,VueNumeric},
   data() {
     return {
       resource: "clientes",
@@ -605,14 +605,6 @@ export default {
       contador_garantia: 0,
       mesEs: mesConf,
       diaEs: diaConf,
-      money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'S/. ',
-          suffix: '',
-          precision: 2,
-          masked: false
-      },
       notificationSystem: {
         options: {
           success: {
@@ -897,12 +889,9 @@ export default {
         });
     },
     retornar() {
-      this.backMixin_handleBack();
+      this.backMixin_handleBack('/perfil/'+this.form.cliente.documento );
     }
   },
-  mounted() {
-    console.log("Component mounted.");
-  }
 };
 </script>
 <style lang="scss">

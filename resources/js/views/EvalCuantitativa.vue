@@ -83,68 +83,35 @@
                               <input  :disabled='index==0' type="text" class="form-control" v-model="val.concepto" />
                             </td>
                             <td>
-                              <money
-                                :change="negocioIngresosSubtotal(index)"
-                                v-model="evaluacion.titular.ingresos_negocio[index].lunes"
-                                v-bind="money"
-                                class="form-control"
-                              ></money>
+                              <vue-numeric class="form-control"  :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].lunes" v-bind:precision="2"></vue-numeric>
+
                             </td>
                             <td>
-                              <money
-                                :change="negocioIngresosSubtotal(index)"
-                                v-model="evaluacion.titular.ingresos_negocio[index].martes"
-                                v-bind="money"
-                                class="form-control"
-                              ></money>
+                               <vue-numeric class="form-control"  :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].martes" v-bind:precision="2"></vue-numeric>
                             </td>
                             <td>
-                              <money
-                                :change="negocioIngresosSubtotal(index)"
-                                v-model="evaluacion.titular.ingresos_negocio[index].miercoles"
-                                v-bind="money"
-                                class="form-control"
-                              ></money>
+                              <vue-numeric class="form-control"  :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].miercoles" v-bind:precision="2"></vue-numeric>
+                             
                             </td>
                             <td>
-                              <money
-                                :change="negocioIngresosSubtotal(index)"
-                                v-model="evaluacion.titular.ingresos_negocio[index].jueves"
-                                v-bind="money"
-                                class="form-control"
-                              ></money>
+                               <vue-numeric class="form-control"  :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].jueves" v-bind:precision="2"></vue-numeric>
+                             
                             </td>
                             <td>
-                              <money
-                                :change="negocioIngresosSubtotal(index)"
-                                v-model="evaluacion.titular.ingresos_negocio[index].viernes"
-                                v-bind="money"
-                                class="form-control"
-                              ></money>
+                              <vue-numeric class="form-control"  :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].viernes" v-bind:precision="2"></vue-numeric>
+                             
                             </td>
                             <td>
-                              <money
-                                :change="negocioIngresosSubtotal(index)"
-                                v-model="evaluacion.titular.ingresos_negocio[index].sabado"
-                                v-bind="money"
-                                class="form-control"
-                              ></money>
+                               <vue-numeric class="form-control"  :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].sabado" v-bind:precision="2"></vue-numeric>
+                             
                             </td>
                             <td>
-                              <money
-                                :change="negocioIngresosSubtotal(index)"
-                                v-model="evaluacion.titular.ingresos_negocio[index].domingo"
-                                v-bind="money"
-                                class="form-control"
-                              ></money>
+                              <vue-numeric class="form-control"  :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].domingo" v-bind:precision="2"></vue-numeric>
+                             
                             </td>
                             <td>
-                              <money
-                                :change="negocioIngresosSubtotal(index)"
-                                v-model="evaluacion.titular.ingresos_negocio[index].subtotal"
-                                v-bind="money"
-                                class="form-control"
-                              ></money>
+                              <vue-numeric class="form-control"  :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].subtotal" v-bind:precision="2"></vue-numeric>
+                             
                             </td>
                           </tr>
                         </table>
@@ -326,68 +293,36 @@
                         />
                       </td>
                       <td>
-                        <money
-                          :change="conyugeIngresosSubtotal(index)"
-                          v-model="evaluacion.conyuge.ingresos_negocio[index].lunes"
-                          v-bind="money"
-                          class="form-control"
-                        ></money>
+                        <vue-numeric class="form-control"  :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].lunes" v-bind:precision="2"></vue-numeric>
+                         
                       </td>
                       <td>
-                        <money
-                          :change="conyugeIngresosSubtotal(index)"
-                          v-model="evaluacion.conyuge.ingresos_negocio[index].martes"
-                          v-bind="money"
-                          class="form-control"
-                        ></money>
+                        <vue-numeric class="form-control"  :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].martes" v-bind:precision="2"></vue-numeric>
+                        
                       </td>
                       <td>
-                        <money
-                          :change="conyugeIngresosSubtotal(index)"
-                          v-model="evaluacion.conyuge.ingresos_negocio[index].miercoles"
-                          v-bind="money"
-                          class="form-control"
-                        ></money>
+                        <vue-numeric class="form-control"  :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].miercoles" v-bind:precision="2"></vue-numeric>
+                       
                       </td>
                       <td>
-                        <money
-                          :change="conyugeIngresosSubtotal(index)"
-                          v-model="evaluacion.conyuge.ingresos_negocio[index].jueves"
-                          v-bind="money"
-                          class="form-control"
-                        ></money>
+                        <vue-numeric class="form-control"  :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].jueves" v-bind:precision="2"></vue-numeric>
+                       
                       </td>
                       <td>
-                        <money
-                          :change="conyugeIngresosSubtotal(index)"
-                          v-model="evaluacion.conyuge.ingresos_negocio[index].viernes"
-                          v-bind="money"
-                          class="form-control"
-                        ></money>
+                        <vue-numeric class="form-control"  :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].viernes" v-bind:precision="2"></vue-numeric>
+                       
                       </td>
                       <td>
-                        <money
-                          :change="conyugeIngresosSubtotal(index)"
-                          v-model="evaluacion.conyuge.ingresos_negocio[index].sabado"
-                          v-bind="money"
-                          class="form-control"
-                        ></money>
+                        <vue-numeric class="form-control"  :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].sabado" v-bind:precision="2"></vue-numeric>
+                       
                       </td>
                       <td>
-                        <money
-                          :change="conyugeIngresosSubtotal(index)"
-                          v-model="evaluacion.conyuge.ingresos_negocio[index].domingo"
-                          v-bind="money"
-                          class="form-control"
-                        ></money>
+                         <vue-numeric class="form-control"  :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].domingo" v-bind:precision="2"></vue-numeric>
+                       
                       </td>
                       <td>
-                        <money
-                          :change="conyugeIngresosSubtotal(index)"
-                          v-model="evaluacion.conyuge.ingresos_negocio[index].subtotal"
-                          v-bind="money"
-                          class="form-control"
-                        ></money>
+                         <vue-numeric class="form-control"  :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].subtotal" v-bind:precision="2"></vue-numeric>
+                       
                       </td>
                     </tr>
                   </table>
@@ -711,10 +646,13 @@
 <script>
 import vSelect from "vue-select";
 import { serviceNumber } from "../mixins/functions";
+import VueNumeric from 'vue-numeric'
+
 export default {
   mixins: [serviceNumber],
   components: {
-    vSelect
+    vSelect,
+    VueNumeric
   },
   data() {
     return {
@@ -730,14 +668,6 @@ export default {
         }
       },
       loading_submit: 0,
-      money: {
-        decimal: ",",
-        thousands: ".",
-        prefix: "S/. ",
-        suffix: "",
-        precision: 0,
-        masked: false
-      },
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
         propuesta: {

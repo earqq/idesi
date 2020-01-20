@@ -270,11 +270,11 @@
               <div class="row">
                 <div class="form-group col-md-3">
                     <label>Inscripcion </label>
-                    <money   v-model="form.asociativa.inscripcion"  v-bind="money" class="form-control"  ></money>
+                    <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.inscripcion"  v-bind:precision="2"></vue-numeric>
                 </div>
                 <div class="form-group col-md-3">
                     <label>Aporte </label>
-                    <money   v-model="form.asociativa.aporte" v-bind="money" class="form-control"  ></money>
+                    <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.aporte"  v-bind:precision="2"></vue-numeric>
                 </div>
               </div>
               <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
@@ -323,6 +323,7 @@
 import DatePick from 'vue-date-pick';
 import "vue-date-pick/dist/vueDatePick.css";
 import { serviceNumber } from "../../../mixins/functions";
+import VueNumeric from 'vue-numeric'
 
 const mesConf = [
   "Enero",
@@ -343,7 +344,7 @@ const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 
 export default {
 mixins: [serviceNumber],
-  components: { DatePick},
+  components: { DatePick,VueNumeric},
  props: ['tipo_persona'],
         
   data() {
@@ -357,14 +358,6 @@ mixins: [serviceNumber],
       provinces: [],
       districts: [],
       form: {},
-      money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'S/. ',
-          suffix: '',
-          precision: 2,
-          masked: false
-      },
       notificationSystem: {
         options: {
           success: {

@@ -4,29 +4,25 @@
       <span @click="retornar()">
         <i class="fas fa-angle-left"></i>
       </span>
-      <h1>Lista de visitas</h1>
+      <h1>Ubicación del negocio</h1>
     </header>
-
+    <button @click="locateMe">Get location</button>
     <div class="loans-views">
       <div class="row m-0" v-if="tipo">
             <div class="col-md-12 d-flex justify-content-between p-0 ">
               <p></p>
-              <button class="btn btn-def " style="width:15%"  @click="crearVisita()">Crear Visita</button>
+              <button class="btn btn-def " style="width:15%"  @click="crearVisita()">Crear Ubicación</button>
             </div>
             <div class="col-md-12 views p-0">
-              <h1>Visitas Programadas</h1>
+              <h1>Ubicación del negocio</h1>
               <table style="width:100%">
                 <tr>
-                  <th>Fecha</th>
-                  <th>Hora</th>
-                  <th>Motivo</th>
-                  <th>Lugar</th>
-                  <th></th>
+                  <th>Fecha de registro</th>
+                  <th>Foto</th>
+                  <th>Ver en mapa</th>
                 </tr>
                 <tr v-for="visita in list_vistas" :key="visita.id">
                   <td v-text="stringDate(visita.fecha)"></td>
-                  <td v-text="visita.hora"></td>
-                  <td v-text="visita.motivo"></td>
                   <td>
                     <i class="fas fa-map-marked-alt"></i>
                   </td>
@@ -45,24 +41,6 @@
 
           <div class="new-view" v-else>
             <div class="row">
-              <div class="form-group col-md-8">
-                  <label for="motivo">Motivo</label>
-                  <input
-                    type="text"
-                    class="form-control documento-input"
-                    v-model="formViews.motivo"
-                  />
-              </div>
-              <div class="form-group col-md-2">
-                    <label for="fecha">Fecha</label>
-                    <date-pick v-model="formViews.fecha" :months="mesEs" :weekdays="diaEs"></date-pick>
-              </div>
-
-              <div class="form-group col-md-2">
-                    <label for="hora">Hora</label>
-                    <input type="text" class="form-control" v-model="formViews.hora" placeholder />
-              </div>
-
               <div class="form-group col-md-12 d-flex justify-content-center mt-2 mb-2">
                     <label for="">
                         <gmap-autocomplete
@@ -139,6 +117,9 @@ export default {
   data() {
     return {
       resource: "clientes",
+          location:null,
+    gettingLocation: false,
+    errorStr:null,
       errors: {},
       formViews: {},
       list_vistas: [],
@@ -159,7 +140,7 @@ export default {
   },
   async created() {
 
-
+ 
     await this.views();
     /**
      * DATOS VIES
@@ -168,8 +149,37 @@ export default {
   },
   mounted() {
     this.geolocate();
+    
   },
   methods: {
+        async getLocation() {
+      
+      return new Promise((resolve, reject) => {
+
+        if(!("geolocation" in navigator)) {
+          reject(new Error('Geolocation is not available.'));
+        }
+
+        navigator.geolocation.getCurrentPosition(pos => {
+          resolve(pos);
+        }, err => {
+          reject(err);
+        });
+
+      });
+    },
+        async locateMe() {
+
+      this.gettingLocation = true;
+      try {
+        this.gettingLocation = false;
+        this.location = await this.getLocation();
+      } catch(e) {
+        this.gettingLocation = false;
+        this.errorStr = e.message;
+      }
+      
+    },
    retornar() {
      this.$parent.view = false; 
      this.$parent.idprestamo = 0; 
