@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
 use App\Imports\ColegiosImport;
 use Maatwebsite\Excel\Facades\Excel;
-class DataColegiosSeeder extends Seeder
+class DataColeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
