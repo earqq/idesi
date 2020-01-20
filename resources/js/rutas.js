@@ -15,10 +15,15 @@ export default new Router({
             name: 'inicio',
             component: require('./views/Inicio').default
         },
-        {
+        { 
             path: '/clientes',
             name: 'clientes',
             component: require('./views/Clientes').default
+        },
+        {
+            path: '/clientes/registrar/natural',
+            name: 'registrar/natural',
+            component: require('./views/PersonaNatural').default
         },
         {
             path: '/eval-cualitativa/:prestamo',

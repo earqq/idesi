@@ -18,7 +18,8 @@
               <option value="PN">Persona Natural</option>
               <option value="PJ">Persona Juridica</option>
             </select>
-            <button class="btn btn-def col-md-4 form-control" @click="crearCliente()">Crear Solicutd</button>
+            <router-link :to="{name:'registrar/natural'}" class="btn btn-def col-md-4 form-control" v-if="form.tipo_persona=='PN'">Crear Solicitud</router-link>
+            <!-- <button class="" @click="crearCliente()">Crear Solicutd</button> -->
           </div>
 
         </div>
