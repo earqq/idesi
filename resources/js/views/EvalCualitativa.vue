@@ -207,8 +207,12 @@
                           </select>
                         </div>
                         <div class="form-group col-md-2">
-                          <label>Horario de atención</label>
-                          <input type='text' v-model='evaluacion.negocio.horario_atencion' class='form-control'>
+                          <label>Horario de atención entrada</label>
+                          <input type='time' v-model='evaluacion.negocio.horario_atencion_inicio' class='form-control'>
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label>Horario de atención salida</label>
+                          <input type='time' v-model='evaluacion.negocio.horario_atencion_salida' class='form-control'>
                         </div>
                       </div>
                       
@@ -292,10 +296,19 @@
                         </div>
 
                         <div class="form-group col-md-1">
-                          <label>Horario trabajo</label>
+                          <label>Horario trabajo inicio</label>
                           <input
-                            type="text"
-                            v-model="evaluacion.vehiculo.horario_servicio"
+                            type="time"
+                            v-model="evaluacion.vehiculo.horario_servicio_inicio"
+                            class="form-control"
+                          />
+                        </div>
+
+                        <div class="form-group col-md-1">
+                          <label>Horario trabajo fin</label>
+                          <input
+                            type="time"
+                            v-model="evaluacion.vehiculo.horario_servicio_fin"
                             class="form-control"
                           />
                         </div>
@@ -356,54 +369,50 @@
                           <thead>
                             <tr>
                               <th style="width: 25%;">Edad</th>
-                              <th style="width: 25%;">Grado</th>
                               <th style="width: 25%;">Colegio</th>
+                              <th style="width: 25%;">Grado</th>
                               <th style="width: 25%;">Costo</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr v-for="(n, index) in evaluacion.familiar.numero_hijos" :key="index">
+                            <tr v-for="(hijo, index) in evaluacion.familiar.hijos" :key="index">
                               <td>
                                 <input
                                   type="text"
                                   class="form-control"
-                                  v-model="evaluacion.familiar.hijos[index].edad"
+                                  v-model="hijo.edad"
                                 />
                               </td>
                               <td>
                                 <select
-                                  v-model="evaluacion.familiar.hijos[index].grado"
+                                  v-model="hijo.colegio"
                                   class="form-control"
-                                  @change="seleccionColegios(index)"
+                                  @change="seleccionColegiosCosto(index)"
                                 >
-                                  <option value="0">SELECCIONE</option>
+                                  <option
+                                    v-for="(colegio,index) in colegios"
+                                    v-bind:value="colegio.nombre"
+                                    :key="index"
+                                  >{{ colegio.nombre }}</option>
+                                </select>
+
+                              </td>
+                              <td>
+                                <select
+                                  v-model="hijo.grado"
+                                  class="form-control"
+                                  @change="seleccionColegiosCosto(index)"
+                                >
                                   <option value="INICIAL">INICIAL</option>
                                   <option value="PRIMARIA">PRIMARIA</option>
                                   <option value="SECUNDARIA">SECUNDARIA</option>
                                 </select>
                               </td>
                               <td>
-                                <select
-                                  v-if="evaluacion.familiar.hijos[index].grado!='0'"
-                                  v-model="evaluacion.familiar.hijos[index].colegio"
-                                  class="form-control"
-                                  @change="seleccionColegiosCosto(index)"
-                                >
-                                  <option value="0">SELECCIONE</option>
-                                  <option
-                                    v-for="colegio in colegios"
-                                    v-bind:value="colegio.nombre"
-                                    :key="colegio.id"
-                                  >{{ colegio.nombre }}</option>
-                                </select>
-
-                                <input type="text" class="form-control" disabled v-else />
-                              </td>
-                              <td>
                                 <input
                                   type="text"
                                   class="form-control"
-                                  :value="'S/. '+evaluacion.familiar.hijos[index].costo"
+                                  :value="'S/. '+hijo.costo"
                                   disabled
                                 />
                               </td>
@@ -439,164 +448,49 @@
                             <td>Entidad Financiera</td>
                             <td>Capital de Trabajo</td>
                             <td>Activo Fijo</td>
-                            <td>Consumo Fijo</td>
+                            <td>Consumo</td>
                             <td>Vehicular</td>
                             <td>Hipotecario</td>
                             <td>Terceros</td>
                           </tr>
-                          <tr>
+                          <tr v-for='(entidad_financiera,index) in evaluacion.central_riesgo' :key="index">
                             <td>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="evaluacion.central_riesgo[1].entidad_financiera"
-                              />
+                              <v-select
+                                  label="nombre"
+                                  :options="entidades"
+                                  :reduce="entidades => entidades.nombre"
+                                  placeholder="Buscar Entidad"
+                                  v-model="entidad_financiera.entidad_financiera"
+                                ></v-select> 
                             </td>
                             <td>
-                              <input type="checkbox" v-model="evaluacion.central_riesgo[1].capital" />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="evaluacion.central_riesgo[1].activo_f"
-                              />
-                            </td>
-                            <td>
-                              <input type="checkbox" v-model="evaluacion.central_riesgo[1].consumo" />
+                              <input type="checkbox" v-model="entidad_financiera.capital" />
                             </td>
                             <td>
                               <input
                                 type="checkbox"
-                                v-model="evaluacion.central_riesgo[1].vehicular"
+                                v-model="entidad_financiera.activo_f"
                               />
+                            </td>
+                            <td>
+                              <input type="checkbox" v-model="entidad_financiera.consumo" />
                             </td>
                             <td>
                               <input
                                 type="checkbox"
-                                v-model="evaluacion.central_riesgo[1].hipoteca"
+                                v-model="entidad_financiera.vehicular"
                               />
                             </td>
                             <td>
                               <input
                                 type="checkbox"
-                                v-model="evaluacion.central_riesgo[1].terceros"
-                              />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="evaluacion.central_riesgo[2].entidad_financiera"
-                              />
-                            </td>
-                            <td>
-                              <input type="checkbox" v-model="evaluacion.central_riesgo[2].capital" />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="evaluacion.central_riesgo[2].activo_f"
-                              />
-                            </td>
-                            <td>
-                              <input type="checkbox" v-model="evaluacion.central_riesgo[2].consumo" />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="evaluacion.central_riesgo[2].vehicular"
+                                v-model="entidad_financiera.hipoteca"
                               />
                             </td>
                             <td>
                               <input
                                 type="checkbox"
-                                v-model="evaluacion.central_riesgo[2].hipoteca"
-                              />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="evaluacion.central_riesgo[2].terceros"
-                              />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="evaluacion.central_riesgo[3].entidad_financiera"
-                              />
-                            </td>
-                            <td>
-                              <input type="checkbox" v-model="evaluacion.central_riesgo[3].capital" />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="evaluacion.central_riesgo[3].activo_f"
-                              />
-                            </td>
-                            <td>
-                              <input type="checkbox" v-model="evaluacion.central_riesgo[3].consumo" />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="evaluacion.central_riesgo[3].vehicular"
-                              />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="evaluacion.central_riesgo[3].hipoteca"
-                              />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="evaluacion.central_riesgo[3].terceros"
-                              />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <input
-                                type="text"
-                                class="form-control"
-                                v-model="evaluacion.central_riesgo[4].entidad_financiera"
-                              />
-                            </td>
-                            <td>
-                              <input type="checkbox" v-model="evaluacion.central_riesgo[4].capital" />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="evaluacion.central_riesgo[4].activo_f"
-                              />
-                            </td>
-                            <td>
-                              <input type="checkbox" v-model="evaluacion.central_riesgo[4].consumo" />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="evaluacion.central_riesgo[4].vehicular"
-                              />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="evaluacion.central_riesgo[4].hipoteca"
-                              />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="evaluacion.central_riesgo[4].terceros"
+                                v-model="entidad_financiera.terceros"
                               />
                             </td>
                           </tr>
@@ -604,7 +498,7 @@
                       </div>
                       <div class="form-group col-md-12">
                         <label for>Comentarios</label>
-                        <textarea class="form-control" v-model="evaluacion.comentario_colateral"></textarea>
+                        <textarea class="form-control" v-model="evaluacion.comentario_central_riesgo"></textarea>
                       </div>
                     </div>
                   </div>
@@ -631,75 +525,29 @@
                                     <td>Nombre</td>
                                     <td>Telefono</td>
                                   </tr>
-                                  <tr>
+                                  <tr v-for='(referencia,index) in evaluacion.referencias' :key='index'>
                                     <td>
                                       <input
-                                        v-model="evaluacion.referencias[1].tipo_relacion"
+                                        v-model="referencia.tipo_relacion"
                                         type="text"
                                         class="form-control"
                                       />
                                     </td>
                                     <td>
                                       <input
-                                        v-model="evaluacion.referencias[1].nombre"
+                                        v-model="referencia.nombre"
                                         type="text"
                                         class="form-control"
                                       />
                                     </td>
                                     <td>
                                       <input
-                                        v-model="evaluacion.referencias[1].telefono"
+                                        v-model="referencia.telefono"
                                         type="text"
                                         class="form-control"
                                       />
                                     </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <input
-                                        v-model="evaluacion.referencias[2].tipo_relacion"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                    <td>
-                                      <input
-                                        v-model="evaluacion.referencias[2].nombre"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                    <td>
-                                      <input
-                                        v-model="evaluacion.referencias[2].telefono"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <input
-                                        v-model="evaluacion.referencias[3].tipo_relacion"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                    <td>
-                                      <input
-                                        v-model="evaluacion.referencias[3].nombre"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                    <td>
-                                      <input
-                                        v-model="evaluacion.referencias[3].telefono"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                  </tr>
+                                  </tr>                                  
                                 </table>
                               </div>
                             </div>
@@ -746,7 +594,7 @@
                   class="btn btn-orange"
                   @click.prevent="guardar()"
                   v-if="loading_submit=='0'"
-                >Regsitrar</a>
+                >Registrar</a>
                 <div class="container-load-register" v-else>
                   <svg
                     aria-hidden="true"
@@ -786,6 +634,7 @@ export default {
   data() {
     return {
       giros: [],
+      entidades: [],
       notificationSystem: {
         options: {
           success: {
@@ -811,17 +660,19 @@ export default {
           antiguedad: "1",
           local: 1,
           licencia_funcionamiento: 1,
-          horario_atencion: "",
+          horario_atencion_entrada: "",
+          horario_atencion_salida: "",
           mejoras_local: 0
         },
         vehiculo: {
           marca: "",
           modelo: "",
-          año: "",
+          año: "2010",
           tipo_servicio_brinda: "",
           antiguedad_servicio: "",
           permiso_servicio: 1,
-          horario_trabajo: ""
+          horario_servicio_inicio: "",
+          horario_servicio_fin: ""
         },
         familiar: {
           numero_hijos: 0,
@@ -831,8 +682,8 @@ export default {
           hijos: []
         },
         comentario_central_riesgo:'',
-        central_riesgo: {
-          1: {
+        central_riesgo: [
+          {
             entidad_financiera: "",
             capital: false,
             activo_f: false,
@@ -841,7 +692,7 @@ export default {
             hipoteca: false,
             terceros: false
           },
-          2: {
+          {
             entidad_financiera: "",
             capital: false,
             activo_f: false,
@@ -850,7 +701,7 @@ export default {
             hipoteca: false,
             terceros: false
           },
-          3: {
+          {
             entidad_financiera: "",
             capital: false,
             activo_f: false,
@@ -859,7 +710,43 @@ export default {
             hipoteca: false,
             terceros: false
           },
-          4: {
+          {
+            entidad_financiera: "",
+            capital: false,
+            activo_f: false,
+            consumo: false,
+            vehicular: false,
+            hipoteca: false,
+            terceros: false
+          },
+          {
+            entidad_financiera: "",
+            capital: false,
+            activo_f: false,
+            consumo: false,
+            vehicular: false,
+            hipoteca: false,
+            terceros: false
+          },
+          {
+            entidad_financiera: "",
+            capital: false,
+            activo_f: false,
+            consumo: false,
+            vehicular: false,
+            hipoteca: false,
+            terceros: false
+          },
+          {
+            entidad_financiera: "",
+            capital: false,
+            activo_f: false,
+            consumo: false,
+            vehicular: false,
+            hipoteca: false,
+            terceros: false
+          },
+          {
             entidad_financiera: "",
             capital: false,
             activo_f: false,
@@ -868,24 +755,24 @@ export default {
             hipoteca: false,
             terceros: false
           }
-        },
-        referencias: {
-          1: {
+        ],
+        referencias: [
+          {
             tipo_relacion: "",
             nombre: "",
             telefono: ""
           },
-          2: {
+          {
             tipo_relacion: "",
             nombre: "",
             telefono: ""
           },
-          3: {
+          {
             tipo_relacion: "",
             nombre: "",
             telefono: ""
           }
-        },
+        ],
         colateral: 0,
         comentario_colateral: ""
       }
@@ -923,28 +810,12 @@ export default {
             this.notificationSystem.options.success
           )
         this.retornar()
-        alert("guardado correctamente");
       });
     },
     retornar() {
       this.backMixin_handleBack();
-    },
-    seleccionColegios(index) {
-      this.colegios = [];
-      this.evaluacion.familiar.hijos[index].colegio = "0";
-      this.evaluacion.familiar.hijos[index].costo = "";
-      this.$http
-        .get(
-          `/evaluaciones/colegio?filtro=` +
-            this.evaluacion.familiar.hijos[index].grado
-        )
-        .then(response => {
-          this.colegios = response.data;
-        });
-      // console.log(this.evaluacion.familiar.hijos[index].grado)
-    },
+    },   
     seleccionColegiosCosto(index) {
-      console.log("asdad");
       this.$http
         .get(
           `/evaluaciones/colegio/costo?grado=` +
@@ -959,15 +830,30 @@ export default {
     }
   },
   async mounted() {
+
     this.$http.get(`/evaluaciones/giro`).then(response => {
       this.giros = response.data;
     });
 
-    this.$http.get(`/evaluaciones/colegio`).then(response => {
-      this.colegios = response.data;
+    this.$http.get(`/evaluaciones/entidades`).then(response => {
+      this.entidades = response.data;
     });
 
-    this.$http
+    this.$http.get(`/evaluaciones/colegio`).then(response => {
+      this.colegios=[]
+      response.data.map(colegio=>{
+        let found = this.colegios.find(element => element.nombre == colegio.nombre)
+        if(found==undefined){
+          this.colegios.push({
+            nombre: colegio.nombre,
+            nivel: colegio.nivel,
+            costo: colegio.costo
+          })
+        }
+      })
+    });
+
+    this.$http 
       .get(`/evaluaciones/numerohijos/` + this.$route.params.prestamo)
       .then(response => {
         this.evaluacion.familiar.numero_hijos = response.data.numero;
@@ -979,12 +865,13 @@ export default {
         ) {
           this.evaluacion.familiar.hijos.push({
             edad: "",
-            colegio: "0",
-            grado: "0",
-            costo: ""
+            colegio: "PRINCIPITO",
+            grado: "INICIAL",
+            costo: 0
           });
+          this.seleccionColegiosCosto(this.i)
         }
       });
   }
 };
-</script> 
+</script>  

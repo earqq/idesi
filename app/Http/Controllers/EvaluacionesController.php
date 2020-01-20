@@ -4,20 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Prestamo;
+use App\Archivo;
+use App\Subido;
 use App\Negocio;
 use App\Imports\NegociosImport;
 use App\Evaluacion;
 use App\Cuantitativa;
 use App\Cliente;
-use App\Subido;
-use App\Archivos;
-use Barryvdh\DomPDF\Facade as PDF;
-use Illuminate\Support\Facades\Storage;
-
+use App\Archivos; 
 use App\Cualitativa;
 use App\ResultadoCuantitativa;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade as PDF;
+
 class EvaluacionesController extends Controller
 {
     /**
@@ -53,6 +53,10 @@ class EvaluacionesController extends Controller
    
     public function saveCuantitativa(Request $request){
     
+        try{
+
+            DB::beginTransaction();
+
         $resultado_eva='';
         $resultado_sist='';
         $participacion_cuota_titular=0;
@@ -628,7 +632,8 @@ class EvaluacionesController extends Controller
 
         $resultado_cuantitativa->save();
         
-        $cuantitativa= new cuantitativa;  
+        $cuantitativa= new cuantitativa;
+        $cuantitativa->prestamo_id=$request->prestamo_id;
         $cuantitativa->resultado_cuantitativa_id=$resultado_cuantitativa->id;
         $cuantitativa->propuesta=$request->propuesta;
         $cuantitativa->titular=$request->titular;
@@ -638,17 +643,27 @@ class EvaluacionesController extends Controller
         $cuantitativa->propiedades=$request->propiedades;
         $cuantitativa->save();
 
-        //    // $pdf = PDF::loadView('reportes.prestamo',compact('prestamos','cliente','avals','garantias'));
-        //    $pdf = PDF::loadView('reportes.cuantitativa');
+        $prestamo = Prestamo::find($request->prestamo_id);
+        $prestamo->cuantitativa=1;
+        $prestamo->save();
 
-        //    if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
-        //        // $file= new Archivo;
-        //        // $file->nombre = 'prestamo_'.$prestamo->id;
-        //        // $file->tipo = 'documento';
-        //        // $file->extension = 'pdf';
-        //        // $file->prestamos_id =  $prestamos->id;
-        //        // $file->save();
-        //    }
+
+        $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+        $subidos->evaluacion_cuantitativa=1;
+        $subidos->save();
+
+        DB::commit();
+        return [
+            'success' => true,
+            'data' => 'Evaluación Completado',
+        ];
+
+        } catch (Exception $e){
+            return [
+                'success' => false, 
+            ];
+            DB::rollBack();
+        }
 
     }
     
@@ -669,30 +684,19 @@ class EvaluacionesController extends Controller
             $cualitativa->colateral=$request->colateral;
             $cualitativa->comentario_colateral=$request->comentario_colateral;
             $cualitativa->save();
-            
-            $prestamos = Prestamo::find($request->prestamo_id);
-            $cliente = Cliente::find($prestamos->clientes_id);
 
-            $pdf = PDF::loadView('reportes.cualitativa',compact('cualitativa'));
+            $prestamo = Prestamo::find($request->prestamo_id); 
+            $prestamo->cualitativa=1;
+            $prestamo->save();
 
-            if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output()))
-            {
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->evaluacion_cualitativa=1;
-                $subidos->save();
-
-                $archivo = new Archivo();
-                $archivo->nombre = 'evaluacion_cualitativa' ;
-                $archivo->tipo =  'documento';
-                $archivo->extension =  'pdf';
-                $archivo->prestamos_id =  $request->prestamo_id;
-                $archivo->save();
-            }
+            $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+            $subidos->evaluacion_cualitativa=1;
+            $subidos->save();
 
             DB::commit();
                 return [
                     'success' => true,
-                    'data' => 'Cliente creado',
+                    'data' => 'Evaluación Completado',
                 ];
 
         } catch (Exception $e){
@@ -701,14 +705,37 @@ class EvaluacionesController extends Controller
             ];
             DB::rollBack();
         }
+ 
+    }
+
+    public function CualitativaPdf($prestamo){
+
+        $cualitativa= cualitativa::where('prestamo_id',$prestamo)->first();
+        return $cualitativa;
+        $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
+        return $pdf->stream('evaluacion_cualitativa.pdf');
 
     }
+
+    public function CuantitativaPdf($prestamo){
+
+        $cuantitativa= cuantitativa::where('prestamo_id',$prestamo)->first();
+        // return $cuantitativa;
+        $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
+        return $pdf->stream('evaluacion_cualitativa.pdf');
+
+    }
+
+
+
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function edit($id)
     {
         //

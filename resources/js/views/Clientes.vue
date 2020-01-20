@@ -127,7 +127,6 @@
 </template> 
 
 <script>
-import InfiniteLoading from "vue-infinite-loading";
 import DatePick from 'vue-date-pick';
 import RegistrarNatural from './componentes/clientes/RegistrarNatural.vue'; 
 import RegistrarJuridico from "./componentes/clientes/RegistrarJuridico.vue";
@@ -150,13 +149,13 @@ const mesConf = [
 const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   name: 'clients',
-  components: { InfiniteLoading, DatePick,RegistrarNatural,RegistrarJuridico },
+  components: { DatePick,RegistrarNatural,RegistrarJuridico },
   data() {
     return {
       resource: "clientes",
       clientes: [],
       type_list: 1,
-      page: 0,
+      page: 0, 
       tipo: true,
       search_input: "",
       last_page: 1,

@@ -24,7 +24,7 @@ class FileController extends Controller
     public function index($id)
     {
         $pretamos = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
-                            ->select('clientes.documento','clientes.id')
+                            ->select('clientes.documento','clientes.id','prestamos.cuantitativa','prestamos.cualitativa')
                             ->where('prestamos.id',$id)->first();
 
         $model = new Archivo();

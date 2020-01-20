@@ -32,7 +32,6 @@
                <div class="form-group col-md-2">
                 <label>Tipo de Documento</label>
                 <select v-model="form.cliente.tipo_documento" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="DNI">DNI</option>
                   <option value="CE">CE</option>
                   <option value="PASAPORTE">PASAPORTE</option>
@@ -85,7 +84,6 @@
               <div class="form-group col-md-2">
                 <label>Estado Civil</label>
                 <select v-model="form.natural.estado_civil" :maxlength="25"  class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="SOLTERO">SOLTERO</option>
                   <option value="CASADO">CASADO</option>
                   <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -96,7 +94,6 @@
               <div class="form-group col-md-2">
                 <label>Genero</label>
                 <select v-model="form.natural.genero" :maxlength="10" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="FEMENINO">FEMENINO</option>
                   <option value="MASCULINO">MASCULINO</option>
                 </select>
@@ -104,7 +101,6 @@
               <div class="form-group col-md-2">
                 <label>Grado de Instrucción</label>
                 <select v-model="form.natural.grado_instruccion" :maxlength="10" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="PRIMARIA">PRIMARIA</option>
                   <option value="TECNICO">TECNICO</option>
                   <option value="SUPERIOR">SUPERIOR</option>
@@ -206,7 +202,6 @@
               <div class="form-group col-md-2">
                 <label>Estado Trabajador</label>
                 <select v-model="form.laboral.estado_laboral" :maxlength="15" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="TRABAJA">TRABAJA</option>
                   <option value="NO TRABAJA">NO TRABAJA</option>
                   <option value="JUBILADO">JUBILADO</option>
@@ -225,7 +220,6 @@
                 <div class="form-group col-md-3"> 
                   <label>Estado Trabajador</label>
                   <select v-model="form.laboral.tipo_trabajador" :maxlength="15" class="form-control">
-                    <option value="0">SELECCIONE</option>
                     <option value="INDEPENDIENTE">INDEPENDIENTE</option>
                     <option value="DEPENDIENTE">DEPENDIENTE</option>
                     <option value="AGRICULTOR">AGRICULTOR</option>
@@ -238,7 +232,6 @@
                 <div class="form-group col-md-2">
                   <label>Ingreso Mensual</label>
                   <select v-model="form.laboral.ingreso_mensual" :maxlength="25" class="form-control">
-                    <option value="0">SELECCIONE</option>
                     <option value="HASTA S/. 1000">HASTA S/. 1000</option>
                     <option value="S/. 1.001 a S/ 2.500">S/. 1000 a S/ 2.500</option>
                     <option value="S/. 2.500 a S/ 5.000">S/. 2.500 a S/ 5.000</option>
@@ -297,23 +290,70 @@
                   <label>Piso</label>
                   <input type="text" v-model="form.laboral.piso" :maxlength="5" class="form-control" />
               </div>
-
-              <div class="form-group col-md-3">
-                  <label>Distrito</label>
-                  <input type="text" v-model="form.laboral.distrito"  :maxlength="45" class="form-control" />
-              </div>
-              <div class="form-group col-md-3">
-                  <label>Provincia</label>
-                  <input type="text" v-model="form.laboral.provincia" :maxlength="45" class="form-control" />
-              </div>
-              <div class="form-group col-md-3">
-                  <label>Departamento</label>
-                  <input type="text" v-model="form.laboral.departamento" :maxlength="45" class="form-control" />
-              </div>
+              
               <div class="form-group col-md-3">
                   <label>Pais</label>
                   <input type="text" v-model="form.laboral.pais" :maxlength="20" class="form-control" />
               </div>
+
+              <div class="form-group col-md-3">
+                  <label>Departamento</label>
+                  <select
+                  class="form-control"
+                  v-model="form.laboral.departamento"
+                  filterable
+                  @change="filterProvince"
+                  dusk="departamentos_id"
+                >
+                  <option value="0">SELECCIONE</option>
+                  <option
+                    v-for="option in all_departments"
+                    :key="option.id"
+                    :value="option.id"
+                    :label="option.descripcion"
+                  >></option>
+                </select>
+
+              </div>
+
+              <div class="form-group col-md-3">
+                  <label>Provincia</label>
+                  <select
+                  class="form-control text-uppercase"
+                  v-model="form.laboral.provincia"
+                  filterable
+                  @change="filterDistrict"
+                  dusk="provincias_id"
+                >
+                  <option value="0">SELECCIONE</option>
+                  <option
+                    v-for="option in provinces"
+                    :key="option.id"
+                    :value="option.id"
+                    :label="option.descripcion"
+                  >></option>
+                </select>
+
+              </div>
+
+              <div class="form-group col-md-3">
+                  <label>Distrito</label>
+                  <select
+                  class="form-control text-uppercase"
+                  v-model="form.laboral.distrito"
+                  filterable
+                  dusk="distritos_id"
+                >
+                  <option value="0">SELECCIONE</option>
+                  <option
+                    v-for="option in districts"
+                    :key="option.id"
+                    :value="option.id"
+                    :label="option.descripcion"
+                  >></option>
+                </select>
+
+              </div> 
 
 
               <div class="form-group col-md-3">
@@ -359,20 +399,18 @@
               <div class="form-group col-md-3">
                   <label>¿Tiene Hijos?</label>
                   <select v-model="form.familia.hijos" class="form-control">
-                    <option value="0">SELECCIONE</option>
                     <option value="SI">SI</option>
                     <option value="NO">NO</option>
                   </select>
                 </div> 
               <div class="form-group col-md-3" v-if="form.familia.hijos=='SI'">
                   <label>Nro de hijos</label>
-                  <input type="text" class="form-control" :maxlength="2" v-model="form.familia.numero"  @change="hijosAsignacion()" >
+                  <input type="text" class="form-control" :maxlength="2" v-model="form.familia.numero">
               </div>
 
                <div class="form-group col-md-3">
                   <label>¿Tiene cónyuge ó conviviente?</label>
                   <select v-model="form.familia.conyugue" class="form-control" @change="conyugeAsignacion()">
-                    <option value="0">SELECCIONE</option>
                     <option value="SI">SI</option>
                     <option value="NO">NO</option>
                   </select>
@@ -381,7 +419,7 @@
                 <div class="form-group col-md-3" v-if="form.familia.conyugue=='SI'">
                   <label>Ocupación del cónyuge ó conviviente?</label>
                   <select v-model="form.familia.ocupacion" :maxlength="15" class="form-control">
-                    <option value="0">SELECCIONE</option>
+                    
                     <option value="AMA DE CASA">AMA DE CASA</option>
                     <option value="DEPENDIENTE">DEPENDIENTE</option>
                     <option value="INDEPENDIENTE">INDEPENDIENTE</option>
@@ -392,8 +430,7 @@
               <div class="col-md-12 mt-3" v-if="form.detalles.length>0">
                           <table class="table table-bordered table-striped table-sm">
                                   <thead>
-                                      <tr>
-                                          <th></th>
+                                      <tr> 
                                           <th>Dc. Identidad</th>
                                           <th>Apellidos y Nombres</th>
                                           <th>Parentesco</th>
@@ -403,19 +440,12 @@
                                   </thead>
                                   <tbody>
                                       <tr v-for="(row, index) in form.detalles" :key="index">
-                                          <td>
-                                              
-                                              <template>
-                                                  <button type="button" class="btn btn-danger btn-sm"  @click.prevent="clickRemoveFamiliar(index)">
-                                                      <i class="fas fa-trash"></i>
-                                                  </button>
-                                              </template>
-                                          </td>
+                                          
                                           <td><input type="text" v-model="row.documento" class="form-control letter-5" v-mask="{mask: '99999999'}" @change="datosFamiliar(index)" /></td>
                                           <td><input type="text" v-model="row.nombres" :maxlength="45" class="form-control" /></td>
                                           <td>
                                             <select v-model="row.parentesco" class="form-control">
-                                              <option value="0">SELECCIONE</option>
+                                              
                                               <option value="CONYUGE">CONYUGE</option>
                                               <option value="CONVIVIENTE">CONVIVIENTE</option>
                                               <option value="HIJOS">HIJOS</option>
@@ -426,7 +456,7 @@
                                           </td>
                                           <td>
                                             <select v-model="row.socio" class="form-control">
-                                              <option value="0">SELECCIONE</option>
+                                              
                                               <option value="SI">SI</option>
                                               <option value="NO">NO</option>
                                             </select>
@@ -436,12 +466,7 @@
                             </table>
               </div>
 
-              <div class="col-md-12 mt-3">
-                  <button type="button"  @click.prevent="clickAddFamiliar"  class="btn btn-outline-dark more-option w-100" >
-                    <i class="fas fa-plus"></i> Agregar Familiar
-                  </button>
-              </div>
-
+        
 
 
             </div>
@@ -464,7 +489,7 @@
                  <div class="form-group col-md-4">
                   <label>Tipo de Documento</label>
                   <select v-model="form.adicional.documento" class="form-control">
-                    <option value="0">SELECCIONE</option>
+                    
                     <option value="DNI">DNI</option>
                     <option value="CE">CE</option>
                     <option value="PASAPORTE">PASAPORTE</option>
@@ -478,7 +503,7 @@
               <div class="form-group col-md-4">
                   <label>Relación con el solicitante</label>
                   <select v-model="form.adicional.relacion" class="form-control">
-                    <option value="0">SELECCIONE</option>
+                    
                     <option value="PADRE">PADRE</option>
                     <option value="MADRE">MADRE</option>
                     <option value="OTRO">OTRO</option>
@@ -498,19 +523,19 @@
             <div class="row">
               <div class="form-group col-md-3">
                   <label>Inscripción </label>
-                  <money   v-model="form.asociativa.inscripcion"  v-bind="money" class="form-control"  ></money>
+                   <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.inscripcion"  v-bind:precision="2"></vue-numeric>
               </div>
               <div class="form-group col-md-3">
                   <label>Aporte </label>
-                   <money   v-model="form.asociativa.aporte" v-bind="money" class="form-control"  ></money>
+                  <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.aporte"  v-bind:precision="2"></vue-numeric>
               </div>
               <div class="form-group col-md-3">
                   <label>Fondo de prevencion social </label>
-                  <money   v-model="form.asociativa.fondo"  v-bind="money" class="form-control"  ></money>
+                  <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.fondo"  v-bind:precision="2"></vue-numeric>
               </div>
               <div class="form-group col-md-3">
                   <label>Fondo de prevencion social opcional </label>
-                  <money v-model="form.asociativa.fondo_opcional"  v-bind="money" class="form-control"  ></money>
+                  <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.fondo_opcional" v-bind:precision="2"></vue-numeric>
               </div>
             </div> 
             <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
@@ -523,7 +548,7 @@
               <div class="form-group col-md-4">
                   <label>Es sujeto a informar a la UIF Perú</label>
                   <select v-model="form.declaracion.uif" class="form-control">
-                    <option value="0">SELECCIONE</option>
+                    
                     <option value="SI">SI</option>
                     <option value="NO">NO</option>
                   </select>
@@ -531,7 +556,7 @@
               <div class="form-group col-md-4">
                   <label>Es PEP (persona expuesta politicamente)</label>
                   <select v-model="form.declaracion.pep" class="form-control">
-                    <option value="0">SELECCIONE</option>
+                    
                     <option value="SI">SI</option>
                     <option value="NO">NO</option>
                   </select>
@@ -539,7 +564,7 @@
               <div class="form-group col-md-4">
                   <label>Estado</label>
                   <select v-model="form.declaracion.estado" class="form-control">
-                    <option value="0">SELECCIONE</option>
+                    
                     <option value="ADMITIDO">ADMITIDO</option>
                     <option value="RECHAZADO">RECHAZADO</option>
                   </select>
@@ -567,6 +592,7 @@ import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
 import { serviceNumber } from "../../../mixins/functions";
 import vSelect from "vue-select";
+import VueNumeric from 'vue-numeric'
 
 const mesConf = [
   "Enero",
@@ -588,7 +614,7 @@ const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   name: 'natural',
   mixins: [serviceNumber],
-  components: { DatePick , vSelect},
+  components: { DatePick , vSelect,VueNumeric},
   props: ["tipo_persona"],
 
   data() {
@@ -603,14 +629,6 @@ export default {
       loading_submit:'0',
       districts: [],
       form: {},
-      money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'S/. ',
-          suffix: '',
-          precision: 2,
-          masked: false
-      },
       notificationSystem: {
         options: {
           success: {
@@ -626,17 +644,24 @@ export default {
     };
   },
   async created() {
-    // await this.$http.get(`/${this.resource}/datos/`).then(response => {
-    //   this.all_departments = response.data.departments;
-    //   this.all_provinces = response.data.provinces;
-    //   this.all_districts = response.data.districts;
-    // });
+
+    this.$http.get(`/${this.resource}/datos/`).then(response => {
+      this.all_departments = response.data.departments;
+      this.all_provinces = response.data.provinces;
+      this.all_districts = response.data.districts;
+    });
+
 
     await this.initForm();
     
     this.$http.get(`/evaluaciones/giro`).then(response => {
       this.giros = response.data;
     });
+  },
+  watch: {
+    'form.familia.numero'(new_value,old_value){ 
+      this.hijosAsignacion(new_value,old_value)
+    }
   },
   methods: {
     next() {
@@ -653,23 +678,10 @@ export default {
         .find("a")
         .trigger("click");
     },
-    clickRemoveFamiliar(index) {
-      this.form.detalles.splice(index, 1);
-    },
-
-    clickAddFamiliar() {
-      this.form.detalles.push({
-          nombres: "",
-          documento:"",
-          parentesco:"0",
-          nacimiento:"",
-          socio:"0",
-      });
-    },
     initForm() {
       this.form = {
         cliente:{
-          tipo_documento: 0,
+          tipo_documento: "DNI",
           documento: "",
           codigo: "",
           tipo_cliente: this.tipo_persona,
@@ -684,7 +696,7 @@ export default {
           nombres: "",
           apellidos: "",
           nacimiento: "",
-          estado_civil: "0",
+          estado_civil: "SOLTERO",
           ocupacion: "",
           telefono: "",
           celular: "",
@@ -694,8 +706,8 @@ export default {
           tipo_domicilio: 0,
           centro_laboral: "",
           direccion_laboral: "",
-          genero: 0,
-          grado_instruccion:0,
+          genero: "MASCULINO",
+          grado_instruccion:"PRIMARIA",
           numero: "",
           manzana: "",
           lote: "",
@@ -708,10 +720,10 @@ export default {
           correo:"",
         },
         laboral:{
-          estado_laboral:0,
-          tipo_trabajador:0,
+          estado_laboral:"TRABAJA",
+          tipo_trabajador:"INDEPENDIENTE",
           razon_social:"",
-          ingreso_mensual: 0,
+          ingreso_mensual: "HASTA S/. 1000",
           cargo_ocupacion:"",
           fecha_ingreso:"",
           giro_negocio: "",
@@ -725,7 +737,7 @@ export default {
           distrito:"",
           provincia:"",
           departamento:"",
-          pais:"",
+          pais:"PERÚ",
           referencia:"",
           telefono:"",
           celular:"",
@@ -734,19 +746,19 @@ export default {
         
         },
          familia:{
-          hijos: 0,
+          hijos: "SI",
           numero:0,
-          conyugue:0,
-          ocupacion:0,
+          conyugue:"NO",
+          ocupacion:"",
         },
 
         detalles: [],
 
         adicional:{
           representante: "",
-          documento: 0,
+          documento: 'DNI',
           numero:"",
-          relacion: 0
+          relacion: 'PADRE'
         },
         asociativa:{
           inscripcion:"",
@@ -757,10 +769,10 @@ export default {
         },
 
         declaracion:{
-          uif: 0,
-          pep:0,
+          uif: "NO",
+          pep:"NO",
           obervaciones:"",
-          estado: 0,
+          estado: "ADMITIDO",
           fecha: ""
         }
 
@@ -775,23 +787,43 @@ export default {
                 documento:"",
                 parentesco:"CONYUGE",
                 nacimiento:"",
-                socio:"0",
+                socio:"NO",
             });
+      }else{
+        for (var i = 0; i < this.form.detalles.length; i++) {  
+            if(this.form.detalles[i].parentesco!='HIJOS'){ 
+              this.form.detalles.splice(i,1)
+            } 
+      }
       }
 
     },
 
-    hijosAsignacion(){
-      
-      for (var i = 0; i < this.form.familia.hijos; i++) {
-          this.form.detalles.push({
+    hijosAsignacion(new_value,old_value){
+       old_value = old_value || 0
+       new_value = new_value || 0 
+      var conyuge=null
+
+      for (var i = 0; i < this.form.detalles.length; i++) {  
+            if(this.form.detalles[i].parentesco!='HIJOS'){ 
+              conyuge= this.form.detalles[i] 
+            } 
+      }
+
+      this.form.detalles=[]
+
+      for (var i = 0; i < new_value; i++) { 
+              this.form.detalles.push({
                   nombres: "",
                   documento:"",
                   parentesco:"HIJOS",
                   nacimiento:"",
                   socio:"0",
-              });
+              })
+
         } 
+        if (conyuge) this.form.detalles.push(conyuge)
+
     },
 
     resetForm() {

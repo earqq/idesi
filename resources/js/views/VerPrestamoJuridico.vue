@@ -78,13 +78,11 @@
 
               <div class="col-md-4 form-group">
                 <label>Monto</label>
-                <!-- <input type="text" v-model="form.monto_inicial" class="form-control" /> -->
-                <money   v-model="form.monto_inicial" v-bind="money" class="form-control"  ></money>
+                 <vue-numeric class="form-control" currency="S/. " separator=","  v-model="form.monto_inicial"  v-bind:precision="2" ></vue-numeric>
               </div>
               <div class="col-md-4 form-group">
                 <label>Plazo</label>
                 <select v-model="form.plazo_inicial" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option v-for="(index) in 36" :key="index" :value="index">{{index}}</option>
                 </select>
               </div>
@@ -99,7 +97,6 @@
               <div class="col-md-6 form-group">
                 <label>Forma</label>
                 <select v-model="form.forma_inicial" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="DIARIO">DIARIO</option>
                   <option value="SEMANAL">SEMANAL</option>
                   <option value="QUINCENAL">QUINCENAL</option>
@@ -192,7 +189,6 @@
               <div class="col-md-4 form-group">
                 <label>Estado Civil</label>
                 <select v-model="form.representante.estado_civil_representante" class="form-control">
-                  <option value="0">SELECCIONE ...</option>
                   <option value="SOLTERO">SOLTERO</option>
                   <option value="CASADO">CASADO</option>
                   <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -249,7 +245,6 @@
               <div class="col-md-3 form-group">
                 <label>Tipo Domicilio</label>
                 <select v-model="form.representante.tipo_domicilio_representante" class="form-control">
-                  <option value="0">SELECCIONE</option>
                   <option value="PROPIO">PROPIO</option>
                   <option value="ALQUILADO">ALQUILADO</option>
                 </select>
@@ -286,7 +281,6 @@
                 <div class="col-md-2 form-group"> 
                     <label>Tipo Persona</label>
                     <select  v-model="row.tipo_persona"  class="form-control">
-                      <option value="0">SELECCIONE ...</option>
                       <option value="pn">Persona Natural</option>
                       <option value="pj">Persona Juridica</option>
                     </select> 
@@ -323,7 +317,6 @@
                 <div class="col-md-4 form-group"> 
                     <label>Estado Civil</label>
                     <select  v-model="row.estado_civil"  class="form-control">
-                      <option value="0">SELECCIONE ...</option>
                       <option value="SOLTERO">SOLTERO</option>
                       <option value="CASADO">CASADO</option>
                       <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -345,7 +338,6 @@
                   <div class="col-md-4 form-group"> 
                     <label>Socio</label>
                     <select v-model="row.socio" class="form-control">
-                      <option value="0">SELECCIONE ...</option>
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
                     </select> 
@@ -359,7 +351,7 @@
 
                 <div class="col-md-4 form-group"> 
                     <label>Aporte</label>
-                    <money   v-model="row.aporte_socio" v-bind="money" class="form-control" v-if="row.socio=='SI'" ></money>
+                    <vue-numeric class="form-control" currency="S/. " separator=","  v-model="row.aporte_socio" v-bind:precision="2" v-if="row.socio=='SI'"></vue-numeric>
                     <input type="text" class="form-control" v-else disabled/> 
                 </div>
 
@@ -456,8 +448,7 @@
                 </div>
                 <div class="col-md-3 form-group">
                     <label>Producto</label>
-                    <select v-model="form.producto" class="form-control">
-                      <option value="0">SELECCIONE</option>
+                    <select v-model="form.producto" class="form-control" @change="meses_numero">
                       <option value="CREDIDIARIO">CREDIDIARIO</option>
                       <option value="CREDISEMANA">CREDISEMANA</option>
                       <option value="CREDIQUINCENA">CREDIQUINCENA</option>
@@ -469,26 +460,17 @@
 
                 </div>
 
-                <!-- <div class="col-md-4 form-group">
-                    <label>Forma</label>
-                    <select v-model="form.forma" class="form-control">
-                      <option value="0">SELECCIONE</option>
-                      <option value="DIARIO">DIARIO</option>
-                      <option value="SEMANAL">SEMANAL</option>
-                      <option value="QUINCENAL">QUINCENAL</option>
-                      <option value="MENSUAL">MENSUAL</option>
-                    </select>
-                </div> -->
+           
 
 
                 <div class="col-md-3 form-group">
                     <label>Importe</label>
-                    <money   v-model="form.importe" v-bind="money" class="form-control"></money>
+                    <vue-numeric class="form-control" currency="S/. " separator=","   v-model="form.importe" v-bind:precision="2"></vue-numeric>
                 </div>
 
                 <div class="col-md-2 form-group">
                     <label>Plazo</label>
-                    <input type="number" class="form-control" v-model="form.plazo" :min="1" :max='48'>
+                    <input type="number" class="form-control" v-model="form.plazo" :min="1" :max='48' @keyup="meses_numero">
 
                 </div>
 
@@ -499,9 +481,13 @@
 
                 <div class="col-md-2 form-group">
                     <label>Aporte</label>
-                    <money  v-model="form.aporte" v-bind="money" class="form-control"></money>
+                    <vue-numeric class="form-control" currency="S/. " separator=","   v-model="form.aporte" v-bind:precision="2"></vue-numeric>
                 </div>
-
+                <div class="col-md-2 form-group">
+                    <label>Prob. Infocorp</label>
+                    <input type='number' v-model='form.probabilidad_infocorp' class='form-control'>
+                </div>
+ 
                 <div class="col-md-12 form-group">
                     <label>Comentarios</label>
                     <textarea type="text" v-model="form.comentarios" class="form-control"></textarea>
@@ -523,6 +509,7 @@
 import { serviceNumber } from "../mixins/functions";
 import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
+import VueNumeric from 'vue-numeric'
 
 // import BackMixin from `vue-router-back-mixin`;
 
@@ -543,7 +530,7 @@ const mesConf = [
 const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   mixins: [serviceNumber],
-  components: { DatePick },
+  components: { DatePick,VueNumeric },
   data() {
     return {
       resource: "clientes",
@@ -559,22 +546,6 @@ export default {
       contador_garantia: 0,
       mesEs: mesConf,
       diaEs: diaConf,
-      money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'S/. ',
-          suffix: '',
-          precision: 2,
-          masked: false
-      },
-      money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'S/. ',
-          suffix: '',
-          precision: 2,
-          masked: false
-      },
       notificationSystem: {
         options: {
           success: {
@@ -636,6 +607,7 @@ export default {
         this.form.disponibilidad_pago_inicial=response.data['prestamo']['disponibilidad_pago_inicial'];
         this.form.destino_inicial=response.data['prestamo']['destino_inicial'];
         this.form.forma_inicial=response.data['prestamo']['forma_inicial'];
+        this.form.meses=response.data['prestamo']['meses'];
         this.form.producto= response.data['prestamo']['producto'];
         this.form.forma=response.data['prestamo']['forma'];
         this.form.importe= response.data['prestamo']['importe'];
@@ -697,6 +669,18 @@ export default {
     clickRemoveAval(index) {
       this.form.avals.splice(index, 1);
     },
+    numero_meses(){
+       if(this.form.producto=='CREDIDIARIO'){
+          console.log('diario')
+          this.form.meses = (Number(this.form.plazo)/30).toFixed(2)
+        }
+        else if(this.form.producto=='CREDISEMANA'){
+          this.form.meses = (Number(this.form.plazo)/4).toFixed(2)
+        }
+        else {
+          this.form.meses = (Number(this.form.plazo)/1).toFixed(2)
+        }
+    },
     clickAddGarantia() {
       // this.contador_garantia++;
       this.form.garantias.push({
@@ -756,9 +740,11 @@ export default {
         forma_inicial: "0",
         producto: 0,
         forma: "0",
+        meses: 0,
         importe: 0,
         aporte: 0,
         plazo: 0,
+        probabilidad_infocorp:'',
         coutas: 0,
         tasa: 0.0,
         comentarios: "",
@@ -832,7 +818,7 @@ export default {
         });
     },
     retornar() {
-      this.backMixin_handleBack();
+      this.backMixin_handleBack('/perfil/'+this.form.cliente.documento);
     }
   },
   mounted() {

@@ -9,9 +9,9 @@ window.Vue = require('vue');
 import router from './rutas';
 import Axios from 'axios'
 import VueIziToast from 'vue-izitoast';
-import 'izitoast/dist/css/iziToast.css';
-import money from 'v-money'
-import * as VueGoogleMaps from 'vue2-google-maps'
+import 'izitoast/dist/css/iziToast.css'; 
+import * as VueGoogleMaps from 'vue2-google-maps';
+
 
 // import WebCam from "vue-web-cam";
 
@@ -37,7 +37,6 @@ const VueInputMask = require('vue-inputmask').default
 Vue.use(VueInputMask)
 Vue.prototype.$http = Axios
 Vue.use(VueIziToast);
-Vue.use(money)
 Vue.use(VueGoogleMaps, {
     load: {
       key: 'AIzaSyBWbQ5eFoNQClbQuWWN7DvPHA5QsQS66Uc',

@@ -21,27 +21,26 @@
 
            <label>Seleccione Formato</label>
             <select class="form-control" v-model="fileName">
-              <option value="0">Seleccione...</option>
               <option value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
               <option value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
               <option value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option>
-              <option value="evaluacion_cualitativa" v-if="!subidos.evaluacion_cualitativa" >Evaluacion cualitativa</option>
-              <option value="evaluacion_cuantitativa" v-if="!subidos.evaluacion_cuantitativa">Evaluacion de cuantitativa</option>
+              <!-- <option value="evaluacion_cualitativa" v-if="!subidos.evaluacion_cualitativa" >Evaluacion cualitativa</option>
+              <option value="evaluacion_cuantitativa" v-if="!subidos.evaluacion_cuantitativa">Evaluacion de cuantitativa</option> -->
               <option value="copia_dni"  v-if="!subidos.copia_dni" >Copias DNI</option>
               <option value="recibo_agua_casa" v-if="!subidos.recibo_agua_casa">Recibo de agua de casa</option>
               <option  value="recibo_luz_casa" v-if="!subidos.recibo_luz_casa">Recibo de luz de casa</option> 
-              <option>Titulo de propiedad de casa</option>
-              <option>Contrato de alquiler de casa</option>
-              <option>Fotos de casa</option>
-              <option>Documentos del negocio</option>
-              <option>Recibo de agua del negocio</option>
-              <option>Recibo de luz del negocio</option>
-              <option>Contrato de alquiler del negocio</option>
-              <option>Boleta de compras del negocio</option>
-              <option>Boleta de ventas del negocio</option>
-              <option>Factura de compras del negocio</option>
-              <option>Factura de ventas del negocio</option>
-              <option>Fotos del negocio</option>
+              <option value="titulo_casa">Titulo de propiedad de casa</option>
+              <option value="contrato_alquiler">Contrato de alquiler de casa</option>
+              <option value="foto_casa">Fotos de casa</option>
+              <option value="documento_negocio">Documentos del negocio</option>
+              <option value="recibo_agua_negocio">Recibo de agua del negocio</option>
+              <option value="recibo_luz_negocio">Recibo de luz del negocio</option>
+              <option value="contrato_alquiler">Contrato de alquiler del negocio</option>
+              <option value="boleta_compras">Boleta de compras del negocio</option>
+              <option value="boleta_ventas">Boleta de ventas del negocio</option>
+              <option value="factura_compras">Factura de compras del negocio</option>
+              <option value="factura_ventas">Factura de ventas del negocio</option>
+              <option value="foto_negocio">Fotos del negocio</option>
             </select>
           </div>
           <div class="col-md-12 form-group">
@@ -67,17 +66,24 @@
         <div class="row col-md-12 files">
 
           <div class="file-type " @click="cargarPdf()">
-            <div class="type file-document" >
-              <!-- <button
-                class="btn btn-def "
-                title="Delete"
-                data-toggle="modal"
-                data-target="#exampleModal"
-              >
-                <i class="fas fa-trash"></i> ELIMINAR
-              </button> -->
-              
+            <div class="type file-document" >          
               <p>solicitud_credito.pdf</p> 
+                <div class="mask">
+                   <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M17.656 4c-1.336 0-2.59.52-3.535 1.465L5.465 14.12A4.964 4.964 0 0 0 4 17.656V57c0 1.652 1.348 3 3 3h40c1.652 0 3-1.348 3-3V46h8c1.102 0 2-.898 2-2V24c0-1.102-.898-2-2-2h-8V7c0-1.652-1.348-3-3-3zM18 6h29c.55 0 1 .45 1 1v15H16c-1.102 0-2 .898-2 2v20c0 1.102.898 2 2 2h32v11c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1V18h9c1.652 0 3-1.348 3-3zm-2 .5V15c0 .55-.45 1-1 1H6.5c.11-.164.234-.32.379-.465l8.656-8.656c.145-.145.3-.27.465-.379zM16 24h42v20H16zm9 4a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3c1.652 0 3-1.348 3-3v-2c0-1.652-1.348-3-3-3zm10 0a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3c2.207 0 4-1.793 4-4v-4c0-2.207-1.793-4-4-4zm10 0a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-4h4a1 1 0 1 0 0-2zm-19 2h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-3zm10 0h2c1.102 0 2 .898 2 2v4c0 1.102-.898 2-2 2h-2zM9 52a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1z"></path></svg>
+                </div>
+            </div>
+          </div>
+           <div class="file-type " @click="cualitativaPdf()" v-if="person.cualitativa=='1'">
+            <div class="type file-document" >          
+              <p>evaluacion_cualitativa.pdf</p> 
+                <div class="mask">
+                   <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M17.656 4c-1.336 0-2.59.52-3.535 1.465L5.465 14.12A4.964 4.964 0 0 0 4 17.656V57c0 1.652 1.348 3 3 3h40c1.652 0 3-1.348 3-3V46h8c1.102 0 2-.898 2-2V24c0-1.102-.898-2-2-2h-8V7c0-1.652-1.348-3-3-3zM18 6h29c.55 0 1 .45 1 1v15H16c-1.102 0-2 .898-2 2v20c0 1.102.898 2 2 2h32v11c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1V18h9c1.652 0 3-1.348 3-3zm-2 .5V15c0 .55-.45 1-1 1H6.5c.11-.164.234-.32.379-.465l8.656-8.656c.145-.145.3-.27.465-.379zM16 24h42v20H16zm9 4a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3c1.652 0 3-1.348 3-3v-2c0-1.652-1.348-3-3-3zm10 0a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3c2.207 0 4-1.793 4-4v-4c0-2.207-1.793-4-4-4zm10 0a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-4h4a1 1 0 1 0 0-2zm-19 2h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-3zm10 0h2c1.102 0 2 .898 2 2v4c0 1.102-.898 2-2 2h-2zM9 52a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1z"></path></svg>
+                </div>
+            </div>
+          </div>
+           <div class="file-type " @click="cuantitativaPdf()" v-if="person.cuantitativa=='1'">
+            <div class="type file-document" >          
+              <p>evaluacion_cuantitativa.pdf</p> 
                 <div class="mask">
                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M17.656 4c-1.336 0-2.59.52-3.535 1.465L5.465 14.12A4.964 4.964 0 0 0 4 17.656V57c0 1.652 1.348 3 3 3h40c1.652 0 3-1.348 3-3V46h8c1.102 0 2-.898 2-2V24c0-1.102-.898-2-2-2h-8V7c0-1.652-1.348-3-3-3zM18 6h29c.55 0 1 .45 1 1v15H16c-1.102 0-2 .898-2 2v20c0 1.102.898 2 2 2h32v11c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1V18h9c1.652 0 3-1.348 3-3zm-2 .5V15c0 .55-.45 1-1 1H6.5c.11-.164.234-.32.379-.465l8.656-8.656c.145-.145.3-.27.465-.379zM16 24h42v20H16zm9 4a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3c1.652 0 3-1.348 3-3v-2c0-1.652-1.348-3-3-3zm10 0a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3c2.207 0 4-1.793 4-4v-4c0-2.207-1.793-4-4-4zm10 0a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-4h4a1 1 0 1 0 0-2zm-19 2h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-3zm10 0h2c1.102 0 2 .898 2 2v4c0 1.102-.898 2-2 2h-2zM9 52a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1z"></path></svg>
                 </div>
@@ -121,7 +127,7 @@
               >
                 <i class="fas fa-trash"></i> ELIMINAR
               </button>
-              <a
+              <a 
                 :href="'../storage/'+person.documento+'_'+person.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
                 target="_blank"
               >
@@ -130,6 +136,7 @@
                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M17.656 4c-1.336 0-2.59.52-3.535 1.465L5.465 14.12A4.964 4.964 0 0 0 4 17.656V57c0 1.652 1.348 3 3 3h40c1.652 0 3-1.348 3-3V46h8c1.102 0 2-.898 2-2V24c0-1.102-.898-2-2-2h-8V7c0-1.652-1.348-3-3-3zM18 6h29c.55 0 1 .45 1 1v15H16c-1.102 0-2 .898-2 2v20c0 1.102.898 2 2 2h32v11c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1V18h9c1.652 0 3-1.348 3-3zm-2 .5V15c0 .55-.45 1-1 1H6.5c.11-.164.234-.32.379-.465l8.656-8.656c.145-.145.3-.27.465-.379zM16 24h42v20H16zm9 4a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3c1.652 0 3-1.348 3-3v-2c0-1.652-1.348-3-3-3zm10 0a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3c2.207 0 4-1.793 4-4v-4c0-2.207-1.793-4-4-4zm10 0a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-4h4a1 1 0 1 0 0-2zm-19 2h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-3zm10 0h2c1.102 0 2 .898 2 2v4c0 1.102-.898 2-2 2h-2zM9 52a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1z"></path></svg>
                 </div>
               </a>
+              
 
    
             </div>
@@ -364,7 +371,7 @@ export default {
 
   methods: {
     retornar() {
-      this.backMixin_handleBack("/clientes");
+      this.backMixin_handleBack('/perfil/'+this.person.documento);
     },
     listFile() {
       this.$http.get(`/files/${this.$route.params.prestamo}`).then(response => {
@@ -372,7 +379,7 @@ export default {
         this.archivos = response.data["files"];
         this.subidos = response.data["subidos"];
         this.loaderFile=0
-        console.log(this.subidos)
+        console.log(this.person.cuantitativa)
       });
     },
 
@@ -452,6 +459,12 @@ export default {
     cargarPdf(){
                 window.open('/clientes/solicitudPdf/'+this.$route.params.prestamo,'_blank'); 
       },
+      cualitativaPdf(){
+                window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamo,'_blank'); 
+      },
+      cuantitativaPdf(){
+               window.open('/evaluacion/cuantitativaPdf/'+this.$route.params.prestamo,'_blank'); 
+      }
   }
 };
 </script>

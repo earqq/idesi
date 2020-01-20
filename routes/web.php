@@ -56,6 +56,10 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('clientes/visitas/{prestamo}', 'ClienteController@visitas');
 
         Route::get('/clientes/solicitudPdf/{prestamo}','ClienteController@SolicitudPdf')->name('solicitud_pdf');
+ 
+     
+        Route::get('/evaluacion/cualitativaPdf/{prestamo}','EvaluacionesController@CualitativaPdf')->name('cualitativa_pdf');
+        Route::get('/evaluacion/cuantitativaPdf/{prestamo}','EvaluacionesController@CuantitativaPdf')->name('cuantitativa_pdf');
 
         Route::get('clientes/prestamo/ver/{prestamo}', 'ClienteController@prestamoVer');
         Route::get('clientes/prestamo/ver/juridico/{prestamo}', 'ClienteController@prestamoVerJuridico');
@@ -72,9 +76,10 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('evaluaciones/numerohijos/{prestamo}', 'EvaluacionController@numeroHijos');
 
         Route::get('evaluaciones/giro', 'EvaluacionController@giro');
-        Route::get('evaluaciones/giro/search/{giro}', 'EvaluacionController@searchGiro');
+        // Route::get('evaluaciones/giro/search/{giro}', 'EvaluacionController@searchGiro');
         Route::get('/evaluaciones/datosCualitativas', 'EvaluacionController@datosCualitativas');
-        Route::get('evaluaciones/colegio', 'EvaluacionController@colegio');
+        Route::get('evaluaciones/colegio', 'EvaluacionController@colegios');
+        Route::get('evaluaciones/entidades', 'EvaluacionController@entidades');
         Route::get('evaluaciones/colegio/costo', 'EvaluacionController@colegioCosto');
 
         
