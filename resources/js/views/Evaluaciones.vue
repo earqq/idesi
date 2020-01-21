@@ -156,15 +156,15 @@
 
         <div class="col-md-3 m-0 views" style="background:#fff">
           <div class="row m-0">
+
+
             <div class="col-md-12 status pt-4 pb-4 pl-3">
               <input type="radio" v-model="form.estado" value="APROBADO">APROBADO
               <input type="radio" v-model="form.estado" value="OBSERVADO">OBSERVADO
               <input type="radio" v-model="form.estado" value="DESAPROBADO">DESAPROBADO
               <textarea  v-model="form.detalle" cols="auto" rows="5" class="w-100"></textarea>
             </div>
-
-
-            
+  
             <div class="col-md-12">
               <button class="btn btn-def w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button>
             </div>
