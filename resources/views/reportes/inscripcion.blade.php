@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Inscripcion de Socio</title>
     <style>
         body{
             font-family: monospace;
@@ -173,7 +173,7 @@
                           
                             <tr>
                                     <td> <span class="title">¿TIENE HIJOS?</span> {{$familiar->hijos}} <span ></td>
-                                    @if ($familiar->hijos=='si')
+                                    @if ($familiar->hijos=='SI')
                                         <td> <span class="title">CUANTOS</span> <span > {{$familiar->numero}} </span> </td>
                                     @else
                                     <td><span >No cuenta con hijos actualmente</span> </td>    

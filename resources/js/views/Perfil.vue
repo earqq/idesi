@@ -139,24 +139,27 @@
                             :to="{name:'ver', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
                           >Prestamo</router-link>
+                        
                           <router-link
+                            v-if="prestamo.cualitativa =='0'"
+                            :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id}}"
+                            class="btn btn-def ml-3"
+                          >Ev. Cualitativa</router-link>
+                          <router-link
+                          v-if="prestamo.cuantitativa=='0'"
+                            :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}"
+                            class="btn btn-def ml-3"
+                          >Ev. Cuantitativa</router-link>
+                            <router-link
                             :to="{name:'archivos', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
                           >Documentos</router-link>
-                          <router-link
-                            :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id}}"
-                            class="btn btn-def ml-3"
-                          >Evaluación Cualitativa</router-link>
-                          <router-link
-                            :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}"
-                            class="btn btn-def ml-3"
-                          >Evaluación Cuantitativa</router-link>
                           <!-- <router-link
                             :to="{name:'visitas', params:{prestamo:prestamo.id}}"
                             class="btn btn-def ml-3"
                           >Visitas</router-link> -->
                           <button class="btn btn-def ml-3" @click="cambiarView(prestamo.id)">
-                            visitas
+                            Ubicación
                           </button>
                         </div>
                       </div>
@@ -243,7 +246,7 @@ export default {
         this.prestamos = response.data["prestamos"];
         this.loader = 0;
         this.loader_loan = 0;
-        console.log(this.cliente);
+        console.log(this.prestamos);
       });
   },
   methods: {

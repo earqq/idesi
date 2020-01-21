@@ -19,23 +19,23 @@ export const serviceNumber = {
             }
           },
         filterProvince() {
-            this.form.provincias_id = null 
-            this.form.distritos_id = null
+            this.form.laboral.provincia = null 
+            this.form.laboral.distrito = null
             console.log("sdad");
             this.filterProvinces()
         },
         filterProvinces() {
             this.provinces = this.all_provinces.filter(f => {
-                return f.departamento_id === this.form.departamentos_id
+                return f.departamento_id === this.form.laboral.departamento
             })
         },
         filterDistrict() {
-            this.form.distritos_id = null
+            this.form.laboral.distrito = null
             this.filterDistricts()
         },
         filterDistricts() {
             this.districts = this.all_districts.filter(f => {
-                return f.provincia_id === this.form.provincias_id
+                return f.provincia_id === this.form.laboral.provincia
             })
         },
         

@@ -61,7 +61,6 @@
                 <div class="form-group col-md-2">
                   <label>P.N con negocio</label>
                   <select v-model="form.juridico.tipo_negocio" class="form-control">
-                    <option value="0">SELECCIONE</option>
                     <option value="E.I.R.L">E.I.R.L</option>
                     <option value="S.A.C">S.A.C</option>
                     <option value="S.A">S.A</option>
@@ -271,11 +270,11 @@
               <div class="row">
                 <div class="form-group col-md-3">
                     <label>Inscripcion </label>
-                    <money   v-model="form.asociativa.inscripcion"  v-bind="money" class="form-control"  ></money>
+                    <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.inscripcion"  v-bind:precision="2"></vue-numeric>
                 </div>
                 <div class="form-group col-md-3">
                     <label>Aporte </label>
-                    <money   v-model="form.asociativa.aporte" v-bind="money" class="form-control"  ></money>
+                    <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.aporte"  v-bind:precision="2"></vue-numeric>
                 </div>
               </div>
               <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
@@ -289,7 +288,6 @@
                 <div class="form-group col-md-6">
                     <label>Es sujeto a informar a la UIF Perú</label>
                     <select v-model="form.declaracion.uif" class="form-control">
-                      <option value="0">SELECCIONE</option>
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
                     </select>
@@ -297,7 +295,6 @@
                 <div class="form-group col-md-6">
                     <label>Estado</label>
                     <select v-model="form.declaracion.estado" class="form-control">
-                      <option value="0">SELECCIONE</option>
                       <option value="ADMITIDO">ADMITIDO</option>
                       <option value="RECHAZADO">RECHAZADO</option>
                     </select>
@@ -326,6 +323,7 @@
 import DatePick from 'vue-date-pick';
 import "vue-date-pick/dist/vueDatePick.css";
 import { serviceNumber } from "../../../mixins/functions";
+import VueNumeric from 'vue-numeric'
 
 const mesConf = [
   "Enero",
@@ -346,7 +344,7 @@ const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 
 export default {
 mixins: [serviceNumber],
-  components: { DatePick},
+  components: { DatePick,VueNumeric},
  props: ['tipo_persona'],
         
   data() {
@@ -360,14 +358,6 @@ mixins: [serviceNumber],
       provinces: [],
       districts: [],
       form: {},
-      money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'S/. ',
-          suffix: '',
-          precision: 2,
-          masked: false
-      },
       notificationSystem: {
         options: {
           success: {
@@ -429,7 +419,7 @@ mixins: [serviceNumber],
           actividad_principal:"",
           partida_registral:"",
           oficina_principal:"",
-          tipo_negocio:0,
+          tipo_negocio:"E.I.R.L",
           direccion:"",
           numero:"",
           manzana:"",
@@ -449,8 +439,8 @@ mixins: [serviceNumber],
           aporte:"",
         },
         declaracion:{
-          uif: 0,
-          estado: 0,
+          uif: "NO",
+          estado: "ADMITIDO",
           observaciones: "",
         },
       };
