@@ -26,6 +26,11 @@ export default new Router({
             component: require('./views/PersonaNatural').default
         },
         {
+            path: '/clientes/registrar/juridico',
+            name: 'registrar/juridico',
+            component: require('./views/PersonaJuridico').default
+        },
+        { 
             path: '/eval-cualitativa/:prestamo',
             name: 'evalCualtitativa',
             component: require('./views/EvalCualitativa').default
@@ -97,5 +102,5 @@ export default new Router({
             component: require('./views/404').default
         },
     ],
-    mode: 'history'
+    mode: 'hash'
 })

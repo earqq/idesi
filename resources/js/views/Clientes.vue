@@ -19,10 +19,12 @@
               <option value="PJ">Persona Juridica</option>
             </select>
             <router-link :to="{name:'registrar/natural'}" class="btn btn-def col-md-4 form-control" v-if="form.tipo_persona=='PN'">Crear Solicitud</router-link>
+            <router-link :to="{name:'registrar/juridico'}" class="btn btn-def col-md-4 form-control" v-if="form.tipo_persona=='PJ'">Crear Solicitud</router-link>
             <!-- <button class="" @click="crearCliente()">Crear Solicutd</button> -->
           </div>
-
         </div>
+
+
         <div class="col-md-12 clients-date">
 
             <div class="row date"  v-if="form.tipo_persona=='PN' && type_list=='1'">

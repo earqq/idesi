@@ -115,7 +115,6 @@ class EvaluacionController extends Controller
 
     public function evaluar(Request $request)
     {
-      
             try{
 
                    DB::beginTransaction();

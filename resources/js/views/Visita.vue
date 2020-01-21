@@ -5,8 +5,7 @@
         <i class="fas fa-angle-left"></i>
       </span>
       <h1>Ubicación del negocio</h1>
-    </header>
-    <button @click="locateMe">Get location</button>
+    </header> 
     <div class="loans-views">
       <div class="row m-0" v-if="tipo">
             <div class="col-md-12 d-flex justify-content-between p-0 ">
@@ -41,31 +40,12 @@
 
           <div class="new-view" v-else>
             <div class="row">
-              <div class="form-group col-md-12 d-flex justify-content-center mt-2 mb-2">
-                    <label for="">
-                        <gmap-autocomplete
-                            @place_changed="setPlace">
-                          </gmap-autocomplete>
-                          <button @click="addMarker">Agregar Ubicación</button>
-                    </label>
-              </div>
-
                 <div class="form-group col-md-12">
                            <gmap-map
                             :center="formViews.center"
-                            :zoom="12"
+                            :zoom="18"
                             style="width:100%;  height: 400px;"
-                             :options="{
-                                zoomControl: true,
-                                mapTypeControl: false,
-                                scaleControl: false,
-                                streetViewControl: false,
-                                rotateControl: false,
-                                fullscreenControl: true,
-                                disableDefaultUi: false,
-                                click:true,
-                                dblclick:true
-                              }"
+                            map-type-id="terrain"  
                           >
                             <gmap-marker
                               :key="index"
@@ -92,6 +72,7 @@
 import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
 import moment from "moment";
+import {gmapApi} from 'vue2-google-maps'
 
 
 
@@ -117,9 +98,9 @@ export default {
   data() {
     return {
       resource: "clientes",
-          location:null,
-    gettingLocation: false,
-    errorStr:null,
+      location:null,
+      gettingLocation: false,
+      errorStr:null,
       errors: {},
       formViews: {},
       list_vistas: [],
@@ -138,6 +119,9 @@ export default {
       diaEs: diaConf,
     };
   },
+   computed: {
+    google: gmapApi
+  },
   async created() {
 
  
@@ -148,38 +132,12 @@ export default {
     await this.initForm();
   },
   mounted() {
-    this.geolocate();
-    
+    this.geolocate(); 
+    this.addMarker();
   },
   methods: {
-        async getLocation() {
       
-      return new Promise((resolve, reject) => {
-
-        if(!("geolocation" in navigator)) {
-          reject(new Error('Geolocation is not available.'));
-        }
-
-        navigator.geolocation.getCurrentPosition(pos => {
-          resolve(pos);
-        }, err => {
-          reject(err);
-        });
-
-      });
-    },
-        async locateMe() {
-
-      this.gettingLocation = true;
-      try {
-        this.gettingLocation = false;
-        this.location = await this.getLocation();
-      } catch(e) {
-        this.gettingLocation = false;
-        this.errorStr = e.message;
-      }
-      
-    },
+   
    retornar() {
      this.$parent.view = false; 
      this.$parent.idprestamo = 0; 
@@ -193,6 +151,7 @@ export default {
 
     crearVisita() {
       this.tipo = false;
+      this.addMarker();
     },
     cancelarVisita() {
       this.tipo = true;
@@ -250,8 +209,7 @@ export default {
         .then(() => {
           // this.loading_submit = false;
         });
-    },
-    
+    }, 
     resetForm() {
       this.initForm(); 
     },
@@ -259,17 +217,33 @@ export default {
     setPlace(place) {
       this.formViews.currentPlace = place;
     },
-    addMarker() {
-      if (this.formViews.currentPlace) {
+    addMarker() { 
+
+       if(!("geolocation" in navigator)) {
+          this.errorStr = 'Geolocation is not available.';
+          return;
+        }
+
+        this.gettingLocation = true;
+
+        navigator.geolocation.getCurrentPosition(pos => {
+          this.gettingLocation = false;
+          this.location = pos;
+        }, err => {
+          this.gettingLocation = false;
+          this.errorStr = err.message;
+        })
+
+
         const marker = {
-          lat: this.formViews.currentPlace.geometry.location.lat(),
-          lng: this.formViews.currentPlace.geometry.location.lng()
+          lat:  this.location.coords.latitude,
+          lng:  this.location.coords.longitude
         };
         this.formViews.markers.push({ position: marker });
         this.formViews.places.push(this.formViews.currentPlace);
         this.formViews.center = marker;
         this.formViews.currentPlace = null;
-      }
+      
     },
     geolocate: function() {
       navigator.geolocation.getCurrentPosition(position => {

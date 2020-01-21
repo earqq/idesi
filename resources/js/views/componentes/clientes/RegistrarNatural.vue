@@ -614,8 +614,7 @@ const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   name: 'natural',
   mixins: [serviceNumber],
-  components: { DatePick , vSelect,VueNumeric},
-  props: ["tipo_persona"],
+  components: { DatePick , vSelect,VueNumeric}, 
 
   data() {
     return {
@@ -624,6 +623,7 @@ export default {
       clientes: [],
       all_departments: [],
       all_provinces: [],
+      tipo_persona: 'PJ',
       all_districts: [],
       provinces: [],
       loading_submit:'0',
