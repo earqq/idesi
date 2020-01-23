@@ -489,6 +489,9 @@ class ClienteController extends Controller
 
     public function visitaStore(Request $request)
     {
+
+
+        return $request;
         if (!$request->ajax()) return redirect('/');
  
 

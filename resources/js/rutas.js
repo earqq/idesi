@@ -38,7 +38,7 @@ export default new Router({
         {
             path: '/evaluaciones',
             name: 'evaluaciones',
-            component: require('./views/Evaluaciones').default
+            component: require('./views/EvaluacionComun').default
         },
         {
             path: '/usuarios',
@@ -58,6 +58,11 @@ export default new Router({
             component: require('./views/Perfil').default,
         },
         {
+            path: '/evaluacion/final/:prestamo',
+            name: '/evaluacion/final/',
+            component: require('./views/EvaluacionFinalDetalle').default,
+        },
+        {
             path: '/perfiljuridico/:documento',
             name: 'perfiljuridico',
             component: require('./views/PerfilJuridico').default,
@@ -65,7 +70,7 @@ export default new Router({
         {
             path: '/ver/:prestamo',
             name: 'ver',
-            component: require('./views/VerPrestamo').default
+            component: require('./views/VerPrestamo').default 
         },
         {
             path: '/verjuridico/:prestamo',
