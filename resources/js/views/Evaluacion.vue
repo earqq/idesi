@@ -7,23 +7,46 @@
         <input type="text" placeholder="Buscar Prestamos">
       </div>
       <div class="switch_view">
-        <a class="selected">
+        <a :class="{selected: type_list == 0}" @click="type_list = 0" >
           <i class="material-icons-outlined">border_all</i>
         </a>
-        <a>
+        <a :class="{selected: type_list == 1}" @click="type_list = 1">
           <i class="material-icons-outlined">notes</i>
         </a>
       </div>
-      <router-link to="/"  class="add_client button_primary medium" >
-        <span>
-          CREAR PRESTAMO
-        </span>
-        <i class="material-icons-outlined">add</i>
-      </router-link>
     </div>
 
     <div class="table_container">
-      <div class="table_wrapper" >
+
+      <div class="table_grid"  v-if="type_list==0">
+        <article class="credit_card" v-for="prestamo in prestamos" :key="prestamo.id" >
+          <div class="client">
+            <img src="https://picsum.photos/100/100" />
+            <p class="card-document">{{prestamo.nombres}} {{prestamo.apellidos}}</p>
+          </div>
+          <div class="detail">
+            <h2> {{prestamo.producto}} </h2>
+            <div class="progress_bar">
+              <span class="bar"></span>
+              <p>0% </p>
+            </div>
+            <h3> S/ {{prestamo.importe}} / {{prestamo.plazo}} Diario </h3>
+          </div>
+          <div class="actions">
+            <router-link :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
+              VER PRESTAMO
+            </router-link>
+            <div class="options">
+              <i class="material-icons-outlined" >more_horiz</i>
+            </div>
+          </div>
+          
+        </article>
+        <a v-show="prestamos.length < 4" class="spanner" v-for="i in 4" :key="i*1.5"  >
+        </a>
+      </div>
+
+      <div class="table_wrapper" v-else>
         <table class="table_clients">
           <thead>
             <tr>
@@ -99,7 +122,8 @@ export default {
       resource: "evaluaciones", 
       prestamos: [], 
       id_usuario: 0 ,
-      id_rol:0
+      id_rol:0,
+      type_list: 0
     };
   },
   async created() { 
@@ -124,7 +148,7 @@ export default {
 .credits_content
   .options_bar
     display: grid
-    grid-template-columns: 1fr 120px 200px
+    grid-template-columns: 1fr 120px
     grid-gap: 15px
     padding: 20px
     box-sizing: border-box 
@@ -187,7 +211,7 @@ export default {
       grid-gap: 15px
       padding: 0 20px
       box-sizing: border-box
-      .client_card
+      .credit_card
         background-color: white
         border-radius: 4px
         box-shadow: $shadow
@@ -195,47 +219,70 @@ export default {
         transition: all ease-in-out .3s
         &:hover
           box-shadow: $shadow_hover
-        a
-          text-decoration: none
-          .detail
+        .client
+          display: flex
+          align-items: center
+          padding: 10px 20px
+          border-bottom: 1px solid $line_color
+          img
+            width: 20px
+            height: 20px
+            border-radius: 50%
+            object-fit: cover
+          p
+            margin: 0
+            margin-left: 10px
+            font-size: 11px
+            font-weight: 500
+            margin-bottom: -2px
+        .detail
+          padding: 20px
+          h2
+            font-size: 13px
+            margin: 0
+            font-weight: 700
+          .progress_bar
+            width: 100%
             display: flex
-            flex-direction: column
+            align-items: center
+            span
+              display: block
+              flex: 1
+              height: 6px
+              border-radius: 10px
+              background-color: $line_color
+            p
+              margin: 0
+              margin-left: 10px
+              font-size: 12px
+          h3
+            font-size: 11px
+            margin: 0
+        .actions
+          display: flex
+          align-items: center
+          border-top: 1px solid $line_color
+          height: 40px
+          a
+            color: $text_color
+            font-size: 11px
+            flex: 1
+            display: flex
             align-items: center
             justify-content: center
-            padding: 30px 20px
-            width: 100%
-            img
-              width: 55px
-              height: 55px
-              border-radius: 50%
-              object-fit: cover
-            p, small
-              color: $text_color
-              margin: 0
-            p
-              font-weight: 500
-              font-size: 13px
-              margin-top: 10px
-            small
-              font-size: 10px
-              display: block
-          .phone
+            text-decoration: none
+            font-weight: 700
+            padding: 0 20px
+            height: 100%
+            color: $primary_color
+          .options
             display: flex
-            justify-content: space-between
             align-items: center
-            width: 100%
-            padding: 10px 20px
-            border-top: 1px solid $line_color
-            i
-              font-size: 18px
-              color: $primary_color
-            span
-              flex: 1
-              text-align: center
-              font-size: 12px
-              color: $text_color
-              font-weight: 500
-              margin-bottom: -2px
+            border-left: 1px solid $line_color
+            padding: 0 10px
+            height: 100%
+            cursor: pointer
+
     .table_wrapper
       padding: 0 20px
       box-sizing: border-box

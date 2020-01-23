@@ -507,7 +507,7 @@ mixins: [serviceNumber],
       //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
       //  }
       this.loading_submit=1;
-      this.$http 
+      axios
         .post(`/${this.resource}/nuevo/juridico`, this.form)
         .then(response => {
           if (response.data.success) { 
@@ -528,6 +528,7 @@ mixins: [serviceNumber],
             );
           }
         })
+        .catch(console.error)
         // .catch(error => {
         //   if (error.response.status === 422) {
         //     this.errors = error.response.data;
@@ -535,9 +536,9 @@ mixins: [serviceNumber],
         //     this.$message.error(error.response.data.message);
         //   }
         // })
-        .then(() => {
-          // this.loading_submit = false;
-        });
+        // .then(() => {
+        //   // this.loading_submit = false;
+        // });
     }
   },
   mounted() {
