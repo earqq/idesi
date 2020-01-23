@@ -5,6 +5,10 @@
       <div class="search_bar">
         <i class="material-icons-outlined">search</i>
         <input type="text" placeholder="Buscar Prestamos">
+        <select >
+          <option value="PN">Persona Natural</option>
+          <option value="PJ">Persona Juridica</option>
+        </select>
       </div>
       <div class="switch_view">
         <a :class="{selected: type_list == 0}" @click="type_list = 0" >
@@ -30,14 +34,39 @@
               <span class="bar"></span>
               <p>0% </p>
             </div>
-            <h3> S/ {{prestamo.importe}} / {{prestamo.plazo}} Diario </h3>
+            <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
           </div>
           <div class="actions">
-            <router-link :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
+            <router-link class="credit_link" :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
               VER PRESTAMO
             </router-link>
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
+              <ul v-if="id_rol=='3'">
+                <li>
+                  <router-link v-if="prestamo.estado=='PENDIENTE'" :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+                    Evaluación
+                  </router-link>
+                  <router-link v-else :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+                    Ver Evaluación
+                  </router-link>
+                </li> 
+              </ul>
+              <ul v-if="id_rol=='1'">
+                <li>
+                  <router-link v-if="prestamo.estado=='PENDIENTE'" :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+                    Evaluación
+                  </router-link>
+                  <router-link v-else :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+                    Ver Evaluación
+                  </router-link>
+                </li>
+                <li> Editar </li>
+                <li> E. Cuantitativa </li>
+                <li> E. Cualitativa </li>
+                <li> Documentos </li>
+                <li> Ver Prestamo </li>
+              </ul>
             </div>
           </div>
           
@@ -66,7 +95,7 @@
               </td>
               <td> {{prestamo.producto}} </td>
               <td> S/ {{prestamo.importe}}</td>
-              <td> {{prestamo.plazo}} Meses </td>
+              <td> {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </td>
               <td> 
                 <div class="progress_bar">
                   <span class="bar"></span>
@@ -87,7 +116,7 @@
                     </router-link>
                   </li> 
                 </ul>
-                <ul v-if="id_rol=='3'">
+                <ul v-if="id_rol=='1'">
                   <li>
                     <router-link v-if="prestamo.estado=='PENDIENTE'"
                               :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
@@ -102,7 +131,7 @@
                   <li> E. Cuantitativa </li>
                   <li> E. Cualitativa </li>
                   <li> Documentos </li>
-                  <li> Detalles </li>
+                  <li> Ver Prestamo </li>
                 </ul>
               </td>
             </tr>
@@ -139,6 +168,18 @@ export default {
       });
     },
   },
+  computed: {
+    timeCredit () {
+      return {
+        'CREDIDIARIO': 'Dias',
+        'CREDISEMANA': 'Semanas',
+        'PYME': 'Meses',
+        'PYME ESPECIAL': 'Meses',
+        'CONSUMO': 'Meses',
+        'CONSUMO ESPECIAL': 'Meses',
+        }
+    }
+  }
 };
 </script>
 
@@ -207,7 +248,7 @@ export default {
   .table_container
     .table_grid
       display: grid
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr) )
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr) )
       grid-gap: 15px
       padding: 0 20px
       box-sizing: border-box
@@ -263,7 +304,8 @@ export default {
           align-items: center
           border-top: 1px solid $line_color
           height: 40px
-          a
+          position: relative
+          a.credit_link
             color: $text_color
             font-size: 11px
             flex: 1
@@ -274,7 +316,6 @@ export default {
             font-weight: 700
             padding: 0 20px
             height: 100%
-            color: $primary_color
           .options
             display: flex
             align-items: center
@@ -282,6 +323,59 @@ export default {
             padding: 0 10px
             height: 100%
             cursor: pointer
+            &:hover
+              i
+                opacity: 1
+              ul
+                display: block
+            i
+              cursor: pointer
+              opacity: .5
+              color: $text_color
+            ul
+              position: absolute
+              background-color: #fff
+              box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1)
+              border-radius: 4px
+              top: 37px
+              right: 10px
+              font-size: 12px
+              z-index: 4
+              width: 140px
+              transition: opacity ease 200ms
+              padding: 10px 0
+              display: none
+              &::before
+                position: absolute
+                display: block
+                content: ''
+                width: 12px
+                height: 12px
+                background-color: white
+                top: -7px
+                right: 7px
+                transform: rotateZ(45deg)
+                border-top: 1px solid #f3f1f1
+                border-left: 1px solid #f3f1f1
+              li
+                height: 35px
+                line-height: 38px
+                cursor: pointer
+                text-align: left
+                padding-left: 20px
+                color: $primary_color
+                list-style: none
+                color: black
+                &:hover
+                    background-color: $bg_color
+                a
+                    text-decoration: none
+                    color: $primary_color
+                    height: 100%
+                    width: 100%
+                    display: block
+                    text-decoration: none
+                    color: black
 
     .table_wrapper
       padding: 0 20px
@@ -297,6 +391,7 @@ export default {
             p
               margin: 0
               margin-left: 10px
+              text-align: left
           .progress_bar
             width: 200px
             display: flex

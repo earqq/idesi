@@ -346,5 +346,5 @@ export default {
             p
               margin: 0
               margin-left: 10px
-
+              text-align: left
 </style>

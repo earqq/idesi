@@ -17,15 +17,19 @@
             </div>
             <form class="input_login_wrapper"  method="POST" action="{{ route('access')}}">
                 {{ csrf_field() }}
-                <div class="input_wrapper icon no_label_icon" >
+                <div class="input_wrapper icon no_label_icon @error('usuario') require @enderror" >
                     <input type="text" name="usuario" id="usuario" class=" input_user{{$errors->has('usuario' ? 'is-invalid' : '')}}" placeholder="Usuario" autocomplete="off">
                     <i class="material-icons-outlined">person</i>
-                    {!!$errors->first('usuario','<span class="invalid-feedback" style="display:block">:message</span>')!!}
+                    @error('usuario')
+                        <div class="message"> Credencial Incorrecto </div>
+                    @enderror
                 </div>
-                <div class="input_wrapper icon no_label_icon">
+                <div class="input_wrapper icon no_label_icon @error('password') require @enderror">
                     <input type="password" name="password" id="password" class=" input_pass{{$errors->has('usuario' ? 'is-invalid' : '')}}" placeholder="Contraseña">
                     <i class="material-icons-outlined">lock</i>
-                    {!!$errors->first('usuario','<span class="invalid-feedback" style="display:block">:message</span>')!!}
+                    @error('password')
+                        <div class="message"> Credencial Incorrecto </div>
+                    @enderror
                 </div>
                 <button type="submit" name="button" class="button_primary medium"> 
                     <span>

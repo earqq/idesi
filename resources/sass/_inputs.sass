@@ -61,16 +61,20 @@
         .message
             color: $require_color
             font-size: 11px
-            margin-top: 7px
+            margin-top: 5px
             display: block
+            font-family: $font
+            display: flex
+            align-items: center
             &:before
                 display: inline-block
-                font: normal normal normal 14px/1 FontAwesome
+                font-family: "Material Icons"
+                content: "\e001"
                 font-size: inherit
                 text-rendering: auto
                 -webkit-font-smoothing: antialiased
-                content: "\f071"
                 margin-right: 4px
+                font-size: 14px
     &.disable
         input
             user-select: none

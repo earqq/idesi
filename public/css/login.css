@@ -309,18 +309,24 @@
 .input_wrapper.require .message {
   color: #FF003D;
   font-size: 11px;
-  margin-top: 7px;
+  margin-top: 5px;
   display: block;
+  font-family: "Roboto", sans-serif;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
 }
 
 .input_wrapper.require .message:before {
   display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
+  font-family: "Material Icons";
+  content: "\E001";
   font-size: inherit;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
-  content: "\F071";
   margin-right: 4px;
+  font-size: 14px;
 }
 
 .input_wrapper.disable input {
