@@ -17,7 +17,7 @@
                 </li>
 
                 <li :class="{selected: tab == 'evaluaciones_final'}" v-if="tipo=='1' || tipo=='4' "> 
-                  <router-link :to="{name: 'evaluaciones_final'}"  >Evaluaciones</router-link>
+                  <router-link :to="{name: 'evaluaciones_final'}"  >Prestamos</router-link>
                 </li>
 
                 <li :class="{selected: tab == 'usuarios'}" v-if="tipo=='1'"> 

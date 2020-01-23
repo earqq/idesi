@@ -85,7 +85,7 @@
                   <ul>
                     <li>
                       <router-link :to="{name:'perfil', params:{documento:cliente.documento}}" >
-                        Ver cliente
+                        Ver Cliente
                       </router-link>
                     </li>
                   </ul>

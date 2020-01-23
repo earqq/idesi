@@ -18795,7 +18795,7 @@ readers do not read off random characters that represent icons */
   right: 64px;
   font-size: 12px;
   z-index: 4;
-  width: 120px;
+  width: 140px;
   -webkit-transition: opacity ease 200ms;
   transition: opacity ease 200ms;
   padding: 10px 0;
@@ -18825,6 +18825,7 @@ readers do not read off random characters that represent icons */
   padding-left: 20px;
   color: #0061FF;
   list-style: none;
+  color: black;
 }
 
 .table_wrapper table .options ul li:hover {
