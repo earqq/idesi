@@ -136,35 +136,11 @@
 
     </div>
 
-    <!-- +++++++++++++++++++ -->
-    <!-- CREAR NUEVO CLIENTE -->
-    <!-- +++++++++++++++++++ -->
-
-    <!--<div class="container-general create-client" style="background:#dceaf0" v-else>
-      <header>
-        <span @click="cancelarCliente()">
-          <i class="fas fa-angle-left"></i>
-        </span>
-        <h1 v-if="form.tipo_persona=='PN'" >Admision Persona Natural</h1>
-        <h1 v-else > Admision Persona Juridica </h1>
-      </header>
-
-      <div class="date-client">    
-        <div class="col-md-12">
-          <registrar-natural :tipo_persona="form.tipo_persona" v-if="form.tipo_persona=='PN'" ></registrar-natural>
-          <registrar-juridico :tipo_persona="form.tipo_persona"  v-else-if="form.tipo_persona=='PJ'"></registrar-juridico>
-        </div>
-
-      </div>
-
-    </div>-->
   </div>
 </template> 
 
 <script>
-import DatePick from 'vue-date-pick';
-import RegistrarNatural from './componentes/clientes/RegistrarNatural.vue'; 
-import RegistrarJuridico from "./componentes/clientes/RegistrarJuridico.vue";
+import DatePick from 'vue-date-pick'; 
 import "vue-date-pick/dist/vueDatePick.css";
 
 const mesConf = [
@@ -184,7 +160,7 @@ const mesConf = [
 const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   name: 'clients',
-  components: { DatePick,RegistrarNatural,RegistrarJuridico },
+  components: { DatePick},
   data() {
     return {
       resource: "clientes",

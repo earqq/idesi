@@ -506,10 +506,10 @@ mixins: [serviceNumber],
       //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
       //  }
       this.loading_submit=1;
-      this.$http
+      this.$http 
         .post(`/${this.resource}/nuevo/juridico`, this.form)
         .then(response => {
-          if (response.data.success) {
+          if (response.data.success) { 
             this.resetForm();
             this.$toast.success(
               "La solicitud fue admitida",
