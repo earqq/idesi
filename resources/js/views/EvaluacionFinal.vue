@@ -7,10 +7,10 @@
         <input type="text" placeholder="Buscar Prestamos">
       </div>
       <div class="switch_view">
-        <a class="selected">
+        <a :class="{selected: type_list == 0}" @click="type_list = 0" >
           <i class="material-icons-outlined">border_all</i>
         </a>
-        <a>
+        <a :class="{selected: type_list == 1}" @click="type_list = 1">
           <i class="material-icons-outlined">notes</i>
         </a>
       </div>
@@ -23,7 +23,31 @@
     </div>
 
     <div class="table_container">
-      <div class="table_wrapper" >
+
+      <div class="table_grid"  v-if="type_list==0">
+        <article class="credit_card" v-for="prestamo in prestamos" :key="prestamo.id" >
+          <div class="client">
+            <img src="https://picsum.photos/100/100" />
+            <p class="card-document">{{prestamo.nombres}} {{prestamo.apellidos}}</p>
+          </div>
+          <div class="detail">
+            <h2> Pyme Especial </h2>
+          </div>
+          <div class="actions">
+            <router-link :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
+              Ver Prestamo
+            </router-link>
+            <div class="options">
+              <i class="material-icons-outlined" >more_horiz</i>
+            </div>
+          </div>
+          
+        </article>
+        <a v-show="prestamos.length < 4" class="spanner" v-for="i in 4" :key="i"  >
+        </a>
+      </div>
+
+      <div class="table_wrapper" v-else>
         <table class="table_clients">
           <thead>
             <tr>
@@ -82,7 +106,7 @@ export default {
     return {
       resource: "evaluaciones", 
       prestamos: [], 
-  
+      type_list: 0
     };
   },
   async created() { 
@@ -168,7 +192,7 @@ export default {
       grid-gap: 15px
       padding: 0 20px
       box-sizing: border-box
-      .client_card
+      .credit_card
         background-color: white
         border-radius: 4px
         box-shadow: $shadow
@@ -176,47 +200,30 @@ export default {
         transition: all ease-in-out .3s
         &:hover
           box-shadow: $shadow_hover
-        a
-          text-decoration: none
-          .detail
-            display: flex
-            flex-direction: column
-            align-items: center
-            justify-content: center
-            padding: 30px 20px
-            width: 100%
-            img
-              width: 55px
-              height: 55px
-              border-radius: 50%
-              object-fit: cover
-            p, small
-              color: $text_color
-              margin: 0
-            p
-              font-weight: 500
-              font-size: 13px
-              margin-top: 10px
-            small
-              font-size: 10px
-              display: block
-          .phone
-            display: flex
-            justify-content: space-between
-            align-items: center
-            width: 100%
-            padding: 10px 20px
-            border-top: 1px solid $line_color
-            i
-              font-size: 18px
-              color: $primary_color
-            span
-              flex: 1
-              text-align: center
-              font-size: 12px
-              color: $text_color
-              font-weight: 500
-              margin-bottom: -2px
+        .client
+          display: flex
+          align-items: center
+          padding: 10px 20px
+          border-bottom: 1px solid $line_color
+          img
+            width: 20px
+            height: 20px
+            border-radius: 50%
+            object-fit: cover
+          p
+            margin: 0
+            margin-left: 10px
+            font-size: 11px
+            font-weight: 500
+            margin-bottom: -2px
+        .actions
+          display: flex
+          align-items: center
+          padding: 10px 20px
+          border-top: 1px solid $line_color
+          a
+            color: $text_color
+            font-size: 12px
     .table_wrapper
       padding: 0 20px
       box-sizing: border-box
