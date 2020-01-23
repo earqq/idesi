@@ -41,9 +41,9 @@
                 <img src="https://picsum.photos/100/100" alt />
                 <p> {{prestamo.nombres}} {{prestamo.apellidos}}</p>
               </td>
-              <td> Pyme Especial </td>
-              <td> S/ 5000 </td>
-              <td> 12 Meses </td>
+              <td> {{prestamo.producto}} </td>
+              <td> S/ {{prestamo.importe}}</td>
+              <td> {{prestamo.plazo}} Meses </td>
               <td> 
                 <div class="progress_bar">
                   <span class="bar"></span>
@@ -52,11 +52,27 @@
               </td>
               <td class="options" >
                 <i class="material-icons-outlined" >more_horiz</i>
-                <ul>
+                <ul v-if="id_rol=='3'">
                   <li>
-                    <router-link :v-if="prestamo.estado=='PENDIENTE'"
-                              :to="{name:'/evaluacion/final/', params:{prestamo:prestamo.id}}" >
+                    <router-link v-if="prestamo.estado=='PENDIENTE'"
+                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
                       Evaluación
+                    </router-link>
+                    <router-link v-else
+                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+                      Ver Evaluación
+                    </router-link>
+                  </li> 
+                </ul>
+                <ul v-if="id_rol=='3'">
+                  <li>
+                    <router-link v-if="prestamo.estado=='PENDIENTE'"
+                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+                      Evaluación
+                    </router-link>
+                    <router-link v-else
+                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+                      Ver Evaluación
                     </router-link>
                   </li>
                   <li> Editar </li>
@@ -82,7 +98,8 @@ export default {
     return {
       resource: "evaluaciones", 
       prestamos: [], 
-  
+      id_usuario: 0 ,
+      id_rol:0
     };
   },
   async created() { 
@@ -91,7 +108,9 @@ export default {
   methods: {
     methodsPrestamo() {
       this.$http.get(`/${this.resource}/prestamos/`).then(response => {
-        this.prestamos = response.data;
+        this.prestamos = response.data.pretamos;
+        this.id_usuario = response.data.usuario;
+        this.id_rol = response.data.rol;
         console.log(response.data);
       });
     },

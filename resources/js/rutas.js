@@ -34,22 +34,17 @@ export default new Router({
             path: '/eval-cuantitativa/:prestamo',
             name: 'evalCuantitativa',
             component: require('./views/EvalCuantitativa').default
-        },
-        {
-            path: '/evaluaciones',
-            name: 'evaluaciones',
-            component: require('./views/EvaluacionComun').default
-        },
+        }, 
         {
             path: '/usuarios',
             name: 'usuarios',
             component: require('./views/Usuario').default
         },
-
+ 
         {
-            path: '/lista-evaluaciones',
-            name: 'evaluaciones_final',
-            component: require('./views/EvaluacionFinal').default
+            path: '/evaluaciones',
+            name: 'evaluaciones',
+            component: require('./views/Evaluacion').default
         },
 
         {
@@ -58,9 +53,9 @@ export default new Router({
             component: require('./views/Perfil').default,
         },
         {
-            path: '/evaluacion/final/:prestamo',
-            name: '/evaluacion/final/',
-            component: require('./views/EvaluacionFinalDetalle').default,
+            path: '/evaluacion/detalle/:prestamo',
+            name: '/evaluacion/detalle/',
+            component: require('./views/EvaluacionDetalle').default,
         },
         {
             path: '/perfiljuridico/:documento',
