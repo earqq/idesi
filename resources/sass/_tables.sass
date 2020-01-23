@@ -1,0 +1,117 @@
+.table_wrapper
+    table
+        width: 100%
+        border: none
+        .overflow_column
+            p
+                margin: 0
+                overflow: hidden
+                text-overflow: ellipsis
+                display: -webkit-box
+                -webkit-line-clamp: 1
+                -webkit-box-orient: vertical
+                text-align: left
+        .options
+            max-width: 100px
+            box-sizing: border-box
+            position: relative
+            transition: all ease-in-out .2s .2s
+            &:hover
+                i
+                    opacity: 1
+                ul
+                    display: block
+            i
+                cursor: pointer
+                opacity: .5
+                color: $text_color
+            ul
+                position: absolute
+                background-color: #fff
+                box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1)
+                border-radius: 4px
+                top: 45px
+                right: 64px
+                font-size: 12px
+                z-index: 4
+                width: 120px
+                transition: opacity ease 200ms
+                padding: 10px 0
+                display: none
+                &::before
+                    position: absolute
+                    display: block
+                    content: ''
+                    width: 12px
+                    height: 12px
+                    background-color: white
+                    top: -7px
+                    right: 7px
+                    transform: rotateZ(45deg)
+                    border-top: 1px solid #f3f1f1
+                    border-left: 1px solid #f3f1f1
+                li
+                    height: 35px
+                    line-height: 38px
+                    cursor: pointer
+                    text-align: left
+                    padding-left: 20px
+                    color: $primary_color
+                    list-style: none
+                    &:hover
+                        background-color: $bg_color
+                    a
+                        text-decoration: none
+                        color: $primary_color
+                        height: 100%
+                        width: 100%
+                        display: block
+                        text-decoration: none
+                        color: black
+
+        thead
+            tr
+                display: flex
+                width: 100%
+                background-color: white
+                border-radius: 4px 4px 0 0
+                margin-bottom: 1px
+                th
+                    padding: 5px 15px
+                    font-size: 11px
+                    display: flex
+                    justify-content: flex-start
+                    align-items: center
+                    flex: 1
+                    font-family: $font
+                    font-weight: 700
+                    white-space: nowrap
+                    color: rgba($text_color, .4)
+        tbody
+            display: block
+            color: $primary_color
+            &:hover
+                tr
+                    background-color: #fbfbfd
+            tr
+                display: flex
+                width: 100%
+                font-family: $font
+                transition: all ease-in-out .2s
+                margin-bottom: 1px
+                background-color: white
+                &:hover
+                    background-color: #fff
+                &:last-child
+                    margin-bottom: 0px
+                    border-radius: 0 0 4px 4px
+
+                td
+                    text-align: center
+                    font-size: 12px
+                    display: flex
+                    justify-content: flex-start
+                    align-items: center
+                    flex: 1
+                    padding: 12px 15px
+                    color: $text_color

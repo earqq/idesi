@@ -6,11 +6,6 @@ Vue.use(Router)
 export default new Router({
     routes:[
         {
-            path: '/inicio',
-            name: 'inicio',
-            component: require('./views/Inicio').default
-        },
-        {
             path: '/',
             name: 'inicio',
             component: require('./views/Inicio').default

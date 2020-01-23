@@ -18090,92 +18090,6 @@ readers do not read off random characters that represent icons */
   letter-spacing: 6px;
 }
 
-body,
-html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-.login-crecer {
-  background: #eaeaea !important;
-}
-
-.login-crecer .user_card {
-  height: 400px;
-  width: 350px;
-  margin-top: auto;
-  margin-bottom: auto;
-  background: #cecece;
-  position: relative;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-pack: center;
-          justify-content: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-          flex-direction: column;
-  padding: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 5px;
-}
-
-.login-crecer .brand_logo_container {
-  position: absolute;
-  height: 170px;
-  width: 170px;
-  top: -75px;
-  border-radius: 50%;
-  background: #eaeaea;
-  padding: 10px;
-  text-align: center;
-}
-
-.login-crecer .brand_logo {
-  height: 150px;
-  width: 150px;
-  border-radius: 50%;
-  border: 2px solid white;
-}
-
-.login-crecer .form_container {
-  margin-top: 100px;
-}
-
-.login-crecer .login_btn {
-  width: 100%;
-  background: #2cab9f !important;
-  color: white !important;
-}
-
-.login-crecer .login_btn:focus {
-  box-shadow: none !important;
-  outline: 0px !important;
-}
-
-.login-crecer .login_container {
-  padding: 0 2rem;
-}
-
-.login-crecer .input-group-text {
-  background: #2cab9f !important;
-  color: white !important;
-  border: 0 !important;
-  border-radius: 0.25rem 0 0 0.25rem !important;
-}
-
-.login-crecer .input_user,
-.login-crecer .input_pass:focus {
-  box-shadow: none !important;
-  outline: 0px !important;
-}
-
-.login-crecer .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: #c0392b !important;
-}
-
 .evaluations .loans h1 {
   font-size: 1.3rem;
   background: #e7e5e5;
@@ -18818,24 +18732,188 @@ html {
   margin: 6px 9px;
 }
 
-input {
-  border-radius: 0 !important;
+.slide-fade-enter-active {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.slide-fade-leave-active {
+  -webkit-transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to {
+  -webkit-transform: translateY(5px);
+          transform: translateY(5px);
+  opacity: 0;
+}
+
+.table_wrapper table {
+  width: 100%;
+  border: none;
+}
+
+.table_wrapper table .overflow_column p {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-align: left;
+}
+
+.table_wrapper table .options {
+  max-width: 100px;
+  box-sizing: border-box;
+  position: relative;
+  -webkit-transition: all ease-in-out 0.2s 0.2s;
+  transition: all ease-in-out 0.2s 0.2s;
+}
+
+.table_wrapper table .options:hover i {
+  opacity: 1;
+}
+
+.table_wrapper table .options:hover ul {
+  display: block;
+}
+
+.table_wrapper table .options i {
+  cursor: pointer;
+  opacity: 0.5;
+  color: black;
+}
+
+.table_wrapper table .options ul {
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  top: 45px;
+  right: 64px;
+  font-size: 12px;
+  z-index: 4;
+  width: 120px;
+  -webkit-transition: opacity ease 200ms;
+  transition: opacity ease 200ms;
+  padding: 10px 0;
+  display: none;
+}
+
+.table_wrapper table .options ul::before {
+  position: absolute;
+  display: block;
+  content: "";
+  width: 12px;
+  height: 12px;
+  background-color: white;
+  top: -7px;
+  right: 7px;
+  -webkit-transform: rotateZ(45deg);
+          transform: rotateZ(45deg);
+  border-top: 1px solid #f3f1f1;
+  border-left: 1px solid #f3f1f1;
+}
+
+.table_wrapper table .options ul li {
+  height: 35px;
+  line-height: 38px;
+  cursor: pointer;
+  text-align: left;
+  padding-left: 20px;
+  color: #0061FF;
+  list-style: none;
+}
+
+.table_wrapper table .options ul li:hover {
+  background-color: #f6f9fd;
+}
+
+.table_wrapper table .options ul li a {
+  text-decoration: none;
+  color: #0061FF;
+  height: 100%;
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+
+.table_wrapper table thead tr {
+  display: -webkit-box;
+  display: flex;
+  width: 100%;
+  background-color: white;
+  border-radius: 4px 4px 0 0;
+  margin-bottom: 1px;
+}
+
+.table_wrapper table thead tr th {
+  padding: 5px 15px;
+  font-size: 11px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-flex: 1;
+          flex: 1;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  white-space: nowrap;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.table_wrapper table tbody {
+  display: block;
+  color: #0061FF;
+}
+
+.table_wrapper table tbody:hover tr {
+  background-color: #fbfbfd;
+}
+
+.table_wrapper table tbody tr {
+  display: -webkit-box;
+  display: flex;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  -webkit-transition: all ease-in-out 0.2s;
+  transition: all ease-in-out 0.2s;
+  margin-bottom: 1px;
+  background-color: white;
+}
+
+.table_wrapper table tbody tr:hover {
+  background-color: #fff;
+}
+
+.table_wrapper table tbody tr:last-child {
+  margin-bottom: 0px;
+  border-radius: 0 0 4px 4px;
+}
+
+.table_wrapper table tbody tr td {
+  text-align: center;
+  font-size: 12px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-flex: 1;
+          flex: 1;
+  padding: 12px 15px;
+  color: black;
 }
 
 body {
-  background: #bcbcbc;
-}
-
-.form-group {
-  margin-bottom: 3px;
-}
-
-h1,
-h2,
-h3,
-p,
-label {
-  color: #000;
+  background: #f6f9fd;
+  font-family: "Roboto", sans-serif;
 }
 
 /** PERFIL **/
