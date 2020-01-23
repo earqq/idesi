@@ -26,8 +26,6 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "v-money": "^0.8.1",
-        "vue-currency-input": "^1.15.1",
         "vue-date-pick": "^1.2.1",
         "vue-inputmask": "^0.2.1",
         "vue-izitoast": "^1.2.1",

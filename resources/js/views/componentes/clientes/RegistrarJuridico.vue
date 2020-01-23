@@ -344,9 +344,7 @@ const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 
 export default {
 mixins: [serviceNumber],
-  components: { DatePick,VueNumeric},
- props: ['tipo_persona'],
-        
+  components: { DatePick,VueNumeric}, 
   data() {
     return {
       resource: "clientes",
@@ -355,6 +353,7 @@ mixins: [serviceNumber],
       all_provinces: [],
       all_districts: [],
       loading_submit:'0',
+      tipo_persona:'PJ',
       provinces: [],
       districts: [],
       form: {},
@@ -384,7 +383,7 @@ mixins: [serviceNumber],
   },
   methods: {
 
-    next() {
+    next() { 
       $(".nav-tabs .active")
         .parent()
         .next("li")
@@ -409,7 +408,7 @@ mixins: [serviceNumber],
           pais: "",
           departamento: "",
           provincia: "",
-          distrito: "",
+          distrito: "",    
           numero_registro: "",
           agencia: ""
         },
