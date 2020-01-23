@@ -344,9 +344,7 @@ const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 
 export default {
 mixins: [serviceNumber],
-  components: { DatePick,VueNumeric},
- props: ['tipo_persona'],
-        
+  components: { DatePick,VueNumeric}, 
   data() {
     return {
       resource: "clientes",
@@ -354,6 +352,7 @@ mixins: [serviceNumber],
       all_departments: [],
       all_provinces: [],
       all_districts: [],
+      tipo_persona:'PJ',
       loading_submit:'0',
       provinces: [],
       districts: [],
@@ -518,8 +517,6 @@ mixins: [serviceNumber],
               this.notificationSystem.options.success
             );
             this.loading_submit=0;
-            this.$parent.getRecords();
-            this.$parent.tipo = true;
             
           } else {
             // this.resetForm();

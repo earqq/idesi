@@ -460,7 +460,7 @@ class ClienteController extends Controller
 
                 $declaracion = New DeclaracionJuridico;
                 $declaracion->uif= $request->declaracion['uif'];    
-                $declaracion->observaciones= $request->declaracion['obervaciones'];    
+                $declaracion->observaciones= $request->declaracion['observaciones'];    
                 $declaracion->estado= $request->declaracion['estado'];    
                 $declaracion->juridicos_id= $juridico->id;
                 $declaracion->save();
