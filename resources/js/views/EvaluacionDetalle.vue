@@ -478,52 +478,43 @@
 
         <div class="col-md-3 m-0 views">
           <div class="row m-0">
-            <div class="col-md-12 status pt-4 pb-4 pl-3">
+
+            <div class="col-md-12 status pt-4 pb-4 pl-3" v-if="estado=='PENDIENTE'">
               <input type="radio" v-model="form.estado" value="APROBADO" />APROBADO
-              <!-- <input type="radio" v-model="form.estado" value="OBSERVADO">OBSERVADO -->
+              <input v-if="rol=='3'"  type="radio" v-model="form.estado" value="OBSERVADO">OBSERVADO
               <input type="radio" v-model="form.estado" value="DESAPROBADO" />DESAPROBADO
-              <!-- <textarea  v-model="form.detalle" cols="auto" rows="5" class="w-100"></textarea> -->
+              <textarea v-if="rol=='3'" v-model="form.detalle" cols="auto" rows="5" class="w-100"></textarea>
             </div>
 
 
             <div class="col-md-12">
-              <label for>Producto</label>
-              <input type="text" v-model="form.producto" class="form-control" />
-              <!-- <input type="text" V-else v-model="form.producto" class="form-control" disabled /> -->
+              <label v-if="rol=='4'" for>Producto</label>
+              <input v-if="rol=='4'" type="text" v-model="form.producto" class="form-control" /> 
             </div>
             <div class="col-md-6">
-              <label for>Aporte</label>
-              <input type="text" v-model="form.aporte" class="form-control" />
-              <!-- <input type="text" v-else v-model="form.aporte" class="form-control" disabled /> -->
+              <label v-if="rol=='4'" for>Aporte</label>
+              <input v-if="rol=='4'" type="text" v-model="form.aporte" class="form-control" /> 
             </div>
             <div class="col-md-6">
-              <label for>Importe</label>
-              <input type="text" v-model="form.importe" class="form-control" />
-              <!-- <input type="text" v-else  v-model="form.importe" class="form-control" disabled /> -->
+              <label v-if="rol=='4'" for>Importe</label>
+              <input v-if="rol=='4'" type="text" v-model="form.importe" class="form-control" /> 
             </div>
             <div class="col-md-12">
-              <label for>Plazo</label>
-              <input type="text" v-model="form.plazo" class="form-control" />
-              <!-- <input type="text" v-else v-model="form.plazo" class="form-control" disabled /> -->
+              <label v-if="rol=='4'" for>Plazo</label>
+              <input v-if="rol=='4'" type="text" v-model="form.plazo" class="form-control" /> 
             </div>
             <div class="col-md-6">
-              <label for>Cuotas</label>
-              <input type="text" v-model="form.cuotas" class="form-control" />
-              <!-- <input type="text" v-else v-model="form.cuotas" class="form-control" disabled /> -->
+              <label v-if="rol=='4'" for>Cuotas</label>
+              <input v-if="rol=='4'" type="text" v-model="form.cuotas" class="form-control" /> 
             </div>
             <div class="col-md-6">
-              <label for>Tasa</label>
-              <input type="text" v-model="form.tasa" class="form-control" />
-              <!-- <input type="text" v-else v-model="form.tasa" class="form-control" disabled /> -->
+              <label v-if="rol=='4'" for>Tasa</label>
+              <input v-if="rol=='4'" type="text" v-model="form.tasa" class="form-control" /> 
             </div>
 
             <div class="col-md-12">
-              <button class="btn btn-success w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button>
-              <!-- <button class="btn btn-def w-100 mb-1 mt-2" v-else>FIRMAR</button> -->
-            </div>
-            <!-- <div class="col-md-12">
-              <button class="btn btn-success w-100 mb-1 mt-1">GUARDAR</button>
-            </div>-->
+              <button v-if="estado=='PENDIENTE'" class="btn btn-success w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button> 
+            </div> 
             <div class="col-md-12">
               <button class="btn btn-danger w-100 mb-1 mt-1" @click="cancelarEvaluacion()">CANCELAR</button>
             </div>
@@ -542,7 +533,8 @@ export default {
       id_prestamo: 0, 
       detalle: {},
       cuantitativa: {},
-      tipo: true,
+      rol: this.$route.params.rol, 
+      estado: this.$route.params.estado,
       form: {},
       notificationSystem: {
         options: {
@@ -573,9 +565,9 @@ export default {
       });
     },
  
-    methodsDetalle(id) {
-      this.tipo = false;
-      this.$http
+    methodsDetalle(id) { 
+      if(this.rol=='4'){
+        this.$http
         .get(`/${this.resource}/prestamos/detalleF/` + id)
         .then(response => {
           console.log(response.data);
@@ -594,44 +586,94 @@ export default {
             this.form.prestamos_id = id;
             this.id_prestamo = id;
         });
+      }
+      else if(this.rol=='3'){
+        this.$http
+        .get(`/${this.resource}/prestamos/detalle/` + id)
+        .then(response => {
+          this.detalle = response.data;
+          this.listFile(id);
+          this.form.prestamos_id = id;
+          this.id_prestamo= id;
+        });
+
+      }
     },
     formInit() {
-      this.form = {
-        producto: "",
-        aporte: "",
-        importe: "",
-        plazo: "",
-        cuotas: "",
-        tasa: "",
-        estado: "",
-        prestamos_id: "",
-        evaluacion: []
-      };
+       if(this.rol=='4'){
+            this.form = {
+              producto: "",
+              aporte: "",
+              importe: "",
+              plazo: "",
+              cuotas: "",
+              tasa: "",
+              estado: "",
+              prestamos_id: "",
+              evaluacion: []
+            };
+       }
+       else if(this.rol=='3'){
+            this.form = {
+              detalle: "",
+              estado: "",
+              prestamos_id: ""
+            };
+       }
     },
     cargarPdf() {
       window.open("/clientes/solicitudPdf/" + this.id_prestamo, "_blank");
     },
     firmarEvaluacion() {
-      // if() {
+      if(this.rol=='4'){
+              // if() {
+      //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
+      //  }
+
+            this.$http
+              .post(`/${this.resource}/prestamos/evaluarFinal`, this.form)
+              .then(response => {
+                this.$toast.success(
+                  "El evaluacion fue exitosa",
+                  "Exitoso",
+                  this.notificationSystem.options.success
+                );
+              })
+
+              .then(() => {
+                // this.loading_submit = false;
+              });
+      }
+      else if(this.rol=='3'){
+              // if() {
       //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
       //  }
 
       this.$http
-        .post(`/${this.resource}/prestamos/evaluarFinal`, this.form)
+        .post(`/${this.resource}/prestamos/evaluar`, this.form)
         .then(response => {
+          this.tipo= true
           this.$toast.success(
-            "El evaluacion fue exitosa",
-            "Exitoso",
-            this.notificationSystem.options.success
-          );
+              "El evaluacion fue exitosa",
+              "Exitoso",
+              this.notificationSystem.options.success
+            ); 
         })
-
+        // .catch(error => {
+        //   if (error.response.status === 422) {
+        //     this.errors = error.response.data;
+        //   } else {
+        //     this.$message.error(error.response.data.message);
+        //   }
+        // })
         .then(() => {
           // this.loading_submit = false;
         });
+
+      }
     },
     cancelarEvaluacion() {
-      this.tipo = true;
+      
     }
   },
 };

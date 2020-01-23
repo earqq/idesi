@@ -75,29 +75,21 @@
               </td>
               <td class="options" >
                 <i class="material-icons-outlined" >more_horiz</i>
-                <ul v-if="id_rol=='3'">
+
+                <ul v-if=" id_rol=='1' || id_rol=='3' || id_rol=='4' ">
                   <li>
                     <router-link v-if="prestamo.estado=='PENDIENTE'"
-                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                       Evaluación
                     </router-link>
                     <router-link v-else
-                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                       Ver Evaluación
                     </router-link>
                   </li> 
                 </ul>
-                <ul v-if="id_rol=='3'">
-                  <li>
-                    <router-link v-if="prestamo.estado=='PENDIENTE'"
-                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
-                      Evaluación
-                    </router-link>
-                    <router-link v-else
-                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
-                      Ver Evaluación
-                    </router-link>
-                  </li>
+
+                <ul v-if="id_rol=='2' || id_rol=='1'">
                   <li> Editar </li>
                   <li> E. Cuantitativa </li>
                   <li> E. Cualitativa </li>
