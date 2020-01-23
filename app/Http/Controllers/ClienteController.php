@@ -79,7 +79,7 @@ class ClienteController extends Controller
 
 
             $clientes = Cliente::join('juridicos','clientes.id','=','juridicos.clientes_id')
-              ->select('clientes.documento')
+              ->select('clientes.documento', 'juridicos.razon_social')
               ->where('juridicos.razon_social', 'LIKE', "%{$request->search_input}%")
               ->orWhere('clientes.documento', 'LIKE', "%{$request->search_input}%")
               ->orderBy('clientes.id','desc')

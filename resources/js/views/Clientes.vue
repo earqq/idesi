@@ -36,12 +36,12 @@
 
       <div class="table_container">
 
-        <div class="table_grid"  v-if="form.tipo_persona=='PN' && type_list=='1'">
+        <div class="table_grid"  v-if=" type_list=='1'">
           <article class="client_card" v-for="cliente in clientes" :key="cliente.id" >
             <router-link :to="{ name:'perfil', params: { documento: cliente.documento } }">
               <div class="detail">
                  <img src="https://picsum.photos/100/100" />
-                <p class="card-document">{{cliente.apellidos}}</p>
+                <p class="card-document">{{cliente.apellidos || cliente.razon_social}}</p>
                 <small class="card-name" >{{cliente.nombres}}</small>
               </div>
               <div class="phone">
@@ -56,7 +56,7 @@
           </a>
         </div>
 
-        <div class="table_wrapper" v-if="form.tipo_persona=='PN' && type_list=='0'">
+        <div class="table_wrapper" v-if=" type_list=='0'">
           <table class="table_clients">
             <thead>
               <tr>
@@ -71,7 +71,7 @@
               <tr  v-for="cliente in clientes" :key="cliente.id">
                 <td class="client">
                   <img src="https://picsum.photos/100/100" alt />
-                  <p> {{cliente.nombres}} {{cliente.apellidos}}</p>
+                  <p> {{cliente.nombres}} {{cliente.apellidos || cliente.razon_social}}</p>
                 </td>
                 <td>
                   971755982
@@ -88,6 +88,9 @@
                         Ver Cliente
                       </router-link>
                     </li>
+                    <li>
+                        Nuevo Prestamo
+                    </li>
                   </ul>
                 </td>
               </tr>
@@ -95,43 +98,6 @@
           </table>
         </div>
 
-
-          <div class="row date"  v-if="form.tipo_persona=='PJ' && type_list=='1'">
-              <div class="card-client d-flex align-items-center flex-column justify-content-center" v-for="cliente in clientes" :key="cliente.id" >
-                  <router-link :to="{name:'perfiljuridico', params:{documento:cliente.documento}}">
-                    <p class="card-name" v-text="cliente.nombres"></p>
-                    <p class="card-document" v-text="cliente.documento">dni</p>
-                    <img src="https://picsum.photos/100/100" alt />
-                  </router-link>
-              </div>
-          </div>
-
-          <div class="list-table" v-if="form.tipo_persona=='PJ' && type_list=='0'">
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>FOTO</th>
-                        <th>RUC</th>
-                        <th>RAZON SOCIAL</th>
-                        <th>OPCIONES</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr  v-for="cliente in clientes" :key="cliente.id">
-                        <td>
-                          <img src="https://picsum.photos/100/100" alt />
-                        </td>
-                        <td v-text="cliente.documento"></td>
-                        <td v-text="cliente.documento"></td>
-                        <td> 
-                            <router-link :to="{name:'perfil', params:{documento:cliente.documento}}" class="btn btn-orange w-25">
-                              Ver cliente
-                            </router-link> 
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-            </div>
       </div>
 
     </div>
@@ -342,8 +308,10 @@ export default {
               margin: 0
             p
               font-weight: 500
-              font-size: 13px
+              font-size: 12px
               margin-top: 10px
+              text-align: center
+              line-height: 1.3
             small
               font-size: 10px
               display: block

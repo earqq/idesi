@@ -14,12 +14,6 @@
           <i class="material-icons-outlined">notes</i>
         </a>
       </div>
-      <router-link to="/"  class="add_client button_primary medium" >
-        <span>
-          CREAR PRESTAMO
-        </span>
-        <i class="material-icons-outlined">add</i>
-      </router-link>
     </div>
 
     <div class="table_container">
@@ -32,10 +26,15 @@
           </div>
           <div class="detail">
             <h2> Pyme Especial </h2>
+            <div class="progress_bar">
+              <span class="bar"></span>
+              <p>0% </p>
+            </div>
+            <h3> S/ 5000 / 12 Meses </h3>
           </div>
           <div class="actions">
             <router-link :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
-              Ver Prestamo
+              VER PRESTAMO
             </router-link>
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
@@ -43,7 +42,7 @@
           </div>
           
         </article>
-        <a v-show="prestamos.length < 4" class="spanner" v-for="i in 4" :key="i"  >
+        <a v-show="prestamos.length < 4" class="spanner" v-for="i in 4" :key="i*1.5"  >
         </a>
       </div>
 
@@ -129,7 +128,7 @@ export default {
 .credits_content
   .options_bar
     display: grid
-    grid-template-columns: 1fr 120px 200px
+    grid-template-columns: 1fr 120px
     grid-gap: 15px
     padding: 20px
     box-sizing: border-box 
@@ -216,14 +215,54 @@ export default {
             font-size: 11px
             font-weight: 500
             margin-bottom: -2px
+        .detail
+          padding: 20px
+          h2
+            font-size: 13px
+            margin: 0
+            font-weight: 700
+          .progress_bar
+            width: 100%
+            display: flex
+            align-items: center
+            span
+              display: block
+              flex: 1
+              height: 6px
+              border-radius: 10px
+              background-color: $line_color
+            p
+              margin: 0
+              margin-left: 10px
+              font-size: 12px
+          h3
+            font-size: 11px
+            margin: 0
         .actions
           display: flex
           align-items: center
-          padding: 10px 20px
           border-top: 1px solid $line_color
+          height: 40px
           a
             color: $text_color
-            font-size: 12px
+            font-size: 11px
+            flex: 1
+            display: flex
+            align-items: center
+            justify-content: center
+            text-decoration: none
+            font-weight: 700
+            padding: 0 20px
+            height: 100%
+            color: $primary_color
+          .options
+            display: flex
+            align-items: center
+            border-left: 1px solid $line_color
+            padding: 0 10px
+            height: 100%
+            cursor: pointer
+
     .table_wrapper
       padding: 0 20px
       box-sizing: border-box
