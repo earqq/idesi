@@ -74,6 +74,7 @@
                 </div> 
               </td>
               <td class="options" >
+                
                 <i class="material-icons-outlined" >more_horiz</i>
 
                 <ul v-if=" id_rol=='1' || id_rol=='3' || id_rol=='4' ">
