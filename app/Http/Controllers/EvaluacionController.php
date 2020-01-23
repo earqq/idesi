@@ -31,14 +31,28 @@ class EvaluacionController extends Controller
 
     public function prestamos()
     {
-        $pretamos = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
-                            ->join('naturals','clientes.id',"=","naturals.clientes_id")
-                            ->select('clientes.documento','naturals.nombres','naturals.apellidos','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.created_at','prestamos.id')->get();
+        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '3' || Auth::user()->idrol == '4'){
+            $pretamos = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
+            ->join('naturals','clientes.id',"=","naturals.clientes_id")
+            ->select('clientes.documento','naturals.nombres','naturals.apellidos','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.created_at','prestamos.id')->get();
+
+                $usuario = Auth::user()->id; 
+                $rol =  Auth::user()->idrol;
+
+                return compact('pretamos','usuario','rol');
+        }
         
-        $usuario = Auth::user()->id; 
-        $rol =  Auth::user()->idrol;
-        
-        return compact('pretamos','usuario','rol');
+        elseif(Auth::user()->idrol == '2'){
+            $pretamos = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
+            ->join('naturals','clientes.id',"=","naturals.clientes_id")
+            ->select('clientes.documento','naturals.nombres','naturals.apellidos','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.created_at','prestamos.id')
+            ->where('prestamos.users_id',Auth::user()->id)->get();
+
+                $usuario = Auth::user()->id; 
+                $rol =  Auth::user()->idrol;
+                return compact('pretamos','usuario','rol');
+        }
+
     }
 
     /**

@@ -12,8 +12,13 @@
                   <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                 </li>
 
+<<<<<<< HEAD
                 <li :class="{selected: tab == 'evaluaciones'}" v-if="tipo=='3' || tipo=='1' || tipo=='4'">
                   <router-link :to="{name: 'evaluaciones'}"  >Evaluaciones</router-link>
+=======
+                <li :class="{selected: tab == 'evaluaciones_final'}">
+                  <router-link :to="{name: 'evaluaciones'}"  >Prestamos</router-link>
+>>>>>>> 7a43b75090096110291c2bad91e92a92cf9ef9ab
                 </li>
 
                 <li :class="{selected: tab == 'usuarios'}" v-if="tipo=='1'"> 
