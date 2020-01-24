@@ -185,7 +185,7 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                  <label>GASTO FINANCIERO TITULAR</label>
+                  <label>GASTO FINANCIERO TITULAssR</label>
 
                   <table class="table ingresos-table table-bordered table-striped table-sm">
                     <tr>
