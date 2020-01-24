@@ -2,6 +2,7 @@
   <div class="container-general">
     <div class="evaluations">
       <div class="row col-md-12 m-0 evaluations p-0">
+        
         <div class="col-md-9 p-0" style="overflow-y: auto;height: calc(100vh - 66px);">
           <div class="row m-0">
             <div class="nav-tabs style-tab-menu col-md-12">
@@ -438,10 +439,11 @@
           </div>
         </div>
 
-        <div class="col-md-3 m-0 views" v-if="estado!='APROBADO' || rol!='2' ">
+      <!-- <p>{{!(estado!='APROBADO' || rol!='2')}}</p> -->
+        <div class="col-md-3 m-0 views" v-if="estado=='PENDIENTE' && (rol=='3' || rol=='4')">
           <div class="row m-0">
-
-            <div class="col-md-12 status pt-4 pb-4 pl-3" v-if="estado=='PENDIENTE'">
+ 
+            <div class="col-md-12 status pt-4 pb-4 pl-3">
               <input type="radio" v-model="form.estado" value="APROBADO" />APROBADO
               <input v-if="rol=='3'"  type="radio" v-model="form.estado" value="OBSERVADO">OBSERVADO
               <input type="radio" v-model="form.estado" value="DESAPROBADO" />DESAPROBADO
@@ -449,33 +451,33 @@
             </div>
 
 
-            <div class="col-md-12">
-              <label v-if="rol=='4'" for>Producto</label>
-              <input v-if="rol=='4'" type="text" v-model="form.producto" class="form-control" /> 
+            <div class="col-md-12"  v-if="rol=='4'">
+              <label for>Producto</label>
+              <input  type="text" v-model="form.producto" class="form-control" /> 
             </div>
-            <div class="col-md-6">
-              <label v-if="rol=='4'" for>Aporte</label>
-              <input v-if="rol=='4'" type="text" v-model="form.aporte" class="form-control" /> 
+            <div class="col-md-6" v-if="rol=='4'">
+              <label   for>Aporte</label>
+              <input   type="text" v-model="form.aporte" class="form-control" /> 
             </div>
-            <div class="col-md-6">
-              <label v-if="rol=='4'" for>Importe</label>
-              <input v-if="rol=='4'" type="text" v-model="form.importe" class="form-control" /> 
+            <div class="col-md-6" v-if="rol=='4'">
+              <label  for>Importe</label>
+              <input  type="text" v-model="form.importe" class="form-control" /> 
             </div>
-            <div class="col-md-12">
-              <label v-if="rol=='4'" for>Plazo</label>
-              <input v-if="rol=='4'" type="text" v-model="form.plazo" class="form-control" /> 
+            <div class="col-md-12" v-if="rol=='4'">
+              <label  for>Plazo</label>
+              <input  type="text" v-model="form.plazo" class="form-control" /> 
             </div>
-            <div class="col-md-6">
-              <label v-if="rol=='4'" for>Cuotas</label>
-              <input v-if="rol=='4'" type="text" v-model="form.cuotas" class="form-control" /> 
+            <div class="col-md-6"  v-if="rol=='4'">
+              <label for>Cuotas</label>
+              <input type="text" v-model="form.cuotas" class="form-control" /> 
             </div>
-            <div class="col-md-6">
-              <label v-if="rol=='4'" for>Tasa</label>
-              <input v-if="rol=='4'" type="text" v-model="form.tasa" class="form-control" /> 
+            <div class="col-md-6" v-if="rol=='4'">
+              <label  for>Tasa</label>
+              <input  type="text" v-model="form.tasa" class="form-control" /> 
             </div>
 
-            <div class="col-md-12">
-              <button v-if="estado=='PENDIENTE'" class="btn btn-success w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button> 
+            <div class="col-md-12" >
+              <button class="btn btn-success w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button> 
             </div> 
             <div class="col-md-12">
               <button class="btn btn-danger w-100 mb-1 mt-1" @click="cancelarEvaluacion()">CANCELAR</button>

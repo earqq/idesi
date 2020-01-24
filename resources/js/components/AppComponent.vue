@@ -13,7 +13,7 @@
                 </li>
  
                 <li :class="{selected: tab == 'evaluaciones'}">
-                  <router-link :to="{name: 'evaluaciones'}"  >Evaluaciones</router-link>
+                  <router-link :to="{name: 'evaluaciones'}"  >Prestamos</router-link>
                 </li>
 
                 <li :class="{selected: tab == 'usuarios'}" v-if="tipo=='1'"> 
