@@ -1,5 +1,34 @@
 <template>
-  <div class="row d-flex justify-content-center">
+  <div class="create_client_content">
+    <section class="tabs_section">
+      <div class="tabs_wrapper">
+        <div class="tab">
+          <span>1</span>
+          <p>PERSONALES</p>
+        </div>
+        <div class="tab">
+          <span>2</span>
+          <p>LABORALES</p>
+        </div>
+        <div class="tab">
+          <span>3</span>
+          <p>FAMILIARES</p>
+        </div>
+        <div class="tab">
+          <span>4</span>
+          <p>ADICIONALES</p>
+        </div>
+        <div class="tab">
+          <span>5</span>
+          <p>OBLIGACIONES</p>
+        </div>
+        <div class="tab">
+          <span>6</span>
+          <p>DECLARACIÓN</p>
+        </div>
+      </div>
+    </section>
+
     <div class="col-md-12 p-0">
       <div class="nav-tabs style-tab-menu">
         <ul class="nav nav-tabs" id="myTab" role="tablist">

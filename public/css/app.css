@@ -18912,6 +18912,63 @@ readers do not read off random characters that represent icons */
   color: black;
 }
 
+.tabs_section {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.tabs_section .tabs_wrapper {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+          justify-content: space-between;
+  background-color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03);
+  border-radius: 3px;
+  height: 50px;
+}
+
+.tabs_section .tabs_wrapper .tab {
+  -webkit-box-flex: 1;
+          flex: 1;
+  flex-basis: 0;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  border-right: 1px solid #eef3fb;
+  height: 100%;
+}
+
+.tabs_section .tabs_wrapper .tab:last-child {
+  border-right: none;
+}
+
+.tabs_section .tabs_wrapper .tab span {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #eef3fb;
+  font-weight: 700;
+}
+
+.tabs_section .tabs_wrapper .tab p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 10px;
+}
+
 body {
   background: #f6f9fd;
   font-family: "Roboto", sans-serif;
