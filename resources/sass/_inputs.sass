@@ -1,0 +1,176 @@
+.input_wrapper
+    position: relative
+    label
+        font-family: $font
+        font-weight: 500
+        font-size: 11px
+        margin-bottom: 4px
+        display: block
+    input, select, textarea
+        font-family: $font
+        font-size: 13px
+        height: 40px
+        box-sizing: border-box
+        border-radius: 3px
+        border: 1px solid rgba(black, .2)
+        background-color: white
+        padding: 0 10px
+        width: 100%
+        &:disabled
+            background-color: rgba($bg_color, .5)
+            &:hover, &:focus, &:active
+                border: 1px solid rgba(black, .2)
+                box-shadow: none
+        &:hover, &:focus, &:active
+            outline: none
+            border: 1px solid $primary_color
+            box-shadow: 0px 0px 0px 3px rgba(62, 101, 243, 0.06)
+    textarea
+        height: 60px
+        padding: 10px
+    .message
+        display: none
+    &.icon
+        i
+            position: absolute
+            left: 10px
+            top: 28px
+            font-size: 19px
+            color: rgba(black, .4)
+        input
+            padding-left: 40px
+            &:focus, &:active
+                & + i
+                    color: $primary_color
+    &.no_label_icon
+        i
+            position: absolute
+            left: 10px
+            top: 11px
+            font-size: 19px
+            color: rgba(black, .4)
+        input
+            padding-left: 40px
+            &:focus, &:active
+                & + i
+                    color: $primary_color
+    &.require
+        i
+            color: $require_color
+        input, select, textarea
+            border: 1px solid $require_color
+            box-shadow: 0px 0px 0px 2px rgba($require_color, .15)
+            transition: all ease-in-out .3s
+            &:focus, &:active
+                & + i
+                    color: $require_color
+        .message
+            color: $require_color
+            font-size: 11px
+            margin-top: 5px
+            display: block
+            font-family: $font
+            display: flex
+            align-items: center
+            &:before
+                display: inline-block
+                font-family: "Material Icons"
+                content: "\e001"
+                font-size: inherit
+                text-rendering: auto
+                -webkit-font-smoothing: antialiased
+                margin-right: 4px
+                font-size: 14px
+    &.disable
+        input
+            user-select: none
+            pointer-events: none
+
+.input_checkbox_wrapper
+    input[type="radio"], input[type="checkbox"]
+        display: none
+        &:checked + label.box_content
+            .box
+                border: 1px solid $primary_color
+                &:before
+                    transform: scale(.5)
+                    opacity: 1
+            .other_option
+                user-select: inherit
+                pointer-events: inherit
+    label.box_content
+        display: flex
+        align-items: center
+        cursor: pointer
+        user-select: none
+        .box
+            display: block
+            width: 18px
+            height: 18px
+            border-radius: 2px
+            border: 1px solid rgba(black, .4)
+            position: relative
+            transition: all ease-in-out .2s
+            &:before
+                content: ''
+                position: absolute
+                left: 0
+                top: 0
+                width: 100%
+                height: 100%
+                background-color: $primary_color
+                display: block
+                transform: scale(0)
+                transition: all ease-in-out .2s
+                opacity: 0
+        span
+            font-size: 14px
+            margin-left: 7px
+        .other_option
+            margin-left: 10px
+            user-select: none
+            pointer-events: none
+
+    &.radio
+        label.box_content
+            .box
+                border-radius: 50%
+                &:before
+                    border-radius: 50%
+        &.require
+            label.box_content
+                .box
+                    border: 1px solid $require_color
+                    box-shadow: 0px 0px 0px 2px rgba($require_color, .15)
+
+.switch_wrapper
+    display: flex
+    border-radius: 2px
+    overflow: hidden
+    span
+        flex: 1
+        padding: 0 10px
+        height: 32px
+        font-family: $font
+        font-size: 13px
+        box-sizing: border-box
+        cursor: pointer
+        border: 1px solid rgba(black, .15)
+        display: flex
+        align-items: center
+        &:first-child
+            border-right: none
+        &:last-child
+            border-left: none
+        &.selected
+            background-color: $primary_color
+            color: white
+            border: 1px solid $primary_color
+            &:before
+                content: ''
+                display: block
+                width: 10px
+                height: 10px
+                border-radius: 50%
+                background-color: white
+                margin-right: 7px

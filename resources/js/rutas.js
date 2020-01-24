@@ -6,11 +6,6 @@ Vue.use(Router)
 export default new Router({
     routes:[
         {
-            path: '/inicio',
-            name: 'inicio',
-            component: require('./views/Inicio').default
-        },
-        {
             path: '/',
             name: 'inicio',
             component: require('./views/Inicio').default
@@ -26,6 +21,11 @@ export default new Router({
             component: require('./views/PersonaNatural').default
         },
         {
+            path: '/clientes/registrar/juridico',
+            name: 'registrar/juridico',
+            component: require('./views/PersonaJuridico').default
+        },
+        { 
             path: '/eval-cualitativa/:prestamo',
             name: 'evalCualtitativa',
             component: require('./views/EvalCualitativa').default
@@ -34,28 +34,28 @@ export default new Router({
             path: '/eval-cuantitativa/:prestamo',
             name: 'evalCuantitativa',
             component: require('./views/EvalCuantitativa').default
-        },
-        {
-            path: '/evaluaciones',
-            name: 'evaluaciones',
-            component: require('./views/Evaluaciones').default
-        },
+        }, 
         {
             path: '/usuarios',
             name: 'usuarios',
             component: require('./views/Usuario').default
         },
-
+ 
         {
-            path: '/lista-evaluaciones',
-            name: 'evaluaciones_final',
-            component: require('./views/EvaluacionFinal').default
+            path: '/evaluaciones',
+            name: 'evaluaciones',
+            component: require('./views/Evaluacion').default
         },
 
         {
-            path: '/perfil/:documento',
-            name: 'perfil',
+            path: '/perfil/:documento/:persona',
+            name: 'perfil', 
             component: require('./views/Perfil').default,
+        }, 
+        {
+            path: '/evaluacion/detalle/:prestamo/:rol/:estado',
+            name: '/evaluacion/detalle/',
+            component: require('./views/EvaluacionDetalle').default,
         },
         {
             path: '/perfiljuridico/:documento',
@@ -63,13 +63,13 @@ export default new Router({
             component: require('./views/PerfilJuridico').default,
         },
         {
-            path: '/ver/:prestamo',
-            name: 'ver',
-            component: require('./views/VerPrestamo').default
+            path: '/editar/solicitud/credito/natural/:prestamo',
+            name: '/editar/solicitud/credito/natural/',
+            component: require('./views/VerPrestamo').default 
         },
         {
-            path: '/verjuridico/:prestamo',
-            name: 'verjuridico',
+            path: '/editar/solicitud/credito/juridica/:prestamo',
+            name: '/editar/solicitud/credito/juridica/',
             component: require('./views/VerPrestamoJuridico').default
         },
         {  
@@ -97,5 +97,5 @@ export default new Router({
             component: require('./views/404').default
         },
     ],
-    mode: 'history'
+    mode: 'hash'
 })

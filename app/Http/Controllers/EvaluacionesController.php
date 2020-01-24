@@ -154,7 +154,7 @@ class EvaluacionesController extends Controller
         $negocio=negocio::where('giro_negocio',$request->titular["giro_negocio"])->first();
         $costo_venta_validacion=$ingresos_ventas_validacion/100*floatval($negocio->costo);
         \Log::alert('Costo de venta validacion: '.$costo_venta_validacion);
-        //MARGEN BRUTO
+        //MARGEN BRUTO 
         //Margen bruto titular
         $margen_bruto_titular=$ingresos_ventas_titular+$costo_venta_titular;
         \Log::alert('Margen bruto titular: '.$margen_bruto_titular);
@@ -651,6 +651,19 @@ class EvaluacionesController extends Controller
         $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
         $subidos->evaluacion_cuantitativa=1;
         $subidos->save();
+        
+
+        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
+        if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/pestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
+            
+            $archivo = new Archivos();
+            $archivo->nombre = 'evaluacion_cualitativa';
+            $archivo->tipo = 'documentos';
+            $archivo->extension='pdf';
+            $archivo->prestamos_id= $prestamo->id;
+            $archivo->save();
+        }
 
         DB::commit();
         return [
@@ -693,6 +706,18 @@ class EvaluacionesController extends Controller
             $subidos->evaluacion_cualitativa=1;
             $subidos->save();
 
+            $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+            $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
+            if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/pestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
+                $archivo = new Archivos();
+                $archivo->nombre = 'evaluacion_cualitativa';
+                $archivo->tipo = 'documentos';
+                $archivo->extension='pdf';
+                $archivo->prestamos_id= $prestamo->id;
+                $archivo->save();
+            }
+
+
             DB::commit();
                 return [
                     'success' => true,
@@ -710,8 +735,8 @@ class EvaluacionesController extends Controller
 
     public function CualitativaPdf($prestamo){
 
-        $cualitativa= cualitativa::where('prestamo_id',$prestamo)->first();
-        return $cualitativa;
+        $cualitativa= cualitativa::all();
+        // return $cualitativa;
         $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
         return $pdf->stream('evaluacion_cualitativa.pdf');
 
@@ -722,7 +747,7 @@ class EvaluacionesController extends Controller
         $cuantitativa= cuantitativa::where('prestamo_id',$prestamo)->first();
         // return $cuantitativa;
         $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
-        return $pdf->stream('evaluacion_cualitativa.pdf');
+        return $pdf->stream('evaluacion_cuantitativa.pdf');
 
     }
 

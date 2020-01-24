@@ -169,7 +169,7 @@
           </div>
         </div>
 
-        <div class="date">
+        <div class="date"> 
           <div class="date-header">
             <router-link
               :to="{name: 'prestamojuridico', params:{dni:cliente.documento}}"
@@ -187,7 +187,7 @@
 
             <div class="card">
                 <div class="card-header text-center" >
-                  <i class="fas fa-print"></i>
+                  <i class="fas fa-print"></i> 
                   <span>Solicitud de admisión</span>
             </div>
 

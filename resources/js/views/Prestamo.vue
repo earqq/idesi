@@ -514,7 +514,6 @@
                     <select v-model="form.producto" class="form-control" @change="meses_numero">
                       <option value="CREDIDIARIO">CREDIDIARIO</option>
                       <option value="CREDISEMANA">CREDISEMANA</option>
-                      <option value="CREDIQUINCENA">CREDIQUINCENA</option>
                       <option value="PYME">PYME</option>
                       <option value="PYME ESPECIAL">PYME ESPECIAL</option>
                       <option value="CONSUMO">CONSUMO</option>
