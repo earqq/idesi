@@ -15,19 +15,26 @@
             </li>
             </ul>
           </div>
-        </div>
+        </div> 
         <img src="https://picsum.photos/200/300" />
-        <p> {{cliente.nombres}} </p>
-        <small> {{cliente.apellidos}} </small>
+        <p v-if="tipo_persona=='PN'"> {{cliente.nombres}} </p>
+        <p v-else> {{cliente.razon_social}} </p>
+        <small v-if="tipo_persona=='PN'"> {{cliente.apellidos}} </small>
+
       </div>
       <ul>
         <li>
-          <strong>Documento</strong>
+          <strong v-if="tipo_persona=='PN'">Documento</strong>
+          <strong v-else>R.U.C</strong>
           <p>{{cliente.documento}}</p>
         </li>
-        <li>
+        <li v-if="tipo_persona=='PN'">
           <strong>Fecha de Nacimiento</strong>
           <p>{{cliente.nacimiento || "--"}}</p>
+        </li>
+        <li v-else>
+          <strong>Partida Registral</strong>
+          <p>{{cliente.partida_registral || "--"}}</p>
         </li>
         <li>
           <strong>Celular</strong>
@@ -35,7 +42,8 @@
         </li>
         <li>
           <strong>Dirección</strong>
-          <p>{{cliente.direccion_cliente || '--' }}</p>
+          <p v-if="tipo_persona=='PN'">{{cliente.direccion_cliente || '--' }}</p>
+          <p v-else>{{cliente.direccion || '--' }}</p>
         </li>
       </ul>
     </aside>
@@ -44,7 +52,14 @@
 
       <div class="table_grid" >
 
-        <router-link class="add_credit" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
+        <router-link  v-if="tipo_persona=='PN'"  class="add_credit" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
+          <span>
+            <i class="material-icons-outlined">add</i>
+          </span>
+          <p> NUEVO PRESTAMO  </p>
+        </router-link>
+
+        <router-link  v-else class="add_credit" :to="{name: 'prestamojuridico', params:{dni:cliente.documento}}">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
@@ -57,7 +72,7 @@
             <div class="progress_bar">
               <span class="bar"></span>
               <p>0% </p>
-            </div>
+            </div> 
             <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
           </div>
           <div class="actions">
@@ -68,7 +83,8 @@
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
                 <li> 
-                  <router-link :to="{name:'ver', params:{prestamo:prestamo.id}}"> Editar </router-link>
+                  <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id}}"> Editar </router-link>
+                  <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                 </li>
                 <li> <router-link v-if="prestamo.cuantitativa=='0'" :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
                 <li> <router-link v-if="prestamo.cualitativa =='0'" :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id}}" >E. Cualitativa </router-link></li>
@@ -102,6 +118,7 @@ export default {
       resource: "clientes",
       view:false,
       cliente: {},
+      tipo_persona:  this.$route.params.persona,
       idprestamo: 0,
       prestamos: {},
       loader: 1,
@@ -111,15 +128,30 @@ export default {
     };
   },
   created() {
-    this.$http
-      .get(`/${this.resource}/perfil/cliente/` + this.$route.params.documento)
-      .then(response => {
-        this.cliente = response.data["cliente"];
-        this.prestamos = response.data["prestamos"];
-        this.loader = 0;
-        this.loader_loan = 0;
-        console.log(this.prestamos);
-      });
+
+    if(this.tipo_persona == 'PN'){
+          this.$http
+            .get(`/${this.resource}/perfil/cliente/` + this.$route.params.documento)
+            .then(response => {
+              this.cliente = response.data["cliente"];
+              this.prestamos = response.data["prestamos"];
+              this.loader = 0;
+              this.loader_loan = 0;
+              console.log(this.prestamos);
+            });
+    }else{
+          this.$http
+            .get(`/${this.resource}/perfil/juridico/cliente/` + this.$route.params.documento)
+            .then(response => {
+              
+              this.cliente = response.data["cliente"];
+              this.prestamos = response.data["prestamos"];
+              this.loader = 0;
+              this.loader_loan = 0; 
+              console.log(this.cliente); 
+            });
+    }
+
   },
   methods: {
     cambiarView(id){

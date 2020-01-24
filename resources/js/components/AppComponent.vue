@@ -11,7 +11,7 @@
                 <li :class="{selected: tab == 'clientes'}" v-if="tipo=='1' || tipo=='2'">
                   <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                 </li>
-
+ 
                 <li :class="{selected: tab == 'evaluaciones'}">
                   <router-link :to="{name: 'evaluaciones'}"  >Evaluaciones</router-link>
                 </li>

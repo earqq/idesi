@@ -459,7 +459,7 @@
                     </select>
 
                 </div>
-
+ 
            
 
 
@@ -644,6 +644,20 @@ export default {
     },
     clickRemoveConyuge(){
       this.form.conyugue.conyuge_tiene=0
+    },
+      meses_numero(){
+
+        if(this.form.producto=='CREDIDIARIO'){
+          console.log('diario')
+          this.form.meses = (Number(this.form.plazo)/30).toFixed(2)
+        }
+        else if(this.form.producto=='CREDISEMANA'){
+          this.form.meses = (Number(this.form.plazo)/4).toFixed(2)
+        }
+        else{
+          this.form.meses = (Number(this.form.plazo)/1).toFixed(2)
+    }
+
     },
     clickAddAval() {
       // this.contador_aval++;

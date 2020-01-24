@@ -510,8 +510,8 @@
 import { serviceNumber } from "../mixins/functions";
 import DatePick from "vue-date-pick";
 import "vue-date-pick/dist/vueDatePick.css";
+import VueNumeric from 'vue-numeric'
 
-// import BackMixin from `vue-router-back-mixin`;
 
 const mesConf = [
   "Enero",
@@ -519,7 +519,7 @@ const mesConf = [
   "Marzo",
   "Abril",
   "Mayo",
-  "Junio",
+  "Junio", 
   "Julio",
   "Agosto",
   "Septiembre",
@@ -530,7 +530,7 @@ const mesConf = [
 const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   mixins: [serviceNumber],
-  components: { DatePick },
+  components: { DatePick,VueNumeric },
   data() {
     return {
       resource: "clientes",
