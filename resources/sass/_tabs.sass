@@ -1,5 +1,5 @@
 .tabs_section
-    padding: 20px
+    padding: 20px 20px 10px 20px
     box-sizing: border-box
     .tabs_wrapper
         display: flex
@@ -17,19 +17,100 @@
             justify-content: center
             border-right: 1px solid $line_color
             height: 100%
+            cursor: pointer
             &:last-child
                 border-right: none
+            &.complete
+                span
+                    color: transparent
+                    border: 1px solid $primary_color
+                    background-color: $primary_color
+                    &:before
+                        font-family: "Material Icons"
+                        content: "\e5ca"
+                        font-size: inherit
+                        text-rendering: auto
+                        -webkit-font-smoothing: antialiased
+                        font-size: 12px
+                        margin-left: 7px
+                        color: white
+                p
+                    color: $primary_color
+            &.selected
+                span
+                    color: $primary_color
+                    border: 1px solid $primary_color
+                p
+                    color: $primary_color
             span
                 display: flex
                 align-items: center
                 justify-content: center
-                width: 30px
-                height: 30px
+                width: 25px
+                height: 25px
                 border-radius: 50%
-                border: 2px solid $line_color
+                border: 1px solid rgba($text_color, .25)
                 font-weight: 700
+                color: rgba($text_color, .5)
+                font-size: 12px
             p
                 margin: 0
                 font-size: 12px
                 font-weight: 700
                 margin-left: 10px
+                color: rgba($text_color, .5)
+                margin-bottom: -1px
+
+.client_forms
+    padding: 0 20px
+    box-sizing: border-box
+    .client_forms_wrapper
+        .form_step
+            h3.title
+                font-size: 13px
+                margin: 0
+                width: 100%
+                border-bottom: 1px solid $line_color
+                font-weight: 500
+                padding: 7px 20px
+            .form_step_wrapper
+                background-color: white
+                border-radius: 4px
+                box-shadow: $shadow
+                box-sizing: border-box
+                &.part_bottom
+                    border-radius: 4px 4px 0 0
+                &.part_top
+                    border-radius: 0 0 4px 4px
+                    margin-top: 1px
+                .form_content
+                    padding: 25px 20px
+                    .separator
+                        display: block
+                        width: 100%
+                        height: 1px
+                        background-color: $line_color
+                        margin: 20px 0
+                    .group_form
+                        display: grid
+                        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr))
+                        grid-gap: 10px
+                        &.small
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
+            .form_list
+                .form_step_wrapper
+                    border-radius: 0px
+                    border-top: 1px solid $line_color
+                    &:last-child
+                        border-radius: 0 0 4px 4px
+            .form_buttons
+                display: flex
+                align-items: center
+                justify-content: flex-end
+                margin: 10px 0
+                a
+                    width: 160px
+                    &.prev
+                        background-color: #fff
+                        width: 140px
+                        margin-right: 10px
