@@ -535,9 +535,11 @@ class ClienteController extends Controller
                              ->first();
 
         $prestamos = Prestamo::where('clientes_id',"=",$clientes->idcliente)->get();
+        $usuario = Auth::user()->id; 
+        $rol =  Auth::user()->idrol;
 
         // return 'cliente'=>$clientes;
-        return ['cliente'=>$clientes, 'prestamos'=>$prestamos];
+        return ['cliente'=>$clientes, 'prestamos'=>$prestamos,'usuario'=>$usuario,'rol'=>$rol];
         
     }
 
@@ -550,9 +552,11 @@ class ClienteController extends Controller
                              ->first();
 
         $prestamos = Prestamo::where('clientes_id',"=",$clientes->idcliente)->get();
+        $usuario = Auth::user()->id; 
+        $rol =  Auth::user()->idrol;
 
         // return 'cliente'=>$clientes;
-        return ['cliente'=>$clientes, 'prestamos'=>$prestamos];
+        return ['cliente'=>$clientes, 'prestamos'=>$prestamos,'usuario'=>$usuario,'rol'=>$rol];
         
     }
  
@@ -1004,11 +1008,10 @@ class ClienteController extends Controller
             $pdf = new \LynX39\LaraPdfMerger\PdfManage;
             $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf'), 'all');
 
-            
-                foreach ($archivos as $ep=>$rp) {
-                    
-                    $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/'.$rp->tipo.'/'.$rp->nombre.'.'.$rp->extension), 'all');
-                }
+            foreach ($archivos as $ep=>$rp) {
+                
+                $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/'.$rp->tipo.'/'.$rp->nombre.'.'.$rp->extension), 'all');
+            }
             
             
             // $pdf->addPDF(public_path('/upload/test.pdf'), 'all');
