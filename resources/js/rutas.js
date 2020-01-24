@@ -48,10 +48,10 @@ export default new Router({
         },
 
         {
-            path: '/perfil/:documento',
-            name: 'perfil',
+            path: '/perfil/:documento/:persona',
+            name: 'perfil', 
             component: require('./views/Perfil').default,
-        },
+        }, 
         {
             path: '/evaluacion/detalle/:prestamo/:rol/:estado',
             name: '/evaluacion/detalle/',
@@ -63,13 +63,13 @@ export default new Router({
             component: require('./views/PerfilJuridico').default,
         },
         {
-            path: '/ver/:prestamo',
-            name: 'ver',
+            path: '/editar/solicitud/credito/natural/:prestamo',
+            name: '/editar/solicitud/credito/natural/',
             component: require('./views/VerPrestamo').default 
         },
         {
-            path: '/verjuridico/:prestamo',
-            name: 'verjuridico',
+            path: '/editar/solicitud/credito/juridica/:prestamo',
+            name: '/editar/solicitud/credito/juridica/',
             component: require('./views/VerPrestamoJuridico').default
         },
         {  
