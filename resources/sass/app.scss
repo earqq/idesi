@@ -19,24 +19,21 @@ $fa-font-path: "../webfonts";
 @import 'home';
 @import 'loan';
 @import 'view';
-@import 'login';
 @import 'evaluacion';
 @import 'file';
 @import 'general';
 
-input{
-    border-radius: 0!important;
-}
+@import 'variables';
+@import 'animations';
+@import 'tables';
+
+
 body{
-    background: #bcbcbc;
-}
-.form-group {
-    margin-bottom: 3px;
-}
-h1,h2,h3,p,label{
-    color:#000;
+  background: $bg_color;
+  font-family: $font;
 }
 
+ 
 
 /** PERFIL **/
 .profile-user-img {
@@ -175,3 +172,7 @@ h1,h2,h3,p,label{
     height: 1px;
     background-color: #939393!important;
   }
+
+
+
+  

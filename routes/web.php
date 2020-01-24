@@ -64,9 +64,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('clientes/prestamo/ver/{prestamo}', 'ClienteController@prestamoVer');
         Route::get('clientes/prestamo/ver/juridico/{prestamo}', 'ClienteController@prestamoVerJuridico');
 
-        // Route::get('clientes/prestamo/ver/aval/{prestamo}', 'ClienteController@avalEditar');
-        // Route::get('clientes/prestamo/ver/garantia/{prestamo}', 'ClienteController@garantiaEditar');
-
+ 
         Route::get('evaluaciones/prestamos', 'EvaluacionController@prestamos');
         Route::get('evaluaciones/prestamos/detalle/{prestamo}', 'EvaluacionController@show');
         Route::get('evaluaciones/prestamos/detalleF/{prestamo}', 'EvaluacionController@showF');
@@ -76,7 +74,6 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('evaluaciones/numerohijos/{prestamo}', 'EvaluacionController@numeroHijos');
 
         Route::get('evaluaciones/giro', 'EvaluacionController@giro');
-        // Route::get('evaluaciones/giro/search/{giro}', 'EvaluacionController@searchGiro');
         Route::get('/evaluaciones/datosCualitativas', 'EvaluacionController@datosCualitativas');
         Route::get('evaluaciones/colegio', 'EvaluacionController@colegios');
         Route::get('evaluaciones/entidades', 'EvaluacionController@entidades');
@@ -88,24 +85,15 @@ Route::group(['middleware'=>['auth']],function(){
 
         Route::post('/consulta/dni','ConsultaController@dni');
 
-        /**
-         * RUTAS ARCHIVOS
-         */
         Route::get('/files/{id}', 'FileController@index');
         Route::post('files/add', 'FileController@store');
         Route::get('files/delete/{id}/{prestamo}', 'FileController@destroy');
- 
 
-        Route::get('{path}',"HomeController@index")->where('path','([A-z\d-\/_.]+)?'); 
-
+        // Route::get('{path}',"HomeController@index")->where('path','([A-z\d-\/_.]+)?');
         // evaluaciones cuantitativas y cualitativas
         Route::post('evaluaciones/cuantitativa','EvaluacionesController@saveCuantitativa');
-        Route::post('evaluaciones/cualitativa','EvaluacionesController@saveCualitativa');
-        
+        Route::post('evaluaciones/cualitativa','EvaluacionesController@saveCualitativa'); 
     });
-
-    
-
 
 
 });

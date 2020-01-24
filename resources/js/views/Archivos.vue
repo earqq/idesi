@@ -24,23 +24,23 @@
               <option value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
               <option value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
               <option value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option>
-              <option value="evaluacion_cualitativa" v-if="!subidos.evaluacion_cualitativa" >Evaluacion cualitativa</option>
-              <option value="evaluacion_cuantitativa" v-if="!subidos.evaluacion_cuantitativa">Evaluacion de cuantitativa</option>
+              <!-- <option value="evaluacion_cualitativa" v-if="!subidos.evaluacion_cualitativa" >Evaluacion cualitativa</option>
+              <option value="evaluacion_cuantitativa" v-if="!subidos.evaluacion_cuantitativa">Evaluacion de cuantitativa</option> -->
               <option value="copia_dni"  v-if="!subidos.copia_dni" >Copias DNI</option>
               <option value="recibo_agua_casa" v-if="!subidos.recibo_agua_casa">Recibo de agua de casa</option>
               <option  value="recibo_luz_casa" v-if="!subidos.recibo_luz_casa">Recibo de luz de casa</option> 
-              <option>Titulo de propiedad de casa</option>
-              <option>Contrato de alquiler de casa</option>
-              <option>Fotos de casa</option>
-              <option>Documentos del negocio</option>
-              <option>Recibo de agua del negocio</option>
-              <option>Recibo de luz del negocio</option>
-              <option>Contrato de alquiler del negocio</option>
-              <option>Boleta de compras del negocio</option>
-              <option>Boleta de ventas del negocio</option>
-              <option>Factura de compras del negocio</option>
-              <option>Factura de ventas del negocio</option>
-              <option>Fotos del negocio</option>
+              <option value="titulo_casa">Titulo de propiedad de casa</option>
+              <option value="contrato_alquiler">Contrato de alquiler de casa</option>
+              <option value="foto_casa">Fotos de casa</option>
+              <option value="documento_negocio">Documentos del negocio</option>
+              <option value="recibo_agua_negocio">Recibo de agua del negocio</option>
+              <option value="recibo_luz_negocio">Recibo de luz del negocio</option>
+              <option value="contrato_alquiler">Contrato de alquiler del negocio</option>
+              <option value="boleta_compras">Boleta de compras del negocio</option>
+              <option value="boleta_ventas">Boleta de ventas del negocio</option>
+              <option value="factura_compras">Factura de compras del negocio</option>
+              <option value="factura_ventas">Factura de ventas del negocio</option>
+              <option value="foto_negocio">Fotos del negocio</option>
             </select>
           </div>
           <div class="col-md-12 form-group">
@@ -73,7 +73,7 @@
                 </div>
             </div>
           </div>
-           <div class="file-type " @click="cualitativaPdf()">
+           <div class="file-type " @click="cualitativaPdf()" v-if="person.cualitativa=='1'">
             <div class="type file-document" >          
               <p>evaluacion_cualitativa.pdf</p> 
                 <div class="mask">
@@ -81,7 +81,7 @@
                 </div>
             </div>
           </div>
-           <div class="file-type " @click="cuantitativaPdf()">
+           <div class="file-type " @click="cuantitativaPdf()" v-if="person.cuantitativa=='1'">
             <div class="type file-document" >          
               <p>evaluacion_cuantitativa.pdf</p> 
                 <div class="mask">
@@ -371,7 +371,7 @@ export default {
 
   methods: {
     retornar() {
-      this.backMixin_handleBack("/clientes");
+      this.backMixin_handleBack('/perfil/'+this.person.documento);
     },
     listFile() {
       this.$http.get(`/files/${this.$route.params.prestamo}`).then(response => {
@@ -379,7 +379,7 @@ export default {
         this.archivos = response.data["files"];
         this.subidos = response.data["subidos"];
         this.loaderFile=0
-        console.log(this.subidos)
+        console.log(this.person.cuantitativa)
       });
     },
 

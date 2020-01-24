@@ -79,7 +79,7 @@ class ClienteController extends Controller
 
 
             $clientes = Cliente::join('juridicos','clientes.id','=','juridicos.clientes_id')
-              ->select('clientes.documento')
+              ->select('clientes.documento', 'juridicos.razon_social')
               ->where('juridicos.razon_social', 'LIKE', "%{$request->search_input}%")
               ->orWhere('clientes.documento', 'LIKE', "%{$request->search_input}%")
               ->orderBy('clientes.id','desc')
@@ -460,7 +460,7 @@ class ClienteController extends Controller
 
                 $declaracion = New DeclaracionJuridico;
                 $declaracion->uif= $request->declaracion['uif'];    
-                $declaracion->observaciones= $request->declaracion['obervaciones'];    
+                $declaracion->observaciones= $request->declaracion['observaciones'];    
                 $declaracion->estado= $request->declaracion['estado'];    
                 $declaracion->juridicos_id= $juridico->id;
                 $declaracion->save();
@@ -489,6 +489,9 @@ class ClienteController extends Controller
 
     public function visitaStore(Request $request)
     {
+
+
+        return $request;
         if (!$request->ajax()) return redirect('/');
  
 
@@ -805,6 +808,8 @@ class ClienteController extends Controller
 
             if($request->input('idprestamo')<0){
                $prestamo = new Prestamo();
+               $prestamo->cualitativa = 0;
+               $prestamo->cuantitativa = 0;
             }
             else{
                 $prestamo = Prestamo::where('id',$request->input('idprestamo'))->first();
@@ -966,6 +971,7 @@ class ClienteController extends Controller
 
         $prestamo= Prestamo::find($prestamo);
         $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        $archivos = Archivo::where('prestamos_id', $prestamo->id)->get();
 
         if($cliente->tipo_documento == 'RUC'){
             $juridico = Juridico::where('clientes_id',$cliente->id)->first();
@@ -993,7 +999,22 @@ class ClienteController extends Controller
     
     
             $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge'));
-            return $pdf->stream('solicitud_de_credito.pdf');
+            // return $pdf->stream('solicitud_de_credito.pdf');
+
+            $pdf = new \LynX39\LaraPdfMerger\PdfManage;
+            $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf'), 'all');
+
+            
+                foreach ($archivos as $ep=>$rp) {
+                    
+                    $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/'.$rp->tipo.'/'.$rp->nombre.'.'.$rp->extension), 'all');
+                }
+            
+            
+            // $pdf->addPDF(public_path('/upload/test.pdf'), 'all');
+            $pdf->merge('file', public_path('/upload/created.pdf'), 'P');
+
+            dd('done');
 
         }
 

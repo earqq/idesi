@@ -29,6 +29,7 @@ class CreatePrestamosTable extends Migration
             $table->string('disponibilidad_pago_inicial', 30)->nullable()->default(null);
             $table->string('destino_inicial', 30)->nullable()->default(null);
             $table->string('forma_inicial', 30)->nullable()->default(null);
+            $table->decimal('meses', 11, 2)->nullable()->default(null);
             $table->string('producto', 40)->nullable()->default(null);
             $table->string('forma', 40)->nullable()->default(null);
             $table->decimal('importe', 11, 2)->nullable()->default(null);

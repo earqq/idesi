@@ -1,192 +1,137 @@
 <template>
-  <div class="container-general">
-      <div class="row m-0 dashboard">
-
-              <div class="col-md-9">
-                  <div class="row m-0">
-                       <div class="col-md-12 info"> 
-                            <div class="row m-0">
-
-
-                                <div class="col-md-3">
-                                    <div class="row h-100">
-                                        <div class="col-md-4 d-flex flex-column justify-content-center text-center icon ">
-                                            <i class="fas fa-clipboard-list"></i>
-                                        </div>
-                                        <div class="col-md-8  d-flex flex-column justify-content-center text">
-                                            <p class="title">Totales</p>
-                                            <p>1452</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                   <div class="col-md-3">
-                                    <div class="row h-100">
-                                        <div class="col-md-4 d-flex flex-column justify-content-center text-center icon ">
-                                            <i class="fas fa-clipboard-list"></i>
-                                        </div>
-                                        <div class="col-md-8  d-flex flex-column justify-content-center text">
-                                            <p class="title">Aceptados</p>
-                                            <p>1452</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                   <div class="col-md-3">
-                                    <div class="row h-100">
-                                        <div class="col-md-4 d-flex flex-column justify-content-center text-center icon ">
-                                            <i class="fas fa-clipboard-list"></i>
-                                        </div>
-                                        <div class="col-md-8  d-flex flex-column justify-content-center text">
-                                            <p class="title">Observados</p>
-                                            <p>1452</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                   <div class="col-md-3">
-                                    <div class="row h-100">
-                                        <div class="col-md-4 d-flex flex-column justify-content-center text-center icon ">
-                                            <i class="fas fa-clipboard-list"></i>
-                                        </div>
-                                        <div class="col-md-8  d-flex flex-column justify-content-center text">
-                                            <p class="title">Rechazados</p>
-                                            <p>1452</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                      <div class="col-md-12 loans">
-                           <h1>Prestamos</h1> 
-                            <table style="width:100%">
-                                <tr>
-                                    <th>Cliente</th>
-                                    <th>Estado</th>
-                                    <th></th>
-                                </tr>
-                                <tr>
-                                    <td>Gian Marco Albornoz Rimas</td>
-                                    <td>Pendiente</td>
-                                    <td> <button class="btn btn-success" style="width:50%"> Ver Prestamo</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Gian Marco Albornoz Rimas</td>
-                                    <td>Rechazado</td>
-                                    <td> <button class="btn btn-success" style="width:50%"> Ver Prestamo</button></td>
-                                </tr>
-                                 <tr>
-                                    <td>Gian Marco Albornoz Rimas</td>
-                                    <td>Observado</td>
-                                    <td> <button class="btn btn-success" style="width:50%"> Ver Prestamo</button></td>
-                                </tr>
-                                 <tr>
-                                    <td>Gian Marco Albornoz Rimas</td>
-                                    <td>Pendiente</td>
-                                    <td> <button class="btn btn-success" style="width:50%"> Ver Prestamo</button></td>
-                                </tr>
-                                </table>
-                      </div>
-                  </div>
-              </div>
-              
-              <div class="col-md-3 p-0 views">
-                  <div class="title">
-                      <h1>Cronograma Visitas</h1>
-                  </div>
-                  <div class="sub-title">
-                      <h1>Hoy</h1>
-                  </div>
-
-                  <div class="views-list">
-
-                      <!-- LISTA DE VISTAS -->
-                      <div class="clients-view">
-                          <div class="row m-0">
-                              <div class="col-md-9 date-client">
-                                  <p>Gian Marco Albornoz Rimas</p>
-                                  <p class="font-weight-bold">12:00 am</p>
-                              </div>
-                              <div class="col-md-3 map">
-                                  <i class="fas fa-map-marker-alt"></i>
-                              </div>
-                          </div>
-                      </div>
-                      <!-- FIN DE LISTA DE CLIENTES -->
-
-                      <!-- LISTA DE VISTAS -->
-                      <div class="clients-view">
-                          <div class="row m-0">
-                              <div class="col-md-9 date-client">
-                                  <p>Gian Marco Albornoz Rimas</p>
-                                  <p class="font-weight-bold">12:00 am</p>
-                              </div>
-                              <div class="col-md-3 map">
-                                  <i class="fas fa-map-marker-alt"></i>
-                              </div>
-                          </div>
-                      </div>
-                      <!-- FIN DE LISTA DE CLIENTES -->
-                  </div>
-
-
-                  <div class="sub-title">
-                      <h1>Vie, 30 Mar 2019</h1>
-                  </div>
-
-                  <div class="views-list">
-
-                      <!-- LISTA DE VISTAS -->
-                      <div class="clients-view">
-                          <div class="row m-0">
-                              <div class="col-md-9 date-client">
-                                  <p>Gian Marco Albornoz Rimas</p>
-                                  <p class="font-weight-bold">12:00 am</p>
-                              </div>
-                              <div class="col-md-3 map">
-                                  <i class="fas fa-map-marker-alt"></i>
-                              </div>
-                          </div>
-                      </div>
-                      <!-- FIN DE LISTA DE CLIENTES -->
-
-                      <!-- LISTA DE VISTAS -->
-                      <div class="clients-view">
-                          <div class="row m-0">
-                              <div class="col-md-9 date-client">
-                                  <p>Gian Marco Albornoz Rimas</p> 
-                                  <p class="font-weight-bold">12:00 am</p>
-                              </div>
-                              <div class="col-md-3 map">
-                                  <i class="fas fa-map-marker-alt"></i>
-                              </div>
-                          </div>
-                      </div>
-                      <!-- FIN DE LISTA DE CLIENTES -->
-                  </div>
-
-              </div>
-
-      </div>
-  </div>
+    <div class="dashboard_content">
+        <div class="dashboard_wrapper">
+            <article class="numbers_stats">
+                <div class="number_item n1">
+                    <i class="material-icons-outlined"> swap_horiz </i>
+                    <div class="stat">
+                        <h1>150</h1>
+                        <p>Prestamos Totales</p>
+                    </div>
+                </div>
+                <div class="number_item n2">
+                    <i class="material-icons-outlined"> shuffle </i>
+                    <div class="stat">
+                        <h1>10</h1>
+                        <p>Prestamos Rechazados</p>
+                    </div>
+                </div>
+                <div class="number_item n3">
+                    <i class="material-icons-outlined"> person </i>
+                    <div class="stat">
+                        <h1>25</h1>
+                        <p>Clientes Totales</p>
+                    </div>
+                </div>
+            </article>
+            <article class="chart_stats">
+                <h2 class="title"> Historial / Año </h2>
+            </article>
+            <article class="lists">
+                <div class="list_client">
+                    <h2 class="title"> Nuevo Clientes </h2>
+                </div>
+                <div class="list_credits">
+                    <h2 class="title"> Ultimos Prestamos </h2>
+                </div>
+            </article>
+            <aside class="map">
+            </aside>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      
-    };
-  },
-  methods: {
-
-  },
-  mounted() {
-    console.log("Component mounted.");
-  }
 };
 </script>
+<style lang="sass" scoped>
+@import "../../sass/_variables"
+.dashboard_content
+    .dashboard_wrapper
+        display: grid
+        grid-template-areas: "numbers map" "chart map" "lists map"
+        grid-template-columns: 1fr 500px
+        grid-template-rows: 100px 400px 500px
+        grid-auto-rows: max-content
+        grid-gap: 15px
+        padding: 20px
+        box-sizing: border-box
+        .title
+            font-size: 13px
+            margin: 0
+            width: 100%
+            border-bottom: 1px solid $line_color
+            font-weight: 500
+            padding: 7px 20px
+        .numbers_stats
+            display: grid
+            grid-area: numbers 
+            grid-template-columns: repeat(3, 1fr)
+            grid-gap: 15px
+            .number_item
+                background-color: white
+                border-radius: 4px
+                box-shadow: $shadow
+                height: 100%
+                display: flex
+                align-items: center
+                padding: 20px
+                box-sizing: border-box
+                &.n1
+                    i
+                        color: $primary_color
+                        background-color: rgba($primary_color, .2)
+                &.n2
+                    i
+                        color: $require_color
+                        background-color: rgba($require_color, .2)
+                &.n3
+                    i
+                        color: $highlight_color
+                        background-color: rgba($highlight_color, .2)
+                i
+                    width: 50px
+                    height: 50px
+                    background-color: red
+                    border-radius: 50%
+                    display: flex
+                    justify-content: center
+                    align-items: center
+                .stat
+                    margin-left: 15px
+                    h1, p
+                        margin: 0
+                    h1
+                        font-size: 23px
+                        font-weight: 700
+                    p
+                        font-size: 13px
+                        margin-top: -2px
+        .chart_stats
+            grid-area: chart 
+            background-color: white
+            border-radius: 4px
+            box-shadow: $shadow
+        .lists
+            display: grid
+            grid-area: lists 
+            grid-template-columns: repeat(3, 1fr)
+            grid-gap: 15px
+            .list_client, .list_credits
+                background-color: white
+                border-radius: 4px
+                box-shadow: $shadow
+                height: 100%
+            .list_credits
+                grid-column: 2 / 2 span
+        .map
+            grid-area: map
+            background-color: white
+            border-radius: 4px
+            box-shadow: $shadow
+            height: calc(100vh - 95px)
+            overflow: hidden
+            position: sticky
+            top: 75px
+</style>
