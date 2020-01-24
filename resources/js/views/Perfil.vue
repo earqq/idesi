@@ -86,8 +86,9 @@
                   <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                   <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                 </li>
-                <li> <router-link v-if="prestamo.cuantitativa=='0'" :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
-                <li> <router-link v-if="prestamo.cualitativa =='0'" :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id}}" >E. Cualitativa </router-link></li>
+                <li v-if="prestamo.cuantitativa=='0'"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
+                <li v-if="prestamo.cuantitativa=='0'"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
+                <li> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}"  >Observaciones</router-link></li>
                 <li> <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
               </ul>
             </div>
@@ -121,6 +122,8 @@ export default {
       tipo_persona:  this.$route.params.persona,
       idprestamo: 0,
       prestamos: {},
+      id_usuario: 0 ,
+      id_rol:0,
       loader: 1,
       loader_loan: 1,
       tipo_general: 1,
@@ -129,12 +132,14 @@ export default {
   },
   created() {
 
-    if(this.tipo_persona == 'PN'){
+    if(this.tipo_persona == 'PN'){ 
           this.$http
             .get(`/${this.resource}/perfil/cliente/` + this.$route.params.documento)
             .then(response => {
               this.cliente = response.data["cliente"];
               this.prestamos = response.data["prestamos"];
+              this.id_usuario = response.data['usuario'];
+              this.id_rol = response.data['rol'];
               this.loader = 0;
               this.loader_loan = 0;
               console.log(this.prestamos);
@@ -146,6 +151,8 @@ export default {
               
               this.cliente = response.data["cliente"];
               this.prestamos = response.data["prestamos"];
+              this.id_usuario = response.data['usuario'];
+              this.id_rol = response.data['rol'];
               this.loader = 0;
               this.loader_loan = 0; 
               console.log(this.cliente); 
