@@ -462,7 +462,7 @@
             <div class="col-md-6" v-if="rol=='4'">
               <label  for>Importe</label>
               <input  type="text" v-model="form.importe" class="form-control" /> 
-            </div>
+            </div> 
             <div class="col-md-12" v-if="rol=='4'">
               <label  for>Plazo</label>
               <input  type="text" v-model="form.plazo" class="form-control" /> 
