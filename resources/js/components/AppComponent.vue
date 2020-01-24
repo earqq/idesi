@@ -12,13 +12,8 @@
                   <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                 </li>
 
-<<<<<<< HEAD
-                <li :class="{selected: tab == 'evaluaciones'}" v-if="tipo=='3' || tipo=='1' || tipo=='4'">
+                <li :class="{selected: tab == 'evaluaciones'}">
                   <router-link :to="{name: 'evaluaciones'}"  >Evaluaciones</router-link>
-=======
-                <li :class="{selected: tab == 'evaluaciones_final'}">
-                  <router-link :to="{name: 'evaluaciones'}"  >Prestamos</router-link>
->>>>>>> 7a43b75090096110291c2bad91e92a92cf9ef9ab
                 </li>
 
                 <li :class="{selected: tab == 'usuarios'}" v-if="tipo=='1'"> 
@@ -146,11 +141,23 @@ nav
           cursor: pointer
         .users_options
           position: absolute
-          right: 0
+          right: 5px
           top: 50px
           background-color: white
           width: 250px
-          box-shadow: $shadow
+          box-shadow: $shadow_hover
+          &::before
+            position: absolute
+            display: block
+            content: ''
+            width: 12px
+            height: 12px
+            background-color: white
+            top: -7px
+            right: 7px
+            transform: rotateZ(45deg)
+            border-top: 1px solid #f3f1f1
+            border-left: 1px solid #f3f1f1
           .name
             display: flex
             align-items: center

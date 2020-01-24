@@ -18789,7 +18789,7 @@ readers do not read off random characters that represent icons */
 .table_wrapper table .options ul {
   position: absolute;
   background-color: #fff;
-  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.07);
   border-radius: 4px;
   top: 45px;
   right: 60px;

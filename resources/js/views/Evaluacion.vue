@@ -42,30 +42,33 @@
             </router-link>
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
-              <ul v-if="id_rol=='3'">
-                <li>
-                  <router-link v-if="prestamo.estado=='PENDIENTE'" :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+              <ul v-if="id_rol=='3' || id_rol=='4' ">
+                <li v-if="prestamo.estado=='PENDIENTE'">
+                  <router-link 
+                            :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                     Evaluación
                   </router-link>
-                  <router-link v-else :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+                </li>
+                <li  v-else>
+                  <router-link
+                            :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                     Ver Evaluación
                   </router-link>
                 </li> 
               </ul>
               <ul v-if="id_rol=='1'">
-                <li>
-                  <router-link v-if="prestamo.estado=='PENDIENTE'" :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+                <li v-if="prestamo.estado=='PENDIENTE'">
+                  <router-link 
+                            :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
                     Evaluación
                   </router-link>
-                  <router-link v-else :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
+                </li>
+                <li v-else>
+                  <router-link 
+                            :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
                     Ver Evaluación
                   </router-link>
                 </li>
-                <li> Editar </li>
-                <li> E. Cuantitativa </li>
-                <li> E. Cualitativa </li>
-                <li> Documentos </li>
-                <li> Ver Prestamo </li>
               </ul>
             </div>
           </div>
@@ -76,7 +79,7 @@
       </div>
 
       <div class="table_wrapper" v-else>
-        <table class="table_clients">
+        <table class="table_credits">
           <thead>
             <tr>
               <th>Cliente</th>
@@ -103,39 +106,34 @@
                 </div> 
               </td>
               <td class="options" >
-                
                 <i class="material-icons-outlined" >more_horiz</i>
-
-                <ul v-if=" id_rol=='1' || id_rol=='3' || id_rol=='4' ">
-                  <li>
-                    <router-link v-if="prestamo.estado=='PENDIENTE'"
+                <ul v-if="id_rol=='3' || id_rol=='4' ">
+                  <li v-if="prestamo.estado=='PENDIENTE'">
+                    <router-link 
                               :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                       Evaluación
                     </router-link>
-                    <router-link v-else
+                  </li>
+                  <li  v-else>
+                    <router-link
                               :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                       Ver Evaluación
                     </router-link>
                   </li> 
                 </ul>
                 <ul v-if="id_rol=='1'">
-                  <li>
-                    <router-link v-if="prestamo.estado=='PENDIENTE'"
+                  <li v-if="prestamo.estado=='PENDIENTE'">
+                    <router-link 
                               :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
                       Evaluación
                     </router-link>
-                    <router-link v-else
+                  </li>
+                  <li v-else>
+                    <router-link 
                               :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
                       Ver Evaluación
                     </router-link>
                   </li>
-                </ul>
-                <ul v-if="id_rol=='2' || id_rol=='1'">
-                  <li> Editar </li>
-                  <li> E. Cuantitativa </li>
-                  <li> E. Cualitativa </li>
-                  <li> Documentos </li>
-                  <li> Ver Prestamo </li>
                 </ul>
               </td>
             </tr>
@@ -281,19 +279,20 @@ export default {
             font-weight: 500
             margin-bottom: -2px
         .detail
-          padding: 20px
+          padding: 25px 20px
           h2
-            font-size: 13px
+            font-size: 12px
             margin: 0
             font-weight: 700
           .progress_bar
             width: 100%
             display: flex
             align-items: center
+            margin: 2px 0
             span
               display: block
               flex: 1
-              height: 6px
+              height: 5px
               border-radius: 10px
               background-color: $line_color
             p
@@ -310,7 +309,7 @@ export default {
           height: 40px
           position: relative
           a.credit_link
-            color: $text_color
+            color: $primary_color
             font-size: 11px
             flex: 1
             display: flex
@@ -339,7 +338,7 @@ export default {
             ul
               position: absolute
               background-color: #fff
-              box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1)
+              box-shadow: $shadow_hover
               border-radius: 4px
               top: 37px
               right: 10px
@@ -384,7 +383,8 @@ export default {
     .table_wrapper
       padding: 0 20px
       box-sizing: border-box
-      .table_clients
+      .table_credits
+        box-shadow: $shadow
         tbody
           .client
             img
@@ -403,7 +403,7 @@ export default {
             span
               display: block
               flex: 1
-              height: 6px
+              height: 5px
               border-radius: 10px
               background-color: $line_color
             p
