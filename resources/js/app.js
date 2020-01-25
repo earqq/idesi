@@ -12,7 +12,8 @@ import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.css'; 
 import * as VueGoogleMaps from 'vue2-google-maps';
 
-
+import VueTheMask from 'vue-the-mask'
+Vue.use(VueTheMask)
 // import WebCam from "vue-web-cam";
 
 // import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
@@ -31,11 +32,11 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 //   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 // });
 
-const VueInputMask = require('vue-inputmask').default
+// const VueInputMask = require('vue-inputmask').default
+// Vue.use(VueInputMask)
 
-
-Vue.use(VueInputMask)
 Vue.prototype.$http = Axios
+
 Vue.use(VueIziToast);
 Vue.use(VueGoogleMaps, {
     load: {

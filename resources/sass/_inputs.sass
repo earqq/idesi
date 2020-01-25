@@ -1,5 +1,18 @@
 .input_wrapper
     position: relative
+    .vs__dropdown-toggle
+        border: none
+        .vs__selected
+            position: absolute
+            left: 10px
+            top: 7px
+            font-size: 13px !important
+        .vs__actions
+            display: none
+        .vs__search, .vs__search:focus
+            margin: 0 !important
+            padding: 0 10px !important
+            font-size: 13px !important
     label
         font-family: $font
         font-weight: 500
@@ -67,7 +80,6 @@
         .message
             color: $require_color
             font-size: 11px
-            margin-top: 5px
             display: block
             font-family: $font
             display: flex

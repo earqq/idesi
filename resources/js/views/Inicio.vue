@@ -62,7 +62,7 @@ export default {
             margin: 0
             width: 100%
             border-bottom: 1px solid $line_color
-            font-weight: 500
+            font-weight: 700
             padding: 7px 20px
         .numbers_stats
             display: grid

@@ -15,9 +15,10 @@
             display: flex
             align-items: center
             justify-content: center
-            border-right: 1px solid $line_color
+            border-right: 2px solid $line_color
             height: 100%
             cursor: pointer
+            border-bottom: 2px solid transparent
             &:last-child
                 border-right: none
             &.complete
@@ -37,6 +38,7 @@
                 p
                     color: $primary_color
             &.selected
+                border-bottom: 2px solid $primary_color
                 span
                     color: $primary_color
                     border: 1px solid $primary_color
@@ -55,7 +57,7 @@
                 font-size: 12px
             p
                 margin: 0
-                font-size: 12px
+                font-size: 11px
                 font-weight: 700
                 margin-left: 10px
                 color: rgba($text_color, .5)
@@ -65,14 +67,33 @@
     padding: 0 20px
     box-sizing: border-box
     .client_forms_wrapper
+        position: relative
         .form_step
+            position: absolute
+            left: 0
+            top: 0
+            width: 100%
             h3.title
                 font-size: 13px
                 margin: 0
                 width: 100%
                 border-bottom: 1px solid $line_color
-                font-weight: 500
+                font-weight: 700
                 padding: 7px 20px
+                display: flex
+                align-items: center
+                justify-content: space-between
+                height: 30px
+                .delete_section
+                    border: none
+                    background-color: transparent
+                    display: flex
+                    align-items: center
+                    &:active, &:focus
+                        outline: none
+                    i
+                        font-size: 19px
+                        margin-bottom: -1px
             .form_step_wrapper
                 background-color: white
                 border-radius: 4px
@@ -91,13 +112,31 @@
                         height: 1px
                         background-color: $line_color
                         margin: 20px 0
+                    .message_form
+                        background-color: rgba($primary_color, .05)
+                        color: $primary_color
+                        font-weight: 500
+                        border-radius: 3px
+                        min-height: 45px
+                        display: flex
+                        align-items: center
+                        font-size: 12px
+                        padding: 10px 20px
+                        box-sizing: border-box
+                        border-left: 3px solid $primary_color
                     .group_form
                         display: grid
                         grid-template-columns: repeat(auto-fit, minmax(270px, 1fr))
                         grid-gap: 10px
                         &.small
                             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
+                        .input_wrapper.all
+                            grid-column: 1 / span 3
             .form_list
+                &.list_round
+                    .form_step_wrapper
+                        &:first-child
+                            border-radius: 4px 4px 0 0
                 .form_step_wrapper
                     border-radius: 0px
                     border-top: 1px solid $line_color
@@ -114,3 +153,24 @@
                         background-color: #fff
                         width: 140px
                         margin-right: 10px
+            .add_section
+                border: 0 0 4px 4px
+                width: 100%
+                height: 45px
+                display: flex
+                justify-content: center
+                align-items: center
+                border: 0
+                background-color: #fff
+                border-top: 1px solid $line_color
+                &:focus, &:active
+                    outline: none
+                span
+                    font-weight: 700
+                    font-size: 12px
+                    color: $primary_color
+                    margin-bottom: -2px
+                i
+                    color: $primary_color
+                    margin-left: 10px
+                

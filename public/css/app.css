@@ -18733,24 +18733,46 @@ readers do not read off random characters that represent icons */
 }
 
 .slide-fade-enter-active {
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
 }
 
 .slide-fade-leave-active {
-  -webkit-transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
-  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+  -webkit-transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .slide-fade-enter,
 .slide-fade-leave-to {
-  -webkit-transform: translateY(5px);
-          transform: translateY(5px);
+  -webkit-transform: translateX(5px);
+          transform: translateX(5px);
   opacity: 0;
 }
 
 .input_wrapper {
   position: relative;
+}
+
+.input_wrapper .vs__dropdown-toggle {
+  border: none;
+}
+
+.input_wrapper .vs__dropdown-toggle .vs__selected {
+  position: absolute;
+  left: 10px;
+  top: 7px;
+  font-size: 13px !important;
+}
+
+.input_wrapper .vs__dropdown-toggle .vs__actions {
+  display: none;
+}
+
+.input_wrapper .vs__dropdown-toggle .vs__search,
+.input_wrapper .vs__dropdown-toggle .vs__search:focus {
+  margin: 0 !important;
+  padding: 0 10px !important;
+  font-size: 13px !important;
 }
 
 .input_wrapper label {
@@ -18876,7 +18898,6 @@ readers do not read off random characters that represent icons */
 .input_wrapper.require .message {
   color: #FF003D;
   font-size: 11px;
-  margin-top: 5px;
   display: block;
   font-family: "Roboto", sans-serif;
   display: -webkit-box;
@@ -19439,9 +19460,10 @@ readers do not read off random characters that represent icons */
           align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
-  border-right: 1px solid #eef3fb;
+  border-right: 2px solid #eef3fb;
   height: 100%;
   cursor: pointer;
+  border-bottom: 2px solid transparent;
 }
 
 .tabs_section .tabs_wrapper .tab:last-child {
@@ -19467,6 +19489,10 @@ readers do not read off random characters that represent icons */
 
 .tabs_section .tabs_wrapper .tab.complete p {
   color: #0061FF;
+}
+
+.tabs_section .tabs_wrapper .tab.selected {
+  border-bottom: 2px solid #0061FF;
 }
 
 .tabs_section .tabs_wrapper .tab.selected span {
@@ -19496,7 +19522,7 @@ readers do not read off random characters that represent icons */
 
 .tabs_section .tabs_wrapper .tab p {
   margin: 0;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   margin-left: 10px;
   color: rgba(0, 0, 0, 0.5);
@@ -19508,13 +19534,50 @@ readers do not read off random characters that represent icons */
   box-sizing: border-box;
 }
 
+.client_forms .client_forms_wrapper {
+  position: relative;
+}
+
+.client_forms .client_forms_wrapper .form_step {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
 .client_forms .client_forms_wrapper .form_step h3.title {
   font-size: 13px;
   margin: 0;
   width: 100%;
   border-bottom: 1px solid #eef3fb;
-  font-weight: 500;
+  font-weight: 700;
   padding: 7px 20px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+          justify-content: space-between;
+  height: 30px;
+}
+
+.client_forms .client_forms_wrapper .form_step h3.title .delete_section {
+  border: none;
+  background-color: transparent;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+}
+
+.client_forms .client_forms_wrapper .form_step h3.title .delete_section:active,
+.client_forms .client_forms_wrapper .form_step h3.title .delete_section:focus {
+  outline: none;
+}
+
+.client_forms .client_forms_wrapper .form_step h3.title .delete_section i {
+  font-size: 19px;
+  margin-bottom: -1px;
 }
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper {
@@ -19545,6 +19608,22 @@ readers do not read off random characters that represent icons */
   margin: 20px 0;
 }
 
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .message_form {
+  background-color: rgba(0, 97, 255, 0.05);
+  color: #0061FF;
+  font-weight: 500;
+  border-radius: 3px;
+  min-height: 45px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  font-size: 12px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  border-left: 3px solid #0061FF;
+}
+
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -19553,6 +19632,14 @@ readers do not read off random characters that represent icons */
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form.small {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_wrapper.all {
+  grid-column: 1/span 3;
+}
+
+.client_forms .client_forms_wrapper .form_step .form_list.list_round .form_step_wrapper:first-child {
+  border-radius: 4px 4px 0 0;
 }
 
 .client_forms .client_forms_wrapper .form_step .form_list .form_step_wrapper {
@@ -19582,6 +19669,38 @@ readers do not read off random characters that represent icons */
   background-color: #fff;
   width: 140px;
   margin-right: 10px;
+}
+
+.client_forms .client_forms_wrapper .form_step .add_section {
+  border: 0 0 4px 4px;
+  width: 100%;
+  height: 45px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  border: 0;
+  background-color: #fff;
+  border-top: 1px solid #eef3fb;
+}
+
+.client_forms .client_forms_wrapper .form_step .add_section:focus,
+.client_forms .client_forms_wrapper .form_step .add_section:active {
+  outline: none;
+}
+
+.client_forms .client_forms_wrapper .form_step .add_section span {
+  font-weight: 700;
+  font-size: 12px;
+  color: #0061FF;
+  margin-bottom: -2px;
+}
+
+.client_forms .client_forms_wrapper .form_step .add_section i {
+  color: #0061FF;
+  margin-left: 10px;
 }
 
 body {

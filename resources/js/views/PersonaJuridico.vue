@@ -1,196 +1,243 @@
 <template>
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-12 p-0">
-        <div class="nav-tabs style-tab-menu">
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item col-md-2">
-              <a class="nav-link active text-center " id="personal-tab" data-toggle="tab" href="#personal" role="tab" aria-controls="personal" aria-selected="true" >Datos Personales</a>
-            </li>
+    <div class="create_client_content">
 
-            <li class="nav-item col-md-2">
-              <a class="nav-link text-center" id="representantes-tab" data-toggle="tab" href="#representantes"  role="tab" aria-controls="representantes" aria-selected="false" >Representantes Legales</a>
-            </li>
-            <li class="nav-item col-md-2">
-              <a class="nav-link text-center" id="director-tab"  data-toggle="tab" href="#director" role="tab" aria-controls="director" aria-selected="false" >Principales Directores</a>
-            </li>
-            <li class="nav-item col-md-2">
-              <a  class="nav-link text-center" id="accionista-tab" data-toggle="tab"  href="#accionista"   role="tab" aria-controls="accionista" aria-selected="false" >Principales Accionistas</a>
-            </li>
-            <li class="nav-item col-md-2">
-              <a class="nav-link text-center"  id="asociativa-tab"  data-toggle="tab"  href="#asociativa" role="tab" aria-controls="asociativa"  aria-selected="false" >Obligaciones asociativas</a>
-            </li>
-            <li class="nav-item col-md-2">
-              <a  class="nav-link text-center" id="declaracion-tab"  data-toggle="tab"  href="#declaracion" role="tab" aria-controls="declaracion" aria-selected="false" >Declaracion</a>
-            </li>
-          </ul>
+      <section class="tabs_section">
+        <div class="tabs_wrapper">
+          <div class="tab " @click="tab = 1" :class="[{selected: tab == 1}]">
+            <span>1</span>
+            <p>PERSONALES</p>
+          </div>
+          <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
+            <span>2</span>
+            <p>LEGALES</p>
+          </div>
+          <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
+            <span>3</span>
+            <p>DIRECTORES</p>
+          </div>
+          <div class="tab" @click="tab = 4" :class="{selected: tab == 4}">
+            <span>4</span>
+            <p>ACCIONISTAS</p>
+          </div>
+          <div class="tab" @click="tab = 5" :class="{selected: tab == 5}">
+            <span>5</span>
+            <p>OBLIGACIONES</p>
+          </div>
+          <div class="tab" @click="tab = 6" :class="{selected: tab == 6}">
+            <span>6</span>
+            <p>DECLARACIÓN</p>
+          </div>
         </div>
+      </section>
 
-        <div class="col-md-12 body-tabs">
-          <div class="tab-content" id="myTabContent">
-            <div  class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab"  >
-              <div class="row">
+      <div class="client_forms">
 
-                <div class="form-group col-md-3">
-                  <label>Ruc</label>
-                  <input type="text" class="form-control letter-5" v-model="form.cliente.documento"  v-mask="{mask: '99999999999'}"  />
-                </div>
+        <div class="client_forms_wrapper">
+          
+          <transition name="slide-fade" mode="in-out">
+            <div  v-show="tab == 1" class="form_step"  >
 
-                <div class="form-group col-md-3">
-                  <label >Razon Social</label>
-                  <input type="text" class="form-control" :maxlength="45" v-model="form.juridico.razon_social" placeholder />
-                </div>
+              <div class="form_step_wrapper">
 
-                <div class="form-group col-md-3">
-                  <label>Nombre Comercial</label>
-                  <input type="text" class="form-control" :maxlength="45" v-model="form.juridico.nombre_comercial" placeholder />
-                </div>
-
-                <div class="form-group col-md-3">
-                  <label>Actividad Principal</label>
-                  <input type="text" class="form-control" :maxlength="30" v-model="form.juridico.actividad_principal" placeholder />
-                </div>
-                <div class="form-group col-md-2">
-                  <label>Nro. de Partida Registral</label>
-                  <input type="number" class="form-control" v-model="form.juridico.partida_registral" placeholder />
-                </div>
-                <div class="form-group col-md-2">
-                  <label>Oficina Principal</label>
-                  <input type="number" :maxlength="11" class="form-control" v-model="form.juridico.oficina_principal" placeholder />
-                </div>
-
-                <div class="form-group col-md-2">
-                  <label>P.N con negocio</label>
-                  <select v-model="form.juridico.tipo_negocio" class="form-control">
-                    <option value="E.I.R.L">E.I.R.L</option>
-                    <option value="S.A.C">S.A.C</option>
-                    <option value="S.A">S.A</option>
-                    <option value="ASOCIADOS">ASOCIADOS</option>
-                    <option value="OTROS">OTROS</option>
-                  </select>
-                </div>
-
-              <div class="form-group col-md-6">
-                  <label>Dirección</label>
-                  <input type="text" :maxlength="45"  v-model="form.juridico.direccion" class="form-control" />
-              </div>
-
-              <div class="form-group col-md-2">
-                    <label>Número</label>
-                    <input type="text" v-model="form.juridico.numero"  :maxlength="5" class="form-control" />
-                </div>
-                <div class="form-group col-md-2">
-                    <label>Manzana</label>
-                    <input type="text" v-model="form.juridico.manzana"  :maxlength="5" class="form-control" />
-                </div>
-                <div class="form-group col-md-2">
-                    <label>Lote</label>
-                    <input type="text" v-model="form.juridico.lote"  :maxlength="5" class="form-control" />
-                </div>
-                <div class="form-group col-md-2">
-                    <label>Departamento</label>
-                    <input type="text" v-model="form.juridico.pdto"  :maxlength="5" class="form-control" />
-                </div>
-                <div class="form-group col-md-2">
-                    <label>Interior</label>
-                    <input type="text" v-model="form.juridico.int" :maxlength="5"  class="form-control" />
-                </div>
-                <div class="form-group col-md-2">
-                    <label>Piso</label>
-                    <input type="text" v-model="form.juridico.piso"  :maxlength="5" class="form-control" />
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label>Distrito</label>
-                    <input type="text" v-model="form.cliente.distrito" :maxlength="45" class="form-control" />
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Provincia</label>
-                    <input type="text" v-model="form.cliente.provincia" :maxlength="45" class="form-control" />
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Departamento</label>
-                    <input type="text" v-model="form.cliente.departamento" :maxlength="45" class="form-control" />
-                </div>
-                <div class="form-group col-md-3">
-                    <label>País</label>
-                    <input type="text" v-model="form.cliente.pais" :maxlength="15" class="form-control" />
-                </div>
-
-
-                <div class="form-group col-md-3">
-                    <label>Referencia</label>
-                    <input type="text" :maxlength="45" v-model="form.juridico.referencia" class="form-control" />
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Teléfono</label>
-                    <input type="text" :maxlength="15" v-model="form.juridico.telefono" class="form-control" />
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label>Celular</label>
-                    <input
-                      type="text"
-                      v-model="form.juridico.celular"
-                      class="form-control letter-5"
-                      v-mask="{mask: '+51 999999999', greedy: true}"
-                    />
-                </div>
-
-                <div class="form-group col-md-3"> 
-                    <label>Email</label>
-                    <input type="text" :maxlength="45" v-model="form.juridico.email" class="form-control" />
-                </div>
-
-              </div>
-
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
-              </div>
-            </div>
-              
-            <div class="tab-pane fade" id="representantes" role="tabpanel" aria-labelledby="representantes-tab">
-
-              <div class="row">
-                    <table class="table table-bordered table-striped table-sm">
-                                  <thead>
-                                      <tr>
-                                          <th></th>
-                                          <th>Apellidos y Nombres</th>
-                                          <th>Dc. Identidad</th>
-                                          <th>Cargo</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr v-for="(row, index) in form.representante" :key="index">
-                                          <td>
-                                              
-                                              <template>
-                                                  <button type="button" class="btn btn-danger btn-sm"  @click.prevent="clickRemoveRepresentante(index)">
-                                                      <i class="fas fa-trash"></i>
-                                                  </button>
-                                              </template>
-                                          </td>
-                                          <td><input type="text" :maxlength="60" v-model="row.nombres" class="form-control" /></td>
-                                          <td><input type="number" :maxlength="8"  v-model="row.documento" class="form-control" /></td>
-                                          <td><input type="text" :maxlength="15" v-model="row.cargo" class="form-control" /></td>
-                                      </tr>                                
-                                  </tbody>
-                              </table>
-                
-                    <div class="col-md-12">
-                        <button type="button"  @click.prevent="clickAddRepresentante"  class="btn btn-outline-dark more-option w-100" >
-                          <i class="fas fa-plus"></i> Agregar Representante
-                        </button>
+                <h3 class="title">
+                  Datos Personales
+                </h3>
+                <div class="form_content">
+                  <div class="group_form">
+                  
+                    <div class="input_wrapper">
+                      <label>Ruc</label>
+                      <input type="text"  v-model="form.cliente.documento"  v-mask="'###########'"  />
                     </div>
 
-                  <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                    <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                    <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+                    <div class="input_wrapper">
+                      <label >Razon Social</label>
+                      <input type="text" :maxlength="45" v-model="form.juridico.razon_social" placeholder />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Nombre Comercial</label>
+                      <input type="text" :maxlength="45" v-model="form.juridico.nombre_comercial" placeholder />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Actividad Principal</label>
+                      <input type="text" :maxlength="30" v-model="form.juridico.actividad_principal" placeholder />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Nro. de Partida Registral</label>
+                      <input type="number" v-model="form.juridico.partida_registral" placeholder />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Oficina Principal</label>
+                      <input type="number" :maxlength="11" v-model="form.juridico.oficina_principal" placeholder />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>P.N con negocio</label>
+                      <select v-model="form.juridico.tipo_negocio">
+                        <option value="E.I.R.L">E.I.R.L</option>
+                        <option value="S.A.C">S.A.C</option>
+                        <option value="S.A">S.A</option>
+                        <option value="ASOCIADOS">ASOCIADOS</option>
+                        <option value="OTROS">OTROS</option>
+                      </select>
+                    </div>
+
+                    <div class="input_wrapper">
+                        <label>Dirección</label>
+                        <input type="text" :maxlength="45"  v-model="form.juridico.direccion" />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>País</label>
+                      <input type="text" v-model="form.cliente.pais" :maxlength="15" />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Distrito</label>
+                      <input type="text" v-model="form.cliente.distrito" :maxlength="45" />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Provincia</label>
+                      <input type="text" v-model="form.cliente.provincia" :maxlength="45" />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Departamento</label>
+                      <input type="text" v-model="form.cliente.departamento" :maxlength="45" />
+                    </div>
+
+                  </div>
+
+                  <span class="separator"></span>
+
+                  <div class="group_form">
+
+                    <div class="input_wrapper">
+                        <label>Número</label>
+                        <input type="text" v-model="form.juridico.numero"  :maxlength="5" />
+                    </div>
+
+                    <div class="input_wrapper">
+                        <label>Manzana</label>
+                        <input type="text" v-model="form.juridico.manzana"  :maxlength="5" />
+                    </div>
+
+                    <div class="input_wrapper">
+                        <label>Lote</label>
+                        <input type="text" v-model="form.juridico.lote"  :maxlength="5" />
+                    </div>
+
+                    <div class="input_wrapper">
+                        <label>Departamento</label>
+                        <input type="text" v-model="form.juridico.pdto"  :maxlength="5" />
+                    </div>
+
+                    <div class="input_wrapper">
+                        <label>Interior</label>
+                        <input type="text" v-model="form.juridico.int" :maxlength="5"  />
+                    </div>
+
+                    <div class="input_wrapper">
+                        <label>Piso</label>
+                        <input type="text" v-model="form.juridico.piso"  :maxlength="5" />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Referencia</label>
+                      <input type="text" :maxlength="45" v-model="form.juridico.referencia" />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Teléfono</label>
+                      <input type="text" :maxlength="15" v-model="form.juridico.telefono" />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Celular</label>
+                      <input
+                        type="text"
+                        v-model="form.juridico.celular"
+                        v-mask="'### ### ###'"
+                        />
+                    </div>
+
+                    <div class="input_wrapper"> 
+                      <label>Email</label>
+                      <input type="text" :maxlength="45" v-model="form.juridico.email" />
+                    </div>
+
                   </div>
                 </div>
-            </div>
 
-            <div class="tab-pane fade" id="director" role="tabpanel" aria-labelledby="director-tab">
+              </div>
+
+              <div class="form_buttons">
+                  <a class="button_primary medium next" @click="next(1)">
+                    <span> SIGUIENTE </span>
+                    <i class="material-icons-outlined"> navigate_next </i>
+                  </a>
+                </div>
+            </div>
+          </transition>
+
+          <transition name="slide-fade" mode="in-out">
+            <div  v-show="tab == 2" class="form_step">
+              <div class="form_list" :class="{list_round: form.representante.length > 0}">
+                <div class="form_step_wrapper"   v-for="(row, index) in form.representante" :key="index">
+                  <h3 class="title">
+                    Representante {{index + 1}}
+                    <button v-if="index != 0" class="delete_section" type="button"  @click.prevent="clickRemoveRepresentante(index)">
+                      <i class="material-icons-outlined"> delete </i>
+                    </button>
+                  </h3>
+                  <div class="form_content">
+                    <div class="group_form">
+                      
+                      <div class="input_wrapper">
+                        <label>Apellidos y Nombres</label>
+                        <input type="text" :maxlength="60" v-model="row.nombres" class="form-control" />
+                      </div>
+                      
+                      <div class="input_wrapper">
+                        <label>Doc. Identidad</label>
+                        <input type="number" :maxlength="8"  v-model="row.documento" class="form-control" />
+                      </div>
+
+                      <div class="input_wrapper">
+                        <label>Cargo</label>
+                        <input type="text" :maxlength="15" v-model="row.cargo" class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button"  @click="clickAddRepresentante"  class="add_section" >
+                <span> AGREGAR REPRESENTANTE </span>
+                <i class="fas fa-plus"></i> 
+              </button>
+
+              <div class="form_buttons">
+                <a class="button_inline_primary medium prev" @click="prev(3)">
+                  <i class="material-icons-outlined"> navigate_before </i>
+                  <span> ATRAS </span>
+                </a>
+                <a class="button_primary medium next" @click="next(3)">
+                  <span> SIGUIENTE </span>
+                  <i class="material-icons-outlined"> navigate_next </i>
+                </a>
+              </div>
+
+            </div>
+          </transition>
+
+          <transition name="slide-fade" mode="in-out">
+            <div v-show="tab == 3" class="form_step">
               <div class="row">
                   <table class="table table-bordered table-striped table-sm">
                               <thead>
@@ -228,8 +275,10 @@
                 <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
               </div>
             </div>
+          </transition>
 
-            <div class="tab-pane fade" id="accionista" role="tabpanel" aria-labelledby="accionista-tab">
+          <transition name="slide-fade" mode="in-out">
+            <div v-show="tab == 4" class="form_step">
               <div class="row">
                   <table class="table table-bordered table-striped table-sm">
                               <thead>
@@ -265,8 +314,10 @@
                 <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
               </div>
             </div>
+          </transition>
 
-            <div class="tab-pane fade" id="asociativa"  role="tabpanel"  aria-labelledby="asociativa-tab"  >
+          <transition name="slide-fade" mode="in-out">
+            <div  v-show="tab == 5" class="form_step"  >
               <div class="row">
                 <div class="form-group col-md-3">
                     <label>Inscripcion </label>
@@ -282,8 +333,10 @@
                 <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
               </div>
             </div>
+          </transition>
 
-            <div class="tab-pane fade" id="declaracion" role="tabpanel" aria-labelledby="declaracion-tab" >
+          <transition name="slide-fade" mode="in-out">
+            <div  v-show="tab == 6" class="form_step" >
               <div class="row">
                 <div class="form-group col-md-6">
                     <label>Es sujeto a informar a la UIF Perú</label>
@@ -308,11 +361,11 @@
               <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
               <a class="btn btn-orange" @click.prevent="submit()" v-if="loading_submit=='0'">Registrar Solicitud</a>
                 <div class="container-load-register" v-else ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-lg"><path fill="currentColor" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z" class=""></path></svg> <span class="fw6 f4 ml3">Registrando</span></div>
-            </div>
+              </div>
 
             </div>
+          </transition>
 
-          </div>
         </div>
       </div>
                 
@@ -368,7 +421,8 @@ mixins: [serviceNumber],
         }
       },
       mesEs: mesConf,
-      diaEs: diaConf
+      diaEs: diaConf,
+      tab: 1
     };
   },
   async created() {
@@ -380,6 +434,9 @@ mixins: [serviceNumber],
     // });
 
     await this.initForm();
+  },
+  mounted () {
+    this.clickAddRepresentante()
   },
   methods: {
 
@@ -529,20 +586,7 @@ mixins: [serviceNumber],
           }
         })
         .catch(console.error)
-        // .catch(error => {
-        //   if (error.response.status === 422) {
-        //     this.errors = error.response.data;
-        //   } else {
-        //     this.$message.error(error.response.data.message);
-        //   }
-        // })
-        // .then(() => {
-        //   // this.loading_submit = false;
-        // });
     }
-  },
-  mounted() {
-    console.log("Component mounted.");
   }
 };
 </script>
