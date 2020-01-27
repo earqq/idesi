@@ -188,7 +188,7 @@
           <transition name="slide-fade" mode="in-out">
             <div  v-show="tab == 2" class="form_step">
               <div class="form_list" :class="{list_round: form.representante.length > 0}">
-                <div class="form_step_wrapper"   v-for="(row, index) in form.representante" :key="index">
+                <div class="form_step_wrapper"   v-for="(r, index) in form.representante" :key="index">
                   <h3 class="title">
                     Representante {{index + 1}}
                     <button  class="delete_section" type="button"  @click.prevent="clickRemoveRepresentante(index)">
@@ -199,22 +199,18 @@
                     <div class="group_form">
                       <div class="input_wrapper">
                         <label>Cargo</label>
-                        <input type="text" :maxlength="15" v-model="row.cargo"  />
+                        <input type="text" :maxlength="15" v-model="r.cargo"  />
                       </div>
 
                       <div class="input_wrapper">
                         <label>Doc. Identidad</label>
-                        <input type="text"   v-model="row.documento" v-mask="'########'" />
+                        <input type="text"   v-model="r.documento" v-mask="'########'" />
                       </div>
 
                       <div class="input_wrapper">
                         <label>Apellidos y Nombres</label>
-                        <input type="text" :maxlength="60" v-model="row.nombres"  />
+                        <input type="text" :maxlength="60" v-model="r.nombres"  />
                       </div>
-                      
-                      
-
-                      
                     </div>
                   </div>
                 </div>
@@ -242,7 +238,7 @@
           <transition name="slide-fade" mode="in-out">
             <div v-show="tab == 3" class="form_step">
               <div class="form_list">
-                <div class="form_step_wrapper"  v-for="(row, index) in form.director" :key="index">
+                <div class="form_step_wrapper"  v-for="(d, index) in form.director" :key="index">
                   <h3 class="title">
                     Director {{index + 1}}
                     <button v-if="index != 0" class="delete_section" type="button"  @click.prevent="clickRemoveDirector(index)">
@@ -253,15 +249,15 @@
                     <div class="group_form">
                       <div class="input_wrapper">
                         <label>Apellidos y Nombres</label>
-                        <input type="text" :maxlength="60" v-model="row.nombres"/>
+                        <input type="text" :maxlength="60" v-model="d.nombres"/>
                       </div>
                       <div class="input_wrapper">
                         <label>Doc. Identidad</label>
-                        <input type="number" :maxlength="8" v-model="row.documento"/>
+                        <input type="number" :maxlength="8" v-model="d.documento"/>
                       </div>
                       <div class="input_wrapper">
                         <label>Cargo</label>
-                        <input type="text" :maxlength="15" v-model="row.cargo"/>
+                        <input type="text" :maxlength="15" v-model="d.cargo"/>
                       </div>
                     </div>
                   </div>
@@ -330,7 +326,7 @@
             <div  v-show="tab == 5" class="form_step"  >
 
             <div class="form_step_wrapper">
-              <h3 class="title">Oblicaciones</h3>
+              <h3 class="title">Obligaciones</h3>
               <div class="form_content">
                 <div class="group_form">
                   <div class="input_wrapper">
@@ -389,10 +385,8 @@
                       </select>
                     </div>
                   </div>
-                  <span class="separator"></span>
-
-                  <div class="group_form">
-                     <div class="input_wrapper">
+                  <div class="group_form all">
+                    <div class="input_wrapper">
                       <label>Observaciones</label>
                       <textarea class="form-control" v-model="form.declaracion.observaciones" cols="auto" rows="5"></textarea>
                     </div>

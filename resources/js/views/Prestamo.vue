@@ -70,14 +70,13 @@
                       
                     />
                   </div>
+                </div>
+                <div class="group_form all">
                   <div class="input_wrapper">
-                    <label>Destino de crèdito en propuesta cliente</label>
-                    <input type="text" v-model="form.destino_inicial"  />
+                    <label>Destino de crédito (propuesta cliente)</label>
+                    <textarea  v-model="form.destino_inicial"  />
                   </div>
                 </div>
-
-                <span class="separator"></span>
-                <span class="separator"></span>
               </div>
             </div>
 
@@ -182,111 +181,107 @@
                     <input type="text" v-model="form.natural.direccion_laboral" />
                   </div>
                 </div>
-
-                <h3 class="title">Cònyuge o Conviviente</h3>
-                <span class="separator"></span>
-
-                <div class="group_form" v-if="form.conyugue.conyuge_tiene=='SI'">
-                  <div class="input_wrapper">
-                    <label>Documento de Identidad</label>
-                    <input
-                      type="text"
-                      v-model="form.conyugue.documento_conyugue"
-                      @change="datosCliente()"
-                      v-mask="'########'"
-                    />
-                    <div class="message">número de documento inválido</div>
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Nombres y Apellidos</label>
-                    <input type="text" v-model="form.conyugue.nombres_conyugue" />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Fecha de Nacimiento</label>
-                    <input type="date" v-model="form.conyugue.nacimiento_conyugue" />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Estado Civil</label>
-                    <select v-model="form.conyugue.estado_civil_conyugue">
-                      <option value="SOLTERO">SOLTERO</option>
-                      <option value="CASADO">CASADO</option>
-                      <option value="CONVIVIENTE">CONVIVIENTE</option>
-                      <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
-                      <option value="VIUDO">VIUDO</option>
-                    </select>
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Ocupación</label>
-                    <input type="text" v-model="form.conyugue.ocupacion_conyugue" />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Socio</label>
-                    <select v-model="form.conyugue.socio_conyugue">
-                      <option value="SI">SI</option>
-                      <option value="NO">NO</option>
-                    </select>
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Código</label>
-                    <input
-                      type="text"
-                      v-model="form.conyugue.codigo_socio_conyugue"
-                      v-if="form.conyugue.socio_conyugue=='SI'"
-                    />
-                    <input type="text" disabled v-else />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Aporte</label>
-                    <vue-numeric
-                      currency="S/. "
-                      separator=","
-                      v-model="form.conyugue.aporte_socio_conyugue"
-                      v-bind:precision="2"
-                      v-if="form.conyugue.socio_conyugue=='SI'"
-                    ></vue-numeric>
-                    <input type="text" disabled v-else />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Teléfono</label>
-                    <input type="text" v-model="form.conyugue.telefono_conyugue" />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Celular</label>
-                    <input
-                      type="text"
-                      v-mask="'### ### ###'"
-                      v-model="form.conyugue.celular_conyugue"
-                    />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Centro Laboral</label>
-                    <input type="text" v-model="form.conyugue.centro_laboral_conyugue" />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Dirección centro laboral</label>
-                    <input type="text" v-model="form.conyugue.direccion_laboral_conyugue" />
+              </div>
+            </div>
+            <button
+              type="button"
+              @click.prevent="clickAddConyuge"
+              class="add_section"
+              v-if="form.conyugue.conyuge_tiene=='NO'">
+              <span>AGREGAR CÓNYUGE O CONVIVIENTE</span>
+              <i class="fas fa-plus"></i>
+            </button>
+            <div class="form_list">
+              <div class="form_step_wrapper" v-if="form.conyugue.conyuge_tiene=='SI'">
+                <h3 class="title">
+                  Cónyuge o Conviviente
+                  <button  class="delete_section" type="button"  @click.prevent="clickRemoveConyuge()">
+                    <i class="material-icons-outlined"> delete </i>
+                  </button>
+                </h3>
+                <div class="form_content" >
+                  <div class="group_form" >
+                    <div class="input_wrapper">
+                      <label>Documento de Identidad</label>
+                      <input
+                        type="text"
+                        v-model="form.conyugue.documento_conyugue"
+                        @change="datosCliente()"
+                        v-mask="'########'"
+                      />
+                      <div class="message">número de documento inválido</div>
+                    </div>
+                    <div class="input_wrapper">
+                      <label>Nombres y Apellidos</label>
+                      <input type="text" v-model="form.conyugue.nombres_conyugue" />
+                    </div>
+                    <div class="input_wrapper">
+                      <label>Fecha de Nacimiento</label>
+                      <input type="date" v-model="form.conyugue.nacimiento_conyugue" />
+                    </div>
+                    <div class="input_wrapper">
+                      <label>Estado Civil</label>
+                      <select v-model="form.conyugue.estado_civil_conyugue">
+                        <option value="SOLTERO">SOLTERO</option>
+                        <option value="CASADO">CASADO</option>
+                        <option value="CONVIVIENTE">CONVIVIENTE</option>
+                        <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
+                        <option value="VIUDO">VIUDO</option>
+                      </select>
+                    </div>
+                    <div class="input_wrapper">
+                      <label>Ocupación</label>
+                      <input type="text" v-model="form.conyugue.ocupacion_conyugue" />
+                    </div>
+                    <div class="input_wrapper">
+                      <label>Socio</label>
+                      <select v-model="form.conyugue.socio_conyugue">
+                        <option value="SI">SI</option>
+                        <option value="NO">NO</option>
+                      </select>
+                    </div>
+                    <div class="input_wrapper">
+                      <label>Código</label>
+                      <input
+                        type="text"
+                        v-model="form.conyugue.codigo_socio_conyugue"
+                        v-if="form.conyugue.socio_conyugue=='SI'"
+                      />
+                      <input type="text" disabled v-else />
+                    </div>
+                    <div class="input_wrapper">
+                      <label>Aporte</label>
+                      <vue-numeric
+                        currency="S/. "
+                        separator=","
+                        v-model="form.conyugue.aporte_socio_conyugue"
+                        v-bind:precision="2"
+                        v-if="form.conyugue.socio_conyugue=='SI'"
+                      ></vue-numeric>
+                      <input type="text" disabled v-else />
+                    </div>
+                    <div class="input_wrapper">
+                      <label>Teléfono</label>
+                      <input type="text" v-model="form.conyugue.telefono_conyugue" />
+                    </div>
+                    <div class="input_wrapper">
+                      <label>Celular</label>
+                      <input
+                        type="text"
+                        v-mask="'### ### ###'"
+                        v-model="form.conyugue.celular_conyugue"
+                      />
+                    </div>
+                    <div class="input_wrapper">
+                      <label>Centro Laboral</label>
+                      <input type="text" v-model="form.conyugue.centro_laboral_conyugue" />
+                    </div>
+                    <div class="input_wrapper">
+                      <label>Dirección centro laboral</label>
+                      <input type="text" v-model="form.conyugue.direccion_laboral_conyugue" />
+                    </div>
                   </div>
                 </div>
-
-                <button
-                  type="button"
-                  @click.prevent="clickAddConyuge"
-                  class="add_section"
-                  v-if="form.conyugue.conyuge_tiene=='NO'"
-                >
-                  <span>AGREGAR CONYUGE Ó CONVIVIENTE</span>
-                  <i class="fas fa-plus"></i>
-                </button>
-
-                <button
-                  type="button"
-                  @click.prevent="clickRemoveConyuge"
-                  class="add_section"
-                  v-else
-                >
-                  <span>REMOVER CONYUGE Ó CONVIVIENTE</span>
-                  <i class="fas fa-plus"></i>
-                </button>
               </div>
             </div>
 
@@ -306,17 +301,14 @@
         <transition name="slide-fade" mode="in-out">
           <div v-show="tab == 3" class="form_step">
             <div class="form_step_wrapper">
-              <h3 class="title">Datos de Aval</h3>
-
               <div class="form_list" :class="{list_round: form.avals.length > 0}">
                 <div class="form_step_wrapper" v-for="(row, index) in form.avals" :key="index">
                   <h3 class="title">
                     Aval {{index + 1}}
-                    <button
+                    <button v-if="index > 0"
                       class="delete_section"
                       type="button"
-                      @click.prevent="clickRemoveAval(index)"
-                    >
+                      @click.prevent="clickRemoveAval(index)">
                       <i class="material-icons-outlined">delete</i>
                     </button>
                   </h3>
@@ -365,9 +357,18 @@
                         <input type="text" v-model="row.ocupacion" />
                       </div>
                       <div class="input_wrapper">
-                        <label>Teléfono</label>
-                        <input type="text" v-model="row.telefono" />
+                        <label>Centro Laboral</label>
+                        <input type="text" v-model="row.centro_laboral" />
                       </div>
+                      <div class="input_wrapper">
+                        <label>Dirección centro laboral</label>
+                        <input type="text" v-model="row.direccion_laboral" />
+                      </div>
+                    </div>
+
+                    <span class="separator"></span>
+
+                    <div class="group_form">
                       <div class="input_wrapper">
                         <label>Socio</label>
                         <select v-model="row.socio">
@@ -391,6 +392,15 @@
                         ></vue-numeric>
                         <input type="text" v-else disabled />
                       </div>
+                    </div>
+
+                    <span class="separator"></span>
+
+                    <div class="group_form">
+                      <div class="input_wrapper">
+                        <label>Teléfono</label>
+                        <input type="text" v-model="row.telefono" />
+                      </div>
                       <div class="input_wrapper">
                         <label>Celular</label>
                         <input type="text" v-model="row.celular" v-mask="'### ### ###'" />
@@ -402,14 +412,6 @@
                       <div class="input_wrapper">
                         <label>Distrito</label>
                         <input type="text" v-model="row.distrito" />
-                      </div>
-                      <div class="input_wrapper">
-                        <label>Centro Laboral</label>
-                        <input type="text" v-model="row.centro_laboral" />
-                      </div>
-                      <div class="input_wrapper">
-                        <label>Dirección centro laboral</label>
-                        <input type="text" v-model="row.direccion_laboral" />
                       </div>
                     </div>
                   </div>
@@ -438,17 +440,15 @@
         <transition name="slide-fade" mode="in-out">
           <div v-show="tab == 4" class="form_step">
             <div class="form_step_wrapper">
-              <h3 class="title">Datos de Garantia</h3>
-
               <div class="form_list" :class="{list_round: form.garantias.length > 0}">
                 <div class="form_step_wrapper" v-for="(row, index) in form.garantias" :key="index">
                   <h3 class="title">
                     Garantia {{index + 1}}
                     <button
+                      v-if="index > 0"
                       class="delete_section"
                       type="button"
-                      @click.prevent="clickRemoveGarantia(index)"
-                    >
+                      @click.prevent="clickRemoveGarantia(index)">
                       <i class="material-icons-outlined">delete</i>
                     </button>
                   </h3>
@@ -459,28 +459,25 @@
                         <input type="text" v-model="row.bien_garantia" />
                       </div>
 
-                      <div class="input_wrapper">
-                        <label>Ins</label>
-                        <label class="form-check-label">
-                          <input
-                            type="radio"
-                            v-model="row.tipo"
-                            class="form-check-input"
-                            value="INS"
-                          />
-                        </label>
-                      </div>
-
-                      <div class="input_wrapper">
-                        <label>D.J</label>
-                        <label class="form-check-label">
-                          <input
-                            type="radio"
-                            v-model="row.tipo"
-                            class="form-check-input"
-                            value="DJ"
-                          />
-                        </label>
+                      <div class="input_box"><label>&nbsp;</label>
+                        <div class="input_box_wrapper">
+                          <div class="input_checkbox_wrapper radio" >
+                            <input type="radio" :id="'radio'+index" :name="'garantiaType'+index" v-model="row.tipo" :value="'INS'" />
+                            <label class="box_content" :for="'radio'+index">
+                              <div class="box">
+                              </div>
+                              <span>Inscripción</span>
+                            </label>
+                          </div>
+                          <div class="input_checkbox_wrapper radio" >
+                            <input type="radio" :id="'radio2'+index" :name="'garantiaType'+index" v-model="row.tipo" :value="'DJ'" />
+                            <label class="box_content" :for="'radio2'+index">
+                              <div class="box">
+                              </div>
+                              <span>Declaración Jurada</span>
+                            </label>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -553,7 +550,6 @@
                   <div class="input_wrapper">
                     <label>Aporte</label>
                     <vue-numeric
-                      
                       currency="S/. "
                       separator=","
                       v-model="form.aporte"
@@ -566,8 +562,7 @@
                   </div>
                 </div>
 
-                <div class="separator"></div>
-                <div class="group_form">
+                <div class="group_form all">
                   <div class="input_wrapper">
                     <label>Comentarios</label>
                     <textarea type="text" v-model="form.comentarios"></textarea>
@@ -656,7 +651,9 @@ export default {
     }
   },
   created() {
-    this.initForm();
+    this.initForm()
+    this.clickAddAval()
+    this.clickAddGarantia()
 
     this.$http
       .get(`/${this.resource}/datos/prestamo/` + this.$route.params.dni)

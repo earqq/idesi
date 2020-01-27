@@ -501,7 +501,7 @@
 
                     <div class="input_wrapper" v-if="form.familia.hijos=='SI'">
                       <label>Nro de hijos</label>
-                      <input type="text" :maxlength="2" v-model="form.familia.numero">
+                      <input type="text" :maxlength="2" v-mask="'##'" v-model="form.familia.numero">
                     </div>
 
                     <div class="input_wrapper">
@@ -700,30 +700,32 @@
                 <div class="form_content">
                   <div class="group_form">
                     <div class="input_wrapper">
-                        <label>¿Es sujeto a informar a la UIF Perú?</label>
-                        <select v-model="form.declaracion.uif">
-                          <option value="SI">SI</option>
-                          <option value="NO">NO</option>
-                        </select>
-                      </div>
+                      <label>¿Es sujeto a informar a la UIF Perú?</label>
+                      <select v-model="form.declaracion.uif">
+                        <option value="SI">SI</option>
+                        <option value="NO">NO</option>
+                      </select>
+                    </div>
                     <div class="input_wrapper">
-                        <label>¿Es PEP? (persona expuesta politicamente)</label>
-                        <select v-model="form.declaracion.pep">
-                          <option value="SI">SI</option>
-                          <option value="NO">NO</option>
-                        </select>
-                      </div>
+                      <label>¿Es PEP? (persona expuesta politicamente)</label>
+                      <select v-model="form.declaracion.pep">
+                        <option value="SI">SI</option>
+                        <option value="NO">NO</option>
+                      </select>
+                    </div>
                     <div class="input_wrapper">
-                        <label>Estado</label>
-                        <select v-model="form.declaracion.estado">
-                          <option value="ADMITIDO">ADMITIDO</option>
-                          <option value="RECHAZADO">RECHAZADO</option>
-                        </select>
-                      </div>
-                    <div class="input_wrapper all">
-                        <label>OBSERVACIONES</label>
-                        <textarea v-model="form.declaracion.obervaciones" cols="auto" rows="5"></textarea>
-                      </div>
+                      <label>Estado</label>
+                      <select v-model="form.declaracion.estado">
+                        <option value="ADMITIDO">ADMITIDO</option>
+                        <option value="RECHAZADO">RECHAZADO</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="group_form all">
+                    <div class="input_wrapper">
+                      <label>Observaciones</label>
+                      <textarea v-model="form.declaracion.obervaciones" cols="auto" rows="5"></textarea>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1069,11 +1071,12 @@ export default {
   },
   watch: {
     'form.familia.numero'(new_value,old_value){
-      if (new_value < 1) this.form.familia.numero = 1
+      if (new_value == 0) this.form.familia.hijos = 'NO'
       this.hijosAsignacion(new_value,old_value)
     },
     'form.familia.hijos' (val) {
       if (val == 'NO') this.form.familia.numero = 0
+      else if (val == 'SI') this.form.familia.numero = 1
     }
   }
 };
