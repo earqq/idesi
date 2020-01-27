@@ -57,7 +57,7 @@
                 font-size: 12px
             p
                 margin: 0
-                font-size: 11px
+                font-size: 12px
                 font-weight: 700
                 margin-left: 10px
                 color: rgba($text_color, .5)
@@ -74,7 +74,7 @@
             top: 0
             width: 100%
             h3.title
-                font-size: 13px
+                font-size: 12px
                 margin: 0
                 width: 100%
                 border-bottom: 1px solid $line_color
@@ -84,6 +84,7 @@
                 align-items: center
                 justify-content: space-between
                 height: 30px
+                text-transform: uppercase
                 .delete_section
                     border: none
                     background-color: transparent
@@ -105,7 +106,7 @@
                     border-radius: 0 0 4px 4px
                     margin-top: 1px
                 .form_content
-                    padding: 25px 20px
+                    padding: 20px
                     .separator
                         display: block
                         width: 100%
@@ -128,10 +129,42 @@
                         display: grid
                         grid-template-columns: repeat(auto-fit, minmax(270px, 1fr))
                         grid-gap: 10px
+                        &.all
+                            margin-top: 10px
                         &.small
                             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
-                        .input_wrapper.all
-                            grid-column: 1 / span 3
+                        .input_box
+                            & > label
+                                font-family: $font
+                                font-weight: 500
+                                font-size: 11px
+                                margin-bottom: 4px
+                                display: block
+                            .input_box_wrapper
+                                display: grid
+                                height: 40px
+                                align-items: center
+                                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))
+                                grid-gap: 10px
+                                .input_checkbox_wrapper
+                                    height: 100%
+                                    input
+                                        &:checked + label.box_content
+                                            border: 1px solid $primary_color
+                                            color: $primary_color
+                                            font-weight: 600
+                                    & > label.box_content
+                                        border: 1px solid rgba(0, 0, 0, 0.2)
+                                        height: 100%
+                                        border-radius: 3px
+                                        display: flex
+                                        align-items: center
+                                        padding: 0 20px
+                                        box-sizing: border-box
+                                        margin-bottom: 0
+                                        span
+                                            margin-left: 10px
+
             .form_list
                 &.list_round
                     .form_step_wrapper

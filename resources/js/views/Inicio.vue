@@ -58,12 +58,13 @@ export default {
         padding: 20px
         box-sizing: border-box
         .title
-            font-size: 13px
+            font-size: 12px
             margin: 0
             width: 100%
             border-bottom: 1px solid $line_color
             font-weight: 700
             padding: 7px 20px
+            text-transform: uppercase
         .numbers_stats
             display: grid
             grid-area: numbers 

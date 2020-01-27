@@ -18991,7 +18991,7 @@ readers do not read off random characters that represent icons */
 }
 
 .input_checkbox_wrapper label.box_content span {
-  font-size: 14px;
+  font-size: 13px;
   margin-left: 7px;
 }
 
@@ -19522,7 +19522,7 @@ readers do not read off random characters that represent icons */
 
 .tabs_section .tabs_wrapper .tab p {
   margin: 0;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   margin-left: 10px;
   color: rgba(0, 0, 0, 0.5);
@@ -19546,7 +19546,7 @@ readers do not read off random characters that represent icons */
 }
 
 .client_forms .client_forms_wrapper .form_step h3.title {
-  font-size: 13px;
+  font-size: 12px;
   margin: 0;
   width: 100%;
   border-bottom: 1px solid #eef3fb;
@@ -19559,6 +19559,7 @@ readers do not read off random characters that represent icons */
   -webkit-box-pack: justify;
           justify-content: space-between;
   height: 30px;
+  text-transform: uppercase;
 }
 
 .client_forms .client_forms_wrapper .form_step h3.title .delete_section {
@@ -19597,7 +19598,7 @@ readers do not read off random characters that represent icons */
 }
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content {
-  padding: 25px 20px;
+  padding: 20px;
 }
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .separator {
@@ -19630,12 +19631,56 @@ readers do not read off random characters that represent icons */
   grid-gap: 10px;
 }
 
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form.all {
+  margin-top: 10px;
+}
+
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form.small {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
-.client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_wrapper.all {
-  grid-column: 1/span 3;
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box > label {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box .input_box_wrapper {
+  display: grid;
+  height: 40px;
+  -webkit-box-align: center;
+          align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-gap: 10px;
+}
+
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box .input_box_wrapper .input_checkbox_wrapper {
+  height: 100%;
+}
+
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box .input_box_wrapper .input_checkbox_wrapper input:checked + label.box_content {
+  border: 1px solid #0061FF;
+  color: #0061FF;
+  font-weight: 600;
+}
+
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box .input_box_wrapper .input_checkbox_wrapper > label.box_content {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  height: 100%;
+  border-radius: 3px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
+
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box .input_box_wrapper .input_checkbox_wrapper > label.box_content span {
+  margin-left: 10px;
 }
 
 .client_forms .client_forms_wrapper .form_step .form_list.list_round .form_step_wrapper:first-child {
