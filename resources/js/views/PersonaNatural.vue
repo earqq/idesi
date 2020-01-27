@@ -1070,7 +1070,7 @@ export default {
     validateProvincia () {
       return this.form.cliente.provincia.length > 2
     },
-    validateDistrito () {
+    validateDistrito () { 
       return this.form.cliente.distrito.length > 2
     },
     validateLastname () {
