@@ -19522,7 +19522,7 @@ readers do not read off random characters that represent icons */
 
 .tabs_section .tabs_wrapper .tab p {
   margin: 0;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   margin-left: 10px;
   color: rgba(0, 0, 0, 0.5);

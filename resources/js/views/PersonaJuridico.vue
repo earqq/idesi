@@ -223,11 +223,11 @@
               </button>
 
               <div class="form_buttons">
-                <a class="button_inline_primary medium prev" @click="prev(3)">
+                <a class="button_inline_primary medium prev" @click="prev(2)">
                   <i class="material-icons-outlined"> navigate_before </i>
                   <span> ATRAS </span>
                 </a>
-                <a class="button_primary medium next" @click="next(3)">
+                <a class="button_primary medium next" @click="next(2)">
                   <span> SIGUIENTE </span>
                   <i class="material-icons-outlined"> navigate_next </i>
                 </a>
@@ -238,99 +238,116 @@
 
           <transition name="slide-fade" mode="in-out">
             <div v-show="tab == 3" class="form_step">
-              <div class="row">
-                  <table class="table table-bordered table-striped table-sm">
-                              <thead>
-                                      <tr>
-                                          <th></th>
-                                          <th>Apellidos y Nombres</th>
-                                          <th>Dc. Identidad</th>
-                                          <th>Cargo</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr v-for="(row, index) in form.director" :key="index">
-                                          <td>
-                                              
-                                              <template>
-                                                  <button type="button" class="btn btn-danger btn-sm"  @click.prevent="clickRemoveDirector(index)">
-                                                      <i class="fas fa-trash"></i>
-                                                  </button>
-                                              </template>
-                                          </td>
-                                          <td><input type="text" :maxlength="60" v-model="row.nombres" class="form-control" /></td>
-                                          <td><input type="number" :maxlength="8" v-model="row.documento" class="form-control" /></td>
-                                          <td><input type="text" :maxlength="15" v-model="row.cargo" class="form-control" /></td>
-                                      </tr>                                
-                                  </tbody>
-                              </table>
-                    <div class="col-md-12">
-                        <button type="button"  @click.prevent="clickAddDirector"  class="btn btn-outline-dark more-option w-100" >
-                          <i class="fas fa-plus"></i> Agregar Director
-                        </button>
+              <div class="form_list">
+                <div class="form_step_wrapper"  v-for="(row, index) in form.director" :key="index">
+                  <h3 class="title">
+                    Director {{index + 1}}
+                    <button v-if="index != 0" class="delete_section" type="button"  @click.prevent="clickRemoveDirector(index)">
+                      <i class="material-icons-outlined"> delete </i>
+                    </button>
+                  </h3>
+                  <div class="form_content">
+                    <div class="group_form">
+                      <div class="input_wrapper">
+                        <label>Apellidos y Nombres</label>
+                        <input type="text" :maxlength="60" v-model="row.nombres"/>
+                      </div>
+                      <div class="input_wrapper">
+                        <label>Doc. Identidad</label>
+                        <input type="number" :maxlength="8" v-model="row.documento"/>
+                      </div>
+                      <div class="input_wrapper">
+                        <label>Cargo</label>
+                        <input type="text" :maxlength="15" v-model="row.cargo"/>
+                      </div>
                     </div>
+                  </div>
+                </div>
               </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+              <button type="button"  @click="clickAddDirector"  class="add_section" >
+                <span> AGREGAR DIRECTOR </span>
+                <i class="fas fa-plus"></i> 
+              </button>
+              <div class="form_buttons">
+                <a class="button_inline_primary medium prev" @click="prev(3)">
+                  <i class="material-icons-outlined"> navigate_before </i>
+                  <span> ATRAS </span>
+                </a>
+                <a class="button_primary medium next" @click="next(3)">
+                  <span> SIGUIENTE </span>
+                  <i class="material-icons-outlined"> navigate_next </i>
+                </a>
               </div>
             </div>
           </transition>
 
           <transition name="slide-fade" mode="in-out">
             <div v-show="tab == 4" class="form_step">
-              <div class="row">
-                  <table class="table table-bordered table-striped table-sm">
-                              <thead>
-                                      <tr>
-                                          <th></th>
-                                          <th>Apellidos y Nombres</th>
-                                          <th>Dc. Identidad</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr v-for="(row, index) in form.accionista" :key="index">
-                                          <td>
-                                              
-                                              <template>
-                                                  <button type="button" class="btn btn-danger btn-sm"  @click.prevent="clickRemoveAccionista(index)">
-                                                      <i class="fas fa-trash"></i>
-                                                  </button>
-                                              </template>
-                                          </td>
-                                          <td><input type="text" :maxlength="60" v-model="row.nombres" class="form-control" /></td>
-                                          <td><input type="number" :maxlength="8" v-model="row.documento" class="form-control" /></td>
-                                      </tr>                                
-                                  </tbody>
-                              </table>
-                    <div class="col-md-12">
-                        <button type="button"  @click.prevent="clickAddAccionista"  class="btn btn-outline-dark more-option w-100" >
-                          <i class="fas fa-plus"></i> Agregar Accionista
-                        </button>
+              <div class="form_list">
+                <div class="form_step_wrapper" v-for="(a, index) in form.accionista" :key="index">
+                  <h3 class="title">
+                    Accionista {{index + 1}}
+                    <button v-if="index != 0" class="delete_section" type="button"  @click.prevent="clickRemoveAccionista(index)">
+                      <i class="material-icons-outlined"> delete </i>
+                    </button>
+                  </h3>
+                  <div class="form_content">
+                    <div class="group_form">
+                      <div class="input_wrapper">
+                        <label> Apellidos y Nombres </label>
+                        <input type="text" :maxlength="60" v-model="a.nombres"/>
+                      </div>
+                      <div class="input_wrapper">
+                        <label> Doc. Identidad </label>
+                        <input type="number" :maxlength="8" v-model="a.documento"/>
+                      </div>
                     </div>
+                  </div>
+                </div>
               </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+
+              <button type="button"  @click="clickAddAccionista"  class="add_section" >
+                <span> AGREGAR ACCIONISTA </span>
+                <i class="fas fa-plus"></i> 
+              </button>
+              <div class="form_buttons">
+                <a class="button_inline_primary medium prev" @click="prev(4)">
+                  <i class="material-icons-outlined"> navigate_before </i>
+                  <span> ATRAS </span>
+                </a>
+                <a class="button_primary medium next" @click="next(4)">
+                  <span> SIGUIENTE </span>
+                  <i class="material-icons-outlined"> navigate_next </i>
+                </a>
               </div>
             </div>
           </transition>
 
           <transition name="slide-fade" mode="in-out">
             <div  v-show="tab == 5" class="form_step"  >
-              <div class="row">
-                <div class="form-group col-md-3">
-                    <label>Inscripcion </label>
-                    <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.inscripcion"  v-bind:precision="2"></vue-numeric>
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Aporte </label>
-                    <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.aporte"  v-bind:precision="2"></vue-numeric>
+              <div class="form_step_wrapper">
+                <div class="form_content">
+                  <div class="group_form">
+                    <div class="input_wrapper">
+                      <label>Inscripción </label>
+                      <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.inscripcion"  v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                        <label>Aporte </label>
+                        <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.aporte"  v-bind:precision="2"></vue-numeric>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
+              <div class="form_buttons">
+                <a class="button_inline_primary medium prev" @click="prev(5)">
+                  <i class="material-icons-outlined"> navigate_before </i>
+                  <span> ATRAS </span>
+                </a>
+                <a class="button_primary medium next" @click="next(5)">
+                  <span> SIGUIENTE </span>
+                  <i class="material-icons-outlined"> navigate_next </i>
+                </a>
               </div>
             </div>
           </transition>
@@ -437,24 +454,16 @@ mixins: [serviceNumber],
   },
   mounted () {
     this.clickAddRepresentante()
+    this.clickAddDirector()
+    this.clickAddAccionista()
   },
   methods: {
-
-    next() {
-      $(".nav-tabs .active")
-        .parent()
-        .next("li")
-        .find("a")
-        .trigger("click");
+    next(index) {
+      this.tab = index + 1
     },
-    previous() {
-      $(".nav-tabs .active")
-        .parent()
-        .prev("li")
-        .find("a")
-        .trigger("click");
+    prev(index) {
+      this.tab = index - 1
     },
-
     initForm() {
       this.form = {
         cliente:{
