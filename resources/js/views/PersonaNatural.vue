@@ -62,7 +62,7 @@
 
                     <div class="input_wrapper">
                       <label for="nacimiento">Fecha de Nacimiento</label>
-                      <date-pick v-model="form.natural.nacimiento" :months="mesEs" :weekdays="diaEs"></date-pick>
+                      <input type="date" v-model="form.natural.nacimiento" > 
                     </div>
 
                     <div class="input_wrapper" :class="{require: !validateName}">
@@ -77,24 +77,28 @@
                       <div class="message">apellidos muy corto</div>
                     </div>
 
-                    <div class="input_wrapper">
+                    <div class="input_wrapper" :class="{require: !validateNacionalidad}">
                       <label for="apellidos">Nacionalidad</label>
                       <input type="text"  :maxlength="15"  v-model="form.cliente.pais"/>
+                      <div class="message">nacionalidad invalida</div>
                     </div>
 
-                    <div class="input_wrapper">
+                    <div class="input_wrapper" :class="{require: !validateDepartamento}">
                       <label for="apellidos">Departamento de Nacimiento</label>
                       <input type="text" v-model="form.cliente.departamento" :maxlength="45"  />
+                      <div class="message">nombre de departamento muy corto</div>
                     </div>
 
-                    <div class="input_wrapper">
+                    <div class="input_wrapper" :class="{require: !validateProvincia}">
                       <label for="apellidos">Provincia de Nacimiento</label>
                       <input type="text" v-model="form.cliente.provincia" :maxlength="45"  />
+                      <div class="message">nombre de provincia muy corto</div>
                     </div>
 
-                    <div class="input_wrapper">
+                    <div class="input_wrapper" :class="{require: !validateDistrito}">
                       <label for="apellidos">Distrito de Nacimiento</label>
                       <input type="text" v-model="form.cliente.distrito" :maxlength="45"  />
+                      <div class="message">nombre de distrito muy corto</div>
                     </div>
 
                   </div>
@@ -560,7 +564,7 @@
 
                       <div class="input_wrapper">
                         <label> Fecha de Nacimiento </label>
-                        <date-pick v-model="row.nacimiento" :months="mesEs" :weekdays="diaEs"></date-pick>
+                        <input type="date" v-model="row.nacimiento">
                       </div>
 
                       <div class="input_wrapper">
@@ -898,7 +902,7 @@ export default {
         
         },
          familia:{
-          hijos: "SI",
+          hijos: "NO",
           numero:0,
           conyugue:"NO",
           ocupacion:"AMA DE CASA",
@@ -1053,7 +1057,20 @@ export default {
     }
   },
   computed: {
+
     validateName () {
+      return this.form.natural.nombres.length > 2
+    },
+    validateNacionalidad () {
+      return this.form.natural.nombres.length > 2
+    },
+    validateDepartamento () {
+      return this.form.natural.nombres.length > 2
+    },
+    validateProvincia () {
+      return this.form.natural.nombres.length > 2
+    },
+    validateDistrito () {
       return this.form.natural.nombres.length > 2
     },
     validateLastname () {

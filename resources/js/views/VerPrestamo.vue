@@ -743,7 +743,7 @@ export default {
         nombres: "",
         apellidos: "",
         nacimiento: "",
-        estado_civil: "0",
+        estado_civil: "SOLTERO",
         ocupacion: "",
         telefono: "",
         celular: "",
@@ -751,10 +751,10 @@ export default {
         distrito: "",
         centro_laboral: "",
         direccion_laboral: "",
-        socio: 0,
+        socio: "NO",
         codigo_socio: "",
         aporte_socio: "",
-        tipo_persona: 0
+        tipo_persona: "pn"
       });
     },
     meses_numero(){
