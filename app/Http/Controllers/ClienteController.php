@@ -676,7 +676,8 @@ class ClienteController extends Controller
             
             $prestamo->save();
 
-            if($request->input('idprestamo')<0){
+            
+                Aval::where('prestamos_id', $prestamo->id)->delete();
                 foreach ($request->avals as $ep=>$avals) {
                     $aval= new Aval;
                     $aval->documento = $avals['documento'];
@@ -699,6 +700,7 @@ class ClienteController extends Controller
                     $aval->save();
                 }
     
+                Garantia::where('prestamos_id', $prestamo->id)->delete();
                 foreach ($request->garantias as $ep=>$garantias) {
                     $garantia= new Garantia;
                     $garantia->bien_garantia = $garantias['bien_garantia'];
@@ -714,7 +716,7 @@ class ClienteController extends Controller
                     $garantia->save();
                 }
     
-    
+            if($request->input('idprestamo')<0){
                 $subido= new Subido;
                 $subido->prestamos_id=$prestamo->id;
                 $subido->save();
@@ -837,6 +839,8 @@ class ClienteController extends Controller
             $prestamo->comentarios = $request->input('comentarios');
             $prestamo->estado = $request->input('estado');
             $prestamo->save();
+            
+            Aval::where('prestamos_id', $prestamo->id)->delete();
 
             foreach ($request->avals as $ep=>$avals) {
                 $aval= new Aval;
@@ -860,6 +864,7 @@ class ClienteController extends Controller
                 $aval->save();
             }
 
+            Garantia::where('prestamos_id', $prestamo->id)->delete();
             foreach ($request->garantias as $ep=>$garantias) {
                 $garantia= new Garantia;
                 $garantia->bien_garantia = $garantias['bien_garantia'];
@@ -873,15 +878,16 @@ class ClienteController extends Controller
                 $garantia->save();
             }
 
+            if($request->input('idprestamo')<0){
+                $subido= new Subido;
+                $subido->prestamos_id=$prestamo->id;
+                $subido->save();
 
-            $subido= new Subido;
-            $subido->prestamos_id=$prestamo->id;
-            $subido->save();
-
-            $subidos = Subido::find($subido->id);
-            $subidos->solicitud_credito=1;
-            $subidos->inscripcion_socio=1;
-            $subidos->save();
+                $subidos = Subido::find($subido->id);
+                $subidos->solicitud_credito=1;
+                $subidos->inscripcion_socio=1;
+                $subidos->save();
+            }
 
             // $cuantitativa = new ResultadoCuantitativa;
             // $cuantitativa->prestamo_id= $prestamo->id;
