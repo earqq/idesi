@@ -1,11 +1,5 @@
 <template>
   <div class="container-general">
-    <!-- <header>
-        <span @click="retornar()">
-          <i class="fas fa-angle-left"></i>
-        </span>
-        <h1>Subir archivo</h1>
-    </header>-->
     <div class="gm-grid-container-file">
 
       <div class="new-file">
@@ -56,6 +50,11 @@
           <div class="col-md-12" style="    padding-top: 30px;">
             <button type="button" @click="submit" class="btn btn-crecer w-100">Nuevo Archivo</button>
           </div>
+
+          <div class="col-md-12" style="    padding-top: 30px;">
+            <button type="button" @click="cargarPdf()" class="btn btn-crecer w-100">Adjuntar Archivos</button>
+          </div>
+
           <div class="col-md-3"></div>
         </div>
       </div>
@@ -117,7 +116,7 @@
               </a>
             </div>
 
-            <div class="type file-document" v-if="archivo.tipo=='documento'">
+            <div class="type file-document" v-if="archivo.tipo=='documento' && archivo.nombre!='evaluacion_cualitativa' && archivo.nombre!='evaluacion_cuantitativa' ">
               <button
                 class="btn btn-def "
                 title="Delete"
@@ -137,9 +136,8 @@
                 </div>
               </a>
               
-
-   
             </div>
+
           </div>
 
           <div

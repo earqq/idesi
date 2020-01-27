@@ -1,626 +1,578 @@
 <template >
-  <div class="container-general">
-    <header>
-      <span @click="retornar()">
-        <i class="fas fa-angle-left"></i>
-      </span>
-      <h1>Evaluacion Cualitativa</h1>
-    </header>
-
-    <div class="row m-0 d-flex justify-content-center">
-      <div class="col-md-12 p-0">
-        <div class="nav-tabs style-tab-menu">
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item col-md-2">
-              <a
-                class="nav-link active text-center"
-                id="personal-tab"
-                data-toggle="tab"
-                href="#personal"
-                role="tab"
-                aria-controls="personal"
-                aria-selected="true"
-              >Datos Principales</a>
-            </li>
-
-            <li class="nav-item col-md-2">
-              <a
-                class="nav-link text-center"
-                id="laboral-tab"
-                data-toggle="tab"
-                href="#laboral"
-                role="tab"
-                aria-controls="laboral"
-                aria-selected="false"
-                v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ' "
-              >Datos Negocio</a> 
-              <a
-                class="nav-link text-center"
-                id="laboral-tab"
-                data-toggle="tab"
-                href="#laboral"
-                role="tab"
-                aria-controls="laboral"
-                aria-selected="false"
-                v-else
-              >Datos Vehiculo</a>
-            </li>
-            <li class="nav-item col-md-2">
-              <a
-                class="nav-link text-center"
-                id="familiar-tab"
-                data-toggle="tab"
-                href="#familiar"
-                role="tab"
-                aria-controls="familiar"
-                aria-selected="false"
-              >Datos Familiares</a>
-            </li>
-            <li class="nav-item col-md-2">
-              <a
-                class="nav-link text-center"
-                id="adicional-tab"
-                data-toggle="tab"
-                href="#adicional"
-                role="tab"
-                aria-controls="adicional"
-                aria-selected="false"
-              >Central de Riesgo</a>
-            </li>
-            <li class="nav-item col-md-2">
-              <a
-                class="nav-link text-center"
-                id="asociativa-tab"
-                data-toggle="tab"
-                href="#asociativa"
-                role="tab"
-                aria-controls="asociativa"
-                aria-selected="false"
-              >Referencias</a>
-            </li>
-            <li class="nav-item col-md-2">
-              <a
-                class="nav-link text-center"
-                id="declaracion-tab"
-                data-toggle="tab"
-                href="#declaracion"
-                role="tab"
-                aria-controls="declaracion"
-                aria-selected="false"
-              >Colateral</a>
-            </li>
-          </ul>
+    <div class="create_client_content">
+      <section class="tabs_section">
+        <div class="tabs_wrapper">
+          <div class="tab"  @click="tab = 1" :class="[{complete : validateStep1 }, {selected: tab == 1}]" >
+            <span>1</span>
+            <p>DATOS PRINCIPALES</p>
+          </div>
+          <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
+            <span>2</span>
+            <p>DATOS NEGOCIO</p>
+          </div>
+          <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
+            <span>3</span>
+            <p>DATOS FAMILIARES</p>
+          </div>
+          <div class="tab" @click="tab = 4" :class="{selected: tab == 4}">
+            <span>4</span>
+            <p>CENTRAL DE RIESGO</p>
+          </div>
+          <div class="tab" @click="tab = 5" :class="{selected: tab ==5}">
+            <span>5</span>
+            <p>REFERENCIAS</p>
+          </div>
+          <div class="tab" @click="tab = 6" :class="{selected: tab ==6}">
+            <span>6</span>
+            <p>COLATERAL</p>
+          </div>
         </div>
+      </section>
 
-        <div class="col-md-12 body-tabs">
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab" >
-              <div class="row">
-                <div class="col-md-12 p-0">
-                  <div class="card" style>
-                    <div class="card-header d-flex justify-content-between">
-                      <strong>Datos principales</strong>
-                    </div>
-                    <div class="card-body row">
-                      <div class="form-group col-md-4">
+       <section class="client_forms">
+          <div class="client_forms_wrapper">
+            
+            <transition name="slide-fade" mode="in-out">
+              <div v-show="tab == 1" class="form_step">
+                <div class="form_step_wrapper">
+
+                  <h3 class="title">Datos Principales</h3>
+
+                  <div class="form_content">
+
+                    <div class="group_form">
+
+                      <div class="input_wrapper">
                         <label>Fuente de ingreso</label>
                         <v-select
-                          label="giro_negocio"
-                          :options="giros"
-                          :reduce="giros => giros.giro_negocio"
-                          placeholder="Buscar Giro..."
-                          v-model="evaluacion.principal.fuente_ingreso"
-                        ></v-select>
-                      </div>
-                      <div class="form-group col-md-4">
-                        <label>Destino del credito</label>
-                        <select v-model="evaluacion.principal.destino_credito" class="form-control">
-                          <option value="1">Capital de trabajo</option>
-                          <option value="2">Activo Fijo</option>
-                          <option value="3">Consumo</option>
-                          <option value="4">Vehiculo</option>
-                          <option value="5">Hipotecario</option>
-                          <option value="6">Mejoramiento de vivienda</option>
-                          <option value="7">Compra de deuda</option>
-                        </select>
+                              label="giro_negocio"
+                              :options="giros"
+                              :reduce="giros => giros.giro_negocio"
+                              placeholder="Buscar Giro..."
+                              v-model="evaluacion.principal.fuente_ingreso"
+                            ></v-select>
                       </div>
 
-                      <div class="form-group col-md-4">
+                      <div class="input_wrapper">
+                        <label>Destino del credito</label>
+                        <select v-model="evaluacion.principal.destino_credito">
+                              <option value="1">Capital de trabajo</option>
+                              <option value="2">Activo Fijo</option>
+                              <option value="3">Consumo</option>
+                              <option value="4">Vehiculo</option>
+                              <option value="5">Hipotecario</option>
+                              <option value="6">Mejoramiento de vivienda</option>
+                              <option value="7">Compra de deuda</option>
+                            </select>
+                      </div>
+
+                      <div class="input_wrapper">
                         <label>Descripcion destino</label>
                         <input
-                          type="text"
-                          v-model="evaluacion.principal.destino_credito_descripcion"
-                          class="form-control"
+                              type="text"
+                              v-model="evaluacion.principal.destino_credito_descripcion"
                         />
                       </div>
                     </div>
+
+                    <span class="separator"></span>
                   </div>
                 </div>
-              </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
-              </div>
-            </div>
 
-            <div class="tab-pane fade" id="laboral" role="tabpanel" aria-labelledby="laboral-tab">
-              <div class="row">
-                <div class="col-md-12 p-0">
-                  <div class="card" style>
-                    <div class="card-header d-flex justify-content-between">
-                      <strong v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ'">Datos del negocio</strong>
-                      <strong v-else>Datos del Vehiculo</strong>
-                    </div>
-                    <div class="card-body row">
-                      <div
-                        class="col-md-12 row"
-                        v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ' "
-                      >
-                        <div class="form-group col-md-4">
-                          <label>Ubicacion del negocio</label>
-                          <input
-                            type="text"
-                            v-model="evaluacion.negocio.ubicacion"
-                            class="form-control"
-                          />
-                        </div>
-
-                        <div class="form-group col-md-2">
-                          <label>Antiguedad</label>
-                          <select v-model="evaluacion.negocio.antiguedad" class="form-control">
-                            <option value="0">Menos de 1 año</option>
-                            <option value="1">1 año</option>
-                            <option value="2">2 años</option>
-                            <option value="3">3 años</option>
-                            <option value="4">4 años</option>
-                            <option value="5">5 años</option>
-                            <option value="6">Más de 5 años</option>
-                          </select>
-                        </div>
-
-                        <div class="form-group col-md-2">
-                          <label>Local</label>
-                          <select v-model="evaluacion.negocio.local" class="form-control">
-                            <option value="1">Propio</option>
-                            <option value="2">Alquilado</option>
-                            <option value="3">Módulo V. pública</option>
-                            <option value="4">Familiar</option>
-                            <option value="5">Hipotec/anticresis</option>
-                          </select>
-                        </div>
-
-                        <div class="form-group col-md-2">
-                          <label>Licencia de Funcionamiento</label>
-                          <select
-                            v-model="evaluacion.negocio.licencia_funcionamiento"
-                            class="form-control"
-                          >
-                            <option value="1">Si cuenta</option>
-                            <option value="0">No cuenta</option>
-                          </select>
-                        </div>
-
-                        <div class="form-group col-md-2">
-                          <label>Realizo mejoras en el local</label>
-                          <select v-model="evaluacion.negocio.mejoras_local" class="form-control">
-                            <option value="1">Si realizo</option>
-                            <option value="0">No realizo</option>
-                          </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                          <label>Horario de atención entrada</label>
-                          <input type='time' v-model='evaluacion.negocio.horario_atencion_inicio' class='form-control'>
-                        </div>
-                        <div class="form-group col-md-2">
-                          <label>Horario de atención salida</label>
-                          <input type='time' v-model='evaluacion.negocio.horario_atencion_salida' class='form-control'>
-                        </div>
-                      </div>
-                      
-                      <div class="col-md-12 row" v-else>
-                        <div class="form-group col-md-2">
-                          <label>Marca</label>
-                          <input
-                            type="text"
-                            v-model="evaluacion.vehiculo.marca"
-                            class="form-control"
-                          />
-                        </div>
-
-                        <div class="form-group col-md-2">
-                          <label>Modelo</label>
-                          <input
-                            type="text"
-                            v-model="evaluacion.vehiculo.modelo"
-                            class="form-control"
-                          />
-                        </div>
-
-                        <div class="form-group col-md-1">
-                          <label>Año fabricación</label>
-                          <select v-model="evaluacion.vehiculo.año" class="form-control">
-                            <option value="1995">1995</option>
-                            <option value="1996">1996</option>
-                            <option value="1997">1997</option>
-                            <option value="1998">1998</option>
-                            <option value="1999">1999</option>
-                            <option value="2001">2001</option>
-                            <option value="2002">2002</option>
-                            <option value="2003">2003</option>
-                            <option value="2004">2004</option>
-                            <option value="2005">2005</option>
-                            <option value="2006">2006</option>
-                            <option value="2007">2007</option>
-                            <option value="2008">2008</option>
-                            <option value="2009">2009</option>
-                            <option value="2010">2010</option>
-                            <option value="2011">2011</option>
-                            <option value="2012">2012</option>
-                            <option value="2013">2013</option>
-                            <option value="2014">2014</option>
-                            <option value="2015">2015</option>
-                            <option value="2016">2016</option>
-                            <option value="2017">2017</option>
-                            <option value="2018">2018</option>
-                            <option value="2018">2018</option>
-                            <option value="2019">2019</option>
-                          </select>
-                        </div>
-
-                        <div class="form-group col-md-2">
-                          <label>Tipo servicio que brinda</label>
-                          <input
-                            type="text"
-                            v-model="evaluacion.vehiculo.tipo_servicio_brinda"
-                            class="form-control"
-                          />
-                        </div>
-
-                        <div class="form-group col-md-2">
-                          <label>Antiguedad realizando el servicio</label>
-                          <input
-                            type="text"
-                            v-model="evaluacion.vehiculo.antiguedad_servicio"
-                            class="form-control"
-                          />
-                        </div>
-
-                        <div class="form-group col-md-2">
-                          <label>Permiso para brindar servicio</label>
-                          <select
-                            v-model="evaluacion.vehiculo.permiso_servicio"
-                            class="form-control"
-                          >
-                            <option value="1">Si cuenta</option>
-                            <option value="0">No cuenta</option>
-                          </select>
-                        </div>
-
-                        <div class="form-group col-md-1">
-                          <label>Horario trabajo inicio</label>
-                          <input
-                            type="time"
-                            v-model="evaluacion.vehiculo.horario_servicio_inicio"
-                            class="form-control"
-                          />
-                        </div>
-
-                        <div class="form-group col-md-1">
-                          <label>Horario trabajo fin</label>
-                          <input
-                            type="time"
-                            v-model="evaluacion.vehiculo.horario_servicio_fin"
-                            class="form-control"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div class="form_buttons">
+                  <a class="button_primary medium next" @click="next(1)">
+                    <span>SIGUIENTE</span>
+                    <i class="material-icons-outlined">navigate_next</i>
+                  </a>
                 </div>
               </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
-              </div>
-            </div>
+              
+            </transition>
 
-            <div class="tab-pane fade" id="familiar" role="tabpanel" aria-labelledby="familiar-tab">
-              <div class="row">
-                <div class="col-md-12 p-0">
-                  <div class="card" style>
-                    <div class="card-header d-flex justify-content-between">
-                      <strong>Informacion Familiar</strong>
-                    </div>
-                    <div class="card-body row">
-                      <div class="form-group col-md-4">
-                        <label>Tipo de vivienda</label>
-                        <select v-model="evaluacion.familiar.tipo_vivienda" class="form-control">
-                          <option value="1">Propia Cancelada</option>
-                          <option value="2">Propia (hipoteca)</option>
-                          <option value="3">De los padres</option>
-                          <option value="4">De familiares</option>
-                          <option value="5">Alquilada</option>
-                        </select>
-                      </div>
+            <transition name="slide-fade" mode="in-out">
+                <div v-show="tab == 2" class="form_step">
+                  <div class="form_step_wrapper">
 
-                      <div class="form-group col-md-4">
-                        <label>Situacion familiar</label>
-                        <select
-                          v-model="evaluacion.familiar.situacion_familiar"
-                          class="form-control"
-                        >
-                          <option value="1">Soltero</option>
-                          <option value="2">Casado</option>
-                          <option value="3">Conviviente</option>
-                        </select>
-                      </div>
+                    <h3 class="title" v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ'">Datos del Negocio</h3>
+                    <h3 class="title" v-else>Datos del Vehiculo</h3>
+                    <div class="form_content">
 
-                      <div class="form-group col-md-4">
-                        <label>Miembros de familia</label>
-                        <input
-                          type="number"
-                          v-model="evaluacion.familiar.miembros_familia"
-                          class="form-control"
-                          disabled
-                        />
-                      </div>
+                      <div class="group_form"  v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ' ">
 
-                      <div class="form-group col-md-12" v-if="evaluacion.familiar.numero_hijos>0">
-                        <table class="table table-bordered table-striped table-sm">
-                          <thead>
-                            <tr>
-                              <th style="width: 25%;">Edad</th>
-                              <th style="width: 25%;">Colegio</th>
-                              <th style="width: 25%;">Grado</th>
-                              <th style="width: 25%;">Costo</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="(hijo, index) in evaluacion.familiar.hijos" :key="index">
-                              <td>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  v-model="hijo.edad"
-                                />
-                              </td>
-                              <td>
-                                <select
-                                  v-model="hijo.colegio"
-                                  class="form-control"
-                                  @change="seleccionColegiosCosto(index)"
-                                >
-                                  <option
-                                    v-for="(colegio,index) in colegios"
-                                    v-bind:value="colegio.nombre"
-                                    :key="index"
-                                  >{{ colegio.nombre }}</option>
-                                </select>
-
-                              </td>
-                              <td>
-                                <select
-                                  v-model="hijo.grado"
-                                  class="form-control"
-                                  @change="seleccionColegiosCosto(index)"
-                                >
-                                  <option value="INICIAL">INICIAL</option>
-                                  <option value="PRIMARIA">PRIMARIA</option>
-                                  <option value="SECUNDARIA">SECUNDARIA</option>
-                                </select>
-                              </td>
-                              <td>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  :value="'S/. '+hijo.costo"
-                                  disabled
-                                />
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-
-                      <div class="form-group col-md-12" v-else>
-                        <p class="text-center">No registra hijos</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
-              </div>
-            </div>
-
-            <div  class="tab-pane fade" id="adicional" role="tabpanel" aria-labelledby="adicional-tab" >
-              <div class="row">
-                <div class="col-md-12 p-0">
-                  <div class="card" style>
-                    <div class="card-header d-flex justify-content-between">
-                      <strong>COMENTARIOS (CENTRAL DE RIESGO)</strong>
-                    </div>
-                    <div class="card-body row">
-                      <div class="form-group col-md-12">
-                        <table class="table table-bordered table-striped table-sm">
-                          <tr>
-                            <td>Entidad Financiera</td>
-                            <td>Capital de Trabajo</td>
-                            <td>Activo Fijo</td>
-                            <td>Consumo</td>
-                            <td>Vehicular</td>
-                            <td>Hipotecario</td>
-                            <td>Terceros</td>
-                          </tr>
-                          <tr v-for='(entidad_financiera,index) in evaluacion.central_riesgo' :key="index">
-                            <td>
-                              <v-select
-                                  label="nombre"
-                                  :options="entidades"
-                                  :reduce="entidades => entidades.nombre"
-                                  placeholder="Buscar Entidad"
-                                  v-model="entidad_financiera.entidad_financiera"
-                                ></v-select> 
-                            </td>
-                            <td>
-                              <input type="checkbox" v-model="entidad_financiera.capital" />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="entidad_financiera.activo_f"
-                              />
-                            </td>
-                            <td>
-                              <input type="checkbox" v-model="entidad_financiera.consumo" />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="entidad_financiera.vehicular"
-                              />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="entidad_financiera.hipoteca"
-                              />
-                            </td>
-                            <td>
-                              <input
-                                type="checkbox"
-                                v-model="entidad_financiera.terceros"
-                              />
-                            </td>
-                          </tr>
-                        </table>
-                      </div>
-                      <div class="form-group col-md-12">
-                        <label for>Comentarios</label>
-                        <textarea class="form-control" v-model="evaluacion.comentario_central_riesgo"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
-              </div>
-            </div>
-
-            <div  class="tab-pane fade" id="asociativa"  role="tabpanel" aria-labelledby="asociativa-tab" >
-              <div class="row">
-                      <div class="col-md-12 p-0">
-                          <div class="card" style>
-                            <div class="card-header d-flex justify-content-between">
-                              <strong>REFERENCIAS PERSONALES(Familiares, compañeros de trabajo, vecinos)</strong>
+                            <div class="input_wrapper">
+                              <label>Ubicacion del negocio</label>
+                              <input type="text" v-model="evaluacion.negocio.ubicacion"  />
                             </div>
-                            <div class="card-body row">
-                              <div class="form-group col-md-12">
-                                <table class="table table-bordered table-striped table-sm">
-                                  <tr>
-                                    <td>Tipo de relación</td>
-                                    <td>Nombre</td>
-                                    <td>Telefono</td>
-                                  </tr>
-                                  <tr v-for='(referencia,index) in evaluacion.referencias' :key='index'>
-                                    <td>
+                            
+                            <div class="input_wrapper">
+                              <label>Antiguedad</label>
+                              <select v-model="evaluacion.negocio.antiguedad" >
+                                <option value="0">Menos de 1 año</option>
+                                <option value="1">1 año</option>
+                                <option value="2">2 años</option>
+                                <option value="3">3 años</option>
+                                <option value="4">4 años</option>
+                                <option value="5">5 años</option>
+                                <option value="6">Más de 5 años</option>
+                              </select>
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Local</label>
+                              <select v-model="evaluacion.negocio.local" >
+                                <option value="1">Propio</option>
+                                <option value="2">Alquilado</option>
+                                <option value="3">Módulo V. pública</option>
+                                <option value="4">Familiar</option>
+                                <option value="5">Hipotec/anticresis</option>
+                              </select>
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Licencia de Funcionamiento</label>
+                              <select  v-model="evaluacion.negocio.licencia_funcionamiento" >
+                                <option value="1">Si cuenta</option>
+                                <option value="0">No cuenta</option>
+                              </select>
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Realizo mejoras en el local</label>
+                              <select v-model="evaluacion.negocio.mejoras_local" >
+                                <option value="1">Si realizo</option>
+                                <option value="0">No realizo</option>
+                              </select>
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Horario de atención entrada</label>
+                              <input type='time' v-model='evaluacion.negocio.horario_atencion_inicio' >
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Horario de atención salida</label>
+                              <input type='time' v-model='evaluacion.negocio.horario_atencion_salida' >
+                            </div>
+
+                      </div>
+
+                      <div class="group_form" v-else>
+
+                            <div class="input_wrapper">
+                              <label>Marca</label>
+                              <input type="text" v-model="evaluacion.vehiculo.marca"  />
+                            </div>
+                            
+                            <div class="input_wrapper">
+                              <label>Modelo</label>
+                              <input type="text" v-model="evaluacion.vehiculo.modelo"  />
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Año fabricación</label>
+                              
+                              <select v-model="evaluacion.vehiculo.año" >
+                                <option value="1995">1995</option>
+                                <option value="1996">1996</option>
+                                <option value="1997">1997</option>
+                                <option value="1998">1998</option>
+                                <option value="1999">1999</option>
+                                <option value="2001">2001</option>
+                                <option value="2002">2002</option>
+                                <option value="2003">2003</option>
+                                <option value="2004">2004</option>
+                                <option value="2005">2005</option>
+                                <option value="2006">2006</option>
+                                <option value="2007">2007</option>
+                                <option value="2008">2008</option>
+                                <option value="2009">2009</option>
+                                <option value="2010">2010</option>
+                                <option value="2011">2011</option>
+                                <option value="2012">2012</option>
+                                <option value="2013">2013</option>
+                                <option value="2014">2014</option>
+                                <option value="2015">2015</option>
+                                <option value="2016">2016</option>
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                              </select>
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Tipo servicio que brinda</label>
+                              <input type="text" v-model="evaluacion.vehiculo.tipo_servicio_brinda"  />
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Antiguedad realizando el servicio</label>
+                              <input type="text" v-model="evaluacion.vehiculo.antiguedad_servicio"  />
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Permiso para brindar servicio</label>
+                              <select v-model="evaluacion.vehiculo.permiso_servicio" >
+                                <option value="1">Si cuenta</option>
+                                <option value="0">No cuenta</option>
+                              </select>
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Horario trabajo inicio</label>
+                              <input type='time' v-model="evaluacion.vehiculo.horario_servicio_inicio">
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Horario trabajo inicio</label>
+                              <input type='time' v-model="evaluacion.vehiculo.horario_servicio_fin" >
+                            </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="form_buttons">
+                    <a class="button_inline_primary medium prev" @click="prev(2)">
+                      <i class="material-icons-outlined">navigate_before</i>
+                      <span>ATRAS</span>
+                    </a>
+                    <a class="button_primary medium next" @click="next(2)">
+                      <span>SIGUIENTE</span>
+                      <i class="material-icons-outlined">navigate_next</i>
+                    </a>
+                  </div>
+
+                </div>
+          
+            </transition>
+
+            <transition name="slide-fade" mode="in-out">
+                <div v-show="tab == 3" class="form_step">
+                  <div class="form_step_wrapper">
+
+                    <h3 class="title">Información Familiar</h3>
+
+                    <div class="form_content">
+
+                      <div class="group_form"  >
+                            <div class="input_wrapper">
+                              <label>Tipo de vivienda</label>
+                              <select v-model="evaluacion.familiar.tipo_vivienda" >
+                                <option value="1">Propia Cancelada</option>
+                                <option value="2">Propia (hipoteca)</option>
+                                <option value="3">De los padres</option>
+                                <option value="4">De familiares</option>
+                                <option value="5">Alquilada</option>
+                              </select>
+                            </div>
+                            
+                            <div class="input_wrapper">
+                              <label>Situacion familiar</label>
+                              <select v-model="evaluacion.familiar.situacion_familiar" >
+                                <option value="1">Soltero</option>
+                                <option value="2">Casado</option>
+                                <option value="3">Conviviente</option>
+                              </select>
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Miembros de familia</label>
+                              <input  type="number" v-model="evaluacion.familiar.miembros_familia"  disabled />
+                            </div>
+                      </div>
+
+                      <div class="separator"></div>
+
+                      <div class="form_list" :class="{list_round: evaluacion.familiar.numero_hijos > 0}">
+                          <div class="form_step_wrapper" v-for="(hijo, index) in evaluacion.familiar.hijos" :key="index">
+                            <h3 class="title">
+                              Hijo {{index + 1}}
+                            </h3>
+                            <div class="form_content">
+                              <div class="group_form">
+
+                                <div class="input_wrapper">
+                                  <label>Edad</label>
+                                  <input type="text" v-model="hijo.edad" />
+                                </div>
+
+                                <div class="input_wrapper">
+                                  <label>Colegio</label>
+                                  <select
+                                    v-model="hijo.colegio"
+                                      @change="seleccionColegiosCosto(index)"
+                                    >
+                                      <option
+                                        v-for="(colegio,index) in colegios"
+                                        v-bind:value="colegio.nombre"
+                                        :key="index"
+                                      >{{ colegio.nombre }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="input_wrapper">
+                                  <label>Grado</label>
+                                  <select
+                                      v-model="hijo.grado"
+                                      @change="seleccionColegiosCosto(index)"
+                                    >
+                                      <option value="INICIAL">INICIAL</option>
+                                      <option value="PRIMARIA">PRIMARIA</option>
+                                      <option value="SECUNDARIA">SECUNDARIA</option>
+                                    </select>
+                                </div>
+
+                                <div class="input_wrapper">
+                                  <label>Costo</label>
                                       <input
-                                        v-model="referencia.tipo_relacion"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                    <td>
-                                      <input
-                                        v-model="referencia.nombre"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                    <td>
-                                      <input
-                                        v-model="referencia.telefono"
-                                        type="text"
-                                        class="form-control"
-                                      />
-                                    </td>
-                                  </tr>                                  
-                                </table>
+                                      type="text"
+                                      :value="'S/. '+hijo.costo"
+                                      disabled
+                                    />
+                                </div>
+
                               </div>
                             </div>
                           </div>
-                        </div>
-              </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
-              </div>
-            </div>
+                      </div>
+                      
 
-            <div  class="tab-pane fade" id="declaracion" role="tabpanel"  aria-labelledby="declaracion-tab" >
-              <div class="row">
-                    <div class="col-md-12 p-0">
-                        <div class="card" style>
-                          <div class="card-header d-flex justify-content-between">
-                            <strong>Colateral</strong>
+                    </div>
+                  </div>
+
+                  <div class="form_buttons">
+                    <a class="button_inline_primary medium prev" @click="prev(3)">
+                      <i class="material-icons-outlined">navigate_before</i>
+                      <span>ATRAS</span>
+                    </a>
+                    <a class="button_primary medium next" @click="next(3)">
+                      <span>SIGUIENTE</span>
+                      <i class="material-icons-outlined">navigate_next</i>
+                    </a>
+                  </div>
+
+                </div>
+          
+            </transition>
+
+
+            <transition name="slide-fade" mode="in-out">
+                <div v-show="tab == 4" class="form_step">
+                  <div class="form_step_wrapper">
+
+                    <h3 class="title">Central de Riesgo</h3>
+
+                    <div class="form_content">
+
+                      <div class="form_list">
+                          <div class="form_step_wrapper" v-for="(entidad_financiera, index) in evaluacion.central_riesgo" :key="index">
+                            <h3 class="title">
+                              Entidad Financiera {{index + 1}}
+                              <button
+                                  class="delete_section"
+                                  type="button"
+                                  @click.prevent="clickRemoveGarantia(index)"
+                                >
+                                  <i class="material-icons-outlined">delete</i>
+                                </button>
+                            </h3>
+                            <div class="form_content">
+                              <div class="group_form">
+
+                                <div class="input_wrapper">
+                                  <label>Entidad</label>
+                                  <v-select
+                                    label="nombre"
+                                    :options="entidades"
+                                    :reduce="entidades => entidades.nombre"
+                                    placeholder="Buscar Entidad"
+                                    v-model="entidad_financiera.entidad_financiera"
+                                  ></v-select> 
+                                </div>
+
+                                <div class="input_wrapper">
+                                  <label>Capital de trabajo</label>
+                                  <input type="checkbox" v-model="entidad_financiera.capital" />
+                                </div>
+                                <div class="input_wrapper">
+                                  <label>Activo Fijo</label>
+                                  <input type="checkbox"  v-model="entidad_financiera.activo_f" />
+                                </div>
+                                <div class="input_wrapper">
+                                  <label>Consumo</label>
+                                  <input type="checkbox" v-model="entidad_financiera.consumo" />
+                                </div>
+                                <div class="input_wrapper">
+                                  <label>Vehicular</label>
+                                  <input  type="checkbox"  v-model="entidad_financiera.vehicular" />
+                                </div>
+                                <div class="input_wrapper">
+                                  <label>Hipotecario</label>
+                                  <input  type="checkbox"  v-model="entidad_financiera.hipoteca" />
+                                </div>
+                                
+                                
+                                <div class="input_wrapper">
+                                  <label>Terceros</label>
+                                  <input type="checkbox" v-model="entidad_financiera.terceros" />
+                                </div>
+
+                              </div>
+
+
+                            </div>
                           </div>
-                          <div class="card-body row">
-                            <div class="form-group col-md-12">
-                              <label for>Colateral</label>
-                              <select v-model="evaluacion.colateral" class="form-control">
+                         
+                          <div class="separator"></div>
+
+                          <div class="group_form">
+                            <div class="input_wrapper">
+                                  <label>Cometarios</label>
+                                  <textarea class="form-control" v-model="evaluacion.comentario_central_riesgo"></textarea>
+                                </div>
+                          </div>
+                      </div>
+                      
+
+                    </div>
+                  </div>
+
+                  <div class="form_buttons">
+                    <a class="button_inline_primary medium prev" @click="prev(4)">
+                      <i class="material-icons-outlined">navigate_before</i>
+                      <span>ATRAS</span>
+                    </a>
+                    <a class="button_primary medium next" @click="next(4)">
+                      <span>SIGUIENTE</span>
+                      <i class="material-icons-outlined">navigate_next</i>
+                    </a>
+                  </div>
+
+                </div>
+          
+            </transition>
+
+             <transition name="slide-fade" mode="in-out">
+                <div v-show="tab == 5" class="form_step">
+                  <div class="form_step_wrapper">
+
+                    <h3 class="title">REFERENCIAS PERSONALES(Familiares, compañeros de trabajo, vecinos)</h3>
+
+                    <div class="form_content">
+
+                      <div class="form_list">
+                          <div class="form_step_wrapper" v-for="(referencia, index) in evaluacion.referencias" :key="index">
+                            <h3 class="title">
+                              Referencia  {{index + 1}}
+                              <button
+                                  class="delete_section"
+                                  type="button"
+                                  @click.prevent="clickRemoveGarantia(index)"
+                                >
+                                  <i class="material-icons-outlined">delete</i>
+                                </button>
+                            </h3>
+                            <div class="form_content">
+                              <div class="group_form">
+
+                                <div class="input_wrapper">
+                                  <label>Tipo de relación</label>
+                                  <input v-model="referencia.tipo_relacion" type="text" />
+                                </div>
+
+                                <div class="input_wrapper">
+                                  <label>Nombre</label>
+                                  <input v-model="referencia.nombre" type="text" />
+                                </div>
+                                <div class="input_wrapper">
+                                  <label>Telefono</label>
+                                  <input v-model="referencia.telefono" type="text" />
+                                </div>
+                                
+                                
+
+                              </div>
+
+
+                            </div>
+                          </div>
+                         
+                      
+                      </div>
+                      
+
+                    </div>
+                  </div>
+
+                  <div class="form_buttons">
+                    <a class="button_inline_primary medium prev" @click="prev(5)">
+                      <i class="material-icons-outlined">navigate_before</i>
+                      <span>ATRAS</span>
+                    </a>
+                    <a class="button_primary medium next" @click="next(5)">
+                      <span>SIGUIENTE</span>
+                      <i class="material-icons-outlined">navigate_next</i>
+                    </a>
+                  </div>
+
+                </div>
+          
+            </transition>
+
+            <transition name="slide-fade" mode="in-out">
+              <div v-show="tab == 6" class="form_step">
+                <div class="form_step_wrapper">
+
+                  <h3 class="title">Colateral</h3>
+
+                  <div class="form_content">
+
+                    <div class="group_form">
+
+                      <div class="input_wrapper">
+                        <label>Colateral</label>
+                        <select v-model="evaluacion.colateral">
                                 <option value="1">Aval con casa propia</option>
                                 <option value="2">Aval con casa alquilada</option>
                                 <option value="3">Garantia liquida liquida</option>
                                 <option value="4">Garantia vehicular</option>
                                 <option value="5">Hipoteca inmobiliara</option>
                                 <option value="0">Sin colateral</option>
-                              </select>
-                            </div>
-
-                            <div class="form-group col-md-12">
-                              <label for>Comentarios</label>
-                              <textarea class="form-control" v-model="evaluacion.comentario_colateral"></textarea>
-                            </div>
-                          </div>
-                        </div>
+                        </select>
                       </div>
-              </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a
-                  class="btn btn-orange"
-                  @click.prevent="guardar()"
-                  v-if="loading_submit=='0'"
-                >Registrar</a>
-                <div class="container-load-register" v-else>
-                  <svg
-                    aria-hidden="true"
-                    focusable="false"
-                    data-prefix="fas"
-                    data-icon="spinner"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                    class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-lg"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"
-                      class
-                    />
-                  </svg>
-                  <span class="fw6 f4 ml3">Registrando</span>
+
+                      <div class="input_wrapper">
+                        <label>Comentarios</label>
+                        <input type="text" v-model="evaluacion.comentario_colateral">
+                      </div>
+
+                    </div>
+
+                    <span class="separator"></span>
+                  </div>
+                </div>
+
+                <div class="form_buttons">
+                  <a class="button_inline_primary medium prev" @click="prev(6)">
+                    <i class="material-icons-outlined">navigate_before</i>
+                    <span>ATRAS</span>
+                  </a>
+                  <a class="button_primary medium next" @click.prevent="guardar()">
+                    <span>FINALIZAR</span>
+                    <i class="material-icons-outlined">check</i>
+                  </a>
                 </div>
               </div>
-            </div>
+              
+            </transition>
+
+    
           </div>
-        </div>
-      </div>
+     </section>
+
     </div>
-  </div>
+
 </template>
 <script>
 import vSelect from "vue-select";
@@ -635,6 +587,7 @@ export default {
     return {
       giros: [],
       entidades: [],
+      tab: 1,
       notificationSystem: {
         options: {
           success: {
@@ -778,24 +731,32 @@ export default {
       }
     };
   },
-
+  computed: {
+    validateName() {
+      // return this.form.natural.nombres.length > 2
+    },
+    validateLastname() {
+      // return this.form.natural.apellidos.length > 2
+    },
+    validateDoc() {
+      let result = false;
+      // if (this.form.cliente.tipo_documento == 'DNI') result = this.form.cliente.documento.length == 8
+      // else if (this.form.cliente.tipo_documento == 'CE') result = this.form.cliente.documento.length == 11
+      return result;
+    },
+    validateStep1() {
+      return this.validateDoc && this.validateName && this.validateLastname;
+    }
+  },
   methods: {
     retornar() {
       this.backMixin_handleBack("");
     },
-    next() {
-      $(".nav-tabs .active")
-        .parent()
-        .next("li")
-        .find("a")
-        .trigger("click");
+    next(index) {
+      this.tab = index + 1;
     },
-    previous() {
-      $(".nav-tabs .active")
-        .parent()
-        .prev("li")
-        .find("a")
-        .trigger("click");
+    prev(index) {
+      this.tab = index - 1;
     },
     ejemplo() {
       console.log("sdad");

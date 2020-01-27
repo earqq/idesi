@@ -47,7 +47,7 @@
               <div class="phone">
                 <i class="material-icons-outlined"> phone </i>
                 <span>
-                  971 755 982
+                  {{cliente.celular}}
                 </span>
               </div>
             </router-link>
@@ -173,7 +173,6 @@ export default {
       this.getRecords()
     },
     getRecords() {
-      console.log(this.form.tipo_persona)
       this.clientes= [];
       if(this.form.tipo_persona=='PN'){
         return this.$http 

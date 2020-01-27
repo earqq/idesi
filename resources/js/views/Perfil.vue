@@ -76,9 +76,12 @@
             <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
           </div>
           <div class="actions">
-            <router-link class="credit_link" :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
-              VER PRESTAMO
-            </router-link>
+            
+            <router-link class="credit_link"  :to="{name:'/ver/prestamo/', params:{prestamo:prestamo.id}}"> VER PRESTAMO</router-link>
+            <!-- <router-link class="credit_link" :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
+              VER PRESTAMO 
+            </router-link> -->
+
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
@@ -86,8 +89,8 @@
                   <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                   <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                 </li>
-                <li v-if="prestamo.cuantitativa=='0'"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
-                <li v-if="prestamo.cuantitativa=='0'"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
+                <li v-if="prestamo.cualitativa=='0'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id}}" >E. Cualitativa</router-link> </li>
+                <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1' "> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
                 <li> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}"  >Observaciones</router-link></li>
                 <li> <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
               </ul>

@@ -17,6 +17,7 @@ use App\ResultadoCuantitativa;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Storage;
 
 class EvaluacionesController extends Controller
 {
@@ -655,11 +656,11 @@ class EvaluacionesController extends Controller
 
         $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
         $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
-        if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/pestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
+        if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cuantitativa.pdf', $pdf->output())){
             
-            $archivo = new Archivos();
-            $archivo->nombre = 'evaluacion_cualitativa';
-            $archivo->tipo = 'documentos';
+            $archivo = new Archivo();
+            $archivo->nombre = 'evaluacion_cuantitativa';
+            $archivo->tipo = 'documento';
             $archivo->extension='pdf';
             $archivo->prestamos_id= $prestamo->id;
             $archivo->save();
@@ -708,10 +709,10 @@ class EvaluacionesController extends Controller
 
             $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
             $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
-            if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/pestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
-                $archivo = new Archivos();
+            if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
+                $archivo = new Archivo();
                 $archivo->nombre = 'evaluacion_cualitativa';
-                $archivo->tipo = 'documentos';
+                $archivo->tipo = 'documento';
                 $archivo->extension='pdf';
                 $archivo->prestamos_id= $prestamo->id;
                 $archivo->save();
@@ -719,7 +720,7 @@ class EvaluacionesController extends Controller
 
 
             DB::commit();
-                return [
+                return [ 
                     'success' => true,
                     'data' => 'Evaluación Completado',
                 ];
@@ -735,7 +736,7 @@ class EvaluacionesController extends Controller
 
     public function CualitativaPdf($prestamo){
 
-        $cualitativa= cualitativa::all();
+        $cualitativa= cualitativa::where('prestamo_id',$prestamo)->first();
         // return $cualitativa;
         $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
         return $pdf->stream('evaluacion_cualitativa.pdf');

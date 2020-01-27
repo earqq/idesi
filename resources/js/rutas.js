@@ -36,6 +36,11 @@ export default new Router({
             component: require('./views/EvalCuantitativa').default
         }, 
         {
+            path: '/ver/prestamo/:prestamo',
+            name: '/ver/prestamo/',
+            component: require('./views/DetallePrestamo').default
+        }, 
+        { 
             path: '/usuarios',
             name: 'usuarios',
             component: require('./views/Usuario').default
