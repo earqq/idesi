@@ -191,27 +191,30 @@
                 <div class="form_step_wrapper"   v-for="(row, index) in form.representante" :key="index">
                   <h3 class="title">
                     Representante {{index + 1}}
-                    <button v-if="index != 0" class="delete_section" type="button"  @click.prevent="clickRemoveRepresentante(index)">
+                    <button  class="delete_section" type="button"  @click.prevent="clickRemoveRepresentante(index)">
                       <i class="material-icons-outlined"> delete </i>
                     </button>
                   </h3>
                   <div class="form_content">
                     <div class="group_form">
-                      
                       <div class="input_wrapper">
-                        <label>Apellidos y Nombres</label>
-                        <input type="text" :maxlength="60" v-model="row.nombres" class="form-control" />
-                      </div>
-                      
-                      <div class="input_wrapper">
-                        <label>Doc. Identidad</label>
-                        <input type="number" :maxlength="8"  v-model="row.documento" class="form-control" />
+                        <label>Cargo</label>
+                        <input type="text" :maxlength="15" v-model="row.cargo"  />
                       </div>
 
                       <div class="input_wrapper">
-                        <label>Cargo</label>
-                        <input type="text" :maxlength="15" v-model="row.cargo" class="form-control" />
+                        <label>Doc. Identidad</label>
+                        <input type="text"   v-model="row.documento" v-mask="'########'" />
                       </div>
+
+                      <div class="input_wrapper">
+                        <label>Apellidos y Nombres</label>
+                        <input type="text" :maxlength="60" v-model="row.nombres"  />
+                      </div>
+                      
+                      
+
+                      
                     </div>
                   </div>
                 </div>
@@ -238,130 +241,192 @@
 
           <transition name="slide-fade" mode="in-out">
             <div v-show="tab == 3" class="form_step">
-              <div class="row">
-                  <table class="table table-bordered table-striped table-sm">
-                              <thead>
-                                      <tr>
-                                          <th></th>
-                                          <th>Apellidos y Nombres</th>
-                                          <th>Dc. Identidad</th>
-                                          <th>Cargo</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr v-for="(row, index) in form.director" :key="index">
-                                          <td>
-                                              
-                                              <template>
-                                                  <button type="button" class="btn btn-danger btn-sm"  @click.prevent="clickRemoveDirector(index)">
-                                                      <i class="fas fa-trash"></i>
-                                                  </button>
-                                              </template>
-                                          </td>
-                                          <td><input type="text" :maxlength="60" v-model="row.nombres" class="form-control" /></td>
-                                          <td><input type="number" :maxlength="8" v-model="row.documento" class="form-control" /></td>
-                                          <td><input type="text" :maxlength="15" v-model="row.cargo" class="form-control" /></td>
-                                      </tr>                                
-                                  </tbody>
-                              </table>
-                    <div class="col-md-12">
-                        <button type="button"  @click.prevent="clickAddDirector"  class="btn btn-outline-dark more-option w-100" >
-                          <i class="fas fa-plus"></i> Agregar Director
-                        </button>
+
+                <div class="form_list" :class="{list_round: form.director.length > 0}">
+                      <div class="form_step_wrapper"   v-for="(row, index) in form.director" :key="index">
+                        <h3 class="title">
+                          Director {{index + 1}}
+                          <button  class="delete_section" type="button"  @click.prevent="clickRemoveDirector(index)">
+                            <i class="material-icons-outlined"> delete </i>
+                          </button>
+                        </h3>
+                        <div class="form_content">
+                          <div class="group_form">
+
+                            <div class="input_wrapper">
+                              <label>Cargo</label>
+                              <input type="text" :maxlength="15" v-model="row.cargo"  />
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Doc. Identidad</label>
+                              <input type="text"  v-model="row.documento" v-mask="'########'" />
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Apellidos y Nombres</label>
+                              <input type="text" :maxlength="60" v-model="row.nombres"  />
+                            </div>
+                            
+                     
+                            
+
+                          </div>
+                        </div>
+                      </div>
                     </div>
-              </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
-              </div>
+
+                    <button type="button"  @click="clickAddDirector"  class="add_section" >
+                      <span> AGREGAR DIRECTOR </span>
+                      <i class="fas fa-plus"></i> 
+                    </button>
+
+                    <div class="form_buttons">
+                      <a class="button_inline_primary medium prev" @click="prev(3)">
+                        <i class="material-icons-outlined"> navigate_before </i>
+                        <span> ATRAS </span>
+                      </a>
+                      <a class="button_primary medium next" @click="next(3)">
+                        <span> SIGUIENTE </span>
+                        <i class="material-icons-outlined"> navigate_next </i>
+                      </a>
+                    </div>
             </div>
           </transition>
 
           <transition name="slide-fade" mode="in-out">
             <div v-show="tab == 4" class="form_step">
-              <div class="row">
-                  <table class="table table-bordered table-striped table-sm">
-                              <thead>
-                                      <tr>
-                                          <th></th>
-                                          <th>Apellidos y Nombres</th>
-                                          <th>Dc. Identidad</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr v-for="(row, index) in form.accionista" :key="index">
-                                          <td>
-                                              
-                                              <template>
-                                                  <button type="button" class="btn btn-danger btn-sm"  @click.prevent="clickRemoveAccionista(index)">
-                                                      <i class="fas fa-trash"></i>
-                                                  </button>
-                                              </template>
-                                          </td>
-                                          <td><input type="text" :maxlength="60" v-model="row.nombres" class="form-control" /></td>
-                                          <td><input type="number" :maxlength="8" v-model="row.documento" class="form-control" /></td>
-                                      </tr>                                
-                                  </tbody>
-                              </table>
-                    <div class="col-md-12">
-                        <button type="button"  @click.prevent="clickAddAccionista"  class="btn btn-outline-dark more-option w-100" >
-                          <i class="fas fa-plus"></i> Agregar Accionista
-                        </button>
+
+              <div class="form_list" :class="{list_round: form.accionista.length > 0}">
+                      <div class="form_step_wrapper"   v-for="(row, index) in form.accionista" :key="index">
+                        <h3 class="title">
+                          Director {{index + 1}}
+                          <button  class="delete_section" type="button"  @click.prevent="clickRemoveAccionista(index)">
+                            <i class="material-icons-outlined"> delete </i>
+                          </button>
+                        </h3>
+                        <div class="form_content">
+                          <div class="group_form">
+
+                            <div class="input_wrapper">
+                              <label>Doc. Identidad</label>
+                              <input type="text"  v-model="row.documento" v-mask="'########'" />
+                            </div>
+
+                            <div class="input_wrapper">
+                              <label>Apellidos y Nombres</label>
+                              <input type="text" :maxlength="60" v-model="row.nombres"  />
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
                     </div>
-              </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
-              </div>
+
+                    <button type="button"  @click="clickAddAccionista"  class="add_section" >
+                      <span> AGREGAR ACCIONISTA </span>
+                      <i class="fas fa-plus"></i> 
+                    </button>
+
+                    <div class="form_buttons">
+                      <a class="button_inline_primary medium prev" @click="prev(4)">
+                        <i class="material-icons-outlined"> navigate_before </i>
+                        <span> ATRAS </span>
+                      </a>
+                      <a class="button_primary medium next" @click="next(4)">
+                        <span> SIGUIENTE </span>
+                        <i class="material-icons-outlined"> navigate_next </i>
+                      </a>
+                    </div> 
+
             </div>
           </transition>
 
           <transition name="slide-fade" mode="in-out">
             <div  v-show="tab == 5" class="form_step"  >
-              <div class="row">
-                <div class="form-group col-md-3">
-                    <label>Inscripcion </label>
-                    <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.inscripcion"  v-bind:precision="2"></vue-numeric>
+
+            <div class="form_step_wrapper">
+              <h3 class="title">Oblicaciones</h3>
+              <div class="form_content">
+                <div class="group_form">
+                  <div class="input_wrapper">
+                    <label>Inscripcion</label>
+                    <vue-numeric
+                      currency="S/. "
+                      separator=","
+                      v-model="form.asociativa.inscripcion" 
+                      v-bind:precision="2"
+                    ></vue-numeric>
+                  </div>
+                  <div class="input_wrapper">
+                    <label>Aporte</label>
+                    <vue-numeric  currency="S/. " separator="," v-model="form.asociativa.aporte"  v-bind:precision="2"></vue-numeric>
+                  </div>
                 </div>
-                <div class="form-group col-md-3">
-                    <label>Aporte </label>
-                    <vue-numeric class="form-control" currency="S/. " separator="," v-model="form.asociativa.aporte"  v-bind:precision="2"></vue-numeric>
-                </div>
+                <span class="separator"></span>
               </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-                <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-                <a class="btn btn-orange btnNext" @click.prevent="next()">Siguiente</a>
-              </div>
+            </div>  
+
+            <div class="form_buttons">
+              <a class="button_inline_primary medium prev" @click="prev(5)">
+                <i class="material-icons-outlined"> navigate_before </i>
+                <span> ATRAS </span>
+              </a>
+              <a class="button_primary medium next" @click="next(5)">
+                <span> SIGUIENTE </span>
+                <i class="material-icons-outlined"> navigate_next </i>
+              </a>
+            </div> 
+
+
             </div>
           </transition>
 
           <transition name="slide-fade" mode="in-out">
             <div  v-show="tab == 6" class="form_step" >
-              <div class="row">
-                <div class="form-group col-md-6">
-                    <label>Es sujeto a informar a la UIF Perú</label>
-                    <select v-model="form.declaracion.uif" class="form-control">
-                      <option value="SI">SI</option>
-                      <option value="NO">NO</option>
-                    </select>
+              <div class="form_step_wrapper">
+              <h3 class="title">Dejaración</h3>
+              <div class="form_content">
+                  <div class="group_form">
+
+                    <div class="input_wrapper">
+                      <label>Es sujeto a informar a la UIF Perú</label>
+                       <select v-model="form.declaracion.uif" class="form-control">
+                        <option value="SI">SI</option>
+                        <option value="NO">NO</option>
+                      </select>
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Estado</label>
+                      <select v-model="form.declaracion.estado" class="form-control">
+                        <option value="ADMITIDO">ADMITIDO</option>
+                        <option value="RECHAZADO">RECHAZADO</option>
+                      </select>
+                    </div>
                   </div>
-                <div class="form-group col-md-6">
-                    <label>Estado</label>
-                    <select v-model="form.declaracion.estado" class="form-control">
-                      <option value="ADMITIDO">ADMITIDO</option>
-                      <option value="RECHAZADO">RECHAZADO</option>
-                    </select>
+                  <span class="separator"></span>
+
+                  <div class="group_form">
+                     <div class="input_wrapper">
+                      <label>Observaciones</label>
+                      <textarea class="form-control" v-model="form.declaracion.observaciones" cols="auto" rows="5"></textarea>
+                    </div>
                   </div>
-                <div class="form-group col-md-12">
-                    <label>OBSERVACIONES</label>
-                    <textarea class="form-control" v-model="form.declaracion.obervaciones" cols="auto" rows="5"></textarea>
-                  </div>
-              </div>
-              <div class="input-group mb-3 group-end d-flex justify-content-end mt-2">
-              <a class="btn btn-dark btnPrevious" @click.prevent="previous()">Atras</a>
-              <a class="btn btn-orange" @click.prevent="submit()" v-if="loading_submit=='0'">Registrar Solicitud</a>
-                <div class="container-load-register" v-else ><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="spinner" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-spinner fa-w-16 fa-spin fa-lg"><path fill="currentColor" d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z" class=""></path></svg> <span class="fw6 f4 ml3">Registrando</span></div>
-              </div>
+
+                </div>
+              </div>  
+
+            <div class="form_buttons">
+              <a class="button_inline_primary medium prev" @click="prev(6)">
+                <i class="material-icons-outlined"> navigate_before </i>
+                <span> ATRAS </span>
+              </a>
+              <a class="button_primary medium next" @click.prevent="submit()">
+                <span> FINALIZAR </span>
+                <i class="material-icons-outlined">check</i>
+              </a>
+            </div> 
 
             </div>
           </transition>
@@ -437,22 +502,16 @@ mixins: [serviceNumber],
   },
   mounted () {
     this.clickAddRepresentante()
+    this.clickAddDirector()
+    this.clickAddAccionista()
   },
   methods: {
 
-    next() {
-      $(".nav-tabs .active")
-        .parent()
-        .next("li")
-        .find("a")
-        .trigger("click");
+    next(index) {
+      this.tab = index + 1;
     },
-    previous() {
-      $(".nav-tabs .active")
-        .parent()
-        .prev("li")
-        .find("a")
-        .trigger("click");
+    prev(index) {
+     this.tab = index - 1;
     },
 
     initForm() {

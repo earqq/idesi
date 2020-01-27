@@ -537,8 +537,18 @@
                   <div class="form_content" >
 
                     <div class="group_form small">
-
+                      
                       <div class="input_wrapper">
+                        <label> Parentesco </label>
+                        <select v-model="row.parentesco" class="form-control" disabled>
+                          <option value="CONYUGE">CONYUGE</option>
+                          <option value="CONVIVIENTE">CONVIVIENTE</option>
+                          <option value="HIJOS">HIJOS</option>
+                        </select>
+                      </div>
+
+
+                      <div class="input_wrapper"> 
                         <label> Documento </label>
                         <input type="text" v-model="row.documento" @change="datosFamiliar(index)" />
                       </div>
@@ -546,15 +556,6 @@
                       <div class="input_wrapper">
                         <label> Nombres </label>
                         <input type="text" v-model="row.nombres" :maxlength="45" class="form-control" />
-                      </div>
-
-                      <div class="input_wrapper">
-                        <label> Parentesco </label>
-                        <select v-model="row.parentesco" class="form-control">
-                          <option value="CONYUGE">CONYUGE</option>
-                          <option value="CONVIVIENTE">CONVIVIENTE</option>
-                          <option value="HIJOS">HIJOS</option>
-                        </select>
                       </div>
 
                       <div class="input_wrapper">
@@ -898,7 +899,7 @@ export default {
           hijos: "SI",
           numero:0,
           conyugue:"NO",
-          ocupacion:"",
+          ocupacion:"AMA DE CASA",
         },
 
         detalles: [],
@@ -946,6 +947,7 @@ export default {
         }
       }
     },
+    
     hijosAsignacion(new_value,old_value){
        old_value = old_value || 0
        new_value = new_value || 0 
@@ -977,7 +979,6 @@ export default {
     },
     datosCliente() {
       let me = this;
-      // me.loader = "true";
       axios
         .post("/consulta/dni", {
           documento: this.form.cliente.documento
@@ -986,8 +987,6 @@ export default {
           console.log(response.data);
           me.form.natural.nombres = response.data["nombres"];
           me.form.natural.apellidos = response.data["surnames"];
-
-          // me.loader = false;
         })
         .catch(function(error) {
           console.log(error);
@@ -996,7 +995,6 @@ export default {
     },
     datosFamiliar(index) {
       let me = this;
-      // me.loader = "true";
       axios
         .post("/consulta/dni", {
           documento: this.form.detalles[index].documento

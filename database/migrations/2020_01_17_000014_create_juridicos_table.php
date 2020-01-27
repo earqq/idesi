@@ -36,6 +36,7 @@ class CreateJuridicosTable extends Migration
             $table->string('manzana', 5)->nullable()->default(null);
             $table->string('lote', 5)->nullable()->default(null);
             $table->string('pdto', 5)->nullable()->default(null);
+            $table->date('fecha_constitucion')->nullable()->default(null);
             $table->string('int', 5)->nullable()->default(null);
             $table->string('piso', 5)->nullable()->default(null);
             $table->string('referencia', 45)->nullable()->default(null);
