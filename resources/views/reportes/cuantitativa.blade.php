@@ -180,12 +180,12 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @for ($i = 0; $i <= 4; $i++)
+                                        @foreach($cuantitativa->titular['gasto_negocio'] as $gasto_tit)
                                         <tr>
-                                            <td>{{$cuantitativa->titular['gasto_negocio'][$i]['entidad']}}</td>
-                                            <td>S/. {{$cuantitativa->titular['gasto_negocio'][$i]['pago']}}</td>  
+                                            <td>{{$gasto_tit['entidad']}}</td>
+                                            <td>S/. {{$gasto_tit['pago']}}</td>  
                                         </tr>
-                                        @endfor
+                                        @endforeach
                                         
                                     </tbody>
                                 </table>
@@ -226,24 +226,24 @@
                                         </tr>
                                        
                                     </thead>
-                                    <tbody>
-                                        @for ($i = 0; $i <=1; $i++)
-                                        @if ($cuantitativa->conyuge['ingresos_negocio'][$i]['concepto'])
+                                    <tbody>                                       
+                                        @foreach($cuantitativa->conyuge['ingresos_negocio'] as $conyuge_ingreso)
+                                        @if ($conyuge_ingreso['concepto'])
+                                         
                                          
                                         <tr>
-                                            <td>{{$cuantitativa->conyuge['ingresos_negocio'][$i]['concepto']}}</td>
-                                            <td>S/. {{$cuantitativa->conyuge['ingresos_negocio'][$i]['lunes']}}</td>
-                                            <td>S/. {{$cuantitativa->conyuge['ingresos_negocio'][$i]['martes']}}</td>
-                                            <td>S/. {{$cuantitativa->conyuge['ingresos_negocio'][$i]['miercoles']}}</td>
-                                            <td>S/. {{$cuantitativa->conyuge['ingresos_negocio'][$i]['jueves']}}</td>
-                                            <td>S/. {{$cuantitativa->conyuge['ingresos_negocio'][$i]['viernes']}}</td>
-                                            <td>S/. {{$cuantitativa->conyuge['ingresos_negocio'][$i]['sabado']}}</td>
-                                            <td>S/. {{$cuantitativa->conyuge['ingresos_negocio'][$i]['domingo']}}</td>
-                                            <td style="background: #009688;color:#fff">S/. {{$cuantitativa->conyuge['ingresos_negocio'][$i]['subtotal']}}</td>
+                                            <td>{{$conyuge_ingreso['concepto']}}</td>
+                                            <td>S/. {{$conyuge_ingreso['lunes']}}</td>
+                                            <td>S/. {{$conyuge_ingreso['martes']}}</td>
+                                            <td>S/. {{$conyuge_ingreso['miercoles']}}</td>
+                                            <td>S/. {{$conyuge_ingreso['jueves']}}</td>
+                                            <td>S/. {{$conyuge_ingreso['viernes']}}</td>
+                                            <td>S/. {{$conyuge_ingreso['sabado']}}</td>
+                                            <td>S/. {{$conyuge_ingreso['domingo']}}</td>
+                                            <td style="background: #009688;color:#fff">S/. {{$conyuge_ingreso['subtotal']}}</td>
                                         </tr>
                                         @endif
-                                        @endfor
-                                        
+                                        @endforeach
                                     </tbody>
                                 </table>
                              </td>
@@ -265,15 +265,15 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @for ($i = 0; $i <=1; $i++)
-                                        @if ($cuantitativa->conyuge['ingresos_por_categoria'][$i]['concepto'])
+                                        @foreach($cuantitativa->conyuge['ingresos_por_categoria'] as $ingreso_cat)
+                                        @if ($ingreso_cat['concepto'])
                                           
                                         <tr>
-                                            <td>{{$cuantitativa->conyuge['ingresos_por_categoria'][$i]['concepto']}}</td>
-                                            <td>S/. {{$cuantitativa->conyuge['ingresos_por_categoria'][$i]['mes']}}</td> 
+                                            <td>{{$ingreso_cat['concepto']}}</td>
+                                            <td>S/. {{$ingreso_cat['mes']}}</td> 
                                         </tr>
                                         @endif
-                                        @endfor
+                                        @endforeach
                                     </tbody>
                                 </table>
                              </td>
@@ -303,16 +303,16 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @for ($i = 0; $i <=4; $i++)
-                                        @if ($cuantitativa->conyuge['gasto_financiero'][$i]['entidad'])
-                                         
-                                        <tr>
-                                            <td>{{$cuantitativa->conyuge['gasto_financiero'][$i]['entidad']}}</td>
-                                            <td>S/. {{$cuantitativa->conyuge['gasto_financiero'][$i]['saldo_capital']}}</td> 
-                                            <td>S/. {{$cuantitativa->conyuge['gasto_financiero'][$i]['cuota']}}</td> 
-                                        </tr>
-                                        @endif
-                                    @endfor
+                                        @foreach($cuantitativa->conyuge['gasto_financiero'] as $conyuge_gasto)
+                                            @if ($conyuge_gasto['entidad'])
+                                            
+                                            <tr>
+                                                <td>{{$conyuge_gasto['entidad']}}</td>
+                                                <td>S/. {{$conyuge_gasto['saldo_capital']}}</td> 
+                                                <td>S/. {{$conyuge_gasto['cuota']}}</td> 
+                                            </tr>
+                                            @endif
+                                        @endforeach
                                     </tbody>
                                 </table>
                              </td>
@@ -335,12 +335,12 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @for ($i = 0; $i <= 4; $i++)
+                                        @foreach($cuantitativa->conyuge['gasto_negocio'] as $conyuge_gasto)
                                         <tr>
-                                            <td>{{$cuantitativa->conyuge['gasto_negocio'][$i]['entidad']}}</td>
-                                            <td>S/. {{$cuantitativa->conyuge['gasto_negocio'][$i]['pago']}}</td>  
+                                            <td>{{$conyuge_gasto['entidad']}}</td>
+                                            <td>S/. {{$conyuge_gasto['pago']}}</td>  
                                         </tr>
-                                        @endfor
+                                        @endforeach
                                     </tbody>
                                 </table>
                              </td>
@@ -374,12 +374,12 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @for ($i = 0; $i <= 5; $i++)
+                                        @foreach($cuantitativa->gastos_hogar as $gastos_hogar)
                                         <tr>
-                                            <td>{{$cuantitativa->gastos_hogar[$i]['concepto']}}</td>
-                                            <td>S/. {{$cuantitativa->gastos_hogar[$i]['pago']}}</td> 
+                                            <td>{{$gastos_hogar['concepto']}}</td>
+                                            <td>S/. {{$gastos_hogar['pago']}}</td> 
                                         </tr>
-                                        @endfor
+                                        @endforeach
                                         
                                     </tbody>
                                 </table>
@@ -402,15 +402,15 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @for ($i = 0; $i <= 5; $i++)
-                                        @if ($cuantitativa->propiedades[$i]['concepto'])
+                                        @foreach($cuantitativa->propiedades as $propiedades)
+                                        @if ($propiedades['concepto'])
                                          
                                         <tr>
-                                            <td>{{$cuantitativa->propiedades[$i]['concepto']}}</td>
-                                            <td>S/. {{$cuantitativa->propiedades[$i]['valor_estimado']}}</td> 
+                                            <td>{{$propiedades['concepto']}}</td>
+                                            <td>S/. {{$propiedades['valor_estimado']}}</td> 
                                         </tr>
                                         @endif
-                                        @endfor
+                                        @endforeach
                                     </tbody>
                                 </table>
                              </td>
