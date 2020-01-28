@@ -773,7 +773,7 @@ export default {
           celular: "",
           direccion: "",
           referencia: "",
-          tipo_domicilio: "",
+          tipo_domicilio: "PROPIA",
           centro_laboral: "",
           direccion_laboral: "",
           domicilio_departamento: "",
