@@ -660,7 +660,7 @@ export default {
        }
     },
     cargarPdf() {
-      window.open("/clientes/solicitudPdf/" + this.id_prestamo, "_blank");
+      window.open("/clientes/adjuntarPdf/" + this.id_prestamo, "_blank");
     },
     firmarEvaluacion() {
       if(this.rol=='4'){
