@@ -493,28 +493,28 @@ class ClienteController extends Controller
         return $request->file;
         if (!$request->ajax()) return redirect('/');
         
-        // $model = new Archivo(); 
+            // $model = new Archivo(); 
 
-        // $file = $request->file('file');
-        // $ext = $request->file->getClientOriginalExtension();
+            // $file = $request->file('file');
+            // $ext = $request->file->getClientOriginalExtension();
 
-        // $prestamo = Prestamo::find($request->prestamo_id);
-        // $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
-        
-        // if (Storage::putFileAs('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/foto_negocio.'.$ext)) {
+            // $prestamo = Prestamo::find($request->prestamo_id);
+            // $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
             
-        //     if($request['name'] == 'fotos_negocio'){
-        //         $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-        //         $subidos->fotos_negocio=1;
-        //         $subidos->save();
-        //     } 
-        //     return $model::create([
-        //             'nombre' => 'foto_negocio',
-        //             'tipo' => 'imagen',
-        //             'extension' => $ext,
-        //             'prestamos_id' => $request->prestamo_id
-        //         ]);
-        // }
+            // if (Storage::putFileAs('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/foto_negocio.'.$ext)) {
+                
+            //     if($request['name'] == 'fotos_negocio'){
+            //         $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+            //         $subidos->fotos_negocio=1;
+            //         $subidos->save();
+            //     } 
+            //     return $model::create([
+            //             'nombre' => 'foto_negocio',
+            //             'tipo' => 'imagen',
+            //             'extension' => $ext,
+            //             'prestamos_id' => $request->prestamo_id
+            //         ]);
+            // }
         $visita = new Vista();
         $visita->latitud= $request->latitud;
         $visita->altitud=$request->longitud; 

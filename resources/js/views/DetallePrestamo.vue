@@ -352,7 +352,7 @@ export default {
       };
     },
     clearform() {
-      this.initForm();
+      this.initForm(); 
     },
     views() {
       this.$http
