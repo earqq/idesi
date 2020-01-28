@@ -98,7 +98,64 @@ class FileController extends Controller
                 $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
                 $subidos->recibo_luz_casa=1;
                 $subidos->save();
-            }            
+            }  
+            
+            if($request['name'] == 'titulo_casa'){
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->titulo_casa=1;
+                $subidos->save();
+            }  
+            if($request['name'] == 'contrato_alquiler_casa'){
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->contrato_alquiler_casa=1;
+                $subidos->save();
+            }  
+            if($request['name'] == 'foto_casa'){
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->foto_casa=1;
+                $subidos->save();
+            }  
+            if($request['name'] == 'recibo_agua_negocio'){
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->recibo_agua_negocio=1;
+                $subidos->save();
+            }  
+            if($request['name'] == 'recibo_luz_negocio'){
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->recibo_luz_negocio=1;
+                $subidos->save();
+            }  
+            if($request['name'] == 'contrato_alquiler_negocio'){
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->contrato_alquiler_negocio=1;
+                $subidos->save();
+            }  
+            if($request['name'] == 'boleta_compra'){
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->boleta_compra=1;
+                $subidos->save();
+            }  
+            if($request['name'] == 'boleta_venta'){
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->boleta_venta=1;
+                $subidos->save();
+            }  
+            if($request['name'] == 'factura_compra'){
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->factura_compra=1;
+                $subidos->save();
+            }  
+            if($request['name'] == 'factura_venta'){
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->factura_venta=1;
+                $subidos->save();
+            }
+            if($request['name'] == 'fotos_negocio'){
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->fotos_negocio=1;
+                $subidos->save();
+            } 
+
             
             
             return $model::create([
@@ -159,7 +216,63 @@ class FileController extends Controller
                     $subidos = Subido::where('prestamos_id', $prestamo)->first();
                     $subidos->recibo_luz_casa=0;
                     $subidos->save();
-                }    
+                }
+
+                if($file->nombre == 'titulo_casa'){
+                    $subidos = Subido::where('prestamos_id', $prestamo)->first();
+                    $subidos->titulo_casa=0;
+                    $subidos->save();
+                }  
+                if($file->nombre == 'contrato_alquiler_casa'){
+                    $subidos = Subido::where('prestamos_id', $prestamo)->first();
+                    $subidos->contrato_alquiler_casa=0;
+                    $subidos->save();
+                }  
+                if($file->nombre == 'foto_casa'){
+                    $subidos = Subido::where('prestamos_id', $prestamo)->first();
+                    $subidos->foto_casa=0;
+                    $subidos->save();
+                }  
+                if($file->nombre == 'recibo_agua_negocio'){
+                    $subidos = Subido::where('prestamos_id', $prestamo)->first();
+                    $subidos->recibo_agua_negocio=0;
+                    $subidos->save();
+                }  
+                if($file->nombre == 'recibo_luz_negocio'){
+                    $subidos = Subido::where('prestamos_id', $prestamo)->first();
+                    $subidos->recibo_luz_negocio=0;
+                    $subidos->save();
+                }  
+                if($file->nombre == 'contrato_alquiler_negocio'){
+                    $subidos = Subido::where('prestamos_id', $prestamo)->first();
+                    $subidos->contrato_alquiler_negocio=0;
+                    $subidos->save();
+                }  
+                if($file->nombre == 'boleta_compra'){
+                    $subidos = Subido::where('prestamos_id', $prestamo)->first();
+                    $subidos->boleta_compra=0;
+                    $subidos->save();
+                }  
+                if($file->nombre == 'boleta_venta'){
+                    $subidos = Subido::where('prestamos_id', $prestamo)->first();
+                    $subidos->boleta_venta=0;
+                    $subidos->save();
+                }  
+                if($file->nombre == 'factura_compra'){
+                    $subidos = Subido::where('prestamos_id', $prestamo)->first();
+                    $subidos->factura_compra=0;
+                    $subidos->save();
+                }  
+                if($file->nombre == 'factura_venta'){
+                    $subidos = Subido::where('prestamos_id', $prestamo)->first();
+                    $subidos->factura_venta=0;
+                    $subidos->save();
+                }
+                if($file->nombre == 'fotos_negocio'){
+                    $subidos = Subido::where('prestamos_id', $prestamo)->first();
+                    $subidos->fotos_negocio=0;
+                    $subidos->save();
+                } 
                 
                 
                 return response()->json($file->delete());

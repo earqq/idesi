@@ -1060,16 +1060,16 @@ export default {
       return this.form.natural.nombres.length > 2
     },
     validateNacionalidad () {
-      return this.form.natural.nombres.length > 2
+      return this.form.cliente.pais.length > 2
     },
     validateDepartamento () {
-      return this.form.natural.nombres.length > 2
+      return this.form.cliente.departamento.length > 2
     },
     validateProvincia () {
-      return this.form.natural.nombres.length > 2
+      return this.form.cliente.provincia.length > 2
     },
-    validateDistrito () {
-      return this.form.natural.nombres.length > 2
+    validateDistrito () { 
+      return this.form.cliente.distrito.length > 2
     },
     validateLastname () {
       return this.form.natural.apellidos.length > 2

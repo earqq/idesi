@@ -216,6 +216,53 @@
           <i class="fas fa-users icon-users"></i>
         </div>
 
+<<<<<<< HEAD
+=======
+        <div class="date-file">
+          <div class="col-md-12 form-group">
+
+           <label>Seleccione Formato</label>
+            <select class="form-control" v-model="fileName">
+              <option value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
+              <option value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
+              <option value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option> 
+              <option value="copia_dni"  v-if="!subidos.copia_dni" >Copias DNI</option>
+              <option value="recibo_agua_casa" v-if="!subidos.recibo_agua_casa">Recibo de agua de casa</option>
+              <option  value="recibo_luz_casa" v-if="!subidos.recibo_luz_casa">Recibo de luz de casa</option> 
+              <option value="titulo_casa" v-if="!subidos.titulo_casa">Titulo de propiedad de casa</option>
+              <option value="contrato_alquiler_casa" v-if="!subidos.contrato_alquiler_casa">Contrato de alquiler de casa</option>
+              <option value="foto_casa" v-if="!subidos.foto_casa">Fotos de casa</option>
+               <option value="recibo_agua_negocio" v-if="!subidos.recibo_agua_negocio">Recibo de agua del negocio</option>
+              <option value="recibo_luz_negocio" v-if="!subidos.recibo_luz_negocio">Recibo de luz del negocio</option>
+              <option value="contrato_alquiler_negocio" v-if="!subidos.contrato_alquiler_negocio">Contrato de alquiler del negocio</option>
+              <option value="boleta_compra" v-if="!subidos.boleta_compra">Boleta de compras del negocio</option>
+              <option value="boleta_venta" v-if="!subidos.boleta_venta">Boleta de ventas del negocio</option>
+              <option value="factura_compra" v-if="!subidos.factura_compra">Factura de compras del negocio</option>
+              <option value="factura_venta" v-if="!subidos.factura_venta">Factura de ventas del negocio</option>
+              <option value="fotos_negocio" v-if="!subidos.fotos_negocio">Fotos del negocio</option>
+            </select>
+          </div>
+          <div class="col-md-12 form-group">
+            <label>Archivo</label>
+            <input
+              type="file"
+              id="file"
+              ref="file"
+              v-on:change="handleFileUpload()"
+              class="form-control"
+            />
+          </div>
+          <div class="col-md-12" style="    padding-top: 30px;">
+            <button type="button" @click="submit" class="btn btn-crecer w-100">Nuevo Archivo</button>
+          </div>
+
+          <div class="col-md-12" style="    padding-top: 30px;">
+            <button type="button" @click="cargarPdf()" class="btn btn-crecer w-100">Adjuntar Archivos</button>
+          </div>
+
+          <div class="col-md-3"></div>
+        </div>
+>>>>>>> eb6c26a1124ed0895cea2fdd84dff202699aeb65
       </div>
       <div class="container-fluid file-loan p-0 scroll-style">
         <!-- <div class="col-md-12 header-file">
@@ -289,7 +336,165 @@
       </div>
 
 
+<<<<<<< HEAD
       
+=======
+      <div class="list-file scroll-style">
+        <loader-file v-if="loaderFile"></loader-file>
+        <ol class="tree-structure" v-else>
+          <li  :class="{ subido: subidos.inscripcion_socio }">
+            <span class="num">1</span>
+            <a href="#">Inscripcion de socio</a>
+            <i class="fas fa-check-circle" v-if="subidos.inscripcion_socio"></i>
+          </li>
+          <li :class="{ subido: subidos.solicitud_credito }">
+            <span class="num">2</span>
+            <a href="#">Solicitud de credito</a>
+            <i class="fas fa-check-circle" v-if="subidos.solicitud_credito"></i>
+          </li>
+          <li :class="{ subido: subidos.reporte_de_central }" >
+            <span class="num">3</span>
+            <a href="#">Reporte de central de riesgo</a>
+            <i class="fas fa-check-circle" v-if="subidos.reporte_de_central"></i>
+          </li>
+          <li :class="{ subido: subidos.evaluacion_cualitativa }" >
+            <span class="num">4</span>
+            <a href="#">Evaluacion cualitativa</a>
+            <i class="fas fa-check-circle" v-if="subidos.evaluacion_cualitativa"></i> 
+          </li>
+          <li :class="{ subido: subidos.evaluacion_cuantitativa }">
+            <span class="num">5</span>
+            <a href="#">Evaluacion de cuantitativa</a>
+            <i class="fas fa-check-circle" v-if="subidos.evaluacion_cuantitativa"></i>
+          </li>
+          <li :class="{ subido: subidos.copia_dni}">
+            <span class="num">6</span>
+            <a href="#">Copia DNI</a>
+            <i class="fas fa-check-circle" v-if="subidos.copia_dni"></i>
+          </li>
+
+          <li>
+            <span class="num num-tree">7</span>
+            <a href="#">Documentos de casa</a>
+            <ol>
+              <li :class="{ subido: subidos.recibo_agua_casa}">
+                <span class="num">7.1</span>
+                <a href="#">Recibo de agua </a>
+               <i class="fas fa-check-circle" v-if="subidos.recibo_agua_casa"></i>
+              </li>
+              <li :class="{ subido: subidos.recibo_luz_casa}">
+                <span class="num">7.1</span>
+                <a href="#">Recibo de luz</a>
+               <i class="fas fa-check-circle" v-if="subidos.recibo_luz_casa"></i>
+              </li>
+              <li>
+                <span class="num">7.2</span>
+                <a href="#">Ubicacion</a>
+              </li>
+              <li :class="{ subido: subidos.titulo_casa}">
+                <span class="num">7.3</span>
+                <a href="#">Titulo de propiedad</a>
+                <i class="fas fa-check-circle" v-if="subidos.titulo_casa"></i>
+              </li>
+              <li :class="{ subido: subidos.contrato_alquiler_casa}">
+                <span class="num">7.4</span>
+                <a href="#">Contrato de alquiler</a>
+                <i class="fas fa-check-circle" v-if="subidos.contrato_alquiler_casa"></i>
+              </li>
+              <li :class="{ subido: subidos.foto_casa}">
+                <span class="num">7.5</span>
+                <a href="#">Fotos de casa</a>
+                <i class="fas fa-check-circle" v-if="subidos.foto_casa"></i>
+              
+              </li>
+            </ol>
+          </li>
+
+          <li>
+            <span class="num num-tree">8</span>
+            <a href="#">Documentos del negocio</a>
+            <ol>
+              <li :class="{ subido: subidos.recibo_agua_negocio}">
+                <span class="num">8.1</span>
+                <a href="#">Recibo de agua</a>
+                <i class="fas fa-check-circle" v-if="subidos.recibo_agua_negocio"></i>
+              
+              </li>
+              <li :class="{ subido: subidos.recibo_luz_negocio}">
+                <span class="num">8.2</span>
+                <a href="#">Recibo de luz</a>
+                <i class="fas fa-check-circle" v-if="subidos.recibo_luz_negocio"></i>
+              
+              </li>
+              <li>
+                <span class="num">8.3</span>
+                <a href="#">Ubicacion</a>
+              </li>
+              <li :class="{ subido: subidos.contrato_alquiler_negocio}">
+                <span class="num">8.4</span>
+                <a href="#">Contrato de alquiler</a>
+                <i class="fas fa-check-circle" v-if="subidos.contrato_alquiler_negocio"></i>
+              
+              </li>
+              <li :class="{ subido: subidos.fotos_negocio}">
+                <span class="num">8.4</span>
+                <a href="#">Fotos de negocio</a>
+                <i class="fas fa-check-circle" v-if="subidos.fotos_negocio"></i>
+              
+              </li>
+              <li :class="{ subido: subidos.boleta_compra}">
+                <span class="num">8.5</span>
+                <a href="#">Boletas de compras</a>
+                <i class="fas fa-check-circle" v-if="subidos.boleta_compra"></i>
+              
+              </li>
+              <li :class="{ subido: subidos.factura_compra}">
+                <span class="num">8.6</span>
+                <a href="#">Facturas de compras</a>
+                <i class="fas fa-check-circle" v-if="subidos.factura_compra"></i>
+              
+              </li>
+              <li :class="{ subido: subidos.boleta_venta}">
+                <span class="num">8.7</span>
+                <a href="#">Boletas de ventas</a>
+                <i class="fas fa-check-circle" v-if="subidos.boleta_venta"></i>
+              
+              </li>
+              <li :class="{ subido: subidos.factura_venta}">
+                <span class="num">8.8</span>
+                <a href="#">Facturas de ventas</a>
+                <i class="fas fa-check-circle" v-if="subidos.factura_venta"></i>
+              
+              </li>
+            </ol>
+          </li>
+
+          <li>
+            <span class="num num-tree">8</span>
+            <a href="#">Colateral</a>
+            <ol>
+              <li>
+                <span class="num">8.1</span>
+                <a href="#"></a>
+              </li>
+              <li>
+                <span class="num">8.2</span>
+                <a href="#">Ubicacion</a>
+              </li>
+              <li>
+                <span class="num">8.3</span>
+                <a href="#">Contrato de alquiler</a>
+              </li>
+              <li>
+                <span class="num">8.4</span>
+                <a href="#">Fotos de negocio</a>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </div>
+
+>>>>>>> eb6c26a1124ed0895cea2fdd84dff202699aeb65
     </div>
   </div>
 </template>

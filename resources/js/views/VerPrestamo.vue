@@ -445,28 +445,25 @@
                         <input type="text" v-model="row.bien_garantia" />
                       </div>
 
-                      <div class="input_wrapper">
-                        <label>Ins</label>
-                        <label class="form-check-label">
-                          <input
-                            type="radio"
-                            v-model="row.tipo"
-                            class="form-check-input"
-                            value="INS"
-                          />
-                        </label>
-                      </div>
-
-                      <div class="input_wrapper">
-                        <label>D.J</label>
-                        <label class="form-check-label">
-                          <input
-                            type="radio"
-                            v-model="row.tipo"
-                            class="form-check-input"
-                            value="DJ"
-                          />
-                        </label>
+                      <div class="input_box"><label>&nbsp;</label>
+                        <div class="input_box_wrapper">
+                          <div class="input_checkbox_wrapper radio" >
+                            <input type="radio" :id="'radio'+index" :name="'garantiaType'+index" v-model="row.tipo" :value="'INS'" />
+                            <label class="box_content" :for="'radio'+index">
+                              <div class="box">
+                              </div>
+                              <span>Inscripción</span>
+                            </label>
+                          </div>
+                          <div class="input_checkbox_wrapper radio" >
+                            <input type="radio" :id="'radio2'+index" :name="'garantiaType'+index" v-model="row.tipo" :value="'DJ'" />
+                            <label class="box_content" :for="'radio2'+index">
+                              <div class="box">
+                              </div>
+                              <span>Declaración Jurada</span>
+                            </label>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
