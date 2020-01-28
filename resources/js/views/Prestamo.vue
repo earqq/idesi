@@ -422,7 +422,7 @@
                 <i class="fas fa-plus"></i>
               </button>
             </div>
-
+ 
             <div class="form_buttons">
               <a class="button_inline_primary medium prev" @click="prev(3)">
                 <i class="material-icons-outlined">navigate_before</i>
