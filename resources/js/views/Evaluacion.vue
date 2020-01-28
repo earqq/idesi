@@ -163,7 +163,7 @@ export default {
   methods: {
     methodsPrestamo() {
       this.$http.get(`/${this.resource}/prestamos/`).then(response => {
-        this.prestamos = response.data.pretamos;
+        this.prestamos = response.data.prestamo;
         this.id_usuario = response.data.usuario;
         this.id_rol = response.data.rol;
         console.log(response.data);

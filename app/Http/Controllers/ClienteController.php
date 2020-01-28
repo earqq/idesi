@@ -1015,9 +1015,14 @@ class ClienteController extends Controller
             
             
             // $pdf->addPDF(public_path('/upload/test.pdf'), 'all');
-            $pdf->merge('file', public_path('/upload/created.pdf'), 'P');
+            $pdf->merge('file', public_path('/upload/created.pdf'),'P');
 
             dd('done');
+
+            
+
+
+
 
         }
 

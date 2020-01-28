@@ -11,13 +11,12 @@ use App\Imports\NegociosImport;
 use App\Evaluacion;
 use App\Cuantitativa;
 use App\Cliente;
-use App\Archivos; 
 use App\Cualitativa;
 use App\ResultadoCuantitativa;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
-
+use Storage;
 class EvaluacionesController extends Controller
 {
     /**
@@ -657,7 +656,7 @@ class EvaluacionesController extends Controller
         $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
         if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/pestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
             
-            $archivo = new Archivos();
+            $archivo = new Archivo;
             $archivo->nombre = 'evaluacion_cualitativa';
             $archivo->tipo = 'documentos';
             $archivo->extension='pdf';
@@ -708,10 +707,11 @@ class EvaluacionesController extends Controller
 
             $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
             $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
-            if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/pestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
-                $archivo = new Archivos();
+            if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
+                \Log::alert(" sie entra");
+                $archivo = new Archivo;
                 $archivo->nombre = 'evaluacion_cualitativa';
-                $archivo->tipo = 'documentos';
+                $archivo->tipo = 'documento';
                 $archivo->extension='pdf';
                 $archivo->prestamos_id= $prestamo->id;
                 $archivo->save();
