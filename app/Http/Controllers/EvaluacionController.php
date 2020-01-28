@@ -192,7 +192,7 @@ class EvaluacionController extends Controller
 
     public function datosCualitativas(Request $request)
     {
-        $cualitativa = Cualitativa::where('prestamo_id',$request->prestamo)->first();
+        $cualitativa = Cualitativa::where('prestamo_id',intval($request->prestamo))->first();
         return $cualitativa;
 
     } 
