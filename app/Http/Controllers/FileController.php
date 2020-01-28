@@ -52,7 +52,9 @@ class FileController extends Controller
 
         $model = new Archivo(); 
 
+        
         $file = $request->file('file');
+
         $ext = $file->getClientOriginalExtension();
         $type = $this->getType($ext);
  
