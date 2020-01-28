@@ -106,34 +106,16 @@
 </template> 
 
 <script>
-import DatePick from 'vue-date-pick'; 
-import "vue-date-pick/dist/vueDatePick.css";
-
-const mesConf = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre"
-];
-const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
+ 
+ 
 export default {
-  name: 'clients',
-  components: { DatePick},
+  name: 'clients', 
   data() {
     return {
       resource: "clientes",
       clientes: [],
       type_list: 1,
-      page: 0, 
-      tipo: true,
+      page: 0,  
       search_input: "",
       last_page: 1,
       form: {},
@@ -146,9 +128,7 @@ export default {
             position: "topRight"
           }
         }
-      },
-      mesEs: mesConf,
-      diaEs: diaConf
+      }, 
     };
   },
   async created() {
@@ -191,12 +171,6 @@ export default {
           this.clientes = response.data.data;
         })
       }
-    },
-    crearCliente() {
-      this.tipo = false;
-    },
-    cancelarCliente() {
-      this.tipo = true;
     },
     initForm() {
       this.form = {

@@ -310,7 +310,7 @@
                     <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero" v-bind:key="index">
                       <h3 class="title">
                         Entidad {{index + 1}}
-                        <button v-if="index > 0" class="delete_section" type="button" >
+                        <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidad(index)">
                           <i class="material-icons-outlined"> delete </i>
                         </button>
                       </h3>
@@ -334,7 +334,7 @@
                       </div>
                     </div>
                   </div>
-                  <button type="button"  class="add_section" >
+                  <button type="button"  class="add_section" @click="clickAddEntidad" >
                     <span> AGREGAR ENTIDAD </span>
                     <i class="fas fa-plus"></i> 
                   </button>
@@ -427,7 +427,12 @@
                   <h3 class="title">Propiedades</h3>
                   <div class="form_list no_border">
                     <div class="sub_step_wrapper" v-for="(propiedades,index) in evaluacion.propiedades" v-bind:key="index">
-                      <h3 class="title">Propiedad {{index + 1}}</h3>
+                      <h3 class="title">Propiedad {{index + 1}}
+                        <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemovePropiedad(index)">
+                          <i class="material-icons-outlined"> delete </i>
+                        </button>
+                      </h3>
+                      
                       <div class="form_content">
                         <div class="group_form">
                           <div class="input_wrapper">
@@ -442,7 +447,7 @@
                       </div>
                     </div>
                   </div>
-                  <button type="button"  class="add_section" >
+                  <button type="button"  class="add_section" @click="clickAddPropiedad">
                     <span> AGREGAR PROPIEDAD </span>
                     <i class="fas fa-plus"></i> 
                   </button>
@@ -452,7 +457,11 @@
                   <h3 class="title">Gasto Finaciero del Titular (Personales) </h3>
                   <div class="form_list no_border">
                     <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.titular.gasto_financiero_personal" v-bind:key="index">
-                      <h3 class="title">Entidad {{index + 1}}</h3>
+                      <h3 class="title">Entidad {{index + 1}}
+                        <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidadTitular(index)">
+                          <i class="material-icons-outlined"> delete </i>
+                        </button>
+                      </h3>
                       <div class="form_content">
                         <div class="group_form">
                           <div class="input_wrapper">
@@ -471,7 +480,7 @@
                         </div>
                     </div>
                   </div>
-                  <button type="button"  class="add_section" >
+                  <button type="button"  class="add_section" @click="clickAddEntidadTitular" >
                     <span> AGREGAR ENTIDAD </span>
                     <i class="fas fa-plus"></i> 
                   </button>
@@ -481,7 +490,11 @@
                   <h3 class="title">Gasto Finaciero del Conyuge ò Conviviente (Personales) </h3>
                   <div class="form_list no_border">
                     <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero_personal" v-bind:key="index">
-                      <h3 class="title">Entidad {{index + 1}} </h3>
+                      <h3 class="title">Entidad {{index + 1}}
+                          <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidadConyuge(index)">
+                          <i class="material-icons-outlined"> delete </i>
+                        </button>
+                      </h3>
                       <div class="form_content">
                         <div class="group_form">
                           <div class="input_wrapper">
@@ -500,7 +513,7 @@
                       </div>
                     </div>
                   </div>
-                  <button type="button"  class="add_section" >
+                  <button type="button"  class="add_section" @click="clickAddEntidadConyuge">
                     <span> AGREGAR ENTIDAD </span>
                     <i class="fas fa-plus"></i> 
                   </button>
@@ -827,6 +840,50 @@ export default {
     prev(index) {
         this.tab = index - 1;
     },
+    clickAddEntidad() { 
+      this.evaluacion.conyuge.gasto_financiero.push({
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+      });
+    },
+    clickRemoveEntidad(index) {
+      this.evaluacion.conyuge.gasto_financiero.splice(index, 1);
+    },
+
+    clickAddEntidadTitular() { 
+      this.evaluacion.titular.gasto_financiero_personal.push({
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+      });
+    },
+    clickRemoveEntidadTitular(index) {
+      this.evaluacion.titular.gasto_financiero_personal.splice(index, 1);
+    },
+
+    clickAddEntidadConyuge() { 
+      this.evaluacion.conyuge.gasto_financiero_personal.push({
+              entidad: "",
+              saldo_capital: 0,
+              cuota: 0
+      });
+    },
+    clickRemoveEntidadConyuge(index) {
+      this.evaluacion.conyuge.gasto_financiero_personal.splice(index, 1);
+    },
+
+
+    clickAddPropiedad() { 
+      this.evaluacion.propiedades.push({
+            concepto: "",
+            valor_estimado: 0
+      });
+    },
+    clickRemovePropiedad(index) {
+      this.evaluacion.propiedades.splice(index, 1);
+    },
+    
     negocioIngresosSubtotal(index) {
       this.evaluacion.titular.ingresos_negocio[index].subtotal =
         parseFloat(this.evaluacion.titular.ingresos_negocio[index].lunes, 2) +

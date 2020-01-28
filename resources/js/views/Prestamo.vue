@@ -590,22 +590,7 @@
 <script>
 import { serviceNumber } from "../mixins/functions";
 import VueNumeric from "vue-numeric";
-
-const mesConf = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre"
-];
-const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
+ 
 export default {
   mixins: [serviceNumber],
   components: { VueNumeric },
@@ -617,9 +602,7 @@ export default {
       errors: {},
       form: {},
       contador_aval: 0,
-      contador_garantia: 0,
-      mesEs: mesConf,
-      diaEs: diaConf,
+      contador_garantia: 0, 
       notificationSystem: {
         options: {
           success: {
@@ -656,8 +639,7 @@ export default {
 
     this.$http
       .get(`/${this.resource}/datos/prestamo/` + this.$route.params.dni)
-      .then(response => {
-        console.log(response.data);
+      .then(response => { 
 
         this.form.cliente.departamento =
           response.data["cliente"]["departamento"];
@@ -688,8 +670,7 @@ export default {
         this.form.natural.direccion_laboral =
           response.data["natural"]["direccion_laboral"];
 
-        if (response.data["tiene_conyuge"] == "SI") {
-          console.log(response.data["conyugue"]);
+        if (response.data["tiene_conyuge"] == "SI") { 
           this.form.conyugue.documento_conyugue =
             response.data["conyugue"]["documento"];
           this.form.conyugue.nombres_conyugue =
@@ -716,8 +697,7 @@ export default {
             response.data["conyugue"]["aporte_socio"];
           this.form.conyugue.conyuge_tiene = "SI";
         } else {
-          this.form.conyugue.conyuge_tiene = "NO";
-          console.log(this.form.conyugue.conyuge_tiene);
+          this.form.conyugue.conyuge_tiene = "NO"; 
         }
       });
   },
@@ -735,8 +715,7 @@ export default {
     clickRemoveConyuge() {
       this.form.conyugue.conyuge_tiene = "NO";
     },
-    clickAddAval() {
-      // this.contador_aval++;
+    clickAddAval() { 
       this.form.avals.push({
         documento: "",
         nombres: "",
@@ -840,8 +819,7 @@ export default {
         .post("/consulta/dni", {
           documento: this.form.conyugue.documento_conyugue
         })
-        .then(function(response) {
-          console.log(response.data);
+        .then(function(response) { 
           me.form.conyugue.nombres_conyugue =
             response.data["nombres"] + " " + response.data["surnames"];
 
@@ -853,8 +831,7 @@ export default {
         });
     },
     meses_numero() {
-      if (this.form.producto == "CREDIDIARIO") {
-        console.log("diario");
+      if (this.form.producto == "CREDIDIARIO") { 
         this.form.meses = (Number(this.form.plazo) / 30).toFixed(2);
       } else if (this.form.producto == "CREDISEMANA") {
         this.form.meses = (Number(this.form.plazo) / 4).toFixed(2);
@@ -869,8 +846,7 @@ export default {
         .post("/consulta/dni", {
           documento: this.form.avals[index].documento
         })
-        .then(function(response) {
-          console.log(response.data);
+        .then(function(response) { 
           me.form.avals[index].nombres = response.data["nombres"];
           me.form.avals[index].apellidos = response.data["surnames"];
 
@@ -882,9 +858,7 @@ export default {
         });
     },
     submit() {
-      // if() {
-      //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
-      //  }
+ 
 
       this.$http
         .post(`/${this.resource}/prestamo`, this.form)
@@ -894,7 +868,7 @@ export default {
             "Exitoso",
             this.notificationSystem.options.success
           );
-          this.retornar();
+          this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, persona: 'PN' }})
         })
         // .catch(error => {
         //   if (error.response.status === 422) {

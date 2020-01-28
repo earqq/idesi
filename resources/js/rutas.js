@@ -63,11 +63,6 @@ export default new Router({
             component: require('./views/EvaluacionDetalle').default,
         },
         {
-            path: '/perfiljuridico/:documento',
-            name: 'perfiljuridico',
-            component: require('./views/PerfilJuridico').default,
-        },
-        {
             path: '/editar/solicitud/credito/natural/:prestamo',
             name: '/editar/solicitud/credito/natural/',
             component: require('./views/VerPrestamo').default 

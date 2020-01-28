@@ -15,7 +15,7 @@
                     </div>
                     <div class="input_wrapper">
                       <label>Forma</label>
-                      <input type="text" :value="prestamo_detalle.forma_inicial" disabled />
+                      <input type="text" :value="prestamo_detalle.forma_inicial" disablgied />
                     </div>
                     <div class="input_wrapper">
                       <label>Plazo</label>
@@ -38,7 +38,7 @@
                   </div>
                 </div>
               </div>
-
+ 
               <div class="form_step_wrapper">
                 <h3 class="title">Propuesta del Analista</h3>
 
@@ -137,7 +137,7 @@
                     <video ref="video" id="video" width="640" height="480" autoplay></video>
                   </div>
                   <div>
-                    <button id="snap" v-on:click="capture()">Capturar Imagen</button>
+                    <button id="snap" v-on:click="capture()">Registrar Ubicación</button>
                     <button @click="apagar()">apagar</button>
                   </div>
                   <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
@@ -146,6 +146,17 @@
                     <img v-bind:src="captura" height="50" />
                     <!-- </li> -->
                   </ul>
+                </div>
+
+                <div class="form_buttons">
+                  <a class="button_inline_primary medium prev"  >
+                    <i class="material-icons-outlined">navigate_before</i>
+                    <span>REGRESAR PERFIL</span>
+                  </a>
+                  <a class="button_primary medium next" >
+                    <span>GUARDAR UBICACION</span>
+                    <i class="material-icons-outlined">navigate_next</i>
+                  </a>
                 </div>
               </div>
             </div>
@@ -193,29 +204,12 @@
 </template>
  
 <script>
-import DatePick from "vue-date-pick";
-import "vue-date-pick/dist/vueDatePick.css";
 import moment from "moment";
 import { gmapApi } from "vue2-google-maps";
 
-const mesConf = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre"
-];
-const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   name: "visita",
-  components: { DatePick },
+  components: {},
   data() {
     return {
       resource: "clientes",
@@ -229,6 +223,8 @@ export default {
       errors: {},
       prestamo_detalle: [],
       camara: [],
+      latitud: '',
+      altitud: '',
       formViews: {},
       formData: {},
       list_vistas: [],
@@ -242,9 +238,7 @@ export default {
             position: "topRight"
           }
         }
-      },
-      mesEs: mesConf,
-      diaEs: diaConf
+      }
     };
   },
   computed: {
@@ -305,7 +299,7 @@ export default {
           output.innerHTML = errorMsg("Ocurrio un error", null);
         }
       );
-    }
+    } 
   },
   methods: {
     capture() {
@@ -314,6 +308,8 @@ export default {
         .getContext("2d")
         .drawImage(this.video, 0, 0, 640, 480);
       this.captura = canvas.toDataURL("image/png");
+
+      this.submit()
     },
     apagar() {
       this.video = this.$refs.video;
@@ -372,6 +368,8 @@ export default {
       this.formData = new FormData();
       this.formData.append("name", "addsdasd");
       this.formData.append("prestamo_id", this.prestamo);
+      this.formData.append("latitud", this.location.coords.latitude);
+      this.formData.append("longitud",  this.location.coords.longitude); 
       this.formData.append("file", this.captura);
       this.$http
         .post(`/${this.resource}/visita/nuevo`, this.formData, {
@@ -388,14 +386,7 @@ export default {
             "Exitoso",
             this.notificationSystem.options.success
           );
-        })
-        // .catch(error => {
-        //   if (error.response.status === 422) {
-        //     this.errors = error.response.data;
-        //   } else {
-        //     this.$message.error(error.response.data.message);
-        //   }
-        // })
+        }) 
         .then(() => {
           // this.loading_submit = false;
         });

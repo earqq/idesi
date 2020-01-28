@@ -16,6 +16,8 @@ Route::group(['middleware'=>['guest']],function(){
  */
 Route::get('charge/data','EvaluacionesController@chargeData');
 Route::group(['middleware'=>['auth']],function(){
+    
+    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::group(['middleware'=>['Administrador']],function(){
 

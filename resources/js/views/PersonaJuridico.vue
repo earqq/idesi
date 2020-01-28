@@ -428,42 +428,17 @@
 </template>
 
 <script>
-import DatePick from 'vue-date-pick';
-import "vue-date-pick/dist/vueDatePick.css";
 import { serviceNumber } from "../mixins/functions";
 import VueNumeric from 'vue-numeric'
 
-const mesConf = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre"
-];
-
-const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
-
 export default {
 mixins: [serviceNumber],
-  components: { DatePick,VueNumeric}, 
+  components: {VueNumeric}, 
   data() {
     return {
       resource: "clientes",
-      clientes: [],
-      all_departments: [],
-      all_provinces: [],
-      all_districts: [],
-      tipo_persona:'PJ',
-      loading_submit:'0',
-      provinces: [],
-      districts: [],
+      clientes: [], 
+      tipo_persona:'PJ',  
       form: {},
       notificationSystem: {
         options: {
@@ -474,9 +449,7 @@ mixins: [serviceNumber],
             position: "topRight"
           }
         }
-      },
-      mesEs: mesConf,
-      diaEs: diaConf,
+      }, 
       tab: 1
     };
   },
@@ -618,8 +591,7 @@ mixins: [serviceNumber],
         .post("/consulta/dni", {
           documento: this.form.documento
         }) 
-        .then(function(response) {
-          console.log(response.data);
+        .then(function(response) { 
           me.form.nombres = response.data["nombres"];
           me.form.apellidos = response.data["surnames"];
 
@@ -634,8 +606,7 @@ mixins: [serviceNumber],
     submit() {
       // if() {
       //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
-      //  }
-      this.loading_submit=1;
+      //  } 
       axios
         .post(`/${this.resource}/nuevo/juridico`, this.form)
         .then(response => {
@@ -645,8 +616,9 @@ mixins: [serviceNumber],
               "La solicitud fue admitida",
               "Exitoso",
               this.notificationSystem.options.success
-            );
-            this.loading_submit=0;
+            ); 
+
+            this.$router.push({ name: 'clientes'})
             
           } else {
             // this.resetForm();
@@ -662,25 +634,3 @@ mixins: [serviceNumber],
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.vdpWithInput {
-  width: 100%;
-}
-.vdpWithInput > input {
-  font-size: 16px;
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  -webkit-appearance: none;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0.1em 0.3em;
-  padding: 5px 40px 6px 15px;
-  border-radius: 4px;
-  background: white;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(224, 224, 224);
-  border-image: initial;
-  outline: 0px;
-}
-</style>

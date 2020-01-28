@@ -144,8 +144,7 @@ export default {
               this.id_usuario = response.data['usuario'];
               this.id_rol = response.data['rol'];
               this.loader = 0;
-              this.loader_loan = 0;
-              console.log(this.prestamos);
+              this.loader_loan = 0; 
             });
     }else{
           this.$http
@@ -157,8 +156,7 @@ export default {
               this.id_usuario = response.data['usuario'];
               this.id_rol = response.data['rol'];
               this.loader = 0;
-              this.loader_loan = 0; 
-              console.log(this.cliente); 
+              this.loader_loan = 0;  
             });
     }
 
@@ -177,10 +175,7 @@ export default {
         .format("D [de] MMMM [del] YYYY h:mm:ss a");
       return string;
     }
-  },
-  mounted() {
-    console.log("Component mounted.");
-  },
+  }, 
   computed: {
     timeCredit () {
       return {

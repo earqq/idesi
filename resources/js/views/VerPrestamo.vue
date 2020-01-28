@@ -5,25 +5,25 @@
       <div class="tabs_wrapper">
         <div
           class="tab"
-          @click="tab = 1"
+          @click="tab = 1;saving()"
           :class="[{complete : validateStep1 }, {selected: tab == 1}]"
         >
           <span>1</span>
           <p>SOLICITUD</p>
         </div>
-        <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
+        <div class="tab" @click="tab = 2;saving()" :class="{selected: tab == 2}">
           <span>2</span>
           <p>CLIENTE</p>
         </div>
-        <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
+        <div class="tab" @click="tab = 3;saving()" :class="{selected: tab == 3}">
           <span>3</span>
           <p>AVAL</p>
         </div>
-        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}">
+        <div class="tab" @click="tab = 4;saving()" :class="{selected: tab == 4}">
           <span>4</span>
           <p>GARANTIA</p>
         </div>
-        <div class="tab" @click="tab = 5" :class="{selected: tab ==5}">
+        <div class="tab" @click="tab = 5;saving()" :class="{selected: tab ==5}">
           <span>5</span>
           <p>PROPUESTA DE ANALISTA</p>
         </div>
@@ -579,29 +579,13 @@
 </template>
 
 <script>
-import { serviceNumber } from "../mixins/functions";
-import DatePick from "vue-date-pick";
-import "vue-date-pick/dist/vueDatePick.css";
+import { serviceNumber } from "../mixins/functions";  
 import VueNumeric from 'vue-numeric'
 
-const mesConf = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo", 
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre"
-];
-const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
+
 export default {
   mixins: [serviceNumber],
-  components: { DatePick ,VueNumeric},
+  components: { VueNumeric},
   data() {
     return {
       resource: "clientes",
@@ -615,9 +599,7 @@ export default {
       loading_submit: 0,
       form: {},
       contador_aval: 0,
-      contador_garantia: 0,
-      mesEs: mesConf,
-      diaEs: diaConf,
+      contador_garantia: 0, 
       notificationSystem: {
         options: {
           success: {
@@ -658,9 +640,7 @@ export default {
 
     this.$http
       .get(`/${this.resource}/prestamo/ver/` + this.$route.params.prestamo)
-      .then(response => {
-        console.log(response.data['prestamo']);
-
+      .then(response => { 
         this.form.cliente.departamento = response.data["cliente"]["departamento"];
         this.form.cliente.provincia = response.data["cliente"]["provincia"];
         this.form.cliente.distrito = response.data["cliente"]["distrito"];
@@ -723,6 +703,7 @@ export default {
   methods: {
     next(index) {
        this.tab = index + 1;
+       this.saving()
     },
     prev(index) {
        this.tab = index - 1;
@@ -756,8 +737,7 @@ export default {
     },
     meses_numero(){
 
-        if(this.form.producto=='CREDIDIARIO'){
-          console.log('diario')
+        if(this.form.producto=='CREDIDIARIO'){  
           this.form.meses = (Number(this.form.plazo)/30).toFixed(2)
         }
         else if(this.form.producto=='CREDISEMANA'){
@@ -852,8 +832,7 @@ export default {
         .post("/consulta/dni", {
           documento: this.form.conyugue.documento_conyugue
         })
-        .then(function(response) {
-          console.log(response.data);
+        .then(function(response) { 
           me.form.conyugue.nombres_conyugue = response.data["nombres"] +' '+ response.data["surnames"];
 
           // me.loader = false;
@@ -870,8 +849,7 @@ export default {
         .post("/consulta/dni", {
           documento: this.form.avals[index].documento
         })
-        .then(function(response) {
-          console.log(response.data);
+        .then(function(response) { 
           me.form.avals[index].nombres = response.data["nombres"];
           me.form.avals[index].apellidos = response.data["surnames"];
 
@@ -883,10 +861,7 @@ export default {
         });
     },
     submit() {
-      // if() {
-      //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
-      //  }
-      this.loading_submit=1;
+
 
       this.$http
         .post(`/${this.resource}/prestamo`, this.form)
@@ -896,22 +871,20 @@ export default {
             "Exitoso",
             this.notificationSystem.options.success
           );
-        this.loading_submit=0;
-        this.retornar();
-        })
-        // .catch(error => {
-        //   if (error.response.status === 422) {
-        //     this.errors = error.response.data;
-        //   } else {
-        //     this.$message.error(error.response.data.message);
-        //   }
-        // })
+
+          this.$router.push({ name: 'perfil', params: { documento:  this.form.cliente.documento, persona: 'PN' }})
+          
+        }) 
         .then(() => {
-          // this.loading_submit = false;
         });
     },
-    retornar() {
-      this.backMixin_handleBack('/perfil/'+this.form.cliente.documento );
+    saving() {
+      this.$http
+        .post(`/${this.resource}/prestamo`, this.form)
+        .then(response => {
+        }) 
+        .then(() => {
+        });
     }
   },
 };

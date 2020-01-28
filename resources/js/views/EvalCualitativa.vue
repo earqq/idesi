@@ -345,13 +345,15 @@
                     <div class="form_list no_border" >
                         <div class="sub_step_wrapper" v-for="(entidad_financiera, index) in evaluacion.central_riesgo" :key="index">
                           <h3 class="title">
-                            Entidad Financiera {{index + 1}}
+                            Entidad Financiera {{index + 1}} 
                             <button
                                 v-if="index > 0"
                                 class="delete_section"
-                                type="button">
+                                type="button"
+                                @click="clickRemoveFinanciera(index)"
+                                >
                                 <i class="material-icons-outlined">delete</i>
-                            </button>
+                            </button> 
                           </h3>
                           <div class="form_content">
                             <div class="group_form">
@@ -428,7 +430,7 @@
                         </div>
                     </div>
 
-                    <button type="button"    class="add_section" >
+                    <button type="button"    class="add_section" @click="clickAddFinanciera" >
                       <span> AGREGAR ENTIDAD FINANCIERA </span>
                       <i class="fas fa-plus"></i> 
                     </button>
@@ -473,7 +475,7 @@
                               v-if="index > 0"
                               class="delete_section"
                               type="button"
-                              @click.prevent="clickRemoveGarantia(index)">
+                              @click.prevent="clickRemoveReferencia(index)">
                               <i class="material-icons-outlined">delete</i>
                             </button>
                           </h3>
@@ -498,7 +500,7 @@
                           </div>
                         </div>
                     </div>
-                    <button type="button"    class="add_section" >
+                    <button type="button"    class="add_section"  @click="clickAddReferencia">
                       <span> AGREGAR REFERENCIA </span>
                       <i class="fas fa-plus"></i> 
                     </button>
@@ -691,9 +693,31 @@ export default {
     },
     prev(index) {
       this.tab = index - 1;
+    }, 
+
+    clickAddFinanciera() { 
+      this.evaluacion.central_riesgo.push({
+            entidad_financiera: "",
+            capital: false,
+            activo_f: false,
+            consumo: false,
+            vehicular: false,
+            hipoteca: false,
+            terceros: false
+      });
     },
-    ejemplo() {
-      console.log("sdad");
+    clickRemoveFinanciera(index) {
+      this.evaluacion.central_riesgo.splice(index, 1);
+    },
+    clickAddReferencia() { 
+      this.evaluacion.referencias.push({
+            tipo_relacion: "",
+            nombre: "",
+            telefono: ""
+      });
+    },
+    clickRemoveReferencia(index) {
+      this.evaluacion.referencias.splice(index, 1);
     },
     guardar() {
       this.loading_submit=1

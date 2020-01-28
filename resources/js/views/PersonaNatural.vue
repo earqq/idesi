@@ -315,7 +315,7 @@
 
                     <div class="input_wrapper">
                       <label for="nacimiento">Fecha de Ingreso</label>
-                      <date-pick v-model="form.laboral.fecha_ingreso" :months="mesEs" :weekdays="diaEs"></date-pick>
+                      <input type="date" v-model="form.laboral.fecha_ingreso"> 
                     </div>
 
                   </div>
@@ -751,33 +751,14 @@
 </template>
 
 <script>
-import DatePick from "vue-date-pick";
-import "vue-date-pick/dist/vueDatePick.css";
 import { serviceNumber } from "../mixins/functions";
 import vSelect from "vue-select";
 import VueNumeric from 'vue-numeric'
-
-const mesConf = [
-  "Enero",
-  "Febrero", 
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre"
-];
-
-const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
-
+ 
 export default {
   name: 'natural',
   mixins: [serviceNumber],
-  components: { DatePick , vSelect,VueNumeric}, 
+  components: { vSelect,VueNumeric}, 
   data() {
     return {
       giros: [],
@@ -804,9 +785,7 @@ export default {
             position: "topRight"
           }
         }
-      },
-      mesEs: mesConf,
-      diaEs: diaConf,
+      }, 
       tab: 1
     };
   },
@@ -987,8 +966,7 @@ export default {
         .post("/consulta/dni", {
           documento: this.form.cliente.documento
         })
-        .then(function(response) {
-          console.log(response.data);
+        .then(function(response) { 
           me.form.natural.nombres = response.data["nombres"];
           me.form.natural.apellidos = response.data["surnames"];
         })
@@ -1004,7 +982,6 @@ export default {
           documento: this.form.detalles[index].documento
         })
         .then(function(response) {
-          console.log(response.data);
           me.form.detalles[index].nombres = response.data["nombres"]  + ' ' +  response.data["surnames"];
         })
         .catch(function(error) {
@@ -1016,7 +993,7 @@ export default {
       // if() {
       //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
       //  }
-      this.loading_submit=1;
+
       this.$http
         .post(`/${this.resource}/nuevo/natural`, this.form)
         .then(response => {
@@ -1028,10 +1005,7 @@ export default {
               this.notificationSystem.options.success
             );
 
-            this.loading_submit=0;
-            this.$parent.getRecords();
-            this.$parent.tipo = true;
-
+            this.$router.push({ name: 'clientes'})
             
           } else {
             // this.resetForm();

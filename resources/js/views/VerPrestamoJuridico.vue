@@ -5,25 +5,25 @@
       <div class="tabs_wrapper">
         <div
           class="tab"
-          @click="tab = 1"
+          @click="tab = 1;saving()"
           :class="[{complete : validateStep1 }, {selected: tab == 1}]"
         >
           <span>1</span>
           <p>SOLICITUD</p>
         </div>
-        <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
+        <div class="tab" @click="tab = 2;saving()" :class="{selected: tab == 2}">
           <span>2</span>
           <p>EMPRESA</p>
         </div>
-        <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
+        <div class="tab" @click="tab = 3;saving()" :class="{selected: tab == 3}">
           <span>3</span>
           <p>AVAL</p>
         </div>
-        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}">
+        <div class="tab" @click="tab = 4;saving()" :class="{selected: tab == 4}">
           <span>4</span>
           <p>GARANTIA</p>
         </div>
-        <div class="tab" @click="tab = 5" :class="{selected: tab ==5}">
+        <div class="tab" @click="tab = 5;saving()" :class="{selected: tab ==5}">
           <span>5</span>
           <p>PROPUESTA DE ANALISTA</p>
         </div>
@@ -549,47 +549,22 @@
 </template>
 
 <script>
-import { serviceNumber } from "../mixins/functions";
-import DatePick from "vue-date-pick";
-import "vue-date-pick/dist/vueDatePick.css";
+import { serviceNumber } from "../mixins/functions"; 
 import VueNumeric from 'vue-numeric'
 
-// import BackMixin from `vue-router-back-mixin`;
-
-const mesConf = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre"
-];
-const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
+ 
 export default {
   mixins: [serviceNumber],
-  components: { DatePick,VueNumeric },
+  components: {VueNumeric },
   data() {
     return {
       resource: "clientes",
-      all_departments: [],
-      all_provinces: [],
-      all_districts: [],
-      provinces: [],
-      districts: [],
       tab: 1,
       loading_submit:0,
       errors: {},
       form: {},
       contador_aval: 0,
-      contador_garantia: 0,
-      mesEs: mesConf,
-      diaEs: diaConf,
+      contador_garantia: 0, 
       notificationSystem: {
         options: {
           success: {
@@ -630,8 +605,7 @@ export default {
 
     this.$http
       .get(`/${this.resource}/prestamo/ver/juridico/` + this.$route.params.prestamo)
-      .then(response => {
-        console.log(response.data);
+      .then(response => { 
 
         this.form.cliente.departamento = response.data["cliente"]["departamento"];
         this.form.cliente.provincia = response.data["cliente"]["provincia"];
@@ -688,6 +662,7 @@ export default {
   methods: {
     next(index) {
         this.tab = index + 1;
+        this.saving()
     },
     prev(index) {
       this.tab = index - 1;
@@ -700,8 +675,7 @@ export default {
     },
       meses_numero(){
 
-        if(this.form.producto=='CREDIDIARIO'){
-          console.log('diario')
+        if(this.form.producto=='CREDIDIARIO'){ 
           this.form.meses = (Number(this.form.plazo)/30).toFixed(2)
         }
         else if(this.form.producto=='CREDISEMANA'){
@@ -712,8 +686,7 @@ export default {
     }
 
     },
-    clickAddAval() {
-      // this.contador_aval++;
+    clickAddAval() { 
       this.form.avals.push({
         documento: "",
         nombres: "",
@@ -737,8 +710,7 @@ export default {
       this.form.avals.splice(index, 1);
     },
     numero_meses(){
-       if(this.form.producto=='CREDIDIARIO'){
-          console.log('diario')
+       if(this.form.producto=='CREDIDIARIO'){ 
           this.form.meses = (Number(this.form.plazo)/30).toFixed(2)
         }
         else if(this.form.producto=='CREDISEMANA'){
@@ -748,8 +720,7 @@ export default {
           this.form.meses = (Number(this.form.plazo)/1).toFixed(2)
         }
     },
-    clickAddGarantia() {
-      // this.contador_garantia++;
+    clickAddGarantia() { 
       this.form.garantias.push({
         bien_garantia: "",
         tipo: ""
@@ -826,8 +797,7 @@ export default {
         .post("/consulta/dni", {
         //   documento: this.form.conyugue.documento_conyugue
         })
-        .then(function(response) {
-          console.log(response.data);
+        .then(function(response) { 
         //   me.form.conyugue.nombres_conyugue = response.data["nombres"];
         //   me.form.conyugue.apellidos_conyugue = response.data["surnames"];
 
@@ -845,8 +815,7 @@ export default {
         .post("/consulta/dni", {
           documento: this.form.avals[index].documento
         })
-        .then(function(response) {
-          console.log(response.data);
+        .then(function(response) { 
           me.form.avals[index].nombres = response.data["nombres"];
           me.form.avals[index].apellidos = response.data["surnames"];
 
@@ -858,10 +827,7 @@ export default {
         });
     },
     submit() {
-      // if() {
-      //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
-      //  }
-      this.loading_submit=1
+ 
       this.$http
         .post(`/${this.resource}/prestamo/juridico`, this.form)
         .then(response => {
@@ -870,48 +836,26 @@ export default {
             "La solicitud de prestamo fue actualizada",
             "Exitoso",
             this.notificationSystem.options.success
-          );
-          this.loading_submit=0
-          this.retornar();
+          ); 
+
+          this.$router.push({ name: 'perfil', params: { documento:  this.form.cliente.documento, persona: 'PJ' }})
+          // this.$router.push({ name: 'perfil', params: { documento:  this.form.cliente.documento, persona: 'PN' }})
+
         })
-        // .catch(error => {
-        //   if (error.response.status === 422) {
-        //     this.errors = error.response.data;
-        //   } else {
-        //     this.$message.error(error.response.data.message);
-        //   }
-        // })
+   
         .then(() => {
           // this.loading_submit = false;
         });
     },
-    retornar() {
-      this.backMixin_handleBack('/perfil/'+this.form.cliente.documento+'/PJ');
+    saving() {
+      this.$http
+        .post(`/${this.resource}/prestamo/juridico`, this.form)
+        .then(response => {
+        }) 
+        .then(() => {
+        });
     }
-  },
-  mounted() {
-    console.log("Component mounted.");
-  }
+  } 
 };
 </script>
-<style lang="scss">
-.vdpWithInput {
-  width: 100%;
-}
-.vdpWithInput > input {
-  font-size: 16px;
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  -webkit-appearance: none;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0.1em 0.3em;
-  padding: 5px 40px 6px 15px;
-  border-radius: 4px;
-  background: white;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(224, 224, 224);
-  border-image: initial;
-  outline: 0px;
-}
-</style>
+ 

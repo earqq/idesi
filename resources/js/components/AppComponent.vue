@@ -38,7 +38,7 @@
                           </a>
                         </h1>
                       </div>
-                      <a class="logout" href="#">
+                      <a type="bottom" class="logout" @click="logout">
                         Cerrar Sesión
                       </a>
                     </div>
@@ -69,6 +69,13 @@ export default {
     await this.$http.get(`/${this.resource}/tipo/`).then(response => {
       this.tipo = response.data.idrol
     })
+  },
+  methods:{
+    logout() {
+      axios.post("/logout").then(res => { 
+        
+      });
+    },
   },
   mounted () {
     this.tab = this.$route.name
