@@ -52,7 +52,7 @@ class ClienteController extends Controller
 
 
             $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
-              ->select('clientes.documento','naturals.nombres','naturals.apellidos')
+              ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular')
               ->where('clientes.documento', 'LIKE', "%{$request->search_input}%")
               ->orWhere('naturals.nombres', 'LIKE', "%{$request->search_input}%")
               ->orWhere('naturals.apellidos', 'LIKE', "%{$request->search_input}%")
@@ -63,7 +63,7 @@ class ClienteController extends Controller
         }
         else{
             $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
-              ->select('clientes.documento','naturals.nombres','naturals.apellidos')
+              ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular')
               ->orderBy('clientes.id','desc')
               ->where('users_id','=',Auth::user()->id)
               ->paginate(10);
@@ -77,9 +77,8 @@ class ClienteController extends Controller
     {
         if(Auth::user()->id == '1'){
 
-
             $clientes = Cliente::join('juridicos','clientes.id','=','juridicos.clientes_id')
-              ->select('clientes.documento', 'juridicos.razon_social')
+              ->select('clientes.documento', 'juridicos.razon_social', 'juridicos.celular')
               ->where('juridicos.razon_social', 'LIKE', "%{$request->search_input}%")
               ->orWhere('clientes.documento', 'LIKE', "%{$request->search_input}%")
               ->orderBy('clientes.id','desc')
@@ -89,7 +88,7 @@ class ClienteController extends Controller
         }
         else{
             $clientes = Cliente::join('juridicos','clientes.id','=','juridicos.clientes_id')
-              ->select('clientes.documento','juridicos.razon_social')
+              ->select('clientes.documento','juridicos.razon_social', 'juridicos.celular')
               ->orderBy('clientes.id','desc')
               ->where('users_id','=',Auth::user()->id)
               ->paginate(10);
@@ -491,18 +490,35 @@ class ClienteController extends Controller
     {
 
 
-        return $request;
+        return $request->file;
         if (!$request->ajax()) return redirect('/');
- 
+        
+            // $model = new Archivo(); 
 
+            // $file = $request->file('file');
+            // $ext = $request->file->getClientOriginalExtension();
+
+            // $prestamo = Prestamo::find($request->prestamo_id);
+            // $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+            
+            // if (Storage::putFileAs('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/foto_negocio.'.$ext)) {
+                
+            //     if($request['name'] == 'fotos_negocio'){
+            //         $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+            //         $subidos->fotos_negocio=1;
+            //         $subidos->save();
+            //     } 
+            //     return $model::create([
+            //             'nombre' => 'foto_negocio',
+            //             'tipo' => 'imagen',
+            //             'extension' => $ext,
+            //             'prestamos_id' => $request->prestamo_id
+            //         ]);
+            // }
         $visita = new Vista();
-        $visita->fecha=$request->fecha;
-        $visita->hora=$request->hora;
-        $visita->motivo=$request->motivo;
-        $visita->latitud= $request->center['lat'];
-        $visita->altitud=$request->center['lng'];
-        $visita->estado=$request->estado;
-        $visita->prestamos_id=$request->prestamos_id;
+        $visita->latitud= $request->latitud;
+        $visita->altitud=$request->longitud; 
+        $visita->prestamos_id=$request->prestamo_id;
 
         $visita->save();
         return [
@@ -563,9 +579,11 @@ class ClienteController extends Controller
     public function visitas($documento)
     {
         // if (!$request->ajax()) return redirect('/');
-        $vistas = Vista::where('prestamos_id',$documento)->get();
+        $vista = Vista::where('prestamos_id',$documento)->get();
+        $prestamo = Prestamo::find($documento);
 
-        return $vistas;
+
+        return compact('visita','prestamo');
         
     }
 
@@ -677,7 +695,8 @@ class ClienteController extends Controller
             
             $prestamo->save();
 
-            if($request->input('idprestamo')<0){
+            
+                Aval::where('prestamos_id', $prestamo->id)->delete();
                 foreach ($request->avals as $ep=>$avals) {
                     $aval= new Aval;
                     $aval->documento = $avals['documento'];
@@ -700,6 +719,7 @@ class ClienteController extends Controller
                     $aval->save();
                 }
     
+                Garantia::where('prestamos_id', $prestamo->id)->delete();
                 foreach ($request->garantias as $ep=>$garantias) {
                     $garantia= new Garantia;
                     $garantia->bien_garantia = $garantias['bien_garantia'];
@@ -715,7 +735,7 @@ class ClienteController extends Controller
                     $garantia->save();
                 }
     
-    
+            if($request->input('idprestamo')<0){
                 $subido= new Subido;
                 $subido->prestamos_id=$prestamo->id;
                 $subido->save();
@@ -788,6 +808,7 @@ class ClienteController extends Controller
             $juridico->nombre_comercial = $request->juridico['nombre_comercial'];
             $juridico->actividad_principal = $request->juridico['actividad_principal'];
             $juridico->partida_registral = $request->juridico['partida_registral'];
+            $juridico->fecha_constitucion= $request->juridico['fecha_constitucion'];
             $juridico->telefono = $request->juridico['telefono'];
             $juridico->direccion = $request->juridico['direccion'];
             $juridico->email = $request->juridico['email'];
@@ -837,6 +858,8 @@ class ClienteController extends Controller
             $prestamo->comentarios = $request->input('comentarios');
             $prestamo->estado = $request->input('estado');
             $prestamo->save();
+            
+            Aval::where('prestamos_id', $prestamo->id)->delete();
 
             foreach ($request->avals as $ep=>$avals) {
                 $aval= new Aval;
@@ -860,6 +883,7 @@ class ClienteController extends Controller
                 $aval->save();
             }
 
+            Garantia::where('prestamos_id', $prestamo->id)->delete();
             foreach ($request->garantias as $ep=>$garantias) {
                 $garantia= new Garantia;
                 $garantia->bien_garantia = $garantias['bien_garantia'];
@@ -873,15 +897,16 @@ class ClienteController extends Controller
                 $garantia->save();
             }
 
+            if($request->input('idprestamo')<0){
+                $subido= new Subido;
+                $subido->prestamos_id=$prestamo->id;
+                $subido->save();
 
-            $subido= new Subido;
-            $subido->prestamos_id=$prestamo->id;
-            $subido->save();
-
-            $subidos = Subido::find($subido->id);
-            $subidos->solicitud_credito=1;
-            $subidos->inscripcion_socio=1;
-            $subidos->save();
+                $subidos = Subido::find($subido->id);
+                $subidos->solicitud_credito=1;
+                $subidos->inscripcion_socio=1;
+                $subidos->save();
+            }
 
             // $cuantitativa = new ResultadoCuantitativa;
             // $cuantitativa->prestamo_id= $prestamo->id;
@@ -972,10 +997,8 @@ class ClienteController extends Controller
 
     public function SolicitudPdf($prestamo){
 
-
         $prestamo= Prestamo::find($prestamo);
-        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
-        $archivos = Archivo::where('prestamos_id', $prestamo->id)->get();
+        $cliente = Cliente::where('id',$prestamo->clientes_id)->first(); 
 
         if($cliente->tipo_documento == 'RUC'){
             $juridico = Juridico::where('clientes_id',$cliente->id)->first();
@@ -1003,21 +1026,87 @@ class ClienteController extends Controller
     
     
             $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge'));
-            // return $pdf->stream('solicitud_de_credito.pdf');
+            return $pdf->stream('solicitud_de_credito.pdf');
+
+        }
+
+
+    }
+
+    public function AdjuntarPdf($prestamo){
+
+
+        $prestamo= Prestamo::find($prestamo);
+        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        $archivos = Archivo::where('prestamos_id', $prestamo->id)->get();
+
+        if(Storage::disk('local')->exists('/public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/adjunto_'.$cliente->documento.'.pdf')){
+            if(Storage::disk('local')->delete('/public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/adjunto_'.$cliente->documento.'.pdf')){
+
+                if(Storage::disk('local')->exists('/public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf')){
+                    if(Storage::disk('local')->delete('/public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf')){
+
+                    }
+                }
+            }
+
+        }
+
+
+        if($cliente->tipo_documento == 'RUC'){
+
+            $juridico = Juridico::where('clientes_id',$cliente->id)->first();
+            $avals = Aval::where('prestamos_id',$prestamo->id)->get();
+            $garantias = Garantia::where('prestamos_id',$prestamo->id)->get(); 
+
+            $pdf = \PDF::loadView('reportes.prestamoJuridico',compact('prestamo','cliente','avals','garantias','juridico'));
+            Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf', $pdf->output());
 
             $pdf = new \LynX39\LaraPdfMerger\PdfManage;
             $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf'), 'all');
+            $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf'), 'all');
 
             foreach ($archivos as $ep=>$rp) {
-                
                 $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/'.$rp->tipo.'/'.$rp->nombre.'.'.$rp->extension), 'all');
             }
-            
-            
-            // $pdf->addPDF(public_path('/upload/test.pdf'), 'all');
-            $pdf->merge('file', public_path('/upload/created.pdf'), 'P');
 
-            dd('done');
+            $pdf->merge('file', public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/general/documento/adjunto_'.$cliente->documento.'.pdf'), 'P');
+
+        }
+        else
+        {
+            $natural = Natural::where('clientes_id',$cliente->id)->first();
+            $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
+            $avals = Aval::where('prestamos_id',$prestamo->id)->get();
+            $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+            $tiene_conyuge = '';
+            
+            if($conyugue){
+                $tiene_conyuge='SI'; 
+            }
+            else{
+                $tiene_conyuge='NO';
+            }     
+            
+            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge'));
+            Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf', $pdf->output());
+
+            $pdf = new \LynX39\LaraPdfMerger\PdfManage;
+            $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf'), 'all');
+            $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf'), 'all');
+
+            foreach ($archivos as $ep=>$rp) {
+                $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/'.$rp->tipo.'/'.$rp->nombre.'.'.$rp->extension), 'all');
+            }
+
+            $pdf->merge("archivo_adjunto.pdf", "download");
+            // $pdf->save('file', public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/general/documento/adjunto_'.$cliente->documento.'.pdf'), 'download');
+
+
+            
+
+
+
 
         }
 

@@ -47,7 +47,7 @@
               <div class="phone">
                 <i class="material-icons-outlined"> phone </i>
                 <span>
-                  971 755 982
+                  {{cliente.celular}}
                 </span>
               </div>
             </router-link>
@@ -85,7 +85,7 @@
                   <ul>
                     <li>
                       <router-link :to="{name:'perfil', params:{documento:cliente.documento,persona:form.tipo_persona}}" >
-                        Ver Clienteaaaa
+                        Ver Cliente
                       </router-link>
                     </li>
                     <li>
@@ -106,34 +106,16 @@
 </template> 
 
 <script>
-import DatePick from 'vue-date-pick'; 
-import "vue-date-pick/dist/vueDatePick.css";
-
-const mesConf = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre"
-];
-const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
+ 
+ 
 export default {
-  name: 'clients',
-  components: { DatePick},
+  name: 'clients', 
   data() {
     return {
       resource: "clientes",
       clientes: [],
       type_list: 1,
-      page: 0, 
-      tipo: true,
+      page: 0,  
       search_input: "",
       last_page: 1,
       form: {},
@@ -146,9 +128,7 @@ export default {
             position: "topRight"
           }
         }
-      },
-      mesEs: mesConf,
-      diaEs: diaConf
+      }, 
     };
   },
   async created() {
@@ -173,7 +153,6 @@ export default {
       this.getRecords()
     },
     getRecords() {
-      console.log(this.form.tipo_persona)
       this.clientes= [];
       if(this.form.tipo_persona=='PN'){
         return this.$http 
@@ -192,12 +171,6 @@ export default {
           this.clientes = response.data.data;
         })
       }
-    },
-    crearCliente() {
-      this.tipo = false;
-    },
-    cancelarCliente() {
-      this.tipo = true;
     },
     initForm() {
       this.form = {
@@ -233,6 +206,7 @@ export default {
       display: flex
       align-items: center
       padding: 0 15px
+      border: 1px solid $line_color
       i
         font-size: 20px
       input, select
@@ -256,6 +230,7 @@ export default {
       flex: 1
       height: 40px
       display: flex
+      border: 1px solid $line_color
       a
         height: 100%
         flex: 1
@@ -287,6 +262,7 @@ export default {
         box-shadow: $shadow
         box-sizing: border-box
         transition: all ease-in-out .3s
+        border: 1px solid $line_color
         &:hover
           box-shadow: $shadow_hover
         a
@@ -337,6 +313,7 @@ export default {
       box-sizing: border-box
       .table_clients
         box-shadow: $shadow
+        border: 1px solid $line_color
         tbody
           .client
             img

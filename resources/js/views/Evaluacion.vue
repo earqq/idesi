@@ -37,9 +37,9 @@
             <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
           </div>
           <div class="actions">
-            <router-link class="credit_link" :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
-              VER PRESTAMO
-            </router-link>
+            
+            <router-link class="credit_link"  :to="{name:'/ver/prestamo/', params:{prestamo:prestamo.id}}"> VER PRESTAMO</router-link>
+
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
@@ -55,7 +55,7 @@
                     Ver Evaluación
                   </router-link>
                 </li>  
-              </ul> 
+              </ul>   
             </div>
           </div>
           
@@ -135,7 +135,7 @@ export default {
   methods: {
     methodsPrestamo() {
       this.$http.get(`/${this.resource}/prestamos/`).then(response => {
-        this.prestamos = response.data.pretamos;
+        this.prestamos = response.data.prestamo;
         this.id_usuario = response.data.usuario;
         this.id_rol = response.data.rol;
         console.log(response.data);
@@ -178,6 +178,7 @@ export default {
       display: flex
       align-items: center
       padding: 0 15px
+      border: 1px solid $line_color
       i
         font-size: 20px
       input, select
@@ -201,6 +202,7 @@ export default {
       flex: 1
       height: 40px
       display: flex
+      border: 1px solid $line_color
       a
         height: 100%
         flex: 1
@@ -232,6 +234,7 @@ export default {
         box-shadow: $shadow
         box-sizing: border-box
         transition: all ease-in-out .3s
+        border: 1px solid $line_color
         &:hover
           box-shadow: $shadow_hover
         .client
@@ -320,6 +323,7 @@ export default {
               transition: opacity ease 200ms
               padding: 10px 0
               display: none
+              border: 1px solid $line_color
               &::before
                 position: absolute
                 display: block
@@ -357,6 +361,7 @@ export default {
       box-sizing: border-box
       .table_credits
         box-shadow: $shadow
+        border: 1px solid $line_color
         tbody
           .client
             img

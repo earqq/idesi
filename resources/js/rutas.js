@@ -36,6 +36,11 @@ export default new Router({
             component: require('./views/EvalCuantitativa').default
         }, 
         {
+            path: '/ver/prestamo/:prestamo',
+            name: '/ver/prestamo/',
+            component: require('./views/DetallePrestamo').default
+        }, 
+        { 
             path: '/usuarios',
             name: 'usuarios',
             component: require('./views/Usuario').default
@@ -56,11 +61,6 @@ export default new Router({
             path: '/evaluacion/detalle/:prestamo/:rol/:estado',
             name: '/evaluacion/detalle/',
             component: require('./views/EvaluacionDetalle').default,
-        },
-        {
-            path: '/perfiljuridico/:documento',
-            name: 'perfiljuridico',
-            component: require('./views/PerfilJuridico').default,
         },
         {
             path: '/editar/solicitud/credito/natural/:prestamo',

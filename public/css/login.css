@@ -209,6 +209,32 @@
   position: relative;
 }
 
+.input_wrapper .vs__dropdown-toggle {
+  border: none;
+}
+
+.input_wrapper .vs__dropdown-toggle .vs__selected {
+  position: absolute;
+  left: 10px;
+  top: 7px;
+  font-size: 13px !important;
+}
+
+.input_wrapper .vs__dropdown-toggle .vs__actions {
+  display: none;
+}
+
+.input_wrapper .vs__dropdown-toggle .vs__selected-options {
+  padding: 0 !important;
+}
+
+.input_wrapper .vs__dropdown-toggle .vs__search,
+.input_wrapper .vs__dropdown-toggle .vs__search:focus {
+  margin: 0 !important;
+  padding: 0 10px !important;
+  font-size: 13px !important;
+}
+
 .input_wrapper label {
   font-family: "Roboto", sans-serif;
   font-weight: 500;
@@ -332,7 +358,6 @@
 .input_wrapper.require .message {
   color: #FF003D;
   font-size: 11px;
-  margin-top: 5px;
   display: block;
   font-family: "Roboto", sans-serif;
   display: -webkit-box;
@@ -426,7 +451,7 @@
 }
 
 .input_checkbox_wrapper label.box_content span {
-  font-size: 14px;
+  font-size: 13px;
   margin-left: 7px;
 }
 

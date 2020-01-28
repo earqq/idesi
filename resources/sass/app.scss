@@ -29,6 +29,7 @@ $fa-font-path: "../webfonts";
 @import 'buttons';
 @import 'tables';
 @import 'tabs';
+@import 'modal';
 
 
 body{
@@ -36,7 +37,9 @@ body{
   font-family: $font;
 }
 
- 
+.no_scroll::-webkit-scrollbar {
+    display: none;
+}
 
 /** PERFIL **/
 .profile-user-img {

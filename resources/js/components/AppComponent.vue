@@ -38,7 +38,7 @@
                           </a>
                         </h1>
                       </div>
-                      <a class="logout" href="#">
+                      <a type="bottom" class="logout" @click="logout">
                         Cerrar Sesión
                       </a>
                     </div>
@@ -70,6 +70,13 @@ export default {
       this.tipo = response.data.idrol
     })
   },
+  methods:{
+    logout() {
+      axios.post("/logout").then(res => { 
+        
+      });
+    },
+  },
   mounted () {
     this.tab = this.$route.name
     this.$router.beforeEach((to, from, next) => {
@@ -94,6 +101,7 @@ nav
   box-shadow: $shadow
   position: sticky
   top: 0
+  border-bottom: 1px solid $line_color
   .logo
     height: 30px
     margin-left: 20px
@@ -146,6 +154,7 @@ nav
           background-color: white
           width: 250px
           box-shadow: $shadow_hover
+          border: 1px solid $line_color
           &::before
             position: absolute
             display: block

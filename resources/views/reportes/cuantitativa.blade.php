@@ -30,7 +30,7 @@
                     <th style="border: none;"></th>
                 </tr>
                 <tr >
-                    <td  colspan="2" valign="middle" align="left"  style="width: 80%;border: none;"><span>EVALUACIÓN CUALITATIVA DEL PRESTAMO</span></td>
+                    <td  colspan="2" valign="middle" align="left"  style="width: 80%;border: none;"><span>EVALUACIÓN CUANTITATIVA DEL PRESTAMO</span></td>
                 
                     <td rowspan="2" style="padding: 10px 0;"><span class="title"> ***  Logo ****</span> </td>
                 </tr>
@@ -73,6 +73,9 @@
                                     </thead>
                                     <tbody>
                                         @for ($i = 0; $i <= 1; $i++)
+                                        @if ($cuantitativa->titular['ingresos_negocio'][$i]['concepto'])
+                                            
+                                        
                                             <tr>
                                                 <td>{{$cuantitativa->titular['ingresos_negocio'][$i]['concepto']}}</td>
                                                 <td>S/. {{$cuantitativa->titular['ingresos_negocio'][$i]['lunes']}}</td>
@@ -84,6 +87,7 @@
                                                 <td>S/. {{$cuantitativa->titular['ingresos_negocio'][$i]['domingo']}}</td>
                                                 <td style="background: #009688;color:#fff">S/. {{$cuantitativa->titular['ingresos_negocio'][$i]['subtotal']}}</td>
                                             </tr>
+                                            @endif
                                         @endfor
                                        
                                     </tbody>
@@ -111,10 +115,12 @@
                                     </thead>
                                     <tbody>
                                         @for ($i = 0; $i <=1; $i++)
+                                        @if ($cuantitativa->titular['ingresos_por_categoria'][$i]['concepto'])
                                         <tr>
                                             <td>{{$cuantitativa->titular['ingresos_por_categoria'][$i]['concepto']}}</td>
                                             <td>{{$cuantitativa->titular['ingresos_por_categoria'][$i]['mes']}}</td> 
                                         </tr>
+                                        @endif
                                         @endfor
                                         
                                     </tbody>
@@ -144,13 +150,13 @@
                                        
                                     </thead>
                                     <tbody> 
-                                        @for ($i = 0; $i <=4; $i++)
+                                        @foreach ($cuantitativa->titular['gasto_financiero'] as $cuant)
                                             <tr>
-                                                <td>{{$cuantitativa->titular['gasto_financiero'][$i]['entidad']}}</td>
-                                                <td>S/. {{$cuantitativa->titular['gasto_financiero'][$i]['saldo_capital']}}</td> 
-                                                <td>S/. {{$cuantitativa->titular['gasto_financiero'][$i]['cuota']}}</td> 
+                                                <td>{{$cuant['entidad']}}</td>
+                                                <td>S/. {{$cuant['saldo_capital']}}</td> 
+                                                <td>S/. {{$cuant['cuota']}}</td> 
                                             </tr>
-                                        @endfor
+                                        @endforeach
                                         
                                     </tbody>
                                 </table>
@@ -222,6 +228,8 @@
                                     </thead>
                                     <tbody>
                                         @for ($i = 0; $i <=1; $i++)
+                                        @if ($cuantitativa->conyuge['ingresos_negocio'][$i]['concepto'])
+                                         
                                         <tr>
                                             <td>{{$cuantitativa->conyuge['ingresos_negocio'][$i]['concepto']}}</td>
                                             <td>S/. {{$cuantitativa->conyuge['ingresos_negocio'][$i]['lunes']}}</td>
@@ -233,6 +241,7 @@
                                             <td>S/. {{$cuantitativa->conyuge['ingresos_negocio'][$i]['domingo']}}</td>
                                             <td style="background: #009688;color:#fff">S/. {{$cuantitativa->conyuge['ingresos_negocio'][$i]['subtotal']}}</td>
                                         </tr>
+                                        @endif
                                         @endfor
                                         
                                     </tbody>
@@ -257,10 +266,13 @@
                                     </thead>
                                     <tbody>
                                         @for ($i = 0; $i <=1; $i++)
+                                        @if ($cuantitativa->conyuge['ingresos_por_categoria'][$i]['concepto'])
+                                          
                                         <tr>
                                             <td>{{$cuantitativa->conyuge['ingresos_por_categoria'][$i]['concepto']}}</td>
                                             <td>S/. {{$cuantitativa->conyuge['ingresos_por_categoria'][$i]['mes']}}</td> 
                                         </tr>
+                                        @endif
                                         @endfor
                                     </tbody>
                                 </table>
@@ -292,11 +304,14 @@
                                     </thead>
                                     <tbody>
                                         @for ($i = 0; $i <=4; $i++)
+                                        @if ($cuantitativa->conyuge['gasto_financiero'][$i]['entidad'])
+                                         
                                         <tr>
                                             <td>{{$cuantitativa->conyuge['gasto_financiero'][$i]['entidad']}}</td>
                                             <td>S/. {{$cuantitativa->conyuge['gasto_financiero'][$i]['saldo_capital']}}</td> 
                                             <td>S/. {{$cuantitativa->conyuge['gasto_financiero'][$i]['cuota']}}</td> 
                                         </tr>
+                                        @endif
                                     @endfor
                                     </tbody>
                                 </table>
@@ -388,10 +403,13 @@
                                     </thead>
                                     <tbody>
                                         @for ($i = 0; $i <= 5; $i++)
+                                        @if ($cuantitativa->propiedades[$i]['concepto'])
+                                         
                                         <tr>
                                             <td>{{$cuantitativa->propiedades[$i]['concepto']}}</td>
                                             <td>S/. {{$cuantitativa->propiedades[$i]['valor_estimado']}}</td> 
                                         </tr>
+                                        @endif
                                         @endfor
                                     </tbody>
                                 </table>
@@ -409,18 +427,20 @@
     
                                         
                                         <tr>
-                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none; font-size: 10px">Conceptop</th>
-                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px"> Pago</th>   
+                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none; font-size: 10px">Entidad</th>
+                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px"> Saldo Capital</th>   
+                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px"> Cuota</th>   
                                         </tr>
                                        
                                     </thead>
                                     <tbody>
-                                        @for ($i = 0; $i <= 4; $i++)
+                                        @foreach ($cuantitativa->titular['gasto_financiero_personal'] as $cuant)
                                         <tr>
-                                            <td>{{$cuantitativa->titular['gasto_financiero_personal'][$i]['concepto']}}</td>
-                                            <td>S/. {{$cuantitativa->titular['gasto_financiero_personal'][$i]['pago']}}</td> 
+                                            <td>{{$cuant['entidad']}}</td>
+                                            <td>S/. {{$cuant['saldo_capital']}}</td> 
+                                            <td>S/. {{$cuant['cuota']}}</td> 
                                         </tr>
-                                        @endfor
+                                        @endforeach
                                     </tbody>
                                 </table>
                              </td>
@@ -437,17 +457,19 @@
                                         
                                         <tr>
                                             <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none; font-size: 10px">Entidad</th>
-                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Pago</th> 
+                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px"> Saldo Capital</th>   
+                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px"> Cuota</th>   
                                          </tr>
                                        
                                     </thead>
                                     <tbody>
-                                        @for ($i = 0; $i <= 4; $i++)
+                                        @foreach ($cuantitativa->conyuge['gasto_financiero_personal'] as $cuant)
                                         <tr>
-                                            <td>{{$cuantitativa->conyuge['gasto_financiero_personal'][$i]['concepto']}}</td>
-                                            <td>S/. {{$cuantitativa->conyuge['gasto_financiero_personal'][$i]['pago']}}</td> 
+                                            <td>{{$cuant['entidad']}}</td>
+                                            <td>S/. {{$cuant['saldo_capital']}}</td> 
+                                            <td>S/. {{$cuant['cuota']}}</td> 
                                         </tr>
-                                        @endfor
+                                        @endforeach
                                     </tbody>
                                 </table>
                              </td>

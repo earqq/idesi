@@ -48,9 +48,9 @@
                 </thead>
                 <tbody>
                         <tr>
-                            <td> <span class="title">FUENTE DE INGRESO </span> {{$cualitativa->principal['destino_credito_descripcion']}} <span > </span> </td>
+                            <td> <span class="title">FUENTE DE INGRESO </span> {{$cualitativa->principal['fuente_ingreso']}} <span > </span> </td>
                             <td > <span class="title">DESTINO DE CREDITO</span> {{$cualitativa->principal['destino_credito']}} <span > </span> </td>
-                            <td > <span class="title">DESCRIPCIÓN DE DESTINO</span> {{$cualitativa->principal['fuente_ingreso']}} <span > </span> </td>
+                            <td > <span class="title">DESCRIPCIÓN DE DESTINO</span> {{$cualitativa->principal['destino_credito_descripcion']}} <span > </span> </td>
                         </tr>
                 </tbody>
             </table>
@@ -89,7 +89,7 @@
                  <tbody>
                     <tr>
                         <td> <span class="title">UBICACIÓN DE INGRESO </span> {{$cualitativa->negocio['ubicacion']}} <span > </span> </td>
-                        <td > <span class="title">ANITGUEDAD</span> {{$cualitativa->negocio['antiguedad']}} <span > </span> </td> 
+                        <td > <span class="title">ANTIGUEDAD</span> {{$cualitativa->negocio['antiguedad']}} <span > </span> </td> 
                         <td > <span class="title">LOCAL</span> {{$cualitativa->negocio['local']}} <span > </span> </td> 
                     </tr>
                     <tr>
@@ -98,8 +98,7 @@
                         <td ></td> 
                     </tr>
                     <tr>
-                        <td> <span class="title">HR. ATENCION INICIO </span> {{$cualitativa->negocio['horario_atencion_inicio']}} <span > </span> </td>
-                        <td > <span class="title">HR. ATENCION ENTRADA</span> {{$cualitativa->negocio['horario_atencion_entrada']}} <span > </span> </td> 
+                        <td > <span class="title">HR. ATENCION ENTRADA</span> {{$cualitativa->negocio['horario_atencion_inicio']}} <span > </span> </td> 
                         <td > <span class="title">HR. ATENCION SALIDA</span> {{$cualitativa->negocio['horario_atencion_salida']}} <span > </span> </td> 
                     </tr>
                  </tbody> 
@@ -186,11 +185,16 @@
                                    
                                 </thead>
                                 <tbody>
-                                    @for ($i = 1; $i <= 8; $i++)
-                                    <tr>
-                                        <td>{{$cualitativa->central_riesgo[$i]['entidad_financiera']}}</td>
+                                    
+                                    
                                         
-                                        @if ($cualitativa->central_riesgo[$i]['capital'])
+                                    
+                                    @foreach ($cualitativa->central_riesgo as $cual)
+                                    @if ($cual['capital'])
+                                    <tr>
+                                        <td>{{$cual['entidad_financiera']}}</td>
+                                        
+                                        @if ($cual['capital'])
                                             <td style="text-align: center;background: #009688;color: #fff">
                                                 SI
                                             </td>
@@ -201,7 +205,7 @@
                                          @endif
                                         
                                         
-                                            @if ($cualitativa->central_riesgo[$i]['activo_f'])
+                                            @if ($cual['activo_f'])
                                             <td style="text-align: center;background: #009688;color: #fff">
                                                 SI
                                             </td>
@@ -211,7 +215,7 @@
                                             </td>
                                             @endif
                                          
-                                            @if ($cualitativa->central_riesgo[$i]['consumo'])
+                                            @if ($cual['consumo'])
                                             <td style="text-align: center;background: #009688;color: #fff">
                                                 SI
                                             </td>
@@ -221,7 +225,7 @@
                                             </td>
                                             @endif
                                           
-                                            @if ($cualitativa->central_riesgo[$i]['vehicular'])
+                                            @if ($cual['vehicular'])
                                             <td style="text-align: center;background: #009688;color: #fff">
                                                 SI
                                             </td>
@@ -231,7 +235,7 @@
                                             </td>
                                             @endif
                                           
-                                            @if ($cualitativa->central_riesgo[$i]['hipoteca'])
+                                            @if ($cual['hipoteca'])
                                             <td style="text-align: center;background: #009688;color: #fff">
                                                 SI
                                             </td>
@@ -241,7 +245,7 @@
                                             </td>
                                             @endif
                                           
-                                            @if ($cualitativa->central_riesgo[$i]['terceros'])
+                                            @if ($cual['terceros'])
                                             <td style="text-align: center;background: #009688;color: #fff">
                                                 SI
                                             </td>
@@ -252,7 +256,8 @@
                                             @endif
                                          
                                     </tr>
-                                    @endfor
+                                    @endif
+                                    @endforeach
                                 </tbody>
                             </table>
                         </td>
@@ -290,13 +295,17 @@
                                    
                                 </thead>
                                 <tbody>
-                                    @for ($i = 1; $i <=3; $i++)
+                                    @foreach ($cualitativa->referencias as $ref)
+                                    @if ($ref['tipo_relacion'])
+                                        
+                                    
                                     <tr>
-                                        <td>{{$cualitativa->referencias[$i]['tipo_relacion']}}</td>
-                                        <td>{{$cualitativa->referencias[$i]['nombre']}}</td>
-                                        <td>{{$cualitativa->referencias[$i]['telefono']}}</td> 
-                                    </tr>     
-                                    @endfor    
+                                        <td>{{ $ref['tipo_relacion']}}</td>
+                                        <td>{{ $ref['nombre']}}</td>
+                                        <td>{{ $ref['telefono']}}</td> 
+                                    </tr>
+                                    @endif
+                                    @endforeach   
                                 </tbody>
                             </table>
                     </tr>  
@@ -336,4 +345,4 @@
             </table>
 
 </body>
-</html>
+</html> 

@@ -58,12 +58,13 @@ export default {
         padding: 20px
         box-sizing: border-box
         .title
-            font-size: 13px
+            font-size: 12px
             margin: 0
             width: 100%
             border-bottom: 1px solid $line_color
-            font-weight: 500
+            font-weight: 700
             padding: 7px 20px
+            text-transform: uppercase
         .numbers_stats
             display: grid
             grid-area: numbers 
@@ -78,6 +79,7 @@ export default {
                 align-items: center
                 padding: 20px
                 box-sizing: border-box
+                border: 1px solid $line_color
                 &.n1
                     i
                         color: $primary_color
@@ -113,6 +115,7 @@ export default {
             background-color: white
             border-radius: 4px
             box-shadow: $shadow
+            border: 1px solid $line_color
         .lists
             display: grid
             grid-area: lists 
@@ -123,6 +126,7 @@ export default {
                 border-radius: 4px
                 box-shadow: $shadow
                 height: 100%
+                border: 1px solid $line_color
             .list_credits
                 grid-column: 2 / 2 span
         .map
@@ -134,4 +138,5 @@ export default {
             overflow: hidden
             position: sticky
             top: 75px
+            border: 1px solid $line_color
 </style>

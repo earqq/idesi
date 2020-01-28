@@ -1,309 +1,317 @@
 <template>
-  <div class="container-general">
-    <!-- <header>
-        <span @click="retornar()">
-          <i class="fas fa-angle-left"></i>
-        </span>
-        <h1>Subir archivo</h1>
-    </header>-->
-    <div class="gm-grid-container-file">
-
-      <div class="new-file">
-
-        <div class="return" @click="retornar()">
-          <i class="fas fa-chevron-left back"></i>
-          <p>Clientes</p>
-          <i class="fas fa-users icon-users"></i>
+  <div class="documents_content">
+    
+    <div class="modal_content" v-if="flagModalUpload" >
+      <div class="modal_wrapper">
+        <div class="title"> 
+          <h1> Cargar </h1>
+          <i  @click="flagModalUpload = false" class="material-icons-outlined">close</i>
         </div>
+        <div class="input_wrapper">
+          <select v-model="fileName">
+            <option value="0" disabled selected> Seleccionar Documento </option>
+            <option value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
+            <option value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
+            <option value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option> 
+            <option value="copia_dni"  v-if="!subidos.copia_dni" >Copias DNI</option>
+            <option value="recibo_agua_casa" v-if="!subidos.recibo_agua_casa">Recibo de agua de casa</option>
+            <option  value="recibo_luz_casa" v-if="!subidos.recibo_luz_casa">Recibo de luz de casa</option> 
+            <option value="titulo_casa" v-if="!subidos.titulo_casa">Titulo de propiedad de casa</option>
+            <option value="contrato_alquiler_casa" v-if="!subidos.contrato_alquiler_casa">Contrato de alquiler de casa</option>
+            <option value="foto_casa" v-if="!subidos.foto_casa">Fotos de casa</option>
+              <option value="recibo_agua_negocio" v-if="!subidos.recibo_agua_negocio">Recibo de agua del negocio</option>
+            <option value="recibo_luz_negocio" v-if="!subidos.recibo_luz_negocio">Recibo de luz del negocio</option>
+            <option value="contrato_alquiler_negocio" v-if="!subidos.contrato_alquiler_negocio">Contrato de alquiler del negocio</option>
+            <option value="boleta_compra" v-if="!subidos.boleta_compra">Boleta de compras del negocio</option>
+            <option value="boleta_venta" v-if="!subidos.boleta_venta">Boleta de ventas del negocio</option>
+            <option value="factura_compra" v-if="!subidos.factura_compra">Factura de compras del negocio</option>
+            <option value="factura_venta" v-if="!subidos.factura_venta">Factura de ventas del negocio</option>
+            <option value="fotos_negocio" v-if="!subidos.fotos_negocio">Fotos del negocio</option>
 
-        <div class="date-file">
-          <div class="col-md-12 form-group">
-
-           <label>Seleccione Formato</label>
-            <select class="form-control" v-model="fileName">
-              <option value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
-              <option value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
-              <option value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option>
-              <!-- <option value="evaluacion_cualitativa" v-if="!subidos.evaluacion_cualitativa" >Evaluacion cualitativa</option>
-              <option value="evaluacion_cuantitativa" v-if="!subidos.evaluacion_cuantitativa">Evaluacion de cuantitativa</option> -->
-              <option value="copia_dni"  v-if="!subidos.copia_dni" >Copias DNI</option>
-              <option value="recibo_agua_casa" v-if="!subidos.recibo_agua_casa">Recibo de agua de casa</option>
-              <option  value="recibo_luz_casa" v-if="!subidos.recibo_luz_casa">Recibo de luz de casa</option> 
-              <option value="titulo_casa">Titulo de propiedad de casa</option>
-              <option value="contrato_alquiler">Contrato de alquiler de casa</option>
-              <option value="foto_casa">Fotos de casa</option>
-              <option value="documento_negocio">Documentos del negocio</option>
-              <option value="recibo_agua_negocio">Recibo de agua del negocio</option>
-              <option value="recibo_luz_negocio">Recibo de luz del negocio</option>
-              <option value="contrato_alquiler">Contrato de alquiler del negocio</option>
-              <option value="boleta_compras">Boleta de compras del negocio</option>
-              <option value="boleta_ventas">Boleta de ventas del negocio</option>
-              <option value="factura_compras">Factura de compras del negocio</option>
-              <option value="factura_ventas">Factura de ventas del negocio</option>
-              <option value="foto_negocio">Fotos del negocio</option>
-            </select>
-          </div>
-          <div class="col-md-12 form-group">
-            <label>Archivo</label>
-            <input
-              type="file"
-              id="file"
-              ref="file"
-              v-on:change="handleFileUpload()"
-              class="form-control"
-            />
-          </div>
-          <div class="col-md-12" style="    padding-top: 30px;">
-            <button type="button" @click="submit" class="btn btn-crecer w-100">Nuevo Archivo</button>
-          </div>
-          <div class="col-md-3"></div>
+          </select>
         </div>
-      </div>
-      <div class="container-fluid file-loan p-0 scroll-style">
-        <!-- <div class="col-md-12 header-file">
-
-        </div> -->
-        <div class="row col-md-12 files">
-
-          <div class="file-type " @click="cargarPdf()">
-            <div class="type file-document" >          
-              <p>solicitud_credito.pdf</p> 
-                <div class="mask">
-                   <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M17.656 4c-1.336 0-2.59.52-3.535 1.465L5.465 14.12A4.964 4.964 0 0 0 4 17.656V57c0 1.652 1.348 3 3 3h40c1.652 0 3-1.348 3-3V46h8c1.102 0 2-.898 2-2V24c0-1.102-.898-2-2-2h-8V7c0-1.652-1.348-3-3-3zM18 6h29c.55 0 1 .45 1 1v15H16c-1.102 0-2 .898-2 2v20c0 1.102.898 2 2 2h32v11c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1V18h9c1.652 0 3-1.348 3-3zm-2 .5V15c0 .55-.45 1-1 1H6.5c.11-.164.234-.32.379-.465l8.656-8.656c.145-.145.3-.27.465-.379zM16 24h42v20H16zm9 4a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3c1.652 0 3-1.348 3-3v-2c0-1.652-1.348-3-3-3zm10 0a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3c2.207 0 4-1.793 4-4v-4c0-2.207-1.793-4-4-4zm10 0a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-4h4a1 1 0 1 0 0-2zm-19 2h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-3zm10 0h2c1.102 0 2 .898 2 2v4c0 1.102-.898 2-2 2h-2zM9 52a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1z"></path></svg>
+        <div class="dropzone_content">
+          <input style="display: none" id="file" type="file" ref="file" @change="onFileChange($event)" accept="application/pdf">
+          <label class="dropzone" for="file" :class="{ready: fileInto}"  @dragover.prevent="dragover($event)"  @dragleave.prevent="dragleave($event)" @drop.prevent="dragFinish(-1,$event)">
+              <div class="open_file"  v-if="!attachment.content">
+                <div class="upload">
+                  <i class="material-icons-outlined">upload</i>
                 </div>
-            </div>
-          </div>
-           <div class="file-type " @click="cualitativaPdf()" v-if="person.cualitativa=='1'">
-            <div class="type file-document" >          
-              <p>evaluacion_cualitativa.pdf</p> 
-                <div class="mask">
-                   <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M17.656 4c-1.336 0-2.59.52-3.535 1.465L5.465 14.12A4.964 4.964 0 0 0 4 17.656V57c0 1.652 1.348 3 3 3h40c1.652 0 3-1.348 3-3V46h8c1.102 0 2-.898 2-2V24c0-1.102-.898-2-2-2h-8V7c0-1.652-1.348-3-3-3zM18 6h29c.55 0 1 .45 1 1v15H16c-1.102 0-2 .898-2 2v20c0 1.102.898 2 2 2h32v11c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1V18h9c1.652 0 3-1.348 3-3zm-2 .5V15c0 .55-.45 1-1 1H6.5c.11-.164.234-.32.379-.465l8.656-8.656c.145-.145.3-.27.465-.379zM16 24h42v20H16zm9 4a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3c1.652 0 3-1.348 3-3v-2c0-1.652-1.348-3-3-3zm10 0a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3c2.207 0 4-1.793 4-4v-4c0-2.207-1.793-4-4-4zm10 0a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-4h4a1 1 0 1 0 0-2zm-19 2h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-3zm10 0h2c1.102 0 2 .898 2 2v4c0 1.102-.898 2-2 2h-2zM9 52a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1z"></path></svg>
-                </div>
-            </div>
-          </div>
-           <div class="file-type " @click="cuantitativaPdf()" v-if="person.cuantitativa=='1'">
-            <div class="type file-document" >          
-              <p>evaluacion_cuantitativa.pdf</p> 
-                <div class="mask">
-                   <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M17.656 4c-1.336 0-2.59.52-3.535 1.465L5.465 14.12A4.964 4.964 0 0 0 4 17.656V57c0 1.652 1.348 3 3 3h40c1.652 0 3-1.348 3-3V46h8c1.102 0 2-.898 2-2V24c0-1.102-.898-2-2-2h-8V7c0-1.652-1.348-3-3-3zM18 6h29c.55 0 1 .45 1 1v15H16c-1.102 0-2 .898-2 2v20c0 1.102.898 2 2 2h32v11c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1V18h9c1.652 0 3-1.348 3-3zm-2 .5V15c0 .55-.45 1-1 1H6.5c.11-.164.234-.32.379-.465l8.656-8.656c.145-.145.3-.27.465-.379zM16 24h42v20H16zm9 4a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3c1.652 0 3-1.348 3-3v-2c0-1.652-1.348-3-3-3zm10 0a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3c2.207 0 4-1.793 4-4v-4c0-2.207-1.793-4-4-4zm10 0a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-4h4a1 1 0 1 0 0-2zm-19 2h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-3zm10 0h2c1.102 0 2 .898 2 2v4c0 1.102-.898 2-2 2h-2zM9 52a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1z"></path></svg>
-                </div>
-            </div>
-          </div>
-
-
-          <div class="file-type" v-for="(archivo, index) in archivos" :key="index">
-            <div class="type" v-if="archivo.tipo=='imagen'">
-              <button
-                class="btn btn-file"
-                title="Delete"
-                @click="prepareToDelete(archivo)"
-                data-toggle="modal"
-                data-target="#exampleModal"
-              >
-                <i class="fas fa-trash"></i> ELIMINAR
-              </button>
-              <a
-                :href="'../storage/'+person.documento+'_'+person.id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
-                target="_blank"
-              >
-                <img
-                  :src="'../storage/'+person.documento+'_'+person.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
-                  :alt="archivo.nombre"
-                />
-                <p v-text="archivo.nombre+'.'+archivo.extension"></p>
-                <div class="mask">
-                  <i class="fas fa-file-download"></i>
-                </div>
-              </a>
-            </div>
-
-            <div class="type file-document" v-if="archivo.tipo=='documento'">
-              <button
-                class="btn btn-def "
-                title="Delete"
-                @click="prepareToDelete(archivo)"
-                data-toggle="modal"
-                data-target="#exampleModal"
-              >
-                <i class="fas fa-trash"></i> ELIMINAR
-              </button>
-              <a 
-                :href="'../storage/'+person.documento+'_'+person.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
-                target="_blank"
-              >
-              <p v-text="archivo.nombre+'.'+archivo.extension"></p>
-                <div class="mask">
-                   <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><path d="M17.656 4c-1.336 0-2.59.52-3.535 1.465L5.465 14.12A4.964 4.964 0 0 0 4 17.656V57c0 1.652 1.348 3 3 3h40c1.652 0 3-1.348 3-3V46h8c1.102 0 2-.898 2-2V24c0-1.102-.898-2-2-2h-8V7c0-1.652-1.348-3-3-3zM18 6h29c.55 0 1 .45 1 1v15H16c-1.102 0-2 .898-2 2v20c0 1.102.898 2 2 2h32v11c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1V18h9c1.652 0 3-1.348 3-3zm-2 .5V15c0 .55-.45 1-1 1H6.5c.11-.164.234-.32.379-.465l8.656-8.656c.145-.145.3-.27.465-.379zM16 24h42v20H16zm9 4a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3c1.652 0 3-1.348 3-3v-2c0-1.652-1.348-3-3-3zm10 0a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3c2.207 0 4-1.793 4-4v-4c0-2.207-1.793-4-4-4zm10 0a1 1 0 0 0-1 1v10a1 1 0 1 0 2 0v-3h3a1 1 0 1 0 0-2h-3v-4h4a1 1 0 1 0 0-2zm-19 2h3c.55 0 1 .45 1 1v2c0 .55-.45 1-1 1h-3zm10 0h2c1.102 0 2 .898 2 2v4c0 1.102-.898 2-2 2h-2zM9 52a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1zm5 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1z"></path></svg>
-                </div>
-              </a>
-              
-
-   
-            </div>
-          </div>
-
-          <div
-            class="modal fade"
-            id="exampleModal"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Eliminar Archivo</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-dismiss="modal"
-                    @click="cancelDeleting()"
-                  >Cerrar</button>
-                  <button
-                    type="button"
-                    class="btn btn-primary w-auto"
-                    data-dismiss="modal"
-                    @click="deleteFile()"
-                  >Eliminar</button>
-                </div>
+                <h1>
+                  Arrastrar y soltar o <strong>carga desde la computadora</strong>
+                </h1>
               </div>
-            </div>
-          </div>
-        </div> 
+              <div class="file_selected" v-else>
+                <div class="upload">
+                  <i class="material-icons-outlined">picture_as_pdf</i>
+                </div>
+                <h1>
+                  <p>  {{attachment.content.name}} {{validateSizeFile}}</p>
+                  <small>{{(attachment.content.size / 1000).toFixed(2)}} Kb <b v-if="!validateSizeFile"> ( Archivo muy grande, Max: 8 Mb )</b> </small> 
+                </h1>
+              </div>
+          </label>
+        </div>
+
+        <button class="button_primary medium" type="button" @click="uploadFile">
+          <span> CARGAR ARCHIVO </span>
+        </button>
       </div>
-
-
-      <div class="list-file scroll-style">
-        <loader-file v-if="loaderFile"></loader-file>
-        <ol class="tree-structure" v-else>
-          <li  :class="{ subido: subidos.inscripcion_socio }">
-            <span class="num">1</span>
-            <a href="#">Inscripcion de socio</a>
-            <i class="fas fa-check-circle" v-if="subidos.inscripcion_socio"></i>
-          </li>
-          <li :class="{ subido: subidos.solicitud_credito }">
-            <span class="num">2</span>
-            <a href="#">Solicitud de credito</a>
-            <i class="fas fa-check-circle" v-if="subidos.solicitud_credito"></i>
-          </li>
-          <li :class="{ subido: subidos.reporte_de_central }" >
-            <span class="num">3</span>
-            <a href="#">Reporte de central de riesgo</a>
-            <i class="fas fa-check-circle" v-if="subidos.reporte_de_central"></i>
-          </li>
-          <li :class="{ subido: subidos.evaluacion_cualitativa }" >
-            <span class="num">4</span>
-            <a href="#">Evaluacion cualitativa</a>
-            <i class="fas fa-check-circle" v-if="subidos.evaluacion_cualitativa"></i> 
-          </li>
-          <li :class="{ subido: subidos.evaluacion_cuantitativa }">
-            <span class="num">5</span>
-            <a href="#">Evaluacion de cuantitativa</a>
-            <i class="fas fa-check-circle" v-if="subidos.evaluacion_cuantitativa"></i>
-          </li>
-          <li :class="{ subido: subidos.copia_dni}">
-            <span class="num">6</span>
-            <a href="#">Copia DNI</a>
-            <i class="fas fa-check-circle" v-if="subidos.copia_dni"></i>
-          </li>
-
-          <li>
-            <span class="num num-tree">7</span>
-            <a href="#">Documentos de casa</a>
-            <ol>
-              <li :class="{ subido: subidos.recibo_agua_casa}">
-                <span class="num">7.1</span>
-                <a href="#">Recibo de agua </a>
-               <i class="fas fa-check-circle" v-if="subidos.recibo_agua_casa"></i>
-              </li>
-              <li :class="{ subido: subidos.recibo_luz_casa}">
-                <span class="num">7.1</span>
-                <a href="#">Recibo de luz</a>
-               <i class="fas fa-check-circle" v-if="subidos.recibo_luz_casa"></i>
-              </li>
-              <li>
-                <span class="num">7.2</span>
-                <a href="#">Ubicacion</a>
-              </li>
-              <li>
-                <span class="num">7.3</span>
-                <a href="#">Titulo de propiedad</a>
-              </li>
-              <li>
-                <span class="num">7.4</span>
-                <a href="#">Contrato de alquiler</a>
-              </li>
-              <li>
-                <span class="num">7.5</span>
-                <a href="#">Fotos de casa</a>
-              </li>
-            </ol>
-          </li>
-
-          <li>
-            <span class="num num-tree">8</span>
-            <a href="#">Documentos del negocio</a>
-            <ol>
-              <li>
-                <span class="num">8.1</span>
-                <a href="#">Recibo de agua y/o luz</a>
-              </li>
-              <li>
-                <span class="num">8.2</span>
-                <a href="#">Ubicacion</a>
-              </li>
-              <li>
-                <span class="num">8.3</span>
-                <a href="#">Contrato de alquiler</a>
-              </li>
-              <li>
-                <span class="num">8.4</span>
-                <a href="#">Fotos de negocio</a>
-              </li>
-              <li>
-                <span class="num">8.5</span>
-                <a href="#">Boletas/Facturas de compras</a>
-              </li>
-              <li>
-                <span class="num">8.6</span>
-                <a href="#">Boletas/Facturas de ventas</a>
-              </li>
-            </ol>
-          </li>
-
-          <li>
-            <span class="num num-tree">8</span>
-            <a href="#">Colateral</a>
-            <ol>
-              <li>
-                <span class="num">8.1</span>
-                <a href="#"></a>
-              </li>
-              <li>
-                <span class="num">8.2</span>
-                <a href="#">Ubicacion</a>
-              </li>
-              <li>
-                <span class="num">8.3</span>
-                <a href="#">Contrato de alquiler</a>
-              </li>
-              <li>
-                <span class="num">8.4</span>
-                <a href="#">Fotos de negocio</a>
-              </li>
-            </ol>
-          </li>
-        </ol>
-      </div>
-
     </div>
+
+    <div class="files_containter">
+      
+      <div class="files_grid">
+        <a class="add_file" @click="flagModalUpload = true" >
+          <span>
+            <i class="material-icons-outlined">add</i>
+          </span>
+          <p> NUEVO ARCHIVO  </p>
+        </a>
+
+        <div class="file_item"  @click="solicitudPdf()">
+          <div class="file_detail">
+            <a :href="'#'"
+              >
+              <i class="material-icons-outlined"> picture_as_pdf </i>
+              <div class="file_info">
+                <p> solicitud_credito </p> 
+                <small> 27 de enero de 2020 </small>            
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="file_item"  @click="cualitativaPdf()">
+          <div class="file_detail">
+            <a :href="'#'"
+              >
+              <i class="material-icons-outlined"> picture_as_pdf </i>
+              <div class="file_info">
+                <p> evaluacion_cualitativa </p> 
+                <small> 27 de enero de 2020 </small>            
+              </div>
+            </a>
+          </div>
+        </div>
+
+                <div class="file_item"  @click="cuantitativaPdf()">
+          <div class="file_detail">
+            <a :href="'#'"
+              >
+              <i class="material-icons-outlined"> picture_as_pdf </i>
+              <div class="file_info">
+                <p> evaluacion_cuantitativa </p> 
+                <small> 27 de enero de 2020 </small>            
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="file_item" v-for="(archivo, index) in archivos" :key="index">
+          <div class="file_detail" v-if="archivo.tipo=='imagen'">
+            <a :href="'../storage/'+person.documento+'_'+person.id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+              target="_blank">
+              <i class="material-icons-outlined"> collections </i>
+              <div class="file_info">
+                <p > {{archivo.nombre | noUnderscore }}</p>
+                <small> 27 de enero de 2020 </small>            
+              </div>
+            </a>
+          </div>
+          <div class="file_detail" v-if="archivo.tipo=='documento' && archivo.nombre!='evaluacion_cualitativa' && archivo.nombre!='evaluacion_cuantitativa' ">
+            <a :href="'../storage/'+person.documento+'_'+person.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+              target="_blank">
+              <i class="material-icons-outlined"> picture_as_pdf </i>
+              <div class="file_info">
+                <p> {{archivo.nombre | noUnderscore }} </p>
+                <small> 27 de enero de 2020 </small>            
+              </div>
+            </a>
+          </div>
+        </div>
+        <a v-show="archivos.length || 0 < 5" class="spanner" v-for="i in 5" :key="i*1.5"  ></a>
+      </div>
+
+      <aside class="checklist">
+        <div class="checklist_wrapper no_scroll">
+          <div class="tree">
+            <li>
+              <div class="state" :class="{complete: subidos.inscripcion_socio}" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Inscripcion de socio</a>
+            </li>
+
+            <li >
+              <div class="state" :class="{complete: subidos.solicitud_credito}" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Solicitud de credito</a>
+            </li>
+
+            <li >
+              <div class="state"  :class="{complete: subidos.reporte_de_central}" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Reporte de central de riesgo</a>
+            </li>
+
+            <li  >
+              <div class="state" :class="{complete: subidos.evaluacion_cualitativa}" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Evaluacion cualitativa</a>
+            </li>
+
+            <li >
+              <div class="state"  :class="{complete: subidos.evaluacion_cuantitativa}" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Evaluacion de cuantitativa</a>
+            </li>
+
+            <li>
+              <div class="state"  :class="{complete: subidos.copia_dni}" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Copia DNI</a>
+            </li>
+          </div>
+
+          <div class="tree">
+            <div class="title">Documentos de casa</div>
+            <li >
+              <div class="state"  :class="{complete: subidos.recibo_agua_casa}" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Recibo de agua </a>
+            </li>
+            <li>
+              <div class="state"  :class="{complete: subidos.recibo_luz_casa}" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Recibo de luz</a>
+            </li>
+            <li>
+              <div class="state" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Ubicacion</a>
+            </li>
+            <li>
+              <div class="state" :class="{complete: subidos.titulo_casa}" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Titulo de propiedad</a>
+            </li>
+            <li>
+              <div class="state" :class="{complete: subidos.contrato_alquiler_casa}">
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Contrato de alquiler</a>
+            </li>
+            <li>
+              <div class="state" :class="{complete: subidos.foto_casa}">
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Fotos de casa</a>
+            </li>
+          </div>
+
+          <div class="tree">
+            <div class="title">Documentos del negocio</div>
+
+            <li> 
+              <div class="state" :class="{ complete: subidos.recibo_agua_negocio}">
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Recibo de agua</a>
+            </li>
+             <li>
+              <div class="state" :class="{ complete: subidos.recibo_luz_negocio}">
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Recibo de luz</a>
+            </li>
+            <li>
+              <div class="state" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Ubicacion</a>
+            </li>
+            <li>
+              <div class="state" :class="{ complete: subidos.contrato_alquiler_negocio}">
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Contrato de alquiler</a>
+            </li>
+            <li>
+              <div class="state" :class="{ complete: subidos.fotos_negocio}">
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Fotos de negocio</a>
+            </li>
+            <li>
+              <div class="state" :class="{ complete: subidos.boleta_compra}">
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Boletas de compras</a>
+            </li>
+             <li>
+              <div class="state" :class="{ complete: subidos.factura_compra}">
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Facturas de compras</a>
+            </li>
+            <li>
+              <div class="state" :class="{ complete: subidos.boleta_venta}">
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Boletas  de ventas</a>
+            </li>
+            <li>
+              <div class="state" :class="{ complete: subidos.factura_venta}" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#"> Facturas de ventas</a>
+            </li>
+          </div>
+
+          <div class="tree">
+            <div class="title">Colateral</div>
+            <li>
+              <div class="state" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Ubicacion</a>
+            </li>
+            <li>
+              <div class="state" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Contrato de alquiler</a>
+            </li>
+            <li>
+              <div class="state" >
+                <i class="material-icons-outlined"> check </i>
+              </div>
+              <a href="#">Fotos de negocio</a>
+            </li>
+          </div>
+        </div>
+        <a class="button_primary generate" @click="cargarPdf">
+          <span>
+            GENERAR EXPEDIENTE
+          </span>
+          <i class="material-icons-outlined">repeat</i>
+        </a>
+      </aside>
+      
+    </div>
+    
+
+    
   </div>
 </template>
 
@@ -315,6 +323,8 @@ export default {
   components: {  LoaderFile},
   data() {
     return {
+      fileInto: false,
+      flagModalUpload: false,
       resource: "clientes",
       clientes: [],
       page: 0,
@@ -333,18 +343,14 @@ export default {
           }
         }
       },
-
-      /***
-       * OTROS
-       */
-
       files: {},
       file: {},
       loading: false,
-
       formData: {},
       fileName: "0",
-      attachment: "",
+      attachment: {
+        content: null
+      },
       deletingFile: {},
       subidos:[],
       notification: false,
@@ -382,20 +388,30 @@ export default {
         console.log(this.person.cuantitativa)
       });
     },
-
-    handleFileUpload() {
-      this.attachment = document.getElementById("file").files[0];
-      console.log(this.attachment);
+    dragFinish (i, e) {
+      console.log(e.dataTransfer.files[0])
+      this.attachment.content = e.dataTransfer.files[0]
+      this.fileInto = false
     },
-
+    dragover (e) {
+      this.fileInto = true
+    },
+    dragleave (e) {
+      this.fileInto = false
+    },
+    onFileChange (e) {
+      console.log(event.target.files[0])
+      this.attachment.content = event.target.files[0];
+    },
+    sendPdf () {
+      if (this.validateDoc) this.uploadPdf()
+    },
     prepareToDelete(file) {
       this.deletingFile = file;
     },
-
     cancelDeleting() {
       this.deletingFile = {};
     },
-
     deleteFile() {
       this.$http
         .get(
@@ -415,26 +431,23 @@ export default {
           this.showNotification(error.response.data.message, false);
         });
     },
-
     resetForm() {
       this.formData = {};
       this.fileName = "";
       this.attachment = "";
       this.f
     },
-
     anyError() {
       return Object.keys(this.errors).length > 0;
     },
-
     clearErrors() {
       this.errors = {};
     },
-    submit() {
+    uploadFile() {
       this.formData = new FormData();
       this.formData.append("name", this.fileName);
       this.formData.append("prestamo_id", this.$route.params.prestamo);
-      this.formData.append("file", this.attachment);
+      this.formData.append("file", this.attachment.content);
 
       this.$http
         .post(`/files/add`, this.formData, {
@@ -449,14 +462,17 @@ export default {
             "Archivo Registrado",
             this.notificationSystem.options.success
           );
+          this.flagModalUpload = false
         })
         .catch(error => {
           this.errors = error.response.data.errors;
           this.showNotification(error.response.data.message, false);
         });
     },
-
     cargarPdf(){
+                window.open('/clientes/adjuntarPdf/'+this.$route.params.prestamo,'_blank'); 
+      },
+      solicitudPdf(){
                 window.open('/clientes/solicitudPdf/'+this.$route.params.prestamo,'_blank'); 
       },
       cualitativaPdf(){
@@ -465,16 +481,273 @@ export default {
       cuantitativaPdf(){
                window.open('/evaluacion/cuantitativaPdf/'+this.$route.params.prestamo,'_blank'); 
       }
+  },
+  computed: {
+    validateSizeFile () {
+      return this.attachment.content.size / 1000 <= 8000
+    }
+  },
+  filters: {
+    noUnderscore (text) {
+      return text.split('_').join(' ')
+    }
   }
-};
-</script>
-<style lang="css" scoped>
-input[type="”file”"]#file-input {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
 }
+</script>
+<style lang="sass" scoped>
+@import "../../sass/variables"
+@import "../../sass/buttons"
+.documents_content
+  .modal_content
+    .modal_wrapper
+      .dropzone_content
+        width: 100%
+        box-sizing: border-box
+        .dropzone
+          width: 100%
+          height: 220px
+          background-color: white
+          border: 1px dashed rgba(0, 0, 0, 0.2)
+          display: flex
+          justify-content: center
+          align-items: center
+          cursor: pointer
+          transition: all ease-in-out .2s
+          padding: 10px
+          box-sizing: border-box
+          margin-top: 15px
+          margin-bottom: 15px
+          border-radius: 3px
+          .open_file, .file_selected
+            display: flex
+            align-items: center
+            justify-content: center
+            flex-direction: column
+            background-color: rgba($primary_color, .03)
+            width: 100%
+            height: 100%
+            border-radius: 3px
+          .file_selected
+            small
+              font-size: 11px
+              font-weight: 400
+              margin-top: 5px
+              display: block
+              b
+                color: red
+                font-weight: 400
+          .upload
+            background-color: rgba($primary_color,.2)
+            width: 35px
+            min-width: 35px
+            height: 35px
+            border-radius: 50%
+            display: flex
+            justify-content: center
+            align-items: center
+            margin-right: 15px
+            i
+              color: $primary_color
+              font-size: 20px
+          h1
+            font-size: 12px
+            font-weight: 500
+            margin: 0
+            margin-top: 10px
+            text-align: center
+            p
+              line-height: 1.3
+              overflow: hidden
+              text-overflow: ellipsis
+              display: -webkit-box
+              -webkit-line-clamp: 1
+              -webkit-box-orient: vertical
+              margin-bottom: 3px
+            strong
+              color: $primary_color
+              font-weight: 500
+          &.ready, &:hover
+            border: 1px dashed rgba(0, 0, 0, 0.3)
+            .open_file, .file_selected
+              background-color: rgba($primary_color, .1)
+
+  .files_containter
+    display: grid
+    grid-template-columns: 1fr 320px
+    .files_grid
+      display: grid
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr) )
+      grid-gap: 15px
+      padding: 20px
+      box-sizing: border-box
+      grid-auto-rows: max-content
+      .file_item
+        border-radius: 4px
+        transition: all ease-in-out .3s
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
+        cursor: pointer
+        height: 200px
+        border: $primary_color
+        background-color: white
+        box-shadow: $shadow
+        user-select: none
+        text-decoration: none
+        border: 1px solid $line_color
+        &:hover
+          box-shadow: $shadow_hover
+        .file_detail
+          width: 100%
+          height: 100%
+          a
+            display: flex
+            flex-direction: column
+            height: 100%
+            text-decoration: none
+            i
+              flex: 1
+              display: flex
+              justify-content: center
+              align-items: center
+              font-size: 30px
+              color: $primary_color
+            .file_info
+              border-top: 1px solid $line_color
+              padding: 7px 20px
+              p
+                font-size: 12px
+                font-weight: 600
+                margin: 0
+                color: $text_color
+                text-transform: capitalize
+                overflow: hidden
+                text-overflow: ellipsis
+                display: -webkit-box
+                -webkit-line-clamp: 1
+                -webkit-box-orient: vertical
+                text-align: left
+              small
+                display: block
+                font-size: 11px
+                color: $text_color
+                margin-top: -2px
+      .add_file
+        border-radius: 4px
+        transition: all ease-in-out .3s
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
+        cursor: pointer
+        height: 200px
+        border: $primary_color
+        background-color: white
+        box-shadow: $shadow
+        user-select: none
+        text-decoration: none
+        border: 1px solid $line_color
+        &:hover
+          box-shadow: $shadow_hover
+          span
+            box-shadow: 0px 4px 10px 0px rgba($primary_color, 0.45)
+            &:before
+              transform: scale(1.1)
+              opacity: 1
+        p
+          font-weight: 700
+          font-size: 12px
+          margin: 0
+          margin-top: 10px
+          color: $primary_color
+        span
+          width: 40px
+          height: 40px
+          border-radius: 50%
+          background-color: $primary_color
+          display: flex
+          justify-content: center
+          align-items: center
+          position: relative
+          transition: all cubic-bezier(0.79, 0.03, 0.18, 1.03) 0.3s
+          box-shadow: 0px 4px 10px 0px rgba($primary_color, 0.35)
+          &:before
+            content: ''
+            position: absolute
+            left: 0
+            top: 0
+            width: 100%
+            height: 100%
+            background-color: rgba(white, .2 )
+            border-radius: 50%
+            transform: scale(0.2)
+            transition: all cubic-bezier(0.79, 0.03, 0.18, 1.03) 0.3s
+            opacity: 0
+          i
+            color: white
+            position: relative
+    aside.checklist
+      background-color: white
+      box-shadow: $shadow
+      border-left: 1px solid $line_color
+      height: calc(100vh - 55px)
+      display: flex
+      flex-direction: column
+      position: sticky
+      top: 55px
+      .generate
+        border-radius: 0
+        height: 40px
+        i
+          font-size: 20px
+      .checklist_wrapper
+        box-sizing: border-box
+        flex: 1
+        height: calc(100vh - 55px)
+        overflow: auto
+        .tree
+          .title
+            border-top: 1px solid $line_color
+            border-bottom: 1px solid $line_color
+            font-size: 11px
+            font-weight: 600
+            color: rgba($text_color, .4)
+            padding: 2px 20px
+            margin-bottom: 10px
+          li
+            list-style: none
+            display: flex
+            align-items: center
+            height: 30px
+            padding: 0 20px
+            &:first-child
+              margin-top: 10px
+            &:last-child
+              margin-bottom: 10px
+            a
+              color: $text_color
+              font-size: 12px
+              margin-left: 10px
+              text-decoration: none
+              cursor: inherit
+            .state
+              width: 22px
+              height: 22px
+              border-radius: 50%
+              border: 1px solid rgba($text_color, .25)
+              display: flex
+              justify-content: center
+              align-items: center
+              &.complete
+                background-color: $primary_color
+                border: 1px solid $primary_color
+                color: white
+                i
+                  display: block
+                & + a
+                  font-weight: 500
+              i
+                font-size: 13px
+                display: none
 </style>
