@@ -37,7 +37,7 @@
                             
                             <div class="input_wrapper">
                               <label>Subtotal</label>
-                              <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].subtotal" v-bind:precision="2"></vue-numeric>
+                              <vue-numeric  disabled='disabled'  :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].subtotal" v-bind:precision="2"></vue-numeric>
                             </div>
                           </div>
 
@@ -244,7 +244,7 @@
 
                           <div class="input_wrapper">
                             <label>Subtotal</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].subtotal" v-bind:precision="2"></vue-numeric>
+                            <vue-numeric   disabled='disabled'  :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].subtotal" v-bind:precision="2"></vue-numeric>
                           </div>
 
                         </div>
@@ -416,7 +416,7 @@
                       </div>
                       <div class="input_wrapper">
                         <label v-text="evaluacion.gastos_hogar[5].concepto">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[5].pago" v-bind:precision="2"></vue-numeric>
+                        <vue-numeric disabled='disabled'  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[5].pago" v-bind:precision="2"></vue-numeric>
                       </div>
 
                     </div>

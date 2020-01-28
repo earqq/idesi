@@ -457,7 +457,8 @@ class EvaluacionesController extends Controller
         if($margen_neto>0.05) $margen_neto_resultado='BIEN';
         \Log::alert('MARGEN NETO RESULTADO: '.$margen_neto_resultado);
         //LIQUIDEZ
-        
+        if($balance_pasivo_deudas==0)
+        $balance_pasivo_deudas=1;
         $liquidez=($balance_activo_caja+$balance_activo_inventario)/$balance_pasivo_deudas;
         \Log::alert('RATIOS LIQUIDEZ: '.$liquidez);
         $liquidez_resultado='MAL';
