@@ -95,7 +95,7 @@
       </div>
 
       <aside class="checklist">
-        <div class="checklist_wrapper">
+        <div class="checklist_wrapper no_scroll">
           <div class="tree">
             <li>
               <div class="state" :class="{complete: subidos.inscripcion_socio}" >
@@ -716,6 +716,8 @@ export default {
       height: calc(100vh - 55px)
       display: flex
       flex-direction: column
+      position: sticky
+      top: 55px
       .generate
         border-radius: 0
         height: 40px
@@ -724,6 +726,8 @@ export default {
       .checklist_wrapper
         box-sizing: border-box
         flex: 1
+        height: calc(100vh - 55px)
+        overflow: auto
         .tree
           .title
             border-top: 1px solid $line_color

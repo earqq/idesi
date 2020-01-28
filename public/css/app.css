@@ -19813,6 +19813,10 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+.no_scroll::-webkit-scrollbar {
+  display: none;
+}
+
 /** PERFIL **/
 
 .profile-user-img {
