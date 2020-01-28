@@ -94,6 +94,7 @@ nav
   box-shadow: $shadow
   position: sticky
   top: 0
+  border-bottom: 1px solid $line_color
   .logo
     height: 30px
     margin-left: 20px
@@ -146,6 +147,7 @@ nav
           background-color: white
           width: 250px
           box-shadow: $shadow_hover
+          border: 1px solid $line_color
           &::before
             position: absolute
             display: block

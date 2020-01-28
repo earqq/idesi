@@ -7,7 +7,9 @@
         justify-content: space-between
         background-color: white
         box-shadow: $shadow
-        border-radius: 3px
+        border: 1px solid $line_color
+        border-radius: 4px
+        overflow: hidden
         height: 50px
         .tab
             flex: 1
@@ -15,10 +17,11 @@
             display: flex
             align-items: center
             justify-content: center
-            border-right: 2px solid $line_color
+            border-right: 1px solid $line_color
             height: 100%
             cursor: pointer
             border-bottom: 2px solid transparent
+            user-select: none
             &:last-child
                 border-right: none
             &.complete
@@ -97,14 +100,13 @@
                         margin-bottom: -1px
             .form_step_wrapper
                 background-color: white
-                border-radius: 4px
                 box-shadow: $shadow
                 box-sizing: border-box
-                &.part_bottom
-                    border-radius: 4px 4px 0 0
-                &.part_top
-                    border-radius: 0 0 4px 4px
-                    margin-top: 1px
+                border: 1px solid $line_color
+                border-radius: 4px
+                overflow: hidden
+                &.in_bottom
+                    margin-top: 10px
                 .form_content
                     padding: 20px
                     .separator
@@ -134,6 +136,8 @@
                         &.small
                             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
                         .input_box
+                            &.no_label
+                                margin-top: 5px
                             & > label
                                 font-family: $font
                                 font-weight: 500
@@ -142,12 +146,11 @@
                                 display: block
                             .input_box_wrapper
                                 display: grid
-                                height: 40px
                                 align-items: center
-                                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))
+                                grid-template-columns: repeat(auto-fit, minmax(170px, 1fr))
                                 grid-gap: 10px
                                 .input_checkbox_wrapper
-                                    height: 100%
+                                    height: 40px
                                     input
                                         &:checked + label.box_content
                                             border: 1px solid $primary_color
@@ -166,15 +169,13 @@
                                             margin-left: 10px
 
             .form_list
-                &.list_round
-                    .form_step_wrapper
-                        &:first-child
-                            border-radius: 4px 4px 0 0
-                .form_step_wrapper
-                    border-radius: 0px
+                &.no_border
+                    .sub_step_wrapper:first-child
+                        border-top: none
+                .sub_step_wrapper
                     border-top: 1px solid $line_color
-                    &:last-child
-                        border-radius: 0 0 4px 4px
+                .form_step_wrapper
+                    border-top: 1px solid $line_color
             .form_buttons
                 display: flex
                 align-items: center
@@ -187,7 +188,6 @@
                         width: 140px
                         margin-right: 10px
             .add_section
-                border: 0 0 4px 4px
                 width: 100%
                 height: 45px
                 display: flex

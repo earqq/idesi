@@ -31,7 +31,6 @@
 
     <section class="client_forms">
       <div class="client_forms_wrapper">
-        
         <transition name="slide-fade" mode="in-out">
           <div v-show="tab == 1" class="form_step">
             <div class="form_step_wrapper">
@@ -301,7 +300,7 @@
         <transition name="slide-fade" mode="in-out">
           <div v-show="tab == 3" class="form_step">
             <div class="form_step_wrapper">
-              <div class="form_list" :class="{list_round: form.avals.length > 0}">
+              <div class="form_list" >
                 <div class="form_step_wrapper" v-for="(row, index) in form.avals" :key="index">
                   <h3 class="title">
                     Aval {{index + 1}}
@@ -440,7 +439,7 @@
         <transition name="slide-fade" mode="in-out">
           <div v-show="tab == 4" class="form_step">
             <div class="form_step_wrapper">
-              <div class="form_list" :class="{list_round: form.garantias.length > 0}">
+              <div class="form_list">
                 <div class="form_step_wrapper" v-for="(row, index) in form.garantias" :key="index">
                   <h3 class="title">
                     Garantia {{index + 1}}

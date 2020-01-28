@@ -18768,6 +18768,10 @@ readers do not read off random characters that represent icons */
   display: none;
 }
 
+.input_wrapper .vs__dropdown-toggle .vs__selected-options {
+  padding: 0 !important;
+}
+
 .input_wrapper .vs__dropdown-toggle .vs__search,
 .input_wrapper .vs__dropdown-toggle .vs__search:focus {
   margin: 0 !important;
@@ -19319,6 +19323,7 @@ readers do not read off random characters that represent icons */
   -webkit-transition: opacity ease 200ms;
   transition: opacity ease 200ms;
   padding: 10px 0;
+  border: 1px solid #eef3fb;
   display: none;
 }
 
@@ -19446,7 +19451,9 @@ readers do not read off random characters that represent icons */
           justify-content: space-between;
   background-color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03);
-  border-radius: 3px;
+  border: 1px solid #eef3fb;
+  border-radius: 4px;
+  overflow: hidden;
   height: 50px;
 }
 
@@ -19460,10 +19467,14 @@ readers do not read off random characters that represent icons */
           align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
-  border-right: 2px solid #eef3fb;
+  border-right: 1px solid #eef3fb;
   height: 100%;
   cursor: pointer;
   border-bottom: 2px solid transparent;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .tabs_section .tabs_wrapper .tab:last-child {
@@ -19583,18 +19594,15 @@ readers do not read off random characters that represent icons */
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper {
   background-color: white;
-  border-radius: 4px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03);
   box-sizing: border-box;
+  border: 1px solid #eef3fb;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-.client_forms .client_forms_wrapper .form_step .form_step_wrapper.part_bottom {
-  border-radius: 4px 4px 0 0;
-}
-
-.client_forms .client_forms_wrapper .form_step .form_step_wrapper.part_top {
-  border-radius: 0 0 4px 4px;
-  margin-top: 1px;
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper.in_bottom {
+  margin-top: 10px;
 }
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content {
@@ -19639,6 +19647,10 @@ readers do not read off random characters that represent icons */
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box.no_label {
+  margin-top: 5px;
+}
+
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box > label {
   font-family: "Roboto", sans-serif;
   font-weight: 500;
@@ -19649,15 +19661,14 @@ readers do not read off random characters that represent icons */
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box .input_box_wrapper {
   display: grid;
-  height: 40px;
   -webkit-box-align: center;
           align-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   grid-gap: 10px;
 }
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box .input_box_wrapper .input_checkbox_wrapper {
-  height: 100%;
+  height: 40px;
 }
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box .input_box_wrapper .input_checkbox_wrapper input:checked + label.box_content {
@@ -19683,17 +19694,16 @@ readers do not read off random characters that represent icons */
   margin-left: 10px;
 }
 
-.client_forms .client_forms_wrapper .form_step .form_list.list_round .form_step_wrapper:first-child {
-  border-radius: 4px 4px 0 0;
+.client_forms .client_forms_wrapper .form_step .form_list.no_border .sub_step_wrapper:first-child {
+  border-top: none;
 }
 
-.client_forms .client_forms_wrapper .form_step .form_list .form_step_wrapper {
-  border-radius: 0px;
+.client_forms .client_forms_wrapper .form_step .form_list .sub_step_wrapper {
   border-top: 1px solid #eef3fb;
 }
 
-.client_forms .client_forms_wrapper .form_step .form_list .form_step_wrapper:last-child {
-  border-radius: 0 0 4px 4px;
+.client_forms .client_forms_wrapper .form_step .form_list .form_step_wrapper {
+  border-top: 1px solid #eef3fb;
 }
 
 .client_forms .client_forms_wrapper .form_step .form_buttons {
@@ -19717,7 +19727,6 @@ readers do not read off random characters that represent icons */
 }
 
 .client_forms .client_forms_wrapper .form_step .add_section {
-  border: 0 0 4px 4px;
   width: 100%;
   height: 45px;
   display: -webkit-box;

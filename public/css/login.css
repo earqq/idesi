@@ -224,6 +224,10 @@
   display: none;
 }
 
+.input_wrapper .vs__dropdown-toggle .vs__selected-options {
+  padding: 0 !important;
+}
+
 .input_wrapper .vs__dropdown-toggle .vs__search,
 .input_wrapper .vs__dropdown-toggle .vs__search:focus {
   margin: 0 !important;

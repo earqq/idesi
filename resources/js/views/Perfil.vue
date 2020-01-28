@@ -204,6 +204,7 @@ export default {
   .profile_detail
     background-color: white
     box-shadow: $shadow
+    border-right: 1px solid $line_color
     height: calc(100vh - 55px)
     .head_profile
       display: flex
@@ -245,6 +246,7 @@ export default {
             transition: opacity ease 200ms
             padding: 10px 0
             display: none
+            border: 1px solid $line_color
             &::before
               position: absolute
               display: block
@@ -353,6 +355,7 @@ export default {
         box-shadow: $shadow
         user-select: none
         text-decoration: none
+        border: 1px solid $line_color
         &:hover
           box-shadow: $shadow_hover
           span
@@ -398,6 +401,7 @@ export default {
         box-shadow: $shadow
         box-sizing: border-box
         transition: all ease-in-out .3s
+        border: 1px solid $line_color
         &:hover
           box-shadow: $shadow_hover
         .detail
@@ -470,6 +474,7 @@ export default {
               transition: opacity ease 200ms
               padding: 10px 0
               display: none
+              border: 1px solid $line_color
               &::before
                 position: absolute
                 display: block

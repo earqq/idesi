@@ -192,42 +192,42 @@
             </div>
           </transition>
 
-          <transition name="slide-fade" mode="in-out">
+          <transition name="slide-fade" mode="in-out"> 
             <div  v-show="tab == 2" class="form_step">
-              <div class="form_list" :class="{list_round: form.representante.length > 0}">
-                <div class="form_step_wrapper"   v-for="(r, index) in form.representante" :key="index">
-                  <h3 class="title">
-                    Representante {{index + 1}}
-                    <button  class="delete_section" type="button"  @click.prevent="clickRemoveRepresentante(index)">
-                      <i class="material-icons-outlined"> delete </i>
-                    </button>
-                  </h3>
-                  <div class="form_content">
-                    <div class="group_form">
-                      <div class="input_wrapper">
-                        <label>Cargo</label>
-                        <input type="text" :maxlength="15" v-model="r.cargo"  />
-                      </div>
+              <div class="form_step_wrapper">
+                <div class="form_list no_border" >
+                  <div class="sub_step_wrapper"   v-for="(r, index) in form.representante" :key="index">
+                    <h3 class="title">
+                      Representante {{index + 1}}
+                      <button v-if="index > 0" class="delete_section" type="button"  @click.prevent="clickRemoveRepresentante(index)">
+                        <i class="material-icons-outlined"> delete </i>
+                      </button>
+                    </h3>
+                    <div class="form_content">
+                      <div class="group_form">
+                        <div class="input_wrapper">
+                          <label>Cargo</label>
+                          <input type="text" :maxlength="15" v-model="r.cargo"  />
+                        </div>
 
-                      <div class="input_wrapper">
-                        <label>Doc. Identidad</label>
-                        <input type="text"   v-model="r.documento" v-mask="'########'" />
-                      </div>
+                        <div class="input_wrapper">
+                          <label>Doc. Identidad</label>
+                          <input type="text"   v-model="r.documento" v-mask="'########'" />
+                        </div>
 
-                      <div class="input_wrapper">
-                        <label>Apellidos y Nombres</label>
-                        <input type="text" :maxlength="60" v-model="r.nombres"  />
+                        <div class="input_wrapper">
+                          <label>Apellidos y Nombres</label>
+                          <input type="text" :maxlength="60" v-model="r.nombres"  />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <button type="button"  @click="clickAddRepresentante"  class="add_section" >
+                  <span> AGREGAR REPRESENTANTE </span>
+                  <i class="fas fa-plus"></i> 
+                </button>
               </div>
-
-              <button type="button"  @click="clickAddRepresentante"  class="add_section" >
-                <span> AGREGAR REPRESENTANTE </span>
-                <i class="fas fa-plus"></i> 
-              </button>
-
               <div class="form_buttons">
                 <a class="button_inline_primary medium prev" @click="prev(2)">
                   <i class="material-icons-outlined"> navigate_before </i>
@@ -244,36 +244,38 @@
 
           <transition name="slide-fade" mode="in-out">
             <div v-show="tab == 3" class="form_step">
-              <div class="form_list">
-                <div class="form_step_wrapper"  v-for="(d, index) in form.director" :key="index">
-                  <h3 class="title">
-                    Director {{index + 1}}
-                    <button v-if="index != 0" class="delete_section" type="button"  @click.prevent="clickRemoveDirector(index)">
-                      <i class="material-icons-outlined"> delete </i>
-                    </button>
-                  </h3>
-                  <div class="form_content">
-                    <div class="group_form">
-                      <div class="input_wrapper">
-                        <label>Apellidos y Nombres</label>
-                        <input type="text" :maxlength="60" v-model="d.nombres"/>
-                      </div>
-                      <div class="input_wrapper">
-                        <label>Doc. Identidad</label>
-                        <input type="number" :maxlength="8" v-model="d.documento"/>
-                      </div>
-                      <div class="input_wrapper">
-                        <label>Cargo</label>
-                        <input type="text" :maxlength="15" v-model="d.cargo"/>
+              <div class="form_step_wrapper">
+                <div class="form_list no_border" >
+                  <div class="sub_step_wrapper"  v-for="(d, index) in form.director" :key="index">
+                    <h3 class="title">
+                      Director {{index + 1}}
+                      <button v-if="index != 0" class="delete_section" type="button"  @click.prevent="clickRemoveDirector(index)">
+                        <i class="material-icons-outlined"> delete </i>
+                      </button>
+                    </h3>
+                    <div class="form_content">
+                      <div class="group_form">
+                        <div class="input_wrapper">
+                          <label>Apellidos y Nombres</label>
+                          <input type="text" :maxlength="60" v-model="d.nombres"/>
+                        </div>
+                        <div class="input_wrapper">
+                          <label>Doc. Identidad</label>
+                          <input type="number" :maxlength="8" v-model="d.documento"/>
+                        </div>
+                        <div class="input_wrapper">
+                          <label>Cargo</label>
+                          <input type="text" :maxlength="15" v-model="d.cargo"/>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <button type="button"  @click="clickAddDirector"  class="add_section" >
+                  <span> AGREGAR DIRECTOR </span>
+                  <i class="fas fa-plus"></i> 
+                </button>
               </div>
-              <button type="button"  @click="clickAddDirector"  class="add_section" >
-                <span> AGREGAR DIRECTOR </span>
-                <i class="fas fa-plus"></i> 
-              </button>
               <div class="form_buttons">
                 <a class="button_inline_primary medium prev" @click="prev(3)">
                   <i class="material-icons-outlined"> navigate_before </i>
@@ -289,33 +291,36 @@
 
           <transition name="slide-fade" mode="in-out">
             <div v-show="tab == 4" class="form_step">
-              <div class="form_list">
-                <div class="form_step_wrapper" v-for="(a, index) in form.accionista" :key="index">
-                  <h3 class="title">
-                    Accionista {{index + 1}}
-                    <button v-if="index != 0" class="delete_section" type="button"  @click.prevent="clickRemoveAccionista(index)">
-                      <i class="material-icons-outlined"> delete </i>
-                    </button>
-                  </h3>
-                  <div class="form_content">
-                    <div class="group_form">
-                      <div class="input_wrapper">
-                        <label> Apellidos y Nombres </label>
-                        <input type="text" :maxlength="60" v-model="a.nombres"/>
-                      </div>
-                      <div class="input_wrapper">
-                        <label> Doc. Identidad </label>
-                        <input type="number" :maxlength="8" v-model="a.documento"/>
+              <div class="form_step_wrapper">
+                <div class="form_list no_border" >
+                  <div class="sub_step_wrapper" v-for="(a, index) in form.accionista" :key="index">
+                    <h3 class="title">
+                      Accionista {{index + 1}}
+                      <button v-if="index != 0" class="delete_section" type="button"  @click.prevent="clickRemoveAccionista(index)">
+                        <i class="material-icons-outlined"> delete </i>
+                      </button>
+                    </h3>
+                    <div class="form_content">
+                      <div class="group_form">
+                        <div class="input_wrapper">
+                          <label> Apellidos y Nombres </label>
+                          <input type="text" :maxlength="60" v-model="a.nombres"/>
+                        </div>
+                        <div class="input_wrapper">
+                          <label> Doc. Identidad </label>
+                          <input type="number" :maxlength="8" v-model="a.documento"/>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
+                <button type="button"  @click="clickAddAccionista"  class="add_section" >
+                  <span> AGREGAR ACCIONISTA </span>
+                  <i class="fas fa-plus"></i> 
+                </button>
               </div>
 
-              <button type="button"  @click="clickAddAccionista"  class="add_section" >
-                <span> AGREGAR ACCIONISTA </span>
-                <i class="fas fa-plus"></i> 
-              </button>
               <div class="form_buttons">
                 <a class="button_inline_primary medium prev" @click="prev(4)">
                   <i class="material-icons-outlined"> navigate_before </i>

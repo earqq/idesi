@@ -342,8 +342,6 @@
                       <input type="text" :maxlength="45" v-model="form.laboral.direccion">
                     </div>
 
-                    
-                    
                     <div class="input_wrapper">
                         <label>Pais</label>
                         <input type="text" v-model="form.laboral.pais" :maxlength="20" />
@@ -485,7 +483,7 @@
           <transition name="slide-fade" mode="in-out">
             <div v-show="tab == 3" class="form_step">
 
-              <div class="form_step_wrapper" :class="{part_bottom: form.detalles.length > 0}">
+              <div class="form_step_wrapper" >
 
                 <h3 class="title">
                   Datos Familiares
@@ -529,55 +527,55 @@
 
                 </div>
           
-              </div>
+                <div class="form_list" v-if="form.detalles.length>0">
 
-              <div class="form_list" v-if="form.detalles.length>0">
+                  <div class="sub_step_wrapper" v-for="(row, index) in form.detalles" :key="index" >
+                    <h3 class="title">
+                      Familiar {{index + 1}}
+                    </h3>
 
-                <div class="form_step_wrapper" v-for="(row, index) in form.detalles" :key="index" >
-                  <h3 class="title">
-                    Familiar {{index + 1}}
-                  </h3>
+                    <div class="form_content" >
 
-                  <div class="form_content" >
-
-                    <div class="group_form small">
-                      
-                      <div class="input_wrapper">
-                        <label> Parentesco </label>
-                        <select v-model="row.parentesco" class="form-control" disabled>
-                          <option value="CONYUGE">CONYUGE</option>
-                          <option value="CONVIVIENTE">CONVIVIENTE</option>
-                          <option value="HIJOS">HIJOS</option>
-                        </select>
-                      </div>
-
-
-                      <div class="input_wrapper"> 
-                        <label> Documento </label>
-                        <input type="text" v-model="row.documento" @change="datosFamiliar(index)" />
-                      </div>
-
-                      <div class="input_wrapper">
-                        <label> Nombres </label>
-                        <input type="text" v-model="row.nombres" :maxlength="45" class="form-control" />
-                      </div>
-
-                      <div class="input_wrapper">
-                        <label> Fecha de Nacimiento </label>
-                        <input type="date" v-model="row.nacimiento">
-                      </div>
-
-                      <div class="input_wrapper">
-                        <label> ¿Socio? </label>
-                        <select v-model="row.socio" class="form-control">
-                            <option value="SI">SI</option>
-                            <option value="NO">NO</option>
+                      <div class="group_form small">
+                        
+                        <div class="input_wrapper">
+                          <label> Parentesco </label>
+                          <select v-model="row.parentesco" class="form-control" disabled>
+                            <option value="CONYUGE">CONYUGE</option>
+                            <option value="CONVIVIENTE">CONVIVIENTE</option>
+                            <option value="HIJOS">HIJOS</option>
                           </select>
+                        </div>
+
+
+                        <div class="input_wrapper"> 
+                          <label> Documento </label>
+                          <input type="text" v-model="row.documento" @change="datosFamiliar(index)" />
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label> Nombres </label>
+                          <input type="text" v-model="row.nombres" :maxlength="45" class="form-control" />
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label> Fecha de Nacimiento </label>
+                          <input type="date" v-model="row.nacimiento">
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label> ¿Socio? </label>
+                          <select v-model="row.socio" class="form-control">
+                              <option value="SI">SI</option>
+                              <option value="NO">NO</option>
+                            </select>
+                        </div>
+
                       </div>
 
                     </div>
-
                   </div>
+
                 </div>
 
               </div>

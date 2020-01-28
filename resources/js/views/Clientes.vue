@@ -85,7 +85,7 @@
                   <ul>
                     <li>
                       <router-link :to="{name:'perfil', params:{documento:cliente.documento,persona:form.tipo_persona}}" >
-                        Ver Clienteaaaa
+                        Ver Cliente
                       </router-link>
                     </li>
                     <li>
@@ -232,6 +232,7 @@ export default {
       display: flex
       align-items: center
       padding: 0 15px
+      border: 1px solid $line_color
       i
         font-size: 20px
       input, select
@@ -255,6 +256,7 @@ export default {
       flex: 1
       height: 40px
       display: flex
+      border: 1px solid $line_color
       a
         height: 100%
         flex: 1
@@ -286,6 +288,7 @@ export default {
         box-shadow: $shadow
         box-sizing: border-box
         transition: all ease-in-out .3s
+        border: 1px solid $line_color
         &:hover
           box-shadow: $shadow_hover
         a
@@ -336,6 +339,7 @@ export default {
       box-sizing: border-box
       .table_clients
         box-shadow: $shadow
+        border: 1px solid $line_color
         tbody
           .client
             img

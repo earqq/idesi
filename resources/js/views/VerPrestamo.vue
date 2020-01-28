@@ -293,7 +293,7 @@
             <div class="form_step_wrapper">
               <h3 class="title">Datos de Aval</h3>
 
-              <div class="form_list" :class="{list_round: form.avals.length > 0}">
+              <div class="form_list" >
                 <div class="form_step_wrapper" v-for="(row, index) in form.avals" :key="index">
                   <h3 class="title">
                     Aval {{index + 1}}
@@ -426,7 +426,7 @@
             <div class="form_step_wrapper">
               <h3 class="title">Datos de Garantia</h3>
 
-              <div class="form_list" :class="{list_round: form.garantias.length > 0}">
+              <div class="form_list">
                 <div class="form_step_wrapper" v-for="(row, index) in form.garantias" :key="index">
                   <h3 class="title">
                     Garantia {{index + 1}}
