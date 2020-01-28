@@ -37,7 +37,9 @@ body{
   font-family: $font;
 }
 
- 
+.no_scroll::-webkit-scrollbar {
+    display: none;
+}
 
 /** PERFIL **/
 .profile-user-img {
