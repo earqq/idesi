@@ -37,9 +37,9 @@
             <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
           </div>
           <div class="actions">
-            <router-link class="credit_link" :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
-              VER PRESTAMO
-            </router-link>
+            
+            <router-link class="credit_link"  :to="{name:'/ver/prestamo/', params:{prestamo:prestamo.id}}"> VER PRESTAMO</router-link>
+
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>

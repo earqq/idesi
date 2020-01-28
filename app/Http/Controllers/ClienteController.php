@@ -562,9 +562,11 @@ class ClienteController extends Controller
     public function visitas($documento)
     {
         // if (!$request->ajax()) return redirect('/');
-        $vistas = Vista::where('prestamos_id',$documento)->get();
+        $vista = Vista::where('prestamos_id',$documento)->get();
+        $prestamo = Prestamo::find($documento);
 
-        return $vistas;
+
+        return compact('visita','prestamo');
         
     }
 
