@@ -54,7 +54,7 @@ class Juridico extends Model
     /**
      * @var array
      */
-    protected $fillable = ['clientes_id', 'razon_social', 'nombre_comercial', 'actividad_principal', 'partida_registral', 'oficina_principal', 'tipo_negocio', 'direccion', 'numero', 'manzana', 'lote', 'pdto', 'int', 'piso', 'referencia', 'telefono', 'celular', 'email', 'nombres_representante', 'documento_representante', 'nacimiento_representante', 'estado_civil_representante', 'ocupacion_representante', 'telefono_representante', 'celular_representante', 'direccion_representante', 'distrito_representante', 'provincia_representante', 'departamento_representante', 'referencia_representante', 'tipo_domicilio_representante', 'poderes_representante', 'fecha_inicio_representante', 'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['clientes_id', 'razon_social', 'nombre_comercial', 'actividad_principal', 'partida_registral', 'oficina_principal', 'tipo_negocio','fecha_constitucion', 'direccion', 'numero', 'manzana', 'lote', 'pdto', 'int', 'piso', 'referencia', 'telefono', 'celular', 'email', 'nombres_representante', 'documento_representante', 'nacimiento_representante', 'estado_civil_representante', 'ocupacion_representante', 'telefono_representante', 'celular_representante', 'direccion_representante', 'distrito_representante', 'provincia_representante', 'departamento_representante', 'referencia_representante', 'tipo_domicilio_representante', 'poderes_representante', 'fecha_inicio_representante', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

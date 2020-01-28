@@ -76,9 +76,12 @@
             <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
           </div>
           <div class="actions">
-            <router-link class="credit_link" :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
-              VER PRESTAMO
-            </router-link>
+            
+            <router-link class="credit_link"  :to="{name:'/ver/prestamo/', params:{prestamo:prestamo.id}}"> VER PRESTAMO</router-link>
+            <!-- <router-link class="credit_link" :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
+              VER PRESTAMO 
+            </router-link> -->
+
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
@@ -86,8 +89,8 @@
                   <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                   <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                 </li>
-                <li v-if="prestamo.cuantitativa=='0'"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
-                <li v-if="prestamo.cuantitativa=='0'"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
+                <li v-if="prestamo.cualitativa=='0'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id}}" >E. Cualitativa</router-link> </li>
+                <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1' "> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
                 <li> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}"  >Observaciones</router-link></li>
                 <li> <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
               </ul>
@@ -141,8 +144,7 @@ export default {
               this.id_usuario = response.data['usuario'];
               this.id_rol = response.data['rol'];
               this.loader = 0;
-              this.loader_loan = 0;
-              console.log(this.prestamos);
+              this.loader_loan = 0; 
             });
     }else{
           this.$http
@@ -154,8 +156,7 @@ export default {
               this.id_usuario = response.data['usuario'];
               this.id_rol = response.data['rol'];
               this.loader = 0;
-              this.loader_loan = 0; 
-              console.log(this.cliente); 
+              this.loader_loan = 0;  
             });
     }
 
@@ -174,10 +175,7 @@ export default {
         .format("D [de] MMMM [del] YYYY h:mm:ss a");
       return string;
     }
-  },
-  mounted() {
-    console.log("Component mounted.");
-  },
+  }, 
   computed: {
     timeCredit () {
       return {
@@ -201,6 +199,7 @@ export default {
   .profile_detail
     background-color: white
     box-shadow: $shadow
+    border-right: 1px solid $line_color
     height: calc(100vh - 55px)
     .head_profile
       display: flex
@@ -242,6 +241,7 @@ export default {
             transition: opacity ease 200ms
             padding: 10px 0
             display: none
+            border: 1px solid $line_color
             &::before
               position: absolute
               display: block
@@ -350,6 +350,7 @@ export default {
         box-shadow: $shadow
         user-select: none
         text-decoration: none
+        border: 1px solid $line_color
         &:hover
           box-shadow: $shadow_hover
           span
@@ -395,6 +396,7 @@ export default {
         box-shadow: $shadow
         box-sizing: border-box
         transition: all ease-in-out .3s
+        border: 1px solid $line_color
         &:hover
           box-shadow: $shadow_hover
         .detail
@@ -467,6 +469,7 @@ export default {
               transition: opacity ease 200ms
               padding: 10px 0
               display: none
+              border: 1px solid $line_color
               &::before
                 position: absolute
                 display: block

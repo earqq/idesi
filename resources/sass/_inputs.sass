@@ -1,9 +1,24 @@
 .input_wrapper
     position: relative
+    .vs__dropdown-toggle
+        border: none
+        .vs__selected
+            position: absolute
+            left: 10px
+            top: 7px
+            font-size: 13px !important
+        .vs__actions
+            display: none
+        .vs__selected-options
+            padding: 0 !important
+        .vs__search, .vs__search:focus
+            margin: 0 !important
+            padding: 0 10px !important
+            font-size: 13px !important
     label
         font-family: $font
         font-weight: 500
-        font-size: 13px
+        font-size: 11px
         margin-bottom: 4px
         display: block
     input, select, textarea
@@ -13,8 +28,14 @@
         box-sizing: border-box
         border-radius: 3px
         border: 1px solid rgba(black, .2)
+        background-color: white
         padding: 0 10px
         width: 100%
+        &:disabled
+            background-color: rgba($bg_color, .5)
+            &:hover, &:focus, &:active
+                border: 1px solid rgba(black, .2)
+                box-shadow: none
         &:hover, &:focus, &:active
             outline: none
             border: 1px solid $primary_color
@@ -61,7 +82,6 @@
         .message
             color: $require_color
             font-size: 11px
-            margin-top: 5px
             display: block
             font-family: $font
             display: flex
@@ -118,7 +138,7 @@
                 transition: all ease-in-out .2s
                 opacity: 0
         span
-            font-size: 14px
+            font-size: 13px
             margin-left: 7px
         .other_option
             margin-left: 10px

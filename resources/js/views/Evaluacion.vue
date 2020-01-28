@@ -37,13 +37,13 @@
             <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
           </div>
           <div class="actions">
-            <router-link class="credit_link" :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
-              VER PRESTAMO
-            </router-link>
+            
+            <router-link class="credit_link"  :to="{name:'/ver/prestamo/', params:{prestamo:prestamo.id}}"> VER PRESTAMO</router-link>
+
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
-              <ul v-if="id_rol=='3' || id_rol=='4' ">
-                <li v-if="prestamo.estado=='PENDIENTE'">
+              <ul>
+                <li v-if="prestamo.estado=='PENDIENTE' && (id_rol=='3' || id_rol=='4')">
                   <router-link 
                             :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                     Evaluación
@@ -54,22 +54,8 @@
                             :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                     Ver Evaluación
                   </router-link>
-                </li> 
-              </ul>
-              <ul v-if="id_rol=='1'">
-                <li v-if="prestamo.estado=='PENDIENTE'">
-                  <router-link 
-                            :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
-                    Evaluación
-                  </router-link>
-                </li>
-                <li v-else>
-                  <router-link 
-                            :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
-                    Ver Evaluación
-                  </router-link>
-                </li>
-              </ul>
+                </li>  
+              </ul>   
             </div>
           </div>
           
@@ -107,8 +93,8 @@
               </td>
               <td class="options" >
                 <i class="material-icons-outlined" >more_horiz</i>
-                <ul v-if="id_rol=='3' || id_rol=='4' ">
-                  <li v-if="prestamo.estado=='PENDIENTE'">
+                <ul>
+                  <li v-if="prestamo.estado=='PENDIENTE' && (id_rol=='3' || id_rol=='4') ">
                     <router-link 
                               :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                       Evaluación
@@ -120,21 +106,7 @@
                       Ver Evaluación
                     </router-link>
                   </li> 
-                </ul>
-                <ul v-if="id_rol=='1'">
-                  <li v-if="prestamo.estado=='PENDIENTE'">
-                    <router-link 
-                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
-                      Evaluación
-                    </router-link>
-                  </li>
-                  <li v-else>
-                    <router-link 
-                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
-                      Ver Evaluación
-                    </router-link>
-                  </li>
-                </ul>
+                </ul> 
               </td>
             </tr>
           </tbody>
@@ -206,6 +178,7 @@ export default {
       display: flex
       align-items: center
       padding: 0 15px
+      border: 1px solid $line_color
       i
         font-size: 20px
       input, select
@@ -229,6 +202,7 @@ export default {
       flex: 1
       height: 40px
       display: flex
+      border: 1px solid $line_color
       a
         height: 100%
         flex: 1
@@ -260,6 +234,7 @@ export default {
         box-shadow: $shadow
         box-sizing: border-box
         transition: all ease-in-out .3s
+        border: 1px solid $line_color
         &:hover
           box-shadow: $shadow_hover
         .client
@@ -348,6 +323,7 @@ export default {
               transition: opacity ease 200ms
               padding: 10px 0
               display: none
+              border: 1px solid $line_color
               &::before
                 position: absolute
                 display: block
@@ -385,6 +361,7 @@ export default {
       box-sizing: border-box
       .table_credits
         box-shadow: $shadow
+        border: 1px solid $line_color
         tbody
           .client
             img

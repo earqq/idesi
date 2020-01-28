@@ -16,7 +16,8 @@ use App\ResultadoCuantitativa;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
-use Storage;
+use Illuminate\Support\Facades\Storage;
+
 class EvaluacionesController extends Controller
 {
     /**
@@ -654,11 +655,11 @@ class EvaluacionesController extends Controller
 
         $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
         $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
-        if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/pestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
+        if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cuantitativa.pdf', $pdf->output())){
             
-            $archivo = new Archivo;
-            $archivo->nombre = 'evaluacion_cualitativa';
-            $archivo->tipo = 'documentos';
+            $archivo = new Archivo();
+            $archivo->nombre = 'evaluacion_cuantitativa';
+            $archivo->tipo = 'documento';
             $archivo->extension='pdf';
             $archivo->prestamos_id= $prestamo->id;
             $archivo->save();
@@ -708,8 +709,7 @@ class EvaluacionesController extends Controller
             $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
             $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
             if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
-                \Log::alert(" sie entra");
-                $archivo = new Archivo;
+                $archivo = new Archivo();
                 $archivo->nombre = 'evaluacion_cualitativa';
                 $archivo->tipo = 'documento';
                 $archivo->extension='pdf';
@@ -719,7 +719,7 @@ class EvaluacionesController extends Controller
 
 
             DB::commit();
-                return [
+                return [ 
                     'success' => true,
                     'data' => 'Evaluación Completado',
                 ];

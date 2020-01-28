@@ -16,6 +16,8 @@ Route::group(['middleware'=>['guest']],function(){
  */
 Route::get('charge/data','EvaluacionesController@chargeData');
 Route::group(['middleware'=>['auth']],function(){
+    
+    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::group(['middleware'=>['Administrador']],function(){
 
@@ -56,6 +58,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('clientes/visitas/{prestamo}', 'ClienteController@visitas');
 
         Route::get('/clientes/solicitudPdf/{prestamo}','ClienteController@SolicitudPdf')->name('solicitud_pdf');
+        Route::get('/clientes/adjuntarPdf/{prestamo}','ClienteController@AdjuntarPdf')->name('adjuntar_pdf');
  
      
         Route::get('/evaluacion/cualitativaPdf/{prestamo}','EvaluacionesController@CualitativaPdf')->name('cualitativa_pdf');

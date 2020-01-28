@@ -40,6 +40,7 @@
 .button_primary span,
 .button_primary i {
   position: relative;
+  color: white;
 }
 
 .button_primary:hover:before {
@@ -125,7 +126,6 @@
   color: white;
   font-family: "Roboto", sans-serif;
   font-weight: 700;
-  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 2px;
   background-color: white;
   color: rgba(0, 0, 0, 0.7);
@@ -141,6 +141,9 @@
   transition: all ease-in-out 0.2s;
   text-decoration: none;
   color: #0061FF;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+  font-size: 13px;
 }
 
 .button_inline_primary:before {
@@ -151,11 +154,12 @@
   top: 0;
   width: 100%;
   height: 100%;
+  background-color: rgba(0, 97, 255, 0.01);
   -webkit-transition: all ease-in-out 0.2s;
   transition: all ease-in-out 0.2s;
   opacity: 0;
-  -webkit-transform: scale(0.5);
-          transform: scale(0.5);
+  -webkit-transform: scale(0.3);
+          transform: scale(0.3);
 }
 
 .button_inline_primary span,
@@ -163,16 +167,15 @@
   position: relative;
 }
 
-.button_inline_primary:hover {
-  border: 1px solid #0f6aff;
-  color: #0061FF;
-  background-color: #e5ebff;
-}
-
 .button_inline_primary:hover:before {
   -webkit-transform: scale(1);
           transform: scale(1);
   opacity: 1;
+}
+
+.button_inline_primary span,
+.button_inline_primary i {
+  position: relative;
 }
 
 .button_inline_primary.rounded {
@@ -206,10 +209,36 @@
   position: relative;
 }
 
+.input_wrapper .vs__dropdown-toggle {
+  border: none;
+}
+
+.input_wrapper .vs__dropdown-toggle .vs__selected {
+  position: absolute;
+  left: 10px;
+  top: 7px;
+  font-size: 13px !important;
+}
+
+.input_wrapper .vs__dropdown-toggle .vs__actions {
+  display: none;
+}
+
+.input_wrapper .vs__dropdown-toggle .vs__selected-options {
+  padding: 0 !important;
+}
+
+.input_wrapper .vs__dropdown-toggle .vs__search,
+.input_wrapper .vs__dropdown-toggle .vs__search:focus {
+  margin: 0 !important;
+  padding: 0 10px !important;
+  font-size: 13px !important;
+}
+
 .input_wrapper label {
   font-family: "Roboto", sans-serif;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 11px;
   margin-bottom: 4px;
   display: block;
 }
@@ -223,8 +252,28 @@
   box-sizing: border-box;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: white;
   padding: 0 10px;
   width: 100%;
+}
+
+.input_wrapper input:disabled,
+.input_wrapper select:disabled,
+.input_wrapper textarea:disabled {
+  background-color: rgba(246, 249, 253, 0.5);
+}
+
+.input_wrapper input:disabled:hover,
+.input_wrapper input:disabled:focus,
+.input_wrapper input:disabled:active,
+.input_wrapper select:disabled:hover,
+.input_wrapper select:disabled:focus,
+.input_wrapper select:disabled:active,
+.input_wrapper textarea:disabled:hover,
+.input_wrapper textarea:disabled:focus,
+.input_wrapper textarea:disabled:active {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: none;
 }
 
 .input_wrapper input:hover,
@@ -309,7 +358,6 @@
 .input_wrapper.require .message {
   color: #FF003D;
   font-size: 11px;
-  margin-top: 5px;
   display: block;
   font-family: "Roboto", sans-serif;
   display: -webkit-box;
@@ -403,7 +451,7 @@
 }
 
 .input_checkbox_wrapper label.box_content span {
-  font-size: 14px;
+  font-size: 13px;
   margin-left: 7px;
 }
 
