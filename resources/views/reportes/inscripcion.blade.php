@@ -185,13 +185,13 @@
                              @if ($familiar->conyugue=='SI')
                                 <td> <span class="title">OCUPACIÓN</span> <span > {{$familiar->ocupacion}} </span> </td>
                              @else
-                             <td> <span > No cuenta con conyuge ó conviviente </span> </td> 
+                             <td> <span > No cuenta con CONYUGE ó conviviente </span> </td> 
                              @endif
                                 
                             </tr>
     
                             <tr>
-                                <td colspan="3" >Detalle de familiares(cónyuge, conviviente e hijos) </td>
+                                <td colspan="3" >Detalle de familiares(CONYUGE, conviviente e hijos) </td>
                             </tr>
                             
                             <tr colspan="3" >

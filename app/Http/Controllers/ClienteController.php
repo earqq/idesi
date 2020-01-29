@@ -268,7 +268,7 @@ class ClienteController extends Controller
                     $detalle->familiars_id= $familiar->id;
                     $detalle->save();
 
-                    if($rp['parentesco']=='CONYUGE')
+                    if($rp['parentesco']=='conyuge')
                     {
                         $conyuge= new Conyugue;
                         $conyuge->nombres= $rp['nombres'];

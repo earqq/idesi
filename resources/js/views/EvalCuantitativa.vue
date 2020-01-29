@@ -9,7 +9,7 @@
           </div>
           <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
             <span>2</span>
-            <p>DATOS CONYUGE</p>
+            <p>DATOS CÓNYUGE</p>
           </div>
           <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
             <span>3</span>
@@ -102,7 +102,7 @@
                   <div class="form_content">
                     <div class="group_form">
                       <div class="input_wrapper">
-                        <label>Tipo de Giuro de Negocio</label>
+                        <label>Tipo de Giro de Negocio</label>
                         <v-select
                           label="giro_negocio"
                           :options="giros"
@@ -198,53 +198,53 @@
 
                   <h3 class="title">Ingreso del Negocio</h3>
                   <div class="form_list no_border">
-                    <div class="sub_step_wrapper" v-for="(ingreso,index) in evaluacion.conyuge.ingresos_negocio" v-bind:key="index">
+                    <div class="sub_step_wrapper" v-for="(ingreso,index) in evaluacion.CONYUGE.ingresos_negocio" v-bind:key="index">
                       <div class="form_content">
                         <div class="group_form">
 
                           <div class="input_wrapper">
                             <label>Concepto</label>
-                            <input type="text" v-model="evaluacion.conyuge.ingresos_negocio[index].concepto" />
+                            <input type="text" v-model="evaluacion.CONYUGE.ingresos_negocio[index].concepto" />
                           </div>
 
                           <div class="input_wrapper">
                             <label>Lunes</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].lunes" v-bind:precision="2"></vue-numeric>
+                            <vue-numeric   :change="CONYUGEIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.CONYUGE.ingresos_negocio[index].lunes" v-bind:precision="2"></vue-numeric>
                           </div>
 
                           <div class="input_wrapper">
                             <label>Martes</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].martes" v-bind:precision="2"></vue-numeric>
+                            <vue-numeric   :change="CONYUGEIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.CONYUGE.ingresos_negocio[index].martes" v-bind:precision="2"></vue-numeric>
                           </div>
 
                           <div class="input_wrapper">
                             <label>Miercoles</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].miercoles" v-bind:precision="2"></vue-numeric>
+                            <vue-numeric   :change="CONYUGEIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.CONYUGE.ingresos_negocio[index].miercoles" v-bind:precision="2"></vue-numeric>
                           </div>
 
                           <div class="input_wrapper">
                             <label>Jueves</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].jueves" v-bind:precision="2"></vue-numeric>
+                            <vue-numeric   :change="CONYUGEIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.CONYUGE.ingresos_negocio[index].jueves" v-bind:precision="2"></vue-numeric>
                           </div>
 
                           <div class="input_wrapper">
                             <label>Viernes</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].viernes" v-bind:precision="2"></vue-numeric>
+                            <vue-numeric   :change="CONYUGEIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.CONYUGE.ingresos_negocio[index].viernes" v-bind:precision="2"></vue-numeric>
                           </div>
 
                           <div class="input_wrapper">
                             <label>Sabado</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].sabado" v-bind:precision="2"></vue-numeric>
+                            <vue-numeric   :change="CONYUGEIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.CONYUGE.ingresos_negocio[index].sabado" v-bind:precision="2"></vue-numeric>
                           </div>
 
                           <div class="input_wrapper">
                             <label>Domingo</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].domingo" v-bind:precision="2"></vue-numeric>
+                            <vue-numeric   :change="CONYUGEIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.CONYUGE.ingresos_negocio[index].domingo" v-bind:precision="2"></vue-numeric>
                           </div>
 
                           <div class="input_wrapper">
                             <label>Subtotal</label>
-                            <vue-numeric   disabled='disabled'  :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].subtotal" v-bind:precision="2"></vue-numeric>
+                            <vue-numeric   disabled='disabled'  :change="CONYUGEIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.CONYUGE.ingresos_negocio[index].subtotal" v-bind:precision="2"></vue-numeric>
                           </div>
 
                         </div>
@@ -257,16 +257,16 @@
                 <div class="form_step_wrapper in_bottom">
                   <h3 class="title">Ingresos por 2da, 4ta y/o 5ta Categoria</h3>
                   <div class="form_list no_border">
-                    <div class="sub_step_wrapper" v-for="(ingresos,index) in evaluacion.conyuge.ingresos_por_categoria" v-bind:key="index">
+                    <div class="sub_step_wrapper" v-for="(ingresos,index) in evaluacion.CONYUGE.ingresos_por_categoria" v-bind:key="index">
                       <div class="form_content">
                         <div class="group_form">
                           <div class="input_wrapper">
                             <label>CONCEPTO</label>
-                            <input type="text" v-model="evaluacion.conyuge.ingresos_por_categoria[index].concepto" />
+                            <input type="text" v-model="evaluacion.CONYUGE.ingresos_por_categoria[index].concepto" />
                           </div>
                           <div class="input_wrapper">
                             <label>MONTO MENSUAL</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_por_categoria[index].mes"  v-bind:precision="2"></vue-numeric>
+                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.CONYUGE.ingresos_por_categoria[index].mes"  v-bind:precision="2"></vue-numeric>
                           </div>
                         </div>
                       </div>
@@ -279,24 +279,24 @@
                   <div class="form_content">
                     <div class="group_form">
                       <div class="input_wrapper">
-                        <label>Tipo de Giuro de Negocio</label>
+                        <label>Tipo de Giro de Negocio</label>
                         <v-select
                           label="giro_negocio"
                           :options="giros"
                           :reduce="giros => giros.giro_negocio"
                           placeholder="Buscar Giro..."
-                          v-model="evaluacion.conyuge.giro_negocio"
+                          v-model="evaluacion.CONYUGE.giro_negocio"
                         ></v-select>
                       </div>
 
                       <div class="input_wrapper">
                         <label>Margen de Costo</label>
-                        <input type="text"  v-model="evaluacion.conyuge.margen_costo_conyuge" />
+                        <input type="text"  v-model="evaluacion.CONYUGE.margen_costo_CONYUGE" />
                       </div>
 
                       <div class="input_wrapper">
                         <label>Valor Inventario</label>
-                        <input type="text" v-model="evaluacion.conyuge.valor_inventario_conyuge" />
+                        <input type="text" v-model="evaluacion.CONYUGE.valor_inventario_CONYUGE" />
                       </div>
 
                     </div>
@@ -305,9 +305,9 @@
 
 
                 <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Gasto Finaciero Conyuge</h3>
+                  <h3 class="title">Gasto Finaciero CONYUGE</h3>
                   <div class="form_list no_border">
-                    <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero" v-bind:key="index">
+                    <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.CONYUGE.gasto_financiero" v-bind:key="index">
                       <h3 class="title">
                         Entidad {{index + 1}}
                         <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidad(index)">
@@ -318,17 +318,17 @@
                         <div class="group_form">
                           <div class="input_wrapper">
                             <label>Entidad</label>
-                            <input type="text" v-model="evaluacion.conyuge.gasto_financiero[index].entidad" />
+                            <input type="text" v-model="evaluacion.CONYUGE.gasto_financiero[index].entidad" />
                           </div>
 
                           <div class="input_wrapper">
                             <label>Saldo Capital</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_financiero[index].saldo_capital" v-bind:precision="2"></vue-numeric>
+                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.CONYUGE.gasto_financiero[index].saldo_capital" v-bind:precision="2"></vue-numeric>
                           </div>
 
                           <div class="input_wrapper">
                             <label>Cuota</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_financiero[index].cuota" v-bind:precision="2"></vue-numeric>
+                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.CONYUGE.gasto_financiero[index].cuota" v-bind:precision="2"></vue-numeric>
                           </div>
                         </div>
                       </div>
@@ -347,23 +347,23 @@
                     <div class="group_form">
                       <div class="input_wrapper">
                         <label v-text="evaluacion.titular.gasto_negocio[0].entidad">Alquiler</label>
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[0].pago" v-bind:precision="2"></vue-numeric>
+                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.CONYUGE.gasto_negocio[0].pago" v-bind:precision="2"></vue-numeric>
                       </div>
                       <div class="input_wrapper">
                         <label v-text="evaluacion.titular.gasto_negocio[1].entidad">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[1].pago" v-bind:precision="2"></vue-numeric>
+                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.CONYUGE.gasto_negocio[1].pago" v-bind:precision="2"></vue-numeric>
                       </div>
                       <div class="input_wrapper">
                         <label v-text="evaluacion.titular.gasto_negocio[2].entidad">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[2].pago" v-bind:precision="2"></vue-numeric>
+                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.CONYUGE.gasto_negocio[2].pago" v-bind:precision="2"></vue-numeric>
                       </div>
                       <div class="input_wrapper">
                         <label v-text="evaluacion.titular.gasto_negocio[3].entidad">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[3].pago" v-bind:precision="2"></vue-numeric>
+                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.CONYUGE.gasto_negocio[3].pago" v-bind:precision="2"></vue-numeric>
                       </div>
                       <div class="input_wrapper">
                         <label v-text="evaluacion.titular.gasto_negocio[4].entidad">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[4].pago" v-bind:precision="2"></vue-numeric>
+                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.CONYUGE.gasto_negocio[4].pago" v-bind:precision="2"></vue-numeric>
                       </div>
                     </div>
                   </div>
@@ -487,11 +487,11 @@
                 </div>
 
                 <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Gasto Finaciero del Conyuge ò Conviviente (Personales) </h3>
+                  <h3 class="title">Gasto Finaciero del CONYUGE ò Conviviente (Personales) </h3>
                   <div class="form_list no_border">
-                    <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero_personal" v-bind:key="index">
+                    <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.CONYUGE.gasto_financiero_personal" v-bind:key="index">
                       <h3 class="title">Entidad {{index + 1}}
-                          <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidadConyuge(index)">
+                          <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidadCONYUGE(index)">
                           <i class="material-icons-outlined"> delete </i>
                         </button>
                       </h3>
@@ -499,21 +499,21 @@
                         <div class="group_form">
                           <div class="input_wrapper">
                             <label>Entidad</label>
-                            <input type="text" v-model="evaluacion.conyuge.gasto_financiero_personal[index].entidad" />
+                            <input type="text" v-model="evaluacion.CONYUGE.gasto_financiero_personal[index].entidad" />
                           </div>
                           <div class="input_wrapper">
                             <label>Saldo Capital</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_financiero_personal[index].saldo_capital"  v-bind:precision="2"></vue-numeric>
+                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.CONYUGE.gasto_financiero_personal[index].saldo_capital"  v-bind:precision="2"></vue-numeric>
                           </div>
                           <div class="input_wrapper">
                             <label>Cuota</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_financiero_personal[index].cuota"  v-bind:precision="2"></vue-numeric>
+                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.CONYUGE.gasto_financiero_personal[index].cuota"  v-bind:precision="2"></vue-numeric>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <button type="button"  class="add_section" @click="clickAddEntidadConyuge">
+                  <button type="button"  class="add_section" @click="clickAddEntidadCONYUGE">
                     <span> AGREGAR ENTIDAD </span>
                     <i class="fas fa-plus"></i> 
                   </button>
@@ -586,7 +586,7 @@ export default {
             pago: 0
           },
           {
-            concepto: "TELEFONO FIJO",
+            concepto: "TELÉFONO FIJO",
             pago: 0
           },
           {
@@ -594,11 +594,11 @@ export default {
             pago: 0
           },
           {
-            concepto: "ALIMENTACION Y TRANSPORTE",
+            concepto: "ALIMENTACIÓN Y TRANSPORTE",
             pago: 0
           },
           {
-            concepto: "EDUCACION",
+            concepto: "EDUCACIÓN",
             pago: 0
           }
         ],
@@ -687,7 +687,7 @@ export default {
           margen_costo: 0,
           valor_inventario: 0
         },
-        conyuge: {
+        CONYUGE: {
           ingresos_negocio: [
             {
               concepto: "",
@@ -842,14 +842,14 @@ export default {
         this.tab = index - 1;
     },
     clickAddEntidad() { 
-      this.evaluacion.conyuge.gasto_financiero.push({
+      this.evaluacion.CONYUGE.gasto_financiero.push({
               entidad: "",
               saldo_capital: 0,
               cuota: 0
       });
     },
     clickRemoveEntidad(index) {
-      this.evaluacion.conyuge.gasto_financiero.splice(index, 1);
+      this.evaluacion.CONYUGE.gasto_financiero.splice(index, 1);
     },
 
     clickAddEntidadTitular() { 
@@ -863,15 +863,15 @@ export default {
       this.evaluacion.titular.gasto_financiero_personal.splice(index, 1);
     },
 
-    clickAddEntidadConyuge() { 
-      this.evaluacion.conyuge.gasto_financiero_personal.push({
+    clickAddEntidadCONYUGE() { 
+      this.evaluacion.CONYUGE.gasto_financiero_personal.push({
               entidad: "",
               saldo_capital: 0,
               cuota: 0
       });
     },
-    clickRemoveEntidadConyuge(index) {
-      this.evaluacion.conyuge.gasto_financiero_personal.splice(index, 1);
+    clickRemoveEntidadCONYUGE(index) {
+      this.evaluacion.CONYUGE.gasto_financiero_personal.splice(index, 1);
     },
 
 
@@ -911,18 +911,18 @@ export default {
     retornar() {
       this.backMixin_handleBack();
     },
-    conyugeIngresosSubtotal(index) {
-      this.evaluacion.conyuge.ingresos_negocio[index].subtotal =
-        parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].lunes, 2) +
-        parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].martes, 2) +
+    CONYUGEIngresosSubtotal(index) {
+      this.evaluacion.CONYUGE.ingresos_negocio[index].subtotal =
+        parseFloat(this.evaluacion.CONYUGE.ingresos_negocio[index].lunes, 2) +
+        parseFloat(this.evaluacion.CONYUGE.ingresos_negocio[index].martes, 2) +
         parseFloat(
-          this.evaluacion.conyuge.ingresos_negocio[index].miercoles,
+          this.evaluacion.CONYUGE.ingresos_negocio[index].miercoles,
           2
         ) +
-        parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].jueves, 2) +
-        parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].viernes, 2) +
-        parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].sabado, 2) +
-        parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].domingo, 2);
+        parseFloat(this.evaluacion.CONYUGE.ingresos_negocio[index].jueves, 2) +
+        parseFloat(this.evaluacion.CONYUGE.ingresos_negocio[index].viernes, 2) +
+        parseFloat(this.evaluacion.CONYUGE.ingresos_negocio[index].sabado, 2) +
+        parseFloat(this.evaluacion.CONYUGE.ingresos_negocio[index].domingo, 2);
     }
   }
 };

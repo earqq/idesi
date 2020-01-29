@@ -21,51 +21,51 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $ratios_solvencia
  * @property string $ratios_solvencia_resultado
  * @property float $ingresos_ventas_titular
- * @property float $ingresos_ventas_conyuge
+ * @property float $ingresos_ventas_CONYUGE
  * @property float $ingresos_ventas_total
  * @property float $ingresos_ventas_validacion
  * @property float $costo_venta_titular
- * @property float $costo_venta_conyuge
+ * @property float $costo_venta_CONYUGE
  * @property float $consto_venta_total
  * @property float $costo_venta_validacion
  * @property float $margen_bruto_titular
- * @property float $margen_bruto_conyuge
+ * @property float $margen_bruto_CONYUGE
  * @property float $margen_bruto_total
  * @property float $margen_bruto_validacion
  * @property float $otros_ingresos_titular
- * @property float $otros_ingresos_conyuge
+ * @property float $otros_ingresos_CONYUGE
  * @property float $otros_ingresos_total
  * @property float $otros_ingresos_validacion
  * @property float $servicios_lat_titular
- * @property float $servicios_lat_conyuge
+ * @property float $servicios_lat_CONYUGE
  * @property float $servicios_lat_total
  * @property float $servicios_lat_validacion
  * @property float $alquiler_titular
- * @property float $alquiler_conyuge
+ * @property float $alquiler_CONYUGE
  * @property float $alquiler_total
  * @property float $alquiler_validacion
  * @property float $empleados_titular
- * @property float $empleados_conyuge
+ * @property float $empleados_CONYUGE
  * @property float $empleados_total
  * @property float $empleados_validacion
  * @property float $gasto_financiero_titular
- * @property float $gasto_financiero_conyuge
+ * @property float $gasto_financiero_CONYUGE
  * @property float $gasto_financiero_total
  * @property float $gasto_financiero_validacion
  * @property float $gasto_hogar_titular
- * @property float $gasto_hogar_conyuge
+ * @property float $gasto_hogar_CONYUGE
  * @property float $gasto_hogar_total
  * @property float $gasto_hogar_validacion
  * @property float $utilidad_titular
- * @property float $utilidad_conyuge
+ * @property float $utilidad_CONYUGE
  * @property float $utilidad_total
  * @property float $utilidad_validacion
  * @property float $cuota_institucion_titular
- * @property float $cuota_institucion_conyuge
+ * @property float $cuota_institucion_CONYUGE
  * @property float $cuota_institucion_total
  * @property float $cuota_institucion_validacion
  * @property float $utilidad_desp_cuota_titular
- * @property float $utilidad_desp_cuota_conyuge
+ * @property float $utilidad_desp_cuota_CONYUGE
  * @property float $utilidad_desp_cuota_total
  * @property float $utilidad_desp_cuota_validacion
  * @property float $balance_activo_caja
@@ -89,6 +89,6 @@ class ResultadoCuantitativa extends Model
     /**
      * @var array
      */
-    protected $fillable = ['prestamo_id', 'participacion_cuota_titular', 'participacion_cuota_total', 'participacion_cuota_validacion', 'resultado_eva', 'resultado_sist', 'ratios_endeudamiento', 'ratios_endeudamiento_resultado', 'ratios_margen_neto', 'ratios_margen_neto_resultado', 'ratios_liquidez', 'ratios_liquidez_resultado', 'ratios_solvencia', 'ratios_solvencia_resultado', 'ingresos_ventas_titular', 'ingresos_ventas_conyuge', 'ingresos_ventas_total', 'ingresos_ventas_validacion', 'costo_venta_titular', 'costo_venta_conyuge', 'consto_venta_total', 'costo_venta_validacion', 'margen_bruto_titular', 'margen_bruto_conyuge', 'margen_bruto_total', 'margen_bruto_validacion', 'otros_ingresos_titular', 'otros_ingresos_conyuge', 'otros_ingresos_total', 'otros_ingresos_validacion', 'servicios_lat_titular', 'servicios_lat_conyuge', 'servicios_lat_total', 'servicios_lat_validacion', 'alquiler_titular', 'alquiler_conyuge', 'alquiler_total', 'alquiler_validacion', 'empleados_titular', 'empleados_conyuge', 'empleados_total', 'empleados_validacion', 'gasto_financiero_titular', 'gasto_financiero_conyuge', 'gasto_financiero_total', 'gasto_financiero_validacion', 'gasto_hogar_titular', 'gasto_hogar_conyuge', 'gasto_hogar_total', 'gasto_hogar_validacion', 'utilidad_titular', 'utilidad_conyuge', 'utilidad_total', 'utilidad_validacion', 'cuota_institucion_titular', 'cuota_institucion_conyuge', 'cuota_institucion_total', 'cuota_institucion_validacion', 'utilidad_desp_cuota_titular', 'utilidad_desp_cuota_conyuge', 'utilidad_desp_cuota_total', 'utilidad_desp_cuota_validacion', 'balance_activo_caja', 'balance_activo_inventario', 'balance_activo_f', 'balance_activo_total', 'balance_pasivo_deudas', 'balance_patrimonio_capital', 'balance_patrimonio_utilidad', 'balance_patrimonio_total'];
+    protected $fillable = ['prestamo_id', 'participacion_cuota_titular', 'participacion_cuota_total', 'participacion_cuota_validacion', 'resultado_eva', 'resultado_sist', 'ratios_endeudamiento', 'ratios_endeudamiento_resultado', 'ratios_margen_neto', 'ratios_margen_neto_resultado', 'ratios_liquidez', 'ratios_liquidez_resultado', 'ratios_solvencia', 'ratios_solvencia_resultado', 'ingresos_ventas_titular', 'ingresos_ventas_CONYUGE', 'ingresos_ventas_total', 'ingresos_ventas_validacion', 'costo_venta_titular', 'costo_venta_CONYUGE', 'consto_venta_total', 'costo_venta_validacion', 'margen_bruto_titular', 'margen_bruto_CONYUGE', 'margen_bruto_total', 'margen_bruto_validacion', 'otros_ingresos_titular', 'otros_ingresos_CONYUGE', 'otros_ingresos_total', 'otros_ingresos_validacion', 'servicios_lat_titular', 'servicios_lat_CONYUGE', 'servicios_lat_total', 'servicios_lat_validacion', 'alquiler_titular', 'alquiler_CONYUGE', 'alquiler_total', 'alquiler_validacion', 'empleados_titular', 'empleados_CONYUGE', 'empleados_total', 'empleados_validacion', 'gasto_financiero_titular', 'gasto_financiero_CONYUGE', 'gasto_financiero_total', 'gasto_financiero_validacion', 'gasto_hogar_titular', 'gasto_hogar_CONYUGE', 'gasto_hogar_total', 'gasto_hogar_validacion', 'utilidad_titular', 'utilidad_CONYUGE', 'utilidad_total', 'utilidad_validacion', 'cuota_institucion_titular', 'cuota_institucion_CONYUGE', 'cuota_institucion_total', 'cuota_institucion_validacion', 'utilidad_desp_cuota_titular', 'utilidad_desp_cuota_CONYUGE', 'utilidad_desp_cuota_total', 'utilidad_desp_cuota_validacion', 'balance_activo_caja', 'balance_activo_inventario', 'balance_activo_f', 'balance_activo_total', 'balance_pasivo_deudas', 'balance_patrimonio_capital', 'balance_patrimonio_utilidad', 'balance_patrimonio_total'];
     public $timestamps=false;
 }

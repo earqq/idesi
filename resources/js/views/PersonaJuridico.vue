@@ -47,37 +47,37 @@
                   
                     <div class="input_wrapper" :class="{require: !validateRuc}">
                       <label>Ruc</label>
-                      <input type="text"  v-model="form.cliente.documento"  v-mask="'###########'"  />
+                      <input type="text"  v-model="form.cliente.documento" @keyup='getCompanyData(form.cliente.documento)' v-mask="'###########'"  />
                       <div class="message">Ruc no valido</div>
                     </div>
 
                     <div class="input_wrapper" :class="{require: !validateRazon}">
                       <label >Razon Social</label>
-                      <input type="text" :maxlength="45" v-model="form.juridico.razon_social" placeholder />
+                      <input type="text" :maxlength="200" v-model="form.juridico.razon_social" placeholder />
                       <div class="message">razón social muy corto</div>
                     </div>
 
                     <div class="input_wrapper" :class="{require: !validateComercial}">
                       <label>Nombre Comercial</label>
-                      <input type="text" :maxlength="45" v-model="form.juridico.nombre_comercial" placeholder />
+                      <input type="text" :maxlength="200" v-model="form.juridico.nombre_comercial" placeholder />
                       <div class="message">nombre comercial muy corto</div>
                     </div>
 
                     <div class="input_wrapper" :class="{require: !validateActividad}">
                       <label>Actividad Principal</label>
-                      <input type="text" :maxlength="30" v-model="form.juridico.actividad_principal" placeholder />
+                      <input type="text" maxlength='200' v-model="form.juridico.actividad_principal" placeholder />
                       <div class="message">actividad muy corto</div>
                     </div>
 
                     <div class="input_wrapper" :class="{require: !validatePartida}">
                       <label>Nro. de Partida Registral</label>
-                      <input type="number" v-model="form.juridico.partida_registral" placeholder />
+                      <input type="number" v-mask="'########'" v-model="form.juridico.partida_registral"  />
                       <div class="message">partida registral muy corto</div>
                     </div>
 
                     <div class="input_wrapper" :class="{require: !validateOficina}">
                       <label>Oficina Principal</label>
-                      <input type="text" :maxlength="11" v-model="form.juridico.oficina_principal" placeholder />
+                      <input type="text" :maxlength="100" v-model="form.juridico.oficina_principal" placeholder />
                       <div class="message">nombre de oficina muy corto</div>
                     </div>
 
@@ -94,7 +94,7 @@
 
                     <div class="input_wrapper" :class="{require: !validateDireccion}">
                         <label>Dirección</label>
-                        <input type="text" :maxlength="45"  v-model="form.juridico.direccion" />
+                        <input type="text" :maxlength="200"  v-model="form.juridico.direccion" />
                         <div class="message">dirección muy corto</div>
                     </div>
 
@@ -206,18 +206,17 @@
                     <div class="form_content">
                       <div class="group_form">
                         <div class="input_wrapper">
-                          <label>Cargo</label>
-                          <input type="text" :maxlength="15" v-model="r.cargo"  />
-                        </div>
-
-                        <div class="input_wrapper">
                           <label>Doc. Identidad</label>
-                          <input type="text"   v-model="r.documento" v-mask="'########'" />
+                          <input type="text" @keyup='getPersonData(r)'  v-model="r.documento" v-mask="'########'" />
                         </div>
 
                         <div class="input_wrapper">
                           <label>Apellidos y Nombres</label>
                           <input type="text" :maxlength="60" v-model="r.nombres"  />
+                        </div>
+                        <div class="input_wrapper">
+                          <label>Cargo</label>
+                          <input type="text" :maxlength="15" v-model="r.cargo"  />
                         </div>
                       </div>
                     </div>
@@ -256,12 +255,12 @@
                     <div class="form_content">
                       <div class="group_form">
                         <div class="input_wrapper">
-                          <label>Apellidos y Nombres</label>
-                          <input type="text" :maxlength="60" v-model="d.nombres"/>
+                          <label>Doc. Identidad</label>
+                          <input type="number" @keyup='getPersonData(d)'  :maxlength="8" v-model="d.documento"/>
                         </div>
                         <div class="input_wrapper">
-                          <label>Doc. Identidad</label>
-                          <input type="number" :maxlength="8" v-model="d.documento"/>
+                          <label>Apellidos y Nombres</label>
+                          <input type="text" :maxlength="60" v-model="d.nombres"/>
                         </div>
                         <div class="input_wrapper">
                           <label>Cargo</label>
@@ -303,12 +302,12 @@
                     <div class="form_content">
                       <div class="group_form">
                         <div class="input_wrapper">
-                          <label> Apellidos y Nombres </label>
-                          <input type="text" :maxlength="60" v-model="a.nombres"/>
+                          <label> Doc. Identidad </label>
+                          <input type="number" @keyup='getPersonData(a)'  :maxlength="8" v-model="a.documento"/>
                         </div>
                         <div class="input_wrapper">
-                          <label> Doc. Identidad </label>
-                          <input type="number" :maxlength="8" v-model="a.documento"/>
+                          <label> Apellidos y Nombres </label>
+                          <input type="text" :maxlength="60" v-model="a.nombres"/>
                         </div>
                       </div>
                     </div>
@@ -493,7 +492,42 @@ mixins: [serviceNumber],
     this.clickAddAccionista()
   },
   methods: {
-
+    getCompanyData(ruc){
+      if(ruc.length==11){
+          let me = this;
+          axios
+            .post("/consulta/doc", {
+              documento: this.form.cliente.documento
+            })
+            .then(function(response) {          
+              if(response.data){
+                  me.form.juridico.razon_social=response.data.RAZON
+                  me.form.juridico.nombre_comercial=response.data.NOMBRECOMERCIAL
+                  me.form.juridico.direccion=response.data.DIRECCION
+              }
+            })
+            .catch(function(error) {
+              console.log(error);
+        });
+      }
+    },
+    getPersonData(person){
+      if(person.documento.length==8){
+          let me = this;
+          axios
+            .post("/consulta/doc", {
+              documento: person.documento
+            })
+            .then(function(response) {          
+              if(response.data){
+                person.nombres=response.data.nombres
+              }
+            })
+            .catch(function(error) {
+              console.log(error);
+        });
+      }
+    },
     next(index) {
       this.tab = index + 1;
     },
@@ -588,7 +622,7 @@ mixins: [serviceNumber],
       let me = this;
       // me.loader = "true";
       axios
-        .post("/consulta/dni", {
+        .post("/consulta/doc", {
           documento: this.form.documento
         }) 
         .then(function(response) { 
