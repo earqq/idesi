@@ -64,55 +64,55 @@ class EvaluacionesController extends Controller
         $participacion_cuota_total=0;
         $participacion_cuota_validacion=0;
         $utilidad_titular=0;
-        $utilidad_CONYUGE=0;
+        $utilidad_conyuge=0;
         $utilidad_total=0;
         $utilidad_validacion=0;
         $cuota_institucion_titular=0;
-        $cuota_institucion_CONYUGE=0;
+        $cuota_institucion_conyuge=0;
         $cuota_institucion_total=0;
         $cuota_institucion_validacion=0;
         $utilidad_desp_cuota_titular=0;
-        $utilidad_desp_cuota_CONYUGE=0;
+        $utilidad_desp_cuota_conyuge=0;
         $utilidad_desp_cuota_total=0;
         $utilidad_desp_cuota_validacion=0;
         $gasto_hogar_titular=0;
-        $gasto_hogar_CONYUGE=0;
+        $gasto_hogar_conyuge=0;
         $gasto_hogar_total=0;
         $gasto_financiero_validacion=0;
         $gasto_financiero_titular=0;
         $gasto_financiero_personal_titular=0;
-        $gasto_financiero_CONYUGE=0;
-        $gasto_financiero_personal_CONYUGE=0;
+        $gasto_financiero_conyuge=0;
+        $gasto_financiero_personal_conyuge=0;
         $gasto_financiero_total=0;
         $gasto_financiero_personal_total=0;
         $gasto_financiero_validacion=0;
         $gasto_financiero_personal_validacion=0;
         $empleados_titular=0;
-        $empleados_CONYUGE=0;
+        $empleados_conyuge=0;
         $empleados_total=0;
         $empleados_validacion=0;
         $alquiler_titular=0;
-        $alquiler_CONYUGE=0;
+        $alquiler_conyuge=0;
         $alquiler_total=0;
         $alquiler_validacion=0;
         $servicios_lat_titular=0;
-        $servicios_lat_CONYUGE=0;
+        $servicios_lat_conyuge=0;
         $servicios_lat_total=0;
         $servicios_lat_validacion=0;
         $otros_ingresos_titular=0;
-        $otros_ingresos_CONYUGE=0;
+        $otros_ingresos_conyuge=0;
         $otros_ingresos_total=0;
         $otros_ingresos_validacion=0;
         $margen_bruto_titular=0;
-        $margen_bruto_CONYUGE=0;
+        $margen_bruto_conyuge=0;
         $margen_bruto_total=0;
         $margen_bruto_validacion=0;
         $costo_venta_titular=0;
-        $costo_venta_CONYUGE=0;
+        $costo_venta_conyuge=0;
         $costo_venta_total=0;
         $costo_venta_validacion=0;
         $ingresos_ventas_titular=0;
-        $ingresos_ventas_CONYUGE=0;
+        $ingresos_ventas_conyuge=0;
         $ingresos_ventas_total=0;
         $ingresos_ventas_validacion=0;
         //INGRESOS / VENTAS
@@ -122,15 +122,15 @@ class EvaluacionesController extends Controller
         }
         $ingresos_ventas_titular=floatval($ingresos_ventas_titular)*4;
         \Log::alert('Ingresos ventas titular: '.$ingresos_ventas_titular);
-        //ingresos del CONYUGE  - ingresos negocio
-        foreach($request->CONYUGE["ingresos_negocio"] as $ingreso_negocio){
+        //ingresos del conyuge  - ingresos negocio
+        foreach($request->conyuge["ingresos_negocio"] as $ingreso_negocio){
             if(isset($ingreso_negocio["subtotal"]))
-            $ingresos_ventas_CONYUGE+=$ingreso_negocio['subtotal'];
+            $ingresos_ventas_conyuge+=$ingreso_negocio['subtotal'];
         }
-        $ingresos_ventas_CONYUGE=floatval($ingresos_ventas_CONYUGE)*4;
-        \Log::alert('Ingresos ventas CONYUGE: '.$ingresos_ventas_CONYUGE);
+        $ingresos_ventas_conyuge=floatval($ingresos_ventas_conyuge)*4;
+        \Log::alert('Ingresos ventas conyuge: '.$ingresos_ventas_conyuge);
         //total de ingresos
-        $ingresos_ventas_total=$ingresos_ventas_titular+$ingresos_ventas_CONYUGE;
+        $ingresos_ventas_total=$ingresos_ventas_titular+$ingresos_ventas_conyuge;
         \Log::alert('Ingresos ventas total: '.$ingresos_ventas_total);
         //ingresos del titular  - ingresos negocio
         foreach($request->titular["ingresos_negocio"] as $ingreso_negocio){
@@ -143,12 +143,12 @@ class EvaluacionesController extends Controller
         $costo_venta_titular=$ingresos_ventas_titular/100*floatval($request->titular["margen_costo"]);
         $costo_venta_titular=$costo_venta_titular*-1;        
         \Log::alert('Costo de venta titular: '.$costo_venta_titular);
-        //CONYUGE
-        $costo_venta_CONYUGE=$ingresos_ventas_CONYUGE/100*floatval($request->CONYUGE["margen_costo"]);        
-        $costo_venta_CONYUGE=$costo_venta_CONYUGE*-1;        
-        \Log::alert('Costo de venta CONYUGE: '.$costo_venta_CONYUGE);
+        //conyuge
+        $costo_venta_conyuge=$ingresos_ventas_conyuge/100*floatval($request->conyuge["margen_costo"]);        
+        $costo_venta_conyuge=$costo_venta_conyuge*-1;        
+        \Log::alert('Costo de venta conyuge: '.$costo_venta_conyuge);
         //Total
-        $costo_venta_total=$costo_venta_titular+$costo_venta_CONYUGE;
+        $costo_venta_total=$costo_venta_titular+$costo_venta_conyuge;
         \Log::alert('Costo de venta total: '.$costo_venta_total);
         //Validacion
         $negocio=negocio::where('giro_negocio',$request->titular["giro_negocio"])->first();
@@ -158,11 +158,11 @@ class EvaluacionesController extends Controller
         //Margen bruto titular
         $margen_bruto_titular=$ingresos_ventas_titular+$costo_venta_titular;
         \Log::alert('Margen bruto titular: '.$margen_bruto_titular);
-        //Margen bruto CONYUGE
-        $margen_bruto_CONYUGE=$ingresos_ventas_CONYUGE+$costo_venta_CONYUGE;
-        \Log::alert('Margen bruto CONYUGE: '.$margen_bruto_CONYUGE);
+        //Margen bruto conyuge
+        $margen_bruto_conyuge=$ingresos_ventas_conyuge+$costo_venta_conyuge;
+        \Log::alert('Margen bruto conyuge: '.$margen_bruto_conyuge);
         //Margen bruto total
-        $margen_bruto_total=$margen_bruto_titular+$margen_bruto_CONYUGE;
+        $margen_bruto_total=$margen_bruto_titular+$margen_bruto_conyuge;
         \Log::alert('Margen bruto titular: '.$margen_bruto_total);
         //Margen bruto validacion
         $margen_bruto_validacion=$ingresos_ventas_validacion-$costo_venta_validacion;
@@ -172,25 +172,25 @@ class EvaluacionesController extends Controller
         foreach($request->titular["ingresos_por_categoria"] as $ingreso){
             $otros_ingresos_titular+=$ingreso["mes"];
         }
-        \Log::alert("Otros ingresos CONYUGE: ".$otros_ingresos_CONYUGE);
-          //otros ingresos CONYUGE
-        foreach($request->CONYUGE["ingresos_por_categoria"] as $ingreso){
-            $otros_ingresos_CONYUGE+=$ingreso["mes"];
+        \Log::alert("Otros ingresos conyuge: ".$otros_ingresos_conyuge);
+          //otros ingresos conyuge
+        foreach($request->conyuge["ingresos_por_categoria"] as $ingreso){
+            $otros_ingresos_conyuge+=$ingreso["mes"];
         }
-        \Log::alert("Otros ingresos CONYUGE: ".$otros_ingresos_CONYUGE);
+        \Log::alert("Otros ingresos conyuge: ".$otros_ingresos_conyuge);
         //otros ingresos total
-        $otros_ingresos_total=$otros_ingresos_titular-$otros_ingresos_CONYUGE;
+        $otros_ingresos_total=$otros_ingresos_titular-$otros_ingresos_conyuge;
         \Log::alert('Otros ingresos total: '.$otros_ingresos_total);
 
         //SERVICIO LAT
         //titular
         $servicios_lat_titular=(floatval($request->titular["gasto_negocio"][3]["pago"])+floatval($request->titular["gasto_negocio"][4]["pago"]))*-1;
         \Log::alert('servicios latinos titular: '.$servicios_lat_titular);
-        //CONYUGE
-        $servicios_lat_CONYUGE=(floatval($request->CONYUGE["gasto_negocio"][3]["pago"])+floatval($request->CONYUGE["gasto_negocio"][4]["pago"]))*-1;
-        \Log::alert('servicios latinos CONYUGE: '.$servicios_lat_CONYUGE);
+        //conyuge
+        $servicios_lat_conyuge=(floatval($request->conyuge["gasto_negocio"][3]["pago"])+floatval($request->conyuge["gasto_negocio"][4]["pago"]))*-1;
+        \Log::alert('servicios latinos conyuge: '.$servicios_lat_conyuge);
         //total
-        $servicios_lat_total=$servicios_lat_titular+$servicios_lat_CONYUGE;
+        $servicios_lat_total=$servicios_lat_titular+$servicios_lat_conyuge;
         \Log::alert('servicios latinos total: '.$servicios_lat_total);
         //validacion
         $servicios_lat_validacion=floatval($request->titular["gasto_negocio"][3]["pago"])*-1;
@@ -199,11 +199,11 @@ class EvaluacionesController extends Controller
         //titular
         $alquiler_titular=floatval($request->titular["gasto_negocio"][0]["pago"])*-1;
         \Log::alert('alquiler titular: '.$alquiler_titular);
-        //CONYUGE
-        $alquiler_CONYUGE=floatval($request->CONYUGE["gasto_negocio"][0]["pago"])*-1;
-        \Log::alert('alquiler CONYUGE: '.$alquiler_CONYUGE);
+        //conyuge
+        $alquiler_conyuge=floatval($request->conyuge["gasto_negocio"][0]["pago"])*-1;
+        \Log::alert('alquiler conyuge: '.$alquiler_conyuge);
         //total
-        $alquiler_total=$alquiler_titular+$alquiler_CONYUGE;
+        $alquiler_total=$alquiler_titular+$alquiler_conyuge;
         \Log::alert('alquiler total: '.$alquiler_total);
         //validacion
         $alquiler_validacion=floatval($request->titular["gasto_negocio"][0]["pago"])*-1;
@@ -212,11 +212,11 @@ class EvaluacionesController extends Controller
         //titular
         $empleados_titular=floatval($request->titular["gasto_negocio"][1]["pago"])*-1;
         \Log::alert('empleados titular: '.$empleados_titular);
-        //CONYUGE
-        $empleados_CONYUGE=floatval($request->CONYUGE["gasto_negocio"][1]["pago"])*-1;
-        \Log::alert('empleados CONYUGE: '.$empleados_CONYUGE);
+        //conyuge
+        $empleados_conyuge=floatval($request->conyuge["gasto_negocio"][1]["pago"])*-1;
+        \Log::alert('empleados conyuge: '.$empleados_conyuge);
         //total
-        $empleados_total=$empleados_titular+$empleados_CONYUGE;
+        $empleados_total=$empleados_titular+$empleados_conyuge;
         \Log::alert('empleados total: '.$empleados_total);
         //validacion
         $empleados_validacion=floatval($request->titular["gasto_negocio"][1]["pago"])*-1;
@@ -229,14 +229,14 @@ class EvaluacionesController extends Controller
         }
         $gasto_financiero_titular=$gasto_financiero_titular*-1;
         \Log::alert('gasto financiero titular: '.$gasto_financiero_titular);
-        //CONYUGE
-        foreach($request->CONYUGE["gasto_financiero"] as $gastos){
-            $gasto_financiero_CONYUGE+=$gastos["cuota"];
+        //conyuge
+        foreach($request->conyuge["gasto_financiero"] as $gastos){
+            $gasto_financiero_conyuge+=$gastos["cuota"];
         }
-        $gasto_financiero_CONYUGE=$gasto_financiero_CONYUGE*-1;
-        \Log::alert('gasto financiero CONYUGE: '.$gasto_financiero_CONYUGE);
+        $gasto_financiero_conyuge=$gasto_financiero_conyuge*-1;
+        \Log::alert('gasto financiero conyuge: '.$gasto_financiero_conyuge);
         //Total
-        $gasto_financiero_total=$gasto_financiero_titular+$gasto_financiero_CONYUGE;
+        $gasto_financiero_total=$gasto_financiero_titular+$gasto_financiero_conyuge;
         \Log::alert('gasto financiero total: '.$gasto_financiero_total);
         //validacion
         $gasto_financiero_validacion=$gasto_financiero_titular;
@@ -249,11 +249,11 @@ class EvaluacionesController extends Controller
         }
         $gasto_hogar_titular=$gasto_hogar_titular*-1;
         \Log::alert('gasto hogar titular: '.$gasto_hogar_titular);
-        //CONYUGE        
-        \Log::alert('gasto hogar CONYUGE: '.$gasto_hogar_CONYUGE);
-        $gasto_hogar_CONYUGE=$gasto_hogar_CONYUGE*-1;
+        //conyuge        
+        \Log::alert('gasto hogar conyuge: '.$gasto_hogar_conyuge);
+        $gasto_hogar_conyuge=$gasto_hogar_conyuge*-1;
         //Total
-        $gasto_hogar_total=$gasto_hogar_titular+$gasto_hogar_CONYUGE;
+        $gasto_hogar_total=$gasto_hogar_titular+$gasto_hogar_conyuge;
         \Log::alert('gasto hogar total: '.$gasto_hogar_total);
         //validacion
         $gasto_hogar_validacion=$gasto_hogar_titular;
@@ -266,14 +266,14 @@ class EvaluacionesController extends Controller
         }
         $gasto_financiero_personal_titular=$gasto_financiero_personal_titular*-1;
         \Log::alert('gasto financiero personal titular: '.$gasto_hogar_titular);
-        //CONYUGE        
-        foreach($request->CONYUGE["gasto_financiero_personal"] as $gastos){
-            $gasto_financiero_personal_CONYUGE+=$gastos["cuota"];
+        //conyuge        
+        foreach($request->conyuge["gasto_financiero_personal"] as $gastos){
+            $gasto_financiero_personal_conyuge+=$gastos["cuota"];
         }
-        $gasto_financiero_personal_CONYUGE=$gasto_financiero_personal_CONYUGE*-1;
-        \Log::alert('gasto financiero personal CONYUGE: '.$gasto_financiero_personal_CONYUGE);
+        $gasto_financiero_personal_conyuge=$gasto_financiero_personal_conyuge*-1;
+        \Log::alert('gasto financiero personal conyuge: '.$gasto_financiero_personal_conyuge);
         //Total
-        $gasto_financiero_personal_total=$gasto_financiero_personal_titular+$gasto_financiero_personal_CONYUGE;
+        $gasto_financiero_personal_total=$gasto_financiero_personal_titular+$gasto_financiero_personal_conyuge;
         \Log::alert('gasto financiero personal total: '.$gasto_financiero_personal_total);
         //validacion
         $gasto_financiero_personal_validacion=$gasto_financiero_personal_total;
@@ -289,15 +289,15 @@ class EvaluacionesController extends Controller
                         +$gasto_financiero_personal_titular
                         +$gasto_hogar_titular);
         \Log::alert("utilidad titular: ".$utilidad_titular);
-        //CONYUGE
-        $utilidad_CONYUGE=floatval($margen_bruto_CONYUGE+$otros_ingresos_CONYUGE
-                        +$servicios_lat_CONYUGE
-                        +$alquiler_CONYUGE
-                        +$empleados_CONYUGE
-                        +$gasto_financiero_CONYUGE
-                        +$gasto_financiero_personal_CONYUGE
-                        +$gasto_hogar_CONYUGE);
-        \Log::alert("utilidad CONYUGE: ".$utilidad_CONYUGE);
+        //conyuge
+        $utilidad_conyuge=floatval($margen_bruto_conyuge+$otros_ingresos_conyuge
+                        +$servicios_lat_conyuge
+                        +$alquiler_conyuge
+                        +$empleados_conyuge
+                        +$gasto_financiero_conyuge
+                        +$gasto_financiero_personal_conyuge
+                        +$gasto_hogar_conyuge);
+        \Log::alert("utilidad conyuge: ".$utilidad_conyuge);
         //total
         $utilidad_total=floatval($margen_bruto_total+$otros_ingresos_total
                         +$servicios_lat_total
@@ -337,7 +337,7 @@ class EvaluacionesController extends Controller
         $cuota_institucion_titular=$request->propuesta["cuotas"]*$multiplier;
         \Log::alert("cuota institucion titular: ".$cuota_institucion_titular);
 
-        \Log::alert("cuota institucion CONYUGE: ".$cuota_institucion_CONYUGE);
+        \Log::alert("cuota institucion conyuge: ".$cuota_institucion_conyuge);
         $cuota_institucion_total=$cuota_institucion_titular;
         \Log::alert("cuota institucion total: ".$cuota_institucion_total);
         $cuota_institucion_validacion=$cuota_institucion_titular;
@@ -347,9 +347,9 @@ class EvaluacionesController extends Controller
         //titular
         $utilidad_desp_cuota_titular=$utilidad_titular-$cuota_institucion_titular;
         \Log::alert('utilidad despues cuota titular: '.$utilidad_desp_cuota_titular);
-        //CONYUGE
-        $utilidad_desp_cuota_CONYUGE=$utilidad_CONYUGE-$cuota_institucion_CONYUGE;
-        \Log::alert('utilidad despues cuota CONYUGE: '.$utilidad_desp_cuota_CONYUGE);
+        //conyuge
+        $utilidad_desp_cuota_conyuge=$utilidad_conyuge-$cuota_institucion_conyuge;
+        \Log::alert('utilidad despues cuota conyuge: '.$utilidad_desp_cuota_conyuge);
         //total
         $utilidad_desp_cuota_total=$utilidad_total-$cuota_institucion_total;
         \Log::alert('utilidad despues cuota total: '.$utilidad_desp_cuota_total);
@@ -360,8 +360,8 @@ class EvaluacionesController extends Controller
         //PARTICIPACION CUOTA
         $participacion_cuota_titular=round(($cuota_institucion_titular/$utilidad_titular)*100);
         \Log::alert("participacion cuota titular: ".$participacion_cuota_titular);
-        $participacion_cuota_CONYUGE=0;
-        \Log::alert("participacion cuota CONYUGE: ".$participacion_cuota_CONYUGE);
+        $participacion_cuota_conyuge=0;
+        \Log::alert("participacion cuota conyuge: ".$participacion_cuota_conyuge);
         $participacion_cuota_total=round(($cuota_institucion_total/$utilidad_total)*100);
         \Log::alert("participacion cuota total: ".$participacion_cuota_total);
         $participacion_cuota_validacion=round(($cuota_institucion_validacion/$utilidad_validacion)*100);
@@ -407,8 +407,8 @@ class EvaluacionesController extends Controller
         //titular
         foreach($request->titular["gasto_financiero"] as $gasto){
             $balance_pasivo_deudas+=$gasto["saldo_capital"];
-        }//CONYUGE
-        foreach($request->CONYUGE["gasto_financiero"] as $gasto){
+        }//conyuge
+        foreach($request->conyuge["gasto_financiero"] as $gasto){
             $balance_pasivo_deudas+=$gasto["saldo_capital"];
         }
         \Log::alert('PASIVO DEUDA: '.$balance_pasivo_deudas);
@@ -432,7 +432,7 @@ class EvaluacionesController extends Controller
         \Log::alert('ACTIVO F: '.$balance_activo_f);
 
         //ACTIVO INVENTARIO
-        $balance_activo_inventario=$request->titular["valor_inventario"]+$request->CONYUGE["valor_inventario"];
+        $balance_activo_inventario=$request->titular["valor_inventario"]+$request->conyuge["valor_inventario"];
         \Log::alert('ACTIVO INVENTARIO: '.$balance_activo_inventario);
 
         //TOTAL ACTIVO
@@ -556,51 +556,51 @@ class EvaluacionesController extends Controller
         $resultado_cuantitativa->ratios_solvencia=$solvencia;
         $resultado_cuantitativa->ratios_solvencia_resultado=$solvencia_resultado;
         $resultado_cuantitativa->ingresos_ventas_titular=$ingresos_ventas_titular;
-        $resultado_cuantitativa->ingresos_ventas_CONYUGE=$ingresos_ventas_CONYUGE;
+        $resultado_cuantitativa->ingresos_ventas_conyuge=$ingresos_ventas_conyuge;
         $resultado_cuantitativa->ingresos_ventas_total=$ingresos_ventas_total;
         $resultado_cuantitativa->ingresos_ventas_validacion=$ingresos_ventas_validacion;
         $resultado_cuantitativa->costo_venta_titular=$costo_venta_titular;
-        $resultado_cuantitativa->costo_venta_CONYUGE=$costo_venta_CONYUGE;
+        $resultado_cuantitativa->costo_venta_conyuge=$costo_venta_conyuge;
         $resultado_cuantitativa->costo_venta_total=$costo_venta_total;
         $resultado_cuantitativa->costo_venta_validacion=$costo_venta_validacion;
         $resultado_cuantitativa->margen_bruto_titular=$margen_bruto_titular;
-        $resultado_cuantitativa->margen_bruto_CONYUGE=$margen_bruto_CONYUGE;
+        $resultado_cuantitativa->margen_bruto_conyuge=$margen_bruto_conyuge;
         $resultado_cuantitativa->margen_bruto_total=$margen_bruto_total;
         $resultado_cuantitativa->margen_bruto_validacion=$margen_bruto_validacion;
         $resultado_cuantitativa->otros_ingresos_titular=$otros_ingresos_titular;
-        $resultado_cuantitativa->otros_ingresos_CONYUGE=$otros_ingresos_CONYUGE;
+        $resultado_cuantitativa->otros_ingresos_conyuge=$otros_ingresos_conyuge;
         $resultado_cuantitativa->otros_ingresos_total=$otros_ingresos_total;
         $resultado_cuantitativa->otros_ingresos_validacion=$otros_ingresos_validacion;
         $resultado_cuantitativa->servicios_lat_titular=$servicios_lat_titular;
-        $resultado_cuantitativa->servicios_lat_CONYUGE=$servicios_lat_CONYUGE;
+        $resultado_cuantitativa->servicios_lat_conyuge=$servicios_lat_conyuge;
         $resultado_cuantitativa->servicios_lat_total=$servicios_lat_total;
         $resultado_cuantitativa->servicios_lat_validacion=$servicios_lat_validacion;
         $resultado_cuantitativa->alquiler_titular=$alquiler_titular;
-        $resultado_cuantitativa->alquiler_CONYUGE=$alquiler_CONYUGE;
+        $resultado_cuantitativa->alquiler_conyuge=$alquiler_conyuge;
         $resultado_cuantitativa->alquiler_total=$alquiler_total;
         $resultado_cuantitativa->alquiler_validacion=$alquiler_validacion;
         $resultado_cuantitativa->empleados_titular=$empleados_titular;
-        $resultado_cuantitativa->empleados_CONYUGE=$empleados_CONYUGE;
+        $resultado_cuantitativa->empleados_conyuge=$empleados_conyuge;
         $resultado_cuantitativa->empleados_total=$empleados_total;
         $resultado_cuantitativa->empleados_validacion=$empleados_validacion;
         $resultado_cuantitativa->gasto_financiero_titular=$gasto_financiero_titular;
-        $resultado_cuantitativa->gasto_financiero_CONYUGE=$gasto_financiero_CONYUGE;
+        $resultado_cuantitativa->gasto_financiero_conyuge=$gasto_financiero_conyuge;
         $resultado_cuantitativa->gasto_financiero_total=$gasto_financiero_total;
         $resultado_cuantitativa->gasto_financiero_validacion=$gasto_financiero_validacion;
         $resultado_cuantitativa->gasto_hogar_titular=$gasto_hogar_titular;
-        $resultado_cuantitativa->gasto_hogar_CONYUGE=$gasto_hogar_CONYUGE;
+        $resultado_cuantitativa->gasto_hogar_conyuge=$gasto_hogar_conyuge;
         $resultado_cuantitativa->gasto_hogar_total=$gasto_hogar_total;
         $resultado_cuantitativa->gasto_hogar_validacion=$gasto_hogar_validacion;
         $resultado_cuantitativa->utilidad_titular=$utilidad_titular;
-        $resultado_cuantitativa->utilidad_CONYUGE=$utilidad_CONYUGE;
+        $resultado_cuantitativa->utilidad_conyuge=$utilidad_conyuge;
         $resultado_cuantitativa->utilidad_total=$utilidad_total;
         $resultado_cuantitativa->utilidad_validacion=$utilidad_validacion;
         $resultado_cuantitativa->cuota_institucion_titular=$cuota_institucion_titular;
-        $resultado_cuantitativa->cuota_institucion_CONYUGE=$cuota_institucion_CONYUGE;
+        $resultado_cuantitativa->cuota_institucion_conyuge=$cuota_institucion_conyuge;
         $resultado_cuantitativa->cuota_institucion_total=$cuota_institucion_total;
         $resultado_cuantitativa->cuota_institucion_validacion=$cuota_institucion_validacion;
         $resultado_cuantitativa->utilidad_desp_cuota_titular=$utilidad_desp_cuota_titular;
-        $resultado_cuantitativa->utilidad_desp_cuota_CONYUGE=$utilidad_desp_cuota_CONYUGE;
+        $resultado_cuantitativa->utilidad_desp_cuota_conyuge=$utilidad_desp_cuota_conyuge;
         $resultado_cuantitativa->utilidad_desp_cuota_total=$utilidad_desp_cuota_total;
         $resultado_cuantitativa->utilidad_desp_cuota_validacion=$utilidad_desp_cuota_validacion;
         //Balance
@@ -614,7 +614,7 @@ class EvaluacionesController extends Controller
         $resultado_cuantitativa->balance_patrimonio_total=$balance_patrimonio_total;
         //gastos financieros perosnales
         $resultado_cuantitativa->gasto_financiero_personal_titular=$gasto_financiero_personal_titular;
-        $resultado_cuantitativa->gasto_financiero_personal_CONYUGE=$gasto_financiero_personal_CONYUGE;
+        $resultado_cuantitativa->gasto_financiero_personal_conyuge=$gasto_financiero_personal_conyuge;
         $resultado_cuantitativa->gasto_financiero_personal_total=$gasto_financiero_personal_total;
         $resultado_cuantitativa->gasto_financiero_personal_validacion=$gasto_financiero_personal_validacion;
 
@@ -638,7 +638,7 @@ class EvaluacionesController extends Controller
         $cuantitativa->resultado_cuantitativa_id=$resultado_cuantitativa->id;
         $cuantitativa->propuesta=$request->propuesta;
         $cuantitativa->titular=$request->titular;
-        $cuantitativa->CONYUGE=$request->CONYUGE;
+        $cuantitativa->conyuge=$request->conyuge;
         $cuantitativa->probabilidad_infocorp=$request->probabilidad_infocorp;
         $cuantitativa->gastos_hogar=$request->gastos_hogar;
         $cuantitativa->propiedades=$request->propiedades;

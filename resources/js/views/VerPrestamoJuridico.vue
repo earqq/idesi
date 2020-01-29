@@ -664,11 +664,11 @@ export default {
     prev(index) {
       this.tab = index - 1;
     },
-    clickAddCONYUGE(){
-      this.form.conyugue.CONYUGE_tiene=1
+    clickAddconyuge(){
+      this.form.conyugue.conyuge_tiene=1
     },
-    clickRemoveCONYUGE(){
-      this.form.conyugue.CONYUGE_tiene=0
+    clickRemoveconyuge(){
+      this.form.conyugue.conyuge_tiene=0
     },
       meses_numero(){
 

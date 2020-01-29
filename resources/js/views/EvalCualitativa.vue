@@ -65,7 +65,7 @@
                     <div class="group_form all">
                       <div class="input_wrapper">
                         <label>Descripcion destino</label>
-                        <textarea v-model="evaluacion.principal.destino_credito_descripcion"></textarea>
+                        <textarea disabled v-model="evaluacion.principal.destino_credito_descripcion"></textarea>
                       </div>
                     </div>
                   </div>
@@ -753,7 +753,9 @@ export default {
     this.$http.get(`/evaluaciones/giro`).then(response => {
       this.giros = response.data;
     });
-
+    this.$http.get(`/evaluaciones/prestamos/detalle/`+this.$route.params.prestamo).then(response => {
+      this.evaluacion.principal.destino_credito_descripcion=response.data.destino_inicial
+    });
     this.$http.get(`/evaluaciones/entidades`).then(response => {
       this.entidades = response.data;
     });
@@ -775,20 +777,23 @@ export default {
     this.$http 
       .get(`/evaluaciones/numerohijos/` + this.$route.params.prestamo)
       .then(response => {
-        this.evaluacion.familiar.numero_hijos = response.data.numero;
-        this.evaluacion.familiar.miembros_familia = this.evaluacion.familiar.numero_hijos;
-        for (
-          this.i = 0;
-          this.i < this.evaluacion.familiar.numero_hijos;
-          this.i++
-        ) {
-          this.evaluacion.familiar.hijos.push({
-            edad: "",
-            colegio: "PRINCIPITO",
-            grado: "INICIAL",
-            costo: 0
-          });
-          this.seleccionColegiosCosto(this.i)
+        if(response.data){
+
+          this.evaluacion.familiar.numero_hijos = response.data.numero;
+          this.evaluacion.familiar.miembros_familia = this.evaluacion.familiar.numero_hijos;
+          for (
+            this.i = 0;
+            this.i < this.evaluacion.familiar.numero_hijos;
+            this.i++
+          ) {
+            this.evaluacion.familiar.hijos.push({
+              edad: "",
+              colegio: "PRINCIPITO",
+              grado: "INICIAL",
+              costo: 0
+            });
+            this.seleccionColegiosCosto(this.i)
+          }
         }
       });
   }

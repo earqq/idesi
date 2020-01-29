@@ -124,7 +124,7 @@
                         <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">CONYUGE O CONVIVIENTE</th>
                     </tr>
                 </thead>
-                @if ($tiene_CONYUGE=='SI')
+                @if ($tiene_conyuge=='SI')
                 <tbody>
                     <tr>
                         <td colspan="3">

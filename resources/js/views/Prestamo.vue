@@ -184,17 +184,17 @@
             </div>
             <button
               type="button"
-              @click.prevent="clickAddCONYUGE"
+              @click.prevent="clickAddconyuge"
               class="add_section"
-              v-if="form.conyugue.CONYUGE_tiene=='NO'">
-              <span>AGREGAR CONYUGE O CONVIVIENTE</span>
+              v-if="form.conyugue.conyuge_tiene=='NO'">
+              <span>AGREGAR CÓNYUGE O CONVIVIENTE</span>
               <i class="fas fa-plus"></i>
             </button>
             <div class="form_list">
-              <div class="form_step_wrapper" v-if="form.conyugue.CONYUGE_tiene=='SI'">
+              <div class="form_step_wrapper" v-if="form.conyugue.conyuge_tiene=='SI'">
                 <h3 class="title">
-                  CONYUGE o Conviviente
-                  <button  class="delete_section" type="button"  @click.prevent="clickRemoveCONYUGE()">
+                  CÓNYUGE o Conviviente
+                  <button  class="delete_section" type="button"  @click.prevent="clickRemoveconyuge()">
                     <i class="material-icons-outlined"> delete </i>
                   </button>
                 </h3>
@@ -670,7 +670,7 @@ export default {
         this.form.natural.direccion_laboral =
           response.data["natural"]["direccion_laboral"];
 
-        if (response.data["tiene_CONYUGE"] == "SI") { 
+        if (response.data["tiene_conyuge"] == "SI") { 
           this.form.conyugue.documento_conyugue =
             response.data["conyugue"]["documento"];
           this.form.conyugue.nombres_conyugue =
@@ -695,9 +695,9 @@ export default {
             response.data["conyugue"]["codigo_socio"];
           this.form.conyugue.aporte_socio_conyugue =
             response.data["conyugue"]["aporte_socio"];
-          this.form.conyugue.CONYUGE_tiene = "SI";
+          this.form.conyugue.conyuge_tiene = "SI";
         } else {
-          this.form.conyugue.CONYUGE_tiene = "NO"; 
+          this.form.conyugue.conyuge_tiene = "NO"; 
         }
       });
   },
@@ -709,11 +709,11 @@ export default {
     prev(index) {
       this.tab = index - 1;
     },
-    clickAddCONYUGE() {
-      this.form.conyugue.CONYUGE_tiene = "SI";
+    clickAddconyuge() {
+      this.form.conyugue.conyuge_tiene = "SI";
     },
-    clickRemoveCONYUGE() {
-      this.form.conyugue.CONYUGE_tiene = "NO";
+    clickRemoveconyuge() {
+      this.form.conyugue.conyuge_tiene = "NO";
     },
     clickAddAval() { 
       this.form.avals.push({
@@ -793,7 +793,7 @@ export default {
           socio_conyugue: "NO",
           codigo_socio_conyugue: "",
           aporte_socio_conyugue: "",
-          CONYUGE_tiene: 0
+          conyuge_tiene: 0
         },
         monto_inicial: "",
         plazo_inicial: "5",

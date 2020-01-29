@@ -541,7 +541,7 @@
                         <div class="input_wrapper">
                           <label> Parentesco </label>
                           <select v-model="row.parentesco" class="form-control" disabled>
-                            <option value="CONYUGE">CONYUGE</option>
+                            <option value="CONYUGE">CÓNYUGE</option>
                             <option value="CONVIVIENTE">CONVIVIENTE</option>
                             <option value="HIJOS">HIJOS</option>
                           </select>
@@ -934,11 +934,11 @@ export default {
     hijosAsignacion(new_value,old_value){
        old_value = old_value || 0
        new_value = new_value || 0 
-      var CONYUGE=null
+      var conyuge=null
 
       for (var i = 0; i < this.form.detalles.length; i++) {  
             if(this.form.detalles[i].parentesco!='HIJOS'){ 
-              CONYUGE= this.form.detalles[i] 
+              conyuge= this.form.detalles[i] 
             } 
       }
 
@@ -954,7 +954,7 @@ export default {
               })
 
         } 
-        if (CONYUGE) this.form.detalles.push(CONYUGE)
+        if (conyuge) this.form.detalles.push(conyuge)
 
     },
     resetForm() {

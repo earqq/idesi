@@ -324,56 +324,56 @@
                                       <tr>
                                         <td>FLUJO DE CAJA MENSUAL</td>
                                         <td>Titular</td>
-                                        <td>CONYUGE</td>
+                                        <td>Cónyuge</td>
                                         <td>Unidad Familiar</td>
                                         <td>Comprobación</td>
                                       </tr>
                                       <tr>
                                         <td class="">INGRESOS/ VENTAS</td>
                                         <td v-text="cuantitativa.ingresos_ventas_titular"></td>
-                                        <td v-text="cuantitativa.ingresos_ventas_CONYUGE"></td>
+                                        <td v-text="cuantitativa.ingresos_ventas_conyuge"></td>
                                         <td v-text="cuantitativa.ingresos_ventas_total"></td>
                                         <td v-text="cuantitativa.ingresos_ventas_validacion"></td>
                                       </tr>
                                       <tr>
                                         <td class="">Costo de venta</td>
                                         <td v-text="cuantitativa.costo_venta_titular"></td>
-                                        <td v-text="cuantitativa.costo_venta_CONYUGE">0</td>
+                                        <td v-text="cuantitativa.costo_venta_conyuge">0</td>
                                         <td v-text="cuantitativa.consto_venta_total"></td>
                                         <td v-text="cuantitativa.costo_venta_validacion"></td>
                                       </tr>
                                       <tr style="background: rgb(155, 155, 155);">
                                         <td class="font-weight-bold">Margen Bruto</td>
                                         <td v-text="cuantitativa.margen_bruto_titular"></td>
-                                        <td v-text="cuantitativa.margen_bruto_CONYUGE"></td>
+                                        <td v-text="cuantitativa.margen_bruto_conyuge"></td>
                                         <td v-text="cuantitativa.margen_bruto_total"></td>
                                         <td v-text="cuantitativa.margen_bruto_validacion"></td>
                                       </tr>
                                       <tr>
                                         <td>Otros ingresos</td>
                                         <td v-text="cuantitativa.otros_ingresos_titular"></td>
-                                        <td v-text="cuantitativa.otros_ingresos_CONYUGE"></td>
+                                        <td v-text="cuantitativa.otros_ingresos_conyuge"></td>
                                         <td v-text="cuantitativa.otros_ingresos_total"></td>
                                         <td v-text="cuantitativa.otros_ingresos_validacion"></td>
                                       </tr>
                                       <tr>
                                         <td>Servicios LAT</td>
                                         <td v-text="cuantitativa.servicios_lat_titular"></td>
-                                        <td v-text="cuantitativa.servicios_lat_CONYUGE"></td>
+                                        <td v-text="cuantitativa.servicios_lat_conyuge"></td>
                                         <td v-text="cuantitativa.servicios_lat_total"></td>
                                         <td v-text="cuantitativa.servicios_lat_validacion"></td>
                                       </tr>
                                       <tr>
                                         <td>Alquiler</td>
                                         <td v-text="cuantitativa.alquiler_titular"></td>
-                                        <td v-text="cuantitativa.alquiler_CONYUGE"></td>
+                                        <td v-text="cuantitativa.alquiler_conyuge"></td>
                                         <td v-text="cuantitativa.alquiler_total"></td>
                                         <td v-text="cuantitativa.alquiler_validacion"></td>
                                       </tr>
                                       <tr>
                                         <td>Empleados</td>
                                         <td v-text="cuantitativa.empleados_titular"></td>
-                                        <td v-text="cuantitativa.empleados_CONYUGE"></td>
+                                        <td v-text="cuantitativa.empleados_conyuge"></td>
                                         <td v-text="cuantitativa.empleados_total"></td>
                                         <td v-text="cuantitativa.empleados_validacion"></td>
                                       </tr>
@@ -381,7 +381,7 @@
                                       <tr>
                                         <td>Gasto Financiero</td>
                                         <td v-text="cuantitativa.gasto_financiero_titular"></td>
-                                        <td v-text="cuantitativa.gasto_financiero_CONYUGE"></td>
+                                        <td v-text="cuantitativa.gasto_financiero_conyuge"></td>
                                         <td v-text="cuantitativa.gasto_financiero_total"></td>
                                         <td v-text="cuantitativa.gasto_financiero_validacion"></td>
                                       </tr>
@@ -389,7 +389,7 @@
                                         <tr>
                                         <td>Gasto Hogar</td>
                                         <td v-text="cuantitativa.gasto_hogar_titular"></td>
-                                        <td v-text="cuantitativa.gasto_hogar_CONYUGE"></td>
+                                        <td v-text="cuantitativa.gasto_hogar_conyuge"></td>
                                         <td v-text="cuantitativa.gasto_hogar_total"></td>
                                         <td v-text="cuantitativa.gasto_hogar_validacion"></td>
                                       </tr>
@@ -397,21 +397,21 @@
                                       <tr style="background: rgb(155, 155, 155);">
                                         <td class="font-weight-bold">UTILIDAD</td>
                                         <td v-text="cuantitativa.utilidad_titular"></td>
-                                        <td v-text="cuantitativa.utilidad_CONYUGE"></td>
+                                        <td v-text="cuantitativa.utilidad_conyuge"></td>
                                         <td v-text="cuantitativa.utilidad_total"></td>
                                         <td v-text="cuantitativa.utilidad_validacion"></td>
                                       </tr>
                                       <tr>
                                         <td>CUOTA INSITUTCION</td>
                                         <td v-text="cuantitativa.cuota_institucion_titular"></td>
-                                        <td v-text="cuantitativa.cuota_institucion_CONYUGE"></td>
+                                        <td v-text="cuantitativa.cuota_institucion_conyuge"></td>
                                         <td v-text="cuantitativa.cuota_institucion_total"></td>
                                         <td v-text="cuantitativa.cuota_institucion_validacion"></td>
                                       </tr>
                                       <tr style="background: rgb(155, 155, 155);">
                                         <td class="font-weight-bold">UTILIDAD DESP CUOTA</td>
                                         <td v-text="cuantitativa.utilidad_desp_cuota_titular"></td>
-                                        <td v-text="cuantitativa.utilidad_desp_cuota_CONYUGE"></td>
+                                        <td v-text="cuantitativa.utilidad_desp_cuota_conyuge"></td>
                                         <td v-text="cuantitativa.utilidad_desp_cuota_total"></td>
                                         <td v-text="cuantitativa.utilidad_desp_cuota_validacion"></td>
                                       </tr>

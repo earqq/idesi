@@ -89,17 +89,17 @@
 
                   <div class="input_wrapper">
                     <label>Razón Social</label>
-                    <input type="text"  v-model="form.juridico.razon_social" />
+                    <input type="text"  v-model="form.juridico.razon_social"  disabled/>
                   </div>
 
                   <div class="input_wrapper">
                     <label>Ruc</label>
-                    <input type="text"  v-model="form.cliente.documento" />
+                    <input type="text"  v-model="form.cliente.documento" disabled/>
                   </div>
 
                   <div class="input_wrapper">
                     <label>Nombre comercial</label>
-                    <input type="text"  v-model="form.juridico.nombre_comercial" />
+                    <input type="text"  v-model="form.juridico.nombre_comercial"  />
                   </div>
 
                   <div class="input_wrapper">
@@ -140,7 +140,7 @@
                     <input
                       type="text"
                       v-model="form.representante.documento_representante"
-                      @change="datosCliente()"
+                      @keyup="datosCliente()"
                       v-mask="'########'"
                     />
                     <div class="message">número de documento inválido</div>
@@ -285,7 +285,7 @@
                           type="text"
                           v-model="row.documento"
                           v-mask="'########'"
-                          @change="datosAval(index)"
+                          @change="datosAval(row)"
                         />
                       </div>
                       <div class="input_wrapper">
@@ -666,11 +666,11 @@ export default {
     prev(index) {
         this.tab = index - 1;
     },
-    clickAddCONYUGE(){
-      this.form.conyugue.CONYUGE_tiene=1
+    clickAddconyuge(){
+      this.form.conyugue.conyuge_tiene=1
     },
-    clickRemoveCONYUGE(){
-      this.form.conyugue.CONYUGE_tiene=0
+    clickRemoveconyuge(){
+      this.form.conyugue.conyuge_tiene=0
     },
     clickAddAval() {
       // this.contador_aval++;
@@ -781,32 +781,34 @@ export default {
     },
     datosCliente() {
       let me = this;
-      // me.loader = "true";
-      axios
+      if(this.form.representante.documento_representante.length==8){
+        axios
         .post("/consulta/doc", {
-        //   documento: this.form.conyugue.documento_conyugue
+          documento: this.form.representante.documento_representante
         })
         .then(function(response) { 
-        //   me.form.conyugue.nombres_conyugue = response.data["nombres"];
-        //   me.form.conyugue.apellidos_conyugue = response.data["surnames"];
+          if(response.data){
+            me.form.representante.nombres_representante = response.data.name
+          }
 
-          // me.loader = false;
         })
         .catch(function(error) {
           console.log(error);
-          // me.initForm();
         });
+      }
     },
-    datosAval(index) {
-      let me = this;
-      // me.loader = "true";
-      axios
+    datosAval(row) {
+      if(row.documento.length==8){
+
+        let me = this;
+        // me.loader = "true";
+        axios
         .post("/consulta/doc", {
-          documento: this.form.avals[index].documento
+          documento: row.documento
         })
         .then(function(response) { 
-          me.form.avals[index].nombres = response.data["nombres"];
-          me.form.avals[index].apellidos = response.data["surnames"];
+          row.nombres = response.data["nombres"];
+          row.apellidos = response.data["surnames"];
 
           // me.loader = false;
         })
@@ -814,6 +816,7 @@ export default {
           console.log(error);
           // me.initForm();
         });
+      }
     },
     submit() {
  

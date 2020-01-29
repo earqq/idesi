@@ -114,12 +114,14 @@ class EvaluacionController extends Controller
         $prestamo = Prestamo::where('id',$id)
                             ->select('clientes_id')->first();
         $clientes = Cliente::find($prestamo->clientes_id);
-
+        
         $natural = Natural::where('clientes_id',$clientes->id)->first();
+        if($natural){
 
-        $familia = Familiar::where('naturals_id',$natural->id)->select('numero')->first();
+            $familia = Familiar::where('naturals_id',$natural->id)->select('numero')->first();
+            return $familia;
+        }
 
-        return $familia;
     }
 
 
