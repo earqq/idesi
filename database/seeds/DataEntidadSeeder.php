@@ -1,10 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
-use App\Imports\ColegiosImport;
+use App\Imports\EntidadesImport;
 use Maatwebsite\Excel\Facades\Excel;
-class DataColegiosSeeder extends Seeder
+class DataEntidadSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +12,6 @@ class DataColegiosSeeder extends Seeder
      */
     public function run()
     {
-        Excel::import(new ColegiosImport, env('RUTA').'/public/data_colegios.xlsx');
+        Excel::import(new EntidadesImport, env('RUTA').'/public/data_entidades.xlsx');
     }
 }
