@@ -164,7 +164,7 @@ class ClienteController extends Controller
             DB::beginTransaction();
 
             // return $request;
-            $cliente = Cliente::where('documento',$request->input('documento'))->first();
+            $cliente = Cliente::where('documento',$request->cliente['documento'])->first();
             if($cliente){
                 DB::rollBack();
                 return [
@@ -179,10 +179,10 @@ class ClienteController extends Controller
                 $cliente->documento = $request->cliente['documento'];
                 $cliente->codigo = $request->cliente['codigo'];
                 $cliente->tipo_cliente = $request->cliente['tipo_cliente'];
-                $cliente->pais = $request->cliente['pais'];
-                $cliente->departamento = $request->cliente['departamento'];
-                $cliente->provincia = $request->cliente['provincia'];
-                $cliente->distrito = $request->cliente['distrito'];
+                $cliente->pais = strtoupper($request->cliente['pais']);
+                $cliente->departamento = strtoupper($request->cliente['departamento']);
+                $cliente->provincia = strtoupper($request->cliente['provincia']);
+                $cliente->distrito = strtoupper($request->cliente['distrito']);
                 $cliente->numero_registro = $request->cliente['numero_registro'];
                 $cliente->agencia = $request->cliente['agencia'];
                 $cliente->save();
@@ -268,7 +268,7 @@ class ClienteController extends Controller
                     $detalle->familiars_id= $familiar->id;
                     $detalle->save();
 
-                    if($rp['parentesco']=='CONYUGE')
+                    if($rp['parentesco']=='conyuge')
                     {
                         $conyuge= new Conyugue;
                         $conyuge->nombres= $rp['nombres'];

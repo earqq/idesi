@@ -138,7 +138,6 @@
                   </div>
                   <div>
                     <button id="snap" v-on:click="capture()">Registrar Ubicación</button>
-                    <button @click="apagar()">apagar</button>
                   </div>
                   <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
                   <ul>
@@ -310,6 +309,7 @@ export default {
       this.captura = canvas.toDataURL("image/png");
 
       this.submit()
+      this.apagar()
     },
     apagar() {
       this.video = this.$refs.video;

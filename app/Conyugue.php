@@ -37,7 +37,7 @@ class Conyugue extends Model
     /**
      * @var array
      */
-    protected $fillable = ['naturals_id', 'documento', 'conyuge_tiene','nombres', 'apellidos', 'nacimiento', 'estado_civil', 'ocupacion', 'telefono', 'celular', 'centro_laboral', 'direccion', 'socio', 'codigo_socio', 'aporte_socio', 'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['naturals_id', 'documento', 'CONYUGE_tiene','nombres', 'apellidos', 'nacimiento', 'estado_civil', 'ocupacion', 'telefono', 'celular', 'centro_laboral', 'direccion', 'socio', 'codigo_socio', 'aporte_socio', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

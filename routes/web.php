@@ -77,7 +77,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('evaluaciones/numerohijos/{prestamo}', 'EvaluacionController@numeroHijos');
 
         Route::get('evaluaciones/giro', 'EvaluacionController@giro');
-        Route::get('/evaluaciones/datosCualitativas', 'EvaluacionController@datosCualitativas');
+        Route::get('evaluaciones/datosCualitativas', 'EvaluacionController@datosCualitativas');
         Route::get('evaluaciones/colegio', 'EvaluacionController@colegios');
         Route::get('evaluaciones/entidades', 'EvaluacionController@entidades');
         Route::get('evaluaciones/colegio/costo', 'EvaluacionController@colegioCosto');
@@ -86,7 +86,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('evaluaciones/prestamos/evaluar', 'EvaluacionController@evaluar');
         Route::post('evaluaciones/prestamos/evaluarFinal', 'EvaluacionController@evaluarFinal');
 
-        Route::post('/consulta/dni','ConsultaController@dni');
+        Route::post('/consulta/doc','ConsultaController@doc');
 
         Route::get('/files/{id}', 'FileController@index');
         Route::post('files/add', 'FileController@store');
