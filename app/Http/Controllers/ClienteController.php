@@ -490,7 +490,8 @@ class ClienteController extends Controller
     {
 
 
-        return $request->file('file');
+        return $request;
+
         if (!$request->ajax()) return redirect('/');
         
             // $model = new Archivo(); 

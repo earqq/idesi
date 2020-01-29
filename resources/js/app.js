@@ -6,14 +6,23 @@
 
 require('./bootstrap');
 window.Vue = require('vue');
+
+const moment = require('moment')
+require('moment/locale/es')
+
+
 import router from './rutas';
 import Axios from 'axios'
 import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.css'; 
 import * as VueGoogleMaps from 'vue2-google-maps';
 
+import VueMoment from 'vue-moment'
 import VueTheMask from 'vue-the-mask'
+
 Vue.use(VueTheMask)
+Vue.use(VueMoment, { moment })
+
 // import WebCam from "vue-web-cam";
 
 // import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
