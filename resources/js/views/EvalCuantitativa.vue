@@ -389,7 +389,7 @@
               <div v-show="tab == 3" class="form_step">
 
                 <div class="form_step_wrapper">
-                  <h3 class="title">Gasto del Negocio</h3>
+                  <h3 class="title">Gasto del Hogar</h3>
                   <div class="form_content">
 
                     <div class="group_form">

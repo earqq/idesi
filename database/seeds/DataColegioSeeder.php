@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 
 use App\Imports\ColegiosImport;
 use Maatwebsite\Excel\Facades\Excel;
-class DataColegioSeeder extends Seeder
+class DataColegiosSeeder extends Seeder
 {
     /**
      * Run the database seeds.

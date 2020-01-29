@@ -105,7 +105,15 @@
                         </tbody>
                       </table>
                     </div> 
-                    
+                    <div v-if='estado_evaluado==1'> 
+                      <li>Forma Final: {{prestamo.forma_final}}</li>
+                      <li>Producto Final: {{prestamo.producto_final}}</li>
+                      <li>Aporte Final:{{prestamo.aporte_final}}</li>
+                      <li>Importe Final:{{prestamo.importe_final}}</li>
+                      <li>Plazo Final:{{prestamo.plazo_final}}</li>
+                      <li>Cuota Final:{{prestamo.cuota_final}}</li>
+                      <li>Tasa Final:{{prestamo.tasa_final}}</li>
+                    </div>
                   </div>
                 </div>
               </transition>
@@ -539,6 +547,7 @@ export default {
       estado_evaluado: 0,
       rol: this.$route.params.rol, 
       estado: this.$route.params.estado,
+      prestamo:{},
       form: {},
       notificationSystem: {
         options: {
@@ -572,14 +581,15 @@ export default {
         this.$http
         .get(`/${this.resource}/prestamos/detalle/` + id)
         .then(response => {
-          
+          console.log("response eval")
+          console.log(response)
           if(response.data.estado_evaluado==0){
             this.estado_evaluado=0
           }else{
             this.estado_evaluado=1
+            this.prestamo=response.data.prestamo
           }
-
-          console.log(this.estado_evaluado);
+          
           if (response.data.cuantitativa)
             this.cuantitativa = response.data.cuantitativa;
             this.detalle = response.data.prestamo;
@@ -625,6 +635,8 @@ export default {
       window.open("/clientes/adjuntarPdf/" + this.id_prestamo, "_blank");
     },
     firmarEvaluacion() {
+      console.log("role")
+      console.log(this.rol)
       if(this.rol=='4'){
               // if() {
       //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
@@ -633,6 +645,7 @@ export default {
             this.$http
               .post(`/${this.resource}/prestamos/evaluarFinal`, this.form)
               .then(response => {
+                this.methodsDetalle(this.$route.params.prestamo)
                 this.$toast.success(
                   "El evaluacion fue exitosa",
                   "Exitoso",
@@ -640,9 +653,6 @@ export default {
                 );
               })
 
-              .then(() => {
-                // this.loading_submit = false;
-              });
       }
       else if(this.rol=='3'){
       this.$http
