@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(DataColegiosSeeder::class);
         $this->call(DataEntidadesSeeder::class);
-        $this->call(DataLocationSeeder::class);
+        $this->call(Location2Seeder::class);
     }
 }
