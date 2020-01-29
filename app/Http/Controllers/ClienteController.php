@@ -490,37 +490,38 @@ class ClienteController extends Controller
     {
 
 
-        return $request->file;
+        return $request;
+
         if (!$request->ajax()) return redirect('/');
         
             // $model = new Archivo(); 
 
-            // $file = $request->file('file');
-            // $ext = $request->file->getClientOriginalExtension();
+            $file =$request->file('file');
+            $ext = $file->getClientOriginalExtension();
 
-            // $prestamo = Prestamo::find($request->prestamo_id);
-            // $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+            $prestamo = Prestamo::find($request->prestamo_id);
+            $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
             
-            // if (Storage::putFileAs('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/foto_negocio.'.$ext)) {
+            if (Storage::putFileAs('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/', $file,'foto_neogcio' . '.' . $ext)) {
                 
-            //     if($request['name'] == 'fotos_negocio'){
-            //         $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-            //         $subidos->fotos_negocio=1;
-            //         $subidos->save();
-            //     } 
-            //     return $model::create([
-            //             'nombre' => 'foto_negocio',
-            //             'tipo' => 'imagen',
-            //             'extension' => $ext,
-            //             'prestamos_id' => $request->prestamo_id
-            //         ]);
-            // }
-        $visita = new Vista();
-        $visita->latitud= $request->latitud;
-        $visita->altitud=$request->longitud; 
-        $visita->prestamos_id=$request->prestamo_id;
+                if($request['name'] == 'fotos_negocio'){
+                    $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                    $subidos->fotos_negocio=1;
+                    $subidos->save();
+                } 
+                return $model::create([
+                        'nombre' => 'foto_negocio',
+                        'tipo' => 'imagen',
+                        'extension' => $ext,
+                        'prestamos_id' => $request->prestamo_id
+                    ]);
+            }
+        // $visita = new Vista();
+        // $visita->latitud= $request->latitud;
+        // $visita->altitud=$request->longitud; 
+        // $visita->prestamos_id=$request->prestamo_id;
 
-        $visita->save();
+        // $visita->save();
         return [
             'success' => true,
             'data' => 'Cliente creado',
@@ -715,6 +716,9 @@ class ClienteController extends Controller
                     $aval->socio = $avals['socio'];
                     $aval->codigo_socio = $avals['codigo_socio'];
                     $aval->aporte_socio = $avals['aporte_socio'];
+                    $aval->empresa_ruc = $avals['empresa_ruc'];
+                    $aval->empresa_razon_social = $avals['empresa_razon_social'];
+                    $aval->empresa_direccion = $avals['empresa_direccion'];
                     $aval->prestamos_id = $prestamo->id;
                     $aval->save();
                 }
@@ -879,6 +883,9 @@ class ClienteController extends Controller
                 $aval->socio = $avals['socio'];
                 $aval->codigo_socio = $avals['codigo_socio'];
                 $aval->aporte_socio = $avals['aporte_socio'];
+                $aval->empresa_ruc = $avals['empresa_ruc'];
+                $aval->empresa_razon_social = $avals['empresa_razon_social'];
+                $aval->empresa_direccion = $avals['empresa_direccion'];
                 $aval->prestamos_id = $prestamo->id;
                 $aval->save();
             }

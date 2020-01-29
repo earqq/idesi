@@ -69,7 +69,7 @@
           <p> NUEVO ARCHIVO  </p>
         </a>
 
-        <div class="file_item"  @click="solicitudPdf()">
+        <!-- <div class="file_item"  @click="solicitudPdf()">
           <div class="file_detail">
             <a :href="'#'"
               >
@@ -79,7 +79,7 @@
                 <small> 27 de enero de 2020 </small>            
               </div>
             </a>
-          </div>
+          </div> 
         </div>
 
         <div class="file_item"  @click="cualitativaPdf()">
@@ -93,7 +93,7 @@
               </div>
             </a>
           </div>
-        </div>
+        </div> -->
 
                 <div class="file_item"  @click="cuantitativaPdf()">
           <div class="file_detail">
@@ -119,7 +119,7 @@
               </div>
             </a>
           </div>
-          <div class="file_detail" v-if="archivo.tipo=='documento' && archivo.nombre!='evaluacion_cualitativa' && archivo.nombre!='evaluacion_cuantitativa' ">
+          <div class="file_detail" v-if="archivo.tipo=='documento'">
             <a :href="'../storage/'+person.documento+'_'+person.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
               target="_blank">
               <i class="material-icons-outlined"> picture_as_pdf </i>

@@ -308,6 +308,7 @@ export default {
         .drawImage(this.video, 0, 0, 640, 480);
       this.captura = canvas.toDataURL("image/png");
 
+console.log(this.captura)
       this.submit()
       this.apagar()
     },
