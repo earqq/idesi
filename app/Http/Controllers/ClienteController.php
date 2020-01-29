@@ -715,6 +715,9 @@ class ClienteController extends Controller
                     $aval->socio = $avals['socio'];
                     $aval->codigo_socio = $avals['codigo_socio'];
                     $aval->aporte_socio = $avals['aporte_socio'];
+                    $aval->empresa_ruc = $avals['empresa_ruc'];
+                    $aval->empresa_razon_social = $avals['empresa_razon_social'];
+                    $aval->empresa_direccion = $avals['empresa_direccion'];
                     $aval->prestamos_id = $prestamo->id;
                     $aval->save();
                 }
@@ -879,6 +882,9 @@ class ClienteController extends Controller
                 $aval->socio = $avals['socio'];
                 $aval->codigo_socio = $avals['codigo_socio'];
                 $aval->aporte_socio = $avals['aporte_socio'];
+                $aval->empresa_ruc = $avals['empresa_ruc'];
+                $aval->empresa_razon_social = $avals['empresa_razon_social'];
+                $aval->empresa_direccion = $avals['empresa_direccion'];
                 $aval->prestamos_id = $prestamo->id;
                 $aval->save();
             }

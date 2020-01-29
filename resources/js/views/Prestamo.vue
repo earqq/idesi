@@ -320,6 +320,43 @@
                           <option value="pj">Persona Juridica</option>
                         </select>
                       </div>
+
+                      <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
+                        <label>Ruc</label>
+                        <input
+                          type="text"
+                          v-model="row.empresa_ruc"
+                          v-mask="'##########'"
+                        />
+                      </div>
+
+                      <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
+                        <label>Razon Social</label>
+                        <input
+                          type="text"
+                          v-model="row.empresa_razon_social"
+                        />
+                      </div>
+
+                      <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
+                        <label>Dirección</label>
+                        <input
+                          type="text"
+                          v-model="row.empresa_direccion" 
+                        />
+                      </div>
+
+                    </div>
+                    
+                    <br v-if="row.tipo_persona=='pj'">
+                    <h3 class="title" v-if="row.tipo_persona=='pj'">
+                        Datos Representante 
+                    </h3>
+                    <br v-if="row.tipo_persona=='pj'">
+
+                    <span class="separator" v-if="row.tipo_persona=='pn'"></span>
+
+                    <div class="group_form">
                       <div class="input_wrapper">
                         <label>Documento de Identidad</label>
                         <input
@@ -392,8 +429,6 @@
                         <input type="text" v-else disabled />
                       </div>
                     </div>
-
-                    <span class="separator"></span>
 
                     <div class="group_form">
                       <div class="input_wrapper">
@@ -732,7 +767,10 @@ export default {
         socio: "NO",
         codigo_socio: "",
         aporte_socio: "",
-        tipo_persona: "pn"
+        tipo_persona: "pn",
+        empresa_ruc:'',
+        empresa_razon_social:'',
+        empresa_direccion:''
       });
     },
     clickRemoveAval(index) {
