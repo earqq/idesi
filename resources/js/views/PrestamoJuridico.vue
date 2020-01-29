@@ -89,17 +89,17 @@
 
                   <div class="input_wrapper">
                     <label>Razón Social</label>
-                    <input type="text"  v-model="form.juridico.razon_social" />
+                    <input type="text"  v-model="form.juridico.razon_social"  disabled/>
                   </div>
 
                   <div class="input_wrapper">
                     <label>Ruc</label>
-                    <input type="text"  v-model="form.cliente.documento" />
+                    <input type="text"  v-model="form.cliente.documento" disabled/>
                   </div>
 
                   <div class="input_wrapper">
                     <label>Nombre comercial</label>
-                    <input type="text"  v-model="form.juridico.nombre_comercial" />
+                    <input type="text"  v-model="form.juridico.nombre_comercial"  />
                   </div>
 
                   <div class="input_wrapper">
@@ -140,7 +140,7 @@
                     <input
                       type="text"
                       v-model="form.representante.documento_representante"
-                      @change="datosCliente()"
+                      @keyup="datosCliente()"
                       v-mask="'########'"
                     />
                     <div class="message">número de documento inválido</div>
@@ -271,6 +271,7 @@
                     </button>
                   </h3>
                   <div class="form_content">
+
                     <div class="group_form">
                       <div class="input_wrapper">
                         <label>Tipo Persona</label>
@@ -279,13 +280,50 @@
                           <option value="pj">Persona Juridica</option>
                         </select>
                       </div>
+
+                      <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
+                        <label>Ruc</label>
+                        <input
+                          type="text"
+                          v-model="row.empresa_ruc"
+                          v-mask="'##########'"
+                        />
+                      </div>
+
+                      <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
+                        <label>Razon Social</label>
+                        <input
+                          type="text"
+                          v-model="row.empresa_razon_social"
+                        />
+                      </div>
+
+                      <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
+                        <label>Dirección</label>
+                        <input
+                          type="text"
+                          v-model="row.empresa_direccion" 
+                        />
+                      </div>
+
+                    </div>
+
+                    <br v-if="row.tipo_persona=='pj'">
+                    <h3 class="title" v-if="row.tipo_persona=='pj'">
+                        Datos Representante 
+                    </h3>
+                    <br v-if="row.tipo_persona=='pj'">
+
+                    <span class="separator" v-if="row.tipo_persona=='pn'"></span>
+
+                    <div class="group_form">
                       <div class="input_wrapper">
                         <label>Documento de Identidad</label>
                         <input
                           type="text"
                           v-model="row.documento"
                           v-mask="'########'"
-                          @change="datosAval(index)"
+                          @change="datosAval(row)"
                         />
                       </div>
                       <div class="input_wrapper">
@@ -666,10 +704,10 @@ export default {
     prev(index) {
         this.tab = index - 1;
     },
-    clickAddConyuge(){
+    clickAddconyuge(){
       this.form.conyugue.conyuge_tiene=1
     },
-    clickRemoveConyuge(){
+    clickRemoveconyuge(){
       this.form.conyugue.conyuge_tiene=0
     },
     clickAddAval() {
@@ -690,7 +728,10 @@ export default {
         socio: "NO",
         codigo_socio: "",
         aporte_socio: "",
-        tipo_persona: "pn"
+        tipo_persona: "pn",
+        empresa_ruc:'',
+        empresa_razon_social:'',
+        empresa_direccion:''
       });
     },
         meses_numero(){
@@ -781,32 +822,34 @@ export default {
     },
     datosCliente() {
       let me = this;
-      // me.loader = "true";
-      axios
-        .post("/consulta/dni", {
-        //   documento: this.form.conyugue.documento_conyugue
+      if(this.form.representante.documento_representante.length==8){
+        axios
+        .post("/consulta/doc", {
+          documento: this.form.representante.documento_representante
         })
         .then(function(response) { 
-        //   me.form.conyugue.nombres_conyugue = response.data["nombres"];
-        //   me.form.conyugue.apellidos_conyugue = response.data["surnames"];
+          if(response.data){
+            me.form.representante.nombres_representante = response.data.name
+          }
 
-          // me.loader = false;
         })
         .catch(function(error) {
           console.log(error);
-          // me.initForm();
         });
+      }
     },
-    datosAval(index) {
-      let me = this;
-      // me.loader = "true";
-      axios
-        .post("/consulta/dni", {
-          documento: this.form.avals[index].documento
+    datosAval(row) {
+      if(row.documento.length==8){
+
+        let me = this;
+        // me.loader = "true";
+        axios
+        .post("/consulta/doc", {
+          documento: row.documento
         })
         .then(function(response) { 
-          me.form.avals[index].nombres = response.data["nombres"];
-          me.form.avals[index].apellidos = response.data["surnames"];
+          row.nombres = response.data["nombres"];
+          row.apellidos = response.data["surnames"];
 
           // me.loader = false;
         })
@@ -814,6 +857,7 @@ export default {
           console.log(error);
           // me.initForm();
         });
+      }
     },
     submit() {
  

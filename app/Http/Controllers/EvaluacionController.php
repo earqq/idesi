@@ -76,6 +76,18 @@ class EvaluacionController extends Controller
         //
     }
 
+
+    public function verificarPrestamo($id)
+    {
+        $evaluacion = Evaluacion::where('prestamos_id',$id)->where('users_id', Auth::user()->id)->first();
+        $existe_evaluacion = 0;
+        if($evaluacion){
+            $existe_evaluacion = 1;
+        }
+        return $existe_evaluacion;
+    }
+
+
     /**
      * Display the specified resource.
      *
@@ -85,7 +97,19 @@ class EvaluacionController extends Controller
     public function show($id)
     {
         $prestamo = Prestamo::find($id);
-        return $prestamo;
+        $evaluacion = Evaluacion::join('users','evaluacions.users_id','=','users.id')
+                                    ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name')
+                                    ->where('prestamos_id',$prestamo->id)->get();
+        
+        $cuantitativa = ResultadoCuantitativa::where('prestamo_id', $prestamo->id)->first();
+        $evaluado = Evaluacion::where('prestamos_id',$id)->where('users_id', Auth::user()->id)->first();
+        $estado_evaluado = 0;
+        if($evaluado){
+            $estado_evaluado = 1;
+        }
+         return compact('prestamo','evaluacion','cuantitativa','estado_evaluado');
+
+
     }
 
     public function showF($id)
@@ -114,12 +138,14 @@ class EvaluacionController extends Controller
         $prestamo = Prestamo::where('id',$id)
                             ->select('clientes_id')->first();
         $clientes = Cliente::find($prestamo->clientes_id);
-
+        
         $natural = Natural::where('clientes_id',$clientes->id)->first();
+        if($natural){
 
-        $familia = Familiar::where('naturals_id',$natural->id)->select('numero')->first();
+            $familia = Familiar::where('naturals_id',$natural->id)->select('numero')->first();
+            return $familia;
+        }
 
-        return $familia;
     }
 
 
@@ -143,6 +169,7 @@ class EvaluacionController extends Controller
                    $evaluacion->prestamos_id  = $request['prestamos_id'];
                    $evaluacion->users_id  = Auth::user()->id;
                    $evaluacion->save();
+
     
                     DB::commit();
                     return [

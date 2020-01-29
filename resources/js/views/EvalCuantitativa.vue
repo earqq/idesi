@@ -9,7 +9,7 @@
           </div>
           <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
             <span>2</span>
-            <p>DATOS CONYUGE</p>
+            <p>DATOS CÓNYUGE</p>
           </div>
           <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
             <span>3</span>
@@ -102,7 +102,7 @@
                   <div class="form_content">
                     <div class="group_form">
                       <div class="input_wrapper">
-                        <label>Tipo de Giuro de Negocio</label>
+                        <label>Tipo de Giro de Negocio</label>
                         <v-select
                           label="giro_negocio"
                           :options="giros"
@@ -127,8 +127,8 @@
                   </div>
                 </div>
 
-                <div class="form_step_wrapper in_bottom" v-if=" evaluacion.titular.gasto_financiero > 0">
-                  <h3 class="title">Gasto Finaciero Titular</h3>
+                <div class="form_step_wrapper in_bottom" v-if=" evaluacion.titular.gasto_financiero.length > 0">
+                  <h3 class="title">Gasto Financiero Titular</h3>
                   <div class="form_list no_border">
                     <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.titular.gasto_financiero" v-bind:key="index">
                       <h3 class="title">Entidad {{index + 1}}</h3>
@@ -279,7 +279,7 @@
                   <div class="form_content">
                     <div class="group_form">
                       <div class="input_wrapper">
-                        <label>Tipo de Giuro de Negocio</label>
+                        <label>Tipo de Giro de Negocio</label>
                         <v-select
                           label="giro_negocio"
                           :options="giros"
@@ -305,7 +305,7 @@
 
 
                 <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Gasto Finaciero Conyuge</h3>
+                  <h3 class="title">Gasto Financiero Cónyuge</h3>
                   <div class="form_list no_border">
                     <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero" v-bind:key="index">
                       <h3 class="title">
@@ -454,7 +454,7 @@
                 </div>
 
                 <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Gasto Finaciero del Titular (Personales) </h3>
+                  <h3 class="title">Gasto Financiero del Titular (Personales) </h3>
                   <div class="form_list no_border">
                     <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.titular.gasto_financiero_personal" v-bind:key="index">
                       <h3 class="title">Entidad {{index + 1}}
@@ -487,11 +487,11 @@
                 </div>
 
                 <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Gasto Finaciero del Conyuge ò Conviviente (Personales) </h3>
+                  <h3 class="title">Gasto Financiero del cónyuge ò Conviviente (Personales) </h3>
                   <div class="form_list no_border">
                     <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero_personal" v-bind:key="index">
                       <h3 class="title">Entidad {{index + 1}}
-                          <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidadConyuge(index)">
+                          <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidadconyuge(index)">
                           <i class="material-icons-outlined"> delete </i>
                         </button>
                       </h3>
@@ -513,7 +513,7 @@
                       </div>
                     </div>
                   </div>
-                  <button type="button"  class="add_section" @click="clickAddEntidadConyuge">
+                  <button type="button"  class="add_section" @click="clickAddEntidadconyuge">
                     <span> AGREGAR ENTIDAD </span>
                     <i class="fas fa-plus"></i> 
                   </button>
@@ -586,7 +586,7 @@ export default {
             pago: 0
           },
           {
-            concepto: "TELEFONO FIJO",
+            concepto: "TELÉFONO FIJO",
             pago: 0
           },
           {
@@ -594,11 +594,11 @@ export default {
             pago: 0
           },
           {
-            concepto: "ALIMENTACION Y TRANSPORTE",
+            concepto: "ALIMENTACIÓN Y TRANSPORTE",
             pago: 0
           },
           {
-            concepto: "EDUCACION",
+            concepto: "EDUCACIÓN",
             pago: 0
           }
         ],
@@ -863,14 +863,14 @@ export default {
       this.evaluacion.titular.gasto_financiero_personal.splice(index, 1);
     },
 
-    clickAddEntidadConyuge() { 
+    clickAddEntidadconyuge() { 
       this.evaluacion.conyuge.gasto_financiero_personal.push({
               entidad: "",
               saldo_capital: 0,
               cuota: 0
       });
     },
-    clickRemoveEntidadConyuge(index) {
+    clickRemoveEntidadconyuge(index) {
       this.evaluacion.conyuge.gasto_financiero_personal.splice(index, 1);
     },
 

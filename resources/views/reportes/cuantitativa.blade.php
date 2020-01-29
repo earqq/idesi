@@ -198,7 +198,7 @@
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS DEL CONYUGE</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS DEL CÓNYUGE</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -287,7 +287,7 @@
                         </tr>
                          <!-- GASTOS FINANCIEROS -->
                          <tr>
-                            <td colspan="3"> <span class="title">GASTO FINANCIERO CONYUGE</td>
+                            <td colspan="3"> <span class="title">GASTO FINANCIERO CÓNYUGE</td>
                          </tr>
                          <tr>
                              <td colspan="3">
@@ -320,7 +320,7 @@
 
                          <!-- gasto del negocio -->
                          <tr>
-                            <td colspan="3"> <span class="title">GASTO DE NEGOCIO DEL CONYUGE</td>
+                            <td colspan="3"> <span class="title">GASTO DE NEGOCIO DEL CÓNYUGE</td>
                          </tr>
                          <tr>
                              <td colspan="3">
@@ -444,10 +444,10 @@
                                     </tbody>
                                 </table>
                              </td>
-                         </tr>
+                         </tr
  
                          <tr>
-                            <td colspan="3"> <span class="title">GASTO FINANCIERO PERSONAL CONYUGE O CONVIVIENTE</td>
+                            <td colspan="3"> <span class="title">GASTO FINANCIERO PERSONAL CÓNYUGE O CONVIVIENTE</td>
                          </tr>
                          <tr>
                              <td colspan="3">

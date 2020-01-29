@@ -143,7 +143,7 @@ class EvaluacionesController extends Controller
         $costo_venta_titular=$ingresos_ventas_titular/100*floatval($request->titular["margen_costo"]);
         $costo_venta_titular=$costo_venta_titular*-1;        
         \Log::alert('Costo de venta titular: '.$costo_venta_titular);
-        //Conyuge
+        //conyuge
         $costo_venta_conyuge=$ingresos_ventas_conyuge/100*floatval($request->conyuge["margen_costo"]);        
         $costo_venta_conyuge=$costo_venta_conyuge*-1;        
         \Log::alert('Costo de venta conyuge: '.$costo_venta_conyuge);

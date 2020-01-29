@@ -181,11 +181,11 @@
                                     
                             </tr>
                             <tr>
-                                <td> <span class="title">¿TIENE CONYUGE?</span> {{$familiar->conyugue}} <span ></td>
+                                <td> <span class="title">¿TIENE CÓNYUGE?</span> {{$familiar->conyugue}} <span ></td>
                              @if ($familiar->conyugue=='SI')
                                 <td> <span class="title">OCUPACIÓN</span> <span > {{$familiar->ocupacion}} </span> </td>
                              @else
-                             <td> <span > No cuenta con conyuge ó conviviente </span> </td> 
+                             <td> <span > No cuenta con cónyuge ó conviviente </span> </td> 
                              @endif
                                 
                             </tr>

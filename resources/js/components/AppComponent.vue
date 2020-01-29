@@ -116,7 +116,6 @@ nav
       display: flex
       justify-content: space-between
       align-items: center
-      width: 450px
       height: 100%
       margin: 0
       padding: 0
@@ -125,6 +124,7 @@ nav
         height: 100%
         border-bottom: 3px solid transparent
         flex: 1
+        min-width: 100px
         a
           text-decoration: none
           color: rgba($text_color, .5)

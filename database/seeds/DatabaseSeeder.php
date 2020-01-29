@@ -17,7 +17,12 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call(DataColegiosSeeder::class);
+<<<<<<< HEAD
         $this->call(DataEntidadSeeder::class);
 
+=======
+        $this->call(DataEntidadesSeeder::class);
+        $this->call(DataLocationSeeder::class);
+>>>>>>> c56d5ecf31d5df019757bda4855f0ab0296cd77c
     }
 }

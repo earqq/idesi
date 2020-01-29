@@ -184,7 +184,7 @@
             </div>
             <button
               type="button"
-              @click.prevent="clickAddConyuge"
+              @click.prevent="clickAddconyuge"
               class="add_section"
               v-if="form.conyugue.conyuge_tiene=='NO'">
               <span>AGREGAR CÓNYUGE O CONVIVIENTE</span>
@@ -193,8 +193,8 @@
             <div class="form_list">
               <div class="form_step_wrapper" v-if="form.conyugue.conyuge_tiene=='SI'">
                 <h3 class="title">
-                  Cónyuge o Conviviente
-                  <button  class="delete_section" type="button"  @click.prevent="clickRemoveConyuge()">
+                  CÓNYUGE o Conviviente
+                  <button  class="delete_section" type="button"  @click.prevent="clickRemoveconyuge()">
                     <i class="material-icons-outlined"> delete </i>
                   </button>
                 </h3>
@@ -320,6 +320,43 @@
                           <option value="pj">Persona Juridica</option>
                         </select>
                       </div>
+
+                      <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
+                        <label>Ruc</label>
+                        <input
+                          type="text"
+                          v-model="row.empresa_ruc"
+                          v-mask="'##########'"
+                        />
+                      </div>
+
+                      <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
+                        <label>Razon Social</label>
+                        <input
+                          type="text"
+                          v-model="row.empresa_razon_social"
+                        />
+                      </div>
+
+                      <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
+                        <label>Dirección</label>
+                        <input
+                          type="text"
+                          v-model="row.empresa_direccion" 
+                        />
+                      </div>
+
+                    </div>
+                    
+                    <br v-if="row.tipo_persona=='pj'">
+                    <h3 class="title" v-if="row.tipo_persona=='pj'">
+                        Datos Representante 
+                    </h3>
+                    <br v-if="row.tipo_persona=='pj'">
+
+                    <span class="separator" v-if="row.tipo_persona=='pn'"></span>
+
+                    <div class="group_form">
                       <div class="input_wrapper">
                         <label>Documento de Identidad</label>
                         <input
@@ -392,8 +429,6 @@
                         <input type="text" v-else disabled />
                       </div>
                     </div>
-
-                    <span class="separator"></span>
 
                     <div class="group_form">
                       <div class="input_wrapper">
@@ -709,10 +744,10 @@ export default {
     prev(index) {
       this.tab = index - 1;
     },
-    clickAddConyuge() {
+    clickAddconyuge() {
       this.form.conyugue.conyuge_tiene = "SI";
     },
-    clickRemoveConyuge() {
+    clickRemoveconyuge() {
       this.form.conyugue.conyuge_tiene = "NO";
     },
     clickAddAval() { 
@@ -732,7 +767,10 @@ export default {
         socio: "NO",
         codigo_socio: "",
         aporte_socio: "",
-        tipo_persona: "pn"
+        tipo_persona: "pn",
+        empresa_ruc:'',
+        empresa_razon_social:'',
+        empresa_direccion:''
       });
     },
     clickRemoveAval(index) {
@@ -816,7 +854,7 @@ export default {
       let me = this;
       // me.loader = "true";
       axios
-        .post("/consulta/dni", {
+        .post("/consulta/doc", {
           documento: this.form.conyugue.documento_conyugue
         })
         .then(function(response) { 
@@ -843,7 +881,7 @@ export default {
       let me = this;
       // me.loader = "true";
       axios
-        .post("/consulta/dni", {
+        .post("/consulta/doc", {
           documento: this.form.avals[index].documento
         })
         .then(function(response) { 

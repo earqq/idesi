@@ -1,130 +1,116 @@
 <template>
 
-<div class="">
- 
-  <div class="container-general">
-    <div class="evaluations">
-      <div class="row col-md-12 m-0 evaluations p-0">
+<div class="evaluation_content">
 
-        
-        <div class="col-md-9 p-0" style="overflow-y: auto;height: calc(100vh - 66px);">
-
-          <div class="create_client_content">
-              <section class="tabs_section">
-                <div class="tabs_wrapper">
-                  <div
-                    class="tab"
-                    @click="tab = 1"
-                    :class=" {selected: tab == 1}"
-                  >
-                    <p>Detalles</p>
+    <div class="evaluation_detail"> 
+      <section class="tab_inline">
+        <div
+          class="tab"
+          @click="tab = 1"
+          :class=" {selected: tab == 1}">
+          <p>Detalles</p>
+        </div>
+        <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
+          <p>Evaluación</p>
+        </div>
+      </section>
+      <div class="evaluation_detail_wrapper">
+        <div class="create_client_content">
+          <section class="client_forms">
+            <div class="client_forms_wrapper">
+              <transition name="slide-fade" mode="in-out">
+                <div v-show="tab == 1" class="form_step">
+                  
+                  <div class="form_step_wrapper">
+                    <button
+                      type="button"
+                      @click="cargarPdf()"
+                      class="add_section">
+                      <span>DESCARGAR EXPEDIENTE DE PRESTAMO</span>
+                      <i class="material-icons-outlined">download</i>
+                    </button>
                   </div>
-                  <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
-                    <p>Evaluaciòn</p>
+
+                  <div class="form_step_wrapper in_bottom">
+                    <h3 class="title">Propuesta del Analista</h3>
+
+                    <div class="form_content">
+
+                      <div class="group_form">
+
+                        <div class="input_wrapper">
+                          <label>Producto</label>
+                          <input type="text" :value="detalle.producto" disabled>
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Importe</label>
+                          <input type="text" :value="detalle.importe" disabled>
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Plazo</label>
+                          <input type="text" :value="detalle.plazo" disabled>
+
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Cuotas del Sistema</label>
+                          <input type="text" :value="detalle.cuotas" disabled>
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Aporte</label>
+                          <input type="text" :value="detalle.aporte" disabled>
+                        </div>
+
+                      </div>
+
+                      <div class="group_form all">
+                        <div class="input_wrapper">
+                          <label>Comentarios</label>
+                          <textarea name="" id="" cols="auto" rows="10" :value="detalle.comentarios" disabled></textarea>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form_step_wrapper in_bottom">
+                    <h3 class="title">Evaluaciones</h3>
+
+                    <div class="empty_message" v-if="!form.evaluacion">
+                      <img src="img/empty.svg" >
+                      <h1> Sin Evaluaciones </h1>
+                      <p>Todavia no se han relizado evaluaciones a este prestamo</p>
+                    </div>
+
+                    <div class="table_wrapper" v-else>
+                      <table class="table_clients">
+                        <thead>
+                          <tr>
+                            <th>Evaluador</th>
+                            <th>Comentarios</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr  v-for="evaluacion in form.evaluacion" :key="evaluacion.id">
+                            <td v-text="evaluacion.name"></td>
+                            <td v-text="evaluacion.detalle"></td>
+                            <td> {{evaluacion.created_at | moment("D [de] MMMM, YYYY")}} </td>
+                            <td class="state"> <span :class="stateEvaluation(evaluacion.estado)">  </span> {{evaluacion.estado | toCapitalize}} </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div> 
+                    
                   </div>
                 </div>
-              </section>
+              </transition>
 
-               <section class="client_forms">
-                  <div class="client_forms_wrapper">
-
-                    <transition name="slide-fade" mode="in-out">
-
-                      <div v-show="tab == 1" class="form_step">
-                        
-                        <button
-                          type="button"
-                          @click="cargarPdf()"
-                          class="add_section"
-                        >
-                          <span>DESCARGAR EXPEDIENTE DE PRESTAMO</span>
-                          <i class="fas fa-plus"></i>
-                        </button>
-
-
-                        <div class="form_step_wrapper">
-                          <h3 class="title">Propuesta del Analista</h3>
-
-                          <div class="form_content">
-
-                            <div class="group_form">
-
-                              <div class="input_wrapper">
-                                <label>Producto</label>
-                                <input type="text" :value="detalle.producto" disabled>
-                              </div>
-
-                              <div class="input_wrapper">
-                                <label>Importe</label>
-                                <input type="text" :value="detalle.importe" disabled>
-                              </div>
-
-                              <div class="input_wrapper">
-                                <label>Plazo</label>
-                                <input type="text" :value="detalle.plazo" disabled>
-
-                              </div>
-                            </div>
-
-                            <div class="group_form">
-
-                              <div class="input_wrapper">
-                                <label>Cuotas del Sistema</label>
-                                <input type="text" :value="detalle.cuotas" disabled>
-                              </div>
-
-                              <div class="input_wrapper">
-                                <label>Aporte</label>
-                                <input type="text" :value="detalle.aporte" disabled>
-                              </div>
-
-                            </div>detalle.comentarios
-
-                            <div class="group_form">
-
-                              <div class="input_wrapper">
-                                <label>Comentarios</label>
-                                <textarea name="" id="" cols="auto" rows="10" :value="detalle.comentarios" disabled></textarea>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>
-
-
-                        <div class="form_step_wrapper">
-                          <h3 class="title">Evaluaciones</h3>
-
-                          <div class="table_wrapper" v-if=" type_list=='0'">
-                            <table class="table_clients">
-                              <thead>
-                                <tr>
-                                  <th>Evaluador</th>
-                                  <th>Observaciones</th>
-                                  <th>Fecha</th>
-                                  <th>Estado</th>
-                                  <!-- <th class="options">Opciones</th> -->
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr  v-for="evaluacion in form.evaluacion" :key="evaluacion.id">
-                                  <td v-text="evaluacion.name"></td>
-                                  <td v-text="evaluacion.detalle"></td>
-                                  <td v-text="evaluacion.created_at"></td>
-                                  <td v-text="evaluacion.estado"></td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div> 
-
-                        </div>
-
-                    
-                      </div>
-                    </transition>
-
-
-                    <transition name="slide-fade" mode="in-out">
+                  <transition name="slide-fade" mode="in-out">
 
                       <div v-show="tab == 2" class="form_step">
                         
@@ -324,7 +310,7 @@
                                       <tr>
                                         <td>FLUJO DE CAJA MENSUAL</td>
                                         <td>Titular</td>
-                                        <td>Conyuge</td>
+                                        <td>Cónyuge</td>
                                         <td>Unidad Familiar</td>
                                         <td>Comprobación</td>
                                       </tr>
@@ -408,6 +394,7 @@
                                         <td v-text="cuantitativa.cuota_institucion_total"></td>
                                         <td v-text="cuantitativa.cuota_institucion_validacion"></td>
                                       </tr>
+
                                       <tr style="background: rgb(155, 155, 155);">
                                         <td class="font-weight-bold">UTILIDAD DESP CUOTA</td>
                                         <td v-text="cuantitativa.utilidad_desp_cuota_titular"></td>
@@ -415,6 +402,7 @@
                                         <td v-text="cuantitativa.utilidad_desp_cuota_total"></td>
                                         <td v-text="cuantitativa.utilidad_desp_cuota_validacion"></td>
                                       </tr>
+
                                       <tr>
                                         <td>Participacion de la cuota</td>
                                         <td v-text="cuantitativa.participacion_cuota_titular"></td>
@@ -422,9 +410,12 @@
                                         <td v-text="cuantitativa.participacion_cuota_total"></td>
                                         <td v-text="cuantitativa.participacion_cuota_validacion"></td>
                                       </tr>
+
                                       <tr>
                                         <td colspan="5">RESULTADO EVA <span v-text="cuantitativa.resultado_eva" ></span></td>
                                       </tr>
+
+
                                       <tr>
                                         <td colspan="5">RESULTADO SIST <span v-text="cuantitativa.resultado_sist"></span></td>
                                       </tr>
@@ -438,127 +429,101 @@
                     
                       </div>
                     </transition>
-
-
-                  </div>
-               </section>
-          </div>
-
-
-        </div>
-
-      <!-- <p>{{!(estado!='APROBADO' || rol!='2')}}</p> -->
-        <div class="col-md-3 m-0 views" v-if="estado=='PENDIENTE' && (rol=='3' || rol=='4')">
-
-          <div class="create_client_content">
-
-              <section class="client_forms">
-
-                  <div class="client_forms_wrapper">
-
-                      <transition name="slide-fade" mode="in-out">
-
-                        <div class="form_step_wrapper">
-                      
-                          <div class="form_content">
-
-                            <div class="group_form">
-
-                              <div class="input_wrapper">
-                                <input type="radio" v-model="form.estado" value="APROBADO" />APROBADO
-                              </div>
-
-                              <div class="input_wrapper" v-if="rol=='3'">
-                                <input  type="radio" v-model="form.estado" value="OBSERVADO">OBSERVADO
-                              </div>
-
-                              <div class="input_wrapper">
-                                <input type="radio" v-model="form.estado" value="DESAPROBADO" />DESAPROBADO
-                              </div>
-                            </div>
-
-                
-                            <div class="group_form" v-if="rol=='3'" >
-                              <div class="input_wrapper">
-                                <label>Observación</label>
-                                <textarea v-model="form.detalle" cols="auto" rows="5" class="w-100"></textarea>
-                              </div>
-                            </div>
-
-
-                            <div class="group_form" v-if="rol=='4'">
-
-                              <div class="input_wrapper">
-                                  <label for>Producto</label>
-                                  <input  type="text" v-model="form.producto"/> 
-                              </div>
-                              
-                            </div>
-
-                            <div class="group_form" v-if="rol=='4'">
-
-                              <div class="input_wrapper">
-                                  <label   for>Aporte</label>
-                                  <input   type="text" v-model="form.aporte"  /> 
-                              </div>
-
-                              <div class="input_wrapper">
-                                  <label  for>Importe</label>
-                                  <input  type="text" v-model="form.importe"  /> 
-                              </div>
-
-                            </div>
-
-                            <div class="group_form" v-if="rol=='4'">
-
-                              <div class="input_wrapper">
-                                  <label  for>Plazo</label>
-                                  <input  type="text" v-model="form.plazo" /> 
-                              </div>
-                              
-                            </div>
-
-                            <div class="group_form" v-if="rol=='4'">
-
-                              <div class="input_wrapper">
-                                  <label  for>Cuotas</label>
-                                  <input type="text" v-model="form.cuotas"  /> 
-                              </div>
-                              
-                              <div class="input_wrapper">
-                                  <label  for>Tasa</label>
-                                  <input  type="text" v-model="form.tasa"/> 
-                              </div>
-
-                            </div>
-
-
-                          </div>
-                        </div>
-
-                      </transition>
-
-
-                  </div>
-
-              </section>
-          </div>
-
-          <div class="row m-0">
- 
-
-            <div class="col-md-12" >
-              <button class="btn btn-success w-100 mb-1 mt-2" @click="firmarEvaluacion()">FIRMAR</button> 
-            </div> 
-            <div class="col-md-12">
-              <button class="btn btn-danger w-100 mb-1 mt-1" @click="cancelarEvaluacion()">CANCELAR</button>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </div>
-  </div>
 
+    <aside class="evaluation" v-if="estado_evaluado==0">
+      <div class="title">Evaluador</div>
+      <div class="evaluation_wrapper">
+
+        <div class="input_box">
+          <div class="input_box_wrapper">
+            <div class="input_checkbox_wrapper radio" >
+              <input type="radio" id="radio1" name="evaluation" v-model="form.estado" :value="'APROBADO'" />
+              <label class="box_content" for="radio1">
+                <div class="box">
+                </div>
+                <span>Aprobado</span>
+              </label>
+            </div>
+            <div class="input_checkbox_wrapper radio" v-if="rol=='3'">
+              <input type="radio" id="radio2" name="evaluation" v-model="form.estado" :value="'OBSERVADO'" />
+              <label class="box_content" for="radio2">
+                <div class="box">
+                </div>
+                <span>Observado</span>
+              </label>
+            </div>
+            <div class="input_checkbox_wrapper radio" >
+              <input type="radio" id="radio3" name="evaluation" v-model="form.estado" :value="'DESAPROBADO'" />
+              <label class="box_content" for="radio3">
+                <div class="box">
+                </div>
+                <span>{{rol== '3' ? 'Desaprobado' : 'Rechazado'}}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form_content">
+
+          <div class="input_wrapper" v-if="rol=='3'">
+            <label>Comentarios</label>
+            <textarea v-model="form.detalle" ></textarea>
+          </div>
+
+          <div class="input_wrapper" v-if="rol=='4'">
+              <label for>Producto</label>
+              <input  type="text" v-model="form.producto"/> 
+          </div>
+            
+          <div class="inline_inputs" v-if="rol=='4'">
+
+            <div class="input_wrapper">
+                <label   for>Aporte</label>
+                <input   type="text" v-model="form.aporte"  /> 
+            </div>
+
+            <div class="input_wrapper" >
+              <label  for>Plazo</label>
+              <input  type="text" v-model="form.plazo" /> 
+            </div>
+
+          </div>
+
+          <div class="input_wrapper" v-if="rol=='4'">
+            <label  for>Importe</label>
+            <input  type="text" v-model="form.importe"  /> 
+          </div>
+
+          <div class="inline_inputs" v-if="rol=='4'">
+
+            <div class="input_wrapper">
+                <label  for>Cuotas</label>
+                <input type="text" v-model="form.cuotas"  /> 
+            </div>
+            
+            <div class="input_wrapper">
+                <label  for>Tasa</label>
+                <input  type="text" v-model="form.tasa"/> 
+            </div>
+
+          </div>
+
+        </div>
+
+        <button class="button_primary medium" @click="firmarEvaluacion()">
+          <span>
+            FIRMAR EVALUACIÓN
+          </span>
+          <i class="material-icons-outlined">fingerprint</i>
+        </button> 
+      </div>
+    </aside>
+    
 </div>
 </template>
 
@@ -571,6 +536,7 @@ export default {
       detalle: {},
       tab: 1,
       cuantitativa: {},
+      estado_evaluado: 0,
       rol: this.$route.params.rol, 
       estado: this.$route.params.estado,
       form: {},
@@ -602,40 +568,36 @@ export default {
         this.archivos = response.data["files"];
       });
     },
- 
-    methodsDetalle(id) { 
-      if(this.rol=='4' || this.rol=='1' || this.rol=='2'){
+    methodsDetalle(id) {  
         this.$http
-        .get(`/${this.resource}/prestamos/detalleF/` + id)
+        .get(`/${this.resource}/prestamos/detalle/` + id)
         .then(response => {
-          console.log(response.data);
+          
+          if(response.data.estado_evaluado==0){
+            this.estado_evaluado=0
+          }else{
+            this.estado_evaluado=1
+          }
+
+          console.log(this.estado_evaluado);
           if (response.data.cuantitativa)
             this.cuantitativa = response.data.cuantitativa;
             this.detalle = response.data.prestamo;
             this.form.evaluacion = response.data.evaluacion;
+            
             this.listFile(id);
-            this.form.producto = this.detalle.producto;
-            this.form.aporte = this.detalle.aporte;
-            this.form.importe = this.detalle.importe;
-            this.form.plazo = this.detalle.plazo;
-            this.form.cuotas = this.detalle.cuotas;
-            this.form.tasa = this.detalle.tasa;
-            this.form.estado = this.detalle.estado;
+            if(this.rol=='4'){
+                this.form.producto = this.detalle.producto;
+                this.form.aporte = this.detalle.aporte;
+                this.form.importe = this.detalle.importe;
+                this.form.plazo = this.detalle.plazo;
+                this.form.cuotas = this.detalle.cuotas;
+                this.form.tasa = this.detalle.tasa;
+                this.form.estado = this.detalle.estado;
+            }
             this.form.prestamos_id = id;
             this.id_prestamo = id;
-        });
-      }
-      else if(this.rol=='3'){
-        this.$http
-        .get(`/${this.resource}/prestamos/detalle/` + id)
-        .then(response => {
-          this.detalle = response.data;
-          this.listFile(id);
-          this.form.prestamos_id = id;
-          this.id_prestamo= id;
-        });
-
-      }
+        }); 
     },
     formInit() {
        if(this.rol=='4'){
@@ -683,10 +645,6 @@ export default {
               });
       }
       else if(this.rol=='3'){
-              // if() {
-      //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
-      //  }
-
       this.$http
         .post(`/${this.resource}/prestamos/evaluar`, this.form)
         .then(response => {
@@ -695,24 +653,179 @@ export default {
               "El evaluacion fue exitosa",
               "Exitoso",
               this.notificationSystem.options.success
-            ); 
+            );  
+          this.methodsDetalle(this.$route.params.prestamo)
         })
-        // .catch(error => {
-        //   if (error.response.status === 422) {
-        //     this.errors = error.response.data;
-        //   } else {
-        //     this.$message.error(error.response.data.message);
-        //   }
-        // })
+ 
         .then(() => {
           // this.loading_submit = false;
         });
 
       }
     },
-    cancelarEvaluacion() {
-      
+    stateEvaluation(estado) {
+      if (estado == 'APROBADO') return 'accept'
+      if (estado == 'OBSERVADO') return 'observed'
+      if (estado == 'DESAPROBADO') return 'denied'
+      return 
     }
   },
+  filters: {
+    toCapitalize (text) {
+      return text.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())
+    }
+  }
 };
 </script>
+
+<style lang="sass">
+@import "../../sass/variables"
+.evaluation_content
+  display: flex
+  .evaluation_detail
+    flex: 1
+    .tab_inline
+      background-color: white
+      height: 30px
+      display: flex
+      .tab
+        width: 100px
+        display: flex
+        align-items: center
+        justify-content: center
+        height: 100%
+        cursor: pointer
+        border-bottom: 2px solid transparent
+        user-select: none
+        margin-left: 20px
+        &.selected
+          border-bottom: 2px solid $primary_color
+          p
+              color: $primary_color
+        p
+          margin: 0
+          font-size: 12px
+          font-weight: 700
+          margin-left: 10px
+          color: rgba($text_color, .5)
+          margin-bottom: -1px
+    .evaluation_detail_wrapper
+      margin-top: 20px
+      .add_section
+        border-top: none
+      .empty_message
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-direction: column
+        padding: 20px
+        height: 250px
+        overflow: hidden
+        img
+          width: 120px
+        h1
+          margin: 0
+          font-size: 14px
+          margin-top: 15px
+          margin-bottom: 5px
+          font-weight: 600
+        p
+          margin: 0
+          font-size: 12px
+          width: 220px
+          text-align: center
+          line-height: 1.3
+      table
+        thead, tbody
+          tr
+            margin-bottom: 0px
+            border-bottom: 1px solid $bg_color
+        tbody
+          tr:last-child
+            border-bottom: 0
+
+        .state
+          span
+            width: 12px
+            height: 12px
+            border-radius: 50%
+            background-color: $line_color
+            margin-right: 12px
+            margin-top: -2px
+            &.accept
+              background-color: $primary_color
+            &.observed
+              background-color: $highlight_color
+            &.denied
+              background-color: $require_color
+  .evaluation
+    width: 350px
+    background-color: white
+    box-shadow: $shadow
+    border-left: 1px solid $line_color
+    height: calc(100vh - 55px)
+    display: flex
+    flex-direction: column
+    position: sticky
+    top: 55px
+    .title
+      border-bottom: 1px solid $line_color
+      font-size: 11px
+      font-weight: 600
+      color: rgba($text_color, .4)
+      padding: 0 20px
+      display: flex
+      align-items: center
+      height: 30px
+    .evaluation_wrapper
+      padding: 20px
+      .input_box
+        &.no_label
+            margin-top: 5px
+        & > label
+            font-family: $font
+            font-weight: 500
+            font-size: 11px
+            margin-bottom: 4px
+            display: block
+        .input_box_wrapper
+            display: grid
+            align-items: center
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr))
+            grid-gap: 10px
+            .input_checkbox_wrapper
+                height: 40px
+                input
+                    &:checked + label.box_content
+                        border: 1px solid $primary_color
+                        color: $primary_color
+                        font-weight: 600
+                & > label.box_content
+                    border: 1px solid rgba(0, 0, 0, 0.2)
+                    height: 100%
+                    border-radius: 3px
+                    display: flex
+                    align-items: center
+                    padding: 0 20px
+                    box-sizing: border-box
+                    margin-bottom: 0
+                    span
+                        margin-left: 10px
+
+      .form_content
+        display: grid
+        grid-template-columns: 1fr
+        grid-gap: 10px
+        margin-top: 10px
+        textarea
+          display: block
+        .inline_inputs
+          display: grid
+          grid-template-columns: 1fr 1fr
+          grid-gap: 10px
+      button
+        width: 100%
+        margin-top: 15px
+        i
+          font-size: 20px
+</style>

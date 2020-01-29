@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 
 class ConsultaController extends Controller
 {
-    public function dni(Request $request)
+    public function doc(Request $request)
     {
-        $dni = $request->documento;
-        $datos = file_get_contents('https://app.easybill.pe/tools/consult/identification/'.$dni);
+        $doc = $request->documento;
+        $datos = file_get_contents('https://app.easybill.pe/tools/consult/identification/'.$doc);
 
         return $datos;
     }
+   
 }
