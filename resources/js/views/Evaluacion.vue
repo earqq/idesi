@@ -25,7 +25,10 @@
       <div class="table_grid"  v-if="type_list==0">
         <article class="credit_card" v-for="prestamo in prestamos" :key="prestamo.id" >
           <div class="client">
-            <img src="https://picsum.photos/100/100" />
+            <div class="avatar">
+              <img src="https://picsum.photos/100/100" v-if="false"/>
+              <div class="avatar_alt" v-else> {{prestamo.apellidos.substring(0,1)}} </div>
+            </div>
             <p class="card-document">{{prestamo.nombres}} {{prestamo.apellidos}}</p>
           </div>
           <div class="detail">
@@ -44,22 +47,16 @@
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
                 <li v-if="prestamo.estado=='PENDIENTE' && (id_rol=='3' || id_rol=='4')">
-                  <router-link
-                              v-if="evalaucionEcho(prestamo.id)==0"
-                            :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
+                  <router-link v-if="evalaucionEcho(prestamo.id)==0" :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                     Evaluación
                   </router-link>
-                  <router-link
-                              v-else
-                            :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
-                    Ver Evaluación
+                  <router-link v-else :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
+                    Evaluación
                   </router-link>
-
                 </li>
                 <li  v-else>
-                  <router-link
-                            :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
-                    Ver Evaluación
+                  <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
+                    Evaluación
                   </router-link>
                 </li>  
               </ul>   
@@ -67,7 +64,7 @@
           </div>
           
         </article>
-        <a v-show="prestamos.length < 4" class="spanner" v-for="i in 4" :key="i*1.5"  >
+        <a v-show="prestamos.length < 4" class="spanner" v-for="i in 4" :key="i*1.3"  >
         </a>
       </div>
 
@@ -86,7 +83,10 @@
           <tbody>
             <tr v-for="prestamo in prestamos" :key="prestamo.id">
               <td class="client">
-                <img src="https://picsum.photos/100/100" alt />
+                <div class="avatar">
+                  <img src="https://picsum.photos/100/100" v-if="false" />
+                  <div class="avatar_alt" v-else>  {{prestamo.apellidos.substring(0,1)}} </div>              
+                </div>
                 <p> {{prestamo.nombres}} {{prestamo.apellidos}}</p>
               </td>
               <td> {{prestamo.producto}} </td>
@@ -102,14 +102,12 @@
                 <i class="material-icons-outlined" >more_horiz</i>
                 <ul>
                   <li v-if="prestamo.estado=='PENDIENTE' && (id_rol=='3' || id_rol=='4') ">
-                    <router-link 
-                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
+                    <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                       Evaluación
                     </router-link>
                   </li>
                   <li  v-else>
-                    <router-link
-                              :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
+                    <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                       Ver Evaluación
                     </router-link>
                   </li> 
@@ -256,11 +254,23 @@ export default {
           align-items: center
           padding: 10px 20px
           border-bottom: 1px solid $line_color
-          img
-            width: 20px
-            height: 20px
-            border-radius: 50%
-            object-fit: cover
+          .avatar
+            .avatar_alt
+              width: 24px
+              height: 24px
+              background-color: $primary_color
+              border-radius: 50%
+              display: flex
+              align-items: center
+              justify-content: center
+              font-size: 13px
+              font-weight: 500
+              color: white
+            img
+              width: 24px
+              height: 24px
+              border-radius: 50%
+              object-fit: cover
           p
             margin: 0
             margin-left: 10px
@@ -378,11 +388,23 @@ export default {
         border: 1px solid $line_color
         tbody
           .client
-            img
-              width: 24px
-              height: 24px
-              border-radius: 50%
-              object-fit: cover
+            .avatar
+              .avatar_alt
+                width: 24px
+                height: 24px
+                background-color: $primary_color
+                border-radius: 50%
+                display: flex
+                align-items: center
+                justify-content: center
+                font-size: 13px
+                font-weight: 500
+                color: white
+              img
+                width: 24px
+                height: 24px
+                border-radius: 50%
+                object-fit: cover
             p
               margin: 0
               margin-left: 10px

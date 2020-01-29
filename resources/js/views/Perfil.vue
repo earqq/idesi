@@ -15,12 +15,14 @@
             </li>
             </ul>
           </div>
-        </div> 
-        <img src="https://picsum.photos/200/300" />
-        <p v-if="tipo_persona=='PN'"> {{cliente.nombres}} </p>
+        </div>
+        <div class="avatar">
+          <img src="https://picsum.photos/200/300" v-if="false" />
+          <div class="avatar_alt" v-else> {{cliente.apellidos.substring(0,1)}} </div>
+        </div>
+        <p v-if="tipo_persona=='PN'"> {{cliente.apellidos}} </p>
         <p v-else> {{cliente.razon_social}} </p>
-        <small v-if="tipo_persona=='PN'"> {{cliente.apellidos}} </small>
-
+        <small v-if="tipo_persona=='PN'"> {{cliente.nombres}} </small>
       </div>
       <ul>
         <li>
@@ -45,6 +47,18 @@
           <p v-if="tipo_persona=='PN'">{{cliente.direccion_cliente || '--' }}</p>
           <p v-else>{{cliente.direccion || '--' }}</p>
         </li>
+        <blockquote class="message_request">
+          <div class="message_request_wrapper">
+            <h1>SOLICITUD DE ACEPTACIÓN</h1>
+            <p> Se ha registrado un nuevo cliente esperando por aprobación.  </p>
+            <div class="actions">
+              <a class="denied"> RECHAZAR </a>
+              <a class="button_primary small">
+                <span> ACEPTAR </span>
+              </a>
+            </div>
+          </div>
+        </blockquote>
       </ul>
     </aside>
 
@@ -78,9 +92,6 @@
           <div class="actions">
             
             <router-link class="credit_link"  :to="{name:'/ver/prestamo/', params:{prestamo:prestamo.id}}"> VER PRESTAMO</router-link>
-            <!-- <router-link class="credit_link" :to="{ name:'/evaluacion/final/', params: { prestamo:prestamo.id } }">
-              VER PRESTAMO 
-            </router-link> -->
 
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
@@ -91,7 +102,7 @@
                 </li>
                 <li v-if="prestamo.cualitativa=='0'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id}}" >E. Cualitativa</router-link> </li>
                 <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1' "> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
-                <li> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}"  >Observaciones</router-link></li>
+                <li> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}"  >Evaluación</router-link></li>
                 <li> <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
               </ul>
             </div>
@@ -211,8 +222,7 @@ export default {
       border-bottom: 1px solid $line_color
       .bg
         width: 100%
-        height: 80px
-        background-color: $primary_color
+        height: 70px
         display: flex
         flex-direction: column
         position: relative
@@ -227,7 +237,7 @@ export default {
               display: block
           i
             cursor: pointer
-            color: white
+            color: black
           ul
             position: absolute
             background-color: #fff
@@ -249,7 +259,7 @@ export default {
               width: 12px
               height: 12px
               background-color: white
-              top: -5px
+              top: -7px
               right: 7px
               transform: rotateZ(45deg)
               border-top: 1px solid #f3f1f1
@@ -274,15 +284,28 @@ export default {
                   display: block
                   text-decoration: none
                   color: black
-      img
-        width: 55px
-        height: 55px
-        border-radius: 50%
-        object-fit: cover
-        position: relative
-        margin-top: -27px
-        border: 2px solid white
-        background-color: white
+      .avatar
+        .avatar_alt
+          width: 55px
+          height: 55px
+          background-color: $primary_color
+          border-radius: 50%
+          display: flex
+          align-items: center
+          justify-content: center
+          font-size: 17px
+          font-weight: 700
+          margin-top: -27px
+          color: white
+        img
+          width: 55px
+          height: 55px
+          border-radius: 50%
+          object-fit: cover
+          position: relative
+          margin-top: -27px
+          border: 2px solid white
+          background-color: white
       p, small
         color: $text_color
         margin: 0
@@ -298,6 +321,40 @@ export default {
     ul
       margin: 0
       padding: 0
+      blockquote.message_request
+        padding: 20px
+        box-sizing: border-box
+        border-bottom: 1px solid $line_color
+        border-left: 2px solid $primary_color
+        box-shadow: $shadow
+        .message_request_wrapper
+          font-weight: 500
+          border-radius: 3px
+          min-height: 45px
+          display: flex
+          align-items: flex-start
+          flex-direction: column
+          font-size: 12px
+          box-sizing: border-box
+          h1
+            font-size: 13px
+            color: $primary_color
+            font-weight: 600
+          p
+            color: block
+            font-size: 12px
+          .actions
+            display: flex
+            width: 100%
+            align-self: flex-end
+            align-items: center
+            margin-top: 5px
+            a
+              flex: 1
+              cursor: pointer
+              text-align: center
+              &.denied
+                color: $primary_color
       li
         list-style: none
         border-bottom: 1px solid $line_color

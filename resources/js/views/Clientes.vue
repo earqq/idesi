@@ -40,7 +40,10 @@
           <article class="client_card" v-for="cliente in clientes" :key="cliente.id" >
             <router-link :to="{ name:'perfil', params: { documento: cliente.documento,persona:form.tipo_persona } }">
               <div class="detail">
-                 <img src="https://picsum.photos/100/100" />
+                <div class="avatar">
+                  <img src="https://picsum.photos/100/100" v-if="false"/>
+                  <div class="avatar_alt" v-else>{{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }}</div>
+                </div>
                 <p class="card-document">{{cliente.apellidos || cliente.razon_social}}</p>
                 <small class="card-name" >{{cliente.nombres}}</small>
               </div>
@@ -70,7 +73,10 @@
             <tbody>
               <tr  v-for="cliente in clientes" :key="cliente.id">
                 <td class="client">
-                  <img src="https://picsum.photos/100/100" alt />
+                  <div class="avatar">
+                    <img src="https://picsum.photos/200/300" v-if="false" />
+                    <div class="avatar_alt" v-else> {{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }} </div>
+                  </div>
                   <p> {{cliente.nombres}} {{cliente.apellidos || cliente.razon_social}}</p>
                 </td>
                 <td>
@@ -274,11 +280,23 @@ export default {
             justify-content: center
             padding: 30px 20px
             width: 100%
-            img
-              width: 55px
-              height: 55px
-              border-radius: 50%
-              object-fit: cover
+            .avatar
+              .avatar_alt
+                width: 55px
+                height: 55px
+                background-color: $primary_color
+                border-radius: 50%
+                display: flex
+                align-items: center
+                justify-content: center
+                font-size: 17px
+                font-weight: 700
+                color: white
+              img
+                width: 55px
+                height: 55px
+                border-radius: 50%
+                object-fit: cover
             p, small
               color: $text_color
               margin: 0
@@ -316,11 +334,23 @@ export default {
         border: 1px solid $line_color
         tbody
           .client
-            img
-              width: 24px
-              height: 24px
-              border-radius: 50%
-              object-fit: cover
+            .avatar
+              .avatar_alt
+                width: 24px
+                height: 24px
+                background-color: $primary_color
+                border-radius: 50%
+                display: flex
+                align-items: center
+                justify-content: center
+                font-size: 13px
+                font-weight: 500
+                color: white
+              img
+                width: 24px
+                height: 24px
+                border-radius: 50%
+                object-fit: cover
             p
               margin: 0
               margin-left: 10px

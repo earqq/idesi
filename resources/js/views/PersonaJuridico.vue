@@ -3,7 +3,7 @@
 
       <section class="tabs_section">
         <div class="tabs_wrapper">
-          <div class="tab " @click="tab = 1" :class="[{complete : validateStep1 },{selected: tab == 1}]">
+          <div class="tab " @click="tab = 1" :class="{selected: tab == 1}">
             <span>1</span> 
             <p>PERSONALES</p>
           </div>
@@ -45,40 +45,34 @@
                 <div class="form_content">
                   <div class="group_form">
                   
-                    <div class="input_wrapper" :class="{require: !validateRuc}">
+                    <div class="input_wrapper" >
                       <label>Ruc</label>
                       <input type="text"  v-model="form.cliente.documento" @keyup='getCompanyData(form.cliente.documento)' v-mask="'###########'"  />
-                      <div class="message">Ruc no valido</div>
                     </div>
 
-                    <div class="input_wrapper" :class="{require: !validateRazon}">
+                    <div class="input_wrapper" >
                       <label >Razon Social</label>
                       <input type="text" :maxlength="200" v-model="form.juridico.razon_social" placeholder />
-                      <div class="message">razón social muy corto</div>
                     </div>
 
-                    <div class="input_wrapper" :class="{require: !validateComercial}">
+                    <div class="input_wrapper" >
                       <label>Nombre Comercial</label>
                       <input type="text" :maxlength="200" v-model="form.juridico.nombre_comercial" placeholder />
-                      <div class="message">nombre comercial muy corto</div>
                     </div>
 
-                    <div class="input_wrapper" :class="{require: !validateActividad}">
+                    <div class="input_wrapper" >
                       <label>Actividad Principal</label>
                       <input type="text" maxlength='200' v-model="form.juridico.actividad_principal" placeholder />
-                      <div class="message">actividad muy corto</div>
                     </div>
 
-                    <div class="input_wrapper" :class="{require: !validatePartida}">
+                    <div class="input_wrapper" >
                       <label>Nro. de Partida Registral</label>
                       <input type="number" v-mask="'########'" v-model="form.juridico.partida_registral"  />
-                      <div class="message">partida registral muy corto</div>
                     </div>
 
-                    <div class="input_wrapper" :class="{require: !validateOficina}">
+                    <div class="input_wrapper" >
                       <label>Oficina Principal</label>
                       <input type="text" :maxlength="100" v-model="form.juridico.oficina_principal" placeholder />
-                      <div class="message">nombre de oficina muy corto</div>
                     </div>
 
                     <div class="input_wrapper">
@@ -92,10 +86,9 @@
                       </select>
                     </div>
 
-                    <div class="input_wrapper" :class="{require: !validateDireccion}">
+                    <div class="input_wrapper"  >
                         <label>Dirección</label>
                         <input type="text" :maxlength="200"  v-model="form.juridico.direccion" />
-                        <div class="message">dirección muy corto</div>
                     </div>
 
                     <div class="input_wrapper">
@@ -140,7 +133,7 @@
                     </div>
 
                     <div class="input_wrapper">
-                        <label>Departamento</label>
+                        <label>N° departamento</label>
                         <input type="text" v-model="form.juridico.pdto"  :maxlength="5" />
                     </div>
 
@@ -454,37 +447,6 @@ mixins: [serviceNumber],
   },
   async created() {
     await this.initForm();
-  },
-  computed: {
-
-    validateRuc () {
-      return this.form.cliente.documento.length == 11
-    },
-    validateRazon () {
-      return this.form.juridico.razon_social.length > 6
-    }, 
-    validateComercial () {
-      return this.form.juridico.nombre_comercial.length > 6
-    },  
-    validateActividad () {
-      return this.form.juridico.actividad_principal.length > 6
-    }, 
-    validatePartida () {
-      return this.form.juridico.partida_registral.length > 2
-    }, 
-    validateOficina () {
-      return this.form.juridico.oficina_principal.length > 4
-    }, 
-    validateDireccion () {
-      return this.form.juridico.direccion.length > 6
-    }, 
-
-    validateStep1 () {
-      return this.validateRuc && this.validateRazon && this.validateComercial && this.validateActividad && this.validatePartida && this.validateOficina && this.validateDireccion
-    }
-
-
-
   },
   mounted () {
     this.clickAddRepresentante()

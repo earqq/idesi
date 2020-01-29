@@ -9,6 +9,11 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
 </head>
+<style>
+.input_login_wrapper .message{
+    margin-top: 5px;
+}
+</style>
 <body>
     <div class="login_container">
         <div class="login_container_wrapper">

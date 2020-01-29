@@ -3,7 +3,7 @@
 .button_primary {
   color: white;
   font-family: "Roboto", sans-serif;
-  background-color: #0061FF;
+  background-color: #21396f;
   border: none;
   font-weight: 500;
   border-radius: 3px;
@@ -16,7 +16,7 @@
   justify-content: space-around;
   padding: 0 8px;
   text-decoration: none;
-  box-shadow: 0px 4px 10px 0px rgba(0, 97, 255, 0.35);
+  box-shadow: 0px 4px 10px 0px rgba(33, 57, 111, 0.35);
   cursor: pointer;
   font-size: 13px;
 }
@@ -29,7 +29,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #146eff;
+  background-color: #26417f;
   -webkit-transition: all ease-in-out 0.2s;
   transition: all ease-in-out 0.2s;
   opacity: 0;
@@ -84,7 +84,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #0061FF;
+  background-color: #21396f;
   -webkit-transition: all ease-in-out 0.2s;
   transition: all ease-in-out 0.2s;
   z-index: 3;
@@ -140,7 +140,7 @@
   -webkit-transition: all ease-in-out 0.2s;
   transition: all ease-in-out 0.2s;
   text-decoration: none;
-  color: #0061FF;
+  color: #21396f;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03);
   cursor: pointer;
   font-size: 13px;
@@ -154,7 +154,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 97, 255, 0.01);
+  background-color: rgba(33, 57, 111, 0.01);
   -webkit-transition: all ease-in-out 0.2s;
   transition: all ease-in-out 0.2s;
   opacity: 0;
@@ -286,7 +286,7 @@
 .input_wrapper textarea:focus,
 .input_wrapper textarea:active {
   outline: none;
-  border: 1px solid #0061FF;
+  border: 1px solid #21396f;
   box-shadow: 0px 0px 0px 3px rgba(62, 101, 243, 0.06);
 }
 
@@ -313,7 +313,7 @@
 
 .input_wrapper.icon input:focus + i,
 .input_wrapper.icon input:active + i {
-  color: #0061FF;
+  color: #21396f;
 }
 
 .input_wrapper.no_label_icon i {
@@ -330,7 +330,7 @@
 
 .input_wrapper.no_label_icon input:focus + i,
 .input_wrapper.no_label_icon input:active + i {
-  color: #0061FF;
+  color: #21396f;
 }
 
 .input_wrapper.require i {
@@ -392,7 +392,7 @@
 
 .input_checkbox_wrapper input[type=radio]:checked + label.box_content .box,
 .input_checkbox_wrapper input[type=checkbox]:checked + label.box_content .box {
-  border: 1px solid #0061FF;
+  border: 1px solid #21396f;
 }
 
 .input_checkbox_wrapper input[type=radio]:checked + label.box_content .box:before,
@@ -441,7 +441,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #0061FF;
+  background-color: #21396f;
   display: block;
   -webkit-transform: scale(0);
           transform: scale(0);
@@ -509,9 +509,9 @@
 }
 
 .switch_wrapper span.selected {
-  background-color: #0061FF;
+  background-color: #21396f;
   color: white;
-  border: 1px solid #0061FF;
+  border: 1px solid #21396f;
 }
 
 .switch_wrapper span.selected:before {
@@ -552,7 +552,7 @@ body {
 }
 
 .login_container .login_container_wrapper .logo_content {
-  background-color: #0061FF;
+  background-color: #21396f;
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: center;

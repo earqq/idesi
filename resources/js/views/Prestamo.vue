@@ -1,4 +1,4 @@
-<template>
+/<template>
   <div class="create_client_content">
     <section class="tabs_section">
       <div class="tabs_wrapper">
@@ -185,13 +185,14 @@
             <button
               type="button"
               @click.prevent="clickAddconyuge"
-              class="add_section"
+              class="add_section in_bottom"
               v-if="form.conyugue.conyuge_tiene=='NO'">
               <span>AGREGAR CÓNYUGE O CONVIVIENTE</span>
               <i class="fas fa-plus"></i>
             </button>
-            <div class="form_list">
-              <div class="form_step_wrapper" v-if="form.conyugue.conyuge_tiene=='SI'">
+
+            <div class="form_list " v-if="form.conyugue.conyuge_tiene=='SI'">
+              <div class="form_step_wrapper in_bottom" >
                 <h3 class="title">
                   CÓNYUGE o Conviviente
                   <button  class="delete_section" type="button"  @click.prevent="clickRemoveconyuge()">
@@ -301,7 +302,7 @@
           <div v-show="tab == 3" class="form_step">
             <div class="form_step_wrapper">
               <div class="form_list" >
-                <div class="form_step_wrapper" v-for="(row, index) in form.avals" :key="index">
+                <div class="sub_step_wrapper" v-for="(row, index) in form.avals" :key="index">
                   <h3 class="title">
                     Aval {{index + 1}}
                     <button v-if="index > 0"
@@ -348,13 +349,7 @@
 
                     </div>
                     
-                    <br v-if="row.tipo_persona=='pj'">
-                    <h3 class="title" v-if="row.tipo_persona=='pj'">
-                        Datos Representante 
-                    </h3>
-                    <br v-if="row.tipo_persona=='pj'">
-
-                    <span class="separator" v-if="row.tipo_persona=='pn'"></span>
+                    <span class="separator" ></span>
 
                     <div class="group_form">
                       <div class="input_wrapper">
@@ -428,9 +423,7 @@
                         ></vue-numeric>
                         <input type="text" v-else disabled />
                       </div>
-                    </div>
-
-                    <div class="group_form">
+                
                       <div class="input_wrapper">
                         <label>Teléfono</label>
                         <input type="text" v-model="row.telefono" />
@@ -475,7 +468,7 @@
           <div v-show="tab == 4" class="form_step">
             <div class="form_step_wrapper">
               <div class="form_list">
-                <div class="form_step_wrapper" v-for="(row, index) in form.garantias" :key="index">
+                <div class="sub_step_wrapper" v-for="(row, index) in form.garantias" :key="index">
                   <h3 class="title">
                     Garantia {{index + 1}}
                     <button

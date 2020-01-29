@@ -2,7 +2,7 @@
   <div class="create_client_content">
     <section class="tabs_section">
       <div class="tabs_wrapper">
-        <div class="tab " @click="tab = 1" :class="[{complete : validateStep1 }, {selected: tab == 1}]">
+        <div class="tab " @click="tab = 1" :class="{selected: tab == 1}">
           <span>1</span>
           <p>PERSONALES</p>
         </div>
@@ -52,12 +52,11 @@
                       </select>
                     </div>
       
-                    <div class="input_wrapper" :class="{require: !validateDoc}">
+                    <div class="input_wrapper">
                       <label for="documento">Número</label>
                       <input type="text"  v-if="form.cliente.tipo_documento=='DNI'" v-model="form.cliente.documento"   v-mask="'########'" />
                       <input type="text"  v-else-if="form.cliente.tipo_documento=='CE'" v-model="form.cliente.documento"  />
                       <input type="text"  v-else  disabled/>
-                      <div class="message">número de documento inválido</div>
                     </div>
 
                     <div class="input_wrapper">
@@ -65,40 +64,34 @@
                       <input type="date" v-model="form.natural.nacimiento" > 
                     </div>
 
-                    <div class="input_wrapper" :class="{require: !validateName}">
+                    <div class="input_wrapper" >
                       <label for="nombres">Nombres</label>
                       <input type="text" v-model="form.natural.nombres" placeholder />
-                      <div class="message">nombres muy corto</div>
                     </div>
 
-                    <div class="input_wrapper" :class="{require: !validateLastname}">
+                    <div class="input_wrapper">
                       <label for="apellidos">Apellidos</label>
                       <input type="text" v-model="form.natural.apellidos" placeholder />
-                      <div class="message">apellidos muy corto</div>
                     </div>
 
-                    <div class="input_wrapper" :class="{require: !validateNacionalidad}">
+                    <div class="input_wrapper" >
                       <label for="apellidos">Nacionalidad</label>
                       <input type="text"  :maxlength="15"  v-model="form.cliente.pais"/>
-                      <div class="message">nacionalidad invalida</div>
                     </div>
 
-                    <div class="input_wrapper" :class="{require: !validateDepartamento}">
+                    <div class="input_wrapper">
                       <label for="apellidos">Departamento de Nacimiento</label>
                       <input type="text" v-model="form.cliente.departamento" :maxlength="45"  />
-                      <div class="message">nombre de departamento muy corto</div>
                     </div>
 
-                    <div class="input_wrapper" :class="{require: !validateProvincia}">
+                    <div class="input_wrapper" >
                       <label for="apellidos">Provincia de Nacimiento</label>
                       <input type="text" v-model="form.cliente.provincia" :maxlength="45"  />
-                      <div class="message">nombre de provincia muy corto</div>
                     </div>
 
-                    <div class="input_wrapper" :class="{require: !validateDistrito}">
+                    <div class="input_wrapper" >
                       <label for="apellidos">Distrito de Nacimiento</label>
                       <input type="text" v-model="form.cliente.distrito" :maxlength="45"  />
-                      <div class="message">nombre de distrito muy corto</div>
                     </div>
 
                   </div>
@@ -194,7 +187,7 @@
                     </div>
 
                     <div class="input_wrapper">
-                        <label>Departamento</label>
+                        <label>N° departamento</label>
                         <input type="text" v-model="form.natural.dpto" :maxlength="5" />
                     </div>
 
@@ -268,6 +261,7 @@
                         <option value="JUBILADO">JUBILADO</option>
                         <option value="AMA DE CASA">AMA DE CASA</option>
                         <option value="ESTUDIANTE">ESTUDIANTE</option>
+                        <option value="MENOR DE EDAD">MENOR DE EDAD</option>
                         <option value="OTROS">OTROS</option>
                       </select>
                     </div>
@@ -422,7 +416,7 @@
                     </div>
 
                     <div class="input_wrapper">
-                        <label>Departamento</label>
+                        <label>N° departamento</label>
                         <input type="text" v-model="form.laboral.dpto" :maxlength="5" />
                     </div>
 
@@ -662,7 +656,7 @@
                   <div class="group_form">
                     <div class="input_wrapper">
                         <label>Inscripción </label>
-                        <vue-numeric currency="S/. " separator="," v-model="form.asociativa.inscripcion"  v-bind:precision="2"></vue-numeric>
+                        <vue-numeric currency="S/. " readonly separator="," v-model="form.asociativa.inscripcion"  v-bind:precision="2"></vue-numeric>
                     </div>
                     <div class="input_wrapper">
                         <label>Aporte </label>
@@ -713,13 +707,6 @@
                       <select v-model="form.declaracion.pep">
                         <option value="SI">SI</option>
                         <option value="NO">NO</option>
-                      </select>
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Estado</label>
-                      <select v-model="form.declaracion.estado">
-                        <option value="ADMITIDO">ADMITIDO</option>
-                        <option value="RECHAZADO">RECHAZADO</option>
                       </select>
                     </div>
                   </div>
@@ -894,7 +881,7 @@ export default {
           relacion: 'PADRE'
         },
         asociativa:{
-          inscripcion:"",
+          inscripcion: 30,
           aporte:"",
           fondo:"",
           fondo_opcional:"",
@@ -1034,39 +1021,15 @@ export default {
         });
     }
   },
-  computed: {
-
-    validateName () {
-      return this.form.natural.nombres.length > 2
-    },
-    validateNacionalidad () {
-      return this.form.cliente.pais.length > 2
-    },
-    validateDepartamento () {
-      return this.form.cliente.departamento.length > 2
-    },
-    validateProvincia () {
-      return this.form.cliente.provincia.length > 2
-    },
-    validateDistrito () { 
-      return this.form.cliente.distrito.length > 2
-    },
-    validateLastname () {
-      return this.form.natural.apellidos.length > 2
-    },
-    validateDoc () {
-      let result = false
-      if (this.form.cliente.tipo_documento == 'DNI') result = this.form.cliente.documento.length == 8
-      else if (this.form.cliente.tipo_documento == 'CE') result = this.form.cliente.documento.length == 11
-      return result
-    },
-    validateStep1 () {
-      return this.validateDoc && this.validateName && this.validateLastname
-    }
-  },
   watch: {
     'form.familia.numero'(new_value,old_value){
-      if (new_value == 0) this.form.familia.hijos = 'NO'
+      console.log(new_value == '' && new_value <= 1 && this.form.familia.hijos=='SI')
+      if (new_value == 0 && new_value != '') this.form.familia.hijos = 'NO'
+      else if (new_value == '' && new_value <= 1 && this.form.familia.hijos=='SI') {
+        setTimeout(() => {
+          this.form.familia.numero = 1
+        }, 2000)
+      }
       this.hijosAsignacion(new_value,old_value)
     },
     'form.familia.hijos' (val) {

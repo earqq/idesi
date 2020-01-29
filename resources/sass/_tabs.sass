@@ -41,9 +41,9 @@
                 p
                     color: $primary_color
             &.selected
-                border-bottom: 2px solid $primary_color
                 span
-                    color: $primary_color
+                    color: white
+                    background-color: $primary_color
                     border: 1px solid $primary_color
                 p
                     color: $primary_color
@@ -198,6 +198,11 @@
                 border-top: 1px solid $line_color
                 &:focus, &:active
                     outline: none
+                &.in_bottom
+                    margin-top: 10px
+                    border: 1px solid $line_color
+                    border-radius: 4px
+                    box-shadow: $shadow
                 span
                     font-weight: 700
                     font-size: 12px

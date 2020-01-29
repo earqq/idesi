@@ -63,14 +63,13 @@
                     <label>Disponibilidad de pago</label>
                     <input type="text" v-model="form.disponibilidad_pago_inicial"  />
                   </div>
+                </div>
+                <div class="group_form all">
                   <div class="input_wrapper">
-                    <label>Destino de crèdito en propuesta cliente</label>
-                    <input type="text" v-model="form.destino_inicial"  />
+                    <label>Destino de crédito (propuesta cliente)</label>
+                    <textarea v-model="form.destino_inicial"  />
                   </div>
                 </div>
-
-                <span class="separator"></span>
-                <span class="separator"></span>
               </div>
             </div>
 
@@ -176,11 +175,18 @@
                     <input type="text" v-model="form.natural.direccion_laboral"  />
                   </div>
                 </div>
+              </div>
+            </div>
 
-                <h3 class="title">Cònyuge o Conviviente</h3>
-                <span class="separator"></span>
-
-                <div class="group_form" v-if="form.conyuge.conyuge_tiene=='SI'">
+            <div class="form_step_wrapper in_bottom" v-if="form.conyuge.conyuge_tiene=='SI'">
+              <h3 class="title">
+                Cónyuge o Conviviente
+                <button  class="delete_section" type="button"  @click.prevent="clickRemoveconyuge()">
+                  <i class="material-icons-outlined"> delete </i>
+                </button>
+              </h3>
+              <div class="form_content">
+                <div class="group_form" >
                   <div class="input_wrapper">
                     <label>Documento de Identidad</label>
                     <input
@@ -251,28 +257,17 @@
                     <input type="text" v-model="form.conyuge.direccion_laboral_conyugue" />
                   </div>
                 </div>
-
-                <button
-                  type="button"
-                  @click.prevent="clickAddconyuge"
-                  class="add_section"
-                  v-if="form.conyuge.conyuge_tiene=='NO'"
-                >
-                  <span>AGREGAR CÓNYUGE O CONVIVIENTE</span>
-                  <i class="fas fa-plus"></i>
-                </button>
-
-                <button
-                  type="button"
-                  @click.prevent="clickRemoveconyuge"
-                  class="add_section"
-                  v-else
-                >
-                  <span>REMOVER CÓNYUGE Ó CONVIVIENTE</span>
-                  <i class="fas fa-plus"></i>
-                </button>
               </div>
             </div>
+
+            <button
+              type="button"
+              @click.prevent="clickAddconyuge"
+              class="add_section in_bottom"
+              v-if="form.conyuge.conyuge_tiene=='NO'">
+              <span>AGREGAR CÓNYUGE O CONVIVIENTE</span>
+              <i class="fas fa-plus"></i>
+            </button>
 
             <div class="form_buttons">
               <a class="button_inline_primary medium prev" @click="prev(2)">
@@ -291,10 +286,8 @@
         <transition name="slide-fade" mode="in-out">
           <div v-show="tab == 3" class="form_step">
             <div class="form_step_wrapper">
-              <h3 class="title">Datos de Aval</h3>
-
               <div class="form_list" >
-                <div class="form_step_wrapper" v-for="(row, index) in form.avals" :key="index">
+                <div class="sub_step_wrapper" v-for="(row, index) in form.avals" :key="index">
                   <h3 class="title">
                     Aval {{index + 1}}
                     <button
@@ -343,13 +336,8 @@
 
                     </div>
 
-                    <br v-if="row.tipo_persona=='pj'">
-                    <h3 class="title" v-if="row.tipo_persona=='pj'">
-                        Datos Representante 
-                    </h3>
-                    <br v-if="row.tipo_persona=='pj'">
 
-                    <span class="separator" v-if="row.tipo_persona=='pn'"></span>
+                    <span class="separator" ></span>
 
 
                     <div class="group_form">
@@ -389,10 +377,22 @@
                         <label>Ocupación</label>
                         <input type="text" v-model="row.ocupacion" />
                       </div>
+                 
                       <div class="input_wrapper">
-                        <label>Teléfono</label>
-                        <input type="text" v-model="row.telefono" />
+                        <label>Centro Laboral</label>
+                        <input type="text" v-model="row.centro_laboral" />
                       </div>
+                      <div class="input_wrapper">
+                        <label>Dirección centro laboral</label>
+                        <input type="text" v-model="row.direccion_laboral" />
+                      </div>
+
+                    </div>
+
+                    <span class="separator"></span>
+
+                    <div class="group_form">
+
                       <div class="input_wrapper">
                         <label>Socio</label>
                         <select v-model="row.socio">
@@ -417,6 +417,10 @@
                         <input type="text" v-else disabled />
                       </div>
                       <div class="input_wrapper">
+                        <label>Teléfono</label>
+                        <input type="text" v-model="row.telefono" />
+                      </div>
+                      <div class="input_wrapper">
                         <label>Celular</label>
                         <input type="text" v-model="row.celular" v-mask="'### ### ###'" />
                       </div>
@@ -428,15 +432,9 @@
                         <label>Distrito</label>
                         <input type="text" v-model="row.distrito" />
                       </div>
-                      <div class="input_wrapper">
-                        <label>Centro Laboral</label>
-                        <input type="text" v-model="row.centro_laboral" />
-                      </div>
-                      <div class="input_wrapper">
-                        <label>Dirección centro laboral</label>
-                        <input type="text" v-model="row.direccion_laboral" />
-                      </div>
+                     
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -464,17 +462,15 @@
         <transition name="slide-fade" mode="in-out">
           <div v-show="tab == 4" class="form_step">
             <div class="form_step_wrapper">
-              <h3 class="title">Datos de Garantia</h3>
-
               <div class="form_list">
-                <div class="form_step_wrapper" v-for="(row, index) in form.garantias" :key="index">
+                <div class="sub_step_wrapper" v-for="(row, index) in form.garantias" :key="index">
                   <h3 class="title">
                     Garantia {{index + 1}}
                     <button
+                      v-if="index > 0"
                       class="delete_section"
                       type="button"
-                      @click.prevent="clickRemoveGarantia(index)"
-                    >
+                      @click.prevent="clickRemoveGarantia(index)">
                       <i class="material-icons-outlined">delete</i>
                     </button>
                   </h3>
@@ -589,8 +585,7 @@
                   </div>
                 </div>
 
-                <div class="separator"></div>
-                <div class="group_form">
+                <div class="group_form all">
                   <div class="input_wrapper">
                     <label>Comentarios</label>
                     <textarea type="text" v-model="form.comentarios"></textarea>
