@@ -44,10 +44,17 @@
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
                 <li v-if="prestamo.estado=='PENDIENTE' && (id_rol=='3' || id_rol=='4')">
-                  <router-link 
+                  <router-link
+                              v-if="evalaucionEcho(prestamo.id)==0"
                             :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
                     Evaluación
                   </router-link>
+                  <router-link
+                              v-else
+                            :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
+                    Ver Evaluación
+                  </router-link>
+
                 </li>
                 <li  v-else>
                   <router-link
@@ -141,6 +148,13 @@ export default {
         console.log(response.data);
       });
     },
+    evalaucionEcho(prestamo){
+      this.$http.get(`/${this.resource}/veridicarEvaluacion/`+ prestamo).then(response => {
+        console.log(response.data)
+       return false
+      });
+      
+    } 
   },
   computed: {
     timeCredit () {
