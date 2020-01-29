@@ -110,7 +110,7 @@
                 </div>
               </transition>
 
-                             <transition name="slide-fade" mode="in-out">
+                  <transition name="slide-fade" mode="in-out">
 
                       <div v-show="tab == 2" class="form_step">
                         
@@ -394,6 +394,7 @@
                                         <td v-text="cuantitativa.cuota_institucion_total"></td>
                                         <td v-text="cuantitativa.cuota_institucion_validacion"></td>
                                       </tr>
+
                                       <tr style="background: rgb(155, 155, 155);">
                                         <td class="font-weight-bold">UTILIDAD DESP CUOTA</td>
                                         <td v-text="cuantitativa.utilidad_desp_cuota_titular"></td>
@@ -401,6 +402,7 @@
                                         <td v-text="cuantitativa.utilidad_desp_cuota_total"></td>
                                         <td v-text="cuantitativa.utilidad_desp_cuota_validacion"></td>
                                       </tr>
+
                                       <tr>
                                         <td>Participacion de la cuota</td>
                                         <td v-text="cuantitativa.participacion_cuota_titular"></td>
@@ -408,9 +410,12 @@
                                         <td v-text="cuantitativa.participacion_cuota_total"></td>
                                         <td v-text="cuantitativa.participacion_cuota_validacion"></td>
                                       </tr>
+
                                       <tr>
                                         <td colspan="5">RESULTADO EVA <span v-text="cuantitativa.resultado_eva" ></span></td>
                                       </tr>
+
+
                                       <tr>
                                         <td colspan="5">RESULTADO SIST <span v-text="cuantitativa.resultado_sist"></span></td>
                                       </tr>
@@ -430,7 +435,7 @@
       </div>
     </div>
 
-    <aside class="evaluation" v-if="estado=='PENDIENTE' && (rol=='3' || rol=='4')">
+    <aside class="evaluation" v-if="estado_evaluado==0">
       <div class="title">Evaluador</div>
       <div class="evaluation_wrapper">
 
@@ -531,6 +536,7 @@ export default {
       detalle: {},
       tab: 1,
       cuantitativa: {},
+      estado_evaluado: 0,
       rol: this.$route.params.rol, 
       estado: this.$route.params.estado,
       form: {},
@@ -562,39 +568,36 @@ export default {
         this.archivos = response.data["files"];
       });
     },
-    methodsDetalle(id) { 
-      if(this.rol=='4' || this.rol=='1' || this.rol=='2'){
+    methodsDetalle(id) {  
         this.$http
-        .get(`/${this.resource}/prestamos/detalleF/` + id)
+        .get(`/${this.resource}/prestamos/detalle/` + id)
         .then(response => {
-          console.log(response.data);
+          
+          if(response.data.estado_evaluado==0){
+            this.estado_evaluado=0
+          }else{
+            this.estado_evaluado=1
+          }
+
+          console.log(this.estado_evaluado);
           if (response.data.cuantitativa)
             this.cuantitativa = response.data.cuantitativa;
             this.detalle = response.data.prestamo;
             this.form.evaluacion = response.data.evaluacion;
+            
             this.listFile(id);
-            this.form.producto = this.detalle.producto;
-            this.form.aporte = this.detalle.aporte;
-            this.form.importe = this.detalle.importe;
-            this.form.plazo = this.detalle.plazo;
-            this.form.cuotas = this.detalle.cuotas;
-            this.form.tasa = this.detalle.tasa;
-            this.form.estado = this.detalle.estado;
+            if(this.rol=='4'){
+                this.form.producto = this.detalle.producto;
+                this.form.aporte = this.detalle.aporte;
+                this.form.importe = this.detalle.importe;
+                this.form.plazo = this.detalle.plazo;
+                this.form.cuotas = this.detalle.cuotas;
+                this.form.tasa = this.detalle.tasa;
+                this.form.estado = this.detalle.estado;
+            }
             this.form.prestamos_id = id;
             this.id_prestamo = id;
-        });
-      }
-      else if(this.rol=='3'){
-        this.$http
-        .get(`/${this.resource}/prestamos/detalle/` + id)
-        .then(response => {
-          this.detalle = response.data;
-          this.listFile(id);
-          this.form.prestamos_id = id;
-          this.id_prestamo= id;
-        });
-
-      }
+        }); 
     },
     formInit() {
        if(this.rol=='4'){
@@ -642,10 +645,6 @@ export default {
               });
       }
       else if(this.rol=='3'){
-              // if() {
-      //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
-      //  }
-
       this.$http
         .post(`/${this.resource}/prestamos/evaluar`, this.form)
         .then(response => {
@@ -654,15 +653,10 @@ export default {
               "El evaluacion fue exitosa",
               "Exitoso",
               this.notificationSystem.options.success
-            ); 
+            );  
+          this.methodsDetalle(this.$route.params.prestamo)
         })
-        // .catch(error => {
-        //   if (error.response.status === 422) {
-        //     this.errors = error.response.data;
-        //   } else {
-        //     this.$message.error(error.response.data.message);
-        //   }
-        // })
+ 
         .then(() => {
           // this.loading_submit = false;
         });

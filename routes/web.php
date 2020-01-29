@@ -69,6 +69,7 @@ Route::group(['middleware'=>['auth']],function(){
 
  
         Route::get('evaluaciones/prestamos', 'EvaluacionController@prestamos');
+        Route::get('evaluaciones/veridicarEvaluacion/{prestamo}', 'EvaluacionController@verificarPrestamo');
         Route::get('evaluaciones/prestamos/detalle/{prestamo}', 'EvaluacionController@show');
         Route::get('evaluaciones/prestamos/detalleF/{prestamo}', 'EvaluacionController@showF');
 
