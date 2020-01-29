@@ -105,7 +105,15 @@
                         </tbody>
                       </table>
                     </div> 
-                    
+                    <div v-if='estado_evaluado==1'> 
+                      <li>Forma Final: {{prestamo.forma_final}}</li>
+                      <li>Producto Final: {{prestamo.producto_final}}</li>
+                      <li>Aporte Final:{{prestamo.aporte_final}}</li>
+                      <li>Importe Final:{{prestamo.importe_final}}</li>
+                      <li>Plazo Final:{{prestamo.plazo_final}}</li>
+                      <li>Cuota Final:{{prestamo.cuota_final}}</li>
+                      <li>Tasa Final:{{prestamo.tasa_final}}</li>
+                    </div>
                   </div>
                 </div>
               </transition>
@@ -539,6 +547,7 @@ export default {
       estado_evaluado: 0,
       rol: this.$route.params.rol, 
       estado: this.$route.params.estado,
+      prestamo:{},
       form: {},
       notificationSystem: {
         options: {
@@ -578,9 +587,9 @@ export default {
             this.estado_evaluado=0
           }else{
             this.estado_evaluado=1
+            this.prestamo=response.data.prestamo
           }
-
-          console.log(this.estado_evaluado);
+          
           if (response.data.cuantitativa)
             this.cuantitativa = response.data.cuantitativa;
             this.detalle = response.data.prestamo;
