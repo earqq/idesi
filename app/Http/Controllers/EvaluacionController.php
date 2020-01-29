@@ -160,23 +160,18 @@ class EvaluacionController extends Controller
     public function evaluar(Request $request)
     {
             try{
-
-                   DB::beginTransaction();
-    
-                   $evaluacion = new Evaluacion();
-                   $evaluacion->detalle  = $request['detalle'] ;
-                   $evaluacion->estado  = $request['estado'];
-                   $evaluacion->prestamos_id  = $request['prestamos_id'];
-                   $evaluacion->users_id  = Auth::user()->id;
-                   $evaluacion->save();
-
-    
+                    DB::beginTransaction();
+                    $evaluacion = new Evaluacion();
+                    $evaluacion->detalle  = $request['detalle'] ;
+                    $evaluacion->estado  = $request['estado'];
+                    $evaluacion->prestamos_id  = $request['prestamos_id'];
+                    $evaluacion->users_id  = Auth::user()->id;
+                    $evaluacion->save();
                     DB::commit();
                     return [
                         'success' => true,
                         'data' => 'Cliente creado',
                     ];
-    
             } catch (Exception $e){
                 return [
                     'success' => false,
@@ -234,7 +229,7 @@ class EvaluacionController extends Controller
                     
                    $prestamo = Prestamo::find($request['prestamos_id']);
                    
-                   if($request['estado']=='DESAPROBADO' ){
+                   if($request->estado=='DESAPROBADO' ){
 
                     $prestamo->producto_final = 0;
                     $prestamo->forma_final = 0;
@@ -243,22 +238,28 @@ class EvaluacionController extends Controller
                     $prestamo->plazo_final = 0;
                     $prestamo->cuota_final = 0;
                     $prestamo->tasa_final = 0;
-                    $prestamo->estado = $request['estado'];
+                    $prestamo->estado = $request->estado;
                     $prestamo->save();
 
                    }else{
 
-                    $prestamo->producto_final = $request['producto'];
-                    $prestamo->aporte_final = $request['aporte'];
-                    $prestamo->importe_final = $request['importe'];
-                    $prestamo->plazo_final = $request['plazo'];
-                    $prestamo->cuota_final = $request['cuotas'];
-                    $prestamo->tasa_final = $request['tasa'];
-                    $prestamo->estado = $request['estado'];
+                    $prestamo->producto_final = $request->producto;
+                    $prestamo->aporte_final = $request->aporte;
+                    $prestamo->importe_final = $request->importe;
+                    $prestamo->plazo_final = $request->plazo;
+                    $prestamo->cuota_final = $request->cuotas;
+                    $prestamo->tasa_final = $request->tasa;
+                    $prestamo->estado = $request->estado;
                     $prestamo->save();
 
                    }
-                  
+                   
+                   $evaluacion = new Evaluacion();
+                   $evaluacion->detalle  = $request['detalle'] ;
+                   $evaluacion->estado  = $request['estado'];
+                   $evaluacion->prestamos_id  = $request['prestamos_id'];
+                   $evaluacion->users_id  = Auth::user()->id;
+                   $evaluacion->save();
     
                     DB::commit();
                     return [

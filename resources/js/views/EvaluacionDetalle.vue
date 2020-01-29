@@ -572,7 +572,8 @@ export default {
         this.$http
         .get(`/${this.resource}/prestamos/detalle/` + id)
         .then(response => {
-          
+          console.log("response eval")
+          console.log(response)
           if(response.data.estado_evaluado==0){
             this.estado_evaluado=0
           }else{
@@ -625,6 +626,8 @@ export default {
       window.open("/clientes/adjuntarPdf/" + this.id_prestamo, "_blank");
     },
     firmarEvaluacion() {
+      console.log("role")
+      console.log(this.rol)
       if(this.rol=='4'){
               // if() {
       //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
@@ -633,6 +636,7 @@ export default {
             this.$http
               .post(`/${this.resource}/prestamos/evaluarFinal`, this.form)
               .then(response => {
+                this.methodsDetalle(this.$route.params.prestamo)
                 this.$toast.success(
                   "El evaluacion fue exitosa",
                   "Exitoso",
@@ -640,9 +644,6 @@ export default {
                 );
               })
 
-              .then(() => {
-                // this.loading_submit = false;
-              });
       }
       else if(this.rol=='3'){
       this.$http
