@@ -180,7 +180,7 @@
                 <h3 class="title">Cònyuge o Conviviente</h3>
                 <span class="separator"></span>
 
-                <div class="group_form" v-if="form.conyugue.conyuge_tiene=='SI'">
+                <div class="group_form" v-if="form.conyugue.CONYUGE_tiene=='SI'">
                   <div class="input_wrapper">
                     <label>Documento de Identidad</label>
                     <input
@@ -254,9 +254,9 @@
 
                 <button
                   type="button"
-                  @click.prevent="clickAddConyuge"
+                  @click.prevent="clickAddCONYUGE"
                   class="add_section"
-                  v-if="form.conyugue.conyuge_tiene=='NO'"
+                  v-if="form.conyugue.CONYUGE_tiene=='NO'"
                 >
                   <span>AGREGAR CONYUGE Ó CONVIVIENTE</span>
                   <i class="fas fa-plus"></i>
@@ -264,7 +264,7 @@
 
                 <button
                   type="button"
-                  @click.prevent="clickRemoveConyuge"
+                  @click.prevent="clickRemoveCONYUGE"
                   class="add_section"
                   v-else
                 >
@@ -701,7 +701,7 @@ export default {
         this.form.natural.centro_laboral = response.data["natural"]["centro_laboral"];
         this.form.natural.direccion_laboral = response.data["natural"]["direccion_laboral"];
 
-        if (response.data["tiene_conyuge"]=='SI') {
+        if (response.data["tiene_CONYUGE"]=='SI') {
           this.form.conyugue.documento_conyugue = response.data["conyugue"]["documento"];
           this.form.conyugue.nombres_conyugue =  response.data["conyugue"]["nombres"];
           this.form.conyugue.nacimiento_conyugue =  response.data["conyugue"]["nacimiento"];
@@ -714,9 +714,9 @@ export default {
           this.form.conyugue.socio_conyugue = response.data["conyugue"]["socio"];
           this.form.conyugue.codigo_socio_conyugue = response.data["conyugue"]["codigo_socio"];
           this.form.conyugue.aporte_socio_conyugue = response.data["conyugue"]["aporte_socio"];
-          this.form.conyugue.conyuge_tiene='SI';
+          this.form.conyugue.CONYUGE_tiene='SI';
         }else{
-          this.form.conyugue.conyuge_tiene='NO';
+          this.form.conyugue.CONYUGE_tiene='NO';
         }
 
         this.form.monto_inicial=response.data['prestamo']['monto_inicial'];
@@ -748,11 +748,11 @@ export default {
     prev(index) {
        this.tab = index - 1;
     },
-    clickAddConyuge(){
-      this.form.conyugue.conyuge_tiene='SI'
+    clickAddCONYUGE(){
+      this.form.conyugue.CONYUGE_tiene='SI'
     },
-    clickRemoveConyuge(){
-      this.form.conyugue.conyuge_tiene='NO'
+    clickRemoveCONYUGE(){
+      this.form.conyugue.CONYUGE_tiene='NO'
     },
     clickAddAval() {
       // this.contador_aval++;
@@ -849,7 +849,7 @@ export default {
           socio_conyugue: 0,
           codigo_socio_conyugue: "",
           aporte_socio_conyugue: "",
-          conyuge_tiene: 0,
+          CONYUGE_tiene: 0,
         },
         monto_inicial: "",
         plazo_inicial: "0",
@@ -872,7 +872,7 @@ export default {
       let me = this;
       // me.loader = "true";
       axios
-        .post("/consulta/dni", {
+        .post("/consulta/doc", {
           documento: this.form.conyugue.documento_conyugue
         })
         .then(function(response) { 
@@ -889,7 +889,7 @@ export default {
       let me = this;
       // me.loader = "true";
       axios
-        .post("/consulta/dni", {
+        .post("/consulta/doc", {
           documento: this.form.avals[index].documento
         })
         .then(function(response) { 

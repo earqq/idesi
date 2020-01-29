@@ -43,16 +43,8 @@ class FileController extends Controller
         $max_size = (int)ini_get('upload_max_filesize') * 1000;
         $all_ext = implode(',', $this->allExtensions());
 
-        
-        // $this->validate($request, [
-        //     'nombre' => 'required|unique:files',
-        //     'file' => 'required|file|mimes:' . $all_ext . '|max:' . $max_size
-        // ]);
+        $model = new Archivo();  
 
-
-        $model = new Archivo(); 
-
-        
         $file = $request->file('file');
 
         $ext = $file->getClientOriginalExtension();

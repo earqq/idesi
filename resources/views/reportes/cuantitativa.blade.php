@@ -227,20 +227,20 @@
                                        
                                     </thead>
                                     <tbody>                                       
-                                        @foreach($cuantitativa->conyuge['ingresos_negocio'] as $conyuge_ingreso)
-                                        @if ($conyuge_ingreso['concepto'])
+                                        @foreach($cuantitativa->CONYUGE['ingresos_negocio'] as $CONYUGE_ingreso)
+                                        @if ($CONYUGE_ingreso['concepto'])
                                          
                                          
                                         <tr>
-                                            <td>{{$conyuge_ingreso['concepto']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['lunes']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['martes']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['miercoles']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['jueves']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['viernes']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['sabado']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['domingo']}}</td>
-                                            <td style="background: #009688;color:#fff">S/. {{$conyuge_ingreso['subtotal']}}</td>
+                                            <td>{{$CONYUGE_ingreso['concepto']}}</td>
+                                            <td>S/. {{$CONYUGE_ingreso['lunes']}}</td>
+                                            <td>S/. {{$CONYUGE_ingreso['martes']}}</td>
+                                            <td>S/. {{$CONYUGE_ingreso['miercoles']}}</td>
+                                            <td>S/. {{$CONYUGE_ingreso['jueves']}}</td>
+                                            <td>S/. {{$CONYUGE_ingreso['viernes']}}</td>
+                                            <td>S/. {{$CONYUGE_ingreso['sabado']}}</td>
+                                            <td>S/. {{$CONYUGE_ingreso['domingo']}}</td>
+                                            <td style="background: #009688;color:#fff">S/. {{$CONYUGE_ingreso['subtotal']}}</td>
                                         </tr>
                                         @endif
                                         @endforeach
@@ -265,7 +265,7 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @foreach($cuantitativa->conyuge['ingresos_por_categoria'] as $ingreso_cat)
+                                        @foreach($cuantitativa->CONYUGE['ingresos_por_categoria'] as $ingreso_cat)
                                         @if ($ingreso_cat['concepto'])
                                           
                                         <tr>
@@ -281,9 +281,9 @@
 
                          <!-- giro del negocio -->
                          <tr>
-                            <td><span class="title">GIRO DEL NEGOCIO </span> <span> {{$cuantitativa->conyuge['giro_negocio']}} </span></td>
-                            <td><span class="title">MARGEN COSTO </span> <span> {{$cuantitativa->conyuge['margen_costo']}} </span></td>
-                            <td><span class="title">VALOR INVENTARIO </span> <span> {{$cuantitativa->conyuge['valor_inventario']}} </span></td>
+                            <td><span class="title">GIRO DEL NEGOCIO </span> <span> {{$cuantitativa->CONYUGE['giro_negocio']}} </span></td>
+                            <td><span class="title">MARGEN COSTO </span> <span> {{$cuantitativa->CONYUGE['margen_costo']}} </span></td>
+                            <td><span class="title">VALOR INVENTARIO </span> <span> {{$cuantitativa->CONYUGE['valor_inventario']}} </span></td>
                         </tr>
                          <!-- GASTOS FINANCIEROS -->
                          <tr>
@@ -303,13 +303,13 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @foreach($cuantitativa->conyuge['gasto_financiero'] as $conyuge_gasto)
-                                            @if ($conyuge_gasto['entidad'])
+                                        @foreach($cuantitativa->CONYUGE['gasto_financiero'] as $CONYUGE_gasto)
+                                            @if ($CONYUGE_gasto['entidad'])
                                             
                                             <tr>
-                                                <td>{{$conyuge_gasto['entidad']}}</td>
-                                                <td>S/. {{$conyuge_gasto['saldo_capital']}}</td> 
-                                                <td>S/. {{$conyuge_gasto['cuota']}}</td> 
+                                                <td>{{$CONYUGE_gasto['entidad']}}</td>
+                                                <td>S/. {{$CONYUGE_gasto['saldo_capital']}}</td> 
+                                                <td>S/. {{$CONYUGE_gasto['cuota']}}</td> 
                                             </tr>
                                             @endif
                                         @endforeach
@@ -335,10 +335,10 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @foreach($cuantitativa->conyuge['gasto_negocio'] as $conyuge_gasto)
+                                        @foreach($cuantitativa->CONYUGE['gasto_negocio'] as $CONYUGE_gasto)
                                         <tr>
-                                            <td>{{$conyuge_gasto['entidad']}}</td>
-                                            <td>S/. {{$conyuge_gasto['pago']}}</td>  
+                                            <td>{{$CONYUGE_gasto['entidad']}}</td>
+                                            <td>S/. {{$CONYUGE_gasto['pago']}}</td>  
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -447,7 +447,7 @@
                          </tr>
  
                          <tr>
-                            <td colspan="3"> <span class="title">GASTO FINANCIERO PERSONAL CONYUGE O CONVIVIENTE</td>
+                            <td colspan="3"> <span class="title">GASTO FINANCIERO PERSONAL CÓNYUGE O CONVIVIENTE</td>
                          </tr>
                          <tr>
                              <td colspan="3">
@@ -463,7 +463,7 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @foreach ($cuantitativa->conyuge['gasto_financiero_personal'] as $cuant)
+                                        @foreach ($cuantitativa->CONYUGE['gasto_financiero_personal'] as $cuant)
                                         <tr>
                                             <td>{{$cuant['entidad']}}</td>
                                             <td>S/. {{$cuant['saldo_capital']}}</td> 

@@ -54,7 +54,7 @@
       
                     <div class="input_wrapper" :class="{require: !validateDoc}">
                       <label for="documento">Número</label>
-                      <input type="text"  v-if="form.cliente.tipo_documento=='DNI'" v-model="form.cliente.documento"  @change="datosCliente()"  v-mask="'########'" />
+                      <input type="text"  v-if="form.cliente.tipo_documento=='DNI'" v-model="form.cliente.documento"   v-mask="'########'" />
                       <input type="text"  v-else-if="form.cliente.tipo_documento=='CE'" v-model="form.cliente.documento"  />
                       <input type="text"  v-else  disabled/>
                       <div class="message">número de documento inválido</div>
@@ -550,7 +550,7 @@
 
                         <div class="input_wrapper"> 
                           <label> Documento </label>
-                          <input type="text" v-model="row.documento" @change="datosFamiliar(index)" />
+                          <input type="text" v-model="row.documento" @keyup="datosFamiliar(index,row.documento)" />
                         </div>
 
                         <div class="input_wrapper">
@@ -878,7 +878,7 @@ export default {
           especificacion:""
         
         },
-         familia:{
+        familia:{
           hijos: "NO",
           numero:0,
           conyugue:"NO",
@@ -934,11 +934,11 @@ export default {
     hijosAsignacion(new_value,old_value){
        old_value = old_value || 0
        new_value = new_value || 0 
-      var conyuge=null
+      var CONYUGE=null
 
       for (var i = 0; i < this.form.detalles.length; i++) {  
             if(this.form.detalles[i].parentesco!='HIJOS'){ 
-              conyuge= this.form.detalles[i] 
+              CONYUGE= this.form.detalles[i] 
             } 
       }
 
@@ -954,7 +954,7 @@ export default {
               })
 
         } 
-        if (conyuge) this.form.detalles.push(conyuge)
+        if (CONYUGE) this.form.detalles.push(CONYUGE)
 
     },
     resetForm() {
@@ -963,7 +963,7 @@ export default {
     datosCliente() {
       let me = this;
       axios
-        .post("/consulta/dni", {
+        .post("/consulta/doc", {
           documento: this.form.cliente.documento
         })
         .then(function(response) {          
@@ -977,15 +977,14 @@ export default {
           me.initForm();
         });
     },
-    datosFamiliar(index) {
-      let me = this;
-      axios
-        .post("/consulta/dni", {
+    datosFamiliar(index,document) {
+      if(document.length==8){
+        let me = this;
+        axios
+        .post("/consulta/doc", {
           documento: this.form.detalles[index].documento
         })
         .then(function(response) {
-           console.log("viene")
-          console.log(response) 
           if(response.data){
             me.form.detalles[index].nombres = response.data["nombres"]  + ' ' +  response.data["surnames"];
           }
@@ -994,6 +993,7 @@ export default {
           console.log(error);
           me.initForm();
         });
+      }
     },
     submit() {
       // if() {
@@ -1072,7 +1072,12 @@ export default {
     'form.familia.hijos' (val) {
       if (val == 'NO') this.form.familia.numero = 0
       else if (val == 'SI') this.form.familia.numero = 1
-    }
+    },
+    'form.cliente.documento'(val){
+      if(val.length==8){
+          this.datosCliente()
+      }
+    },   
   }
 };
 </script>

@@ -33,7 +33,6 @@ class Aval extends Model
     /**
      * @var array
      */
-    protected $fillable = ['prestamos_id', 'documento', 'tipo_persona', 'nombres', 'apellidos', 'nacimiento', 'estado_civil', 'ocupacion', 'telefono', 'celular', 'direccion', 'distrito', 'centro_laboral', 'direccion_laboral', 'socio', 'codigo_socio', 'aporte_socio', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

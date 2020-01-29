@@ -86,7 +86,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('evaluaciones/prestamos/evaluar', 'EvaluacionController@evaluar');
         Route::post('evaluaciones/prestamos/evaluarFinal', 'EvaluacionController@evaluarFinal');
 
-        Route::post('/consulta/dni','ConsultaController@dni');
+        Route::post('/consulta/doc','ConsultaController@doc');
 
         Route::get('/files/{id}', 'FileController@index');
         Route::post('files/add', 'FileController@store');

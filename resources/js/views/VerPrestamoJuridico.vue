@@ -701,11 +701,11 @@ export default {
     prev(index) {
       this.tab = index - 1;
     },
-    clickAddConyuge(){
-      this.form.conyugue.conyuge_tiene=1
+    clickAddCONYUGE(){
+      this.form.conyugue.CONYUGE_tiene=1
     },
-    clickRemoveConyuge(){
-      this.form.conyugue.conyuge_tiene=0
+    clickRemoveCONYUGE(){
+      this.form.conyugue.CONYUGE_tiene=0
     },
       meses_numero(){
 
@@ -831,7 +831,7 @@ export default {
       let me = this;
       // me.loader = "true";
       axios
-        .post("/consulta/dni", {
+        .post("/consulta/doc", {
         //   documento: this.form.conyugue.documento_conyugue
         })
         .then(function(response) { 
@@ -849,7 +849,7 @@ export default {
       let me = this;
       // me.loader = "true";
       axios
-        .post("/consulta/dni", {
+        .post("/consulta/doc", {
           documento: this.form.avals[index].documento
         })
         .then(function(response) { 

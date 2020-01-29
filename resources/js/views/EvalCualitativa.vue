@@ -99,40 +99,40 @@
                             <div class="input_wrapper">
                               <label>Antiguedad</label>
                               <select v-model="evaluacion.negocio.antiguedad" >
-                                <option value="0">Menos de 1 año</option>
-                                <option value="1">1 año</option>
-                                <option value="2">2 años</option>
-                                <option value="3">3 años</option>
-                                <option value="4">4 años</option>
-                                <option value="5">5 años</option>
-                                <option value="6">Más de 5 años</option>
+                                <option value="MENO DE 1 AÑO">Menos de 1 año</option>
+                                <option value="1 AÑO">1 año</option>
+                                <option value="2 AÑOS">2 años</option>
+                                <option value="3 AÑOS">3 años</option>
+                                <option value="4 AÑOS">4 años</option>
+                                <option value="5 AÑOS">5 años</option>
+                                <option value="6 MÁS DE 5 AÑOS">Más de 5 años</option>
                               </select>
                             </div>
 
                             <div class="input_wrapper">
                               <label>Local</label>
                               <select v-model="evaluacion.negocio.local" >
-                                <option value="1">Propio</option>
-                                <option value="2">Alquilado</option>
-                                <option value="3">Módulo V. pública</option>
-                                <option value="4">Familiar</option>
-                                <option value="5">Hipotec/anticresis</option>
+                                <option value="PROPIO">Propio</option>
+                                <option value="ALQUILADO">Alquilado</option>
+                                <option value="MODULO V. PUBLICO">Módulo V. pública</option>
+                                <option value="FAMILIAR">Familiar</option>
+                                <option value="HIPOTECA/ANTICRISIS">HipoteaA/anticresis</option>
                               </select>
                             </div>
 
                             <div class="input_wrapper">
                               <label>Licencia de Funcionamiento</label>
                               <select  v-model="evaluacion.negocio.licencia_funcionamiento" >
-                                <option value="1">Si cuenta</option>
-                                <option value="0">No cuenta</option>
+                                <option value="SI CUENTA">Si cuenta</option>
+                                <option value="NO CUENTA">No cuenta</option>
                               </select>
                             </div>
 
                             <div class="input_wrapper">
                               <label>Realizo mejoras en el local</label>
                               <select v-model="evaluacion.negocio.mejoras_local" >
-                                <option value="1">Si realizo</option>
-                                <option value="0">No realizo</option>
+                                <option value="SI RELIZO">Si realizo</option>
+                                <option value="NO REALIZO">No realizo</option>
                               </select>
                             </div>
 
@@ -205,8 +205,8 @@
                             <div class="input_wrapper">
                               <label>Permiso para brindar servicio</label>
                               <select v-model="evaluacion.vehiculo.permiso_servicio" >
-                                <option value="1">Si cuenta</option>
-                                <option value="0">No cuenta</option>
+                                <option value="SI CUENTA">Si cuenta</option>
+                                <option value="NO CUENTA">No cuenta</option>
                               </select>
                             </div>
 
@@ -248,20 +248,20 @@
                       <div class="input_wrapper">
                         <label>Tipo de vivienda</label>
                         <select v-model="evaluacion.familiar.tipo_vivienda" >
-                          <option value="1">Propia Cancelada</option>
-                          <option value="2">Propia (hipoteca)</option>
-                          <option value="3">De los padres</option>
-                          <option value="4">De familiares</option>
-                          <option value="5">Alquilada</option>
+                          <option value="PROPIA CANCELADA">Propia Cancelada</option>
+                          <option value="PROPIA (HIPOTECA)">Propia (hipoteca)</option>
+                          <option value="DE LOS PADRES">De los padres</option>
+                          <option value="DE FAMILIARES">De familiares</option>
+                          <option value="ALQUILADA">Alquilada</option>
                         </select>
                       </div>
                       
                       <div class="input_wrapper">
                         <label>Situacion familiar</label>
                         <select v-model="evaluacion.familiar.situacion_familiar" >
-                          <option value="1">Soltero</option>
-                          <option value="2">Casado</option>
-                          <option value="3">Conviviente</option>
+                          <option value="SOLTERO">Soltero</option>
+                          <option value="CASADO">Casado</option>
+                          <option value="CONVIVIENTE">Conviviente</option>
                         </select>
                       </div>
 
@@ -530,12 +530,12 @@
                       <div class="input_wrapper">
                         <label>Colateral</label>
                         <select v-model="evaluacion.colateral">
-                          <option value="1">Aval con casa propia</option>
-                          <option value="2">Aval con casa alquilada</option>
-                          <option value="3">Garantia liquida liquida</option>
-                          <option value="4">Garantia vehicular</option>
-                          <option value="5">Hipoteca inmobiliara</option>
-                          <option value="0">Sin colateral</option>
+                          <option value="AVAL CON CASA PORPIA">Aval con casa propia</option>
+                          <option value="AVAL CON CASA ALQUILADA">Aval con casa alquilada</option>
+                          <option value="GARANTIA LIQUIDA ">Garantia liquida </option>
+                          <option value="GARANTIA VEHICULAR">Garantia vehicular</option>
+                          <option value="HIPOTECA INMOBILIRARIA">Hipoteca inmobiliara</option>
+                          <option value="SIN COLATERAL">Sin colateral</option>
                         </select>
                       </div>
                     </div>
@@ -728,7 +728,7 @@ export default {
             "Exitoso",
             this.notificationSystem.options.success
           )
-        this.retornar()
+        this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: 'PN' }})
       });
     },
     retornar() {
