@@ -966,9 +966,11 @@ export default {
         .post("/consulta/dni", {
           documento: this.form.cliente.documento
         })
-        .then(function(response) { 
-          me.form.natural.nombres = response.data["nombres"];
-          me.form.natural.apellidos = response.data["surnames"];
+        .then(function(response) {          
+          if(response.data){
+            me.form.natural.nombres = response.data["nombres"];
+            me.form.natural.apellidos = response.data["surnames"];
+          }
         })
         .catch(function(error) {
           console.log(error);
@@ -982,7 +984,11 @@ export default {
           documento: this.form.detalles[index].documento
         })
         .then(function(response) {
-          me.form.detalles[index].nombres = response.data["nombres"]  + ' ' +  response.data["surnames"];
+           console.log("viene")
+          console.log(response) 
+          if(response.data){
+            me.form.detalles[index].nombres = response.data["nombres"]  + ' ' +  response.data["surnames"];
+          }
         })
         .catch(function(error) {
           console.log(error);
