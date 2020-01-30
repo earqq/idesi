@@ -604,6 +604,7 @@ export default {
   created() {
     this.initForm();
 
+  console.log(this.$route.params)
     this.$http.get(`/${this.resource}/datos/`).then(response => {
       this.all_departments = response.data.departments;
       this.all_provinces = response.data.provinces;
@@ -848,7 +849,8 @@ export default {
             this.notificationSystem.options.success
           ); 
 
-          this.$router.push({ name: 'perfil', params: { documento:  this.form.cliente.documento, persona: 'PJ' }})
+          console.log( this.$router.push({ name: 'perfil', params: { documento:  this.form.cliente.documento, persona: 'PJ' }}))
+          this.$router.push({ name: 'perfil', params: { documento:  this.form.cliente.documento, persona: 'PJ' }}).catch(err => {})
           // this.$router.push({ name: 'perfil', params: { documento:  this.form.cliente.documento, persona: 'PN' }})
 
         })

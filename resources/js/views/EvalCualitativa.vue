@@ -6,9 +6,13 @@
             <span>1</span>
             <p>PRINCIPALES</p>
           </div>
-          <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
+          <div class="tab" @click="tab = 2" :class="{selected: tab == 2}" v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ'">
             <span>2</span>
             <p>NEGOCIO</p>
+          </div>
+          <div class="tab" @click="tab = 2" :class="{selected: tab == 2}" v-else>
+            <span>2</span>
+            <p>TRANSPORTE</p>
           </div>
           <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
             <span>3</span>
@@ -51,13 +55,13 @@
                     <div class="input_wrapper">
                       <label>Destino del credito</label>
                       <select v-model="evaluacion.principal.destino_credito">
-                            <option value="1">Capital de trabajo</option>
-                            <option value="2">Activo Fijo</option>
-                            <option value="3">Consumo</option>
-                            <option value="4">Vehiculo</option>
-                            <option value="5">Hipotecario</option>
-                            <option value="6">Mejoramiento de vivienda</option>
-                            <option value="7">Compra de deuda</option>
+                            <option value="Capital de trabajo">Capital de trabajo</option>
+                            <option value="Activo Fijo">Activo Fijo</option>
+                            <option value="Consumo">Consumo</option>
+                            <option value="Vehiculo">Vehiculo</option>
+                            <option value="Hipotecario">Hipotecario</option>
+                            <option value="Mejoramiento de vivienda">Mejoramiento de vivienda</option>
+                            <option value="Compra de deuda">Compra de deuda</option>
                           </select>
                     </div>
                   </div>
@@ -95,7 +99,7 @@
                         <div class="input_wrapper">
                           <label>Antiguedad</label>
                           <select v-model="evaluacion.negocio.antiguedad" >
-                            <option value="MENO DE 1 AÑO">Menos de 1 año</option>
+                            <option value="MENOS DE 1 AÑO">Menos de 1 año</option>
                             <option value="1 AÑO">1 año</option>
                             <option value="2 AÑOS">2 años</option>
                             <option value="3 AÑOS">3 años</option>
@@ -515,7 +519,7 @@
                     <div class="input_wrapper">
                       <label>Colateral</label>
                       <select v-model="evaluacion.colateral">
-                        <option value="AVAL CON CASA PORPIA">Aval con casa propia</option>
+                        <option value="AVAL CON CASA PROPIA">Aval con casa propia</option>
                         <option value="AVAL CON CASA ALQUILADA">Aval con casa alquilada</option>
                         <option value="GARANTIA LIQUIDA ">Garantia liquida </option>
                         <option value="GARANTIA VEHICULAR">Garantia vehicular</option>
@@ -581,17 +585,17 @@ export default {
         prestamo_id: this.$route.params.prestamo,
         principal: {
           destino_credito_descripcion: "",
-          destino_credito: 1,
+          destino_credito: "Capital de trabajo",
           fuente_ingreso: ""
         },
         negocio: {
           ubicacion: "",
-          antiguedad: "1",
-          local: 1,
-          licencia_funcionamiento: 1,
-          horario_atencion_entrada: "",
-          horario_atencion_salida: "",
-          mejoras_local: 0
+          antiguedad: "MENOS DE 1 AÑO",
+          local: "PROPIO",
+          licencia_funcionamiento: "SI CUENTA",
+          horario_atencion_inicio: "00:00",
+          horario_atencion_salida: "00:00",
+          mejoras_local: "SI RELIZO"
         },
         vehiculo: {
           marca: "",
@@ -599,14 +603,14 @@ export default {
           año: "2010",
           tipo_servicio_brinda: "",
           antiguedad_servicio: "",
-          permiso_servicio: 1,
-          horario_servicio_inicio: "",
-          horario_servicio_fin: ""
+          permiso_servicio: "SI CUENTA",
+          horario_servicio_inicio: "00:00",
+          horario_servicio_fin: "00:00"
         },
         familiar: {
           numero_hijos: 0,
-          tipo_vivienda: 1,
-          situacion_familiar: 1,
+          tipo_vivienda: "PROPIA CANCELADA",
+          situacion_familiar: "SOLTERO",
           miembros_familia: 1,
           hijos: []
         },
@@ -643,7 +647,7 @@ export default {
             telefono: ""
           }
         ],
-        colateral: 0,
+        colateral: "AVAL CON CASA PROPIA",
         comentario_colateral: ""
       }
     };
@@ -664,11 +668,9 @@ export default {
     validateStep1() {
       return this.validateDoc && this.validateName && this.validateLastname;
     }
+    
   },
   methods: {
-    retornar() {
-      this.backMixin_handleBack("");
-    },
     next(index) {
       this.tab = index + 1;
     },
@@ -708,13 +710,10 @@ export default {
             "La evaluación fue realizada",
             "Exitoso",
             this.notificationSystem.options.success
-          )
-        this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: 'PN' }})
+          ) 
+            this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
       });
-    },
-    retornar() {
-      this.backMixin_handleBack();
-    },   
+    }, 
     seleccionColegiosCosto(index) {
       this.$http
         .get(
@@ -730,7 +729,7 @@ export default {
     }
   },
   async mounted() {
-
+ 
     this.$http.get(`/evaluaciones/giro`).then(response => {
       this.giros = response.data;
     });

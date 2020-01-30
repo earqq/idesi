@@ -26,12 +26,12 @@ export default new Router({
             component: require('./views/PersonaJuridico').default
         },
         { 
-            path: '/eval-cualitativa/:prestamo',
+            path: '/eval-cualitativa/:prestamo/:documento/:persona',
             name: 'evalCualtitativa',
             component: require('./views/EvalCualitativa').default
         },
         {
-            path: '/eval-cuantitativa/:prestamo',
+            path: '/eval-cuantitativa/:prestamo/:documento/:persona',
             name: 'evalCuantitativa',
             component: require('./views/EvalCuantitativa').default
         }, 
@@ -67,7 +67,7 @@ export default new Router({
             name: '/editar/solicitud/credito/natural/',
             component: require('./views/VerPrestamo').default 
         },
-        {
+        { 
             path: '/editar/solicitud/credito/juridica/:prestamo',
             name: '/editar/solicitud/credito/juridica/',
             component: require('./views/VerPrestamoJuridico').default

@@ -118,8 +118,8 @@
                   <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                   <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                 </li>
-                <li v-if="prestamo.cualitativa=='0'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id}}" >E. Cualitativa</router-link> </li>
-                <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1' "> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
+                <li v-if="prestamo.cualitativa=='0'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_persona}}" >E. Cualitativa</router-link> </li>
+                <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1' "> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_persona}}" >E. Cuantitativa</router-link> </li>
                 <li> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}"  >Evaluación</router-link></li>
                 <li> <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
               </ul>
@@ -171,6 +171,7 @@ export default {
       this.view=true
     },
     datosClientesPerfil(){
+         
           if(this.tipo_persona == 'PN'){ 
                     this.$http
                       .get(`/${this.resource}/perfil/cliente/` + this.$route.params.documento)
@@ -182,7 +183,8 @@ export default {
                         this.loader = 0;
                         this.loader_loan = 0; 
                       });
-              }else{
+              }else if(this.tipo_persona == 'PJ'){
+                 console.log(this.$route.params.persona)
                     this.$http
                       .get(`/${this.resource}/perfil/juridico/cliente/` + this.$route.params.documento)
                       .then(response => {

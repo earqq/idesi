@@ -491,8 +491,7 @@ class ClienteController extends Controller
 
     public function visitaStore(Request $request)
     {
-
-
+ 
         $prestamo = Prestamo::find($request->prestamo_id);
         $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
         $nombre = $request->name;
@@ -514,47 +513,21 @@ class ClienteController extends Controller
                 $subidos->fotos_negocio=1;
                 $subidos->save(); 
 
-                $model = new Archivo();
-                return $model::create([
-                        'nombre' => $request->name,
-                        'tipo' => 'imagen',
-                        'extension' => 'png',
-                        'prestamos_id' => $request->prestamo_id
-                ]);
+                $archivo = new Archivo();
+                $archivo->nombre= $request->name;
+                $archivo->tipo='imagen'; 
+                $archivo->extension= 'png';
+                $archivo->prestamos_id=$request->prestamo_id;
+                $archivo->save();
 
+                $visita = new Vista();
+                $visita->imagen= $archivo->id;
+                $visita->latitud= $request->latitud;
+                $visita->altitud=$request->longitud; 
+                $visita->prestamos_id=$request->prestamo_id;
+                $visita->save();
         }
 
-        // $img = file_put_contents(Storage::putFileAs('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/', $data,'foto_neogcio' . '.png'));
-        // return 
-        // if (!$request->ajax()) return redirect('/');
-        
-            // $model = new Archivo();
-            // return $data;
-            // $ext = $data->getClientOriginalExtension();
-
-            // $prestamo = Prestamo::find($request->prestamo_id);
-            // $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
-            
-            // if (Storage::putFileAs('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/', $file,'foto_neogcio' . '.' . $ext)) {
-                
-            //     if($request['name'] == 'fotos_negocio'){
-            //         $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-            //         $subidos->fotos_negocio=1;
-            //         $subidos->save();
-            //     } 
-            //     return $model::create([
-            //             'nombre' => 'foto_negocio',
-            //             'tipo' => 'imagen',
-            //             'extension' => $ext,
-            //             'prestamos_id' => $request->prestamo_id
-            //         ]);
-            // }
-        // $visita = new Vista();
-        // $visita->latitud= $request->latitud;
-        // $visita->altitud=$request->longitud; 
-        // $visita->prestamos_id=$request->prestamo_id;
-
-        // $visita->save();
         return [
             'success' => true,
             'data' => 'Cliente creado',
@@ -689,14 +662,19 @@ class ClienteController extends Controller
     public function visitas($documento)
     {
         // if (!$request->ajax()) return redirect('/');
-        $visita = Vista::where('prestamos_id',$documento)->get();
+        $visita = Vista::join('archivos','vistas.imagen','=','archivos.id')
+                        ->select('vistas.latitud','vistas.altitud','vistas.prestamos_id','vistas.created_at','archivos.nombre','archivos.tipo','archivos.extension')
+                        ->where('vistas.prestamos_id',$documento)->get();
         $prestamo = Prestamo::find($documento);
+
+        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+
         $evaluacion = Evaluacion::join('users','evaluacions.users_id','=','users.id')
                     ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name', 'users.idrol')
                     ->where('prestamos_id',$prestamo->id)
                     ->orderBy('users.idrol', 'DESC')->get(); 
 
-        return compact('visita','prestamo','evaluacion');
+        return compact('visita','prestamo','evaluacion','cliente');
         
     }
 

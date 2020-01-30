@@ -117,11 +117,26 @@
                   </thead>
                   <tbody>
                     <tr v-for="visita in list_vistas" :key="visita.id">
-                      <td v-text="stringDate(visita.fecha)"></td>
+                      <td v-text="stringDate(visita.created_at)"></td>
                       <td>
-                        <i class="fas fa-map-marked-alt"></i>
+                          <img :src="'../storage/'+cliente.documento+'_'+cliente.id+'/prestamo_'+visita.prestamos_id+'/imagen/'+visita.nombre+'.'+visita.extension">
                       </td>
-                      <td></td>
+                      <td> 
+                        <i class="fas fa-map-marked-alt"></i>
+                        <GmapMap
+                          :center="{lat:  Number(visita.latitud), lng: Number(visita.altitud) }"
+                          :zoom="15"
+                          map-type-id="terrain"
+                          style="width: 500px; height: 300px"
+                        >
+                                <Gmap-Marker 
+                                :position="{
+                                  lat: Number(visita.latitud),
+                                  lng: Number(visita.altitud),
+                                }"
+                              ></Gmap-Marker>
+                        </GmapMap>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -173,6 +188,7 @@ export default {
       prestamo: this.$route.params.prestamo,
       errors: {},
       prestamo_detalle: [],
+      cliente: [],
       camara: [],
       latitud: "",
       altitud: "",
@@ -330,6 +346,7 @@ export default {
           this.list_vistas = response.data["visita"];
           this.prestamo_detalle = response.data["prestamo"];
           this.evaluacion = response.data["evaluacion"];
+          this.cliente = response.data["cliente"];
         });
     },
     stateEvaluation(estado) {
