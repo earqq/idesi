@@ -6,84 +6,74 @@
           <div class="form_step">
             <div class="form_step_wrapper">
               <h3 class="title">Solicitud de Crédito</h3>
-              <div class="form_content">
-                <div class="group_form">
-                  <div class="input_wrapper">
-                    <label>Monto</label>
-                    <input type="text" :value="prestamo_detalle.monto_inicial" disabled />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Forma</label>
-                    <input type="text" :value="prestamo_detalle.forma_inicial" disablgied />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Plazo</label>
-                    <input type="text" :value="prestamo_detalle.plazo_inicial" disabled />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Disponibilidad de pago</label>
-                    <input
-                      type="text"
-                      :value="prestamo_detalle.disponibilidad_pago_inicial"
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div class="group_form all">
-                  <div class="input_wrapper">
-                    <label>Destino de crédito (propuesta cliente)</label>
-                    <input type="text" :value="prestamo_detalle.destino_inicial" disabled />
-                  </div>
-                </div>
+
+              <div class="detail_content"> 
+                <li>
+                  <strong>Monto </strong> 
+                  <p>S/ {{prestamo_detalle.monto_inicial}}</p>
+                </li>
+                <li>
+                  <strong>Forma </strong> 
+                  <p>{{prestamo_detalle.forma_inicial}}</p>
+                </li>
+                  <li>
+                  <strong>Plazo </strong> 
+                  <p>{{prestamo_detalle.plazo_inicial}}</p>
+                </li>
+                  <li>
+                  <strong>Disponibilidad de pago </strong> 
+                  <p>{{prestamo_detalle.disponibilidad_pago_inicial ? prestamo_detalle.disponibilidad_pago_inicial : '--'}}</p>
+                </li>
+                <li>
+                  <strong>Destino de crédito   </strong> 
+                  <p>{{prestamo_detalle.destino_inicial}}</p>
+                </li>
+                <li></li>
               </div>
+
             </div>
 
             <div class="form_step_wrapper in_bottom">
               <h3 class="title">Propuesta del Analista</h3>
 
-              <div class="form_content">
-                <div class="group_form">
-                  <div class="input_wrapper">
-                    <label>Producto</label>
-                    <input type="text" :value="prestamo_detalle.producto" disabled />
-                  </div>
-
-                  <div class="input_wrapper">
-                    <label>Importe</label>
-                    <input type="text" :value="prestamo_detalle.forma" disabled />
-                  </div>
-
-                  <div class="input_wrapper">
-                    <label>Plazo</label>
-                    <input type="text" :value="prestamo_detalle.importe" disabled />
-                  </div>
-                </div>
-
-                <div class="group_form">
-                  <div class="input_wrapper">
-                    <label>Cuotas del Sistema</label>
-                    <input type="text" :value="prestamo_detalle.cuotas" disabled />
-                  </div>
-
-                  <div class="input_wrapper">
-                    <label>Aporte</label>
-                    <input type="text" :value="prestamo_detalle.aporte" disabled />
-                  </div>
-                </div>
-
-                <div class="group_form">
-                  <div class="input_wrapper">
-                    <label>Comentarios</label>
-                    <input type="text" :value="prestamo_detalle.comentarios" disabled />
-                  </div>
-                </div>
+              <div class="detail_content"> 
+                <li>
+                  <strong>Producto </strong> 
+                  <p>{{prestamo_detalle.producto}}</p>
+                </li>
+                <li>
+                  <strong>Importe </strong> 
+                  <p>{{prestamo_detalle.importe}}</p>
+                </li>
+                  <li>
+                  <strong>Plazo </strong> 
+                  <p>{{prestamo_detalle.plazo}}</p>
+                </li>
+                  <li>
+                  <strong>Cuotas del Sistema </strong> 
+                  <p>{{prestamo_detalle.cuotas}}</p>
+                </li>
+                  <li>
+                  <strong>Aporte </strong> 
+                  <p>{{prestamo_detalle.aporte}}</p>
+                </li>
+                  <li>
+                  <strong>Comentarios </strong> 
+                  <p>{{prestamo_detalle.comentarios}}</p>
+                </li>
+                <li>
+                  <strong>Forma </strong> 
+                  <p>{{prestamo_detalle.forma}}</p>
+                </li>
+                <li></li>
+                <li></li>
               </div>
             </div>
 
             <div class="form_step_wrapper in_bottom">
               <h3 class="title">Evaluaciones</h3>
               <div class="table_wrapper">
-                <table class="table_clients no_hover">
+                <table class="table_evaluations no_hover">
                   <thead>
                     <tr>
                       <th>Evaluador</th>
@@ -155,16 +145,6 @@
                 </ul>
               </div>
 
-              <div class="form_buttons">
-                <a class="button_inline_primary medium prev">
-                  <i class="material-icons-outlined">navigate_before</i>
-                  <span>REGRESAR PERFIL</span>
-                </a>
-                <a class="button_primary medium next">
-                  <span>GUARDAR UBICACION</span>
-                  <i class="material-icons-outlined">navigate_next</i>
-                </a>
-              </div>
             </div>
           </div>
         </div>
@@ -310,7 +290,6 @@ export default {
         track.stop();
       });
     },
-
     retornar() {
       this.$parent.view = false;
       this.$parent.idprestamo = 0;
@@ -321,7 +300,6 @@ export default {
         .format("D [de] MMMM [del] YYYY");
       return string;
     },
-
     crearVisita() {
       this.tipo = false;
       this.addMarker();
@@ -329,7 +307,6 @@ export default {
     cancelarVisita() {
       this.tipo = true;
     },
-
     initForm() {
       this.formViews = {
         fecha: "",
@@ -361,7 +338,6 @@ export default {
       if (estado == "DESAPROBADO") return "denied";
       return;
     },
-
     submit() {
       this.formData = new FormData();
       this.formData.append("name", "addsdasd");
@@ -392,7 +368,6 @@ export default {
     resetForm() {
       this.initForm();
     },
-    // receives a place object via the autocomplete component
     setPlace(place) {
       this.formViews.currentPlace = place;
     },
@@ -406,7 +381,7 @@ export default {
       this.formViews.center = marker;
       this.formViews.currentPlace = null;
     },
-    geolocate: function() {
+    geolocate() {
       navigator.geolocation.getCurrentPosition(position => {
         this.formViews.center = {
           lat: position.coords.latitude,
@@ -414,13 +389,53 @@ export default {
         };
       });
     }
+  },
+  filters: {
+    toCapitalize (text) {
+      return text.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())
+    }
   }
-};
+}
 </script>
 
 <style lang="sass">
+@import "../../sass/variables"
 .credit_detail_content
   .create_client_content
     margin: 20px 0
+    table.table_evaluations
+        thead, tbody
+          tr
+            margin-bottom: 0px
+            border-bottom: 1px solid $bg_color
+        &.no_hover 
+          tbody:hover tr
+            background-color: inherit
+        tbody
+          tr
+            &.final_result
+              background-color: rgba($primary_color, .03) !important
+              border-left: 3px solid $primary_color
+              &:hover
+                background-color: rgba($primary_color, .03) !important
+            &:last-child
+              border-bottom: 0
+        
+        .state
+          strong
+            margin-left: 7px
+          span
+            width: 12px
+            height: 12px
+            border-radius: 50%
+            background-color: $line_color
+            margin-right: 12px
+            margin-top: -2px
+            &.accept
+              background-color: $primary_color
+            &.observed
+              background-color: $highlight_color
+            &.denied
+              background-color: $require_color
 </style>
  

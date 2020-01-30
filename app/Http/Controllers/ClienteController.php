@@ -690,7 +690,7 @@ class ClienteController extends Controller
     public function visitas($documento)
     {
         // if (!$request->ajax()) return redirect('/');
-        $vista = Vista::where('prestamos_id',$documento)->get();
+        $visita = Vista::where('prestamos_id',$documento)->get();
         $prestamo = Prestamo::find($documento);
         $evaluacion = Evaluacion::join('users','evaluacions.users_id','=','users.id')
                     ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name', 'users.idrol')
