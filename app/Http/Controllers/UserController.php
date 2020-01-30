@@ -118,4 +118,11 @@ class UserController extends Controller
         $user->condicion = '1';
         $user->save();
     }
+
+    
+    public function currentUser()
+    {
+        $user = Auth::user();
+        return $user;
+    }
 }

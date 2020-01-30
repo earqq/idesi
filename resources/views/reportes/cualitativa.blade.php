@@ -175,8 +175,8 @@
                                     
                                     <tr>
                                         <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none; font-size: 10px">Entidad Financiera</th>
-                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Cap. Trabajo</th>
-                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Activo Fijo</th>
+                                        <th  style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Cap. Trabajo</th>
+                                        <th  style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Activo Fijo</th>
                                         <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Consumo Fijo</th>
                                         <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Vehicular</th>
                                         <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Hipoteca</th>
@@ -190,7 +190,7 @@
                                         
                                     
                                     @foreach ($cualitativa->central_riesgo as $cual)
-                                    @if ($cual['capital'])
+                                    @if ($cual['entidad_financiera'])
                                     <tr>
                                         <td>{{$cual['entidad_financiera']}}</td>
                                         

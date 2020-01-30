@@ -152,10 +152,6 @@ class EvaluacionesController extends Controller
         \Log::alert('Costo de venta total: '.$costo_venta_total);
         //Validacion
         $negocio=negocio::where('giro_negocio',$request->titular["giro_negocio"])->first();
-        \Log::alert($request);
-        \Log::alert("si viene");
-        \Log::alert($request->titular["giro_negocio"]);
-        \Log::alert($negocio);
         $costo_venta_validacion=$ingresos_ventas_validacion/100*floatval($negocio->costo_ventas);
         \Log::alert('Costo de venta validacion: '.$costo_venta_validacion);
         //MARGEN BRUTO 
@@ -171,20 +167,7 @@ class EvaluacionesController extends Controller
         //Margen bruto validacion
         $margen_bruto_validacion=$ingresos_ventas_validacion-$costo_venta_validacion;
         \Log::alert('Margen bruto titular: '.$margen_bruto_validacion);
-        //OTROS INGRESOS
-        //otros ingresos titular
-        foreach($request->titular["ingresos_por_categoria"] as $ingreso){
-            $otros_ingresos_titular+=$ingreso["mes"];
-        }
-        \Log::alert("Otros ingresos conyuge: ".$otros_ingresos_conyuge);
-          //otros ingresos conyuge
-        foreach($request->conyuge["ingresos_por_categoria"] as $ingreso){
-            $otros_ingresos_conyuge+=$ingreso["mes"];
-        }
-        \Log::alert("Otros ingresos conyuge: ".$otros_ingresos_conyuge);
-        //otros ingresos total
-        $otros_ingresos_total=$otros_ingresos_titular-$otros_ingresos_conyuge;
-        \Log::alert('Otros ingresos total: '.$otros_ingresos_total);
+       
 
         //SERVICIO LAT
         //titular
@@ -237,7 +220,7 @@ class EvaluacionesController extends Controller
         foreach($request->conyuge["gasto_financiero"] as $gastos){
             $gasto_financiero_conyuge+=$gastos["cuota"];
         }
-        $gasto_financiero_conyuge=$gasto_financiero_conyuge*-1;
+        $gasto_financiero_conyuge=$gasto_financiero_conyuge;
         \Log::alert('gasto financiero conyuge: '.$gasto_financiero_conyuge);
         //Total
         $gasto_financiero_total=$gasto_financiero_titular+$gasto_financiero_conyuge;
@@ -246,6 +229,54 @@ class EvaluacionesController extends Controller
         $gasto_financiero_validacion=$gasto_financiero_titular;
         $gasto_financiero_validacion=$gasto_financiero_validacion;
         \Log::alert('gasto financiero validacion: '.$gasto_financiero_validacion);
+
+        // UTILIDAD NETA NEGOCIO
+        $utilidad_neta_negocio_titular=$margen_bruto_titular+$servicios_lat_titular
+                                        +$alquiler_titular
+                                        +$empleados_titular
+                                        +$gasto_financiero_titular;
+
+        \Log::alert("UTILIDAD neta NEGOCIO TITULAR: ".$utilidad_neta_negocio_titular);
+
+
+        // conyuge
+        $utilidad_neta_negocio_conyuge=$margen_bruto_conyuge+$servicios_lat_conyuge
+                                        +$alquiler_conyuge
+                                        +$empleados_conyuge
+                                        +$gasto_financiero_conyuge;
+        \Log::alert("UTILIDAD neta NEGOCIO conyuge: ".$utilidad_neta_negocio_conyuge);
+
+        // total
+        $utilidad_neta_negocio_total=$margen_bruto_total+$servicios_lat_total
+                                        +$alquiler_total
+                                        +$empleados_total
+                                        +$gasto_financiero_total;
+        \Log::alert("UTILIDAD neta NEGOCIO unidad familiar: ".$utilidad_neta_negocio_total);
+
+        // validacion
+           $utilidad_neta_negocio_validacion=$margen_bruto_validacion+$servicios_lat_validacion
+           +$alquiler_validacion
+           +$empleados_validacion
+           +$gasto_financiero_validacion;
+            \Log::alert("UTILIDAD neta NEGOCIO validacion: ".$utilidad_neta_negocio_validacion);
+         //OTROS INGRESOS
+        //otros ingresos titular
+        foreach($request->titular["ingresos_por_categoria"] as $ingreso){
+            $otros_ingresos_titular+=$ingreso["mes"];
+        }
+        \Log::alert("Otros ingresos titular: ".$otros_ingresos_titular);
+          //otros ingresos conyuge
+        foreach($request->conyuge["ingresos_por_categoria"] as $ingreso){
+            $otros_ingresos_conyuge+=$ingreso["mes"];
+        }
+        \Log::alert("Otros ingresos conyuge: ".$otros_ingresos_conyuge);
+        //otros ingresos total
+        $otros_ingresos_total=$otros_ingresos_titular-$otros_ingresos_conyuge;
+        \Log::alert('Otros ingresos total: '.$otros_ingresos_total);
+         //otros ingresos validacion
+         $otros_ingresos_validacion=$otros_ingresos_titular-$otros_ingresos_conyuge;
+         \Log::alert('Otros ingresos validacion: '.$otros_ingresos_validacion);
+
         //GASTOS_HOGAR
         //titular
         foreach($request->gastos_hogar as $gastos){
@@ -269,7 +300,7 @@ class EvaluacionesController extends Controller
             $gasto_financiero_personal_titular+=$gastos["cuota"];
         }
         $gasto_financiero_personal_titular=$gasto_financiero_personal_titular*-1;
-        \Log::alert('gasto financiero personal titular: '.$gasto_hogar_titular);
+        \Log::alert('gasto financiero personal titular: '.$gasto_financiero_personal_titular);
         //conyuge        
         foreach($request->conyuge["gasto_financiero_personal"] as $gastos){
             $gasto_financiero_personal_conyuge+=$gastos["cuota"];
@@ -285,41 +316,41 @@ class EvaluacionesController extends Controller
         //UTILIDAD
         //titular
     
-        $utilidad_titular=floatval($margen_bruto_titular+$otros_ingresos_titular
+        $disponible_titular=floatval($margen_bruto_titular+$otros_ingresos_titular
                         +$servicios_lat_titular
                         +$alquiler_titular
                         +$empleados_titular
                         +$gasto_financiero_titular
                         +$gasto_financiero_personal_titular
                         +$gasto_hogar_titular);
-        \Log::alert("utilidad titular: ".$utilidad_titular);
+        \Log::alert("disponible titular: ".$disponible_titular);
         //conyuge
-        $utilidad_conyuge=floatval($margen_bruto_conyuge+$otros_ingresos_conyuge
+        $disponible_conyuge=floatval($margen_bruto_conyuge+$otros_ingresos_conyuge
                         +$servicios_lat_conyuge
                         +$alquiler_conyuge
                         +$empleados_conyuge
                         +$gasto_financiero_conyuge
                         +$gasto_financiero_personal_conyuge
                         +$gasto_hogar_conyuge);
-        \Log::alert("utilidad conyuge: ".$utilidad_conyuge);
+        \Log::alert("disponible conyuge: ".$disponible_conyuge);
         //total
-        $utilidad_total=floatval($margen_bruto_total+$otros_ingresos_total
+        $disponible_total=floatval($margen_bruto_total+$otros_ingresos_total
                         +$servicios_lat_total
                         +$alquiler_total
                         +$empleados_total
                         +$gasto_financiero_total
                         +$gasto_financiero_personal_total
                         +$gasto_hogar_total);
-        \Log::alert("utilidad total: ".$utilidad_total);
+        \Log::alert("disponible total: ".$disponible_total);
         //validacion
-        $utilidad_validacion=floatval($margen_bruto_validacion+$otros_ingresos_validacion
+        $disponible_validacion=floatval($margen_bruto_validacion+$otros_ingresos_validacion
                         +$servicios_lat_validacion
                         +$alquiler_validacion
                         +$empleados_validacion
                         +$gasto_financiero_validacion
                         +$gasto_financiero_personal_validacion
                         +$gasto_hogar_validacion);
-        \Log::alert("utilidad validacion: ".$utilidad_validacion);        
+        \Log::alert("disponible validacion: ".$disponible_validacion);        
         
         //CUOTA INSTITUCION
         //titular
@@ -347,28 +378,31 @@ class EvaluacionesController extends Controller
         $cuota_institucion_validacion=$cuota_institucion_titular;
         \Log::alert("cuota institucion validacion: ".$cuota_institucion_validacion);
 
-        //UTILIDAD DESPUES CUOTA
+        //disponible DESPUES CUOTA
         //titular
-        $utilidad_desp_cuota_titular=$utilidad_titular-$cuota_institucion_titular;
-        \Log::alert('utilidad despues cuota titular: '.$utilidad_desp_cuota_titular);
+        $disponible_desp_cuota_titular=$utilidad_neta_negocio_titular-$cuota_institucion_titular;
+        \Log::alert('disponible despues cuota titular: '.$disponible_desp_cuota_titular);
         //conyuge
-        $utilidad_desp_cuota_conyuge=$utilidad_conyuge-$cuota_institucion_conyuge;
-        \Log::alert('utilidad despues cuota conyuge: '.$utilidad_desp_cuota_conyuge);
+        $disponible_desp_cuota_conyuge=$disponible_conyuge-$cuota_institucion_conyuge;
+        \Log::alert('disponible despues cuota conyuge: '.$disponible_desp_cuota_conyuge);
         //total
-        $utilidad_desp_cuota_total=$utilidad_total-$cuota_institucion_total;
-        \Log::alert('utilidad despues cuota total: '.$utilidad_desp_cuota_total);
+        $disponible_desp_cuota_total=$utilidad_neta_negocio_total-$cuota_institucion_total;
+        \Log::alert('disponible despues cuota total: '.$disponible_desp_cuota_total);
         //validacion
-        $utilidad_desp_cuota_validacion=$utilidad_validacion-$cuota_institucion_validacion;
-        \Log::alert('utilidad despues cuota validacion: '.$utilidad_desp_cuota_validacion);
+        $disponible_desp_cuota_validacion=$disponible_validacion-$cuota_institucion_validacion;
+        \Log::alert('disponible despues cuota validacion: '.$disponible_desp_cuota_validacion);
 
         //PARTICIPACION CUOTA
-        $participacion_cuota_titular=round(($cuota_institucion_titular/$utilidad_titular)*100);
+        $participacion_cuota_titular=round(($cuota_institucion_titular/$disponible_titular)*100);
         \Log::alert("participacion cuota titular: ".$participacion_cuota_titular);
         $participacion_cuota_conyuge=0;
         \Log::alert("participacion cuota conyuge: ".$participacion_cuota_conyuge);
-        $participacion_cuota_total=round(($cuota_institucion_total/$utilidad_total)*100);
+        $participacion_cuota_total=round(($cuota_institucion_total/$disponible_total)*100);
         \Log::alert("participacion cuota total: ".$participacion_cuota_total);
-        $participacion_cuota_validacion=round(($cuota_institucion_validacion/$utilidad_validacion)*100);
+        
+        // if($disponible_validacion<0) $participacion_cuota_validacion='NO TIENE CAPACIDAD';
+        // else 
+            $participacion_cuota_validacion=round(($cuota_institucion_validacion/$utilidad_neta_negocio_validacion)*100);
         \Log::alert("participacion cuota validacion: ".$participacion_cuota_validacion);
 
         //RESULTADO EVA
@@ -378,20 +412,21 @@ class EvaluacionesController extends Controller
         else if($participacion_cuota_total>40)
             $resultado_eva='POCA CAPACIDAD';
         else 
-            $resultado_eva='TIENE CAPACIDAD';
+            $resultado_eva='TIENE CAPACIDAD SEGUN PARAMETRO';
         
         \Log::alert("resultado eva: ".$resultado_eva);
 
         //RESULTADO SIST
         $resultado_sist='NO TIENE CAPACIDAD DE PAGO';
-        if($participacion_cuota_validacion>100 || $participacion_cuota_validacion<0)
+        $div=($cuota_institucion_validacion/$utilidad_neta_negocio_validacion)*100;
+        if($div>100 || $div<0)
             $resultado_sist='NO TIENE CAPACIDAD';
-        else if($participacion_cuota_validacion>40)
+        else if($div>40)
             $resultado_sist='POCA CAPACIDAD';
         else 
-            $resultado_sist='TIENE CAPACIDAD';
+            $resultado_sist='CAPACIDAD PERMITIDA SEGUN PARAMETRO';
         
-        \Log::alert("resultado eva: ".$resultado_sist);
+        \Log::alert("validacion: ".$resultado_sist);
 
         $balance_activo_caja=0;
         $balance_activo_inventario=0;
@@ -415,6 +450,13 @@ class EvaluacionesController extends Controller
         foreach($request->conyuge["gasto_financiero"] as $gasto){
             $balance_pasivo_deudas+=$gasto["saldo_capital"];
         }
+         //titular
+        foreach($request->titular["gasto_financiero_personal"] as $gasto){
+            $balance_pasivo_deudas+=$gasto["saldo_capital"];
+        }//conyuge
+        foreach($request->conyuge["gasto_financiero_personal"] as $gasto){
+            $balance_pasivo_deudas+=$gasto["saldo_capital"];
+        }
         \Log::alert('PASIVO DEUDA: '.$balance_pasivo_deudas);
         
         //PATRIMONIO CAPITAL
@@ -424,7 +466,7 @@ class EvaluacionesController extends Controller
         \Log::alert('PATRIMONIO CAPITAL: '.$balance_patrimonio_capital);
 
         //PATRIMONIO UTILIDAD
-        $balance_patrimonio_utilidad=$utilidad_desp_cuota_total;
+        $balance_patrimonio_utilidad=$disponible_desp_cuota_total;
         \Log::alert('PATRIMONIO UTILIDAD: '.$balance_patrimonio_utilidad);
 
         //TOTAL PASIVO Y PATRIMONIO
@@ -455,7 +497,7 @@ class EvaluacionesController extends Controller
         if($endeudamiento<0.4) $endeudamiento_resultado='BIEN';
         \Log::alert('ENDEUDAMIENTO RESULTADO: '.$endeudamiento_resultado);
         //MARGEN NETO
-        $margen_neto=$utilidad_desp_cuota_total/$ingresos_ventas_total;
+        $margen_neto=$disponible_desp_cuota_total/$ingresos_ventas_total;
         \Log::alert('RATIOS MARGEN NETO: '.$margen_neto);
         $margen_neto_resultado='MAL';
         if($margen_neto>0.05) $margen_neto_resultado='BIEN';
@@ -722,7 +764,7 @@ class EvaluacionesController extends Controller
                 $archivo->save();
             }
 
-
+ 
             DB::commit();
                 return [ 
                     'success' => true,

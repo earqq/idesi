@@ -22,5 +22,6 @@ class RolController extends Controller
 
         $rol = User::where('id', Auth::user()->id)->select('idrol')->first();
         return $rol;
-    } 
+    }
+
 }

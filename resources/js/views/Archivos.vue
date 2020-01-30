@@ -69,7 +69,7 @@
           <p> NUEVO ARCHIVO  </p>
         </a>
 
-        <!-- <div class="file_item"  @click="solicitudPdf()">
+         <div class="file_item"  @click="solicitudPdf()">
           <div class="file_detail">
             <a :href="'#'"
               >
@@ -81,7 +81,7 @@
             </a>
           </div> 
         </div>
-
+      <!--
         <div class="file_item"  @click="cualitativaPdf()">
           <div class="file_detail">
             <a :href="'#'"
@@ -95,7 +95,7 @@
           </div>
         </div> -->
 
-                <div class="file_item"  @click="cuantitativaPdf()">
+        <!-- <div class="file_item"  @click="cuantitativaPdf()">
           <div class="file_detail">
             <a :href="'#'"
               >
@@ -106,7 +106,7 @@
               </div>
             </a>
           </div>
-        </div>
+        </div> -->
 
         <div class="file_item" v-for="(archivo, index) in archivos" :key="index">
           <div class="file_detail" v-if="archivo.tipo=='imagen'">

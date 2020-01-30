@@ -314,7 +314,15 @@
                       <div class="group_form">
                         <div class="input_wrapper">
                           <label>Entidad</label>
-                          <input type="text" v-model="evaluacion.conyuge.gasto_financiero[index].entidad" />
+                             <v-select
+                              label="nombre"
+                              :options="entidades"
+                              :reduce="entidades => entidades.nombre"
+                              v-model="evaluacion.conyuge.gasto_financiero[index].entidad">
+                              <span slot="no-options">
+                                No se encontro giro de negocio
+                              </span>
+                            </v-select>  
                         </div>
 
                         <div class="input_wrapper">
@@ -459,7 +467,15 @@
                       <div class="group_form">
                         <div class="input_wrapper">
                           <label>Entidad</label>
-                          <input type="text" v-model="evaluacion.titular.gasto_financiero_personal[index].entidad" />
+                          <v-select
+                              label="nombre"
+                              :options="entidades"
+                              :reduce="entidades => entidades.nombre"
+                              v-model="evaluacion.titular.gasto_financiero_personal[index].entidad">
+                              <span slot="no-options">
+                                No se encontro giro de negocio
+                              </span>
+                            </v-select>  
                         </div>
                         <div class="input_wrapper">
                           <label>Saldo Capital</label>
@@ -492,7 +508,15 @@
                       <div class="group_form">
                         <div class="input_wrapper">
                           <label>Entidad</label>
-                          <input type="text" v-model="evaluacion.conyuge.gasto_financiero_personal[index].entidad" />
+                          <v-select
+                              label="nombre"
+                              :options="entidades"
+                              :reduce="entidades => entidades.nombre"
+                              v-model="evaluacion.conyuge.gasto_financiero_personal[index].entidad">
+                              <span slot="no-options">
+                                No se encontro giro de negocio
+                              </span>
+                            </v-select>   
                         </div>
                         <div class="input_wrapper">
                           <label>Saldo Capital</label>
@@ -546,6 +570,7 @@ export default {
     return {
       giros: [],
       tab: 1,
+      entidades:[],
       notificationSystem: {
         options: {
           success: {
@@ -779,6 +804,10 @@ export default {
       this.giros = response.data;
     });
 
+    this.$http.get(`/evaluaciones/entidades`).then(response => {
+      this.entidades = response.data;
+    });
+
     this.$http
       .get(
         `/evaluaciones/datosCualitativas/`+this.$route.params.prestamo
@@ -822,9 +851,7 @@ export default {
     }
   },
   methods: {
-    retornar() {
-      this.backMixin_handleBack("");
-    },
+
     next(index) {
       this.tab = index + 1;
     },
@@ -895,12 +922,10 @@ export default {
             "Exitoso",
             this.notificationSystem.options.success
           )
-        this.retornar()
+      // this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
       });
     },
-    retornar() {
-      this.backMixin_handleBack();
-    },
+ 
     conyugeIngresosSubtotal(index) {
       this.evaluacion.conyuge.ingresos_negocio[index].subtotal =
         parseFloat(this.evaluacion.conyuge.ingresos_negocio[index].lunes, 2) +
