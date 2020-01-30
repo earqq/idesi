@@ -2,7 +2,8 @@ export const serviceNumber = {
     data() {
         return {
             loading_search: false,
-            fromRoute: undefined
+            fromRoute: undefined,
+            id_rol: ''
         }
     },
   beforeRouteEnter (to, from, next) {

@@ -40,6 +40,7 @@ Route::group(['middleware'=>['auth']],function(){
 
 
         Route::get('/rol/selectRol', 'RolController@selectRol');
+        Route::get('/rol', 'RolController@rolUser');
 
         Route::get('clientes/listado','ClienteController@index');
         Route::get('clientes/listado/juridico','ClienteController@indexJuridico');
@@ -56,6 +57,9 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('clientes/prestamo/juridico', 'ClienteController@prestamoJuridico');
         Route::post('clientes/visita/nuevo', 'ClienteController@visitaStore');
         Route::get('clientes/visitas/{prestamo}', 'ClienteController@visitas');
+
+        Route::get('clientes/aceptar/solicitud/{id}/{tipo}', 'ClienteController@aceptarSolicitud');
+        Route::get('clientes/rechazar/solicitud/{id}/{tipo}', 'ClienteController@rechazarSolicitud');
 
         Route::get('/clientes/solicitudPdf/{prestamo}','ClienteController@SolicitudPdf')->name('solicitud_pdf');
         Route::get('/clientes/adjuntarPdf/{prestamo}','ClienteController@AdjuntarPdf')->name('adjuntar_pdf');

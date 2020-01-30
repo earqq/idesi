@@ -19,7 +19,7 @@
           <section class="client_forms">
             <div class="client_forms_wrapper">
               <div v-show="tab == 1" class="form_step">
-                
+                <p>{{rol}}</p>
                 <div class="form_step_wrapper">
                   <button
                     type="button"
@@ -36,27 +36,27 @@
                   <div class="detail_content"> 
                     <li>
                       <strong>Producto </strong> 
-                      <p>{{detalle.producto}}</p>
+                      <p>{{prestamo.producto}}</p>
                     </li>
                     <li>
                       <strong>Importe </strong> 
-                      <p>{{detalle.importe}}</p>
+                      <p>{{prestamo.importe}}</p>
                     </li>
                      <li>
                       <strong>Plazo </strong> 
-                      <p>{{detalle.plazo}}</p>
+                      <p>{{prestamo.plazo}}</p>
                     </li>
                      <li>
                       <strong>Cuotas del Sistema </strong> 
-                      <p>{{detalle.cuotas}}</p>
+                      <p>{{prestamo.cuotas}}</p>
                     </li>
                      <li>
                       <strong>Aporte </strong> 
-                      <p>{{detalle.aporte}}</p>
+                      <p>{{prestamo.aporte}}</p>
                     </li>
                      <li>
                       <strong>Comentarios </strong> 
-                      <p>{{detalle.comentarios}}</p>
+                      <p>{{prestamo.comentarios}}</p>
                     </li>
                   </div>
                 </div>
@@ -92,7 +92,7 @@
                   </div> 
                   
                 </div>
-                <div class="form_step_wrapper in_bottom" v-if='estado_evaluado==1'>
+                <div class="form_step_wrapper in_bottom" v-if="prestamo.estado!='PENDIENTE'">
                   <h3 class="title">Decisión Final</h3>
                   <div class="detail_content"> 
                     <li>
@@ -451,7 +451,7 @@
       </div>
     </div>
 
-    <aside class="evaluation" v-if="estado_evaluado==0">
+    <aside class="evaluation" v-if="estado_evaluado==1 && prestamo.estado=='PENDIENTE' && (rol=='3' || rol=='4')">
       <div class="title">Evaluador</div>
       <div class="evaluation_wrapper">
 
@@ -544,7 +544,10 @@
 </template>
 
 <script>
+import { serviceNumber } from "../mixins/functions";
+
 export default {
+  mixins: [serviceNumber],
   data() {
     return {
       resource: "evaluaciones",
@@ -553,8 +556,7 @@ export default {
       tab: 1,
       cuantitativa: {},
       estado_evaluado: 0,
-      rol: this.$route.params.rol, 
-      estado: this.$route.params.estado,
+      rol: '', 
       prestamo:{},
       form: {},
       notificationSystem: {
@@ -576,6 +578,9 @@ export default {
     await this.formInit(); 
   },
   mounted(){
+      this.$http.get(`/rol`).then(response => {
+        this.rol=response.data.idrol
+      });
     this.methodsDetalle(this.$route.params.prestamo);
   },
   methods: {
@@ -589,29 +594,27 @@ export default {
         this.$http
         .get(`/${this.resource}/prestamos/detalle/` + id)
         .then(response => {
-          console.log("response eval")
-          console.log(response)
+          console.log("dasdsadad")
+          console.log(response.data)
           if(response.data.estado_evaluado==0){
             this.estado_evaluado=0
           }else{
             this.estado_evaluado=1
-            this.prestamo=response.data.prestamo
           }
-          
+          this.prestamo=response.data.prestamo
           if (response.data.cuantitativa)
+
             this.cuantitativa = response.data.cuantitativa;
-            this.detalle = response.data.prestamo;
             this.form.evaluacion = response.data.evaluacion;
-            
             this.listFile(id);
             if(this.rol=='4'){
-                this.form.producto = this.detalle.producto;
-                this.form.aporte = this.detalle.aporte;
-                this.form.importe = this.detalle.importe;
-                this.form.plazo = this.detalle.plazo;
-                this.form.cuotas = this.detalle.cuotas;
-                this.form.tasa = this.detalle.tasa;
-                this.form.estado = this.detalle.estado;
+                this.form.producto = this.prestamo.producto;
+                this.form.aporte = this.prestamo.aporte;
+                this.form.importe = this.prestamo.importe;
+                this.form.plazo = this.prestamo.plazo;
+                this.form.cuotas = this.prestamo.cuotas;
+                this.form.tasa = this.prestamo.tasa;
+                this.form.estado = this.prestamo.estado;
             }
             this.form.prestamos_id = id;
             this.id_prestamo = id;

@@ -58,7 +58,7 @@ export default new Router({
             component: require('./views/Perfil').default,
         }, 
         {
-            path: '/evaluacion/detalle/:prestamo/:rol/:estado',
+            path: '/evaluacion/detalle/:prestamo',
             name: '/evaluacion/detalle/',
             component: require('./views/EvaluacionDetalle').default,
         },

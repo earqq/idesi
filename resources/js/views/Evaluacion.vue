@@ -47,15 +47,15 @@
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
                 <li v-if="prestamo.estado=='PENDIENTE' && (id_rol=='3' || id_rol=='4')">
-                  <router-link v-if="evalaucionEcho(prestamo.id)==0" :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
+                  <router-link v-if="evalaucionEcho(prestamo.id)==0" :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol}}" >
                     Evaluación
                   </router-link>
-                  <router-link v-else :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
+                  <router-link v-else :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol}}" >
                     Evaluación
                   </router-link>
                 </li>
                 <li  v-else>
-                  <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
+                  <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol}}" >
                     Evaluación
                   </router-link>
                 </li>  
@@ -102,12 +102,12 @@
                 <i class="material-icons-outlined" >more_horiz</i>
                 <ul>
                   <li v-if="prestamo.estado=='PENDIENTE' && (id_rol=='3' || id_rol=='4') ">
-                    <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
+                    <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
                       Evaluación
                     </router-link>
                   </li>
                   <li  v-else>
-                    <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol,estado:prestamo.estado}}" >
+                    <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
                       Ver Evaluación
                     </router-link>
                   </li> 

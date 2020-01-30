@@ -40,20 +40,26 @@
         </li>
         <li>
           <strong>Celular</strong>
-          <p>{{cliente.celular || "--"}}</p>
+          <p>{{cliente.celular || "--"}}</p> 
         </li>
         <li>
           <strong>Dirección</strong>
           <p v-if="tipo_persona=='PN'">{{cliente.direccion_cliente || '--' }}</p>
           <p v-else>{{cliente.direccion || '--' }}</p>
         </li>
-        <blockquote class="message_request">
+        <li>
+          <strong>Estado</strong>
+          <p v-if="cliente.estado==0">Pendiente</p> 
+          <p v-if="cliente.estado==1">Aprobado</p> 
+          <p v-if="cliente.estado==2">Rechazado</p> 
+        </li>
+        <blockquote class="message_request" v-if="cliente.estado==0">
           <div class="message_request_wrapper">
             <h1>SOLICITUD DE ACEPTACIÓN</h1>
             <p> Se ha registrado un nuevo cliente esperando por aprobación.  </p>
             <div class="actions">
-              <a class="denied"> RECHAZAR </a>
-              <a class="button_primary small">
+              <a class="denied" @click="rechazarSolicitud"> RECHAZAR </a>
+              <a class="button_primary small" @click="aceptarSolicitud">
                 <span> ACEPTAR </span>
               </a>
             </div>
@@ -66,21 +72,28 @@
 
       <div class="table_grid" >
 
-        <router-link  v-if="tipo_persona=='PN'"  class="add_credit" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
+        <router-link  v-if="tipo_persona=='PN' && cliente.estado=='1'"  class="add_credit" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
           <p> NUEVO PRESTAMO  </p>
         </router-link>
 
-        <router-link  v-else class="add_credit" :to="{name: 'prestamojuridico', params:{dni:cliente.documento}}">
+        <router-link  v-else-if="tipo_persona=='PJ' && cliente.estado=='1'" class="add_credit" :to="{name: 'prestamojuridico', params:{dni:cliente.documento}}">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
           <p> NUEVO PRESTAMO  </p>
         </router-link>
 
-        <article class="credit_card" v-for="prestamo in prestamos" :key="prestamo.id" >
+        <div v-else class="add_credit">
+            <span style="background: lightgrey;">
+            <i class="material-icons-outlined">add</i>
+          </span>
+          <p style="color:lightgrey"> NUEVO PRESTAMO  </p>
+        </div>
+
+        <article class="credit_card" v-for="prestamo in prestamos" :key="prestamo.id"  >
           <div class="detail">
             <h2> {{prestamo.producto}} </h2>
             <div class="progress_bar">
@@ -108,6 +121,12 @@
             </div>
           </div>
         </article>
+
+         <div class="empty_message" v-if="prestamos.length==0">
+            <h1> No Registra Prestamos </h1>
+            <p>Todavia no se han relizado ningun prestamo a este cliente</p>
+          </div>
+        
         <a v-show="prestamos.length || 0 < 4" class="spanner" v-for="i in 4" :key="i*1.5"  >
         </a>
       </div>
@@ -144,38 +163,53 @@ export default {
       option_loan: 1
     };
   },
-  created() {
-
-    if(this.tipo_persona == 'PN'){ 
-          this.$http
-            .get(`/${this.resource}/perfil/cliente/` + this.$route.params.documento)
-            .then(response => {
-              this.cliente = response.data["cliente"];
-              this.prestamos = response.data["prestamos"];
-              this.id_usuario = response.data['usuario'];
-              this.id_rol = response.data['rol'];
-              this.loader = 0;
-              this.loader_loan = 0; 
-            });
-    }else{
-          this.$http
-            .get(`/${this.resource}/perfil/juridico/cliente/` + this.$route.params.documento)
-            .then(response => {
-              
-              this.cliente = response.data["cliente"];
-              this.prestamos = response.data["prestamos"];
-              this.id_usuario = response.data['usuario'];
-              this.id_rol = response.data['rol'];
-              this.loader = 0;
-              this.loader_loan = 0;  
-            });
-    }
-
+  mounted() {
+    this.datosClientesPerfil()
   },
   methods: {
     cambiarView(id){
       this.idprestamo= id
       this.view=true
+    },
+    datosClientesPerfil(){
+          if(this.tipo_persona == 'PN'){ 
+                    this.$http
+                      .get(`/${this.resource}/perfil/cliente/` + this.$route.params.documento)
+                      .then(response => {
+                        this.cliente = response.data["cliente"];
+                        this.prestamos = response.data["prestamos"];
+                        this.id_usuario = response.data['usuario'];
+                        this.id_rol = response.data['rol'];
+                        this.loader = 0;
+                        this.loader_loan = 0; 
+                      });
+              }else{
+                    this.$http
+                      .get(`/${this.resource}/perfil/juridico/cliente/` + this.$route.params.documento)
+                      .then(response => {
+                        
+                        this.cliente = response.data["cliente"];
+                        this.prestamos = response.data["prestamos"];
+                        this.id_usuario = response.data['usuario'];
+                        this.id_rol = response.data['rol'];
+                        this.loader = 0;
+                        this.loader_loan = 0;  
+                      });
+              }
+    },
+    aceptarSolicitud(){
+          this.$http
+            .get(`/${this.resource}/aceptar/solicitud/` + this.cliente.idcliente+'/'+this.tipo_persona)
+            .then(response => {
+              this.datosClientesPerfil()
+            });
+    },
+    rechazarSolicitud(){
+          this.$http
+            .get(`/${this.resource}/rechazar/solicitud/` + this.cliente.idcliente+'/'+this.tipo_persona)
+            .then(response => {
+              this.datosClientesPerfil()
+            });
     },
     retornar() {
       this.backMixin_handleBack("/clientes");

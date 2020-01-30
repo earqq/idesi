@@ -98,18 +98,28 @@ class EvaluacionController extends Controller
     {
         $prestamo = Prestamo::find($id);
         $evaluacion = Evaluacion::join('users','evaluacions.users_id','=','users.id')
-                                    ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name')
-                                    ->where('prestamos_id',$prestamo->id)->get();
-        
+                ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name')
+                ->where('prestamos_id',$prestamo->id)->get();
+
         $cuantitativa = ResultadoCuantitativa::where('prestamo_id', $prestamo->id)->first();
-        $evaluado = Evaluacion::where('prestamos_id',$id)->where('users_id', Auth::user()->id)->first();
         $estado_evaluado = 0;
-        if($evaluado){
-            $estado_evaluado = 1;
+
+        if(Auth::user()->idrol==4){
+
+            $evaluado = Prestamo::where('id',$id)->where('users_id', Auth::user()->id)->where('estado','PENDIENTE')->first();
+            if($evaluado){
+                $estado_evaluado = 1;
+            }
+
+        }else{
+
+            $evaluado = Evaluacion::where('prestamos_id',$id)->where('users_id', Auth::user()->id)->first();
+            if(!$evaluado){
+                $estado_evaluado = 1;
+            }
         }
+
          return compact('prestamo','evaluacion','cuantitativa','estado_evaluado');
-
-
     }
 
     public function showF($id)
@@ -255,7 +265,7 @@ class EvaluacionController extends Controller
                    }
                    
                    $evaluacion = new Evaluacion();
-                   $evaluacion->detalle  = $request['detalle'] ;
+                   $evaluacion->detalle  = 'LA SOLICITUD FUE '.$request['estado'] ;
                    $evaluacion->estado  = $request['estado'];
                    $evaluacion->prestamos_id  = $request['prestamos_id'];
                    $evaluacion->users_id  = Auth::user()->id;

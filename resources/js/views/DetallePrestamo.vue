@@ -140,6 +140,7 @@
                     <button id="snap" v-on:click="capture()">Registrar Ubicación</button>
                   </div>
                   <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
+                  
                   <ul>
                     <!-- <li v-for="c in captures" :key="c"> -->
                     <img v-bind:src="captura" height="50" />
@@ -307,10 +308,19 @@ export default {
         .getContext("2d")
         .drawImage(this.video, 0, 0, 640, 480);
       this.captura = canvas.toDataURL("image/png");
-
-console.log(this.captura)
+      // this.DownloadCanvasAsImage()
       this.submit()
       this.apagar()
+    },
+    DownloadCanvasAsImage(){
+      let downloadLink = document.createElement('a');
+      downloadLink.setAttribute('download', 'captura.png');
+      let canvas = document.getElementById('canvas');
+      let dataURL = canvas.toDataURL('image/png');
+      let url = dataURL.replace(/^data:image\/png/,'data:application/octet-stream');
+      console.log(dataURL)
+      downloadLink.setAttribute('href',url);
+      downloadLink.click();
     },
     apagar() {
       this.video = this.$refs.video;

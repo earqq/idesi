@@ -33,6 +33,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Storage;
+use Image;
 
 class ClienteController extends Controller
 {
@@ -185,6 +186,7 @@ class ClienteController extends Controller
                 $cliente->distrito = strtoupper($request->cliente['distrito']);
                 $cliente->numero_registro = $request->cliente['numero_registro'];
                 $cliente->agencia = $request->cliente['agencia'];
+                $cliente->estado = 0;
                 $cliente->save();
                 
                 $natural = new Natural();
@@ -488,21 +490,28 @@ class ClienteController extends Controller
 
     public function visitaStore(Request $request)
     {
-
-
-        return $request;
+        $prestamo = Prestamo::find($request->prestamo_id);
+        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        
+        $photo_manager = new ImageManager();
+        $image = $manager->make($photo)->encode('jpg')
+        ->resize(123, 123 function ($c) {
+            $c->aspectRatio();
+        });
+        $canvas = Image::canvas(123,123);
+        $canvas->insert($image, 'center');
+        $canvas->save(public_path('uploads/'.Config::get('images.full_size').$filename));
 
         if (!$request->ajax()) return redirect('/');
         
-            // $model = new Archivo(); 
-
-            $file =$request->file('file');
-            $ext = $file->getClientOriginalExtension();
+            // $model = new Archivo();
+            // return $data;
+            // $ext = $data->getClientOriginalExtension();
 
             $prestamo = Prestamo::find($request->prestamo_id);
             $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
             
-            if (Storage::putFileAs('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/', $file,'foto_neogcio' . '.' . $ext)) {
+            if (Storage::putFileAs('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/', $value,'foto_neogcio.png')) {
                 
                 if($request['name'] == 'fotos_negocio'){
                     $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
@@ -548,7 +557,7 @@ class ClienteController extends Controller
 
         $clientes = Cliente::where('documento',$documento)
                              ->join('naturals','clientes.id','=','naturals.clientes_id')
-                             ->select('clientes.id AS idcliente','clientes.documento','naturals.id','naturals.nombres','naturals.direccion_cliente','naturals.celular','naturals.apellidos','naturals.nacimiento')
+                             ->select('clientes.id AS idcliente','clientes.documento','clientes.estado','naturals.id','naturals.nombres','naturals.direccion_cliente','naturals.celular','naturals.apellidos','naturals.nacimiento')
                              ->first();
 
         $prestamos = Prestamo::where('clientes_id',"=",$clientes->idcliente)->get();
@@ -565,7 +574,7 @@ class ClienteController extends Controller
 
         $clientes = Cliente::where('documento',$documento)
                              ->join('juridicos','clientes.id','=','juridicos.clientes_id')
-                             ->select('clientes.id AS idcliente','clientes.documento','juridicos.id','juridicos.razon_social','juridicos.partida_registral','juridicos.celular','juridicos.direccion')
+                             ->select('clientes.id AS idcliente','clientes.documento','clientes.estado','juridicos.id','juridicos.razon_social','juridicos.partida_registral','juridicos.celular','juridicos.direccion')
                              ->first();
 
         $prestamos = Prestamo::where('clientes_id',"=",$clientes->idcliente)->get();
@@ -575,6 +584,82 @@ class ClienteController extends Controller
         // return 'cliente'=>$clientes;
         return ['cliente'=>$clientes, 'prestamos'=>$prestamos,'usuario'=>$usuario,'rol'=>$rol];
         
+    }
+
+    public function aceptarSolicitud($id,$tipo)
+    {
+        try{
+
+            DB::beginTransaction();
+            $cliente = Cliente::find($id);
+            $cliente->estado = 1;
+            $cliente->save();
+
+            if($tipo=='PN'){
+                $natural = Natural::where('clientes_id',$id)->first();
+                $declaracion = Declaracion::where('naturals_id',$natural->id)->first();
+                $declaracion->estado= 'ADMITIDO';
+                $declaracion->save();
+            }
+            elseif($tipo=='PJ'){
+                $juridico = Juridico::where('clientes_id',$id)->first();
+                $declaracion = DeclaracionJuridico::where('juridicos_id',$juridico->id)->first();
+                $declaracion->estado= 'ADMITIDO';
+                $declaracion->save();
+            }
+
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => 'CLIENTE ADMITIDO',
+            ];
+
+    } catch (Exception $e){
+        return [
+            'success' => false,
+        ];
+        DB::rollBack();
+    }
+    }
+
+    public function rechazarSolicitud($id,$tipo)
+    {
+
+        try{
+
+            DB::beginTransaction();
+
+            $cliente = Cliente::find($id);
+            $cliente->estado = 2;
+            $cliente->save();
+            
+            if($tipo=='PN'){
+                $natural = Natural::where('clientes_id',$id)->first();
+                $declaracion = Declaracion::where('naturals_id',$natural->id)->first();
+                $declaracion->estado= 'RECHAZADO';
+                $declaracion->save();
+            }
+            elseif($tipo=='PJ'){
+                $juridico = Juridico::where('clientes_id',$id)->first();
+                $declaracion = DeclaracionJuridico::where('juridicos_id',$juridico->id)->first();
+                $declaracion->estado= 'RECHAZADO';
+                $declaracion->save();
+            }
+            
+            DB::commit();
+
+            return [
+                'success' => true,
+                'data' => 'CLIENTE RECHAZADO',
+            ];
+
+            } catch (Exception $e){
+                return [
+                    'success' => false,
+                ];
+                DB::rollBack();
+            }
     }
  
     public function visitas($documento)

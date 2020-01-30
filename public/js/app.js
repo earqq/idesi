@@ -3338,6 +3338,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3440,10 +3441,20 @@ __webpack_require__.r(__webpack_exports__);
     capture: function capture() {
       this.canvas = this.$refs.canvas;
       var context = this.canvas.getContext("2d").drawImage(this.video, 0, 0, 640, 480);
-      this.captura = canvas.toDataURL("image/png");
-      console.log(this.captura);
+      this.captura = canvas.toDataURL("image/png"); // this.DownloadCanvasAsImage()
+
       this.submit();
       this.apagar();
+    },
+    DownloadCanvasAsImage: function DownloadCanvasAsImage() {
+      var downloadLink = document.createElement('a');
+      downloadLink.setAttribute('download', 'captura.png');
+      var canvas = document.getElementById('canvas');
+      var dataURL = canvas.toDataURL('image/png');
+      var url = dataURL.replace(/^data:image\/png/, 'data:application/octet-stream');
+      console.log(dataURL);
+      downloadLink.setAttribute('href', url);
+      downloadLink.click();
     },
     apagar: function apagar() {
       this.video = this.$refs.video;
@@ -5414,6 +5425,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mixins_functions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mixins/functions */ "./resources/js/mixins/functions.js");
 
 //
 //
@@ -5960,7 +5972,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_mixins_functions__WEBPACK_IMPORTED_MODULE_1__["serviceNumber"]],
   data: function data() {
     return {
       resource: "evaluaciones",
@@ -5969,8 +5983,7 @@ __webpack_require__.r(__webpack_exports__);
       tab: 1,
       cuantitativa: {},
       estado_evaluado: 0,
-      rol: this.$route.params.rol,
-      estado: this.$route.params.estado,
+      rol: '',
       prestamo: {},
       form: {},
       notificationSystem: {
@@ -6003,49 +6016,53 @@ __webpack_require__.r(__webpack_exports__);
     }, null, this);
   },
   mounted: function mounted() {
+    var _this = this;
+
+    this.$http.get("/rol").then(function (response) {
+      _this.rol = response.data.idrol;
+    });
     this.methodsDetalle(this.$route.params.prestamo);
   },
   methods: {
     listFile: function listFile(id) {
-      var _this = this;
+      var _this2 = this;
 
       this.$http.get("/files/".concat(id)).then(function (response) {
-        _this.person = response.data["datos"];
-        _this.archivos = response.data["files"];
+        _this2.person = response.data["datos"];
+        _this2.archivos = response.data["files"];
       });
     },
     methodsDetalle: function methodsDetalle(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$http.get("/".concat(this.resource, "/prestamos/detalle/") + id).then(function (response) {
-        console.log("response eval");
-        console.log(response);
+        console.log("dasdsadad");
+        console.log(response.data);
 
         if (response.data.estado_evaluado == 0) {
-          _this2.estado_evaluado = 0;
+          _this3.estado_evaluado = 0;
         } else {
-          _this2.estado_evaluado = 1;
-          _this2.prestamo = response.data.prestamo;
+          _this3.estado_evaluado = 1;
         }
 
-        if (response.data.cuantitativa) _this2.cuantitativa = response.data.cuantitativa;
-        _this2.detalle = response.data.prestamo;
-        _this2.form.evaluacion = response.data.evaluacion;
+        _this3.prestamo = response.data.prestamo;
+        if (response.data.cuantitativa) _this3.cuantitativa = response.data.cuantitativa;
+        _this3.form.evaluacion = response.data.evaluacion;
 
-        _this2.listFile(id);
+        _this3.listFile(id);
 
-        if (_this2.rol == '4') {
-          _this2.form.producto = _this2.detalle.producto;
-          _this2.form.aporte = _this2.detalle.aporte;
-          _this2.form.importe = _this2.detalle.importe;
-          _this2.form.plazo = _this2.detalle.plazo;
-          _this2.form.cuotas = _this2.detalle.cuotas;
-          _this2.form.tasa = _this2.detalle.tasa;
-          _this2.form.estado = _this2.detalle.estado;
+        if (_this3.rol == '4') {
+          _this3.form.producto = _this3.prestamo.producto;
+          _this3.form.aporte = _this3.prestamo.aporte;
+          _this3.form.importe = _this3.prestamo.importe;
+          _this3.form.plazo = _this3.prestamo.plazo;
+          _this3.form.cuotas = _this3.prestamo.cuotas;
+          _this3.form.tasa = _this3.prestamo.tasa;
+          _this3.form.estado = _this3.prestamo.estado;
         }
 
-        _this2.form.prestamos_id = id;
-        _this2.id_prestamo = id;
+        _this3.form.prestamos_id = id;
+        _this3.id_prestamo = id;
       });
     },
     formInit: function formInit() {
@@ -6073,7 +6090,7 @@ __webpack_require__.r(__webpack_exports__);
       window.open("/clientes/adjuntarPdf/" + this.id_prestamo, "_blank");
     },
     firmarEvaluacion: function firmarEvaluacion() {
-      var _this3 = this;
+      var _this4 = this;
 
       console.log("role");
       console.log(this.rol);
@@ -6083,17 +6100,17 @@ __webpack_require__.r(__webpack_exports__);
         //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
         //  }
         this.$http.post("/".concat(this.resource, "/prestamos/evaluarFinal"), this.form).then(function (response) {
-          _this3.methodsDetalle(_this3.$route.params.prestamo);
+          _this4.methodsDetalle(_this4.$route.params.prestamo);
 
-          _this3.$toast.success("El evaluacion fue exitosa", "Exitoso", _this3.notificationSystem.options.success);
+          _this4.$toast.success("El evaluacion fue exitosa", "Exitoso", _this4.notificationSystem.options.success);
         });
       } else if (this.rol == '3') {
         this.$http.post("/".concat(this.resource, "/prestamos/evaluar"), this.form).then(function (response) {
-          _this3.tipo = true;
+          _this4.tipo = true;
 
-          _this3.$toast.success("El evaluacion fue exitosa", "Exitoso", _this3.notificationSystem.options.success);
+          _this4.$toast.success("El evaluacion fue exitosa", "Exitoso", _this4.notificationSystem.options.success);
 
-          _this3.methodsDetalle(_this3.$route.params.prestamo);
+          _this4.methodsDetalle(_this4.$route.params.prestamo);
         }).then(function () {// this.loading_submit = false;
         });
       }
@@ -6306,6 +6323,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6334,33 +6370,50 @@ __webpack_require__.r(__webpack_exports__);
       option_loan: 1
     };
   },
-  created: function created() {
-    var _this = this;
-
-    if (this.tipo_persona == 'PN') {
-      this.$http.get("/".concat(this.resource, "/perfil/cliente/") + this.$route.params.documento).then(function (response) {
-        _this.cliente = response.data["cliente"];
-        _this.prestamos = response.data["prestamos"];
-        _this.id_usuario = response.data['usuario'];
-        _this.id_rol = response.data['rol'];
-        _this.loader = 0;
-        _this.loader_loan = 0;
-      });
-    } else {
-      this.$http.get("/".concat(this.resource, "/perfil/juridico/cliente/") + this.$route.params.documento).then(function (response) {
-        _this.cliente = response.data["cliente"];
-        _this.prestamos = response.data["prestamos"];
-        _this.id_usuario = response.data['usuario'];
-        _this.id_rol = response.data['rol'];
-        _this.loader = 0;
-        _this.loader_loan = 0;
-      });
-    }
+  mounted: function mounted() {
+    this.datosClientesPerfil();
   },
   methods: {
     cambiarView: function cambiarView(id) {
       this.idprestamo = id;
       this.view = true;
+    },
+    datosClientesPerfil: function datosClientesPerfil() {
+      var _this = this;
+
+      if (this.tipo_persona == 'PN') {
+        this.$http.get("/".concat(this.resource, "/perfil/cliente/") + this.$route.params.documento).then(function (response) {
+          _this.cliente = response.data["cliente"];
+          _this.prestamos = response.data["prestamos"];
+          _this.id_usuario = response.data['usuario'];
+          _this.id_rol = response.data['rol'];
+          _this.loader = 0;
+          _this.loader_loan = 0;
+        });
+      } else {
+        this.$http.get("/".concat(this.resource, "/perfil/juridico/cliente/") + this.$route.params.documento).then(function (response) {
+          _this.cliente = response.data["cliente"];
+          _this.prestamos = response.data["prestamos"];
+          _this.id_usuario = response.data['usuario'];
+          _this.id_rol = response.data['rol'];
+          _this.loader = 0;
+          _this.loader_loan = 0;
+        });
+      }
+    },
+    aceptarSolicitud: function aceptarSolicitud() {
+      var _this2 = this;
+
+      this.$http.get("/".concat(this.resource, "/aceptar/solicitud/") + this.cliente.idcliente + '/' + this.tipo_persona).then(function (response) {
+        _this2.datosClientesPerfil();
+      });
+    },
+    rechazarSolicitud: function rechazarSolicitud() {
+      var _this3 = this;
+
+      this.$http.get("/".concat(this.resource, "/rechazar/solicitud/") + this.cliente.idcliente + '/' + this.tipo_persona).then(function (response) {
+        _this3.datosClientesPerfil();
+      });
     },
     retornar: function retornar() {
       this.backMixin_handleBack("/clientes");
@@ -17089,7 +17142,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#video[data-v-4f6069c7] {\n  background-color: #000000;\n}\n#canvas[data-v-4f6069c7] {\n  display: none;\n}\nli[data-v-4f6069c7] {\n  display: inline;\n  padding: 5px;\n}\n", ""]);
+exports.push([module.i, "\n#video[data-v-4f6069c7] {\r\n  background-color: #000000;\n}\n#canvas[data-v-4f6069c7] {\r\n  display: none;\n}\nli[data-v-4f6069c7] {\r\n  display: inline;\r\n  padding: 5px;\n}\r\n", ""]);
 
 // exports
 
@@ -17108,7 +17161,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.input-w[data-v-6f836608] {\n  width: 100%;\n}\n.form-group label[data-v-6f836608] {\n  margin-bottom: 0;\n  color: #000000;\n  font-weight: 500;\n}\n.card-header[data-v-6f836608] {\n  padding: 0.2rem 1.25rem !important;\n}\n.card-body[data-v-6f836608] {\n  padding: 10px 0px !important;\n  margin: 0 !important;\n}\n.form-control[data-v-6f836608] {\n  height: 27px !important;\n  font-size: 14px !important;\n}\n.title-table[data-v-6f836608] {\n  background: #dfdede;\n  text-align: center;\n  border: 1px solid #bababa;\n}\n", ""]);
+exports.push([module.i, "\n.input-w[data-v-6f836608] {\r\n  width: 100%;\n}\n.form-group label[data-v-6f836608] {\r\n  margin-bottom: 0;\r\n  color: #000000;\r\n  font-weight: 500;\n}\n.card-header[data-v-6f836608] {\r\n  padding: 0.2rem 1.25rem !important;\n}\n.card-body[data-v-6f836608] {\r\n  padding: 10px 0px !important;\r\n  margin: 0 !important;\n}\n.form-control[data-v-6f836608] {\r\n  height: 27px !important;\r\n  font-size: 14px !important;\n}\n.title-table[data-v-6f836608] {\r\n  background: #dfdede;\r\n  text-align: center;\r\n  border: 1px solid #bababa;\n}\r\n", ""]);
 
 // exports
 
@@ -17146,7 +17199,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#app[data-v-486eeb55] {\n  text-align: center;\n  color: #2c3e50;\n  margin-top: 60px;\n}\n#video[data-v-486eeb55] {\n  background-color: #000000;\n}\n#canvas[data-v-486eeb55] {\n  display: none;\n}\nli[data-v-486eeb55] {\n  display: inline;\n  padding: 5px;\n}\n", ""]);
+exports.push([module.i, "\n#app[data-v-486eeb55] {\r\n  text-align: center;\r\n  color: #2c3e50;\r\n  margin-top: 60px;\n}\n#video[data-v-486eeb55] {\r\n  background-color: #000000;\n}\n#canvas[data-v-486eeb55] {\r\n  display: none;\n}\nli[data-v-486eeb55] {\r\n  display: inline;\r\n  padding: 5px;\n}\r\n", ""]);
 
 // exports
 
@@ -69861,7 +69914,6 @@ var render = function() {
                             "evaluacion.principal.destino_credito_descripcion"
                         }
                       ],
-                      attrs: { disabled: "" },
                       domProps: {
                         value:
                           _vm.evaluacion.principal.destino_credito_descripcion
@@ -73716,9 +73768,9 @@ var render = function() {
                       [
                         _c("h3", { staticClass: "title" }, [
                           _vm._v(
-                            "\n                      Entidad " +
+                            "\r\n                      Entidad " +
                               _vm._s(index + 1) +
-                              "\n                      "
+                              "\r\n                      "
                           ),
                           index > 0
                             ? _c(
@@ -74391,7 +74443,7 @@ var render = function() {
                           _vm._v(
                             "Propiedad " +
                               _vm._s(index + 1) +
-                              "\n                      "
+                              "\r\n                      "
                           ),
                           index > 0
                             ? _c(
@@ -74525,7 +74577,7 @@ var render = function() {
                             _vm._v(
                               "Entidad " +
                                 _vm._s(index + 1) +
-                                "\n                      "
+                                "\r\n                      "
                             ),
                             index > 0
                               ? _c(
@@ -74705,7 +74757,7 @@ var render = function() {
                             _vm._v(
                               "Entidad " +
                                 _vm._s(index + 1) +
-                                "\n                        "
+                                "\r\n                        "
                             ),
                             index > 0
                               ? _c(
@@ -75063,8 +75115,7 @@ var render = function() {
                                                 name: "/evaluacion/detalle/",
                                                 params: {
                                                   prestamo: prestamo.id,
-                                                  rol: _vm.id_rol,
-                                                  estado: prestamo.estado
+                                                  rol: _vm.id_rol
                                                 }
                                               }
                                             }
@@ -75083,8 +75134,7 @@ var render = function() {
                                                 name: "/evaluacion/detalle/",
                                                 params: {
                                                   prestamo: prestamo.id,
-                                                  rol: _vm.id_rol,
-                                                  estado: prestamo.estado
+                                                  rol: _vm.id_rol
                                                 }
                                               }
                                             }
@@ -75109,8 +75159,7 @@ var render = function() {
                                             name: "/evaluacion/detalle/",
                                             params: {
                                               prestamo: prestamo.id,
-                                              rol: _vm.id_rol,
-                                              estado: prestamo.estado
+                                              rol: _vm.id_rol
                                             }
                                           }
                                         }
@@ -75214,11 +75263,7 @@ var render = function() {
                                     attrs: {
                                       to: {
                                         name: "/evaluacion/detalle/",
-                                        params: {
-                                          prestamo: prestamo.id,
-                                          rol: _vm.id_rol,
-                                          estado: prestamo.estado
-                                        }
+                                        params: { prestamo: prestamo.id }
                                       }
                                     }
                                   },
@@ -75240,11 +75285,7 @@ var render = function() {
                                     attrs: {
                                       to: {
                                         name: "/evaluacion/detalle/",
-                                        params: {
-                                          prestamo: prestamo.id,
-                                          rol: _vm.id_rol,
-                                          estado: prestamo.estado
-                                        }
+                                        params: { prestamo: prestamo.id }
                                       }
                                     }
                                   },
@@ -75399,6 +75440,8 @@ var render = function() {
                   staticClass: "form_step"
                 },
                 [
+                  _c("p", [_vm._v(_vm._s(_vm.rol))]),
+                  _vm._v(" "),
                   _c("div", { staticClass: "form_step_wrapper" }, [
                     _c(
                       "button",
@@ -75432,37 +75475,37 @@ var render = function() {
                       _c("li", [
                         _c("strong", [_vm._v("Producto ")]),
                         _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.detalle.producto))])
+                        _c("p", [_vm._v(_vm._s(_vm.prestamo.producto))])
                       ]),
                       _vm._v(" "),
                       _c("li", [
                         _c("strong", [_vm._v("Importe ")]),
                         _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.detalle.importe))])
+                        _c("p", [_vm._v(_vm._s(_vm.prestamo.importe))])
                       ]),
                       _vm._v(" "),
                       _c("li", [
                         _c("strong", [_vm._v("Plazo ")]),
                         _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.detalle.plazo))])
+                        _c("p", [_vm._v(_vm._s(_vm.prestamo.plazo))])
                       ]),
                       _vm._v(" "),
                       _c("li", [
                         _c("strong", [_vm._v("Cuotas del Sistema ")]),
                         _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.detalle.cuotas))])
+                        _c("p", [_vm._v(_vm._s(_vm.prestamo.cuotas))])
                       ]),
                       _vm._v(" "),
                       _c("li", [
                         _c("strong", [_vm._v("Aporte ")]),
                         _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.detalle.aporte))])
+                        _c("p", [_vm._v(_vm._s(_vm.prestamo.aporte))])
                       ]),
                       _vm._v(" "),
                       _c("li", [
                         _c("strong", [_vm._v("Comentarios ")]),
                         _vm._v(" "),
-                        _c("p", [_vm._v(_vm._s(_vm.detalle.comentarios))])
+                        _c("p", [_vm._v(_vm._s(_vm.prestamo.comentarios))])
                       ])
                     ])
                   ]),
@@ -75541,7 +75584,7 @@ var render = function() {
                         ])
                   ]),
                   _vm._v(" "),
-                  _vm.estado_evaluado == 1
+                  _vm.prestamo.estado != "PENDIENTE"
                     ? _c(
                         "div",
                         { staticClass: "form_step_wrapper in_bottom" },
@@ -76210,7 +76253,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                            EVALUACION CUANTITATIVA\n                          "
+                              "\r\n                            EVALUACION CUANTITATIVA\r\n                          "
                             )
                           ]
                         ),
@@ -76787,7 +76830,9 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm.estado_evaluado == 0
+    _vm.estado_evaluado == 1 &&
+    _vm.prestamo.estado == "PENDIENTE" &&
+    (_vm.rol == "3" || _vm.rol == "4")
       ? _c("aside", { staticClass: "evaluation" }, [
           _c("div", { staticClass: "title" }, [_vm._v("Evaluador")]),
           _vm._v(" "),
@@ -77091,7 +77136,7 @@ var render = function() {
               },
               [
                 _c("span", [
-                  _vm._v("\n            FIRMAR EVALUACIÓN\n          ")
+                  _vm._v("\r\n            FIRMAR EVALUACIÓN\r\n          ")
                 ]),
                 _vm._v(" "),
                 _c("i", { staticClass: "material-icons-outlined" }, [
@@ -77427,7 +77472,49 @@ var render = function() {
             : _c("p", [_vm._v(_vm._s(_vm.cliente.direccion || "--"))])
         ]),
         _vm._v(" "),
-        _vm._m(0)
+        _c("li", [
+          _c("strong", [_vm._v("Estado")]),
+          _vm._v(" "),
+          _vm.cliente.estado == 0 ? _c("p", [_vm._v("Pendiente")]) : _vm._e(),
+          _vm._v(" "),
+          _vm.cliente.estado == 1 ? _c("p", [_vm._v("Aprobado")]) : _vm._e(),
+          _vm._v(" "),
+          _vm.cliente.estado == 2 ? _c("p", [_vm._v("Rechazado")]) : _vm._e()
+        ]),
+        _vm._v(" "),
+        _vm.cliente.estado == 0
+          ? _c("blockquote", { staticClass: "message_request" }, [
+              _c("div", { staticClass: "message_request_wrapper" }, [
+                _c("h1", [_vm._v("SOLICITUD DE ACEPTACIÓN")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    " Se ha registrado un nuevo cliente esperando por aprobación.  "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "actions" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "denied",
+                      on: { click: _vm.rechazarSolicitud }
+                    },
+                    [_vm._v(" RECHAZAR ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "button_primary small",
+                      on: { click: _vm.aceptarSolicitud }
+                    },
+                    [_c("span", [_vm._v(" ACEPTAR ")])]
+                  )
+                ])
+              ])
+            ])
+          : _vm._e()
       ])
     ]),
     _vm._v(" "),
@@ -77436,7 +77523,7 @@ var render = function() {
         "div",
         { staticClass: "table_grid" },
         [
-          _vm.tipo_persona == "PN"
+          _vm.tipo_persona == "PN" && _vm.cliente.estado == "1"
             ? _c(
                 "router-link",
                 {
@@ -77458,7 +77545,8 @@ var render = function() {
                   _c("p", [_vm._v(" NUEVO PRESTAMO  ")])
                 ]
               )
-            : _c(
+            : _vm.tipo_persona == "PJ" && _vm.cliente.estado == "1"
+            ? _c(
                 "router-link",
                 {
                   staticClass: "add_credit",
@@ -77478,7 +77566,18 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", [_vm._v(" NUEVO PRESTAMO  ")])
                 ]
-              ),
+              )
+            : _c("div", { staticClass: "add_credit" }, [
+                _c("span", { staticStyle: { background: "lightgrey" } }, [
+                  _c("i", { staticClass: "material-icons-outlined" }, [
+                    _vm._v("add")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("p", { staticStyle: { color: "lightgrey" } }, [
+                  _vm._v(" NUEVO PRESTAMO  ")
+                ])
+              ]),
           _vm._v(" "),
           _vm._l(_vm.prestamos, function(prestamo) {
             return _c(
@@ -77488,7 +77587,7 @@ var render = function() {
                 _c("div", { staticClass: "detail" }, [
                   _c("h2", [_vm._v(" " + _vm._s(prestamo.producto) + " ")]),
                   _vm._v(" "),
-                  _vm._m(1, true),
+                  _vm._m(0, true),
                   _vm._v(" "),
                   _c("h3", [
                     _vm._v(
@@ -77654,6 +77753,18 @@ var render = function() {
             )
           }),
           _vm._v(" "),
+          _vm.prestamos.length == 0
+            ? _c("div", { staticClass: "empty_message" }, [
+                _c("h1", [_vm._v(" No Registra Prestamos ")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "Todavia no se han relizado ningun prestamo a este cliente"
+                  )
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _vm._l(4, function(i) {
             return _c("a", {
               directives: [
@@ -77675,30 +77786,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("blockquote", { staticClass: "message_request" }, [
-      _c("div", { staticClass: "message_request_wrapper" }, [
-        _c("h1", [_vm._v("SOLICITUD DE ACEPTACIÓN")]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            " Se ha registrado un nuevo cliente esperando por aprobación.  "
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "actions" }, [
-          _c("a", { staticClass: "denied" }, [_vm._v(" RECHAZAR ")]),
-          _vm._v(" "),
-          _c("a", { staticClass: "button_primary small" }, [
-            _c("span", [_vm._v(" ACEPTAR ")])
-          ])
-        ])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -89740,7 +89827,7 @@ var render = function() {
                 ? _c("div", { staticClass: "form_step_wrapper in_bottom" }, [
                     _c("h3", { staticClass: "title" }, [
                       _vm._v(
-                        "\n              Cónyuge o Conviviente\n              "
+                        "\r\n              Cónyuge o Conviviente\r\n              "
                       ),
                       _c(
                         "button",
@@ -90308,9 +90395,9 @@ var render = function() {
                       [
                         _c("h3", { staticClass: "title" }, [
                           _vm._v(
-                            "\n                  Aval " +
+                            "\r\n                  Aval " +
                               _vm._s(index + 1) +
-                              "\n                  "
+                              "\r\n                  "
                           ),
                           index > 0
                             ? _c(
@@ -91098,9 +91185,9 @@ var render = function() {
                       [
                         _c("h3", { staticClass: "title" }, [
                           _vm._v(
-                            "\n                  Garantia " +
+                            "\r\n                  Garantia " +
                               _vm._s(index + 1) +
-                              "\n                  "
+                              "\r\n                  "
                           ),
                           index > 0
                             ? _c(
@@ -117233,7 +117320,8 @@ var serviceNumber = {
   data: function data() {
     return {
       loading_search: false,
-      fromRoute: undefined
+      fromRoute: undefined,
+      id_rol: ''
     };
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
@@ -117366,7 +117454,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: 'perfil',
     component: __webpack_require__(/*! ./views/Perfil */ "./resources/js/views/Perfil.vue")["default"]
   }, {
-    path: '/evaluacion/detalle/:prestamo/:rol/:estado',
+    path: '/evaluacion/detalle/:prestamo',
     name: '/evaluacion/detalle/',
     component: __webpack_require__(/*! ./views/EvaluacionDetalle */ "./resources/js/views/EvaluacionDetalle.vue")["default"]
   }, {
@@ -119068,9 +119156,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /mnt/c/Users/usuario/Documents/Apps/idesi/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /mnt/c/Users/usuario/Documents/Apps/idesi/resources/sass/app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! /mnt/c/Users/usuario/Documents/Apps/idesi/resources/sass/login.scss */"./resources/sass/login.scss");
+__webpack_require__(/*! C:\laragon\www\idesi\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\laragon\www\idesi\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\laragon\www\idesi\resources\sass\login.scss */"./resources/sass/login.scss");
 
 
 /***/ })

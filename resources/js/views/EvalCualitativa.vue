@@ -64,7 +64,7 @@
                   <div class="group_form all">
                     <div class="input_wrapper">
                       <label>Descripcion destino</label>
-                      <textarea disabled v-model="evaluacion.principal.destino_credito_descripcion"></textarea>
+                      <textarea  v-model="evaluacion.principal.destino_credito_descripcion"></textarea>
                     </div>
                   </div>
                 </div>
