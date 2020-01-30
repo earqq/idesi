@@ -7,14 +7,15 @@
     <title>EVALUACION CUALITATIVA</title>
     <style>
         body{
-            font-family: monospace;
+            font-family: sans-serif;
         } 
         td{
             border: 1px solid #d5d5d5;
             font-size: 12px;
         }
         .title{
-            font-weight: bold
+            font-weight: bold;
+            font-size: 11px;
         }
 
     </style>
@@ -43,7 +44,7 @@
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS PRINCIPALES</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">DATOS PRINCIPALES</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,7 +62,7 @@
                         @if ($cualitativa->principal['fuente_ingreso'] == 'TRANSPORTE BAJAJ' || $cualitativa->principal['fuente_ingreso'] == 'TRANSPORTES')
                             <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS VEHICULO</th>
                         @else
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS NEGOCIO</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">DATOS NEGOCIO</th>
                         @endif
                         
                     </tr>
@@ -109,7 +110,7 @@
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS FAMILIARES</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">DATOS FAMILIARES</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -158,117 +159,52 @@
                 </tbody>
             </table>
 
+         
 
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">CENTRAL DE RIESGO</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none; font-size: 12px">CENTRAL DE RIESGO</th>
                     </tr>
                 </thead>
                 <tbody>
-
-                    <tr  >
+                    <tr>
                         <td colspan="3">
-                            <table style="width: 100%;margin-bottom: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
-                                <thead>
-
-                                    
+                           <span class="title">COMENTARIOS</span>
+                           <span>
+                               {{$cualitativa->comentario_central_riesgo}} 
+                           </span>
+                        </td>
+                   </tr> 
+                    <tr colspan="3" >
+                        <table style="width: 100%;margin-bottom: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
+                                <thead>            
                                     <tr>
-                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none; font-size: 10px">Entidad Financiera</th>
-                                        <th  style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Cap. Trabajo</th>
-                                        <th  style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Activo Fijo</th>
-                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Consumo Fijo</th>
-                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Vehicular</th>
-                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Hipoteca</th>
-                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Terceros</th>
+                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Entidad Financiera</th>
+                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Cap. Trabajo</th> 
+                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Activo Fijo</th> 
+                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Consumo Fijo</th> 
+                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Vehicular</th> 
+                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Hipoteca</th> 
+                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Terceros</th> 
                                     </tr>
                                    
                                 </thead>
                                 <tbody>
-                                    
-                                    
-                                        
-                                    
                                     @foreach ($cualitativa->central_riesgo as $cual)
-                                    @if ($cual['entidad_financiera'])
                                     <tr>
                                         <td>{{$cual['entidad_financiera']}}</td>
-                                        
-                                        @if ($cual['capital'])
-                                            <td style="text-align: center;background: #009688;color: #fff">
-                                                SI
-                                            </td>
-                                        @else
-                                            <td style="text-align: center">
-                                                NO
-                                            </td>
-                                         @endif
-                                        
-                                        
-                                            @if ($cual['activo_f'])
-                                            <td style="text-align: center;background: #009688;color: #fff">
-                                                SI
-                                            </td>
-                                            @else
-                                            <td style="text-align: center;">
-                                                NO
-                                            </td>
-                                            @endif
-                                         
-                                            @if ($cual['consumo'])
-                                            <td style="text-align: center;background: #009688;color: #fff">
-                                                SI
-                                            </td>
-                                            @else
-                                            <td style="text-align: center;">
-                                                NO
-                                            </td>
-                                            @endif
-                                          
-                                            @if ($cual['vehicular'])
-                                            <td style="text-align: center;background: #009688;color: #fff">
-                                                SI
-                                            </td>
-                                            @else
-                                            <td style="text-align: center;">
-                                                NO
-                                            </td>
-                                            @endif
-                                          
-                                            @if ($cual['hipoteca'])
-                                            <td style="text-align: center;background: #009688;color: #fff">
-                                                SI
-                                            </td>
-                                            @else
-                                            <td style="text-align: center;">
-                                                NO
-                                            </td>
-                                            @endif
-                                          
-                                            @if ($cual['terceros'])
-                                            <td style="text-align: center;background: #009688;color: #fff">
-                                                SI
-                                            </td>
-                                            @else
-                                            <td style="text-align: center;">
-                                                NO
-                                            </td>
-                                            @endif
-                                         
+                                        <td>{{ $cual['capital'] ? 'SI' : 'NO'}}</td>
+                                        <td> {{ $cual['activo_f'] ? 'SI' : 'NO'}}</td>
+                                        <td>{{ $cual['consumo'] ? 'SI' : 'NO'}}</td>
+                                        <td>{{ $cual['vehicular'] ? 'SI' : 'NO'}}</td>
+                                        <td>{{ $cual['hipoteca'] ? 'SI' : 'NO'}}</td>
+                                        <td>{{ $cual['terceros'] ? 'SI' : 'NO'}}</td>
+                                    
                                     </tr>
-                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>
-                        </td>
-                    </tr>
-                    <tr  >
-                         <td colspan="3">
-                            <span class="title">COMENTARIOS</span>
-                            <span>
-                                {{$cualitativa->comentario_central_riesgo}} 
-                            </span>
-                         </td>
                     </tr>
 
                 </tbody>
@@ -277,7 +213,7 @@
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">REFERENCIAS</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">REFERENCIAS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -288,7 +224,7 @@
 
                                     
                                     <tr>
-                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none; font-size: 10px">Tipo de relación</th>
+                                        <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Tipo de relación</th>
                                         <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Nombre</th>
                                         <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Telefono</th> 
                                     </tr>
@@ -317,7 +253,7 @@
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">COLATERAL</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">COLATERAL</th>
                     </tr>
                 </thead>
                 <tbody>
