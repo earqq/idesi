@@ -35,14 +35,9 @@
                     <div v-show="menu_user" class="users_options">
                       <div class="name">
                       <div class="avatar">
-                        <img
-                          src="https://picsum.photos/200/300"
-                          alt="User profile picture"
-                          v-if="false"
-                        />
+                        <img src="https://picsum.photos/200/300" v-if="false"/>
                         <div class="avatar_alt" v-else> {{currentUser.name.substring(0,1)}} </div>
                       </div>
-                       
                         <h1>
                           <p>{{currentUser.name}}</p>
                           <a href="#">
