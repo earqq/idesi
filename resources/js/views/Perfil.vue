@@ -321,7 +321,7 @@ export default {
         .avatar_alt
           width: 55px
           height: 55px
-          background-color: $primary_color
+          background-color: $line_color
           border-radius: 50%
           display: flex
           align-items: center
@@ -329,7 +329,7 @@ export default {
           font-size: 17px
           font-weight: 700
           margin-top: -27px
-          color: white
+          color: $primary_color
         img
           width: 55px
           height: 55px

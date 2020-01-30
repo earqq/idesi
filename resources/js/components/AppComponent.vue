@@ -1,5 +1,8 @@
 <template>
   <div>
+    <form id="logout-form" ref="form" action="logout" method="POST" style="display: none;">
+      <input type="hidden" name="_token" :value="csrf">
+    </form>  
     <nav>
         <div class="menu_items">
             <img class="logo" src="/img/logo_alt.svg">
@@ -20,19 +23,28 @@
                   <router-link :to="{name: 'usuarios'}"  >Usuarios</router-link>
                 </li>
                 <div class="current_user">
-                  <img  @click="menu_user = !menu_user"
-                    src="https://picsum.photos/200/300"
-                    alt="User profile picture"
-                  />
+                  <div class="avatar"  @click="menu_user = !menu_user">
+                    <img 
+                      src="https://picsum.photos/200/300"
+                      alt="User profile picture"
+                      v-if="false"
+                    />
+                    <div class="avatar_alt" v-else> {{currentUser.name.substring(0,1)}} </div>
+                  </div>
                   <transition name="slide-fade" mode="in-out">
                     <div v-show="menu_user" class="users_options">
                       <div class="name">
+                      <div class="avatar">
                         <img
                           src="https://picsum.photos/200/300"
                           alt="User profile picture"
+                          v-if="false"
                         />
+                        <div class="avatar_alt" v-else> {{currentUser.name.substring(0,1)}} </div>
+                      </div>
+                       
                         <h1>
-                          Omar Benjamin Chagua Ramos
+                          <p>{{currentUser.name}}</p>
                           <a href="#">
                             Editar
                           </a>
@@ -59,23 +71,32 @@
 export default {
   data () {
     return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       resource: "user",
       tipo: 0,
       menu_user: false,
-      tab: ''
+      tab: '',
+      currentUser: {
+        name: ''
+      }
     }
   },
   async created() {
     await this.$http.get(`/${this.resource}/tipo/`).then(response => {
       this.tipo = response.data.idrol
     })
+    this.getCurrentUser()
   },
   methods:{
-    logout() {
-      axios.post("/logout").then(res => { 
-        
-      });
+    logout () {
+        this.$refs.form.submit();
     },
+    getCurrentUser () {
+      axios.get("/currentUser")
+      .then(res => { 
+        this.currentUser = res.data
+      })
+    }
   },
   mounted () {
     this.tab = this.$route.name
@@ -141,12 +162,27 @@ nav
       .current_user
         margin-left: 20px
         position: relative
-        img
-          width: 30px
-          height: 30px
-          object-fit: cover
-          border-radius: 50%
+        .avatar
           cursor: pointer
+          .avatar_alt
+            width: 30px
+            height: 30px
+            background-color: $line_color
+            border-radius: 50%
+            display: flex
+            align-items: center
+            justify-content: center
+            font-size: 17px
+            font-weight: 600
+            color: $primary_color
+          img
+            width: 30px
+            height: 30px
+            border-radius: 50%
+            object-fit: cover
+            position: relative
+            border: 2px solid white
+            background-color: white
         .users_options
           position: absolute
           right: 5px
@@ -177,6 +213,8 @@ nav
               margin-bottom: 0
               margin-left: 10px
               font-weight: 500
+              p
+                margin: 0
               a
                 text-decoration: none
                 color: $primary_color
@@ -187,6 +225,7 @@ nav
             font-size: 12px
             color: $text_color
             font-weight: 500
+            cursor: pointer
             &:hover
               color: $text_color
 
