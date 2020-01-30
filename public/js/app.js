@@ -68365,6 +68365,8 @@ var render = function() {
                             _vm.person.documento +
                             "_" +
                             _vm.person.id +
+                            "/prestamo_" +
+                            archivo.prestamos_id +
                             "/" +
                             archivo.tipo +
                             "/" +

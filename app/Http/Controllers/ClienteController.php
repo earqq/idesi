@@ -491,12 +491,40 @@ class ClienteController extends Controller
     {
 
 
+        $prestamo = Prestamo::find($request->prestamo_id);
+        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+
         $file = $request->file;
-        $file = str_replace('data:image/png;base64,', '', $file);
-        // $file = str_replace(' ', '+', $file);
+        $file = str_replace('data:image/png;base64,', '', $file); 
         $data = base64_decode($file);
 
-        $img = file_put_contents("i".  rand(0, 50).".png", $data);
+        if (!file_exists("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen")) {
+            mkdir("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen", 0777, true);
+        }
+
+        if(file_put_contents("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen/foto_negocio.png", $data)){
+
+                $pdf=PDF::loadView('reportes.imagen',compact('prestamo','cliente'));
+                Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/imagenpdf/foto.pdf', $pdf->output());
+
+                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+                $subidos->fotos_negocio=1;
+                $subidos->save(); 
+
+                $model = new Archivo();
+                return $model::create([
+                        'nombre' => 'foto_negocio',
+                        'tipo' => 'imagen',
+                        'extension' => 'png',
+                        'prestamos_id' => $request->prestamo_id
+                ]);
+
+
+              
+
+        }
+
+        // $img = file_put_contents(Storage::putFileAs('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/', $data,'foto_neogcio' . '.png'));
         // return 
         // if (!$request->ajax()) return redirect('/');
         
@@ -1155,7 +1183,11 @@ class ClienteController extends Controller
             $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf'), 'all');
 
             foreach ($archivos as $ep=>$rp) {
-                $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/'.$rp->tipo.'/'.$rp->nombre.'.'.$rp->extension), 'all');
+                if($rp->tipo=='documento'){
+                    
+                    $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/'.$rp->tipo.'/'.$rp->nombre.'.'.$rp->extension), 'all');
+                
+                }
             }
 
             $pdf->merge('file', public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/general/documento/adjunto_'.$cliente->documento.'.pdf'), 'P');
@@ -1184,7 +1216,16 @@ class ClienteController extends Controller
             $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf'), 'all');
 
             foreach ($archivos as $ep=>$rp) {
-                $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/'.$rp->tipo.'/'.$rp->nombre.'.'.$rp->extension), 'all');
+                if($rp->tipo=='documento'){
+
+                    $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/'.$rp->tipo.'/'.$rp->nombre.'.'.$rp->extension), 'all');
+                }
+            }
+            foreach ($archivos as $ep=>$rp) {
+                if($rp->tipo=='imagen'){
+
+                    $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/'.$rp->tipo.'/'.$rp->nombre.'.'.$rp->extension), 'all');
+                }
             }
 
             $pdf->merge("archivo_adjunto.pdf", "download");
