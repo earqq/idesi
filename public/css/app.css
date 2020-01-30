@@ -19833,6 +19833,53 @@ readers do not read off random characters that represent icons */
   margin-top: 0;
 }
 
+.empty_message {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  box-sizing: border-box;
+  height: 250px;
+  overflow: hidden;
+  width: 100%;
+  height: calc(100vh - 55px);
+}
+
+.empty_message img {
+  width: 140px;
+}
+
+.empty_message h1 {
+  margin: 0;
+  font-size: 14px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.empty_message p {
+  margin: 0;
+  font-size: 12px;
+  width: 250px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.empty_message a {
+  width: 180px;
+  margin-top: 15px;
+}
+
+.empty_message a i {
+  font-size: 20px;
+  margin-top: -2px;
+}
+
 body {
   background: #f6f9fd;
   font-family: "Roboto", sans-serif;

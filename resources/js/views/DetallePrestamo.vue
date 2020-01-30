@@ -1,204 +1,168 @@
 <template>
-  <div class="views-list">
-    <div class="loans-views">
-      <div class="create_client_content">
-        <section class="client_forms">
-          <div class="client_forms_wrapper">
-            <div class="form_step">
-              <div class="form_step_wrapper">
-                <h3 class="title">Solicitud de Crédito</h3>
-                <div class="form_content">
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Monto</label>
-                      <input type="text" :value="prestamo_detalle.monto_inicial" disabled />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Forma</label>
-                      <input type="text" :value="prestamo_detalle.forma_inicial" disablgied />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Plazo</label>
-                      <input type="text" :value="prestamo_detalle.plazo_inicial" disabled />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Disponibilidad de pago</label>
-                      <input
-                        type="text"
-                        :value="prestamo_detalle.disponibilidad_pago_inicial"
-                        disabled
-                      />
-                    </div>
+  <div class="credit_detail_content">
+    <div class="create_client_content">
+      <section class="client_forms">
+        <div class="client_forms_wrapper">
+          <div class="form_step">
+            
+            <div class="form_step_wrapper">
+              <h3 class="title">Solicitud de Crédito</h3>
+              <div class="form_content">
+                <div class="group_form">
+                  <div class="input_wrapper">
+                    <label>Monto</label>
+                    <input type="text" :value="prestamo_detalle.monto_inicial" disabled />
                   </div>
-                  <div class="group_form all">
-                    <div class="input_wrapper">
-                      <label>Destino de crédito (propuesta cliente)</label>
-                      <input type="text" :value="prestamo_detalle.destino_inicial" disabled />
-                    </div>
+                  <div class="input_wrapper">
+                    <label>Forma</label>
+                    <input type="text" :value="prestamo_detalle.forma_inicial" disablgied />
+                  </div>
+                  <div class="input_wrapper">
+                    <label>Plazo</label>
+                    <input type="text" :value="prestamo_detalle.plazo_inicial" disabled />
+                  </div>
+                  <div class="input_wrapper">
+                    <label>Disponibilidad de pago</label>
+                    <input
+                      type="text"
+                      :value="prestamo_detalle.disponibilidad_pago_inicial"
+                      disabled
+                    />
                   </div>
                 </div>
-              </div>
- 
-              <div class="form_step_wrapper">
-                <h3 class="title">Propuesta del Analista</h3>
-
-                <div class="form_content">
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Producto</label>
-                      <input type="text" :value="prestamo_detalle.producto" disabled />
-                    </div>
-
-                    <div class="input_wrapper">
-                      <label>Importe</label>
-                      <input type="text" :value="prestamo_detalle.forma" disabled />
-                    </div>
-
-                    <div class="input_wrapper">
-                      <label>Plazo</label>
-                      <input type="text" :value="prestamo_detalle.importe" disabled />
-                    </div>
+                <div class="group_form all">
+                  <div class="input_wrapper">
+                    <label>Destino de crédito (propuesta cliente)</label>
+                    <input type="text" :value="prestamo_detalle.destino_inicial" disabled />
                   </div>
-
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Cuotas del Sistema</label>
-                      <input type="text" :value="prestamo_detalle.cuotas" disabled />
-                    </div>
-
-                    <div class="input_wrapper">
-                      <label>Aporte</label>
-                      <input type="text" :value="prestamo_detalle.aporte" disabled />
-                    </div>
-                  </div>
-
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Comentarios</label>
-                      <input type="text" :value="prestamo_detalle.comentarios" disabled />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form_step_wrapper">
-                <h3 class="title">Evaluaciones</h3>
-
-                <div class="table_wrapper">
-                  <table class="table_clients">
-                    <thead>
-                      <tr>
-                        <th>Evaluador</th>
-                        <th>Observaciones</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <!-- <th class="options">Opciones</th> -->
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- <tr  v-for="evaluacion in form.evaluacion" :key="evaluacion.id">
-                                        <td v-text="evaluacion.name"></td>
-                                        <td v-text="evaluacion.detalle"></td>
-                                        <td v-text="evaluacion.created_at"></td>
-                                        <td v-text="evaluacion.estado"></td>
-                      </tr>-->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div class="form_step_wrapper">
-                <h3 class="title">Ubicación del negocio</h3>
-
-                <div class="table_wrapper">
-                  <table class="table_clients">
-                    <thead>
-                      <tr>
-                        <th>Fecha de registro</th>
-                        <th>Foto</th>
-                        <th>Ver en mapa</th>
-                        <!-- <th class="options">Opciones</th> -->
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="visita in list_vistas" :key="visita.id">
-                        <td v-text="stringDate(visita.fecha)"></td>
-                        <td>
-                          <i class="fas fa-map-marked-alt"></i>
-                        </td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="form_content">
-                  <div>
-                    <video ref="video" id="video" width="640" height="480" autoplay></video>
-                  </div>
-                  <div>
-                    <button id="snap" v-on:click="capture()">Registrar Ubicación</button>
-                  </div>
-                  <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
-                  
-                  <ul>
-                    <!-- <li v-for="c in captures" :key="c"> -->
-                    <img v-bind:src="captura" height="50" />
-                    <!-- </li> -->
-                  </ul>
-                </div>
-
-                <div class="form_buttons">
-                  <a class="button_inline_primary medium prev"  >
-                    <i class="material-icons-outlined">navigate_before</i>
-                    <span>REGRESAR PERFIL</span>
-                  </a>
-                  <a class="button_primary medium next" >
-                    <span>GUARDAR UBICACION</span>
-                    <i class="material-icons-outlined">navigate_next</i>
-                  </a>
                 </div>
               </div>
             </div>
+
+            <div class="form_step_wrapper in_bottom">
+              <h3 class="title">Propuesta del Analista</h3>
+
+              <div class="form_content">
+                <div class="group_form">
+                  <div class="input_wrapper">
+                    <label>Producto</label>
+                    <input type="text" :value="prestamo_detalle.producto" disabled />
+                  </div>
+
+                  <div class="input_wrapper">
+                    <label>Importe</label>
+                    <input type="text" :value="prestamo_detalle.forma" disabled />
+                  </div>
+
+                  <div class="input_wrapper">
+                    <label>Plazo</label>
+                    <input type="text" :value="prestamo_detalle.importe" disabled />
+                  </div>
+                </div>
+
+                <div class="group_form">
+                  <div class="input_wrapper">
+                    <label>Cuotas del Sistema</label>
+                    <input type="text" :value="prestamo_detalle.cuotas" disabled />
+                  </div>
+
+                  <div class="input_wrapper">
+                    <label>Aporte</label>
+                    <input type="text" :value="prestamo_detalle.aporte" disabled />
+                  </div>
+                </div>
+
+                <div class="group_form">
+                  <div class="input_wrapper">
+                    <label>Comentarios</label>
+                    <input type="text" :value="prestamo_detalle.comentarios" disabled />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form_step_wrapper in_bottom">
+              <h3 class="title">Evaluaciones</h3>
+
+              <div class="table_wrapper">
+                <table class="table_clients">
+                  <thead>
+                    <tr>
+                      <th>Evaluador</th>
+                      <th>Observaciones</th>
+                      <th>Fecha</th>
+                      <th>Estado</th>
+                      <!-- <th class="options">Opciones</th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- <tr  v-for="evaluacion in form.evaluacion" :key="evaluacion.id">
+                                      <td v-text="evaluacion.name"></td>
+                                      <td v-text="evaluacion.detalle"></td>
+                                      <td v-text="evaluacion.created_at"></td>
+                                      <td v-text="evaluacion.estado"></td>
+                    </tr>-->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="form_step_wrapper in_bottom">
+              <h3 class="title">Ubicación del negocio</h3>
+
+              <div class="table_wrapper">
+                <table class="table_clients">
+                  <thead>
+                    <tr>
+                      <th>Fecha de registro</th>
+                      <th>Foto</th>
+                      <th>Ver en mapa</th>
+                      <!-- <th class="options">Opciones</th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="visita in list_vistas" :key="visita.id">
+                      <td v-text="stringDate(visita.fecha)"></td>
+                      <td>
+                        <i class="fas fa-map-marked-alt"></i>
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="form_content">
+                <div>
+                  <video ref="video" id="video" width="640" height="480" autoplay></video>
+                </div>
+                <div>
+                  <button id="snap" v-on:click="capture()">Registrar Ubicación</button>
+                </div>
+                <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
+                
+                <ul>
+                  <!-- <li v-for="c in captures" :key="c"> -->
+                  <img v-bind:src="captura" height="50" />
+                  <!-- </li> -->
+                </ul>
+              </div>
+
+              <div class="form_buttons">
+                <a class="button_inline_primary medium prev"  >
+                  <i class="material-icons-outlined">navigate_before</i>
+                  <span>REGRESAR PERFIL</span>
+                </a>
+                <a class="button_primary medium next" >
+                  <span>GUARDAR UBICACION</span>
+                  <i class="material-icons-outlined">navigate_next</i>
+                </a>
+              </div>
+            </div>
+
           </div>
-        </section>
-      </div>
-
-      <!-- <div class="row m-0">
-        <div class="col-md-12 d-flex justify-content-between p-0">
-          <p></p>
-          <button class="btn btn-def" style="width:15%" @click="crearVisita()">Crear Ubicación</button>
         </div>
-        <div class="col-md-12 views p-0">
-          <h1>Ubicación del negocio</h1>
-
-        </div>
-      </div>
-
-      <div class="new-view" >
-        <div class="row">
-          <div class="form-group col-md-12">
-            <gmap-map
-                            :center="formViews.center"
-                            :zoom="18"
-                            style="width:100%;  height: 400px;"
-                            map-type-id="terrain"  
-                          >
-                            <gmap-marker
-                              :key="index"
-                              v-for="(m, index) in formViews.markers"
-                              :position="m.position"
-                              @click="formViews.center=m.position"
-                            ></gmap-marker>
-            </gmap-map>
-          </div>
-
-          <div class="col-md-12 mt-3 d-flex justify-content-end">
-            <button class="btn btn-dark w-25" @click="cancelarVisita">Cancelar</button>
-            <button class="btn btn-orange w-25" @click.prevent="submit">Registrar Visita</button>
-          </div>
-        </div>
-      </div>-->
+      </section>
     </div>
   </div>
 </template>
@@ -431,16 +395,9 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-#video {
-  background-color: #000000;
-}
-#canvas {
-  display: none;
-}
-li {
-  display: inline;
-  padding: 5px;
-}
-</style>>
+<style lang="sass">
+.credit_detail_content
+  .create_client_content
+    margin: 20px 0
+</style>
  
