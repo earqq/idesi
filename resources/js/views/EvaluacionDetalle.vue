@@ -148,12 +148,10 @@
                                   </tr>
                                   <tr style="background: white;">
                                     <td class="pt-2" style="width: 11%;">ENDEUDAMIENTO</td>
-                                    <td class="font-weight-bold pt-2"
-                                    v-if="cuantitativa.radios_endeudamiento" 
-                                    v-text="parseFloat(cuantitativa.ratios_endeudamiento).toFixed(2)"
+                                    <td class="font-weight-bold pt-2"                                    
+                                    v-text="parseFloat(cuantitativa.ratios_endeudamiento*100).toFixed(2) + ' %'"
                                     >
                                     </td>
-                                    <td v-else>0</td>
                                     <td class="font-weight-bold pt-2" v-text="cuantitativa.ratios_endeudamiento_resultado"></td>
 
                                   </tr>
@@ -161,7 +159,7 @@
                                     <td class="pt-2" style="width: 11%;">MARGEN NETO</td>
                                     <td
                                     v-if="cuantitativa.ratios_margen_neto"
-                                    v-text="parseFloat(cuantitativa.ratios_margen_neto).toFixed(2)"
+                                    v-text="parseFloat(cuantitativa.ratios_margen_neto*100).toFixed(2) + ' %'"
                                   ></td>
                                   <td v-else>0</td>
                                   <td v-text="cuantitativa.ratios_margen_neto_resultado"></td>
@@ -239,7 +237,7 @@
                             </div>
                       </div>
 
-                      <div class="col-md-3 ratios p-0">
+                      <div v-if='prestamo.forma=="DIARIO"' class="col-md-3 ratios p-0">
                         <div class="card-body p-0">
                               <table
                                 class="table table-responsive-sm table-bordered table-striped table-sm"
@@ -265,7 +263,7 @@
                                   </tr>
                                   <tr style="background: white;">
                                     <td class="pt-2 w-50">PARTICIPACION DE LA CUOTA</td>
-                                    <td v-text="cuantitativa.fc_diario_participacion_cuota"></td>
+                                    <td v-text="cuantitativa.fc_diario_participacion_cuota + ' %'"></td>
 
                                   </tr>
                                   <tr style="background: white;">
@@ -279,7 +277,7 @@
                             </div>
                       </div>
 
-                      <div class="col-md-3 ratios p-0">
+                      <div v-if='prestamo.forma=="SEMANAL"' class="col-md-3 ratios p-0">
                         <div class="card-body p-0">
                               <table
                                 class="table table-responsive-sm table-bordered table-striped table-sm"
@@ -346,8 +344,8 @@
                                 <tr>
                                   <td class="">Costo de venta</td>
                                   <td v-text="cuantitativa.costo_venta_titular"></td>
-                                  <td v-text="cuantitativa.costo_venta_conyuge">0</td>
-                                  <td v-text="cuantitativa.consto_venta_total"></td>
+                                  <td v-text="cuantitativa.costo_venta_conyuge"></td>
+                                  <td v-text="cuantitativa.costo_venta_total"></td>
                                   <td v-text="cuantitativa.costo_venta_validacion"></td>
                                 </tr>
                                 <tr style="background: rgb(155, 155, 155);">
@@ -357,13 +355,7 @@
                                   <td v-text="cuantitativa.margen_bruto_total"></td>
                                   <td v-text="cuantitativa.margen_bruto_validacion"></td>
                                 </tr>
-                                <tr>
-                                  <td>Otros ingresos</td>
-                                  <td v-text="cuantitativa.otros_ingresos_titular"></td>
-                                  <td v-text="cuantitativa.otros_ingresos_conyuge"></td>
-                                  <td v-text="cuantitativa.otros_ingresos_total"></td>
-                                  <td v-text="cuantitativa.otros_ingresos_validacion"></td>
-                                </tr>
+                              
                                 <tr>
                                   <td>Servicios LAT</td>
                                   <td v-text="cuantitativa.servicios_lat_titular"></td>
@@ -393,24 +385,43 @@
                                   <td v-text="cuantitativa.gasto_financiero_total"></td>
                                   <td v-text="cuantitativa.gasto_financiero_validacion"></td>
                                 </tr>
-
-                                  <tr>
+                                <tr style="background: rgb(155, 155, 155);">
+                                  <td class="font-weight-bold">UTILIDAD NETA NEGOCIO</td>
+                                  <td v-text="cuantitativa.utilidad_neta_negocio_titular"></td>
+                                  <td v-text="cuantitativa.utilidad_neta_negocio_conyuge"></td>
+                                  <td v-text="cuantitativa.utilidad_neta_negocio_total"></td>
+                                  <td v-text="cuantitativa.utilidad_neta_negocio_validacion"></td>
+                                </tr>
+                                <tr>
+                                  <td>Otros ingresos</td>
+                                  <td v-text="cuantitativa.otros_ingresos_titular"></td>
+                                  <td v-text="cuantitativa.otros_ingresos_conyuge"></td>
+                                  <td v-text="cuantitativa.otros_ingresos_total"></td>
+                                  <td v-text="cuantitativa.otros_ingresos_validacion"></td>
+                                </tr>
+                                <tr>
                                   <td>Gasto Hogar</td>
                                   <td v-text="cuantitativa.gasto_hogar_titular"></td>
                                   <td v-text="cuantitativa.gasto_hogar_conyuge"></td>
                                   <td v-text="cuantitativa.gasto_hogar_total"></td>
                                   <td v-text="cuantitativa.gasto_hogar_validacion"></td>
                                 </tr>
-                                
+                                  <tr>
+                                  <td>Gasto Financiero Personal</td>
+                                  <td v-text="cuantitativa.gasto_financiero_personal_titular"></td>
+                                  <td v-text="cuantitativa.gasto_financiero_personal_conyuge"></td>
+                                  <td v-text="cuantitativa.gasto_financiero_personal_total"></td>
+                                  <td v-text="cuantitativa.gasto_financiero_personal_validacion"></td>
+                                </tr>
                                 <tr style="background: rgb(155, 155, 155);">
-                                  <td class="font-weight-bold">UTILIDAD</td>
-                                  <td v-text="cuantitativa.utilidad_titular"></td>
-                                  <td v-text="cuantitativa.utilidad_conyuge"></td>
-                                  <td v-text="cuantitativa.utilidad_total"></td>
-                                  <td v-text="cuantitativa.utilidad_validacion"></td>
+                                  <td class="font-weight-bold">DISPONIBLE</td>
+                                  <td v-text="cuantitativa.disponible_titular"></td>
+                                  <td v-text="cuantitativa.disponible_conyuge"></td>
+                                  <td v-text="cuantitativa.disponible_total"></td>
+                                  <td v-text="cuantitativa.disponible_validacion"></td>
                                 </tr>
                                 <tr>
-                                  <td>CUOTA INSITUTCION</td>
+                                  <td>CUOTA INSTITUCION</td>
                                   <td v-text="cuantitativa.cuota_institucion_titular"></td>
                                   <td v-text="cuantitativa.cuota_institucion_conyuge"></td>
                                   <td v-text="cuantitativa.cuota_institucion_total"></td>
@@ -418,7 +429,7 @@
                                 </tr>
 
                                 <tr style="background: rgb(155, 155, 155);">
-                                  <td class="font-weight-bold">UTILIDAD DESP CUOTA</td>
+                                  <td class="font-weight-bold">DISPONIBLE DESP CUOTA</td>
                                   <td v-text="cuantitativa.utilidad_desp_cuota_titular"></td>
                                   <td v-text="cuantitativa.utilidad_desp_cuota_conyuge"></td>
                                   <td v-text="cuantitativa.utilidad_desp_cuota_total"></td>
@@ -427,19 +438,19 @@
 
                                 <tr>
                                   <td>Participacion de la cuota</td>
-                                  <td v-text="cuantitativa.participacion_cuota_titular"></td>
+                                  <td v-text="cuantitativa.participacion_cuota_titular + ' %'"></td>
                                   <td></td>
-                                  <td v-text="cuantitativa.participacion_cuota_total"></td>
-                                  <td v-text="cuantitativa.participacion_cuota_validacion"></td>
+                                  <td v-text="cuantitativa.participacion_cuota_total + ' %'" ></td>
+                                  <td v-text="cuantitativa.participacion_cuota_validacion + ' %'"></td>
                                 </tr>
 
                                 <tr>
-                                  <td colspan="5">RESULTADO EVA <span v-text="cuantitativa.resultado_eva" ></span></td>
+                                  <td colspan="5">RESULTADO EVA: <span v-text="cuantitativa.resultado_eva" ></span></td>
                                 </tr>
 
 
                                 <tr>
-                                  <td colspan="5">RESULTADO SIST <span v-text="cuantitativa.resultado_sist"></span></td>
+                                  <td colspan="5">RESULTADO SIST: <span v-text="cuantitativa.resultado_sist"></span></td>
                                 </tr>
                               </tbody>
                             </table>
