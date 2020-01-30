@@ -33,11 +33,12 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('user/tipo','UserController@tipo');
 
         Route::get('/user', 'UserController@index');
+        Route::get('/currentUser', 'UserController@currentUser');
         Route::post('/user/registrar', 'UserController@store');
         Route::put('/user/actualizar', 'UserController@update');
         Route::put('/user/desactivar', 'UserController@desactivar');
         Route::put('/user/activar', 'UserController@activar');
-
+        
 
         Route::get('/rol/selectRol', 'RolController@selectRol');
         Route::get('/rol', 'RolController@rolUser');
