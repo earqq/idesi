@@ -9,6 +9,7 @@ use App;
 use App\Archivo;
 use App\Subido;
 use App\Cliente;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Prestamo;
 class FileController extends Controller
 {
@@ -49,10 +50,18 @@ class FileController extends Controller
 
         $ext = $file->getClientOriginalExtension();
         $type = $this->getType($ext);
- 
+        
+        $prestamo= Prestamo::find($request['prestamo_id']);
+        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        $nombre = $request['name'];
+        $extension = $ext;
 
         if (Storage::putFileAs('/public/' . $this->getUserDir($request['prestamo_id']) .'/prestamo_'.$request['prestamo_id']. '/' . $type . '/', $file, $request['name'] . '.' . $ext)) {
             
+            if($type=='imagen'){
+                $pdf=PDF::loadView('reportes.imagen',compact('prestamo','cliente','nombre','extension'));
+                Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/imagenpdf/'.$request['name'].'.pdf', $pdf->output());
+            }
             if($request['name'] == 'inscripcion_de_socio'){
                 $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
                 $subidos->inscripcion_socio=1;
