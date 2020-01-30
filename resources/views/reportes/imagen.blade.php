@@ -9,7 +9,6 @@
 <body>
 
 
-<img src="{{env('RUTA')}}/public/storage/{{$cliente->documento}}_{{$cliente->id}}" alt="" srcset="">
-    <p>sadadada</p>
+<img src="{{env('RUTA')}}/public/storage/{{$cliente->documento}}_{{$cliente->id}}/prestamo_{{$prestamo->id}}/imagen/{{$nombre}}.{{$extension}}" alt="" srcset="">
 </body>
 </html>

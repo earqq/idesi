@@ -6828,14 +6828,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -79452,7 +79444,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "form_content" }, [
                 _c("div", { staticClass: "group_form" }, [
-                  _c("div", { staticClass: "input_wrapper" }, [
+                  _c("div", { staticClass: "input_wrapper all" }, [
                     _c("label", [_vm._v("Es sujeto a informar a la UIF Perú")]),
                     _vm._v(" "),
                     _c(
@@ -79493,53 +79485,6 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "NO" } }, [_vm._v("NO")])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "input_wrapper" }, [
-                    _c("label", [_vm._v("Estado")]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.declaracion.estado,
-                            expression: "form.declaracion.estado"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.form.declaracion,
-                              "estado",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          }
-                        }
-                      },
-                      [
-                        _c("option", { attrs: { value: "ADMITIDO" } }, [
-                          _vm._v("ADMITIDO")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "RECHAZADO" } }, [
-                          _vm._v("RECHAZADO")
-                        ])
                       ]
                     )
                   ])

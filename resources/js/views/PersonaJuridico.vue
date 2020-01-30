@@ -361,19 +361,11 @@
               <div class="form_content">
                 <div class="group_form">
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper all">
                     <label>Es sujeto a informar a la UIF Perú</label>
                       <select v-model="form.declaracion.uif" class="form-control">
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
-                    </select>
-                  </div>
-
-                  <div class="input_wrapper">
-                    <label>Estado</label>
-                    <select v-model="form.declaracion.estado" class="form-control">
-                      <option value="ADMITIDO">ADMITIDO</option>
-                      <option value="RECHAZADO">RECHAZADO</option>
                     </select>
                   </div>
                 </div>
