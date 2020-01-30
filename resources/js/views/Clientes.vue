@@ -336,8 +336,8 @@ export default {
           .client
             .avatar
               .avatar_alt
-                width: 24px
-                height: 24px
+                width: 30px
+                height: 30px
                 background-color: $line_color
                 border-radius: 50%
                 display: flex
@@ -347,8 +347,8 @@ export default {
                 font-weight: 600
                 color: $primary_color
               img
-                width: 24px
-                height: 24px
+                width: 30px
+                height: 30px
                 border-radius: 50%
                 object-fit: cover
             p

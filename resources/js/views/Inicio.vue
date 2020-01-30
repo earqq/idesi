@@ -34,14 +34,56 @@
             <article class="lists">
                 <div class="list_client">
                     <h2 class="title"> Nuevo Clientes </h2>
+                    <ul class="list_client_wrapper">
+                        <li v-for="i in 7" :key="i">
+                            <div class="avatar">
+                                <img src="https://picsum.photos/200/300" v-if="false"/>
+                                <div class="avatar_alt" v-else> c </div>
+                            </div>
+                            <div class="name">
+                                <h1 class="truncate"> Chagua Ramos Omar Benjamin  </h1>
+                                <p>71562539</p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
                 <div class="list_credits">
                     <h2 class="title"> Ultimos Prestamos </h2>
+                    <div class="table_wrapper">
+                        <table class="table_credits ">
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Monto</th>
+                                    <th>Plazo</th>
+                                    <th>Progreso</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="i in 7" :key="i">
+                                    <td class="client">
+                                        <div class="avatar">
+                                        <img src="https://picsum.photos/100/100" v-if="false" />
+                                        <div class="avatar_alt" v-else> C </div>              
+                                        </div>
+                                        <p class="truncate"> Chagua Ramos Omar Benjamin </p>
+                                    </td>
+                                    <td> S/ 1000</td>
+                                    <td> 12 Meses </td>
+                                    <td> 
+                                        <div class="progress_bar">
+                                        <span class="bar"></span>
+                                        <p>0% </p>
+                                        </div> 
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </article>
             <aside class="map">
                 <GmapMap :center="{lat: -9.933378, lng: -76.243212}" :zoom="16" :clickable="true" map-type-id="roadmap" style="width: 100%; height: calc(100vh - 51px);" :options="optionsMap" ref="mapRef">
-                     
                 </GmapMap>
             </aside>
         </div>
@@ -127,7 +169,7 @@ export default {
         display: grid
         grid-template-areas: "numbers map" "chart map" "lists map"
         grid-template-columns: 1fr 500px
-        grid-template-rows: 100px 400px 500px
+        grid-template-rows: 100px 400px 450px
         grid-auto-rows: max-content
         grid-gap: 15px
         padding: 20px
@@ -140,6 +182,8 @@ export default {
             font-weight: 700
             padding: 7px 20px
             text-transform: uppercase
+            box-sizing: border-box 
+            background-color: white
         .numbers_stats
             display: grid
             grid-area: numbers 
@@ -189,6 +233,7 @@ export default {
             grid-area: chart 
             background-color: white
             border-radius: 4px
+            overflow: hidden
             box-shadow: $shadow
             border: 1px solid $line_color
             #chart
@@ -201,11 +246,102 @@ export default {
             .list_client, .list_credits
                 background-color: white
                 border-radius: 4px
+                overflow: hidden
                 box-shadow: $shadow
                 height: 100%
                 border: 1px solid $line_color
             .list_credits
                 grid-column: 2 / 2 span
+                table
+                    thead, tbody
+                        tr
+                            margin-bottom: 0px
+                            border-bottom: 1px solid $line_color
+                    thead tr
+                        border-radius: 0
+                    tbody
+                        tr:last-child
+                            border-radius: 0
+                            border-bottom: 0
+                        .client
+                            .avatar
+                                .avatar_alt
+                                    width: 30px
+                                    height: 30px
+                                    background-color: $line_color
+                                    border-radius: 50%
+                                    display: flex
+                                    align-items: center
+                                    justify-content: center
+                                    font-size: 13px
+                                    font-weight: 600
+                                    color: $primary_color
+                                img
+                                    width: 30px
+                                    height: 30px
+                                    border-radius: 50%
+                                    object-fit: cover
+                            p
+                                margin: 0
+                                margin-left: 10px
+                                text-align: left
+                        .progress_bar
+                            width: 100px
+                            display: flex
+                            align-items: center
+                            span
+                                display: block
+                                flex: 1
+                                height: 5px
+                                border-radius: 10px
+                                background-color: $line_color
+                            p
+                                margin: 0
+                                margin-left: 10px
+            .list_client
+                ul.list_client_wrapper
+                    padding: 0
+                    margin: 0
+                    overflow: auto
+                    height: 420px
+                    li 
+                        display: flex
+                        align-items: center
+                        height: 60px
+                        border-bottom: 1px solid $line_color
+                        box-sizing: border-box 
+                        padding: 0 20px
+                        &:last-child
+                            border-bottom: none                            
+                        .avatar
+                            margin-right: 10px
+                            .avatar_alt
+                                width: 35px
+                                height: 35px
+                                background-color: $line_color
+                                border-radius: 50%
+                                display: flex
+                                align-items: center
+                                justify-content: center
+                                font-size: 17px
+                                font-weight: 600
+                                color: $primary_color
+                            img
+                                width: 30px
+                                height: 30px
+                                border-radius: 50%
+                                object-fit: cover
+                                position: relative
+                                border: 2px solid white
+                                background-color: white
+                        .name
+                            h1
+                                font-size: 12px
+                                margin: 0
+                            p
+                                font-size: 11px
+                                margin: 0
+
         .map
             grid-area: map
             background-color: white

@@ -9,15 +9,13 @@
         body{
             font-family: sans-serif;
         } 
-        td{
-            border: 1px solid #d5d5d5;
+        td{ border: 1px solid #d5d5d5;
             font-size: 12px;
         }
         .title{
             font-weight: bold;
             font-size: 11px;
         }
-
     </style>
 </head>
 <body>
