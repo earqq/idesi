@@ -26,6 +26,10 @@
             </article>
             <article class="chart_stats">
                 <h2 class="title"> Historial / Año </h2>
+                <div id="chart">
+                    <apexchart type="line" height="350" :options="optionsChart" :series="series" />
+                </div>
+
             </article>
             <article class="lists">
                 <div class="list_client">
@@ -36,14 +40,85 @@
                 </div>
             </article>
             <aside class="map">
+                <GmapMap :center="{lat: -9.933378, lng: -76.243212}" :zoom="16" :clickable="true" map-type-id="roadmap" style="width: 100%; height: calc(100vh - 51px);" :options="optionsMap" ref="mapRef">
+                     
+                </GmapMap>
             </aside>
         </div>
     </div>
 </template>
 
 <script>
+import { STYLES_MAP } from '../constants'
 export default {
-};
+    data () {
+        return {
+            optionsMap: {
+                styles: STYLES_MAP,
+                zoomControl: false,
+                mapTypeControl: false,
+                scaleControl: false,
+                streetViewControl: false,
+                rotateControl: false,
+                fullscreenControl: false,
+            },
+            optionsChart: {
+                chart: {
+                    toolbar: {
+                        show: false
+                    },
+                    zoom: {
+                        enabled: false
+                    }
+                },
+                stroke: {
+                    colors: ["#21396f", "#FF003D", "#FF8A00"],
+                    width: 2,
+                    curve: 'smooth'
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                colors: ["#21396f", "#FF003D", "#FF8A00"],
+                xaxis: {
+                    categories: ['Ene', 'Feb', 'Mar', 'Abr','May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+                },
+                yaxis: {
+                    labels: {
+                        formatter: function (value) {
+                        return `${Number(value)}`
+                        }
+                    }
+                },
+                markers: {
+                    size: 6
+                },
+                tooltip: {
+                    x: {
+                        format: 'dd/MM/yy HH:mm'
+                    }
+                },
+                legend: {
+                    show: false
+                }
+            },
+            series: [
+                {
+                    name: 'Prestamos',
+                    data: [230, 140, 45, 50, 49, 160, 70, 91, 70, 191, 140, 91]
+                },
+                         {
+                    name: 'Rachazados',
+                    data: [10, 30, 15, 60, 219, 40, 120, 11, 10, 121, 70, 91]
+                },
+                         {
+                    name: 'Clientes',
+                    data: [50, 10, 123, 12, 43, 70, 20, 200,70, 21, 120, 191]
+                }
+            ]
+        }
+    }
+}
 </script>
 <style lang="sass" scoped>
 @import "../../sass/_variables"
@@ -116,6 +191,8 @@ export default {
             border-radius: 4px
             box-shadow: $shadow
             border: 1px solid $line_color
+            #chart
+                padding-right: 15px
         .lists
             display: grid
             grid-area: lists 

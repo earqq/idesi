@@ -33,6 +33,8 @@
         "vue-numeric": "^2.3.0",
         "vue-select": "^3.4.0",
         "vue-the-mask": "^0.11.1",
-        "vue2-google-maps": "^0.10.7"
+        "vue2-google-maps": "^0.10.7",
+        "vue-apexcharts": "^1.4.0",
+        "apexcharts": "^3.8.4"
     }
 }
