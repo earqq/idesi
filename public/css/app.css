@@ -19390,7 +19390,7 @@ readers do not read off random characters that represent icons */
   font-family: "Roboto", sans-serif;
   font-weight: 700;
   white-space: nowrap;
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .table_wrapper table tbody {
@@ -19547,9 +19547,6 @@ readers do not read off random characters that represent icons */
 }
 
 .client_forms .client_forms_wrapper .form_step {
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
 }
 
@@ -19689,6 +19686,30 @@ readers do not read off random characters that represent icons */
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box .input_box_wrapper .input_checkbox_wrapper > label.box_content span {
   margin-left: 10px;
+}
+
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .detail_content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1px;
+  background-color: #f6f9fd;
+}
+
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .detail_content li {
+  list-style: none;
+  padding: 5px 20px;
+  background-color: #fff;
+}
+
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .detail_content li strong {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.client_forms .client_forms_wrapper .form_step .form_step_wrapper .detail_content li p {
+  margin: 0;
+  margin-top: 2px;
+  font-size: 12px;
 }
 
 .client_forms .client_forms_wrapper .form_step .form_list.no_border .sub_step_wrapper:first-child {

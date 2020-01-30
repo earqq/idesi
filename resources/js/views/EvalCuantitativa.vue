@@ -20,520 +20,510 @@
 
       <section class="client_forms">
           <div class="client_forms_wrapper">
-            <transition name="slide-fade" mode="in-out">
-              <div v-show="tab == 1" class="form_step">
+            <div v-show="tab == 1" class="form_step">
 
-                <div class="form_step_wrapper">
-                  <h3 class="title">Ingreso del Negocio</h3>
-                  <div class="form_list no_border">
-                    <div class="sub_step_wrapper " v-for="(val, index) in evaluacion.titular.ingresos_negocio" :key="index">
-                      <div class="form_content">
-                          <div class="group_form">
-
-                            <div class="input_wrapper">
-                              <label>Concepto</label>
-                              <input  :disabled='index==0' type="text" v-model="val.concepto" />
-                            </div>
-                            
-                            <div class="input_wrapper">
-                              <label>Subtotal</label>
-                              <vue-numeric  disabled='disabled'  :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].subtotal" v-bind:precision="2"></vue-numeric>
-                            </div>
-                          </div>
-
-                          <div class="group_form small all">
-                            <div class="input_wrapper">
-                              <label>Lunes</label>
-                              <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].lunes" v-bind:precision="2"></vue-numeric>
-                            </div>
-                            <div class="input_wrapper">
-                              <label>Martes</label>
-                              <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].martes" v-bind:precision="2"></vue-numeric>
-                            </div>
-                            <div class="input_wrapper">
-                              <label>Miercoles</label>
-                              <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].miercoles" v-bind:precision="2"></vue-numeric>
-                            </div>
-                            <div class="input_wrapper">
-                              <label>Jueves</label>
-                              <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].jueves" v-bind:precision="2"></vue-numeric>
-                            </div>
-                            <div class="input_wrapper">
-                              <label>Viernes</label>
-                              <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].viernes" v-bind:precision="2"></vue-numeric>
-                            </div>
-                            <div class="input_wrapper">
-                              <label>Sabado</label>
-                              <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].sabado" v-bind:precision="2"></vue-numeric>
-                            </div>
-                            <div class="input_wrapper">
-                              <label>Domingo</label>
-                              <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].domingo" v-bind:precision="2"></vue-numeric>
-                            </div>
-                            
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Ingresos por 2da, 4ta y/o 5ta Categoria</h3>
-                  <div class="form_list no_border">
-                    <div class="sub_step_wrapper" v-for="(ingreso,index) in evaluacion.titular.ingresos_por_categoria" v-bind:key="index">
-                      <div class="form_content">
-                        <div class="group_form">
-                          <div class="input_wrapper">
-                            <label>CONCEPTO</label>
-                            <input type="text"  v-model="evaluacion.titular.ingresos_por_categoria[index].concepto"  />
-                          </div>
-                          <div class="input_wrapper">
-                            <label>MONTO MENSUAL</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.ingresos_por_categoria[index].mes" v-bind:precision="2"></vue-numeric>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Giro de Negocio</h3>
-                  <div class="form_content">
-                    <div class="group_form">
-                      <div class="input_wrapper">
-                        <label>Tipo de Giro de Negocio</label>
-                        <v-select
-                          label="giro_negocio"
-                          :options="giros"
-                          disabled
-                          :reduce="giros => giros.giro_negocio"
-                          placeholder="Giro negocio.."
-                          v-model="evaluacion.titular.giro_negocio"
-                        ></v-select>
-                      </div>
-
-                      <div class="input_wrapper">
-                        <label>Margen de Costo</label>
-                        <input type="text" v-model="evaluacion.titular.margen_costo" />
-                      </div>
-
-                      <div class="input_wrapper">
-                        <label>Valor Inventario</label>
-                        <input type="text" v-model="evaluacion.titular.valor_inventario" />
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form_step_wrapper in_bottom" v-if=" evaluacion.titular.gasto_financiero.length > 0">
-                  <h3 class="title">Gasto Financiero Titular</h3>
-                  <div class="form_list no_border">
-                    <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.titular.gasto_financiero" v-bind:key="index">
-                      <h3 class="title">Entidad {{index + 1}}</h3>
-                      <div class="form_content">
-                        <div class="group_form">
-                            <div class="input_wrapper">
-                              <label>Entidad</label>
-                              <input  type="text" disabled='disabled' v-model="evaluacion.titular.gasto_financiero[index].entidad" />
-                            </div>
-                            <div class="input_wrapper">
-                              <label>Saldo Capital</label>
-                              <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_financiero[index].saldo_capital" v-bind:precision="2"></vue-numeric>
-                            </div>
-                            <div class="input_wrapper">
-                              <label>Cuota</label>
-                              <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_financiero[index].cuota" v-bind:precision="2"></vue-numeric>
-                            </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                
-                </div>
-
-                <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Gasto del Negocio</h3>
-                  <div class="form_content">
-                    <div class="group_form">
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.titular.gasto_negocio[0].entidad">Alquiler</label>
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[0].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.titular.gasto_negocio[1].entidad">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[1].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.titular.gasto_negocio[2].entidad">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[2].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.titular.gasto_negocio[3].entidad">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[3].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.titular.gasto_negocio[4].entidad">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[4].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form_buttons">
-                  <a class="button_primary medium next" @click="next(1)">
-                    <span>SIGUIENTE</span>
-                    <i class="material-icons-outlined">navigate_next</i>
-                  </a>
-                </div>
-              </div>
-              
-            </transition>
-
-            <transition name="slide-fade" mode="in-out">
-              <div v-show="tab == 2" class="form_step">
-
-                <div class="form_step_wrapper">
-
-                  <h3 class="title">Ingreso del Negocio</h3>
-                  <div class="form_list no_border">
-                    <div class="sub_step_wrapper" v-for="(ingreso,index) in evaluacion.conyuge.ingresos_negocio" v-bind:key="index">
-                      <div class="form_content">
+              <div class="form_step_wrapper">
+                <h3 class="title">Ingreso del Negocio</h3>
+                <div class="form_list no_border">
+                  <div class="sub_step_wrapper " v-for="(val, index) in evaluacion.titular.ingresos_negocio" :key="index">
+                    <div class="form_content">
                         <div class="group_form">
 
                           <div class="input_wrapper">
                             <label>Concepto</label>
-                            <input type="text" v-model="evaluacion.conyuge.ingresos_negocio[index].concepto" />
+                            <input  :disabled='index==0' type="text" v-model="val.concepto" />
                           </div>
-
-                          <div class="input_wrapper">
-                            <label>Lunes</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].lunes" v-bind:precision="2"></vue-numeric>
-                          </div>
-
-                          <div class="input_wrapper">
-                            <label>Martes</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].martes" v-bind:precision="2"></vue-numeric>
-                          </div>
-
-                          <div class="input_wrapper">
-                            <label>Miercoles</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].miercoles" v-bind:precision="2"></vue-numeric>
-                          </div>
-
-                          <div class="input_wrapper">
-                            <label>Jueves</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].jueves" v-bind:precision="2"></vue-numeric>
-                          </div>
-
-                          <div class="input_wrapper">
-                            <label>Viernes</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].viernes" v-bind:precision="2"></vue-numeric>
-                          </div>
-
-                          <div class="input_wrapper">
-                            <label>Sabado</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].sabado" v-bind:precision="2"></vue-numeric>
-                          </div>
-
-                          <div class="input_wrapper">
-                            <label>Domingo</label>
-                            <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].domingo" v-bind:precision="2"></vue-numeric>
-                          </div>
-
+                          
                           <div class="input_wrapper">
                             <label>Subtotal</label>
-                            <vue-numeric   disabled='disabled'  :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].subtotal" v-bind:precision="2"></vue-numeric>
+                            <vue-numeric  disabled='disabled'  :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].subtotal" v-bind:precision="2"></vue-numeric>
                           </div>
+                        </div>
 
+                        <div class="group_form small all">
+                          <div class="input_wrapper">
+                            <label>Lunes</label>
+                            <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].lunes" v-bind:precision="2"></vue-numeric>
+                          </div>
+                          <div class="input_wrapper">
+                            <label>Martes</label>
+                            <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].martes" v-bind:precision="2"></vue-numeric>
+                          </div>
+                          <div class="input_wrapper">
+                            <label>Miercoles</label>
+                            <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].miercoles" v-bind:precision="2"></vue-numeric>
+                          </div>
+                          <div class="input_wrapper">
+                            <label>Jueves</label>
+                            <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].jueves" v-bind:precision="2"></vue-numeric>
+                          </div>
+                          <div class="input_wrapper">
+                            <label>Viernes</label>
+                            <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].viernes" v-bind:precision="2"></vue-numeric>
+                          </div>
+                          <div class="input_wrapper">
+                            <label>Sabado</label>
+                            <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].sabado" v-bind:precision="2"></vue-numeric>
+                          </div>
+                          <div class="input_wrapper">
+                            <label>Domingo</label>
+                            <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].domingo" v-bind:precision="2"></vue-numeric>
+                          </div>
+                          
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form_step_wrapper in_bottom">
+                <h3 class="title">Ingresos por 2da, 4ta y/o 5ta Categoria</h3>
+                <div class="form_list no_border">
+                  <div class="sub_step_wrapper" v-for="(ingreso,index) in evaluacion.titular.ingresos_por_categoria" v-bind:key="index">
+                    <div class="form_content">
+                      <div class="group_form">
+                        <div class="input_wrapper">
+                          <label>CONCEPTO</label>
+                          <input type="text"  v-model="evaluacion.titular.ingresos_por_categoria[index].concepto"  />
+                        </div>
+                        <div class="input_wrapper">
+                          <label>MONTO MENSUAL</label>
+                          <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.ingresos_por_categoria[index].mes" v-bind:precision="2"></vue-numeric>
                         </div>
                       </div>
                     </div>
                   </div>
-                  
                 </div>
- 
-                <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Ingresos por 2da, 4ta y/o 5ta Categoria</h3>
-                  <div class="form_list no_border">
-                    <div class="sub_step_wrapper" v-for="(ingresos,index) in evaluacion.conyuge.ingresos_por_categoria" v-bind:key="index">
-                      <div class="form_content">
-                        <div class="group_form">
+              </div>
+
+              <div class="form_step_wrapper in_bottom">
+                <h3 class="title">Giro de Negocio</h3>
+                <div class="form_content">
+                  <div class="group_form">
+                    <div class="input_wrapper">
+                      <label>Tipo de Giro de Negocio</label>
+                      <v-select
+                        label="giro_negocio"
+                        :options="giros"
+                        disabled
+                        :reduce="giros => giros.giro_negocio"
+                        placeholder="Giro negocio.."
+                        v-model="evaluacion.titular.giro_negocio"
+                      ></v-select>
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Margen de Costo</label>
+                      <input type="text" v-model="evaluacion.titular.margen_costo" />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Valor Inventario</label>
+                      <input type="text" v-model="evaluacion.titular.valor_inventario" />
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="form_step_wrapper in_bottom" v-if=" evaluacion.titular.gasto_financiero.length > 0">
+                <h3 class="title">Gasto Financiero Titular</h3>
+                <div class="form_list no_border">
+                  <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.titular.gasto_financiero" v-bind:key="index">
+                    <h3 class="title">Entidad {{index + 1}}</h3>
+                    <div class="form_content">
+                      <div class="group_form">
                           <div class="input_wrapper">
-                            <label>CONCEPTO</label>
-                            <input type="text" v-model="evaluacion.conyuge.ingresos_por_categoria[index].concepto" />
+                            <label>Entidad</label>
+                            <input  type="text" disabled='disabled' v-model="evaluacion.titular.gasto_financiero[index].entidad" />
                           </div>
                           <div class="input_wrapper">
-                            <label>MONTO MENSUAL</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_por_categoria[index].mes"  v-bind:precision="2"></vue-numeric>
+                            <label>Saldo Capital</label>
+                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_financiero[index].saldo_capital" v-bind:precision="2"></vue-numeric>
                           </div>
+                          <div class="input_wrapper">
+                            <label>Cuota</label>
+                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_financiero[index].cuota" v-bind:precision="2"></vue-numeric>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+              </div>
+
+              <div class="form_step_wrapper in_bottom">
+                <h3 class="title">Gasto del Negocio</h3>
+                <div class="form_content">
+                  <div class="group_form">
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.titular.gasto_negocio[0].entidad">Alquiler</label>
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[0].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.titular.gasto_negocio[1].entidad">Alquiler</label> 
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[1].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.titular.gasto_negocio[2].entidad">Alquiler</label> 
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[2].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.titular.gasto_negocio[3].entidad">Alquiler</label> 
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[3].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.titular.gasto_negocio[4].entidad">Alquiler</label> 
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[4].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form_buttons">
+                <a class="button_primary medium next" @click="next(1)">
+                  <span>SIGUIENTE</span>
+                  <i class="material-icons-outlined">navigate_next</i>
+                </a>
+              </div>
+            </div>
+
+            <div v-show="tab == 2" class="form_step">
+
+              <div class="form_step_wrapper">
+
+                <h3 class="title">Ingreso del Negocio</h3>
+                <div class="form_list no_border">
+                  <div class="sub_step_wrapper" v-for="(ingreso,index) in evaluacion.conyuge.ingresos_negocio" v-bind:key="index">
+                    <div class="form_content">
+                      <div class="group_form">
+
+                        <div class="input_wrapper">
+                          <label>Concepto</label>
+                          <input type="text" v-model="evaluacion.conyuge.ingresos_negocio[index].concepto" />
                         </div>
+
+                        <div class="input_wrapper">
+                          <label>Lunes</label>
+                          <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].lunes" v-bind:precision="2"></vue-numeric>
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Martes</label>
+                          <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].martes" v-bind:precision="2"></vue-numeric>
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Miercoles</label>
+                          <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].miercoles" v-bind:precision="2"></vue-numeric>
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Jueves</label>
+                          <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].jueves" v-bind:precision="2"></vue-numeric>
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Viernes</label>
+                          <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].viernes" v-bind:precision="2"></vue-numeric>
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Sabado</label>
+                          <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].sabado" v-bind:precision="2"></vue-numeric>
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Domingo</label>
+                          <vue-numeric   :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].domingo" v-bind:precision="2"></vue-numeric>
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Subtotal</label>
+                          <vue-numeric   disabled='disabled'  :change="conyugeIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_negocio[index].subtotal" v-bind:precision="2"></vue-numeric>
+                        </div>
+
                       </div>
                     </div>
                   </div>
                 </div>
                 
-                <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Giro de Negocio</h3>
-                  <div class="form_content">
-                    <div class="group_form">
-                      <div class="input_wrapper">
-                        <label>Tipo de Giro de Negocio</label>
-                        <v-select
-                          label="giro_negocio"
-                          :options="giros"
-                          :reduce="giros => giros.giro_negocio"
-                          placeholder="Buscar Giro..."
-                          v-model="evaluacion.conyuge.giro_negocio"
-                        ></v-select>
-                      </div>
+              </div>
 
-                      <div class="input_wrapper">
-                        <label>Margen de Costo</label>
-                        <input type="text"  v-model="evaluacion.conyuge.margen_costo_conyuge" />
-                      </div>
-
-                      <div class="input_wrapper">
-                        <label>Valor Inventario</label>
-                        <input type="text" v-model="evaluacion.conyuge.valor_inventario_conyuge" />
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-
-
-                <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Gasto Financiero Cónyuge</h3>
-                  <div class="form_list no_border">
-                    <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero" v-bind:key="index">
-                      <h3 class="title">
-                        Entidad {{index + 1}}
-                        <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidad(index)">
-                          <i class="material-icons-outlined"> delete </i>
-                        </button>
-                      </h3>
-                      <div class="form_content">
-                        <div class="group_form">
-                          <div class="input_wrapper">
-                            <label>Entidad</label>
-                            <input type="text" v-model="evaluacion.conyuge.gasto_financiero[index].entidad" />
-                          </div>
-
-                          <div class="input_wrapper">
-                            <label>Saldo Capital</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_financiero[index].saldo_capital" v-bind:precision="2"></vue-numeric>
-                          </div>
-
-                          <div class="input_wrapper">
-                            <label>Cuota</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_financiero[index].cuota" v-bind:precision="2"></vue-numeric>
-                          </div>
+              <div class="form_step_wrapper in_bottom">
+                <h3 class="title">Ingresos por 2da, 4ta y/o 5ta Categoria</h3>
+                <div class="form_list no_border">
+                  <div class="sub_step_wrapper" v-for="(ingresos,index) in evaluacion.conyuge.ingresos_por_categoria" v-bind:key="index">
+                    <div class="form_content">
+                      <div class="group_form">
+                        <div class="input_wrapper">
+                          <label>CONCEPTO</label>
+                          <input type="text" v-model="evaluacion.conyuge.ingresos_por_categoria[index].concepto" />
+                        </div>
+                        <div class="input_wrapper">
+                          <label>MONTO MENSUAL</label>
+                          <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.ingresos_por_categoria[index].mes"  v-bind:precision="2"></vue-numeric>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <button type="button"  class="add_section" @click="clickAddEntidad" >
-                    <span> AGREGAR ENTIDAD </span>
-                    <i class="fas fa-plus"></i> 
-                  </button>
                 </div>
+              </div>
+              
+              <div class="form_step_wrapper in_bottom">
+                <h3 class="title">Giro de Negocio</h3>
+                <div class="form_content">
+                  <div class="group_form">
+                    <div class="input_wrapper">
+                      <label>Tipo de Giro de Negocio</label>
+                      <v-select
+                        label="giro_negocio"
+                        :options="giros"
+                        :reduce="giros => giros.giro_negocio"
+                        placeholder="Buscar Giro..."
+                        v-model="evaluacion.conyuge.giro_negocio"
+                      ></v-select>
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Margen de Costo</label>
+                      <input type="text"  v-model="evaluacion.conyuge.margen_costo_conyuge" />
+                    </div>
+
+                    <div class="input_wrapper">
+                      <label>Valor Inventario</label>
+                      <input type="text" v-model="evaluacion.conyuge.valor_inventario_conyuge" />
+                    </div>
+
+                  </div>
+                </div>
+              </div>
 
 
-                <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Gasto del Negocio</h3>
-                  <div class="form_content">
-                    <div class="group_form">
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.titular.gasto_negocio[0].entidad">Alquiler</label>
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[0].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.titular.gasto_negocio[1].entidad">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[1].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.titular.gasto_negocio[2].entidad">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[2].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.titular.gasto_negocio[3].entidad">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[3].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.titular.gasto_negocio[4].entidad">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[4].pago" v-bind:precision="2"></vue-numeric>
+              <div class="form_step_wrapper in_bottom">
+                <h3 class="title">Gasto Financiero Cónyuge</h3>
+                <div class="form_list no_border">
+                  <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero" v-bind:key="index">
+                    <h3 class="title">
+                      Entidad {{index + 1}}
+                      <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidad(index)">
+                        <i class="material-icons-outlined"> delete </i>
+                      </button>
+                    </h3>
+                    <div class="form_content">
+                      <div class="group_form">
+                        <div class="input_wrapper">
+                          <label>Entidad</label>
+                          <input type="text" v-model="evaluacion.conyuge.gasto_financiero[index].entidad" />
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Saldo Capital</label>
+                          <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_financiero[index].saldo_capital" v-bind:precision="2"></vue-numeric>
+                        </div>
+
+                        <div class="input_wrapper">
+                          <label>Cuota</label>
+                          <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_financiero[index].cuota" v-bind:precision="2"></vue-numeric>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <button type="button"  class="add_section" @click="clickAddEntidad" >
+                  <span> AGREGAR ENTIDAD </span>
+                  <i class="fas fa-plus"></i> 
+                </button>
+              </div>
 
-                <div class="form_buttons in_bottom">
-                  <a class="button_inline_primary medium prev" @click="prev(2)">
+
+              <div class="form_step_wrapper in_bottom">
+                <h3 class="title">Gasto del Negocio</h3>
+                <div class="form_content">
+                  <div class="group_form">
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.titular.gasto_negocio[0].entidad">Alquiler</label>
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[0].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.titular.gasto_negocio[1].entidad">Alquiler</label> 
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[1].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.titular.gasto_negocio[2].entidad">Alquiler</label> 
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[2].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.titular.gasto_negocio[3].entidad">Alquiler</label> 
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[3].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.titular.gasto_negocio[4].entidad">Alquiler</label> 
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_negocio[4].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form_buttons in_bottom">
+                <a class="button_inline_primary medium prev" @click="prev(2)">
+                  <i class="material-icons-outlined">navigate_before</i>
+                  <span>ATRAS</span>
+                </a>
+                <a class="button_primary medium next" @click="next(2)">
+                  <span>SIGUIENTE</span>
+                  <i class="material-icons-outlined">navigate_next</i>
+                </a>
+              </div>
+
+              
+            </div>
+
+            <div v-show="tab == 3" class="form_step">
+
+              <div class="form_step_wrapper">
+                <h3 class="title">Gasto del Hogar</h3>
+                <div class="form_content">
+
+                  <div class="group_form">
+
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.gastos_hogar[0].concepto">Alquiler</label>
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[0].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.gastos_hogar[1].concepto">Alquiler</label> 
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[1].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.gastos_hogar[2].concepto">Alquiler</label> 
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[2].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.gastos_hogar[3].concepto">Alquiler</label> 
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[3].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.gastos_hogar[4].concepto">Alquiler</label> 
+                      <vue-numeric  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[4].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+                    <div class="input_wrapper">
+                      <label v-text="evaluacion.gastos_hogar[5].concepto">Alquiler</label> 
+                      <vue-numeric disabled='disabled'  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[5].pago" v-bind:precision="2"></vue-numeric>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="form_step_wrapper in_bottom">
+                <h3 class="title">Propiedades</h3>
+                <div class="form_list no_border">
+                  <div class="sub_step_wrapper" v-for="(propiedades,index) in evaluacion.propiedades" v-bind:key="index">
+                    <h3 class="title">Propiedad {{index + 1}}
+                      <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemovePropiedad(index)">
+                        <i class="material-icons-outlined"> delete </i>
+                      </button>
+                    </h3>
+                    
+                    <div class="form_content">
+                      <div class="group_form">
+                        <div class="input_wrapper">
+                          <label>Concepto</label>
+                          <input type="text"  v-model="evaluacion.propiedades[index].concepto" />
+                        </div>
+                        <div class="input_wrapper">
+                          <label>Pago</label>
+                          <vue-numeric  currency="S/. " separator="," v-model="evaluacion.propiedades[index].valor_estimado"  v-bind:precision="2"></vue-numeric>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="button"  class="add_section" @click="clickAddPropiedad">
+                  <span> AGREGAR PROPIEDAD </span>
+                  <i class="fas fa-plus"></i> 
+                </button>
+              </div>
+
+              <div class="form_step_wrapper in_bottom">
+                <h3 class="title">Gasto Financiero del Titular (Personales) </h3>
+                <div class="form_list no_border">
+                  <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.titular.gasto_financiero_personal" v-bind:key="index">
+                    <h3 class="title">Entidad {{index + 1}}
+                      <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidadTitular(index)">
+                        <i class="material-icons-outlined"> delete </i>
+                      </button>
+                    </h3>
+                    <div class="form_content">
+                      <div class="group_form">
+                        <div class="input_wrapper">
+                          <label>Entidad</label>
+                          <input type="text" v-model="evaluacion.titular.gasto_financiero_personal[index].entidad" />
+                        </div>
+                        <div class="input_wrapper">
+                          <label>Saldo Capital</label>
+                          <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_financiero_personal[index].saldo_capital"  v-bind:precision="2"></vue-numeric>
+                        </div>
+                        <div class="input_wrapper">
+                          <label>Cuota</label>
+                          <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_financiero_personal[index].cuota"  v-bind:precision="2"></vue-numeric>
+                        </div>
+                      </div>
+                      </div>
+                  </div>
+                </div>
+                <button type="button"  class="add_section" @click="clickAddEntidadTitular" >
+                  <span> AGREGAR ENTIDAD </span>
+                  <i class="fas fa-plus"></i> 
+                </button>
+              </div>
+
+              <div class="form_step_wrapper in_bottom">
+                <h3 class="title">Gasto Financiero del cónyuge ò Conviviente (Personales) </h3>
+                <div class="form_list no_border">
+                  <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero_personal" v-bind:key="index">
+                    <h3 class="title">Entidad {{index + 1}}
+                        <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidadconyuge(index)">
+                        <i class="material-icons-outlined"> delete </i>
+                      </button>
+                    </h3>
+                    <div class="form_content">
+                      <div class="group_form">
+                        <div class="input_wrapper">
+                          <label>Entidad</label>
+                          <input type="text" v-model="evaluacion.conyuge.gasto_financiero_personal[index].entidad" />
+                        </div>
+                        <div class="input_wrapper">
+                          <label>Saldo Capital</label>
+                          <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_financiero_personal[index].saldo_capital"  v-bind:precision="2"></vue-numeric>
+                        </div>
+                        <div class="input_wrapper">
+                          <label>Cuota</label>
+                          <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_financiero_personal[index].cuota"  v-bind:precision="2"></vue-numeric>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="button"  class="add_section" @click="clickAddEntidadconyuge">
+                  <span> AGREGAR ENTIDAD </span>
+                  <i class="fas fa-plus"></i> 
+                </button>
+              </div>
+
+              <div class="form_buttons">
+                  <a class="button_inline_primary medium prev" @click="prev(3)">
                     <i class="material-icons-outlined">navigate_before</i>
                     <span>ATRAS</span>
                   </a>
-                  <a class="button_primary medium next" @click="next(2)">
-                    <span>SIGUIENTE</span>
-                    <i class="material-icons-outlined">navigate_next</i>
-                  </a>
+                  <a class="button_primary medium next" @click.prevent="guardar()">
+                  <span>FINALIZAR</span>
+                  <i class="material-icons-outlined">navigate_next</i>
+                </a>
                 </div>
 
-                
-              </div>
-              
-            </transition>
-
-            <transition name="slide-fade" mode="in-out">
-              <div v-show="tab == 3" class="form_step">
-
-                <div class="form_step_wrapper">
-                  <h3 class="title">Gasto del Hogar</h3>
-                  <div class="form_content">
-
-                    <div class="group_form">
-
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.gastos_hogar[0].concepto">Alquiler</label>
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[0].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.gastos_hogar[1].concepto">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[1].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.gastos_hogar[2].concepto">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[2].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.gastos_hogar[3].concepto">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[3].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.gastos_hogar[4].concepto">Alquiler</label> 
-                        <vue-numeric  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[4].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-                      <div class="input_wrapper">
-                        <label v-text="evaluacion.gastos_hogar[5].concepto">Alquiler</label> 
-                        <vue-numeric disabled='disabled'  currency="S/. " separator="," v-model="evaluacion.gastos_hogar[5].pago" v-bind:precision="2"></vue-numeric>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Propiedades</h3>
-                  <div class="form_list no_border">
-                    <div class="sub_step_wrapper" v-for="(propiedades,index) in evaluacion.propiedades" v-bind:key="index">
-                      <h3 class="title">Propiedad {{index + 1}}
-                        <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemovePropiedad(index)">
-                          <i class="material-icons-outlined"> delete </i>
-                        </button>
-                      </h3>
-                      
-                      <div class="form_content">
-                        <div class="group_form">
-                          <div class="input_wrapper">
-                            <label>Concepto</label>
-                            <input type="text"  v-model="evaluacion.propiedades[index].concepto" />
-                          </div>
-                          <div class="input_wrapper">
-                            <label>Pago</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.propiedades[index].valor_estimado"  v-bind:precision="2"></vue-numeric>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <button type="button"  class="add_section" @click="clickAddPropiedad">
-                    <span> AGREGAR PROPIEDAD </span>
-                    <i class="fas fa-plus"></i> 
-                  </button>
-                </div>
-
-                <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Gasto Financiero del Titular (Personales) </h3>
-                  <div class="form_list no_border">
-                    <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.titular.gasto_financiero_personal" v-bind:key="index">
-                      <h3 class="title">Entidad {{index + 1}}
-                        <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidadTitular(index)">
-                          <i class="material-icons-outlined"> delete </i>
-                        </button>
-                      </h3>
-                      <div class="form_content">
-                        <div class="group_form">
-                          <div class="input_wrapper">
-                            <label>Entidad</label>
-                            <input type="text" v-model="evaluacion.titular.gasto_financiero_personal[index].entidad" />
-                          </div>
-                          <div class="input_wrapper">
-                            <label>Saldo Capital</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_financiero_personal[index].saldo_capital"  v-bind:precision="2"></vue-numeric>
-                          </div>
-                          <div class="input_wrapper">
-                            <label>Cuota</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_financiero_personal[index].cuota"  v-bind:precision="2"></vue-numeric>
-                          </div>
-                        </div>
-                        </div>
-                    </div>
-                  </div>
-                  <button type="button"  class="add_section" @click="clickAddEntidadTitular" >
-                    <span> AGREGAR ENTIDAD </span>
-                    <i class="fas fa-plus"></i> 
-                  </button>
-                </div>
-
-                <div class="form_step_wrapper in_bottom">
-                  <h3 class="title">Gasto Financiero del cónyuge ò Conviviente (Personales) </h3>
-                  <div class="form_list no_border">
-                    <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero_personal" v-bind:key="index">
-                      <h3 class="title">Entidad {{index + 1}}
-                          <button v-if="index > 0" class="delete_section" type="button"  @click="clickRemoveEntidadconyuge(index)">
-                          <i class="material-icons-outlined"> delete </i>
-                        </button>
-                      </h3>
-                      <div class="form_content">
-                        <div class="group_form">
-                          <div class="input_wrapper">
-                            <label>Entidad</label>
-                            <input type="text" v-model="evaluacion.conyuge.gasto_financiero_personal[index].entidad" />
-                          </div>
-                          <div class="input_wrapper">
-                            <label>Saldo Capital</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_financiero_personal[index].saldo_capital"  v-bind:precision="2"></vue-numeric>
-                          </div>
-                          <div class="input_wrapper">
-                            <label>Cuota</label>
-                            <vue-numeric  currency="S/. " separator="," v-model="evaluacion.conyuge.gasto_financiero_personal[index].cuota"  v-bind:precision="2"></vue-numeric>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <button type="button"  class="add_section" @click="clickAddEntidadconyuge">
-                    <span> AGREGAR ENTIDAD </span>
-                    <i class="fas fa-plus"></i> 
-                  </button>
-                </div>
-
-                <div class="form_buttons">
-                    <a class="button_inline_primary medium prev" @click="prev(3)">
-                      <i class="material-icons-outlined">navigate_before</i>
-                      <span>ATRAS</span>
-                    </a>
-                    <a class="button_primary medium next" @click.prevent="guardar()">
-                    <span>FINALIZAR</span>
-                    <i class="material-icons-outlined">navigate_next</i>
-                  </a>
-                  </div>
-
-              </div>
-              
-            </transition>
-    
+            </div>
           </div>
      </section>
     </div>

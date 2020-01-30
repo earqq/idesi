@@ -18,7 +18,7 @@
         </div>
         <div class="avatar">
           <img src="https://picsum.photos/200/300" v-if="false" />
-          <div class="avatar_alt" v-else> {{cliente.apellidos.substring(0,1)}} </div>
+          <div class="avatar_alt" v-else> {{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social ? cliente.razon_social.substring(0,1) : "" }} </div>
         </div>
         <p v-if="tipo_persona=='PN'"> {{cliente.apellidos}} </p>
         <p v-else> {{cliente.razon_social}} </p>
