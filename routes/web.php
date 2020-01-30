@@ -83,7 +83,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('evaluaciones/numerohijos/{prestamo}', 'EvaluacionController@numeroHijos');
 
         Route::get('evaluaciones/giro', 'EvaluacionController@giro');
-        Route::get('evaluaciones/datosCualitativas', 'EvaluacionController@datosCualitativas');
+        Route::get('evaluaciones/datosCualitativas/{prestamoID}', 'EvaluacionController@datosCualitativas');
         Route::get('evaluaciones/colegio', 'EvaluacionController@colegios');
         Route::get('evaluaciones/entidades', 'EvaluacionController@entidades');
         Route::get('evaluaciones/colegio/costo', 'EvaluacionController@colegioCosto');

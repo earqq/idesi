@@ -223,9 +223,9 @@ class EvaluacionController extends Controller
         return $colegio;
     } 
 
-    public function datosCualitativas(Request $request)
+    public function datosCualitativas($prestamoID)
     {
-        $cualitativa = Cualitativa::where('prestamo_id',intval($request->prestamo))->first();
+        $cualitativa = Cualitativa::where('prestamo_id',intval($prestamoID))->first();
         return $cualitativa;
 
     } 

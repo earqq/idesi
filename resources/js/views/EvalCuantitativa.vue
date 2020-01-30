@@ -810,7 +810,7 @@ export default {
 
     this.$http
       .get(
-        `/evaluaciones/datosCualitativas?prestamo=`+this.$route.params.prestamo
+        `/evaluaciones/datosCualitativas/`+this.$route.params.prestamo
       )
       .then(response => {
         console.log(response)
@@ -922,7 +922,7 @@ export default {
             "Exitoso",
             this.notificationSystem.options.success
           )
-      this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
+      // this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
       });
     },
  

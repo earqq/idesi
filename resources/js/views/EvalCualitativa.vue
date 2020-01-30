@@ -131,7 +131,7 @@
                         <div class="input_wrapper">
                           <label>Realizo mejoras en el local</label>
                           <select v-model="evaluacion.negocio.mejoras_local" >
-                            <option value="SI RELIZO">Si realizo</option>
+                            <option value="SI REALIZO">Si realizo</option>
                             <option value="NO REALIZO">No realizo</option>
                           </select>
                         </div>
@@ -436,7 +436,7 @@
                 <div class="form_content">
                   <div class="group_form">
                     <div class="input_wrapper">
-                      <label>Cometarios</label>
+                      <label>Comentarios</label>
                       <textarea class="form-control" v-model="evaluacion.comentario_central_riesgo"></textarea>
                     </div>
                   </div>
@@ -590,12 +590,12 @@ export default {
         },
         negocio: {
           ubicacion: "",
-          antiguedad: "MENOS DE 1 AÑO",
+          antiguedad: "1 AÑO",
           local: "PROPIO",
           licencia_funcionamiento: "SI CUENTA",
           horario_atencion_inicio: "00:00",
           horario_atencion_salida: "00:00",
-          mejoras_local: "SI RELIZO"
+          mejoras_local: "SI REALIZO"
         },
         vehiculo: {
           marca: "",
@@ -647,7 +647,7 @@ export default {
             telefono: ""
           }
         ],
-        colateral: "AVAL CON CASA PROPIA",
+        colateral: "SIN COLATERAL",
         comentario_colateral: ""
       }
     };
@@ -711,7 +711,7 @@ export default {
             "Exitoso",
             this.notificationSystem.options.success
           ) 
-            this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
+            // this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
       });
     }, 
     seleccionColegiosCosto(index) {
@@ -734,7 +734,7 @@ export default {
       this.giros = response.data;
     });
     this.$http.get(`/evaluaciones/prestamos/detalle/`+this.$route.params.prestamo).then(response => {
-      this.evaluacion.principal.destino_credito_descripcion=response.data.destino_inicial
+      this.evaluacion.principal.destino_credito_descripcion=response.data.prestamo.destino_inicial
     });
     this.$http.get(`/evaluaciones/entidades`).then(response => {
       this.entidades = response.data;

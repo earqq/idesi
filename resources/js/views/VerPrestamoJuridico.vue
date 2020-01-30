@@ -842,19 +842,19 @@ export default {
       this.$http
         .post(`/${this.resource}/prestamo/juridico`, this.form)
         .then(response => {
-          this.clearForm();
+          
           this.$toast.success(
             "La solicitud de prestamo fue actualizada",
             "Exitoso",
             this.notificationSystem.options.success
           ); 
 
-          console.log( this.$router.push({ name: 'perfil', params: { documento:  this.form.cliente.documento, persona: 'PJ' }}))
+          console.log(this.form.cliente.documento)
           this.$router.push({ name: 'perfil', params: { documento:  this.form.cliente.documento, persona: 'PJ' }}).catch(err => {})
-          // this.$router.push({ name: 'perfil', params: { documento:  this.form.cliente.documento, persona: 'PN' }})
+          this.clearForm(); 
 
         })
-   
+       
         .then(() => {
           // this.loading_submit = false;
         });
