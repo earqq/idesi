@@ -22,6 +22,7 @@ use App\ResultadoCuantitativa;
 use App\AsociativaNatural;
 use App\Asociativa;
 use App\Familiar;
+use App\Evaluacion;
 use App\Declaracion;
 use App\DeclaracionJuridico;
 use App\Director;
@@ -691,9 +692,12 @@ class ClienteController extends Controller
         // if (!$request->ajax()) return redirect('/');
         $vista = Vista::where('prestamos_id',$documento)->get();
         $prestamo = Prestamo::find($documento);
+        $evaluacion = Evaluacion::join('users','evaluacions.users_id','=','users.id')
+                    ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name', 'users.idrol')
+                    ->where('prestamos_id',$prestamo->id)
+                    ->orderBy('users.idrol', 'DESC')->get(); 
 
-
-        return compact('visita','prestamo');
+        return compact('visita','prestamo','evaluacion');
         
     }
 

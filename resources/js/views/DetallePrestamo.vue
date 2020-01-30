@@ -4,7 +4,6 @@
       <section class="client_forms">
         <div class="client_forms_wrapper">
           <div class="form_step">
-            
             <div class="form_step_wrapper">
               <h3 class="title">Solicitud de Crédito</h3>
               <div class="form_content">
@@ -83,25 +82,31 @@
 
             <div class="form_step_wrapper in_bottom">
               <h3 class="title">Evaluaciones</h3>
-
               <div class="table_wrapper">
-                <table class="table_clients">
+                <table class="table_clients no_hover">
                   <thead>
                     <tr>
                       <th>Evaluador</th>
-                      <th>Observaciones</th>
+                      <th>Comentarios</th>
                       <th>Fecha</th>
                       <th>Estado</th>
-                      <!-- <th class="options">Opciones</th> -->
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- <tr  v-for="evaluacion in form.evaluacion" :key="evaluacion.id">
-                                      <td v-text="evaluacion.name"></td>
-                                      <td v-text="evaluacion.detalle"></td>
-                                      <td v-text="evaluacion.created_at"></td>
-                                      <td v-text="evaluacion.estado"></td>
-                    </tr>-->
+                    <tr
+                      v-for="evaluacion in evaluacion"
+                      :key="evaluacion.id"
+                      :class="{final_result: evaluacion.idrol == 4}"
+                    >
+                      <td v-text="evaluacion.name"></td>
+                      <td v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
+                      <td>{{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
+                      <td class="state">
+                        <span :class="stateEvaluation(evaluacion.estado)"></span>
+                        {{evaluacion.estado | toCapitalize}}
+                        <strong v-show="evaluacion.idrol == 4">( Decisión )</strong>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -132,7 +137,9 @@
                 </table>
               </div>
 
-              <div class="form_content">
+              <button @click="prender">pernser camra</button>
+
+              <div class="form_content" v-if="camara_prendida">
                 <div>
                   <video ref="video" id="video" width="640" height="480" autoplay></video>
                 </div>
@@ -140,7 +147,7 @@
                   <button id="snap" v-on:click="capture()">Registrar Ubicación</button>
                 </div>
                 <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
-                
+
                 <ul>
                   <!-- <li v-for="c in captures" :key="c"> -->
                   <img v-bind:src="captura" height="50" />
@@ -149,17 +156,16 @@
               </div>
 
               <div class="form_buttons">
-                <a class="button_inline_primary medium prev"  >
+                <a class="button_inline_primary medium prev">
                   <i class="material-icons-outlined">navigate_before</i>
                   <span>REGRESAR PERFIL</span>
                 </a>
-                <a class="button_primary medium next" >
+                <a class="button_primary medium next">
                   <span>GUARDAR UBICACION</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
               </div>
             </div>
-
           </div>
         </div>
       </section>
@@ -183,13 +189,15 @@ export default {
       video: {},
       canvas: {},
       captura: "",
+      camara_prendida: 0,
       prestamo: this.$route.params.prestamo,
       errors: {},
       prestamo_detalle: [],
       camara: [],
-      latitud: '',
-      altitud: '',
+      latitud: "",
+      altitud: "",
       formViews: {},
+      evaluacion: [],
       formData: {},
       list_vistas: [],
       tipo: true,
@@ -235,37 +243,43 @@ export default {
         this.errorStr = err.message;
       }
     );
-    this.video = this.$refs.video;
-    navigator.getMedia =
-      navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia ||
-      navigator.msGetUserMedia;
-    if (!navigator.getMedia) {
-      output.innerHTML = errorMsg(
-        "Tu navegador no soporta el uso de la camara",
-        null
-      );
-    } else {
-      navigator.getMedia(
-        { video: true },
-        stream => {
-          try {
-            this.camara = stream;
-            this.video.srcObject = this.camara;
-          } catch (error) {
-            this.video.src = URL.createObjectURL(mediaSource);
-          }
-
-          this.video.play();
-        },
-        err => {
-          output.innerHTML = errorMsg("Ocurrio un error", null);
-        }
-      );
-    } 
   },
   methods: {
+    prender() {
+            this.camara_prendida=1
+            this.$nextTick(() => {
+              this.video = this.$refs.video;
+            })
+          navigator.getMedia =
+            navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia;
+          if (!navigator.getMedia) {
+            output.innerHTML = errorMsg(
+              "Tu navegador no soporta el uso de la camara",
+              null
+            );
+          } else {
+            navigator.getMedia(
+              { video: true },
+              stream => {
+                try {
+                  this.camara = stream;
+                  this.video.srcObject = this.camara;
+
+                } catch (error) {
+                  this.video.src = URL.createObjectURL(this.camara);
+                }
+
+                this.video.play();
+              },
+              err => {
+                output.innerHTML = errorMsg("Ocurrio un error", null);
+              }
+            );
+          }
+    },
     capture() {
       this.canvas = this.$refs.canvas;
       var context = this.canvas
@@ -273,17 +287,20 @@ export default {
         .drawImage(this.video, 0, 0, 640, 480);
       this.captura = canvas.toDataURL("image/png");
       // this.DownloadCanvasAsImage()
-      this.submit()
-      this.apagar()
+      this.submit();
+      this.apagar();
     },
-    DownloadCanvasAsImage(){
-      let downloadLink = document.createElement('a');
-      downloadLink.setAttribute('download', 'captura.png');
-      let canvas = document.getElementById('canvas');
-      let dataURL = canvas.toDataURL('image/png');
-      let url = dataURL.replace(/^data:image\/png/,'data:application/octet-stream');
-      console.log(dataURL)
-      downloadLink.setAttribute('href',url);
+    DownloadCanvasAsImage() {
+      let downloadLink = document.createElement("a");
+      downloadLink.setAttribute("download", "captura.png");
+      let canvas = document.getElementById("canvas");
+      let dataURL = canvas.toDataURL("image/png");
+      let url = dataURL.replace(
+        /^data:image\/png/,
+        "data:application/octet-stream"
+      );
+      console.log(dataURL);
+      downloadLink.setAttribute("href", url);
       downloadLink.click();
     },
     apagar() {
@@ -327,7 +344,7 @@ export default {
       };
     },
     clearform() {
-      this.initForm(); 
+      this.initForm();
     },
     views() {
       this.$http
@@ -335,8 +352,14 @@ export default {
         .then(response => {
           this.list_vistas = response.data["visita"];
           this.prestamo_detalle = response.data["prestamo"];
-          console.log(this.prestamo_detalle);
+          this.evaluacion = response.data["evaluacion"];
         });
+    },
+    stateEvaluation(estado) {
+      if (estado == "APROBADO") return "accept";
+      if (estado == "OBSERVADO") return "observed";
+      if (estado == "DESAPROBADO") return "denied";
+      return;
     },
 
     submit() {
@@ -344,7 +367,7 @@ export default {
       this.formData.append("name", "addsdasd");
       this.formData.append("prestamo_id", this.prestamo);
       this.formData.append("latitud", this.location.coords.latitude);
-      this.formData.append("longitud",  this.location.coords.longitude); 
+      this.formData.append("longitud", this.location.coords.longitude);
       this.formData.append("file", this.captura);
       this.$http
         .post(`/${this.resource}/visita/nuevo`, this.formData, {
@@ -361,7 +384,7 @@ export default {
             "Exitoso",
             this.notificationSystem.options.success
           );
-        }) 
+        })
         .then(() => {
           // this.loading_submit = false;
         });
