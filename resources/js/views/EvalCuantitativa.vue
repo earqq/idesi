@@ -781,7 +781,7 @@ export default {
 
     this.$http
       .get(
-        `/evaluaciones/datosCualitativas?prestamo=`+this.$route.params.prestamo
+        `/evaluaciones/datosCualitativas/`+this.$route.params.prestamo
       )
       .then(response => {
         console.log(response)

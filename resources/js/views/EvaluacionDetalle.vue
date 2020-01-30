@@ -57,6 +57,12 @@
                       <strong>Comentarios </strong> 
                       <p>{{prestamo.comentarios}}</p>
                     </li>
+                    <li>
+                      <strong>Forma </strong> 
+                      <p>{{prestamo.forma}}</p>
+                    </li>
+                    <li></li>
+                    <li></li>
                   </div>
                 </div>
 

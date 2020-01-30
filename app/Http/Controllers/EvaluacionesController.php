@@ -152,7 +152,11 @@ class EvaluacionesController extends Controller
         \Log::alert('Costo de venta total: '.$costo_venta_total);
         //Validacion
         $negocio=negocio::where('giro_negocio',$request->titular["giro_negocio"])->first();
-        $costo_venta_validacion=$ingresos_ventas_validacion/100*floatval($negocio->costo);
+        \Log::alert($request);
+        \Log::alert("si viene");
+        \Log::alert($request->titular["giro_negocio"]);
+        \Log::alert($negocio);
+        $costo_venta_validacion=$ingresos_ventas_validacion/100*floatval($negocio->costo_ventas);
         \Log::alert('Costo de venta validacion: '.$costo_venta_validacion);
         //MARGEN BRUTO 
         //Margen bruto titular
@@ -500,8 +504,8 @@ class EvaluacionesController extends Controller
         $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['domingo'];    
 
         \Log::alert("FLUJO PARA CREDITOS DIARIOS MINIMO INGRESO: ".$fc_diario_minimo_ingreso);
-        
-        $fc_diario_cuota=$request->evaluacion["propuesta"]["cuotas"];
+        $prestamo=prestamo::find($request->prestamo_id);
+        $fc_diario_cuota=$prestamo->cuotas;
         \Log::alert("FLUJO PARA CREDITOS DIARIOS CUOTA: ".$fc_diario_cuota);
         
         $fc_diario_disponible_diario=$fc_diario_minimo_ingreso-$fc_diario_cuota;
@@ -522,7 +526,7 @@ class EvaluacionesController extends Controller
         $fc_semanal_minimo_ingreso=$request->titular["ingresos_negocio"][0]['subtotal']/100*80;
         \Log::alert("FLUJO PARA CREDITOS SEMANALES MINIMO INGRESO: ".$fc_semanal_minimo_ingreso);
 
-        $fc_semanal_cuota=$request->evaluacion["propuesta"]["cuotas"];
+        $fc_semanal_cuota=$prestamo->cuotas;
         \Log::alert("FLUJO PARA CREDITOS SEMANAL CUOTA: ".$fc_semanal_cuota);
         
         $fc_semanal_disponible_semanal=$fc_semanal_minimo_ingreso-$fc_semanal_cuota;
@@ -687,7 +691,7 @@ class EvaluacionesController extends Controller
             DB::beginTransaction();
             
             $cualitativa= new cualitativa;
-            $cualitativa->prestamo_id=$request->prestamo_id;
+            $cualitativa->prestamo_id=intval($request->prestamo_id);
             $cualitativa->principal=$request->principal;
             $cualitativa->negocio=$request->negocio;
             $cualitativa->vehiculo=$request->vehiculo;

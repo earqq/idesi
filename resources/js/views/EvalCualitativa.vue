@@ -127,7 +127,7 @@
                         <div class="input_wrapper">
                           <label>Realizo mejoras en el local</label>
                           <select v-model="evaluacion.negocio.mejoras_local" >
-                            <option value="SI RELIZO">Si realizo</option>
+                            <option value="SI REALIZO">Si realizo</option>
                             <option value="NO REALIZO">No realizo</option>
                           </select>
                         </div>
@@ -432,7 +432,7 @@
                 <div class="form_content">
                   <div class="group_form">
                     <div class="input_wrapper">
-                      <label>Cometarios</label>
+                      <label>Comentarios</label>
                       <textarea class="form-control" v-model="evaluacion.comentario_central_riesgo"></textarea>
                     </div>
                   </div>
@@ -586,12 +586,12 @@ export default {
         },
         negocio: {
           ubicacion: "",
-          antiguedad: "1",
-          local: 1,
-          licencia_funcionamiento: 1,
+          antiguedad: "1 AÑO",
+          local: "PROPIO",
+          licencia_funcionamiento: "SI CUENTA",
           horario_atencion_entrada: "",
           horario_atencion_salida: "",
-          mejoras_local: 0
+          mejoras_local: "SI REALIZO"
         },
         vehiculo: {
           marca: "",
@@ -605,8 +605,8 @@ export default {
         },
         familiar: {
           numero_hijos: 0,
-          tipo_vivienda: 1,
-          situacion_familiar: 1,
+          tipo_vivienda: "PROPIA CANCELADA",
+          situacion_familiar: "SOLTERO",
           miembros_familia: 1,
           hijos: []
         },
@@ -643,7 +643,7 @@ export default {
             telefono: ""
           }
         ],
-        colateral: 0,
+        colateral: "SIN COLATERAL",
         comentario_colateral: ""
       }
     };
