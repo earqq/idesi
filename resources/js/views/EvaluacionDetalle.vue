@@ -19,7 +19,6 @@
           <section class="client_forms">
             <div class="client_forms_wrapper">
               <div v-show="tab == 1" class="form_step">
-                <p>{{rol}}</p>
                 <div class="form_step_wrapper">
                   <button
                     type="button"
@@ -64,14 +63,14 @@
                 <div class="form_step_wrapper in_bottom">
                   <h3 class="title">Evaluaciones</h3>
 
-                  <div class="empty_message" v-if="!form.evaluacion">
+                  <div class="empty_message_evaluation" v-if="!form.evaluacion">
                     <img src="img/empty.svg" >
                     <h1> Sin Evaluaciones </h1>
                     <p>Todavia no se han relizado evaluaciones a este prestamo</p>
                   </div>
 
-                  <div class="table_wrapper" v-else>
-                    <table class="table_clients">
+                  <div class="table_wrapper " v-else>
+                    <table class="table_clients no_hover">
                       <thead>
                         <tr>
                           <th>Evaluador</th>
@@ -81,11 +80,11 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr  v-for="evaluacion in form.evaluacion" :key="evaluacion.id">
+                        <tr  v-for="evaluacion in form.evaluacion" :key="evaluacion.id" :class="{final_result: evaluacion.idrol == 4}">
                           <td v-text="evaluacion.name"></td>
-                          <td v-text="evaluacion.detalle"></td>
-                          <td> {{evaluacion.created_at | moment("D [de] MMMM, YYYY")}} </td>
-                          <td class="state"> <span :class="stateEvaluation(evaluacion.estado)">  </span> {{evaluacion.estado | toCapitalize}} </td>
+                          <td v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
+                          <td> {{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
+                          <td class="state"> <span :class="stateEvaluation(evaluacion.estado)">  </span> {{evaluacion.estado | toCapitalize}} <strong v-show="evaluacion.idrol == 4"> ( Decisión )</strong> </td>
                         </tr>
                       </tbody>
                     </table>
@@ -740,7 +739,7 @@ export default {
       margin-bottom: 20px
       .add_section
         border-top: none
-      .empty_message
+      .empty_message_evaluation
         display: flex
         align-items: center
         justify-content: center
@@ -767,11 +766,22 @@ export default {
           tr
             margin-bottom: 0px
             border-bottom: 1px solid $bg_color
+        &.no_hover 
+          tbody:hover tr
+            background-color: inherit
         tbody
-          tr:last-child
-            border-bottom: 0
-
+          tr
+            &.final_result
+              background-color: rgba($primary_color, .03) !important
+              border-left: 3px solid $primary_color
+              &:hover
+                background-color: rgba($primary_color, .03) !important
+            &:last-child
+              border-bottom: 0
+        
         .state
+          strong
+            margin-left: 7px
           span
             width: 12px
             height: 12px

@@ -68,10 +68,22 @@
       </ul>
     </aside>
 
-    <div class="credits_grid">
+    <div class="empty_message" v-if="prestamos.length==0">
+      <img src="img/empty.svg" >
+      <h1> No Registra Prestamos </h1>
+      <p>Todavia no se han relizado ningun prestamo a este cliente</p>
+      <router-link  v-if="tipo_persona=='PN' && cliente.estado=='1'"  class="button_primary medium" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
+        <span> NUEVO PRESTAMO  </span>
+        <i class="material-icons-outlined">add</i>
+      </router-link>
+      <router-link  v-else-if="tipo_persona=='PJ' && cliente.estado=='1'" class="button_primary medium" :to="{name: 'prestamojuridico', params:{dni:cliente.documento}}">
+        <span> NUEVO PRESTAMO  </span>
+        <i class="material-icons-outlined">add</i>
+      </router-link>
+    </div>
 
+    <div class="credits_grid" v-else>
       <div class="table_grid" >
-
         <router-link  v-if="tipo_persona=='PN' && cliente.estado=='1'"  class="add_credit" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
           <span>
             <i class="material-icons-outlined">add</i>
@@ -85,13 +97,6 @@
           </span>
           <p> NUEVO PRESTAMO  </p>
         </router-link>
-
-        <div v-else class="add_credit">
-            <span style="background: lightgrey;">
-            <i class="material-icons-outlined">add</i>
-          </span>
-          <p style="color:lightgrey"> NUEVO PRESTAMO  </p>
-        </div>
 
         <article class="credit_card" v-for="prestamo in prestamos" :key="prestamo.id"  >
           <div class="detail">
@@ -121,13 +126,7 @@
             </div>
           </div>
         </article>
-
-         <div class="empty_message" v-if="prestamos.length==0">
-            <h1> No Registra Prestamos </h1>
-            <p>Todavia no se han relizado ningun prestamo a este cliente</p>
-          </div>
-        
-        <a v-show="prestamos.length || 0 < 4" class="spanner" v-for="i in 4" :key="i*1.5"  >
+        <a v-show="prestamos.length < 4 && prestamos.length > 0" class="spanner" v-for="i in 4" :key="i*1.5"  >
         </a>
       </div>
     

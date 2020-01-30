@@ -98,8 +98,9 @@ class EvaluacionController extends Controller
     {
         $prestamo = Prestamo::find($id);
         $evaluacion = Evaluacion::join('users','evaluacions.users_id','=','users.id')
-                ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name')
-                ->where('prestamos_id',$prestamo->id)->get();
+                ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name', 'users.idrol')
+                ->where('prestamos_id',$prestamo->id)
+                ->orderBy('users.idrol', 'DESC')->get();
 
         $cuantitativa = ResultadoCuantitativa::where('prestamo_id', $prestamo->id)->first();
         $estado_evaluado = 0;
