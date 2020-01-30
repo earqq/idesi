@@ -33,7 +33,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Storage;
-use Image;
 
 class ClienteController extends Controller
 {
@@ -490,41 +489,38 @@ class ClienteController extends Controller
 
     public function visitaStore(Request $request)
     {
-        $prestamo = Prestamo::find($request->prestamo_id);
-        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
-        
-        $photo_manager = new ImageManager();
-        $image = $manager->make($photo)->encode('jpg')
-        ->resize(123, 123 function ($c) {
-            $c->aspectRatio();
-        });
-        $canvas = Image::canvas(123,123);
-        $canvas->insert($image, 'center');
-        $canvas->save(public_path('uploads/'.Config::get('images.full_size').$filename));
 
-        if (!$request->ajax()) return redirect('/');
+
+        $file = $request->file;
+        $file = str_replace('data:image/png;base64,', '', $file);
+        // $file = str_replace(' ', '+', $file);
+        $data = base64_decode($file);
+
+        $img = file_put_contents("i".  rand(0, 50).".png", $data);
+        // return 
+        // if (!$request->ajax()) return redirect('/');
         
             // $model = new Archivo();
             // return $data;
             // $ext = $data->getClientOriginalExtension();
 
-            $prestamo = Prestamo::find($request->prestamo_id);
-            $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+            // $prestamo = Prestamo::find($request->prestamo_id);
+            // $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
             
-            if (Storage::putFileAs('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/', $value,'foto_neogcio.png')) {
+            // if (Storage::putFileAs('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/', $file,'foto_neogcio' . '.' . $ext)) {
                 
-                if($request['name'] == 'fotos_negocio'){
-                    $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                    $subidos->fotos_negocio=1;
-                    $subidos->save();
-                } 
-                return $model::create([
-                        'nombre' => 'foto_negocio',
-                        'tipo' => 'imagen',
-                        'extension' => $ext,
-                        'prestamos_id' => $request->prestamo_id
-                    ]);
-            }
+            //     if($request['name'] == 'fotos_negocio'){
+            //         $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
+            //         $subidos->fotos_negocio=1;
+            //         $subidos->save();
+            //     } 
+            //     return $model::create([
+            //             'nombre' => 'foto_negocio',
+            //             'tipo' => 'imagen',
+            //             'extension' => $ext,
+            //             'prestamos_id' => $request->prestamo_id
+            //         ]);
+            // }
         // $visita = new Vista();
         // $visita->latitud= $request->latitud;
         // $visita->altitud=$request->longitud; 
