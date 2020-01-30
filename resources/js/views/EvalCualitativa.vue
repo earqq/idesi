@@ -735,7 +735,7 @@ export default {
       this.giros = response.data;
     });
     this.$http.get(`/evaluaciones/prestamos/detalle/`+this.$route.params.prestamo).then(response => {
-      this.evaluacion.principal.destino_credito_descripcion=response.data.destino_inicial
+      this.evaluacion.principal.destino_credito_descripcion=response.data.prestamo.destino_inicial
     });
     this.$http.get(`/evaluaciones/entidades`).then(response => {
       this.entidades = response.data;
