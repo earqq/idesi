@@ -36,14 +36,17 @@
             <h3 class="title">Solicitud de Crédito</h3>
             <div class="form_content">
               <div class="group_form">
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateMonto}">
                   <label>Monto</label>
+                  <p>{{String(form.monto_inicial).length}}</p>
                   <vue-numeric
                     currency="S/. "
                     separator=","
                     v-model="form.monto_inicial"
                     v-bind:precision="2"
                   ></vue-numeric>
+                  <!-- <input type="tel"  v-model="form.monto_inicial"> -->
+                  <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper">
                   <label>Forma</label>
@@ -58,18 +61,22 @@
                   <label>Plazo</label>
                   <input type="number" v-model="form.plazo_inicial"  />
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
                   <label>Disponibilidad de pago</label>
-                  <input
-                    type="text"
+                  <vue-numeric
+                    currency="S/. "
+                    separator=","
                     v-model="form.disponibilidad_pago_inicial"
-                  />
+                    v-bind:precision="2"
+                  ></vue-numeric> 
+                  <div class="message">Se requiere esta información</div>
                 </div>
               </div>
               <div class="group_form all">
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateDestino}">
                   <label>Destino de crédito (propuesta cliente)</label>
                   <textarea  v-model="form.destino_inicial"  />
+                  <div class="message">Se requiere esta información</div>
                 </div>
               </div>
             </div>
@@ -631,20 +638,20 @@ export default {
     };
   },
   computed: {
-    validateName() {
-      // return this.form.natural.nombres.length > 2
+    
+
+
+    validateMonto() {
+      return String(this.form.monto_inicial).length > 1
     },
-    validateLastname() {
-      // return this.form.natural.apellidos.length > 2
+    validateDiponibilidad() {
+      return String(this.form.disponibilidad_pago_inicial).length > 1
     },
-    validateDoc() {
-      let result = false;
-      // if (this.form.cliente.tipo_documento == 'DNI') result = this.form.cliente.documento.length == 8
-      // else if (this.form.cliente.tipo_documento == 'CE') result = this.form.cliente.documento.length == 11
-      return result;
+    validateDestino() {
+      return this.form.destino_inicial.length > 6
     },
     validateStep1() {
-      return this.validateDoc && this.validateName && this.validateLastname;
+      return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
     }
   },
   created() {

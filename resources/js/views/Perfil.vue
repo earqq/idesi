@@ -164,7 +164,7 @@ export default {
       option_loan: 1
     };
   },
-  mounted() {
+  mounted() { 
     this.datosClientesPerfil()
   },
   methods: {

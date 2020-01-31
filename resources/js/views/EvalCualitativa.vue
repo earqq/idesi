@@ -37,22 +37,23 @@
           <div class="client_forms_wrapper">
             <div v-show="tab == 1" class="form_step">
               <div class="form_step_wrapper">
-                <h3 class="title">Datos Principales</h3>
+                <h3 class="title">Datos Princisspales</h3>
                 <div class="form_content">
                   <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Fuente de ingreso</label>
+                    <div class="input_wrapper" :class="{require: !validateFuenteIngreso}">
+                      <label>Fuente de ingreso  </label> 
                       <v-select
                         label="giro_negocio"
                         :options="giros"
                         :reduce="giros => giros.giro_negocio"
                         v-model="evaluacion.principal.fuente_ingreso"
-                        :class="{validateFrom: validateFuenteIngreso}"
+                        
                         >
                         <span slot="no-options">
                           No se encontro giro de negocio
                         </span>
                       </v-select>
+                      <div class="message">Se requiere esta información</div>
                     </div>
                     <div class="input_wrapper">
                       <label>Destino del credito</label>
@@ -70,8 +71,9 @@
                   <div class="group_form all">
                     <div class="input_wrapper" :class="{require: !validateDestinoCredito}">
                       <label>Descripcion destino</label>
+                      <p>{{evaluacion.principal.destino_credito_descripcio}}</p>
                       <textarea  v-model="evaluacion.principal.destino_credito_descripcion" ></textarea>
-                      <div class="message">asdasd</div>
+                      <div class="message">Se requiere esta información</div>
                     </div>
                   </div>
                 </div>
@@ -587,7 +589,7 @@ export default {
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
         principal: {
-          destino_credito_descripcion: " asdasdasdsad",
+          destino_credito_descripcion: "asdasdasdsad",
           destino_credito: "Capital de trabajo",
           fuente_ingreso: ""
         },
@@ -656,7 +658,6 @@ export default {
     };
   },
   computed: {
-    
 
     validateFuenteIngreso() {
       return  this.evaluacion.principal.fuente_ingreso.length > 4
@@ -736,7 +737,8 @@ export default {
       this.giros = response.data;
     });
     this.$http.get(`/evaluaciones/prestamos/detalle/`+this.$route.params.prestamo).then(response => {
-      this.evaluacion.principal.destino_credito_descripcion=response.data.prestamo.destino_inicial
+      console.log(response.data.prestamo.destino_inicial)
+      this.evaluacion.principal.destino_credito_descripcion=response.data.prestamo.destino_inicial || ''
     });
     this.$http.get(`/evaluaciones/entidades`).then(response => {
       this.entidades = response.data;
