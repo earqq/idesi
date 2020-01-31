@@ -63,10 +63,10 @@ class EvaluacionesController extends Controller
         $participacion_cuota_contuge=0;
         $participacion_cuota_total=0;
         $participacion_cuota_validacion=0;
-        $utilidad_titular=0;
-        $utilidad_conyuge=0;
-        $utilidad_total=0;
-        $utilidad_validacion=0;
+        $gasto_financiero_personal_titular=0;
+        $gasto_financiero_personal_conyuge=0;
+        $gasto_financiero_personal_total=0;
+        $gasto_financiero_personal_validacion=0;
         $cuota_institucion_titular=0;
         $cuota_institucion_conyuge=0;
         $cuota_institucion_total=0;
@@ -412,7 +412,7 @@ class EvaluacionesController extends Controller
         else if($participacion_cuota_total>40)
             $resultado_eva='POCA CAPACIDAD';
         else 
-            $resultado_eva='TIENE CAPACIDAD SEGUN PARAMETRO';
+            $resultado_eva='CAPACIDAD PERMITIDA SEGUN PARAMETRO';
         
         \Log::alert("resultado eva: ".$resultado_eva);
 
@@ -529,61 +529,66 @@ class EvaluacionesController extends Controller
         $fc_semanal_participacion_cuota=0;
         $fc_semanal_resultado=0;
         $fc_semanal_disponible_semana=0;
-
-        // FLUJO PARA CREDITOS DIARIOS MINIMO INGRESO
-        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['lunes'];
-        if($request->titular["ingresos_negocio"][0]['martes'] < $fc_diario_minimo_ingreso);
-        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['martes'];
-        if($request->titular["ingresos_negocio"][0]['miercoles']<$fc_diario_minimo_ingreso)
-        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['miercoles'];
-        if($request->titular["ingresos_negocio"][0]['jueves']<$fc_diario_minimo_ingreso)
-        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['jueves'];
-        if($request->titular["ingresos_negocio"][0]['viernes']<$fc_diario_minimo_ingreso)
-        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['viernes'];
-        if($request->titular["ingresos_negocio"][0]['sabado']<$fc_diario_minimo_ingreso)
-        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['sabado'];
-        if($request->titular["ingresos_negocio"][0]['domingo']<$fc_diario_minimo_ingreso)
-        $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['domingo'];    
-
-        \Log::alert("FLUJO PARA CREDITOS DIARIOS MINIMO INGRESO: ".$fc_diario_minimo_ingreso);
         $prestamo=prestamo::find($request->prestamo_id);
-        $fc_diario_cuota=$prestamo->cuotas;
-        \Log::alert("FLUJO PARA CREDITOS DIARIOS CUOTA: ".$fc_diario_cuota);
-        
-        $fc_diario_disponible_diario=$fc_diario_minimo_ingreso-$fc_diario_cuota;
-        \Log::alert("FLUJO PARA CREDITOS DIARIOS DISPONIBLE DIARIOS: ".$fc_diario_disponible_diario);
-        
-        $fc_diario_participacion_cuota=$fc_diario_cuota/$fc_diario_minimo_ingreso;
-        \Log::alert("FLUJO PARA CREDITOS DIARIOS PARTICIPACION CUOTA: ".$fc_diario_participacion_cuota);
+        if($prestamo->forma=='DIARIO'){
 
-        if($fc_diario_participacion_cuota>100 || $fc_diario_participacion_cuota<0)
-        $fc_diario_resultado='NO TIENE CAPACIDAD';
-        else if($fc_diario_participacion_cuota>50)
-        $fc_diario_resultado='POCA CAPACIDAD';
-        else
-        $fc_diario_resultado='CAPACIDAD PERMITIDA SEGUN PARAMETRO';
-        \Log::alert("FLUJO PARA CREDITOS DIARIOS RESULTADO: ".$fc_diario_resultado);
+            // FLUJO PARA CREDITOS DIARIOS MINIMO INGRESO
+            $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['lunes'];
+            if($request->titular["ingresos_negocio"][0]['martes'] < $fc_diario_minimo_ingreso);
+            $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['martes'];
+            if($request->titular["ingresos_negocio"][0]['miercoles']<$fc_diario_minimo_ingreso)
+            $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['miercoles'];
+            if($request->titular["ingresos_negocio"][0]['jueves']<$fc_diario_minimo_ingreso)
+            $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['jueves'];
+            if($request->titular["ingresos_negocio"][0]['viernes']<$fc_diario_minimo_ingreso)
+            $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['viernes'];
+            if($request->titular["ingresos_negocio"][0]['sabado']<$fc_diario_minimo_ingreso)
+            $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['sabado'];
+            if($request->titular["ingresos_negocio"][0]['domingo']<$fc_diario_minimo_ingreso)
+            $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['domingo'];    
 
-        // FLUJO PARA CREDITOS SEMANALES
-        $fc_semanal_minimo_ingreso=$request->titular["ingresos_negocio"][0]['subtotal']/100*80;
-        \Log::alert("FLUJO PARA CREDITOS SEMANALES MINIMO INGRESO: ".$fc_semanal_minimo_ingreso);
+            \Log::alert("FLUJO PARA CREDITOS DIARIOS MINIMO INGRESO: ".$fc_diario_minimo_ingreso);
+          
+            $fc_diario_cuota=$prestamo->cuotas;
+            \Log::alert("FLUJO PARA CREDITOS DIARIOS CUOTA: ".$fc_diario_cuota);
+            
+            $fc_diario_disponible_diario=$fc_diario_minimo_ingreso-$fc_diario_cuota;
+            \Log::alert("FLUJO PARA CREDITOS DIARIOS DISPONIBLE DIARIOS: ".$fc_diario_disponible_diario);
+            
+            $fc_diario_participacion_cuota=($fc_diario_cuota/$fc_diario_minimo_ingreso)*100;
+            \Log::alert("FLUJO PARA CREDITOS DIARIOS PARTICIPACION CUOTA: ".$fc_diario_participacion_cuota);
 
-        $fc_semanal_cuota=$prestamo->cuotas;
-        \Log::alert("FLUJO PARA CREDITOS SEMANAL CUOTA: ".$fc_semanal_cuota);
+            if($fc_diario_participacion_cuota>100 || $fc_diario_participacion_cuota<0)
+            $fc_diario_resultado='NO TIENE CAPACIDAD';
+            else if($fc_diario_participacion_cuota>50)
+            $fc_diario_resultado='POCA CAPACIDAD';
+            else
+            $fc_diario_resultado='CAPACIDAD PERMITIDA SEGUN PARAMETRO';
+            \Log::alert("FLUJO PARA CREDITOS DIARIOS RESULTADO: ".$fc_diario_resultado);
+        }
+        if($prestamo->forma=='SEMANAL'){
+
+            // FLUJO PARA CREDITOS SEMANALES
+            $fc_semanal_minimo_ingreso=$request->titular["ingresos_negocio"][0]['subtotal']/100*80;
+            \Log::alert("FLUJO PARA CREDITOS SEMANALES MINIMO INGRESO: ".$fc_semanal_minimo_ingreso);
+            
+            $fc_semanal_cuota=$prestamo->cuotas;
+            \Log::alert("FLUJO PARA CREDITOS SEMANAL CUOTA: ".$fc_semanal_cuota);
+            
+            $fc_semanal_disponible_semanal=$fc_semanal_minimo_ingreso-$fc_semanal_cuota;
+            \Log::alert("FLUJO PARA CREDITOS SEMANAL DISPONIBLE SEMANAL: ".$fc_semanal_disponible_semanal);
         
-        $fc_semanal_disponible_semanal=$fc_semanal_minimo_ingreso-$fc_semanal_cuota;
-        \Log::alert("FLUJO PARA CREDITOS SEMANAL DISPONIBLE SEMANAL: ".$fc_semanal_disponible_semanal);
-        
-        $fc_semanal_participacion_cuota=$fc_semanal_cuota/$fc_semanal_minimo_ingreso;
-        \Log::alert("FLUJO PARA CREDITOS DIARIOS PARTICIPACION CUOTA: ".$fc_semanal_participacion_cuota);
-
-        if($fc_semanal_participacion_cuota>100 || $fc_semanal_participacion_cuota<0)
-        $fc_semanal_resultado='NO TIENE CAPACIDAD';
-        else if($fc_semanal_participacion_cuota>50)
-        $fc_semanal_resultado='POCA CAPACIDAD';
-        else
-        $fc_semanal_resultado='CAPACIDAD PERMITIDA SEGUN PARAMETRO';
-        \Log::alert("FLUJO PARA CREDITOS DIARIOS RESULTADO: ".$fc_semanal_resultado);        
+            $fc_semanal_participacion_cuota=$fc_semanal_cuota/$fc_semanal_minimo_ingreso;
+            \Log::alert("FLUJO PARA CREDITOS DIARIOS PARTICIPACION CUOTA: ".$fc_semanal_participacion_cuota);
+            
+            if($fc_semanal_participacion_cuota>100 || $fc_semanal_participacion_cuota<0)
+            $fc_semanal_resultado='NO TIENE CAPACIDAD';
+            else if($fc_semanal_participacion_cuota>50)
+            $fc_semanal_resultado='POCA CAPACIDAD';
+            else
+            $fc_semanal_resultado='CAPACIDAD PERMITIDA SEGUN PARAMETRO';
+            \Log::alert("FLUJO PARA CREDITOS DIARIOS RESULTADO: ".$fc_semanal_resultado);        
+        }
 
         
         $resultado_cuantitativa= new ResultadoCuantitativa;
@@ -637,18 +642,33 @@ class EvaluacionesController extends Controller
         $resultado_cuantitativa->gasto_hogar_conyuge=$gasto_hogar_conyuge;
         $resultado_cuantitativa->gasto_hogar_total=$gasto_hogar_total;
         $resultado_cuantitativa->gasto_hogar_validacion=$gasto_hogar_validacion;
-        $resultado_cuantitativa->utilidad_titular=$utilidad_titular;
-        $resultado_cuantitativa->utilidad_conyuge=$utilidad_conyuge;
-        $resultado_cuantitativa->utilidad_total=$utilidad_total;
-        $resultado_cuantitativa->utilidad_validacion=$utilidad_validacion;
+
+        $resultado_cuantitativa->gasto_financiero_personal_titular=$gasto_financiero_personal_titular;
+        $resultado_cuantitativa->gasto_financiero_personal_conyuge=$gasto_financiero_personal_conyuge;
+        $resultado_cuantitativa->gasto_financiero_personal_total=$gasto_financiero_personal_total;
+        $resultado_cuantitativa->gasto_financiero_personal_validacion=$gasto_financiero_personal_validacion;
+
+        $resultado_cuantitativa->utilidad_neta_negocio_titular=$utilidad_neta_negocio_titular;
+        $resultado_cuantitativa->utilidad_neta_negocio_conyuge=$utilidad_neta_negocio_conyuge;
+        $resultado_cuantitativa->utilidad_neta_negocio_total=$utilidad_neta_negocio_total;
+        $resultado_cuantitativa->utilidad_neta_negocio_validacion=$utilidad_neta_negocio_validacion;
+
+        $resultado_cuantitativa->disponible_titular=$disponible_titular;
+        $resultado_cuantitativa->disponible_conyuge=$disponible_conyuge;
+        $resultado_cuantitativa->disponible_total=$disponible_total;
+        $resultado_cuantitativa->disponible_validacion=$disponible_validacion;
+
         $resultado_cuantitativa->cuota_institucion_titular=$cuota_institucion_titular;
         $resultado_cuantitativa->cuota_institucion_conyuge=$cuota_institucion_conyuge;
         $resultado_cuantitativa->cuota_institucion_total=$cuota_institucion_total;
         $resultado_cuantitativa->cuota_institucion_validacion=$cuota_institucion_validacion;
-        $resultado_cuantitativa->utilidad_desp_cuota_titular=$utilidad_desp_cuota_titular;
-        $resultado_cuantitativa->utilidad_desp_cuota_conyuge=$utilidad_desp_cuota_conyuge;
-        $resultado_cuantitativa->utilidad_desp_cuota_total=$utilidad_desp_cuota_total;
-        $resultado_cuantitativa->utilidad_desp_cuota_validacion=$utilidad_desp_cuota_validacion;
+
+        
+        // utilidad desp cuota
+        $resultado_cuantitativa->utilidad_desp_cuota_titular=$disponible_desp_cuota_titular;
+        // $resultado_cuantitativa->utilidad_desp_cuota_conyuge=$disponible_desp_cuota_conyuge;
+        $resultado_cuantitativa->utilidad_desp_cuota_total=$disponible_desp_cuota_total;
+        $resultado_cuantitativa->utilidad_desp_cuota_validacion=$disponible_desp_cuota_validacion;
         //Balance
         $resultado_cuantitativa->balance_activo_caja=$balance_activo_caja;
         $resultado_cuantitativa->balance_activo_inventario=$balance_activo_inventario;

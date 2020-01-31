@@ -713,7 +713,7 @@ export default {
             "Exitoso",
             this.notificationSystem.options.success
           ) 
-            // this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
+            this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
       });
     }, 
     seleccionColegiosCosto(index) {
