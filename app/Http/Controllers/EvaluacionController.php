@@ -29,25 +29,65 @@ class EvaluacionController extends Controller
     }
 
 
-    public function prestamos()
+    public function prestamos(Request $request)
     {
-        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '3' || Auth::user()->idrol == '4'){
+        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '3' || Auth::user()->idrol == '4' ||  Auth::user()->idrol == '5'){
             $prestamo = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
             ->join('naturals','clientes.id',"=","naturals.clientes_id")
-            ->select('clientes.documento','naturals.nombres','naturals.apellidos','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.created_at','prestamos.id')->get();
-
-                $usuario = Auth::user()->id; 
+            ->select('clientes.documento','naturals.nombres','naturals.apellidos','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
+            ->where('clientes.documento', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('naturals.nombres', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('naturals.apellidos', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('prestamos.producto', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('prestamos.estado', 'LIKE', "%{$request->search_input}%")
+            ->get();
                 $rol =  Auth::user()->idrol;
-
                 return compact('prestamo','usuario','rol');
         }
         
         elseif(Auth::user()->idrol == '2'){
             $prestamo = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
             ->join('naturals','clientes.id',"=","naturals.clientes_id")
-            ->select('clientes.documento','naturals.nombres','naturals.apellidos','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.created_at','prestamos.id')
-            ->where('prestamos.users_id',Auth::user()->id)->get();
+            ->select('clientes.documento','naturals.nombres','naturals.apellidos','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
+            // ->where('prestamos.users_id',Auth::user()->id)
+            ->orwhere('clientes.documento', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('naturals.nombres', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('naturals.apellidos', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('prestamos.producto', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('prestamos.estado', 'LIKE', "%{$request->search_input}%")
+            ->get();
+                $usuario = Auth::user()->id; 
+                $rol =  Auth::user()->idrol;
+                return compact('prestamo','usuario','rol');
+        }
 
+    }
+
+    public function prestamosJuridico(Request $request)
+    {
+        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '3' || Auth::user()->idrol == '4' ||  Auth::user()->idrol == '5'){
+            $prestamo = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
+            ->join('juridicos','clientes.id',"=","juridicos.clientes_id")
+            ->select('clientes.documento','juridicos.razon_social','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
+            ->where('clientes.documento', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('juridicos.razon_social', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('prestamos.producto', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('prestamos.estado', 'LIKE', "%{$request->search_input}%")
+            ->get();
+                $rol =  Auth::user()->idrol;
+                return compact('prestamo','usuario','rol');
+        }
+        
+        elseif(Auth::user()->idrol == '2'){
+            $prestamo = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
+            ->join('juridicos','clientes.id',"=","juridicos.clientes_id")
+            ->select('clientes.documento','juridicos.razon_social','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
+            // ->where('prestamos.users_id',Auth::user()->id)
+            ->orwhere('clientes.documento', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('juridicos.razon_social', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('prestamos.producto', 'LIKE', "%{$request->search_input}%")
+            ->orWhere('prestamos.estado', 'LIKE', "%{$request->search_input}%")
+            ->get();
                 $usuario = Auth::user()->id; 
                 $rol =  Auth::user()->idrol;
                 return compact('prestamo','usuario','rol');

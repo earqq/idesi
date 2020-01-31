@@ -4,8 +4,8 @@
     <div class="options_bar">
       <div class="search_bar">
         <i class="material-icons-outlined">search</i>
-        <input type="text" placeholder="Buscar Prestamos">
-        <select >
+        <input type="text" placeholder="Buscar Prestamos"  v-model="search_input" @input="methodsPrestamo">
+        <select v-model="tipo_persona" @change="getType()">
           <option value="PN">Persona Natural</option>
           <option value="PJ">Persona Juridica</option>
         </select>
@@ -18,7 +18,7 @@
           <i class="material-icons-outlined">notes</i>
         </a>
       </div>
-    </div>
+    </div> 
 
     <div class="table_container">
 
@@ -27,9 +27,9 @@
           <div class="client">
             <div class="avatar">
               <img src="https://picsum.photos/100/100" v-if="false"/>
-              <div class="avatar_alt" v-else> {{prestamo.apellidos.substring(0,1)}} </div>
+              <div class="avatar_alt" v-else> {{prestamo.apellidos?prestamo.apellidos.substring(0,1):prestamo.razon_social.substring(0,1) }} </div>
             </div>
-            <p class="card-document">{{prestamo.nombres}} {{prestamo.apellidos}}</p>
+            <p class="card-document">{{prestamo.nombres}} {{prestamo.apellidos || prestamo.razon_social}}</p>
           </div>
           <div class="detail">
             <h2> {{prestamo.producto}} </h2>
@@ -42,24 +42,21 @@
           <div class="actions">
             
             <router-link class="credit_link"  :to="{name:'/ver/prestamo/', params:{prestamo:prestamo.id}}"> VER PRESTAMO</router-link>
+            <a class="credit_link" v-if="id_rol==5 && prestamo.estado=='APROBADO'" @click="entregarPrestamos(prestamo.id)"> ENTREGAR</a>
 
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
-                <li v-if="prestamo.estado=='PENDIENTE' && (id_rol=='3' || id_rol=='4')">
-                  <router-link v-if="evalaucionEcho(prestamo.id)==0" :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol}}" >
-                    Evaluación
-                  </router-link>
-                  <router-link v-else :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol}}" >
-                    Evaluación
-                  </router-link>
+                <li v-if="id_rol==2"> 
+                  <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id}}"> Editar </router-link>
+                  <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                 </li>
-                <li  v-else>
-                  <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id,rol:id_rol}}" >
-                    Evaluación
-                  </router-link>
-                </li>  
-              </ul>   
+                <li v-if="prestamo.cualitativa=='0' && id_rol=='2'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id,documento:prestamo.documento,persona:tipo_persona}}" >E. Cualitativa</router-link> </li>
+                <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1' && id_rol=='2' "> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id,documento:prestamo.documento,persona:tipo_persona}}" >E. Cuantitativa</router-link> </li>
+                <li> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}"  >Evaluación</router-link></li>
+                <li> <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
+              </ul>
+
             </div>
           </div>
           
@@ -85,9 +82,9 @@
               <td class="client">
                 <div class="avatar">
                   <img src="https://picsum.photos/100/100" v-if="false" />
-                  <div class="avatar_alt" v-else>  {{prestamo.apellidos.substring(0,1)}} </div>              
+                  <div class="avatar_alt" v-else>  {{prestamo.apellidos?prestamo.apellidos.substring(0,1):prestamo.razon_social.substring(0,1) }} </div>              
                 </div>
-                <p> {{prestamo.nombres}} {{prestamo.apellidos}}</p>
+                <p> {{prestamo.nombres}} {{prestamo.apellidos || prestamo.razon_social}}</p>
               </td>
               <td> {{prestamo.producto}} </td>
               <td> S/ {{prestamo.importe}}</td>
@@ -101,17 +98,17 @@
               <td class="options" >
                 <i class="material-icons-outlined" >more_horiz</i>
                 <ul>
-                  <li v-if="prestamo.estado=='PENDIENTE' && (id_rol=='3' || id_rol=='4') ">
-                    <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
-                      Evaluación
-                    </router-link>
+                  <li v-if="id_rol==2"> 
+                    <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id}}"> Editar </router-link>
+                    <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                   </li>
-                  <li  v-else>
-                    <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}" >
-                      Ver Evaluación
-                    </router-link>
-                  </li> 
-                </ul> 
+                  <li v-if="prestamo.cualitativa=='0' && id_rol=='2'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id,documento:prestamo.documento,persona:tipo_persona}}" >E. Cualitativa</router-link> </li>
+                  <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1' && id_rol=='2' "> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id,documento:prestamo.documento,persona:tipo_persona}}" >E. Cuantitativa</router-link> </li>
+                  <li> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}"  >Evaluación</router-link></li>
+                  <li> <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
+                  <li v-if="id_rol==5 && prestamo.estado=='APROBADO'" @click="entregarPrestamos(prestamo.id)" >  Entregar Prestamo</li>
+                  
+                </ul>
               </td>
             </tr>
           </tbody>
@@ -128,7 +125,9 @@ export default {
   data() {
     return {
       resource: "evaluaciones", 
-      prestamos: [], 
+      prestamos: [],
+      search_input: "",
+      tipo_persona: 'PN',
       id_usuario: 0 ,
       id_rol:0,
       type_list: 0
@@ -138,13 +137,41 @@ export default {
     await this.methodsPrestamo();
   },
   methods: {
+    entregarPrestamos(id){
+      this.$http
+        .get(`/clientes/entregarPrestamo/` + id)
+        .then(response => {
+
+        });
+    },
     methodsPrestamo() {
-      this.$http.get(`/${this.resource}/prestamos/`).then(response => {
-        this.prestamos = response.data.prestamo;
-        this.id_usuario = response.data.usuario;
-        this.id_rol = response.data.rol;
-        console.log(response.data);
-      });
+            this.prestamos= [];
+              if(this.tipo_persona=='PN'){
+                return this.$http 
+                .get(
+                  `/${this.resource}/prestamos?search_input=${this.search_input}`
+                )
+                .then(response => {
+                  this.prestamos = response.data.prestamo;
+                  this.id_rol = response.data.rol;
+                  console.log(response.data);
+                })
+
+              }else{
+                return this.$http 
+                .get(
+                  `/${this.resource}/prestamosJuridicos?search_input=${this.search_input}`
+                )
+                .then(response => {
+                  this.prestamos = response.data.prestamo;
+                  this.id_rol = response.data.rol;
+                  console.log(response.data);
+                })
+              }
+
+    },
+    getType(){
+      this.methodsPrestamo()
     },
     evalaucionEcho(prestamo){
       this.$http.get(`/${this.resource}/veridicarEvaluacion/`+ prestamo).then(response => {

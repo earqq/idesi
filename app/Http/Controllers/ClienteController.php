@@ -37,38 +37,33 @@ use Illuminate\Support\Facades\Storage;
 
 class ClienteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
-        // if(!$request->ajax()) return redirect('/clientes');
-        // $pretamos = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
-        // ->select('clientes.nombres','clientes.apellidos','prestamos.estado','prestamos.id')->get();
-
-        if(Auth::user()->id == '1'){
 
 
+        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '5'){
 
             $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
-              ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular')
+              ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular','naturals.direccion_cliente')
               ->where('clientes.documento', 'LIKE', "%{$request->search_input}%")
               ->orWhere('naturals.nombres', 'LIKE', "%{$request->search_input}%")
               ->orWhere('naturals.apellidos', 'LIKE', "%{$request->search_input}%")
               ->orderBy('clientes.id','desc')
               ->paginate(10);
-            return $clientes;
+
+            $rol=  Auth::user()->idrol;
+            return compact('clientes','rol');
 
         }
         else{
             $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
-              ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular')
+              ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular','naturals.direccion_cliente')
               ->orderBy('clientes.id','desc')
               ->where('users_id','=',Auth::user()->id)
               ->paginate(10);
-            return $clientes;
+              $rol=  Auth::user()->idrol;
+              return compact('clientes','rol');
         }
 
     }
@@ -76,24 +71,26 @@ class ClienteController extends Controller
 
     public function indexJuridico(Request $request)
     {
-        if(Auth::user()->id == '1'){
+        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '5'){
 
             $clientes = Cliente::join('juridicos','clientes.id','=','juridicos.clientes_id')
-              ->select('clientes.documento', 'juridicos.razon_social', 'juridicos.celular')
+              ->select('clientes.documento', 'juridicos.razon_social', 'juridicos.celular','juridicos.direccion')
               ->where('juridicos.razon_social', 'LIKE', "%{$request->search_input}%")
               ->orWhere('clientes.documento', 'LIKE', "%{$request->search_input}%")
               ->orderBy('clientes.id','desc')
               ->paginate(10);
-            return $clientes;
+              $rol=  Auth::user()->idrol;
+              return compact('clientes','rol');
 
         }
         else{
             $clientes = Cliente::join('juridicos','clientes.id','=','juridicos.clientes_id')
-              ->select('clientes.documento','juridicos.razon_social', 'juridicos.celular')
+              ->select('clientes.documento','juridicos.razon_social', 'juridicos.celular','juridicos.direccion')
               ->orderBy('clientes.id','desc')
               ->where('users_id','=',Auth::user()->id)
               ->paginate(10);
-            return $clientes;
+              $rol=  Auth::user()->idrol;
+              return compact('clientes','rol');
         }
 
     }
@@ -1128,6 +1125,13 @@ class ClienteController extends Controller
         }
 
 
+    }
+
+
+    public function entregarPrestamo($prestamo)
+    {
+        return "asdasdasdsa";
+        
     }
 
     public function AdjuntarPdf($prestamo){

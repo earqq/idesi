@@ -5,21 +5,21 @@
                 <div class="number_item n1">
                     <i class="material-icons-outlined"> swap_horiz </i>
                     <div class="stat">
-                        <h1>150</h1>
+                        <h1 v-text="prestamo_total"></h1>
                         <p>Prestamos Totales</p>
                     </div>
                 </div>
                 <div class="number_item n2">
                     <i class="material-icons-outlined"> shuffle </i>
                     <div class="stat">
-                        <h1>10</h1>
+                        <h1 v-text="prestamo_rechazado"></h1>
                         <p>Prestamos Rechazados</p>
                     </div>
                 </div>
                 <div class="number_item n3">
                     <i class="material-icons-outlined"> person </i>
                     <div class="stat">
-                        <h1>25</h1>
+                        <h1 v-text="cliente"></h1>
                         <p>Clientes Totales</p>
                     </div>
                 </div>
@@ -35,14 +35,14 @@
                 <div class="list_client">
                     <h2 class="title"> Nuevo Clientes </h2>
                     <ul class="list_client_wrapper">
-                        <li v-for="i in 7" :key="i">
+                        <li v-for="cliente in clientes" :key="cliente.id">
                             <div class="avatar">
                                 <img src="https://picsum.photos/200/300" v-if="false"/>
                                 <div class="avatar_alt" v-else> c </div>
                             </div>
                             <div class="name">
-                                <h1 class="truncate"> Chagua Ramos Omar Benjamin  </h1>
-                                <p>71562539</p>
+                                <h1 class="truncate" v-text="cliente.nombres+' '+cliente.apellidos"> </h1>
+                                <p v-text="cliente.documento"></p>
                             </div>
                         </li>
                     </ul>
@@ -95,6 +95,12 @@ import { STYLES_MAP } from '../constants'
 export default {
     data () {
         return {
+            clientes: [],
+            prestamos:[],
+            cliente: 0,
+            prestamo_rechazado: 0,
+            prestamo_total: 0,
+            prestamo_prendiente: 0,
             optionsMap: {
                 styles: STYLES_MAP,
                 zoomControl: false,
@@ -159,9 +165,21 @@ export default {
                 }
             ]
         }
-    }
+    },
+    mounted() {
+      this.$http
+        .get(`/inicio/datos/`)
+        .then(response => {
+        this.clientes = response.data["clientes"];
+        this.cliente = response.data["cliente"];
+        this.prestamos = response.data["prestamos"];
+        this.prestamo_rechazado = response.data['prestamo_rechazado'];
+        this.prestamo_total = response.data['prestamo_total'];
+        this.prestamo_pendiente = response.data['prestamo_pendiente'];
+        });
+    },
 }
-</script>
+</script> 
 <style lang="sass" scoped>
 @import "../../sass/_variables"
 .dashboard_content

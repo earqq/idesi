@@ -20,13 +20,13 @@
           </a>
         </div>
  
-        <router-link  class="add_client button_primary medium" :to="{name:'registrar/natural'}"  v-if="form.tipo_persona=='PN'">
+        <router-link  class="add_client button_primary medium" :to="{name:'registrar/natural'}"  v-if="form.tipo_persona=='PN' && rol!='5'">
           <span>
             CREAR CLIENTE
           </span>
           <i class="material-icons-outlined">add</i>
         </router-link>
-        <router-link class="add_client button_primary medium" :to="{name:'registrar/juridico'}"  v-if="form.tipo_persona=='PJ'">
+        <router-link class="add_client button_primary medium" :to="{name:'registrar/juridico'}"  v-if="form.tipo_persona=='PJ' && rol!='5' ">
           <span>
             CREAR CLIENTE
           </span>
@@ -71,7 +71,7 @@
                 <th>Cliente</th>
                 <th>Celular</th>
                 <th>Documento</th>
-                <th>Negocio</th>
+                <th>Dirección</th>
                 <th class="options">Opciones</th>
               </tr>
             </thead>
@@ -85,11 +85,11 @@
                   <p> {{cliente.nombres}} {{cliente.apellidos || cliente.razon_social}}</p>
                 </td>
                 <td>
-                  971755982
+                  {{cliente.celular || '--'}}
                 </td>
                 <td> {{cliente.documento}} </td>
                 <td>
-                  Tienda de Ropa
+                  {{cliente.direccion_cliente || cliente.direccion || '--'}}
                 </td>
                 <td class="options" >
                   <i class="material-icons-outlined" >more_horiz</i>
@@ -133,6 +133,7 @@ export default {
       search_input: "",
       last_page: 1,
       form: {},
+      rol: 0,
       notificationSystem: {
         options: {
           success: {
@@ -174,7 +175,9 @@ export default {
           `/${this.resource}/listado?search_input=${this.search_input}`
         )
         .then(response => {
-          this.clientes = response.data.data
+          console.log(response.data['clientes'].data)
+          this.clientes = response.data['clientes'].data
+          this.rol = response.data['rol']
         })
       }else{
         return this.$http 
@@ -182,7 +185,7 @@ export default {
           `/${this.resource}/listado/juridico?search_input=${this.search_input}`
         )
         .then(response => {
-          this.clientes = response.data.data;
+          this.clientes = response.data['clientes']
         })
       }
     },

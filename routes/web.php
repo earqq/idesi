@@ -38,6 +38,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::put('/user/actualizar', 'UserController@update');
         Route::put('/user/desactivar', 'UserController@desactivar');
         Route::put('/user/activar', 'UserController@activar');
+
+        Route::get('/inicio/datos', 'InicioController@index');
         
 
         Route::get('/rol/selectRol', 'RolController@selectRol');
@@ -50,6 +52,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('clientes/nuevo/juridico', 'ClienteController@storeJuridico');
         Route::get('clientes/datos', 'ClienteController@datos');
         Route::get('clientes/datos/prestamo/{documento}', 'ClienteController@general');
+        Route::get('clientes/entregarPrestamo/{prestamo}', 'ClienteController@entregarPrestamo');
         Route::get('clientes/datos/prestamo/juridico/{documento}', 'ClienteController@generalJuridico');
         Route::get('clientes/perfil/cliente/{documento}', 'ClienteController@showCliente');
         Route::get('clientes/perfil/juridico/cliente/{documento}', 'ClienteController@showClienteJuridico');
@@ -74,6 +77,7 @@ Route::group(['middleware'=>['auth']],function(){
 
  
         Route::get('evaluaciones/prestamos', 'EvaluacionController@prestamos');
+        Route::get('evaluaciones/prestamosJuridicos', 'EvaluacionController@prestamosJuridico');
         Route::get('evaluaciones/veridicarEvaluacion/{prestamo}', 'EvaluacionController@verificarPrestamo');
         Route::get('evaluaciones/prestamos/detalle/{prestamo}', 'EvaluacionController@show');
         Route::get('evaluaciones/prestamos/detalleF/{prestamo}', 'EvaluacionController@showF');
