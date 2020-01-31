@@ -70,10 +70,11 @@
                 </div>
 
             </form>
-            <button type="button" v-if="tipoAccion==1" class="button_primary medium" @click="registrarPersona()">
+            <button type="button" v-if="tipoAccion==1" class="button_primary medium" :class="{loading: loading}" @click="registrarPersona()">
               <span>
               REGISTRAR
               </span>
+              <div class="load_spinner"></div>
             </button>
             <button type="button" v-if="tipoAccion==2" class="button_primary medium" @click="actualizarPersona()">
               <span>ACTUALIZAR</span> 
@@ -210,7 +211,7 @@
                 offset : 3,
                 criterio : 'name',
                 buscar : '',
-                loading: true,
+                loading: false,
                 loaderCargaPagina: 0,
                 notificationSystem: {
                     options: {
@@ -293,6 +294,8 @@
                 me.listarPersona(page,buscar,criterio);
             },
             registrarPersona (){
+
+                this.loading=true
                 if (this.validarPersona()){
                     return;
                 }
@@ -309,6 +312,7 @@
 
                 }).then( response => {
                     this.flagModalUser = false
+                    this.loading=false
                     this.listarPersona(1,'','name');
                 }).catch( error => {
                     console.log(error);
