@@ -715,11 +715,11 @@ export default {
       });
     }, 
     seleccionColegiosCosto(index) {
-      this.$http
+      this.$http 
         .get(
           `/evaluaciones/colegio/costo?grado=` +
             this.evaluacion.familiar.hijos[index].grado +
-            `&colegio=` +
+            `&colegio=` + 
             this.evaluacion.familiar.hijos[index].colegio
         )
         .then(response => {
