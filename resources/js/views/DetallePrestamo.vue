@@ -143,7 +143,7 @@
                       </td>
                       <td class="place_photo">
                         <i class="material-icons-outlined">place</i>
-                        <p>Huanuco, Huanuco, Amarilis </p>
+                        <p> {{visita.latitud}} , {{visita.altitud}}</p>
                         <!-- <GmapMap
                           :center="{lat:  Number(visita.latitud), lng: Number(visita.altitud) }"
                           :zoom="15"
