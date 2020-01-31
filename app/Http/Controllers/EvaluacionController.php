@@ -42,7 +42,7 @@ class EvaluacionController extends Controller
             ->orWhere('prestamos.estado', 'LIKE', "%{$request->search_input}%")
             ->get();
                 $rol =  Auth::user()->idrol;
-                return compact('prestamo','usuario','rol');
+                return compact('prestamo','rol');
         }
         
         elseif(Auth::user()->idrol == '2'){
@@ -58,7 +58,7 @@ class EvaluacionController extends Controller
             ->get();
                 $usuario = Auth::user()->id; 
                 $rol =  Auth::user()->idrol;
-                return compact('prestamo','usuario','rol');
+                return compact('prestamo','rol');
         }
 
     }

@@ -185,7 +185,7 @@ export default {
           `/${this.resource}/listado/juridico?search_input=${this.search_input}`
         )
         .then(response => {
-          this.clientes = response.data['clientes']
+          this.clientes = response.data['clientes'].data
         })
       }
     },
