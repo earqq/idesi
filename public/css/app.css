@@ -18799,6 +18799,7 @@ readers do not read off random characters that represent icons */
   background-color: white;
   padding: 0 10px;
   width: 100%;
+  display: block;
 }
 
 .input_wrapper input:disabled,

@@ -68,9 +68,10 @@
                     </div>
                   </div>
                   <div class="group_form all">
-                    <div class="input_wrapper">
+                    <div class="input_wrapper" :class="{require: !validateDestinoCredito}">
                       <label>Descripcion destino</label>
-                      <textarea  v-model="evaluacion.principal.destino_credito_descripcion" :class="{validateFrom: validateDestinoCredito}"></textarea>
+                      <textarea  v-model="evaluacion.principal.destino_credito_descripcion" ></textarea>
+                      <div class="message">asdasd</div>
                     </div>
                   </div>
                 </div>
