@@ -584,7 +584,8 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click.prevent="submit()">
+            <a class="button_primary medium next" @click.prevent="submit()" :class="{loading: loading}">
+              <div class="load_spinner"></div>
               <span>FINALIZAR</span>
               <i class="material-icons-outlined">check</i>
             </a>
@@ -614,7 +615,7 @@ export default {
       districts: [],
       errors: {},
       tab: 1,
-      loading_submit: 0,
+      loading: false,
       form: {},
       contador_aval: 0,
       contador_garantia: 0, 
@@ -883,10 +884,13 @@ export default {
     },
     submit() {
 
+      this.loading=true
 
       this.$http
         .post(`/${this.resource}/prestamo`, this.form)
         .then(response => {
+
+          this.loading=false
           this.$toast.success(
             "El prestamo fue actualizado",
             "Exitoso",

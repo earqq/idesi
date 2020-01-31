@@ -541,7 +541,8 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click.prevent="submit()">
+            <a class="button_primary medium next" @click.prevent="submit()" :class="{loading: loading}">
+              <div class="load_spinner"></div>
               <span>FINALIZAR</span>
               <i class="material-icons-outlined">check</i>
             </a>
@@ -567,7 +568,7 @@ export default {
     return {
       resource: "clientes",
       tab: 1,
-      loading_submit:0,
+      loading:0,
       errors: {},
       form: {},
     };
@@ -823,18 +824,19 @@ export default {
         });
     },
     submit() {
- 
+      
+      this.loading = true
       this.$http
         .post(`/${this.resource}/prestamo/juridico`, this.form)
         .then(response => {
-          
+
+            this.loading = false
             if(response.data.success){
                 this.$toast.success(
                     "El prestamo fue editado",
                     "Exitoso",
                     toastOptions.success
-                  )
-                 this.clearForm(); 
+                  ) 
                  this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, persona: 'PJ' }})
             }else{
                 this.$toast.error(

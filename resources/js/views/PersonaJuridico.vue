@@ -463,7 +463,8 @@ mixins: [serviceNumber],
             })
             .then(function(response) {          
               if(response.data){
-                person.nombres=response.data.nombres
+                person.nombres=response.data.nombres +' '+response.data.apellido_paterno  +' '+ response.data.apellido_materno
+                console.log(response.data)
               }
             })
             .catch(function(error) {

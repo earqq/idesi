@@ -592,11 +592,6 @@
                 <div class="group_form">
 
                   <div class="input_wrapper">
-                    <label>Apellidos y Nombres (Representate)  </label>
-                    <input type="text" :maxlength="45" v-model="form.adicional.representante" >
-                  </div>
-
-                  <div class="input_wrapper">
                     <label>Tipo de Documento</label>
                     <select v-model="form.adicional.documento" >
                       <option value="DNI">DNI</option>
@@ -607,8 +602,13 @@
 
                   <div class="input_wrapper">
                     <label for="documento">Número</label>
-                    <input type="text" :maxlength="15" v-model="form.adicional.numero" />
+                    <input type="text" :maxlength="15" v-model="form.adicional.numero" @change="datosAdicional" />
                   </div>
+                  
+                  <div class="input_wrapper">
+                    <label>Apellidos y Nombres (Representate)  </label>
+                    <input type="text" :maxlength="45" v-model="form.adicional.representante" >
+                  </div> 
 
                   <div class="input_wrapper">
                       <label>Relación con el solicitante</label>
@@ -933,7 +933,7 @@ export default {
 
     },
     resetForm() {
-      this.initForm();
+      // this.initForm();
     },
     datosCliente() {
       let me = this;
@@ -945,11 +945,31 @@ export default {
           if(response.data){
             me.form.natural.nombres = response.data["nombres"];
             me.form.natural.apellidos = response.data["surnames"];
+
+            // this.submit()
           }
         })
         .catch(function(error) {
           console.log(error);
-          me.initForm();
+          // me.initForm();
+        });
+    },
+    datosAdicional() {
+      let me = this;
+      axios
+        .post("/consulta/doc", {
+          documento: this.form.adicional.numero
+        })
+        .then(function(response) {          
+          if(response.data){
+            me.form.adicional.representante= response.data["nombres"] +' '+ response.data["surnames"];
+
+            // this.submit()
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+          // me.initForm();
         });
     },
     datosFamiliar(index,document) {
@@ -966,7 +986,7 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-          me.initForm();
+          // me.initForm();
         });
       }
     },
@@ -987,7 +1007,7 @@ export default {
               this.$router.push({ name: 'clientes'})
             }else{
                 this.$toast.error(
-                  "Error en Regsitro",
+                  "Documento ya existe",
                   "Error",
                   toastOptions.error
                 )
