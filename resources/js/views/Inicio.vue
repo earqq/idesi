@@ -33,8 +33,19 @@
             </article>
             <article class="lists">
                 <div class="list_client">
-                    <h2 class="title"> Nuevo Clientes </h2>
-                    <ul class="list_client_wrapper">
+                    <div class="empty_message" v-if="clientes.length==0">
+                        <img src="img/empty.svg" >
+                        <h1> No se Encontraron Clientes </h1>
+                        <p>Registra un nuevo cliente para continuar.</p>
+                        <router-link  class="add_client button_primary small" :to="{name:'registrar/natural'}" >
+                            <span>
+                            CREAR CLIENTE
+                            </span>
+                            <i class="material-icons-outlined">add</i>
+                        </router-link>
+                    </div>
+                    <h2 class="title" v-if="!clientes.length==0"> Nuevo Clientes </h2>
+                    <ul class="list_client_wrapper" v-if="!clientes.length==0">
                         <li v-for="cliente in clientes" :key="cliente.id">
                             <div class="avatar">
                                 <img src="https://picsum.photos/200/300" v-if="false"/>
@@ -48,9 +59,20 @@
                     </ul>
                 </div>
                 <div class="list_credits">
-                    <h2 class="title"> Ultimos Prestamos </h2>
-                    <div class="table_wrapper">
-                        <table class="table_credits ">
+                    <div class="empty_message" v-if="true">
+                        <img src="img/empty_2.svg" >
+                        <h1> No se Encontraron Prestamos </h1>
+                        <p>Registra un nuevo cliente para crear prestamos.</p>
+                        <router-link  class="add_client button_primary small" :to="{name:'registrar/natural'}" >
+                            <span>
+                            CREAR CLIENTE
+                            </span>
+                            <i class="material-icons-outlined">add</i>
+                        </router-link>
+                    </div>
+                    <h2 class="title" v-if="false"> Ultimos Prestamos </h2>
+                    <div class="table_wrapper "  v-if="false">
+                        <table class="table_credits no_hover">
                             <thead>
                                 <tr>
                                     <th>Cliente</th>
@@ -60,7 +82,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="i in 7" :key="i">
+                                <tr v-for="i in 4" :key="i">
                                     <td class="client">
                                         <div class="avatar">
                                         <img src="https://picsum.photos/100/100" v-if="false" />
@@ -268,9 +290,14 @@ export default {
                 box-shadow: $shadow
                 height: 100%
                 border: 1px solid $line_color
+                .empty_message
+                    height: 100% 
             .list_credits
                 grid-column: 2 / 2 span
                 table
+                    &.no_hover 
+                        tbody:hover tr
+                            background-color: inherit
                     thead, tbody
                         tr
                             margin-bottom: 0px
@@ -280,7 +307,6 @@ export default {
                     tbody
                         tr:last-child
                             border-radius: 0
-                            border-bottom: 0
                         .client
                             .avatar
                                 .avatar_alt
@@ -329,8 +355,6 @@ export default {
                         border-bottom: 1px solid $line_color
                         box-sizing: border-box 
                         padding: 0 20px
-                        &:last-child
-                            border-bottom: none                            
                         .avatar
                             margin-right: 10px
                             .avatar_alt

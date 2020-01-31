@@ -69,7 +69,7 @@
     </aside>
 
     <div class="empty_message" v-if="prestamos.length==0">
-      <img src="img/empty.svg" >
+      <img src="img/empty_2.svg" >
       <h1> Sin Prestamos Registrados </h1>
       <p>Todavía no se han registrado ningun prestamo a este cliente.</p>
       <router-link  v-if="tipo_persona=='PN' && cliente.estado=='1' && id_rol!='5'"  class="button_primary small" :to="{name: 'prestamo', params:{dni:cliente.documento}}">

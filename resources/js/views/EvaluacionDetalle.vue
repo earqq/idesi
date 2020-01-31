@@ -777,7 +777,6 @@ export default {
         p
           margin: 0
           font-size: 12px
-          width: 220px
           text-align: center
           line-height: 1.4
       table

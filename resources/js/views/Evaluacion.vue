@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="empty_message" v-if="prestamos.length==0">
-      <img src="img/empty.svg" >
+      <img src="img/empty_2.svg" >
       <h1> No se Encontraron Prestamos </h1>
       <p>Registra un nuevo cliente para crear prestamos.</p>
       <router-link  class="add_client button_primary small" :to="{name:'registrar/natural'}" >
