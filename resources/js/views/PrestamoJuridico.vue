@@ -35,7 +35,7 @@
             <h3 class="title">Solicitud de Crédito</h3>
             <div class="form_content">
               <div class="group_form">
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateMonto}">
                   <label>Monto</label>
                   <vue-numeric  currency="S/. " separator="," v-model="form.monto_inicial" v-bind:precision="2"></vue-numeric>
                 </div>
@@ -52,13 +52,18 @@
                   <label>Plazo</label>
                   <input type="number" v-model="form.plazo_inicial"  />
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
                   <label>Disponibilidad de pago</label>
-                  <input type="text" v-model="form.disponibilidad_pago_inicial"  />
+                  <vue-numeric
+                    currency="S/. "
+                    separator=","
+                    v-model="form.disponibilidad_pago_inicial" 
+                    v-bind:precision="2"
+                  ></vue-numeric>  
                 </div>
               </div>
               <div class="group_form all">
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateDestino}">
                   <label>Destino de crédito (propuesta cliente)</label>
                   <textarea v-model="form.destino_inicial"  />
                 </div>
@@ -556,30 +561,13 @@
 </template>
 
 <script>
-import { serviceNumber } from "../mixins/functions";
-import DatePick from "vue-date-pick";
-import "vue-date-pick/dist/vueDatePick.css";
+import { serviceNumber } from "../mixins/functions"; 
 import VueNumeric from 'vue-numeric'
+ import { toastOptions } from '../constants.js'
 
-
-const mesConf = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio", 
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre"
-];
-const diaConf = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"];
 export default {
   mixins: [serviceNumber],
-  components: { DatePick,VueNumeric },
+  components: {VueNumeric },
   data() {
     return {
       resource: "clientes",
@@ -590,38 +578,21 @@ export default {
       districts: [],
       errors: {},
       form: {},
-      tab: 1,
-      contador_aval: 0,
-      contador_garantia: 0,
-      mesEs: mesConf,
-      diaEs: diaConf,
-      notificationSystem: {
-        options: {
-          success: {
-            position: "topRight"
-          },
-          error: {
-            position: "topRight"
-          }
-        }
-      }
+      tab: 1
     };
   },
     computed: {
-    validateName() {
-      // return this.form.natural.nombres.length > 2
+    validateMonto() {
+      return String(this.form.monto_inicial).length > 1
     },
-    validateLastname() {
-      // return this.form.natural.apellidos.length > 2
+    validateDiponibilidad() {
+      return String(this.form.disponibilidad_pago_inicial).length > 1
     },
-    validateDoc() {
-      let result = false;
-      // if (this.form.cliente.tipo_documento == 'DNI') result = this.form.cliente.documento.length == 8
-      // else if (this.form.cliente.tipo_documento == 'CE') result = this.form.cliente.documento.length == 11
-      return result;
+    validateDestino() {
+      return this.form.destino_inicial.length > 6
     },
     validateStep1() {
-      return this.validateDoc && this.validateName && this.validateLastname;
+      return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
     }
   },
   created() {
@@ -841,15 +812,22 @@ export default {
         .post(`/${this.resource}/prestamo/juridico`, this.form)
         .then(response => {
           this.clearForm();
-          this.$toast.success(
-            "El prestamo fue creado",
-            "Exitoso",
-            this.notificationSystem.options.success
-          );
-           this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, persona: 'PJ' }})
+            if(response.data.success){
+                this.$toast.success(
+                    "El prestamo fue creado",
+                    "Exitoso",
+                    toastOptions.success
+                  )
+                  this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, persona: 'PJ' }})
+            }else{
+                this.$toast.error(
+                  "El prestamo fue creado",
+                  "Error",
+                  toastOptions.error
+                )
+            }
         })
-        .then(() => {
-          // this.loading_submit = false;
+        .then(() => { 
         });
     },
  

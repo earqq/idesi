@@ -37,15 +37,13 @@
             <div class="form_content">
               <div class="group_form">
                 <div class="input_wrapper" :class="{require: !validateMonto}">
-                  <label>Monto</label>
-                  <p>{{String(form.monto_inicial).length}}</p>
+                  <label>Monto</label> 
                   <vue-numeric
                     currency="S/. "
                     separator=","
                     v-model="form.monto_inicial"
                     v-bind:precision="2"
                   ></vue-numeric>
-                  <!-- <input type="tel"  v-model="form.monto_inicial"> -->
                   <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper">
@@ -612,7 +610,8 @@
 <script>
 import { serviceNumber } from "../mixins/functions";
 import VueNumeric from "vue-numeric";
- 
+ import { toastOptions } from '../constants.js'
+
 export default {
   mixins: [serviceNumber],
   components: { VueNumeric },
@@ -639,8 +638,6 @@ export default {
   },
   computed: {
     
-
-
     validateMonto() {
       return String(this.form.monto_inicial).length > 1
     },
@@ -890,22 +887,25 @@ export default {
       this.$http
         .post(`/${this.resource}/prestamo`, this.form)
         .then(response => {
-          this.$toast.success(
-            "El prestamo fue creado",
-            "Exitoso",
-            this.notificationSystem.options.success
-          );
-          this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, persona: 'PN' }})
+
+            if(response.data.success){
+                this.$toast.success(
+                    "El prestamo fue creado",
+                    "Exitoso",
+                    toastOptions.success
+                  )
+              this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, persona: 'PN' }})
+            }else{
+                this.$toast.error(
+                  "El prestamo fue creado",
+                  "Error",
+                  toastOptions.error
+                )
+            }
+
         })
-        // .catch(error => {
-        //   if (error.response.status === 422) {
-        //     this.errors = error.response.data;
-        //   } else {
-        //     this.$message.error(error.response.data.message);
-        //   }
-        // })
+
         .then(() => {
-          // this.loading_submit = false;
         });
     },
     retornar() {

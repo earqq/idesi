@@ -562,7 +562,8 @@
 <script>
 import vSelect from "vue-select";
 import { serviceNumber } from "../mixins/functions";
- 
+import { toastOptions } from '../constants.js'
+
 export default {
   mixins: [serviceNumber],
   components: {
@@ -572,17 +573,7 @@ export default {
     return {
       giros: [],
       entidades: [],
-      tab: 1,
-      notificationSystem: {
-        options: {
-          success: {
-            position: "topRight"
-          },
-          error: {
-            position: "topRight"
-          }
-        }
-      },
+      tab: 1, 
       colegios: [],
       i: 0,
       loading_submit:0,
@@ -708,13 +699,22 @@ export default {
     guardar() {
       this.loading_submit=1
       axios.post("/evaluaciones/cualitativa", this.evaluacion).then(res => {
-        this.loading_submit=0
-        this.$toast.success(
-            "La evaluación fue realizada",
-            "Exitoso",
-            this.notificationSystem.options.success
-          ) 
-            this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
+         
+            if(response.data.success){
+                this.$toast.success(
+                    "La Evalación fue realizada",
+                    "Exitoso",
+                    toastOptions.success
+                  )
+                this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
+            }else{
+                this.$toast.error(
+                  "Error Evaluación",
+                  "Error",
+                  toastOptions.error
+                )
+            }
+
       });
     }, 
     seleccionColegiosCosto(index) {

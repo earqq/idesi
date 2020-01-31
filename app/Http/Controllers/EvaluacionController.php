@@ -147,11 +147,9 @@ class EvaluacionController extends Controller
 
         if(Auth::user()->idrol==4){
 
-            $evaluado = Prestamo::where('id',$id)->where('users_id', Auth::user()->id)->where('estado','PENDIENTE')->first();
-            if($evaluado){
+            if($prestamo->users_id == Auth::user()->id && $prestamo->estado =='PENDIENTE' ){
                 $estado_evaluado = 1;
             }
-
         }else{
 
             $evaluado = Evaluacion::where('prestamos_id',$id)->where('users_id', Auth::user()->id)->first();
