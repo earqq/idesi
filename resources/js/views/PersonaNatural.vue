@@ -712,7 +712,8 @@
                 <i class="material-icons-outlined"> navigate_before </i>
                 <span> ATRAS </span>
               </a>
-              <a class="button_primary medium next" @click="submit()" >
+              <a class="button_primary medium next" :class="{loading: loading}" @click="submit()" >
+                <div class="load_spinner"></div>
                 <span> FINALIZAR </span>
                 <i class="material-icons-outlined"> check </i>
               </a>
@@ -727,7 +728,7 @@
 import { serviceNumber } from "../mixins/functions";
 import vSelect from "vue-select";
 import VueNumeric from 'vue-numeric'
- 
+ import { toastOptions } from '../constants.js'
 export default {
   name: 'natural',
   mixins: [serviceNumber],
@@ -742,7 +743,7 @@ export default {
       all_provinces: [],
       all_districts: [],
       provinces: [],
-      loading_submit:'0',
+      loading: false,
       districts: [],
       form: {
         familia: {
@@ -880,7 +881,7 @@ export default {
           uif: "NO",
           pep:"NO",
           obervaciones:"",
-          estado: "ADMITIDO",
+          estado: "PENDIENTE",
           fecha: ""
         }
 
@@ -970,27 +971,27 @@ export default {
       }
     },
     submit() {
+
+      this.loading=true
       this.$http
         .post(`/${this.resource}/nuevo/natural`, this.form)
         .then(response => {
-          if (response.data.success) {
-            this.resetForm();
-            this.$toast.success(
-              "La solicitud fue admitida",
-              "Exitoso",
-              this.notificationSystem.options.success
-            );
-
-            this.$router.push({ name: 'clientes'})
-            
-          } else {
-            // this.resetForm();
-            this.$toast.error(
-              "El cliente ya existe!",
-              "Error",
-              this.notificationSystem.options.error
-            );
-          }
+              this.loading=false
+            if(response.data.success){ 
+                this.$toast.success(
+                    "La Solicutud feu registrada",
+                    "Exitoso",
+                    toastOptions.success
+                  )
+              this.resetForm();
+              this.$router.push({ name: 'clientes'})
+            }else{
+                this.$toast.error(
+                  "Error en Regsitro",
+                  "Error",
+                  toastOptions.error
+                )
+            }  
         })
     },
     completarHijos () {
