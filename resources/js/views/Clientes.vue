@@ -1,6 +1,18 @@
 <template>
   <div>
-    <div class="clients_content" >
+    <div class="empty_message" v-if="clientes.length==0">
+      <img src="img/empty.svg" >
+      <h1> No se Encontraron Clientes </h1>
+      <p>Registra un nuevo cliente para continuar.</p>
+      <router-link  class="add_client button_primary small" :to="{name:'registrar/natural'}"  v-if="form.tipo_persona=='PN' && rol!='5'">
+        <span>
+          CREAR CLIENTE
+        </span>
+        <i class="material-icons-outlined">add</i>
+      </router-link>
+    </div>
+
+    <div class="clients_content" v-else >
 
       <div class="options_bar">
         <div class="search_bar">
