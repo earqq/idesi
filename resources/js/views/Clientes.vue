@@ -1,10 +1,16 @@
 <template>
   <div>
-    <div class="empty_message" v-if="clientes.length==0">
+    <div class="empty_message" v-if="clientes.length==0 && queryCount == 0">
       <img src="img/empty.svg" >
-      <h1> No se Encontraron Clientes </h1>
+      <h1> No Se Encontraron Clientes </h1>
       <p>Registra un nuevo cliente para continuar.</p>
       <router-link  class="add_client button_primary small" :to="{name:'registrar/natural'}"  v-if="form.tipo_persona=='PN' && rol!='5'">
+        <span>
+          CREAR CLIENTE
+        </span>
+        <i class="material-icons-outlined">add</i>
+      </router-link>
+      <router-link  class="add_client button_primary small" :to="{name:'registrar/juridico'}"  v-if="form.tipo_persona=='PJ' && rol!='5'">
         <span>
           CREAR CLIENTE
         </span>
@@ -155,7 +161,8 @@ export default {
             position: "topRight"
           }
         }
-      }
+      },
+      queryCount: 0
     }
   },
   async created() {
@@ -168,6 +175,8 @@ export default {
     async search_product() {
       // this.search_status = 0;
       await this.getRecords();
+      this.queryCount ++
+
       // this.search_status = 1;
     },
     type_list_card(){
@@ -177,6 +186,7 @@ export default {
       this.type_list=0
     },
     getType(){
+      this.queryCount = 0
       this.getRecords()
     },
     getRecords() {
@@ -187,7 +197,6 @@ export default {
           `/${this.resource}/listado?search_input=${this.search_input}`
         )
         .then(response => {
-          console.log(response.data['clientes'].data)
           this.clientes = response.data['clientes'].data
           this.rol = response.data['rol']
         })
