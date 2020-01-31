@@ -11,7 +11,6 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert(array('id'=>'1','nombre'=>'Administrador', 'descripcion'=>'Administradores de área'));
         DB::table('roles')->insert(array('id'=>'2','nombre'=>'Analista', 'descripcion'=>'Gestionar Prestamo'));
         DB::table('roles')->insert(array('id'=>'3','nombre'=>'Evaluador', 'descripcion'=>'Evaluador Común'));
         DB::table('roles')->insert(array('id'=>'4','nombre'=>'Evaluador Final', 'descripcion'=>'Evaluar prestamos'));

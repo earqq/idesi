@@ -13,11 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UsersSeeder::class);
         $this->call(DataNegociosSeeder::class);
-<<<<<<< HEAD
         $this->call(DataColeSeeder::class);
-=======
-        $this->call(DataColegiosSeeder::class);
-        $this->call(DataEntidadesSeeder::class);
->>>>>>> eee1b1962613cef2a07c6dc9a977d66f8c1a757a
     }
 }
