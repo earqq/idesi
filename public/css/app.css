@@ -11517,6 +11517,30 @@ a.text-dark:focus {
   opacity: 0;
 }
 
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
 .input_wrapper {
   position: relative;
 }
@@ -11934,8 +11958,8 @@ a.text-dark:focus {
 .button_primary .load_spinner:before {
   content: "";
   display: block;
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
   border-radius: 50%;
   border: 3px solid rgba(255, 255, 255, 0.3);
   border-bottom: 3px solid white;
