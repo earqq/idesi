@@ -32,6 +32,9 @@ $fa-font-path: "../webfonts";
 @import 'modal';
 @import 'components';
 
+html {
+  scroll-behavior: smooth;
+}
 
 body{
   background: $bg_color;

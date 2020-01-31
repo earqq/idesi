@@ -213,7 +213,7 @@
               </div>
               <button type="button"  @click="clickAddRepresentante"  class="add_section" >
                 <span> AGREGAR REPRESENTANTE </span>
-                <i class="fas fa-plus"></i> 
+                <i class="material-icons-outlined">add</i>  
               </button>
             </div>
             <div class="form_buttons">
@@ -259,7 +259,7 @@
               </div>
               <button type="button"  @click="clickAddDirector"  class="add_section" >
                 <span> AGREGAR DIRECTOR </span>
-                <i class="fas fa-plus"></i> 
+                <i class="material-icons-outlined">add</i>  
               </button>
             </div>
             <div class="form_buttons">
@@ -301,7 +301,7 @@
 
               <button type="button"  @click="clickAddAccionista"  class="add_section" >
                 <span> AGREGAR ACCIONISTA </span>
-                <i class="fas fa-plus"></i> 
+                <i class="material-icons-outlined">add</i>  
               </button>
             </div>
 
@@ -469,10 +469,12 @@ mixins: [serviceNumber],
       }
     },
     next(index) {
-      this.tab = index + 1;
+      window.scrollTo(0,0)
+      this.tab = index + 1
     },
     prev(index) {
-     this.tab = index - 1;
+      window.scrollTo(0,0)
+      this.tab = index - 1
     },
     initForm() {
       this.form = {

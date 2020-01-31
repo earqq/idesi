@@ -46,7 +46,9 @@
                         label="giro_negocio"
                         :options="giros"
                         :reduce="giros => giros.giro_negocio"
-                        v-model="evaluacion.principal.fuente_ingreso">
+                        v-model="evaluacion.principal.fuente_ingreso"
+                        :class="{validateFrom: validateFuenteIngreso}"
+                        >
                         <span slot="no-options">
                           No se encontro giro de negocio
                         </span>
@@ -68,7 +70,7 @@
                   <div class="group_form all">
                     <div class="input_wrapper">
                       <label>Descripcion destino</label>
-                      <textarea  v-model="evaluacion.principal.destino_credito_descripcion"></textarea>
+                      <textarea  v-model="evaluacion.principal.destino_credito_descripcion" :class="{validateFrom: validateDestinoCredito}"></textarea>
                     </div>
                   </div>
                 </div>
@@ -427,7 +429,7 @@
 
                 <button type="button"    class="add_section" @click="clickAddFinanciera" >
                   <span> AGREGAR ENTIDAD FINANCIERA </span>
-                  <i class="fas fa-plus"></i> 
+                  <i class="material-icons-outlined">add</i>  
                 </button>
               </div>
               
@@ -494,7 +496,7 @@
                   </div>
                   <button type="button"    class="add_section"  @click="clickAddReferencia">
                     <span> AGREGAR REFERENCIA </span>
-                    <i class="fas fa-plus"></i> 
+                    <i class="material-icons-outlined">add</i>  
                   </button>
                 </div>
 
@@ -584,7 +586,7 @@ export default {
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
         principal: {
-          destino_credito_descripcion: "",
+          destino_credito_descripcion: " asdasdasdsad",
           destino_credito: "Capital de trabajo",
           fuente_ingreso: ""
         },
@@ -653,29 +655,28 @@ export default {
     };
   },
   computed: {
-    validateName() {
-      // return this.form.natural.nombres.length > 2
+    
+
+    validateFuenteIngreso() {
+      return  this.evaluacion.principal.fuente_ingreso.length > 4
     },
-    validateLastname() {
-      // return this.form.natural.apellidos.length > 2
+    validateDestinoCredito() {
+      return this.evaluacion.principal.destino_credito_descripcion.length > 6
     },
-    validateDoc() {
-      let result = false;
-      // if (this.form.cliente.tipo_documento == 'DNI') result = this.form.cliente.documento.length == 8
-      // else if (this.form.cliente.tipo_documento == 'CE') result = this.form.cliente.documento.length == 11
-      return result;
-    },
+
     validateStep1() {
-      return this.validateDoc && this.validateName && this.validateLastname;
+      return this.validateFuenteIngreso && this.validateDestinoCredito;
     }
     
   },
   methods: {
     next(index) {
-      this.tab = index + 1;
+      window.scrollTo(0,0)
+      this.tab = index + 1
     },
     prev(index) {
-      this.tab = index - 1;
+      window.scrollTo(0,0)
+      this.tab = index - 1
     }, 
 
     clickAddFinanciera() { 
@@ -711,7 +712,7 @@ export default {
             "Exitoso",
             this.notificationSystem.options.success
           ) 
-            // this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
+            this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
       });
     }, 
     seleccionColegiosCosto(index) {

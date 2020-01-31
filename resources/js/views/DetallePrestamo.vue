@@ -1,5 +1,24 @@
 <template>
   <div class="credit_detail_content">
+
+    <div class="camera_screen_content" v-if="camara_prendida">
+      <div class="camera_screen_wrapper">
+        <div  class="close_camera">
+          <i @click="stopCamera()" class="material-icons-outlined">close</i>
+        </div>
+        <video ref="video" id="video"  autoplay></video>
+        <div class="controls" >
+          <button class="capture_photo" id="snap" v-on:click="capture()"  v-if="!captura"></button>
+          <div class="options" v-else>
+            <a @click="storePhoto()"> GUARDAR </a>
+            <a @click="startCamera()"> ELIMINAR </a>
+          </div>
+          <canvas v-show="false" ref="canvas" id="canvas" width="640" height="480"></canvas>
+          <img v-show="false" v-bind:src="captura" height="50" />
+        </div>
+      </div>
+    </div>
+
     <div class="create_client_content">
       <section class="client_forms">
         <div class="client_forms_wrapper">
@@ -30,12 +49,10 @@
                 </li>
                 <li></li>
               </div>
-
             </div>
 
             <div class="form_step_wrapper in_bottom">
               <h3 class="title">Propuesta del Analista</h3>
-
               <div class="detail_content"> 
                 <li>
                   <strong>Producto </strong> 
@@ -72,7 +89,12 @@
 
             <div class="form_step_wrapper in_bottom">
               <h3 class="title">Evaluaciones</h3>
-              <div class="table_wrapper">
+              <div class="empty_message_evaluation" v-if="evaluacion.length == 0">
+                <img src="img/empty.svg" >
+                <h1> Sin Evaluaciones </h1>
+                <p>Todavia no se han relizado evaluaciones a este prestamo</p>
+              </div>
+              <div class="table_wrapper" v-else>
                 <table class="table_evaluations no_hover">
                   <thead>
                     <tr>
@@ -86,8 +108,7 @@
                     <tr
                       v-for="evaluacion in evaluacion"
                       :key="evaluacion.id"
-                      :class="{final_result: evaluacion.idrol == 4}"
-                    >
+                      :class="{final_result: evaluacion.idrol == 4}">
                       <td v-text="evaluacion.name"></td>
                       <td v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
                       <td>{{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
@@ -103,62 +124,60 @@
             </div>
 
             <div class="form_step_wrapper in_bottom">
-              <h3 class="title">Ubicación del negocio</h3>
+              <h3 class="title" v-show="list_vistas.length > 0 " >Negocio</h3>
 
-              <div class="table_wrapper">
-                <table class="table_clients">
+              <div class="table_wrapper" v-show="list_vistas.length > 0 ">
+                <table class="table_photos">
                   <thead>
                     <tr>
-                      <th>Fecha de registro</th>
                       <th>Foto</th>
-                      <th>Ver en mapa</th>
-                      <!-- <th class="options">Opciones</th> -->
+                      <th>Ubicación</th>
+                      <th>Fecha</th>
+                      <th class="options">Opciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="visita in list_vistas" :key="visita.id">
-                      <td v-text="stringDate(visita.created_at)"></td>
-                      <td>
-                          <img :src="'../storage/'+cliente.documento+'_'+cliente.id+'/prestamo_'+visita.prestamos_id+'/imagen/'+visita.nombre+'.'+visita.extension">
+                      <td class="photo">
+                        <img :src="'../storage/'+cliente.documento+'_'+cliente.id+'/prestamo_'+visita.prestamos_id+'/imagen/'+visita.nombre+'.'+visita.extension">
                       </td>
-                      <td> 
-                        <i class="fas fa-map-marked-alt"></i>
-                        <GmapMap
+                      <td class="place_photo">
+                        <i class="material-icons-outlined">place</i>
+                        <p>Huanuco, Huanuco, Amarilis </p>
+                        <!-- <GmapMap
                           :center="{lat:  Number(visita.latitud), lng: Number(visita.altitud) }"
                           :zoom="15"
-                          map-type-id="terrain"
                           style="width: 500px; height: 300px"
-                        >
+                          :options="optionsMap">
                                 <Gmap-Marker 
                                 :position="{
                                   lat: Number(visita.latitud),
                                   lng: Number(visita.altitud),
                                 }"
                               ></Gmap-Marker>
-                        </GmapMap>
+                        </GmapMap> -->
+                      </td>
+                      <td v-text="stringDate(visita.created_at)"></td>
+                      <td class="options">
+                        <i class="material-icons-outlined" >more_horiz</i>
+                        <ul>
+                          <li>
+                            Ver Foto
+                          </li>
+                          <li>
+                            Eliminar
+                          </li>
+                        </ul>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
-              <button @click="prender">pernser camra</button>
-
-              <div class="form_content" v-if="camara_prendida">
-                <div>
-                  <video ref="video" id="video" width="640" height="480" autoplay></video>
-                </div>
-                <div>
-                  <button id="snap" v-on:click="capture()">Registrar Ubicación</button>
-                </div>
-                <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
-
-                <ul>
-                  <!-- <li v-for="c in captures" :key="c"> -->
-                  <img v-bind:src="captura" height="50" />
-                  <!-- </li> -->
-                </ul>
-              </div>
+              <button type="button" class="add_section" :class="{no_border: list_vistas.length == 0 }" @click="startCamera" >
+                <span> CAPTURAR FOTO DE NEGOCIO </span>
+                <i class="material-icons-outlined">camera_alt</i> 
+              </button>
 
             </div>
           </div>
@@ -171,12 +190,22 @@
 <script>
 import moment from "moment";
 import { gmapApi } from "vue2-google-maps";
+import { STYLES_MAP } from '../constants'
 
 export default {
   name: "visita",
   components: {},
   data() {
     return {
+      optionsMap: {
+        styles: STYLES_MAP,
+        zoomControl: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: false,
+      },
       resource: "clientes",
       location: null,
       gettingLocation: false,
@@ -184,7 +213,7 @@ export default {
       video: {},
       canvas: {},
       captura: "",
-      camara_prendida: 0,
+      camara_prendida: false,
       prestamo: this.$route.params.prestamo,
       errors: {},
       prestamo_detalle: [],
@@ -241,11 +270,12 @@ export default {
     );
   },
   methods: {
-    prender() {
-            this.camara_prendida=1
-            this.$nextTick(() => {
-              this.video = this.$refs.video;
-            })
+    startCamera() {
+        this.captura = null 
+        this.camara_prendida = true
+        this.$nextTick(() => {
+          this.video = this.$refs.video;
+        })
           navigator.getMedia =
             navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
@@ -283,8 +313,8 @@ export default {
         .drawImage(this.video, 0, 0, 640, 480);
       this.captura = canvas.toDataURL("image/png");
       // this.DownloadCanvasAsImage()
-      this.submit();
-      this.apagar();
+      // this.storePhoto();
+      this.pauseCamera();
     },
     DownloadCanvasAsImage() {
       let downloadLink = document.createElement("a");
@@ -299,12 +329,16 @@ export default {
       downloadLink.setAttribute("href", url);
       downloadLink.click();
     },
-    apagar() {
+    pauseCamera () {
+      this.video.pause();
+    },
+    stopCamera() {
       this.video = this.$refs.video;
       this.video.pause();
       this.camara.getVideoTracks().forEach(function(track) {
         track.stop();
       });
+      this.camara_prendida = false
     },
     retornar() {
       this.$parent.view = false;
@@ -355,23 +389,23 @@ export default {
       if (estado == "DESAPROBADO") return "denied";
       return;
     },
-    submit() {
-      this.formData = new FormData();
-      this.formData.append("name", "addsdasd");
-      this.formData.append("prestamo_id", this.prestamo);
-      this.formData.append("latitud", this.location.coords.latitude);
-      this.formData.append("longitud", this.location.coords.longitude);
-      this.formData.append("file", this.captura);
+    storePhoto() {
+      this.formData = new FormData()
+      this.formData.append("name", "captura")
+      this.formData.append("prestamo_id", this.prestamo)
+      this.formData.append("latitud", this.location.coords.latitude)
+      this.formData.append("longitud", this.location.coords.longitude)
+      this.formData.append("file", this.captura)
       this.$http
         .post(`/${this.resource}/visita/nuevo`, this.formData, {
           headers: { "Content-Type": "multipart/form-data" }
         })
         .then(response => {
           // this.clearForm()
-          this.views();
-          this.tipo = true;
-          this.clearform();
-
+          this.views()
+          this.tipo = true
+          this.clearform()
+          this.stopCamera()
           this.$toast.success(
             "La visita fue registrada",
             "Exitoso",
@@ -418,8 +452,110 @@ export default {
 <style lang="sass">
 @import "../../sass/variables"
 .credit_detail_content
+  position: relative
+  .camera_screen_content
+    position: fixed
+    left: 0
+    top: 55px
+    background-color: black
+    width: 100%
+    height: calc(100vh - 175px)
+    z-index: 10
+    .camera_screen_wrapper
+      .close_camera
+        height: 50px
+        background-color: black
+        i
+          color: white
+          height: 50px
+          width: 50px
+          margin-right: 10px
+          display: flex
+          justify-content: center
+          align-items: center
+          float: right
+          font-size: 30px
+          cursor: pointer
+      video
+        height: calc(100vh - 225px)
+        width: 100%
+        display: block
+      .controls
+        height: 120px
+        display: flex
+        justify-content: center
+        align-items: center
+        background-color: black
+        .options
+          width: 100%
+          display: flex
+          a
+            flex: 1
+            flex-basis: 0
+            color: white
+            font-weight: 500
+            text-align: center
+            padding: 10px 0
+            cursor: pointer
+        button.capture_photo
+          width: 65px
+          height: 65px
+          border-radius: 50%
+          border: none
+          background-color: white
+          border: 7px solid black
+          box-shadow: 0px 0px 0px 4px white
+          transition: all ease-in-out .15s
+          &:focus, &:active
+            outline: none
+          &:hover
+            border: 10px solid black
+          
   .create_client_content
     margin: 20px 0
+    .empty_message_evaluation
+      display: flex
+      align-items: center
+      justify-content: center
+      flex-direction: column
+      padding: 20px
+      height: 250px
+      overflow: hidden
+      img
+        width: 120px
+      h1
+        margin: 0
+        font-size: 14px
+        margin-top: 15px
+        margin-bottom: 5px
+        font-weight: 600
+      p
+        margin: 0
+        font-size: 12px
+        width: 220px
+        text-align: center
+        line-height: 1.4
+    table.table_photos
+      thead, tbody
+        tr
+          margin-bottom: 0px
+          border-bottom: 1px solid $bg_color
+      tbody
+        tr
+          &:last-child
+            border-bottom: 0
+        td
+          &.place_photo
+            p
+              margin: 0
+              margin-left: 10px
+          &.photo
+            img
+              border-radius: 4px
+              width: 60px
+              height: 40px
+              object-fit: cover
+              display: block
     table.table_evaluations
         thead, tbody
           tr

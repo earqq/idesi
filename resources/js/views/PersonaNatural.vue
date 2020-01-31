@@ -779,9 +779,11 @@ export default {
   },
   methods: {
     next(index) {
+      window.scrollTo(0,0)
       this.tab = index + 1
     },
     prev(index) {
+      window.scrollTo(0,0)
       this.tab = index - 1
     },
     initForm() {
@@ -969,10 +971,6 @@ export default {
       }
     },
     submit() {
-      // if() {
-      //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
-      //  }
-
       this.$http
         .post(`/${this.resource}/nuevo/natural`, this.form)
         .then(response => {
@@ -995,16 +993,6 @@ export default {
             );
           }
         })
-        // .catch(error => {
-        //   if (error.response.status === 422) {
-        //     this.errors = error.response.data;
-        //   } else {
-        //     this.$message.error(error.response.data.message);
-        //   }
-        // })
-        .then(() => {
-          // this.loading_submit = false;
-        });
     }
   },
   watch: {

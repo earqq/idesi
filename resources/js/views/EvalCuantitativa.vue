@@ -340,7 +340,7 @@
                 </div>
                 <button type="button"  class="add_section" @click="clickAddEntidad" >
                   <span> AGREGAR ENTIDAD </span>
-                  <i class="fas fa-plus"></i> 
+                  <i class="material-icons-outlined">add</i>  
                 </button>
               </div>
 
@@ -450,7 +450,7 @@
                 </div>
                 <button type="button"  class="add_section" @click="clickAddPropiedad">
                   <span> AGREGAR PROPIEDAD </span>
-                  <i class="fas fa-plus"></i> 
+                  <i class="material-icons-outlined">add</i>  
                 </button>
               </div>
 
@@ -491,7 +491,7 @@
                 </div>
                 <button type="button"  class="add_section" @click="clickAddEntidadTitular" >
                   <span> AGREGAR ENTIDAD </span>
-                  <i class="fas fa-plus"></i> 
+                  <i class="material-icons-outlined">add</i>  
                 </button>
               </div>
 
@@ -532,7 +532,7 @@
                 </div>
                 <button type="button"  class="add_section" @click="clickAddEntidadconyuge">
                   <span> AGREGAR ENTIDAD </span>
-                  <i class="fas fa-plus"></i> 
+                  <i class="material-icons-outlined">add</i>  
                 </button>
               </div>
 
@@ -853,10 +853,12 @@ export default {
   methods: {
 
     next(index) {
-      this.tab = index + 1;
+      window.scrollTo(0,0)
+      this.tab = index + 1
     },
     prev(index) {
-        this.tab = index - 1;
+      window.scrollTo(0,0)
+      this.tab = index - 1
     },
     clickAddEntidad() { 
       this.evaluacion.conyuge.gasto_financiero.push({

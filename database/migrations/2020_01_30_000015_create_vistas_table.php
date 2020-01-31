@@ -23,7 +23,7 @@ class CreateVistasTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('imagen', 45)->nullable()->default(null);
+            $table->integer('imagen')->nullable()->default(null);
             $table->date('fecha')->nullable()->default(null);
             $table->string('hora', 10)->nullable()->default(null);
             $table->string('motivo', 50)->nullable()->default(null);

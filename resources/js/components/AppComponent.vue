@@ -112,7 +112,7 @@ nav
   justify-content: space-between
   align-items: center
   width: 100%
-  z-index: 10
+  z-index: 15
   position: relative
   box-shadow: $shadow
   position: sticky

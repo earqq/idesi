@@ -18830,7 +18830,7 @@ readers do not read off random characters that represent icons */
 .input_wrapper textarea:focus,
 .input_wrapper textarea:active {
   outline: none;
-  border: 1px solid #21396f;
+  border: 1px solid #0061FE;
   box-shadow: 0px 0px 0px 3px rgba(62, 101, 243, 0.06);
 }
 
@@ -18857,7 +18857,7 @@ readers do not read off random characters that represent icons */
 
 .input_wrapper.icon input:focus + i,
 .input_wrapper.icon input:active + i {
-  color: #21396f;
+  color: #0061FE;
 }
 
 .input_wrapper.no_label_icon i {
@@ -18874,7 +18874,7 @@ readers do not read off random characters that represent icons */
 
 .input_wrapper.no_label_icon input:focus + i,
 .input_wrapper.no_label_icon input:active + i {
-  color: #21396f;
+  color: #0061FE;
 }
 
 .input_wrapper.require i {
@@ -18936,7 +18936,7 @@ readers do not read off random characters that represent icons */
 
 .input_checkbox_wrapper input[type=radio]:checked + label.box_content .box,
 .input_checkbox_wrapper input[type=checkbox]:checked + label.box_content .box {
-  border: 1px solid #21396f;
+  border: 1px solid #0061FE;
 }
 
 .input_checkbox_wrapper input[type=radio]:checked + label.box_content .box:before,
@@ -18985,7 +18985,7 @@ readers do not read off random characters that represent icons */
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #21396f;
+  background-color: #0061FE;
   display: block;
   -webkit-transform: scale(0);
           transform: scale(0);
@@ -19053,9 +19053,9 @@ readers do not read off random characters that represent icons */
 }
 
 .switch_wrapper span.selected {
-  background-color: #21396f;
+  background-color: #0061FE;
   color: white;
-  border: 1px solid #21396f;
+  border: 1px solid #0061FE;
 }
 
 .switch_wrapper span.selected:before {
@@ -19071,7 +19071,7 @@ readers do not read off random characters that represent icons */
 .button_primary {
   color: white;
   font-family: "Roboto", sans-serif;
-  background-color: #21396f;
+  background-color: #0061FE;
   border: none;
   font-weight: 500;
   border-radius: 3px;
@@ -19084,7 +19084,7 @@ readers do not read off random characters that represent icons */
   justify-content: space-around;
   padding: 0 8px;
   text-decoration: none;
-  box-shadow: 0px 4px 10px 0px rgba(33, 57, 111, 0.35);
+  box-shadow: 0px 4px 10px 0px rgba(0, 97, 254, 0.35);
   cursor: pointer;
   font-size: 13px;
 }
@@ -19097,7 +19097,7 @@ readers do not read off random characters that represent icons */
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #26417f;
+  background-color: #136dff;
   -webkit-transition: all ease-in-out 0.2s;
   transition: all ease-in-out 0.2s;
   opacity: 0;
@@ -19152,7 +19152,7 @@ readers do not read off random characters that represent icons */
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #21396f;
+  background-color: #0061FE;
   -webkit-transition: all ease-in-out 0.2s;
   transition: all ease-in-out 0.2s;
   z-index: 3;
@@ -19208,7 +19208,7 @@ readers do not read off random characters that represent icons */
   -webkit-transition: all ease-in-out 0.2s;
   transition: all ease-in-out 0.2s;
   text-decoration: none;
-  color: #21396f;
+  color: #0061FE;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.03);
   cursor: pointer;
   font-size: 13px;
@@ -19222,7 +19222,7 @@ readers do not read off random characters that represent icons */
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(33, 57, 111, 0.01);
+  background-color: rgba(0, 97, 254, 0.01);
   -webkit-transition: all ease-in-out 0.2s;
   transition: all ease-in-out 0.2s;
   opacity: 0;
@@ -19348,7 +19348,7 @@ readers do not read off random characters that represent icons */
   cursor: pointer;
   text-align: left;
   padding-left: 20px;
-  color: #21396f;
+  color: #0061FE;
   list-style: none;
   color: black;
 }
@@ -19359,7 +19359,7 @@ readers do not read off random characters that represent icons */
 
 .table_wrapper table .options ul li a {
   text-decoration: none;
-  color: #21396f;
+  color: #0061FE;
   height: 100%;
   width: 100%;
   display: block;
@@ -19395,7 +19395,7 @@ readers do not read off random characters that represent icons */
 
 .table_wrapper table tbody {
   display: block;
-  color: #21396f;
+  color: #0061FE;
 }
 
 .table_wrapper table tbody:hover tr {
@@ -19483,8 +19483,8 @@ readers do not read off random characters that represent icons */
 
 .tabs_section .tabs_wrapper .tab.complete span {
   color: transparent;
-  border: 1px solid #21396f;
-  background-color: #21396f;
+  border: 1px solid #0061FE;
+  background-color: #0061FE;
 }
 
 .tabs_section .tabs_wrapper .tab.complete span:before {
@@ -19499,17 +19499,17 @@ readers do not read off random characters that represent icons */
 }
 
 .tabs_section .tabs_wrapper .tab.complete p {
-  color: #21396f;
+  color: #0061FE;
 }
 
 .tabs_section .tabs_wrapper .tab.selected span {
   color: white;
-  background-color: #21396f;
-  border: 1px solid #21396f;
+  background-color: #0061FE;
+  border: 1px solid #0061FE;
 }
 
 .tabs_section .tabs_wrapper .tab.selected p {
-  color: #21396f;
+  color: #0061FE;
 }
 
 .tabs_section .tabs_wrapper .tab span {
@@ -19612,8 +19612,8 @@ readers do not read off random characters that represent icons */
 }
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .message_form {
-  background-color: rgba(33, 57, 111, 0.05);
-  color: #21396f;
+  background-color: rgba(0, 97, 254, 0.05);
+  color: #0061FE;
   font-weight: 500;
   border-radius: 3px;
   min-height: 45px;
@@ -19624,7 +19624,7 @@ readers do not read off random characters that represent icons */
   font-size: 12px;
   padding: 10px 20px;
   box-sizing: border-box;
-  border-left: 3px solid #21396f;
+  border-left: 3px solid #0061FE;
 }
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form {
@@ -19666,8 +19666,8 @@ readers do not read off random characters that represent icons */
 }
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .form_content .group_form .input_box .input_box_wrapper .input_checkbox_wrapper input:checked + label.box_content {
-  border: 1px solid #21396f;
-  color: #21396f;
+  border: 1px solid #0061FE;
+  color: #0061FE;
   font-weight: 600;
 }
 
@@ -19697,13 +19697,13 @@ readers do not read off random characters that represent icons */
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .detail_content li {
   list-style: none;
-  padding: 5px 20px;
+  padding: 10px 20px;
   background-color: #fff;
 }
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .detail_content li strong {
   font-size: 11px;
-  color: rgba(0, 0, 0, 0.7);
+  color: rgba(0, 0, 0, 0.77);
 }
 
 .client_forms .client_forms_wrapper .form_step .form_step_wrapper .detail_content li p {
@@ -19763,6 +19763,10 @@ readers do not read off random characters that represent icons */
   outline: none;
 }
 
+.client_forms .client_forms_wrapper .form_step .add_section.no_border {
+  border-top: none;
+}
+
 .client_forms .client_forms_wrapper .form_step .add_section.in_bottom {
   margin-top: 10px;
   border: 1px solid #eef3fb;
@@ -19773,12 +19777,12 @@ readers do not read off random characters that represent icons */
 .client_forms .client_forms_wrapper .form_step .add_section span {
   font-weight: 700;
   font-size: 12px;
-  color: #21396f;
+  color: #0061FE;
   margin-bottom: -2px;
 }
 
 .client_forms .client_forms_wrapper .form_step .add_section i {
-  color: #21396f;
+  color: #0061FE;
   margin-left: 10px;
 }
 
@@ -19795,7 +19799,7 @@ readers do not read off random characters that represent icons */
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 10;
+  z-index: 16;
 }
 
 .modal_content .modal_wrapper {
@@ -19825,6 +19829,13 @@ readers do not read off random characters that represent icons */
   font-size: 17px;
   font-weight: 500;
   margin: 0;
+}
+
+.modal_content .modal_wrapper form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+  margin-bottom: 15px;
 }
 
 .modal_content .modal_wrapper button {
@@ -19878,6 +19889,10 @@ readers do not read off random characters that represent icons */
 .empty_message a i {
   font-size: 20px;
   margin-top: -2px;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {

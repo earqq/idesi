@@ -31,12 +31,12 @@ Vue.component('apexchart', VueApexCharts)
 
 Vue.use(VueIziToast);
 Vue.use(VueGoogleMaps, {
-    load: {
-      key: 'AIzaSyBWbQ5eFoNQClbQuWWN7DvPHA5QsQS66Uc',
-      libraries: 'places', // This is required if you use the Autocomplete plugin
-    },
-   
-});
+  load: {
+    key: 'AIzaSyAbyVLUSddPTErLdnCbHoXpRO7Y1S4FuDA',
+    libraries: 'places,drawing,visualization,geometry, geocode',
+  }
+})
+
 
 Vue.component('app', require('./components/AppComponent.vue').default);
 
