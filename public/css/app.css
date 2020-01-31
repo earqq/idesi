@@ -19856,7 +19856,6 @@ readers do not read off random characters that represent icons */
   -webkit-box-direction: normal;
           flex-direction: column;
   box-sizing: border-box;
-  height: 250px;
   overflow: hidden;
   width: 100%;
   height: calc(100vh - 55px);
@@ -19869,7 +19868,7 @@ readers do not read off random characters that represent icons */
 .empty_message h1 {
   margin: 0;
   font-size: 14px;
-  margin-top: 20px;
+  margin-top: 25px;
   margin-bottom: 5px;
   font-weight: 600;
 }
@@ -19877,14 +19876,14 @@ readers do not read off random characters that represent icons */
 .empty_message p {
   margin: 0;
   font-size: 12px;
-  width: 250px;
   text-align: center;
-  line-height: 1.4;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .empty_message a {
-  width: 180px;
-  margin-top: 15px;
+  width: 170px;
+  margin-top: 20px;
 }
 
 .empty_message a i {

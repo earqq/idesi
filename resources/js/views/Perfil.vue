@@ -70,15 +70,13 @@
 
     <div class="empty_message" v-if="prestamos.length==0">
       <img src="img/empty.svg" >
-      <h1> No Registra Prestamos </h1>
-      <p>Todavia no se han relizado ningun prestamo a este cliente</p>
-      <p>asdasssssssssss</p>
-      <p>{{tipo_persona=='PN' && cliente.estado=='1' && id_rol!='5'}}</p>
-      <router-link  v-if="tipo_persona=='PN' && cliente.estado=='1' && id_rol!='5'"  class="button_primary medium" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
+      <h1> Sin Prestamos Registrados </h1>
+      <p>Todavía no se han registrado ningun prestamo a este cliente.</p>
+      <router-link  v-if="tipo_persona=='PN' && cliente.estado=='1' && id_rol!='5'"  class="button_primary small" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
       </router-link>
-      <router-link  v-else-if="tipo_persona=='PJ' && cliente.estado=='1' && id_rol!='5'" class="button_primary medium" :to="{name: 'prestamojuridico', params:{dni:cliente.documento}}">
+      <router-link  v-else-if="tipo_persona=='PJ' && cliente.estado=='1' && id_rol!='5'" class="button_primary small" :to="{name: 'prestamojuridico', params:{dni:cliente.documento}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
       </router-link>
