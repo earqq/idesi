@@ -491,7 +491,7 @@
 
                   <div class="input_wrapper" v-if="form.familia.hijos=='SI'">
                     <label>Nro de hijos</label>
-                    <input type="text" :maxlength="2" v-mask="'##'" v-model="form.familia.numero">
+                    <input type="text" :maxlength="2" v-mask="'##'" v-model="form.familia.numero" @change="completarHijos">
                   </div>
 
                   <div class="input_wrapper">
@@ -646,19 +646,19 @@
                 <div class="group_form">
                   <div class="input_wrapper">
                       <label>Inscripción </label>
-                      <vue-numeric currency="S/. " readonly separator="," v-model="form.asociativa.inscripcion"  v-bind:precision="2"></vue-numeric>
+                      <vue-numeric currency="S/ " :readonly="true" separator="," v-model="form.asociativa.inscripcion"  v-bind:precision="2"></vue-numeric>
                   </div>
                   <div class="input_wrapper">
                       <label>Aporte </label>
-                      <vue-numeric currency="S/. " separator="," v-model="form.asociativa.aporte"  v-bind:precision="2"></vue-numeric>
+                      <vue-numeric currency="S/ " separator="," v-model="form.asociativa.aporte"  v-bind:precision="2"></vue-numeric>
                   </div>
                   <div class="input_wrapper">
                       <label>Fondo de prevencion social </label>
-                      <vue-numeric currency="S/. " separator="," v-model="form.asociativa.fondo"  v-bind:precision="2"></vue-numeric>
+                      <vue-numeric currency="S/ " separator="," v-model="form.asociativa.fondo"  v-bind:precision="2"></vue-numeric>
                   </div>
                   <div class="input_wrapper">
                       <label>Fondo de prevencion social opcional </label>
-                      <vue-numeric currency="S/. " separator="," v-model="form.asociativa.fondo_opcional" v-bind:precision="2"></vue-numeric>
+                      <vue-numeric currency="S/ " separator="," v-model="form.asociativa.fondo_opcional" v-bind:precision="2"></vue-numeric>
                   </div>
                 </div>
               </div>
@@ -904,8 +904,7 @@ export default {
             } 
         }
       }
-    },
-    
+    },  
     hijosAsignacion(new_value,old_value){
        old_value = old_value || 0
        new_value = new_value || 0 
@@ -993,17 +992,21 @@ export default {
             );
           }
         })
+    },
+    completarHijos () {
+      if (this.form.familia.numero == '' && this.form.familia.numero <= 1 && this.form.familia.hijos=='SI') {
+        this.form.familia.hijos = 'NO'
+      }
     }
   },
   watch: {
     'form.familia.numero'(new_value,old_value){
-      console.log(new_value == '' && new_value <= 1 && this.form.familia.hijos=='SI')
       if (new_value == 0 && new_value != '') this.form.familia.hijos = 'NO'
-      else if (new_value == '' && new_value <= 1 && this.form.familia.hijos=='SI') {
-        setTimeout(() => {
-          this.form.familia.numero = 1
-        }, 2000)
-      }
+      // else if (new_value == '' && new_value <= 1 && this.form.familia.hijos=='SI') {
+      //   setTimeout(() => {
+      //     if (new_value == '') this.form.familia.numero = 1
+      //   }, 2000)
+      // }
       this.hijosAsignacion(new_value,old_value)
     },
     'form.familia.hijos' (val) {
