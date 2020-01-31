@@ -100,17 +100,6 @@ export default {
         this.tab = to.name
         next()
     })
-    this.$toast.success(
-      "El prestamo fue creado",
-      "Exitoso",
-      toastOptions.success
-    )
-
-    this.$toast.error(
-      "El prestamo fue creado",
-      "Error",
-      toastOptions.error
-    )
   }
 }
 </script>
