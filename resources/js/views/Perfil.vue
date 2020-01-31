@@ -115,8 +115,8 @@
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
                 <li> 
-                  <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id}}"> Editar </router-link>
-                  <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id}}"> Editar </router-link>
+                  <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id,dni:cliente.documento}}"> Editar </router-link>
+                  <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id,dni:cliente.documento}}"> Editar </router-link>
                 </li>
                 <li v-if="prestamo.cualitativa=='0'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_persona}}" >E. Cualitativa</router-link> </li>
                 <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1' "> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_persona}}" >E. Cuantitativa</router-link> </li>
@@ -162,7 +162,7 @@ export default {
       option_loan: 1
     };
   },
-  mounted() {
+  mounted() { 
     this.datosClientesPerfil()
   },
   methods: {

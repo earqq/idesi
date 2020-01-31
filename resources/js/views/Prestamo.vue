@@ -36,14 +36,15 @@
             <h3 class="title">Solicitud de Crédito</h3>
             <div class="form_content">
               <div class="group_form">
-                <div class="input_wrapper">
-                  <label>Monto</label>
+                <div class="input_wrapper" :class="{require: !validateMonto}">
+                  <label>Monto</label> 
                   <vue-numeric
                     currency="S/. "
                     separator=","
                     v-model="form.monto_inicial"
                     v-bind:precision="2"
                   ></vue-numeric>
+                  <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper">
                   <label>Forma</label>
@@ -58,18 +59,22 @@
                   <label>Plazo</label>
                   <input type="number" v-model="form.plazo_inicial"  />
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
                   <label>Disponibilidad de pago</label>
-                  <input
-                    type="text"
+                  <vue-numeric
+                    currency="S/. "
+                    separator=","
                     v-model="form.disponibilidad_pago_inicial"
-                  />
+                    v-bind:precision="2"
+                  ></vue-numeric> 
+                  <div class="message">Se requiere esta información</div>
                 </div>
               </div>
               <div class="group_form all">
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateDestino}">
                   <label>Destino de crédito (propuesta cliente)</label>
                   <textarea  v-model="form.destino_inicial"  />
+                  <div class="message">Se requiere esta información</div>
                 </div>
               </div>
             </div>
@@ -605,7 +610,8 @@
 <script>
 import { serviceNumber } from "../mixins/functions";
 import VueNumeric from "vue-numeric";
- 
+ import { toastOptions } from '../constants.js'
+
 export default {
   mixins: [serviceNumber],
   components: { VueNumeric },
@@ -631,20 +637,18 @@ export default {
     };
   },
   computed: {
-    validateName() {
-      // return this.form.natural.nombres.length > 2
+    
+    validateMonto() {
+      return String(this.form.monto_inicial).length > 1
     },
-    validateLastname() {
-      // return this.form.natural.apellidos.length > 2
+    validateDiponibilidad() {
+      return String(this.form.disponibilidad_pago_inicial).length > 1
     },
-    validateDoc() {
-      let result = false;
-      // if (this.form.cliente.tipo_documento == 'DNI') result = this.form.cliente.documento.length == 8
-      // else if (this.form.cliente.tipo_documento == 'CE') result = this.form.cliente.documento.length == 11
-      return result;
+    validateDestino() {
+      return this.form.destino_inicial.length > 6
     },
     validateStep1() {
-      return this.validateDoc && this.validateName && this.validateLastname;
+      return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
     }
   },
   created() {
@@ -883,22 +887,25 @@ export default {
       this.$http
         .post(`/${this.resource}/prestamo`, this.form)
         .then(response => {
-          this.$toast.success(
-            "El prestamo fue creado",
-            "Exitoso",
-            this.notificationSystem.options.success
-          );
-          this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, persona: 'PN' }})
+
+            if(response.data.success){
+                this.$toast.success(
+                    "El prestamo fue creado",
+                    "Exitoso",
+                    toastOptions.success
+                  )
+              this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, persona: 'PN' }})
+            }else{
+                this.$toast.error(
+                  "El prestamo fue creado",
+                  "Error",
+                  toastOptions.error
+                )
+            }
+
         })
-        // .catch(error => {
-        //   if (error.response.status === 422) {
-        //     this.errors = error.response.data;
-        //   } else {
-        //     this.$message.error(error.response.data.message);
-        //   }
-        // })
+
         .then(() => {
-          // this.loading_submit = false;
         });
     },
     retornar() {

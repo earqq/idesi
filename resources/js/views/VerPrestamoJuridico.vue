@@ -558,7 +558,7 @@
 <script>
 import { serviceNumber } from "../mixins/functions"; 
 import VueNumeric from 'vue-numeric'
-
+import { toastOptions } from '../constants.js'
  
 export default {
   mixins: [serviceNumber],
@@ -570,36 +570,21 @@ export default {
       loading_submit:0,
       errors: {},
       form: {},
-      contador_aval: 0,
-      contador_garantia: 0, 
-      notificationSystem: {
-        options: {
-          success: {
-            position: "topRight"
-          },
-          error: {
-            position: "topRight"
-          }
-        }
-      }
     };
   },
       computed: {
-    validateName() {
-      // return this.form.natural.nombres.length > 2
-    },
-    validateLastname() {
-      // return this.form.natural.apellidos.length > 2
-    },
-    validateDoc() {
-      let result = false;
-      // if (this.form.cliente.tipo_documento == 'DNI') result = this.form.cliente.documento.length == 8
-      // else if (this.form.cliente.tipo_documento == 'CE') result = this.form.cliente.documento.length == 11
-      return result;
-    },
-    validateStep1() {
-      return this.validateDoc && this.validateName && this.validateLastname;
-    }
+            validateMonto() {
+              return String(this.form.monto_inicial).length > 1
+            },
+            validateDiponibilidad() {
+              return String(this.form.disponibilidad_pago_inicial).length > 1
+            },
+            validateDestino() {
+              return this.form.destino_inicial.length > 6
+            },
+            validateStep1() {
+              return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
+            }
   },
   created() {
     this.initForm();
@@ -843,16 +828,22 @@ export default {
         .post(`/${this.resource}/prestamo/juridico`, this.form)
         .then(response => {
           
-          this.$toast.success(
-            "La solicitud de prestamo fue actualizada",
-            "Exitoso",
-            this.notificationSystem.options.success
-          ); 
-
-          console.log(this.form.cliente.documento)
-          this.$router.push({ name: 'perfil', params: { documento:  this.form.cliente.documento, persona: 'PJ' }}).catch(err => {})
-          this.clearForm(); 
-
+            if(response.data.success){
+                this.$toast.success(
+                    "El prestamo fue editado",
+                    "Exitoso",
+                    toastOptions.success
+                  )
+                 this.clearForm(); 
+                 this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, persona: 'PJ' }})
+            }else{
+                this.$toast.error(
+                  "Error al editar el prestamo",
+                  "Error",
+                  toastOptions.error
+                )
+            }
+         
         })
        
         .then(() => {

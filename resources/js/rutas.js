@@ -63,12 +63,12 @@ export default new Router({
             component: require('./views/EvaluacionDetalle').default,
         },
         {
-            path: '/editar/solicitud/credito/natural/:prestamo',
+            path: '/editar/solicitud/credito/natural/:prestamo/:dni',
             name: '/editar/solicitud/credito/natural/',
             component: require('./views/VerPrestamo').default 
         },
         { 
-            path: '/editar/solicitud/credito/juridica/:prestamo',
+            path: '/editar/solicitud/credito/juridica/:prestamo/:dni',
             name: '/editar/solicitud/credito/juridica/',
             component: require('./views/VerPrestamoJuridico').default
         },

@@ -735,7 +735,6 @@ class EvaluacionesController extends Controller
         DB::commit();
         return [
             'success' => true,
-            'data' => 'Evaluación Completado',
         ];
 
         } catch (Exception $e){
@@ -788,7 +787,6 @@ class EvaluacionesController extends Controller
             DB::commit();
                 return [ 
                     'success' => true,
-                    'data' => 'Evaluación Completado',
                 ];
 
         } catch (Exception $e){

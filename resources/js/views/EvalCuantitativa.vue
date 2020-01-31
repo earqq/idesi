@@ -558,7 +558,8 @@
 <script>
 import vSelect from "vue-select";
 import { serviceNumber } from "../mixins/functions";
-import VueNumeric from 'vue-numeric'
+import VueNumeric from 'vue-numeric';
+import { toastOptions } from '../constants.js';
 
 export default {
   mixins: [serviceNumber],
@@ -570,17 +571,7 @@ export default {
     return {
       giros: [],
       tab: 1,
-      entidades:[],
-      notificationSystem: {
-        options: {
-          success: {
-            position: "topRight"
-          },
-          error: {
-            position: "topRight"
-          }
-        }
-      },
+      entidades:[], 
       loading_submit: 0,
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
@@ -834,21 +825,38 @@ export default {
       });
   },
     computed: {
-    validateName() {
-      // return this.form.natural.nombres.length > 2
-    },
-    validateLastname() {
-      // return this.form.natural.apellidos.length > 2
-    },
-    validateDoc() {
-      let result = false;
-      // if (this.form.cliente.tipo_documento == 'DNI') result = this.form.cliente.documento.length == 8
-      // else if (this.form.cliente.tipo_documento == 'CE') result = this.form.cliente.documento.length == 11
-      return result;
-    },
-    validateStep1() {
-      return this.validateDoc && this.validateName && this.validateLastname;
-    }
+
+    // validateNegocioLunes() {
+    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
+    // },
+    // validateNegocioMartes() {
+    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
+    // },
+    // validateNegocioMiercoles() {
+    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
+    // },
+    // validateNegocioJueves() {
+    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
+    // },
+    // validateNegocioViernes() {
+    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
+    // },
+    // validateNegocioSabado() {
+    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
+    // },
+    // validateNegocioDomingo() {
+    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
+    // },
+
+
+
+    // validateDestinoCredito() {
+    //   return this.evaluacion.principal.destino_credito_descripcion.length > 6
+    // },
+
+    // validateStep1() {
+    //   return this.validateFuenteIngreso && this.validateDestinoCredito;
+    // }
   },
   methods: {
 
@@ -919,13 +927,22 @@ export default {
     },
     guardar() {
       axios.post("/evaluaciones/cuantitativa", this.evaluacion).then(res => {
-        this.$toast.success(
-            "La evaluación fue realizada",
-            "Exitoso",
-            this.notificationSystem.options.success
-          )
-      // this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
-      });
+            if(response.data.success){
+                this.$toast.success(
+                    "La Evalación fue realizada",
+                    "Exitoso",
+                    toastOptions.success
+                  ) 
+                  // this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
+            }else{
+                this.$toast.error(
+                  "Error Evaluación",
+                  "Error",
+                  toastOptions.error
+                )
+            }
+      
+      }); 
     },
  
     conyugeIngresosSubtotal(index) {

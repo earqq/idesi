@@ -44,7 +44,6 @@ Route::group(['middleware'=>['auth']],function(){
 
         Route::get('/rol/selectRol', 'RolController@selectRol');
         Route::get('/rol', 'RolController@rolUser');
-
         Route::get('clientes/listado','ClienteController@index');
         Route::get('clientes/listado/juridico','ClienteController@indexJuridico');
         Route::post('clientes/nuevo', 'ClienteController@store');

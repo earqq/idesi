@@ -710,10 +710,7 @@ class ClienteController extends Controller
 
             DB::beginTransaction();
             
-            $cliente = Cliente::where('documento',$request->cliente['documento'])->first();
-            // $cliente->departamentos_id = $request->cliente['departamentos_id'];
-            // $cliente->distritos_id= $request->cliente['distritos_id'];
-            // $cliente->provincias_id = $request->cliente['provincias_id'];
+            $cliente = Cliente::where('documento',$request->cliente['documento'])->first(); 
             $cliente->save();
 
             $natural = Natural::where('clientes_id',$cliente->id)->first();
@@ -836,36 +833,11 @@ class ClienteController extends Controller
                 $subidos->inscripcion_socio=1;
                 $subidos->save();
             }
-
-            // $cuantitativa = new ResultadoCuantitativa;
-            // $cuantitativa->prestamo_id= $prestamo->id;
-            // $cuantitativa->save();
-
-
-
-
-            // $prestamos= Prestamo::find($prestamo->id);
-            // $cliente = Cliente::where('id',$prestamos->clientes_id)->first();
-            // $avals = Aval::where('prestamos_id',$prestamos->id)->get();
-            // $garantias = Garantia::where('prestamos_id',$prestamos->id)->get();
-
-            // // return $cliente;
-            // $pdf = PDF::loadView('reportes.prestamo',compact('prestamos','cliente','avals','garantias'));
-
-            // if (Storage::put('public/'.$this->getUserDir($prestamos->id) .'/prestamo_'.$prestamo->id.'/documento/prestamo_'.$prestamo->id.'.pdf', $pdf->output())) {
-            //     $file= new Archivo;
-            //     $file->nombre = 'prestamo_'.$prestamo->id;
-            //     $file->tipo = 'documento';
-            //     $file->extension = 'pdf';
-            //     $file->prestamos_id =  $prestamos->id;
-            //     $file->save();
-            // }
     
             DB::commit();
 
             return [
                 'success' => true,
-                'data' => 'Cliente creado',
             ];
 
         } catch (Exception $e){
@@ -886,14 +858,8 @@ class ClienteController extends Controller
 
             DB::beginTransaction();
             
-            $cliente = Cliente::where('documento',$request->cliente['documento'])->first();
-            // $cliente->departamentos_id = $request->cliente['departamentos_id'];
-            // $cliente->distritos_id= $request->cliente['distritos_id'];
-            // $cliente->provincias_id = $request->cliente['provincias_id'];
+            $cliente = Cliente::where('documento',$request->cliente['documento'])->first(); 
             $cliente->save();
-
-  
-
             $juridico = Juridico::where('clientes_id',$cliente->id)->first();
             $juridico->razon_social = $request->juridico['razon_social'];
             $juridico->nombre_comercial = $request->juridico['nombre_comercial'];
@@ -1002,35 +968,11 @@ class ClienteController extends Controller
                 $subidos->save();
             }
 
-            // $cuantitativa = new ResultadoCuantitativa;
-            // $cuantitativa->prestamo_id= $prestamo->id;
-            // $cuantitativa->save();
-
-
-
-
-            // $prestamos= Prestamo::find($prestamo->id);
-            // $cliente = Cliente::where('id',$prestamos->clientes_id)->first();
-            // $avals = Aval::where('prestamos_id',$prestamos->id)->get();
-            // $garantias = Garantia::where('prestamos_id',$prestamos->id)->get();
-
-            // // return $cliente;
-            // $pdf = PDF::loadView('reportes.prestamo',compact('prestamos','cliente','avals','garantias'));
-
-            // if (Storage::put('public/'.$this->getUserDir($prestamos->id) .'/prestamo_'.$prestamo->id.'/documento/prestamo_'.$prestamo->id.'.pdf', $pdf->output())) {
-            //     $file= new Archivo;
-            //     $file->nombre = 'prestamo_'.$prestamo->id;
-            //     $file->tipo = 'documento';
-            //     $file->extension = 'pdf';
-            //     $file->prestamos_id =  $prestamos->id;
-            //     $file->save();
-            // }
     
             DB::commit();
 
             return [
-                'success' => true,
-                'data' => 'Cliente creado',
+                'success' => true, 
             ];
 
         } catch (Exception $e){
