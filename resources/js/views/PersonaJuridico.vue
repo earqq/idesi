@@ -469,10 +469,12 @@ mixins: [serviceNumber],
       }
     },
     next(index) {
-      this.tab = index + 1;
+      window.scrollTo(0,0)
+      this.tab = index + 1
     },
     prev(index) {
-     this.tab = index - 1;
+      window.scrollTo(0,0)
+      this.tab = index - 1
     },
     initForm() {
       this.form = {

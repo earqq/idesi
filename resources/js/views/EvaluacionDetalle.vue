@@ -69,7 +69,7 @@
                 <div class="form_step_wrapper in_bottom">
                   <h3 class="title">Evaluaciones</h3>
 
-                  <div class="empty_message_evaluation" v-if="!form.evaluacion">
+                  <div class="empty_message_evaluation" v-if="form.evaluacion.length == 0">
                     <img src="img/empty.svg" >
                     <h1> Sin Evaluaciones </h1>
                     <p>Todavia no se han relizado evaluaciones a este prestamo</p>
@@ -563,7 +563,9 @@ export default {
       estado_evaluado: 0,
       rol: '', 
       prestamo:{},
-      form: {},
+      form: {
+        evaluacion: []
+      },
       notificationSystem: {
         options: {
           success: {
@@ -717,7 +719,7 @@ export default {
       box-shadow: $shadow
       position: sticky
       top: 55px
-      z-index: 11
+      z-index: 8
       border-bottom: 1px solid $line_color
       .tab
         width: 100px
@@ -766,7 +768,7 @@ export default {
           font-size: 12px
           width: 220px
           text-align: center
-          line-height: 1.3
+          line-height: 1.4
       table
         thead, tbody
           tr

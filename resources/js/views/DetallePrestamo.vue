@@ -72,7 +72,12 @@
 
             <div class="form_step_wrapper in_bottom">
               <h3 class="title">Evaluaciones</h3>
-              <div class="table_wrapper">
+              <div class="empty_message_evaluation" v-if="evaluacion.length == 0">
+                <img src="img/empty.svg" >
+                <h1> Sin Evaluaciones </h1>
+                <p>Todavia no se han relizado evaluaciones a este prestamo</p>
+              </div>
+              <div class="table_wrapper" v-else>
                 <table class="table_evaluations no_hover">
                   <thead>
                     <tr>
@@ -86,8 +91,7 @@
                     <tr
                       v-for="evaluacion in evaluacion"
                       :key="evaluacion.id"
-                      :class="{final_result: evaluacion.idrol == 4}"
-                    >
+                      :class="{final_result: evaluacion.idrol == 4}">
                       <td v-text="evaluacion.name"></td>
                       <td v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
                       <td>{{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
@@ -420,6 +424,28 @@ export default {
 .credit_detail_content
   .create_client_content
     margin: 20px 0
+    .empty_message_evaluation
+      display: flex
+      align-items: center
+      justify-content: center
+      flex-direction: column
+      padding: 20px
+      height: 250px
+      overflow: hidden
+      img
+        width: 120px
+      h1
+        margin: 0
+        font-size: 14px
+        margin-top: 15px
+        margin-bottom: 5px
+        font-weight: 600
+      p
+        margin: 0
+        font-size: 12px
+        width: 220px
+        text-align: center
+        line-height: 1.4
     table.table_evaluations
         thead, tbody
           tr

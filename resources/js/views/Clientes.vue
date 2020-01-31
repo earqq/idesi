@@ -38,6 +38,17 @@
 
         <div class="table_grid"  v-if=" type_list=='1'">
           <article class="client_card" v-for="cliente in clientes" :key="cliente.id" >
+            <div class="options">
+              <i class="material-icons-outlined" >more_horiz</i>
+              <ul>
+                <li>
+                  Editar
+                </li>
+                <li>
+                  Nuevo Prestamo
+                </li>
+              </ul>   
+            </div>
             <router-link :to="{ name:'perfil', params: { documento: cliente.documento,persona:form.tipo_persona } }">
               <div class="detail">
                 <div class="avatar">
@@ -45,13 +56,7 @@
                   <div class="avatar_alt" v-else>{{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }}</div>
                 </div>
                 <p class="card-document">{{cliente.apellidos || cliente.razon_social}}</p>
-                <small class="card-name" >{{cliente.nombres}}</small>
-              </div>
-              <div class="phone">
-                <i class="material-icons-outlined"> phone </i>
-                <span>
-                  {{cliente.celular}}
-                </span>
+                <small class="card-name" >{{cliente.nombres || cliente.documento}}</small>
               </div>
             </router-link>
           </article>
@@ -95,6 +100,9 @@
                       </router-link>
                     </li>
                     <li>
+                      Editar
+                    </li>
+                    <li>
                         Nuevo Prestamo
                     </li>
                   </ul>
@@ -134,8 +142,8 @@ export default {
             position: "topRight"
           }
         }
-      }, 
-    };
+      }
+    }
   },
   async created() {
     await this.initForm();
@@ -269,6 +277,69 @@ export default {
         box-sizing: border-box
         transition: all ease-in-out .3s
         border: 1px solid $line_color
+        .options
+          display: flex
+          align-items: center
+          justify-content: center
+          width: 40px
+          height: 27px
+          cursor: pointer
+          position: relative
+          float: right
+          &:hover
+            i
+              opacity: 1
+            ul
+              display: block
+          i
+            cursor: pointer
+            opacity: .5
+            color: $text_color
+          ul
+            position: absolute
+            background-color: #fff
+            box-shadow: $shadow_hover
+            border-radius: 4px
+            top: 30px
+            right: 6px
+            font-size: 12px
+            z-index: 4
+            width: 140px
+            transition: opacity ease 200ms
+            padding: 10px 0
+            display: none
+            border: 1px solid $line_color
+            &::before
+              position: absolute
+              display: block
+              content: ''
+              width: 12px
+              height: 12px
+              background-color: white
+              top: -7px
+              right: 7px
+              transform: rotateZ(45deg)
+              border-top: 1px solid #f3f1f1
+              border-left: 1px solid #f3f1f1
+            li
+              height: 35px
+              line-height: 38px
+              cursor: pointer
+              text-align: left
+              padding-left: 20px
+              color: $primary_color
+              list-style: none
+              color: black
+              &:hover
+                  background-color: $bg_color
+              a
+                text-decoration: none
+                color: $primary_color
+                height: 100%
+                width: 100%
+                display: block
+                text-decoration: none
+                color: black
         &:hover
           box-shadow: $shadow_hover
         a
@@ -278,7 +349,7 @@ export default {
             flex-direction: column
             align-items: center
             justify-content: center
-            padding: 30px 20px
+            padding: 40px 20px
             width: 100%
             .avatar
               .avatar_alt
@@ -309,23 +380,6 @@ export default {
             small
               font-size: 10px
               display: block
-          .phone
-            display: flex
-            justify-content: space-between
-            align-items: center
-            width: 100%
-            padding: 10px 20px
-            border-top: 1px solid $line_color
-            i
-              font-size: 18px
-              color: $primary_color
-            span
-              flex: 1
-              text-align: center
-              font-size: 12px
-              color: $text_color
-              font-weight: 500
-              margin-bottom: -2px
     .table_wrapper
       padding: 0 20px
       box-sizing: border-box

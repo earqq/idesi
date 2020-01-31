@@ -114,14 +114,14 @@ export default {
                     }
                 },
                 stroke: {
-                    colors: ["#21396f", "#FF003D", "#FF8A00"],
+                    colors: ["#0061FE", "#FF003D", "#FF8A00"],
                     width: 2,
                     curve: 'smooth'
                 },
                 dataLabels: {
                     enabled: false
                 },
-                colors: ["#21396f", "#FF003D", "#FF8A00"],
+                colors: ["#0061FE", "#FF003D", "#FF8A00"],
                 xaxis: {
                     categories: ['Ene', 'Feb', 'Mar', 'Abr','May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
                 },
@@ -286,7 +286,7 @@ export default {
                                 margin-left: 10px
                                 text-align: left
                         .progress_bar
-                            width: 100px
+                            width: 150px
                             display: flex
                             align-items: center
                             span

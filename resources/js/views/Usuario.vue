@@ -1,194 +1,179 @@
 <template>
-    <div class="">
+    <div class="users_content">
 
-        <div class="container-fluid">
-                <!-- Ejemplo de tabla Listado -->
-                <div class="card">
-                    <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Lista de Usuarios 
-                        <button type="button" @click="abrirModal('persona','registrar')" class="btn btn-success">
-                            <i class="icon-plus"></i>&nbsp;Registra nuevo usuario
-                        </button>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <select class="form-control col-md-3" v-model="criterio">
-                                      <option value="name">Nombre</option>
-                                      <option value="num_documento">Documento</option>
-                                      <option value="email">Email</option>
-                                      <option value="telefono">Teléfono</option>
-                                    </select>
-                                    <input type="text" v-model="buscar" @change="listarPersona(1,buscar,criterio)" class="form-control" placeholder="Texto a buscar">
-                                    <button type="submit" @click="listarPersona(1,buscar,criterio)" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
-                                </div>
-                            </div>
+        <div class="modal_content" v-if="flagModalUser">
+          <div class="modal_wrapper">
+            <div class="title"> 
+              <h1> {{tipoAccion == 1 ? 'Crear' : 'Actualizar'}} Usuario </h1>
+              <i  @click="closeModal()" class="material-icons-outlined">close</i>
+            </div>
+            <form>
+
+                <div class="input_wrapper">
+                    <label>Tipo documento</label>
+                    <select v-model="tipo_documento">
+                        <option value="DNI">DNI</option>
+                        <option value="RUC">RUC</option>
+                        <option value="CEDULA">CEDULA</option>
+                        <option value="PASS">PASS</option>
+                    </select>                                        
+                </div>
+
+                <div class="input_wrapper">
+                    <label>Número documento</label>
+                    <input type="email" v-model="num_documento">
+                </div>
+
+                <div class="input_wrapper">
+                    <label>Nombre</label>
+                    <input type="text" v-model="name" >                                        
+                </div>
+                
+                
+                <div class="input_wrapper">
+                    <label>Dirección</label>
+                    <input type="email" v-model="direccion">
+                </div>
+
+                <div class="input_wrapper">
+                    <label>Teléfono</label>
+                    <input type="email" v-model="telefono">
+                </div> 
+
+                <div class="input_wrapper">
+                    <label>Email</label>
+                    <input type="email" v-model="email">
+                </div>
+
+                <div class="input_wrapper">
+                    <label>Role</label>
+                    <select v-model="idrol" >
+                        <option v-for="role in arrayRol" :key="role.id" :value="role.id" v-text="role.nombre"></option>
+                    </select>
+                </div>
+
+                <div class="input_wrapper">
+                    <label>Usuario</label>
+                    <input type="text" v-model="usuario" >
+                </div>
+
+                <div class="input_wrapper">
+                    <label>Contraseña</label>
+                    <input type="password" v-model="password" >
+                </div>
+
+                <div v-show="errorPersona" class="form-group row div-error">
+                    <div class="text-center text-error">
+                        <div v-for="error in errorMostrarMsjPersona" :key="error" v-text="error">
                         </div>
-                        <table class="table table-bordered table-striped table-sm">
-                            <thead>
-                                <tr>
-                                    <th>Opciones</th>
-                                    <th>Nombre</th>
-                                    <th>Tipo Documento</th>
-                                    <th>Número</th>
-                                    <th>Dirección</th>
-                                    <th>Teléfono</th>
-                                    <th>Email</th>
-                                    <th>Usuario</th>
-                                    <th>Role</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="persona in arrayPersona" :key="persona.id">
-                                    <td>
-                                        <button type="button" @click="abrirModal('persona','actualizar',persona)" class="btn btn-warning btn-sm">
-                                          <i class="fas fa-pencil-alt"></i>
-                                        </button> &nbsp;
-                                        <template v-if="persona.condicion">
-                                            <button type="button" class="btn btn-danger btn-sm" @click="desactivarUsuario(persona.id)">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </template>
-                                        <template v-else>
-                                            <button type="button" class="btn btn-info btn-sm" @click="activarUsuario(persona.id)">
-                                                <i class="fas fa-check-circle"></i>
-                                            </button>
-                                        </template>
-                                    </td>
-                                    <td v-text="persona.name"></td>
-                                    <td v-text="persona.tipo_documento"></td>
-                                    <td v-text="persona.num_documento"></td>
-                                    <td v-text="persona.direccion"></td>
-                                    <td v-text="persona.telefono"></td>
-                                    <td v-text="persona.email"></td>
-                                    <td v-text="persona.usuario"></td>
-                                    <td v-text="persona.rol"></td>
-                                </tr>                                
-                            </tbody>
-                        </table>
-                        <nav>
-                            <ul class="pagination">
-                                <li class="page-item" v-if="pagination.current_page > 1">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
-                                </li>
-                                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActived ? 'active' : '']">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(page,buscar,criterio)" v-text="page"></a>
-                                </li>
-                                <li class="page-item" v-if="pagination.current_page < pagination.last_page">
-                                    <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)">Sig</a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
-                <!-- Fin ejemplo de tabla Listado -->
+
+            </form>
+            <button type="button" v-if="tipoAccion==1" class="button_primary medium" @click="registrarPersona()">
+              <span>
+              REGISTRAR
+              </span>
+            </button>
+            <button type="button" v-if="tipoAccion==2" class="button_primary medium" @click="actualizarPersona()">
+              <span>ACTUALIZAR</span> 
+            </button>
+          </div>
+        </div>
+
+        <div class="options_bar">
+            <div class="search_bar">
+            <i class="material-icons-outlined">search</i>
+                <input type="text" placeholder="Buscar Usuario">
             </div>
+            <div class="switch_view">
+            <a @click="type_list = 1" :class="{selected: type_list == 1}">
+                <i class="material-icons-outlined">border_all</i>
+            </a>
+            <a @click="type_list = 0" :class="{selected: type_list == 0}">
+                <i class="material-icons-outlined">notes</i>
+            </a>
+            </div>
+    
+            <a class="add_client button_primary medium" @click="openModal()">
+                <span>
+                    NUEVO USUARIO
+                </span>
+                <i class="material-icons-outlined">add</i>
+            </a>
+        </div>
 
-        <!--Inicio del modal agregar/actualizar-->
-            <div class="modal fade" tabindex="-1" :class="{'mostrar' : modal}" role="dialog" aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog modal-primary modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" v-text="tituloModal"></h4>
-                            <button type="button" class="close" @click="cerrarModal()" aria-label="Close">
-                              <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-
-                                 <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Tipo documento</label>
-                                    <div class="col-md-9">
-                                        <select v-model="tipo_documento" class="form-control">
-                                            <option value="DNI">DNI</option>
-                                            <option value="RUC">RUC</option>
-                                            <option value="CEDULA">CEDULA</option>
-                                            <option value="PASS">PASS</option>
-                                        </select>                                        
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Número documento</label>
-                                    <div class="col-md-9">
-                                        <input type="email" v-model="num_documento" class="form-control" placeholder="Número de documento">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="text-input">Nombre(*)</label>
-                                    <div class="col-md-9">
-                                        <input type="text" v-model="name" class="form-control" placeholder="Nombre de la persona">                                        
-                                    </div>
-                                </div>
-                               
-                                
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Dirección</label>
-                                    <div class="col-md-9">
-                                        <input type="email" v-model="direccion" class="form-control" placeholder="Dirección">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Teléfono</label>
-                                    <div class="col-md-9">
-                                        <input type="email" v-model="telefono" class="form-control" placeholder="Teléfono">
-                                    </div>
-                                </div> 
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Email</label>
-                                    <div class="col-md-9">
-                                        <input type="email" v-model="email" class="form-control" placeholder="Email">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Role</label>
-                                    <div class="col-md-9">
-                                        <select v-model="idrol" class="form-control">
-                                            <option value="0" disabled>Seleccione</option>
-                                            <option v-for="role in arrayRol" :key="role.id" :value="role.id" v-text="role.nombre"></option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">Usuario</label>
-                                    <div class="col-md-9">
-                                        <input type="text" v-model="usuario" class="form-control" placeholder="Nombre del usuario">
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-md-3 form-control-label" for="email-input">password</label>
-                                    <div class="col-md-9">
-                                        <input type="password" v-model="password" class="form-control" placeholder="password del usuario">
-                                    </div>
-                                </div>
-
-                                <div v-show="errorPersona" class="form-group row div-error">
-                                    <div class="text-center text-error">
-                                        <div v-for="error in errorMostrarMsjPersona" :key="error" v-text="error">
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" @click="cerrarModal()">Cerrar</button>
-                            <button type="button" v-if="tipoAccion==1" class="btn btn-success" @click="registrarPersona()">Registrar Usuario</button>
-                            <button type="button" v-if="tipoAccion==2" class="btn btn-success" @click="actualizarPersona()">Actualizar Usuario</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
+        <div class="table_container">
+            <div class="table_grid"  v-if="type_list=='1'">
+              <article class="user_card" v-for="persona in arrayPersona" :key="persona.id" >
+                <div class="options">
+                  <i class="material-icons-outlined" >more_horiz</i>
+                  <ul>
+                    <li @click="openEditModal(persona)">
+                      Editar
+                    </li>
+                    <li v-if="persona.condicion" @click="desactivarUsuario(persona.id)">
+                      Desactivar
+                    </li>
+                    <li v-else  @click="activarUsuario(persona.id)">
+                      Activar
+                    </li>
+                  </ul>   
                 </div>
-                <!-- /.modal-dialog -->
+                <div class="detail">
+                  <div class="avatar">
+                    <img src="https://picsum.photos/100/100" v-if="false"/>
+                    <div class="avatar_alt" v-else>{{ persona.name.substring(0,1) }}</div>
+                  </div>
+                  <p class="card-document">{{persona.name}}</p>
+                  <small class="card-name" >{{persona.rol}}</small>
+                </div>
+              </article>
+              <a v-show="arrayPersona.length < 6" class="spanner" v-for="i in 6" :key="i*1.3"  >
+              </a>
             </div>
-            <!--Fin del modal-->
+
+            <div class="table_wrapper" v-else>
+                <table class="table_clients">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Número</th>
+                            <th>Teléfono</th>
+                            <th>Email</th>
+                            <th>Usuario</th>
+                            <th>Role</th>
+                            <th class="options">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="persona in arrayPersona" :key="persona.id">
+                            <td v-text="persona.name"></td>
+                            <td v-text="persona.num_documento"></td>
+                            <td v-text="persona.telefono"></td>
+                            <td v-text="persona.email"></td>
+                            <td v-text="persona.usuario"></td>
+                            <td v-text="persona.rol"></td>
+                            <td class="options">
+                              <i class="material-icons-outlined" >more_horiz</i>
+                              <ul>
+                                <li @click="openEditModal(persona)">
+                                  Editar
+                                </li>
+                                <li v-if="persona.condicion" @click="desactivarUsuario(persona.id)">
+                                  Desactivar
+                                </li>
+                                <li v-else  @click="activarUsuario(persona.id)">
+                                  Activar
+                                </li>
+                              </ul>
+                            </td>
+                        </tr>                                
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
     </div>
 </template>
 
@@ -196,6 +181,7 @@
     export default {
         data (){
             return {
+                flagModalUser: false, 
                 persona_id: 0,
                 name : '',
                 tipo_documento : '',
@@ -210,7 +196,7 @@
                 arrayRol : [],
                 modal : 0,
                 tituloModal : '',
-                tipoAccion : 0,
+                tipoAccion : 1,
                 errorPersona : 0,
                 errorMostrarMsjPersona : [],
                 pagination : {
@@ -227,15 +213,17 @@
                 loading: true,
                 loaderCargaPagina: 0,
                 notificationSystem: {
-                options: {
-                success: {
-                    position: "topRight"
+                    options: {
+                        success: {
+                            position: "topRight"
+                        },
+                        error: {
+                            position: "topRight"
+                        }
+                    }
                 },
-                error: {
-                    position: "topRight"
-                }
-                }
-            },
+                type_list: 1
+
             }
         },
         computed:{
@@ -302,13 +290,10 @@
                 //Envia la petición para visualizar la data de esa página
                 me.listarPersona(page,buscar,criterio);
             },
-            registrarPersona(){
+            registrarPersona (){
                 if (this.validarPersona()){
                     return;
                 }
-                
-                let me = this;
-
                 axios.post('/user/registrar',{
                     'name': this.name,
                     'tipo_documento': this.tipo_documento,
@@ -320,20 +305,17 @@
                     'usuario': this.usuario,
                     'password': this.password
 
-                }).then(function (response) {
-                    me.cerrarModal();
-                    me.listarPersona(1,'','name');
-                }).catch(function (error) {
+                }).then( response => {
+                    this.flagModalUser = false
+                    this.listarPersona(1,'','name');
+                }).catch( error => {
                     console.log(error);
-                });
+                })
             },
             actualizarPersona(){
                if (this.validarPersona()){
                     return;
                 }
-                
-                let me = this;
-
                 axios.put('/user/actualizar',{
                     'name': this.name,
                     'tipo_documento': this.tipo_documento,
@@ -345,10 +327,10 @@
                     'usuario': this.usuario,
                     'password': this.password,
                     'id': this.persona_id
-                }).then(function (response) {
-                    me.cerrarModal();
-                    me.listarPersona(1,'','name');
-                }).catch(function (error) {
+                }).then( response => {
+                    this.flagModalUser = false
+                    this.listarPersona(1,'','name');
+                }).catch( error => {
                     console.log(error);
                 }); 
             },
@@ -364,63 +346,48 @@
 
                 return this.errorPersona;
             },
-            cerrarModal(){
-                this.modal=0;
-                this.tituloModal='';
-                this.name='';
-                this.tipo_documento='DNI';
-                this.num_documento='';
-                this.direccion='';
-                this.telefono='';
-                this.email='';
-                this.usuario='';
-                this.password='';
-                this.idrol=0;
-                this.errorPersona=0;
+            closeModal(){
+                this.flagModalUser = false
+                this.modal=0
+                this.tituloModal=''
+                this.name=''
+                this.tipo_documento='DNI'
+                this.num_documento=''
+                this.direccion=''
+                this.telefono=''
+                this.email=''
+                this.usuario=''
+                this.password=''
+                this.idrol=0
+                this.errorPersona=0
             },
-            abrirModal(modelo, accion, data = []){
-                this.selectRol();
-                switch(modelo){
-                    case "persona":
-                    {
-                        switch(accion){
-                            case 'registrar':
-                            {
-                                this.modal = 1;
-                                this.tituloModal = 'Registrar Usuario';
-                                this.name= '';
-                                this.tipo_documento='DNI';
-                                this.num_documento='';
-                                this.direccion='';
-                                this.telefono='';
-                                this.email='';
-                                this.usuario='';
-                                this.password='';
-                                this.idrol=0;
-                                this.tipoAccion = 1;
-                                break;
-                            }
-                            case 'actualizar':
-                            {
-                                //console.log(data);
-                                this.modal=1;
-                                this.tituloModal='Actualizar Usuario';
-                                this.tipoAccion=2;
-                                this.persona_id=data['id'];
-                                this.name = data['name'];
-                                this.tipo_documento = data['tipo_documento'];
-                                this.num_documento = data['num_documento'];
-                                this.direccion = data['direccion'];
-                                this.telefono = data['telefono'];
-                                this.email = data['email'];
-                                this.usuario = data['usuario'];
-                                this.password=data['password'];
-                                this.idrol=data['idrol'];
-                                break;
-                            }
-                        }
-                    }
-                }
+            openEditModal (data) {
+              this.tipoAccion = 2
+              this.flagModalUser = true
+              this.persona_id=data['id']
+              this.name = data['name']
+              this.tipo_documento = data['tipo_documento']
+              this.num_documento = data['num_documento']
+              this.direccion = data['direccion']
+              this.telefono = data['telefono']
+              this.email = data['email']
+              this.usuario = data['usuario']
+              this.password=data['password']
+              this.idrol=data['idrol']
+            },
+            openModal(){
+              this.tipoAccion = 1
+              this.flagModalUser = true
+              this.name= ''
+              this.tipo_documento='DNI'
+              this.num_documento=''
+              this.direccion=''
+              this.telefono=''
+              this.email=''
+              this.usuario=''
+              this.password=''
+              this.idrol=0
+                // this.selectRol();
             },
             desactivarUsuario(id){
                const swalWithBootstrapButtons = Swal.mixin({
@@ -523,23 +490,210 @@
     }
 </script>
 
-<style>    
-    .modal-content{
-        width: 100% !important;
-        position: absolute !important;
-    }
-    .mostrar{
-        display: list-item !important;
-        opacity: 1 !important;
-        position: absolute !important;
-        background-color: #3c29297a !important;
-    }
-    .div-error{
-        display: flex;
-        justify-content: center;
-    }
-    .text-error{
-        color: red !important;
-        font-weight: bold;
-    }
+<style lang="sass">
+@import "../../sass/variables"
+.users_content
+    .options_bar
+        display: grid
+        grid-template-columns: 1fr 120px 200px
+        grid-gap: 15px
+        padding: 20px
+        box-sizing: border-box 
+        .add_client
+            width: 200px
+        .search_bar
+            border-radius: 3px
+            background-color: white
+            box-shadow: $shadow
+            flex: 1
+            height: 40px
+            display: flex
+            align-items: center
+            padding: 0 15px
+            border: 1px solid $line_color
+            i
+                font-size: 20px
+            input, select
+                border: none
+                font-family: $font
+                height: 100%
+                font-size: 13px
+                &:hover, &:focus
+                outline: none
+            input
+                flex: 1
+                padding-left: 10px
+            select
+                border-left: 1px solid $line_color
+                padding: 0 15px
+                box-sizing: border-box
+        .switch_view
+            border-radius: 3px
+            background-color: white
+            box-shadow: $shadow
+            flex: 1
+            height: 40px
+            display: flex
+            border: 1px solid $line_color
+            a
+                height: 100%
+                flex: 1
+                flex-basis: 0
+                display: flex
+                justify-content: center
+                align-items: center
+                cursor: pointer
+                color: rgba($text_color, .3)
+                user-select: none
+                &.selected
+                    i
+                        color: $primary_color
+                i
+                    font-size: 20px
+                &:first-child
+                    border-right: 1px solid $line_color
+    .table_container
+      .table_grid
+        display: grid
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr) )
+        grid-gap: 15px
+        padding: 0 20px
+        box-sizing: border-box
+        .user_card
+          background-color: white
+          border-radius: 4px
+          box-shadow: $shadow
+          box-sizing: border-box
+          transition: all ease-in-out .3s
+          border: 1px solid $line_color
+          .options
+            display: flex
+            align-items: center
+            justify-content: center
+            width: 40px
+            height: 27px
+            cursor: pointer
+            position: relative
+            float: right
+            &:hover
+              i
+                opacity: 1
+              ul
+                display: block
+            i
+              cursor: pointer
+              opacity: .5
+              color: $text_color
+            ul
+              position: absolute
+              background-color: #fff
+              box-shadow: $shadow_hover
+              border-radius: 4px
+              top: 30px
+              right: 6px
+              font-size: 12px
+              z-index: 4
+              width: 140px
+              transition: opacity ease 200ms
+              padding: 10px 0
+              display: none
+              border: 1px solid $line_color
+              &::before
+                position: absolute
+                display: block
+                content: ''
+                width: 12px
+                height: 12px
+                background-color: white
+                top: -7px
+                right: 7px
+                transform: rotateZ(45deg)
+                border-top: 1px solid #f3f1f1
+                border-left: 1px solid #f3f1f1
+              li
+                height: 35px
+                line-height: 38px
+                cursor: pointer
+                text-align: left
+                padding-left: 20px
+                color: $primary_color
+                list-style: none
+                color: black
+                &:hover
+                    background-color: $bg_color
+                a
+                  text-decoration: none
+                  color: $primary_color
+                  height: 100%
+                  width: 100%
+                  display: block
+                  text-decoration: none
+                  color: black
+          &:hover
+            box-shadow: $shadow_hover
+          .detail
+            display: flex
+            flex-direction: column
+            align-items: center
+            justify-content: center
+            padding: 40px 20px
+            width: 100%
+            .avatar
+              .avatar_alt
+                width: 55px
+                height: 55px
+                background-color: $line_color
+                border-radius: 50%
+                display: flex
+                align-items: center
+                justify-content: center
+                font-size: 17px
+                font-weight: 600
+                color: $primary_color
+              img
+                width: 55px
+                height: 55px
+                border-radius: 50%
+                object-fit: cover
+            p, small
+              color: $text_color
+              margin: 0
+            p
+              font-weight: 500
+              font-size: 12px
+              margin-top: 10px
+              text-align: center
+              line-height: 1.3
+            small
+              font-size: 11px
+              display: block
+      .table_wrapper
+        padding: 0 20px
+        box-sizing: border-box
+        .table_clients
+          box-shadow: $shadow
+          border: 1px solid $line_color
+          tbody
+            .client
+              .avatar
+                .avatar_alt
+                  width: 30px
+                  height: 30px
+                  background-color: $line_color
+                  border-radius: 50%
+                  display: flex
+                  align-items: center
+                  justify-content: center
+                  font-size: 13px
+                  font-weight: 600
+                  color: $primary_color
+                img
+                  width: 30px
+                  height: 30px
+                  border-radius: 50%
+                  object-fit: cover
+              p
+                margin: 0
+                margin-left: 10px
+                text-align: left
 </style>
