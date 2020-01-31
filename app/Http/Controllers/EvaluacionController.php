@@ -147,7 +147,7 @@ class EvaluacionController extends Controller
 
         if(Auth::user()->idrol==4){
 
-            if($prestamo->users_id == Auth::user()->id && $prestamo->estado =='PENDIENTE' ){
+            if($prestamo->estado =='PENDIENTE' ){
                 $estado_evaluado = 1;
             }
         }else{
