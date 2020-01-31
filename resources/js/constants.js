@@ -1,3 +1,19 @@
+
+export const toastOptions  = {
+    success: {
+        position: "topRight",
+        color: "blue",
+        animateInside: false,
+        timeout: 3000
+    },
+    error: {
+        position: "topRight",
+        color: "red",
+        animateInside: false,
+        timeout: 4000
+    }
+}
+
 export const STYLES_MAP = [
     {
         "featureType": "all",

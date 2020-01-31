@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { toastOptions } from '../constants.js'
 export default {
   data () {
     return {
@@ -99,6 +100,17 @@ export default {
         this.tab = to.name
         next()
     })
+    this.$toast.success(
+      "El prestamo fue creado",
+      "Exitoso",
+      toastOptions.success
+    )
+
+    this.$toast.error(
+      "El prestamo fue creado",
+      "Error",
+      toastOptions.error
+    )
   }
 }
 </script>

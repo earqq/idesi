@@ -28,3 +28,36 @@
         i
             font-size: 20px
             margin-top: -2px
+
+.iziToast
+    background: rgb(255, 255, 255) !important
+    border-color: rgb(255, 255, 255) !important
+    min-width: 250px  !important
+    &.iziToast-color-red
+        .iziToast-body
+            .iziToast-title
+                color: $require_color !important
+        .iziToast-progressbar > div
+            background: $require_color !important
+    .iziToast-progressbar > div
+        background: $primary_color !important
+    .iziToast-body
+        display: flex
+        align-items: center
+        padding-left: 0 !important
+        .iziToast-texts
+            margin: 0 !important
+        .iziToast-icon
+            transform: scale(.7)
+            display: none !important
+        .iziToast-title
+            padding-right: 10px !important
+            color: $primary_color !important
+        .iziToast-message
+            color: black !important
+        .iziToast-title, .iziToast-message
+            font-size: 12px !important
+            font-family: $font
+            margin: 0 !important
+    &:after
+        box-shadow: $shadow_hover !important
