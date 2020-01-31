@@ -40,32 +40,32 @@
                           </div>
                         </div>
 
-                        <div class="group_form small all">
-                          <div class="input_wrapper">
+                        <div class="group_form small all" >
+                          <div class="input_wrapper" :class="{require: !validateNegocioLunes}">
                             <label>Lunes</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].lunes" v-bind:precision="2"></vue-numeric>
                           </div>
-                          <div class="input_wrapper">
+                          <div class="input_wrapper" :class="{require: !validateNegocioMartes}">
                             <label>Martes</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].martes" v-bind:precision="2"></vue-numeric>
                           </div>
-                          <div class="input_wrapper">
+                          <div class="input_wrapper" :class="{require: !validateNegocioMiercoles}">
                             <label>Miercoles</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].miercoles" v-bind:precision="2"></vue-numeric>
                           </div>
-                          <div class="input_wrapper">
+                          <div class="input_wrapper" :class="{require: !validateNegocioJueves}">
                             <label>Jueves</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].jueves" v-bind:precision="2"></vue-numeric>
                           </div>
-                          <div class="input_wrapper">
+                          <div class="input_wrapper" :class="{require: !validateNegocioViernes}">
                             <label>Viernes</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].viernes" v-bind:precision="2"></vue-numeric>
                           </div>
-                          <div class="input_wrapper">
+                          <div class="input_wrapper" :class="{require: !validateNegocioSabado}">
                             <label>Sabado</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].sabado" v-bind:precision="2"></vue-numeric>
                           </div>
-                          <div class="input_wrapper">
+                          <div class="input_wrapper" :class="{require: !validateNegocioDomingo}">
                             <label>Domingo</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].domingo" v-bind:precision="2"></vue-numeric>
                           </div>
@@ -112,12 +112,12 @@
                       ></v-select>
                     </div>
 
-                    <div class="input_wrapper">
+                    <div class="input_wrapper" :class="{require: !validateNegocioMargen}">
                       <label>Margen de Costo</label>
                       <input type="text" v-model="evaluacion.titular.margen_costo" />
                     </div>
 
-                    <div class="input_wrapper">
+                    <div class="input_wrapper" :class="{require: !validateNegocioValor}">
                       <label>Valor Inventario</label>
                       <input type="text" v-model="evaluacion.titular.valor_inventario" />
                     </div>
@@ -156,23 +156,23 @@
                 <h3 class="title">Gasto del Negocio</h3>
                 <div class="form_content">
                   <div class="group_form">
-                    <div class="input_wrapper">
+                    <div class="input_wrapper" :class="{require: !validateNegocioAlquiler}">
                       <label v-text="evaluacion.titular.gasto_negocio[0].entidad">Alquiler</label>
                       <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[0].pago" v-bind:precision="2"></vue-numeric>
                     </div>
-                    <div class="input_wrapper">
+                    <div class="input_wrapper" :class="{require: !validateNegocioEmpleado}">
                       <label v-text="evaluacion.titular.gasto_negocio[1].entidad">Alquiler</label> 
                       <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[1].pago" v-bind:precision="2"></vue-numeric>
                     </div>
-                    <div class="input_wrapper">
+                    <div class="input_wrapper" :class="{require: !validateNegocioImpuesto}">
                       <label v-text="evaluacion.titular.gasto_negocio[2].entidad">Alquiler</label> 
                       <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[2].pago" v-bind:precision="2"></vue-numeric>
                     </div>
-                    <div class="input_wrapper">
+                    <div class="input_wrapper" :class="{require: !validateNegocioAgua}">
                       <label v-text="evaluacion.titular.gasto_negocio[3].entidad">Alquiler</label> 
                       <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[3].pago" v-bind:precision="2"></vue-numeric>
                     </div>
-                    <div class="input_wrapper">
+                    <div class="input_wrapper" :class="{require: !validateNegocioLuz}">
                       <label v-text="evaluacion.titular.gasto_negocio[4].entidad">Alquiler</label> 
                       <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_negocio[4].pago" v-bind:precision="2"></vue-numeric>
                     </div>
@@ -826,37 +826,61 @@ export default {
   },
     computed: {
 
-    // validateNegocioLunes() {
-    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
-    // },
-    // validateNegocioMartes() {
-    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
-    // },
-    // validateNegocioMiercoles() {
-    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
-    // },
-    // validateNegocioJueves() {
-    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
-    // },
-    // validateNegocioViernes() {
-    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
-    // },
-    // validateNegocioSabado() {
-    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
-    // },
-    // validateNegocioDomingo() {
-    //   return  this.evaluacion.principal.fuente_ingreso.length > 4
-    // },
+    validateNegocioLunes() {
+      return  String(this.evaluacion.titular.ingresos_negocio[0].lunes).length > 1
+    },
+    validateNegocioMartes() {
+      return  String(this.evaluacion.titular.ingresos_negocio[0].martes).length > 1
+    },
+    validateNegocioMiercoles() {
+      return  String(this.evaluacion.titular.ingresos_negocio[0].miercoles).length > 1
+    },
+    validateNegocioJueves() {
+      return  String(this.evaluacion.titular.ingresos_negocio[0].jueves).length > 1
+    },
+    validateNegocioViernes() {
+      return  String(this.evaluacion.titular.ingresos_negocio[0].viernes).length > 1
+    },
+    validateNegocioSabado() {
+      return  String(this.evaluacion.titular.ingresos_negocio[0].sabado).length > 1
+    },
+    validateNegocioDomingo() {
+      return  String(this.evaluacion.titular.ingresos_negocio[0].domingo).length > 1
+    },
+
+    validateNegocioMargen() {
+      return  this.evaluacion.titular.margen_costo.length > 1
+    },
+
+    validateNegocioValor() {
+      return  this.evaluacion.titular.valor_inventario.length > 1
+    },
+
+    validateNegocioAlquiler() {
+      return  String(this.evaluacion.titular.gasto_negocio[0].pago).length > 1
+    },
+
+      validateNegocioEmpleado() {
+      return  String(this.evaluacion.titular.gasto_negocio[1].pago).length > 1
+    },
+
+      validateNegocioImpuesto() {
+      return  String(this.evaluacion.titular.gasto_negocio[2].pago).length > 1
+    },
+
+      validateNegocioAgua() {
+      return  String(this.evaluacion.titular.gasto_negocio[3].pago).length > 1
+    },
+
+      validateNegocioLuz() {
+      return  String(this.evaluacion.titular.gasto_negocio[4].pago).length > 1
+    },
 
 
 
-    // validateDestinoCredito() {
-    //   return this.evaluacion.principal.destino_credito_descripcion.length > 6
-    // },
-
-    // validateStep1() {
-    //   return this.validateFuenteIngreso && this.validateDestinoCredito;
-    // }
+    validateStep1() {
+      // return this.validateFuenteIngreso && this.validateDestinoCredito;
+    }
   },
   methods: {
 

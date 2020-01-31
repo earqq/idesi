@@ -37,7 +37,7 @@
           <div class="client_forms_wrapper">
             <div v-show="tab == 1" class="form_step">
               <div class="form_step_wrapper">
-                <h3 class="title">Datos Princisspales</h3>
+                <h3 class="title">Datos Principales</h3>
                 <div class="form_content">
                   <div class="group_form">
                     <div class="input_wrapper" :class="{require: !validateFuenteIngreso}">
@@ -580,7 +580,7 @@ export default {
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
         principal: {
-          destino_credito_descripcion: "asdasdasdsad",
+          destino_credito_descripcion: "",
           destino_credito: "Capital de trabajo",
           fuente_ingreso: ""
         },
@@ -698,9 +698,10 @@ export default {
     },
     guardar() {
       this.loading_submit=1
-      axios.post("/evaluaciones/cualitativa", this.evaluacion).then(res => {
+      axios.post("/evaluaciones/cualitativa", this.evaluacion).then(response => {
          
-            if(response.data.success){
+          console.log(response.data)
+            if(response.data.success){ 
                 this.$toast.success(
                     "La Evalación fue realizada",
                     "Exitoso",

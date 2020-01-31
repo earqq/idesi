@@ -466,8 +466,7 @@
         </div>
       </div>
     </div>
-
-    <p>{{estado_evaluado==1 && prestamo.estado=='PENDIENTE' && (rol=='3' || rol=='4')}}</p>
+ 
     <aside class="evaluation" v-if="estado_evaluado==1 && prestamo.estado=='PENDIENTE' && (rol=='3' || rol=='4')">
       <div class="title">Evaluador</div>
       <div class="evaluation_wrapper">

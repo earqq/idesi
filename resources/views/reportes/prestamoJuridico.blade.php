@@ -7,7 +7,7 @@
     <title>Document</title>
     <style>
         body{
-            font-family: monospace;
+            font-family: sans-serif;
         }
         /* span{
             border: 1px solid #cbcbcb;
@@ -73,7 +73,7 @@
             <table style="width: 100%;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">TITULAR</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">TITULAR</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -103,7 +103,7 @@
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">REPRESENTANTE LEGAL</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">REPRESENTANTE LEGAL</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -205,7 +205,7 @@
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">GARANTIA</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">GARANTIA</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -223,7 +223,7 @@
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">PROPUESTA DEL ANALISTA</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">PROPUESTA DEL ANALISTA</th>
                         <th style="background: #fff;border: 1px solid #e4e4e4;"> <span > </span> </th>
                     </tr>
                 </thead>
@@ -266,7 +266,7 @@
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                     <thead>
                         <tr>
-                            <th colspan="2" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">COMITÉ DE CRÉDITO</th>
+                            <th colspan="2" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">COMITÉ DE CRÉDITO</th>
                             <th style="background: #fff;border: 1px solid #e4e4e4;"> <span > </span> </th>
                         </tr>
                     </thead>

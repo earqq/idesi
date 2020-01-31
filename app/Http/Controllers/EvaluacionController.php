@@ -49,14 +49,15 @@ class EvaluacionController extends Controller
             $prestamo = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
             ->join('naturals','clientes.id',"=","naturals.clientes_id")
             ->select('clientes.documento','naturals.nombres','naturals.apellidos','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
-            // ->where('prestamos.users_id',Auth::user()->id)
-            ->orwhere('clientes.documento', 'LIKE', "%{$request->search_input}%")
-            ->orWhere('naturals.nombres', 'LIKE', "%{$request->search_input}%")
-            ->orWhere('naturals.apellidos', 'LIKE', "%{$request->search_input}%")
-            ->orWhere('prestamos.producto', 'LIKE', "%{$request->search_input}%")
-            ->orWhere('prestamos.estado', 'LIKE', "%{$request->search_input}%")
+            ->where('prestamos.users_id','=', Auth::user()->id)
+            // ->orWhere(function($q) use($request){
+            //     $q->orWhere('clientes.documento', 'LIKE', "%{$request->search_input}%");
+            //     $q->orWhere('naturals.nombres', 'LIKE', "%{$request->search_input}%");
+            //     $q->orWhere('naturals.apellidos', 'LIKE', "%{$request->search_input}%");
+            //     $q->orWhere('prestamos.producto', 'LIKE', "%{$request->search_input}%");
+            //     $q->orWhere('prestamos.estado', 'LIKE', "%{$request->search_input}%");
+            // })
             ->get();
-                $usuario = Auth::user()->id; 
                 $rol =  Auth::user()->idrol;
                 return compact('prestamo','rol');
         }
@@ -82,11 +83,11 @@ class EvaluacionController extends Controller
             $prestamo = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
             ->join('juridicos','clientes.id',"=","juridicos.clientes_id")
             ->select('clientes.documento','juridicos.razon_social','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
-            // ->where('prestamos.users_id',Auth::user()->id)
-            ->orwhere('clientes.documento', 'LIKE', "%{$request->search_input}%")
-            ->orWhere('juridicos.razon_social', 'LIKE', "%{$request->search_input}%")
-            ->orWhere('prestamos.producto', 'LIKE', "%{$request->search_input}%")
-            ->orWhere('prestamos.estado', 'LIKE', "%{$request->search_input}%")
+            ->where('prestamos.users_id',Auth::user()->id)
+            // ->orwhere('clientes.documento', 'LIKE', "%{$request->search_input}%")
+            // ->orWhere('juridicos.razon_social', 'LIKE', "%{$request->search_input}%")
+            // ->orWhere('prestamos.producto', 'LIKE', "%{$request->search_input}%")
+            // ->orWhere('prestamos.estado', 'LIKE', "%{$request->search_input}%")
             ->get();
                 $usuario = Auth::user()->id; 
                 $rol =  Auth::user()->idrol;

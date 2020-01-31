@@ -7,7 +7,7 @@
     <title>Inscripcion de Socio</title>
     <style>
         body{
-            font-family: monospace;
+            font-family: sans-serif;
         } 
         td{
             border: 1px solid #d5d5d5;
@@ -52,7 +52,7 @@
             <table style="width: 100%;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS PERSONALES</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">DATOS PERSONALES</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,7 +108,7 @@
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS LABORALES</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">DATOS LABORALES</th>
                     </tr>
                 </thead>
                 @if ($laboral->estado_laboral=='TRABAJA')
@@ -166,7 +166,7 @@
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;;">DATOS FAMILIARES</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">DATOS FAMILIARES</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -231,7 +231,7 @@
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;;">DATOS ADICIONALES</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">DATOS ADICIONALES</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -257,7 +257,7 @@
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;;">OBLIGACIONES ASOCIATIVAS</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">OBLIGACIONES ASOCIATIVAS</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -271,7 +271,7 @@
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;;">DECLARACIONES</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">DECLARACIONES</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -286,7 +286,7 @@
                         <td colspan="2"> 
                             
                         </td> 
-                        <td > <span class="title"> Huella </span></td>
+                        <td  style="width: 30px;height: 30px"> <span class="title"> Huella </span></td>
                     </tr>
 
                     <tr>

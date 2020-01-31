@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="empty_message" v-if="prestamos.length==0">
+    <!-- <div class="empty_message" v-if="prestamos.length==0">
       <img src="img/empty_2.svg" >
       <h1> No se Encontraron Prestamos </h1>
       <p>Registra un nuevo cliente para crear prestamos.</p>
@@ -10,8 +10,8 @@
         </span>
         <i class="material-icons-outlined">add</i>
       </router-link>
-    </div>
-    <div class="credits_content" v-else>
+    </div> -->
+    <div class="credits_content" >
 
       <div class="options_bar">
         <div class="search_bar">

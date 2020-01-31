@@ -7,7 +7,7 @@
     <title>EVALUACION CUANTITATIVA</title>
     <style>
         body{
-            font-family: monospace;
+            font-family: sans-serif;
         } 
         td{
             border: 1px solid #d5d5d5;
@@ -43,7 +43,7 @@
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS DEL TITULAR</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">DATOS DEL TITULAR</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -198,7 +198,7 @@
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS DEL CÓNYUGE</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">DATOS DEL CÓNYUGE</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -352,7 +352,7 @@
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS DEL HOGAR</th>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">DATOS DEL HOGAR</th>
                     </tr>
                 </thead>
                 <tbody>
