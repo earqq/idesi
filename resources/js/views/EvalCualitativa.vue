@@ -427,7 +427,7 @@
 
                 <button type="button"    class="add_section" @click="clickAddFinanciera" >
                   <span> AGREGAR ENTIDAD FINANCIERA </span>
-                  <i class="fas fa-plus"></i> 
+                  <i class="material-icons-outlined">add</i>  
                 </button>
               </div>
               
@@ -494,7 +494,7 @@
                   </div>
                   <button type="button"    class="add_section"  @click="clickAddReferencia">
                     <span> AGREGAR REFERENCIA </span>
-                    <i class="fas fa-plus"></i> 
+                    <i class="material-icons-outlined">add</i>  
                   </button>
                 </div>
 

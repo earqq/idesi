@@ -198,6 +198,7 @@ export default {
         font-family: $font
         height: 100%
         font-size: 13px
+        background-color: white
         &:hover, &:focus
           outline: none
       input

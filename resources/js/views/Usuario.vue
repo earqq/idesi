@@ -518,8 +518,9 @@
                 font-family: $font
                 height: 100%
                 font-size: 13px
+                background-color: white
                 &:hover, &:focus
-                outline: none
+                    outline: none
             input
                 flex: 1
                 padding-left: 10px

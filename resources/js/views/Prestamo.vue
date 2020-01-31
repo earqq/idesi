@@ -182,7 +182,7 @@
             class="add_section in_bottom"
             v-if="form.conyugue.conyuge_tiene=='NO'">
             <span>AGREGAR CÓNYUGE O CONVIVIENTE</span>
-            <i class="fas fa-plus"></i>
+            <i class="material-icons-outlined">add</i> 
           </button>
 
           <div class="form_list " v-if="form.conyugue.conyuge_tiene=='SI'">
@@ -439,7 +439,7 @@
 
             <button type="button" @click="clickAddAval" class="add_section">
               <span>AGREGAR AVAL</span>
-              <i class="fas fa-plus"></i>
+              <i class="material-icons-outlined">add</i> 
             </button>
           </div>
 
@@ -503,7 +503,7 @@
 
             <button type="button" @click="clickAddGarantia" class="add_section">
               <span>AGREGAR GARANTIA</span>
-              <i class="fas fa-plus"></i>
+              <i class="material-icons-outlined">add</i> 
             </button>
           </div>
 
