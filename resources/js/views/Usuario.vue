@@ -265,6 +265,8 @@
                     me.pagination= respuesta.pagination;
                     me.loaderCargaPagina =1;
                     me.loading = false;
+
+                    console.log(me.arrayPersona)
                 })
                 .catch(function (error) {
                     console.log(error);
