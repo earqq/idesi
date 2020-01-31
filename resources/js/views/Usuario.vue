@@ -48,7 +48,7 @@
                 <div class="input_wrapper">
                     <label>Role</label>
                     <select v-model="idrol" >
-                        <option v-for="role in arrayRol" :key="role.id" :value="role.id" v-text="role.nombre"></option>
+                        <option  v-for="role in arrayRol" :key="role.id" :value="role.id" v-text="role.nombre"></option>
                     </select>
                 </div>
 
