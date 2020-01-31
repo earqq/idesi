@@ -19,12 +19,12 @@
                     </select>                                        
                 </div>
 
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: ! num_documento}">
                     <label>Número documento</label>
-                    <input type="email" v-model="num_documento">
+                    <input type="email" v-model="num_documento" v-mask="'########'">
                 </div>
 
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !name}">
                     <label>Nombre</label>
                     <input type="text" v-model="name" >                                        
                 </div>
@@ -40,24 +40,24 @@
                     <input type="email" v-model="telefono">
                 </div> 
 
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !email}">
                     <label>Email</label>
                     <input type="email" v-model="email">
                 </div>
 
                 <div class="input_wrapper">
-                    <label>Role</label>
+                    <label>Roles</label>
                     <select v-model="idrol" >
                         <option  v-for="role in arrayRol" :key="role.id" :value="role.id" v-text="role.nombre"></option>
                     </select>
                 </div>
 
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !usuario}">
                     <label>Usuario</label>
                     <input type="text" v-model="usuario" >
                 </div>
 
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !password}">
                     <label>Contraseña</label>
                     <input type="password" v-model="password" >
                 </div>
@@ -191,7 +191,7 @@
                 email : '',
                 usuario: '',
                 password:'',
-                idrol: '',
+                idrol: '2',
                 arrayPersona : [],
                 arrayRol : [],
                 modal : 0,
@@ -201,7 +201,7 @@
                 errorMostrarMsjPersona : [],
                 pagination : {
                     'total' : 0,
-                    'current_page' : 0,
+                    'current_page' : 0, 
                     'per_page' : 0,
                     'last_page' : 0,
                     'from' : 0,
@@ -337,13 +337,17 @@
                 }); 
             },
             validarPersona(){
+
+
+
+
                 this.errorPersona=0;
                 this.errorMostrarMsjPersona =[];
 
                 if (!this.name) this.errorMostrarMsjPersona.push("El nombre de la pesona no puede estar vacío.");
                 if (!this.usuario) this.errorMostrarMsjPersona.push("El nombre de usuario no puede estar vacío.");
                 if (!this.password) this.errorMostrarMsjPersona.push("La password del usuario no puede estar vacía.");
-                if (this.idrol==0) this.errorMostrarMsjPersona.push("Seleccione una Role.");
+                if (this.idrol==0) this.errorMostrarMsjPersona.push("Seleccione una Rol.");
                 if (this.errorMostrarMsjPersona.length) this.errorPersona = 1;
 
                 return this.errorPersona;
@@ -388,7 +392,7 @@
               this.email=''
               this.usuario=''
               this.password=''
-              this.idrol=0
+              this.idrol='2'
                 // this.selectRol();
             },
             desactivarUsuario(id){
