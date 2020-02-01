@@ -162,7 +162,7 @@ class ClienteController extends Controller
             DB::beginTransaction();
 
             // return $request;
-            $cliente = Cliente::where('documento', $request->cliente['tipo_documento'])->first();
+            $cliente = Cliente::where('documento', $request->cliente['documento'])->first();
             if($cliente){
                 DB::rollBack();
                 return [
@@ -340,12 +340,11 @@ class ClienteController extends Controller
             DB::beginTransaction();
 
             
-            $cliente = Cliente::where('documento',$request->input('documento'))->first();
+            $cliente = Cliente::where('documento',$request->cliente['documento'])->first();
             if($cliente){
                 DB::rollBack();
                 return [
-                    'success' => false,
-                    'data' => 'Cliente ya existe'
+                    'success' => false, 
                 ];
             }
             else{

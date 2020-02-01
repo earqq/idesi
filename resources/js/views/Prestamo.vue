@@ -596,7 +596,8 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click.prevent="submit()">
+            <a class="button_primary medium next" @click.prevent="submit()" :class="{loading: loading}">
+              <div class="load_spinner"></div>
               <span>FINALIZAR</span>
               <i class="material-icons-outlined">check</i>
             </a>
@@ -623,6 +624,7 @@ export default {
       errors: {},
       form: {},
       contador_aval: 0,
+      loading: false,
       contador_garantia: 0, 
       notificationSystem: {
         options: {
@@ -883,11 +885,12 @@ export default {
     },
     submit() {
  
-
+        this.loading= true
       this.$http
         .post(`/${this.resource}/prestamo`, this.form)
         .then(response => {
 
+            this.loading = false
             if(response.data.success){
                 this.$toast.success(
                     "El prestamo fue creado",

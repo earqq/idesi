@@ -547,7 +547,8 @@
                   <i class="material-icons-outlined">navigate_before</i>
                   <span>ATRAS</span>
                 </a>
-                <a class="button_primary medium next" @click.prevent="guardar()">
+                <a class="button_primary medium next" @click.prevent="guardar()" :class="{loading: loading}">
+                  <div class="load_spinner"></div>
                   <span>FINALIZAR</span>
                   <i class="material-icons-outlined">check</i>
                 </a>
@@ -565,7 +566,7 @@ import { serviceNumber } from "../mixins/functions";
 import { toastOptions } from '../constants.js'
 
 export default {
-  mixins: [serviceNumber],
+  mixins: [serviceNumber], 
   components: {
     vSelect
   },
@@ -576,7 +577,7 @@ export default {
       tab: 1, 
       colegios: [],
       i: 0,
-      loading_submit:0,
+      loading:false,
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
         principal: {
@@ -697,11 +698,13 @@ export default {
       this.evaluacion.referencias.splice(index, 1);
     },
     guardar() {
-      this.loading_submit=1
+      this.loading=true
       axios.post("/evaluaciones/cualitativa", this.evaluacion).then(response => {
          
           console.log(response.data)
             if(response.data.success){ 
+
+              this.loading = false
                 this.$toast.success(
                     "La Evalación fue realizada",
                     "Exitoso",

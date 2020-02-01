@@ -541,7 +541,8 @@
                     <i class="material-icons-outlined">navigate_before</i>
                     <span>ATRAS</span>
                   </a>
-                  <a class="button_primary medium next" @click.prevent="guardar()">
+                  <a class="button_primary medium next" @click.prevent="guardar()" :class="{loading: loading}">
+                    <div class="load_spinner"></div>
                   <span>FINALIZAR</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
@@ -572,7 +573,7 @@ export default {
       giros: [],
       tab: 1,
       entidades:[], 
-      loading_submit: 0,
+      loading: false,
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
         propuesta: {
@@ -949,15 +950,19 @@ export default {
         parseFloat(this.evaluacion.titular.ingresos_negocio[index].sabado, 2) +
         parseFloat(this.evaluacion.titular.ingresos_negocio[index].domingo, 2);
     },
-    guardar() {
+    guardar() { 
+
+      this.loading= true
       axios.post("/evaluaciones/cuantitativa", this.evaluacion).then(res => {
+
+        this.loading=false
             if(response.data.success){
                 this.$toast.success(
                     "La Evalación fue realizada",
                     "Exitoso",
                     toastOptions.success
                   ) 
-                  // this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
+                  this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
             }else{
                 this.$toast.error(
                   "Error Evaluación",
