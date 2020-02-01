@@ -82,7 +82,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="i in 4" :key="i">
+                                <tr v-for="i in 7" :key="i">
                                     <td class="client">
                                         <div class="avatar">
                                         <img src="https://picsum.photos/100/100" v-if="false" />
@@ -143,7 +143,7 @@ export default {
                 },
                 stroke: {
                     colors: ["#0061FE", "#FF003D", "#FF8A00"],
-                    width: 2,
+                    width: 1.7,
                     curve: 'smooth'
                 },
                 dataLabels: {
@@ -161,12 +161,7 @@ export default {
                     }
                 },
                 markers: {
-                    size: 6
-                },
-                tooltip: {
-                    x: {
-                        format: 'dd/MM/yy HH:mm'
-                    }
+                    size: 5
                 },
                 legend: {
                     show: false
@@ -175,15 +170,15 @@ export default {
             series: [
                 {
                     name: 'Prestamos',
-                    data: [230, 140, 45, 50, 49, 160, 70, 91, 70, 191, 140, 91]
+                    data: [230, 45, 45, 50, 49, 160, 70, 91, 70, 191, 140, 91]
                 },
                          {
                     name: 'Rachazados',
-                    data: [10, 30, 15, 60, 219, 40, 120, 11, 10, 121, 70, 91]
+                    data: [10, 30, 30, 60, 219, 40, 120, 11, 10, 121, 70, 91]
                 },
                          {
                     name: 'Clientes',
-                    data: [50, 10, 123, 12, 43, 70, 20, 200,70, 21, 120, 191]
+                    data: [50, 10, 123, 12, 12, 70, 20, 200,70, 21, 120, 191]
                 }
             ]
         }
@@ -394,4 +389,57 @@ export default {
             position: sticky
             top: 75px
             border: 1px solid $line_color
+
+@media screen and (max-width: 1300px)
+    .dashboard_content
+        .dashboard_wrapper
+            grid-template-columns: 1fr 300px
+            .title
+                font-size: 11px
+            .numbers_stats
+                .number_item
+                    i
+                        width: 40px
+                        height: 40px
+                        font-size: 20px
+                    .stat
+                        p
+                            font-size: 11px
+
+@media screen and (max-width: 1100px)
+    .dashboard_content
+        .dashboard_wrapper
+            grid-template-columns: 1fr
+            grid-template-rows: inherit
+            grid-template-areas: "numbers numbers" "chart chart" "lists lists" "map map"
+            .lists
+                grid-template-columns: 1fr
+                .list_client
+                    ul.list_client_wrapper
+                        height: auto
+                    .empty_message
+                        height: 350px
+                .list_credits 
+                    grid-column: 1
+                    ul
+                        height: auto
+                    .empty_message
+                        height: 350px
+            .map
+                height: 350px     
+
+@media screen and (max-width: 720px)
+    .dashboard_content
+        .dashboard_wrapper
+            grid-gap: 10px
+            grid-template-areas: "numbers numbers" "lists lists" "map map"
+            .chart_stats
+                display: none
+            .lists
+                grid-gap: 10px
+            .numbers_stats
+                grid-template-columns: 1fr
+                grid-gap: 10px
+                .number_item
+                    padding: 15px 20px
 </style>

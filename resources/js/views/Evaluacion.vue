@@ -226,7 +226,8 @@ export default {
     .add_client
       width: 200px
     .search_bar
-      border-radius: 3px
+      border-radius: 4px
+      overflow: hidden
       background-color: white
       box-shadow: $shadow
       flex: 1

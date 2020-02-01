@@ -236,4 +236,12 @@ nav
             &:hover
               color: $text_color
 
+@media screen and (max-width: 720px)
+  nav
+    box-shadow: none
+    .menu_items
+      .logo
+        width: 100px
+      ul
+        display: none
 </style>

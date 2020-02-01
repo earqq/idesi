@@ -583,3 +583,35 @@ body {
   margin-bottom: 10px;
 }
 
+@media screen and (max-width: 640px) {
+  .login_container .login_container_wrapper {
+    grid-template-columns: 1fr;
+    width: 300px;
+    height: auto;
+  }
+
+  .login_container .login_container_wrapper .logo_content {
+    border-radius: 4px 4px 0px 0px;
+    height: 100px;
+  }
+
+  .login_container .login_container_wrapper .logo_content img {
+    width: 140px;
+  }
+
+  .login_container .login_container_wrapper .input_login_wrapper {
+    padding: 40px 30px;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .login_container {
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .login_container .login_container_wrapper {
+    width: 100%;
+  }
+}
+

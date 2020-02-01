@@ -49,4 +49,35 @@ body{
     }
         
 }
+
+@media screen and (max-width: 640px){
+    .login_container {
+        .login_container_wrapper{
+            grid-template-columns: 1fr;
+            width: 300px;
+            height: auto;
+            .logo_content{
+                border-radius: 4px 4px 0px 0px;
+                height: 100px;
+                img{
+                    width: 140px;
+                }
+            }
+            .input_login_wrapper{
+                padding: 40px 30px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 340px){
+    .login_container {
+        padding: 20px;
+        box-sizing: border-box;
+        .login_container_wrapper{
+            width: 100%;
+        }
+    }
+}
+
     

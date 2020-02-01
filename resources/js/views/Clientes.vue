@@ -236,7 +236,8 @@ export default {
     .add_client
       width: 200px
     .search_bar
-      border-radius: 3px
+      border-radius: 4px
+      overflow: hidden
       background-color: white
       box-shadow: $shadow
       flex: 1
@@ -403,7 +404,7 @@ export default {
               text-align: center
               line-height: 1.3
             small
-              font-size: 10px
+              font-size: 11px
               display: block
     .table_wrapper
       padding: 0 20px
@@ -434,4 +435,49 @@ export default {
               margin: 0
               margin-left: 10px
               text-align: left
+@media screen and (max-width: 1000px)
+  .clients_content
+    .options_bar
+      grid-template-columns: 1fr 170px
+      .add_client
+        width: 170px
+      .switch_view
+        display: none
+
+@media screen and (max-width: 720px)
+  .clients_content
+    .options_bar
+      grid-template-columns: 1fr 40px
+      .add_client
+        width: 40px
+        span
+          display: none
+      .switch_view
+        display: none
+
+@media screen and (max-width: 500px)
+  .clients_content
+    .options_bar
+      grid-template-columns: 1fr
+      padding: 0
+      padding-bottom: 20px
+      position: sticky
+      top: 55px
+      z-index: 7
+      .search_bar
+        padding: 0
+        padding-left: 10px
+        border-radius: 0
+        border: none
+        border-bottom: 1px solid #eef3fb
+        select
+          padding: 0 5px
+      .add_client
+        width: 40px
+        position: fixed
+        bottom: 15px
+        right: 15px
+    .table_container
+      .table_grid
+        grid-gap: 10px
 </style>
