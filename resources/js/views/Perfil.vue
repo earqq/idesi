@@ -393,8 +393,9 @@ export default {
       li
         list-style: none
         border-bottom: 1px solid $line_color
-        height: 50px
-        padding: 0 20px
+        min-height: 50px
+        padding: 5px 20px
+        box-sizing: border-box
         display: flex
         flex-direction: column
         justify-content: center

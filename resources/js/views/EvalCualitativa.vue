@@ -79,7 +79,7 @@
                 </div>
               </div>
 
-              <div class="form_buttons">
+              <div class="form_buttons all">
                 <a class="button_primary medium next" @click="next(1)">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>

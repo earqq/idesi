@@ -174,7 +174,7 @@
 
             </div>
 
-            <div class="form_buttons">
+            <div class="form_buttons all">
                 <a class="button_primary medium next" @click="next(1)">
                   <span> SIGUIENTE </span>
                   <i class="material-icons-outlined"> navigate_next </i>
@@ -357,7 +357,7 @@
 
           <div  v-show="tab == 6" class="form_step" >
             <div class="form_step_wrapper">
-              <h3 class="title">Dejaración</h3>
+              <h3 class="title">Declaración</h3>
               <div class="form_content">
                 <div class="group_form">
 
@@ -592,7 +592,7 @@ mixins: [serviceNumber],
             this.loading=false
             if(response.data.success){ 
                 this.$toast.success(
-                    "La Solicutud feu registrada",
+                    "La solicitud fue registrada",
                     "Exitoso",
                     toastOptions.success
                   )

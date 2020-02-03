@@ -129,8 +129,10 @@
                     <img src="https://picsum.photos/100/100" v-if="false"/>
                     <div class="avatar_alt" v-else>{{ persona.name.substring(0,1) }}</div>
                   </div>
-                  <p class="card-document">{{persona.name}}</p>
-                  <small class="card-name" >{{persona.rol}}</small>
+                  <div class="name_wrapper">
+                    <p class="truncate">{{persona.name}}</p>
+                    <small class="truncate" >{{persona.rol}}</small>
+                  </div>
                 </div>
               </article>
               <a v-show="arrayPersona.length < 6" class="spanner" v-for="i in 6" :key="i*1.3"  >
@@ -622,6 +624,7 @@
               cursor: pointer
               opacity: .5
               color: $text_color
+              user-select: none
             ul
               position: absolute
               background-color: #fff
@@ -693,18 +696,20 @@
                 height: 55px
                 border-radius: 50%
                 object-fit: cover
-            p, small
-              color: $text_color
-              margin: 0
-            p
-              font-weight: 500
-              font-size: 12px
-              margin-top: 10px
+            .name_wrapper
               text-align: center
-              line-height: 1.3
-            small
-              font-size: 11px
-              display: block
+              p, small
+                color: $text_color
+                margin: 0
+              p
+                font-weight: 500
+                font-size: 12px
+                margin-top: 10px
+                text-align: center
+                line-height: 1.3
+              small
+                font-size: 11px
+                display: block
       .table_wrapper
         padding: 0 20px
         box-sizing: border-box
@@ -734,4 +739,73 @@
                 margin: 0
                 margin-left: 10px
                 text-align: left
+
+@media screen and (max-width: 1000px)
+  .users_content
+    .options_bar
+      grid-template-columns: 1fr 170px
+      .add_client
+        width: 170px
+      .switch_view
+        display: none
+
+@media screen and (max-width: 720px)
+  .users_content
+    .options_bar
+      grid-template-columns: 1fr 40px
+      .add_client
+        width: 40px
+        span
+          display: none
+      .switch_view
+        display: none
+
+@media screen and (max-width: 500px)
+  .users_content
+    .options_bar
+      grid-template-columns: 1fr
+      padding: 0
+      padding-bottom: 15px
+      position: sticky
+      top: 55px
+      z-index: 7
+      .search_bar
+        padding: 0
+        padding-left: 10px
+        border-radius: 0
+        border: none
+        border-bottom: 1px solid $line_color
+        height: 50px
+        select
+          padding: 0 5px
+      .add_client
+        width: 50px
+        height: 50px
+        position: fixed
+        bottom: 15px
+        right: 15px
+    .table_container
+      .table_grid
+        grid-gap: 10px
+        padding: 0 15px
+        .user_card
+          .detail
+            flex-direction: row
+            padding: 20px 15px
+            justify-content: flex-start
+            padding-top: 0
+            .avatar
+              margin-right: 10px
+              .avatar_alt
+                width: 40px
+                height: 40px
+                font-size: 15px
+              img
+                width: 40px
+                height: 40px
+            .name_wrapper
+              text-align: left
+              p
+                margin-top: 0
+                text-align: left        
 </style>

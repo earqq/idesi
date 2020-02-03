@@ -6,7 +6,7 @@
         <div
           class="tab"
           @click="tab = 1;saving()"
-          :class="[{complete : validateStep1 }, {selected: tab == 1}]"
+          :class="{selected: tab == 1}"
         >
           <span>1</span>
           <p>SOLICITUD</p>
@@ -247,7 +247,7 @@
 
         <div v-show="tab == 3" class="form_step">
           <div class="form_step_wrapper">
-            <div class="form_list" >
+            <div class="form_list no_border" >
               <div class="sub_step_wrapper" v-for="(row, index) in form.avals" :key="index">
                 <h3 class="title">
                   Aval {{index + 1}}
@@ -274,7 +274,7 @@
                       <input
                         type="text"
                         v-model="row.empresa_ruc"
-                        v-mask="'##########'"
+                        v-mask="'###########'"
                       />
                     </div>
 
@@ -406,7 +406,7 @@
 
         <div v-show="tab == 4" class="form_step">
           <div class="form_step_wrapper">
-            <div class="form_list">
+            <div class="form_list no_border">
               <div class="sub_step_wrapper" v-for="(row, index) in form.garantias" :key="index">
                 <h3 class="title">
                   Garantia {{index + 1}}
@@ -424,8 +424,9 @@
                       <label>Bien en Garantía</label>
                       <input type="text" v-model="row.bien_garantia" />
                     </div>
-
-                    <div class="input_box"><label>&nbsp;</label>
+                  </div>
+                  <div class="group_form">
+                    <div class="input_box no_label">
                       <div class="input_box_wrapper">
                         <div class="input_checkbox_wrapper radio" >
                           <input type="radio" :id="'radio'+index" :name="'garantiaType'+index" v-model="row.tipo" :value="'INS'" />

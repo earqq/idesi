@@ -6,52 +6,97 @@
     <nav>
         <div class="menu_items">
             <img class="logo" src="/img/logo_alt.svg">
-            <ul>
-                <li :class="{selected: tab == 'inicio'}" v-if="tipo=='1' || tipo=='2' || tipo=='3' || tipo=='4' | tipo=='5' ">
-                  <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
-                </li>
+            <transition name="fade" mode="in-out">
+              <div class="overlay" @click="menu_user = false" v-show="menu_user"></div>
+            </transition>
+            <div class="items_wrapper">
+              <ul>
+                  <li :class="{selected: tab == 'inicio'}" v-if="tipo=='1' || tipo=='2' || tipo=='3' || tipo=='4' | tipo=='5' ">
+                    <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
+                  </li>
 
-                <li :class="{selected: tab == 'clientes'}" v-if="tipo=='1' || tipo=='2' || tipo=='5'">
-                  <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
-                </li>
- 
-                <li :class="{selected: tab == 'evaluaciones'}">
-                  <router-link :to="{name: 'evaluaciones'}"  >Prestamos</router-link>
-                </li>
+                  <li :class="{selected: tab == 'clientes'}" v-if="tipo=='1' || tipo=='2' || tipo=='5'">
+                    <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
+                  </li>
+  
+                  <li :class="{selected: tab == 'evaluaciones'}">
+                    <router-link :to="{name: 'evaluaciones'}"  >Prestamos</router-link>
+                  </li>
 
-                <li :class="{selected: tab == 'usuarios'}" v-if="tipo=='1'"> 
-                  <router-link :to="{name: 'usuarios'}"  >Usuarios</router-link>
-                </li>
-                <div class="current_user">
-                  <div class="avatar"  @click="menu_user = !menu_user">
-                    <img 
-                      src="https://picsum.photos/200/300"
-                      alt="User profile picture"
-                      v-if="false"
-                    />
-                    <div class="avatar_alt" v-else> {{currentUser.name.substring(0,1)}} </div>
-                  </div>
-                  <transition name="slide-fade" mode="in-out">
-                    <div v-show="menu_user" class="users_options">
-                      <div class="name">
-                      <div class="avatar">
-                        <img src="https://picsum.photos/200/300" v-if="false"/>
-                        <div class="avatar_alt" v-else> {{currentUser.name.substring(0,1)}} </div>
-                      </div>
-                        <h1>
-                          <p>{{currentUser.name}}</p>
-                          <a href="#">
-                            Editar
-                          </a>
-                        </h1>
-                      </div>
-                      <a type="bottom" class="logout" @click="logout">
-                        Cerrar Sesión
-                      </a>
-                    </div>
-                  </transition>
+                  <li :class="{selected: tab == 'usuarios'}" v-if="tipo=='1'"> 
+                    <router-link :to="{name: 'usuarios'}"  >Usuarios</router-link>
+                  </li>
+              </ul>
+              <div class="current_user">
+                <div class="avatar"  @click="menu_user = !menu_user">
+                  <img 
+                    src="https://picsum.photos/200/300"
+                    alt="User profile picture"
+                    v-if="false"
+                  />
+                  <div class="avatar_alt" v-else> {{currentUser.name.substring(0,1)}} </div>
                 </div>
-            </ul>
+                <transition name="slide-fade" mode="in-out">
+                  <div v-show="menu_user && !mobile" class="users_options">
+                    <div class="name">
+                    <div class="avatar">
+                      <img src="https://picsum.photos/200/300" v-if="false"/>
+                      <div class="avatar_alt" v-else> {{currentUser.name.substring(0,1)}} </div>
+                    </div>
+                      <h1>
+                        <p>{{currentUser.name}}</p>
+                        <a href="#">
+                          Editar
+                        </a>
+                      </h1>
+                    </div>
+                    <a class="logout" @click="logout">
+                      Cerrar Sesión
+                    </a>
+                  </div>
+                </transition>
+              </div>
+            </div>
+            <transition name="slide-fade" mode="in-out">
+              <div class="slide_items_wrapper" v-show="menu_user && mobile">
+                <div class="users_options">
+                  <div class="name">
+                    <div class="avatar">
+                      <img src="https://picsum.photos/200/300" v-if="false"/>
+                      <div class="avatar_alt" v-else> {{currentUser.name.substring(0,1)}} </div>
+                    </div>
+                    <h1>
+                      <p>{{currentUser.name}}</p>
+                      <a href="#">
+                        Editar
+                      </a>
+                    </h1>
+                  </div>
+                </div>
+                <ul>
+                  <li :class="{selected: tab == 'inicio'}" v-if="tipo=='1' || tipo=='2' || tipo=='3' || tipo=='4' | tipo=='5' ">
+                    <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
+                  </li>
+
+                  <li :class="{selected: tab == 'clientes'}" v-if="tipo=='1' || tipo=='2' || tipo=='5'">
+                    <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
+                  </li>
+
+                  <li :class="{selected: tab == 'evaluaciones'}">
+                    <router-link :to="{name: 'evaluaciones'}"  >Prestamos</router-link>
+                  </li>
+
+                  <li :class="{selected: tab == 'usuarios'}" v-if="tipo=='1'"> 
+                    <router-link :to="{name: 'usuarios'}"  >Usuarios</router-link>
+                  </li>
+                  <li class="logout" v-if="tipo=='1'"> 
+                    <a @click="logout">
+                      Cerrar Sesión
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </transition>
         </div>
     </nav>
     <main class="container_app">
@@ -71,6 +116,7 @@ export default {
       resource: "user",
       tipo: 0,
       menu_user: false,
+      mobile: false,
       tab: '',
       currentUser: {
         name: ''
@@ -98,8 +144,20 @@ export default {
     this.tab = this.$route.name
     this.$router.beforeEach((to, from, next) => {
         this.tab = to.name
+        this.menu_user = false
         next()
     })
+
+    if (window.innerWidth < 720) this.mobile = true
+    else this.mobile = false
+
+    this.$nextTick(() => {
+        window.addEventListener('resize', () => {
+            if (window.innerWidth < 720) this.mobile = true
+            else this.mobile = false
+        })
+    })
+
     // this.$toast.success(
     //   "El prestamo fue creado",
     //   "Exitoso",
@@ -140,40 +198,123 @@ nav
     width: 100%
     height: 100%
     margin-right: 20px
-    ul
-      display: flex
-      justify-content: space-between
-      align-items: center
-      height: 100%
-      margin: 0
-      padding: 0
-      li
-        list-style: none
-        height: 100%
-        border-bottom: 3px solid transparent
-        flex: 1
-        min-width: 100px
-        a
-          text-decoration: none
-          color: rgba($text_color, .5)
-          font-weight: 700
-          font-size: 12px
-          display: flex
-          justify-content: center
-          align-items: center
-          height: 100%
-        &.selected
-          border-bottom: 3px solid $primary_color
+    .overlay
+      background-color: transparent
+      position: fixed
+      right: 0
+      top: 0
+      height: 100vh
+      width: 100%
+    .slide_items_wrapper
+      background-color: white
+      position: fixed
+      right: 0
+      top: 0
+      height: 100vh
+      width: 200px
+      ul
+        padding: 0
+        margin: 0
+        li
+          list-style: none
+          border-right: 3px solid transparent
+          &.selected
+            border-right: 3px solid $primary_color
+            a
+              color: $text_color
+          &.logout
+            border-right: 3px solid transparent
+            a
+              color: $text_color
           a
-            color: $text_color
+            padding: 15px 20px
+            display: flex
+            text-decoration: none
+            font-size: 12px
+            font-weight: 600
+            cursor: pointer
+            border-bottom: 1px solid rgba($text_color, .07)
+            color: rgba($text_color, .5)
+            &:hover
+              color: $text_color
+      .users_options
+        background-color: white
+        width: 100%
+        .name
+          display: flex
+          align-items: center
+          padding: 15px
+          border-bottom: 1px solid rgba($text_color, .07)
+          .avatar
+            cursor: pointer
+            .avatar_alt
+              width: 35px
+              height: 35px
+              background-color: $line_color
+              border-radius: 50%
+              display: flex
+              align-items: center
+              justify-content: center
+              font-size: 17px
+              font-weight: 600
+              color: $primary_color
+            img
+              width: 35px
+              height: 35px
+              border-radius: 50%
+              object-fit: cover
+              position: relative
+              border: 2px solid white
+              background-color: white
+          h1
+            font-size: 12px
+            margin-bottom: 0
+            margin-left: 10px
+            font-weight: 500
+            p
+              margin: 0
+            a
+              text-decoration: none
+              color: $primary_color
+
+    .items_wrapper
+      display: flex
+      height: 100%
+      align-items: center
+      ul
+        display: flex
+        justify-content: space-between
+        align-items: center
+        height: 100%
+        margin: 0
+        padding: 0
+        li
+          list-style: none
+          height: 100%
+          border-bottom: 3px solid transparent
+          flex: 1
+          min-width: 100px
+          a
+            text-decoration: none
+            color: rgba($text_color, .5)
+            font-weight: 600
+            font-size: 12px
+            display: flex
+            justify-content: center
+            align-items: center
+            height: 100%
+          &.selected
+            border-bottom: 3px solid $primary_color
+            a
+              color: $text_color
       .current_user
         margin-left: 20px
         position: relative
         .avatar
           cursor: pointer
           .avatar_alt
-            width: 30px
-            height: 30px
+            width: 35px
+            height: 35px
             background-color: $line_color
             border-radius: 50%
             display: flex
@@ -183,8 +324,8 @@ nav
             font-weight: 600
             color: $primary_color
           img
-            width: 30px
-            height: 30px
+            width: 35px
+            height: 35px
             border-radius: 50%
             object-fit: cover
             position: relative
@@ -192,12 +333,13 @@ nav
             background-color: white
         .users_options
           position: absolute
-          right: 5px
+          right: 2px
           top: 50px
           background-color: white
           width: 250px
           box-shadow: $shadow_hover
           border: 1px solid $line_color
+          border-radius: 4px 0 4px 4px
           &::before
             position: absolute
             display: block
@@ -240,8 +382,11 @@ nav
   nav
     box-shadow: none
     .menu_items
+      .overlay
+        background-color: rgba($text_color, .7)
       .logo
         width: 100px
-      ul
-        display: none
+      .items_wrapper
+        ul
+          display: none
 </style>

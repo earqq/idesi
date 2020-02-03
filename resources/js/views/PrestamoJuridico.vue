@@ -5,7 +5,7 @@
         <div
           class="tab"
           @click="tab = 1"
-          :class="[{complete : validateStep1 }, {selected: tab == 1}]"
+          :class="{selected: tab == 1}"
         >
           <span>1</span>
           <p>SOLICITUD</p>
@@ -24,7 +24,7 @@
         </div>
         <div class="tab" @click="tab = 5" :class="{selected: tab ==5}">
           <span>5</span>
-          <p>PROPUESTA DE ANALISTA</p>
+          <p>PROPUESTA</p>
         </div>
       </div>
     </section>
@@ -71,7 +71,7 @@
             </div>
           </div>
 
-          <div class="form_buttons">
+          <div class="form_buttons all">
             <a class="button_primary medium next" @click="next(1)">
               <span>SIGUIENTE</span>
               <i class="material-icons-outlined">navigate_next</i>
@@ -251,8 +251,8 @@
 
         <div v-show="tab == 3" class="form_step">
           <div class="form_step_wrapper">
-            <div class="form_list" >
-              <div class="sub_step_wrapper" v-for="(row, index) in form.avals" :key="index">
+            <div class="form_list no_border" >
+              <div class="sub_step_wrapper " v-for="(row, index) in form.avals" :key="index">
                 <h3 class="title">
                   Aval {{index + 1}}
                   <button
@@ -279,7 +279,7 @@
                       <input
                         type="text"
                         v-model="row.empresa_ruc"
-                        v-mask="'##########'"
+                        v-mask="'###########'"
                       />
                     </div>
 
@@ -411,8 +411,8 @@
 
         <div v-show="tab == 4" class="form_step">
           <div class="form_step_wrapper">
-            <div class="form_list">
-              <div class="sub_step_wrapper" v-for="(row, index) in form.garantias" :key="index">
+            <div class="form_list no_border">
+              <div class="sub_step_wrapper " v-for="(row, index) in form.garantias" :key="index">
                 <h3 class="title">
                   Garantia {{index + 1}}
                   <button
@@ -430,8 +430,9 @@
                       <label>Bien en Garantía</label>
                       <input type="text" v-model="row.bien_garantia" />
                     </div>
-
-                    <div class="input_box"><label>&nbsp;</label>
+                  </div>
+                  <div class="group_form">
+                    <div class="input_box no_label">
                       <div class="input_box_wrapper">
                         <div class="input_checkbox_wrapper radio" >
                           <input type="radio" :id="'radio'+index" :name="'garantiaType'+index" v-model="row.tipo" :value="'INS'" />
@@ -476,7 +477,7 @@
 
         <div v-show="tab == 5" class="form_step">
           <div class="form_step_wrapper">
-            <h3 class="title">Declaración</h3>
+            <h3 class="title">Propuesta de Analista</h3>
             <div class="form_content">
               <div class="group_form">
                 <div class="input_wrapper">

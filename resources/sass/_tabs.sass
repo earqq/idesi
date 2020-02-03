@@ -83,7 +83,7 @@
                 display: flex
                 align-items: center
                 justify-content: space-between
-                height: 30px
+                min-height: 30px
                 text-transform: uppercase
                 .delete_section
                     border: none
@@ -134,7 +134,7 @@
                             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
                         .input_box
                             &.no_label
-                                margin-top: 5px
+                                margin-top: 10px
                             & > label
                                 font-family: $font
                                 font-weight: 500
@@ -186,6 +186,8 @@
                         border-top: none
                 .sub_step_wrapper
                     border-top: 1px solid $line_color
+                    &.no_border
+                        border-top: none
                 .form_step_wrapper
                     border-top: 1px solid $line_color
             .form_buttons
@@ -226,3 +228,72 @@
                     color: $primary_color
                     margin-left: 10px
                 
+@media screen and (max-width: 1020px)
+    .tabs_section
+        .tabs_wrapper
+            .tab
+                span
+                    display: none
+                p
+                    font-size: 11px
+                    margin-left: 0px
+
+@media screen and (max-width: 720px)
+    .tabs_section
+        .tabs_wrapper
+            .tab
+                border-bottom: none 
+                border-bottom: 2px solid transparent
+                span
+                    display: flex
+                    border: none
+                    font-size: 14px
+                &.selected
+                    border-bottom: 2px solid $primary_color
+                    span
+                        background-color: transparent
+                        color: $primary_color
+                        border: none
+                p
+                    display: none
+
+@media screen and (max-width: 500px)
+    .tabs_section
+        padding: 0 0 15px 0
+        border: none
+        position: sticky
+        top: 55px
+        z-index: 7
+        .tabs_wrapper
+            border-radius: 0
+            border: none
+            border-bottom: 1px solid $line_color
+            height: 40px
+    .client_forms
+        padding: 0 15px
+
+@media screen and (max-width: 400px)
+    .client_forms
+        .client_forms_wrapper
+            .form_step
+                .form_step_wrapper
+                    .form_content
+                        .group_form
+                            grid-template-columns: 1fr
+                            &.small
+                                grid-template-columns: 1fr
+                .form_buttons
+                    display: grid
+                    grid-template-columns: 50px 1fr
+                    grid-gap: 10px
+                    width: 100%
+                    margin-bottom: 15px
+                    &.all
+                        grid-template-columns: 1fr
+                    a
+                        width: 100%
+                        height: 45px
+                        &.prev
+                            width: 100%
+                            span
+                                display: none
