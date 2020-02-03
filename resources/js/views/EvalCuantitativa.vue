@@ -953,7 +953,7 @@ export default {
     guardar() { 
 
       this.loading= true
-      axios.post("/evaluaciones/cuantitativa", this.evaluacion).then(res => {
+      axios.post("/evaluaciones/cuantitativa", this.evaluacion).then(response => {
 
         this.loading=false
             if(response.data.success){

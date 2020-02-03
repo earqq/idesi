@@ -257,16 +257,12 @@
                         <td colspan="3"> <span class="title">Es sujeto obligado a informar a la UIF Perú</span> [ {{$declaracion->uif}}] </td>
                     </tr>
                     <tr>
-                        <td colspan="2"> 
-                            
-                        </td> 
-                        <td style="width: 30px;height: 30px"> <span class="title"> Huella </span></td>
+                        <td><span class="title">Firma</span>____________________</td>
+                        <td colspan="2" style="height: 70px;"> <div style="border: 1px solid; width: 100px; height: 70px;margin: 0 auto;"></div> </td>
                     </tr>
-
                     <tr>
                         <td><span class="title">Estado</span> {{$declaracion->estado}}</td>
-                        <td><span class="title">Fecha</span> {{$declaracion->created_at}}</td>
-                        <td><span class="title">Firma</span>____________________</td>
+                        <td colspan="2"><span class="title">Fecha</span> {{$declaracion->created_at}}</td>
                     </tr>
 
                     <tr>

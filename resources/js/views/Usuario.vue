@@ -21,7 +21,7 @@
 
                 <div class="input_wrapper" :class="{require: ! num_documento}">
                     <label>Número documento</label>
-                    <input type="email" v-model="num_documento" v-mask="'########'">
+                    <input type="text" v-model="num_documento" v-mask="'########'">
                 </div>
 
                 <div class="input_wrapper" :class="{require: !name}">
@@ -32,12 +32,12 @@
                 
                 <div class="input_wrapper">
                     <label>Dirección</label>
-                    <input type="email" v-model="direccion">
+                    <input type="text" v-model="direccion">
                 </div>
 
                 <div class="input_wrapper">
                     <label>Teléfono</label>
-                    <input type="email" v-model="telefono">
+                    <input type="text" v-model="telefono">
                 </div> 
 
                 <div class="input_wrapper" :class="{require: !email}">
@@ -48,7 +48,10 @@
                 <div class="input_wrapper">
                     <label>Roles</label>
                     <select v-model="idrol" >
-                        <option  v-for="role in arrayRol" :key="role.id" :value="role.id" v-text="role.nombre"></option>
+                        <option value="2">Analista</option>
+                        <option value="3">Evaluador</option>
+                        <option value="4">Evaluador Final</option>
+                        <option value="5">Plataforma</option> 
                     </select>
                 </div>
 
@@ -59,7 +62,7 @@
 
                 <div class="input_wrapper" :class="{require: !password}">
                     <label>Contraseña</label>
-                    <input type="password" v-model="password" >
+                    <input type="text" v-model="password" >
                 </div>
 
                 <div v-show="errorPersona" class="form-group row div-error">
@@ -179,6 +182,7 @@
 </template>
 
 <script>
+ import { toastOptions } from '../constants.js'
     export default {
         data (){
             return {
@@ -297,6 +301,7 @@
 
                 this.loading=true
                 if (this.validarPersona()){
+                    this.loading= false
                     return;
                 }
                 axios.post('/user/registrar',{
@@ -314,12 +319,22 @@
                     this.flagModalUser = false
                     this.loading=false
                     this.listarPersona(1,'','name');
+                    this.$toast.success(
+                        "El usuario fue creado",
+                        toastOptions.success
+                    )
                 }).catch( error => {
                     console.log(error);
+                    this.$toast.success(
+                        "Error al crear usuario ",
+                        toastOptions.error
+                    )
                 })
             },
             actualizarPersona(){
+                this.loading= true
                if (this.validarPersona()){
+                   this.loading = false
                     return;
                 }
                 axios.put('/user/actualizar',{
@@ -335,14 +350,21 @@
                     'id': this.persona_id
                 }).then( response => {
                     this.flagModalUser = false
+                    this.loading = false
                     this.listarPersona(1,'','name');
+                    this.$toast.success(
+                        "El usuario fue editado",
+                        toastOptions.success
+                    )
                 }).catch( error => {
                     console.log(error);
+                    this.$toast.success(
+                        "Error al editar usuario",
+                        toastOptions.error
+                    )
                 }); 
             },
             validarPersona(){
-
-
 
 
                 this.errorPersona=0;
@@ -426,12 +448,15 @@
                             }).then(function (response) {
                                 me.listarPersona(1,'','name');
                                 this.$toast.success(
-                                    "El usuario fue desactivado",
-                                    "Exitoso",
-                                    this.notificationSystem.options.success
-                                    ); 
+                                        "El usuario fue desactivado",
+                                        toastOptions.success
+                                    )
                             }).catch(function (error) {
                                 console.log(error);
+                                this.$toast.success(
+                                        "El usuario fue desactivado",
+                                        toastOptions.success
+                                    )
                             });
                         
                     } else if (
@@ -472,11 +497,12 @@
                                     'id': id
                                 }).then(function (response) {
                                     me.listarPersona(1,'','name');
-                                    this.$toast.success(
-                                        "El usuario fue activado",
-                                        "Exitoso",
-                                        this.notificationSystem.options.success
-                                        ); 
+                                    
+                                     this.$toast.success(
+                                        "El usuario fue acivado",
+                                        toastOptions.success
+                                    )           
+
                                 }).catch(function (error) {
                                     console.log(error);
                                 });

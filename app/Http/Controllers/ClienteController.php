@@ -162,14 +162,14 @@ class ClienteController extends Controller
             DB::beginTransaction();
 
             // return $request;
-            $cliente = Cliente::where('documento', $request->cliente['documento'])->first();
-            if($cliente){
-                DB::rollBack();
-                return [
-                    'success' => false,
-                ];
-            }
-            else{
+            // $cliente = Cliente::where('documento', $request->cliente['documento'])->first();
+            // if($cliente){
+            //     DB::rollBack();
+            //     return [
+            //         'success' => false,
+            //     ];
+            // }
+            // else{
                 $cliente = new Cliente();
                 $cliente->users_id = Auth::user()->id;
                 $cliente->tipo_documento = $request->cliente['tipo_documento'];
@@ -317,7 +317,7 @@ class ClienteController extends Controller
                     'data' => 'Cliente creado',
                 ];
     
-            }
+            // }
  
 
         } catch (Exception $e){

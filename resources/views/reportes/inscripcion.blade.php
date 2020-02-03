@@ -249,7 +249,7 @@
                                 <td><span class="title">RELACIÓN CON EL SOLICITANTE</span> {{$adicional->relacion}}</td>
                             </tr>
                             <tr>
-                                <td colspan="3"> ******************** Esta sección debe ser llenada por la Cooperativa **********************</td>
+                                <td colspan="3"> ***************************** Esta sección debe ser llenada por la Cooperativa *******************************</td>
                             </tr>
                 </tbody>
             </table>
@@ -283,16 +283,14 @@
                         <td colspan="3"> <span class="title">Es PEP(persona expuesta politicamente) </span> [ {{$declaracion->pep}}] </td>
                     </tr>
                     <tr>
-                        <td colspan="2"> 
-                            
-                        </td> 
-                        <td  style="width: 30px;height: 30px"> <span class="title"> Huella </span></td>
+                        <td><span class="title">Firma</span>____________________</td>
+                        <td colspan="2" style="height: 70px;"> <div style="border: 1px solid; width: 100px; height: 70px;margin: 0 auto;"></div> </td>
                     </tr>
 
                     <tr>
                         <td><span class="title">Estado</span> {{$declaracion->estado}}</td>
-                        <td><span class="title">Fecha</span> {{$declaracion->created_at}}</td>
-                        <td><span class="title">Firma</span>____________________</td>
+                        <td colspan="2"><span class="title">Fecha</span> {{$declaracion->created_at}}</td>
+
                     </tr>
 
                     <tr>
