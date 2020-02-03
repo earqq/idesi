@@ -29,7 +29,6 @@
                 <div id="chart">
                     <apexchart type="line" height="350" :options="optionsChart" :series="series" />
                 </div>
-
             </article>
             <article class="lists">
                 <div class="list_client">
@@ -85,10 +84,15 @@
                                 <tr v-for="i in 7" :key="i">
                                     <td class="client">
                                         <div class="avatar">
-                                        <img src="https://picsum.photos/100/100" v-if="false" />
-                                        <div class="avatar_alt" v-else> C </div>              
+                                            <img src="https://picsum.photos/100/100" v-if="false" />
+                                            <div class="avatar_alt" v-else> C </div>              
                                         </div>
-                                        <p class="truncate"> Chagua Ramos Omar Benjamin </p>
+                                        <div class="name_wrapper">
+                                            <p class="truncate"> OMAR BENJAMIN CHAGUA RAMOS </p>
+                                            <small class="credit_detail">
+                                                S/ 1000 &nbsp; / &nbsp; 12 Meses
+                                            </small>
+                                        </div>
                                     </td>
                                     <td> S/ 1000</td>
                                     <td> 12 Meses </td>
@@ -320,10 +324,16 @@ export default {
                                     height: 30px
                                     border-radius: 50%
                                     object-fit: cover
-                            p
-                                margin: 0
-                                margin-left: 10px
+                            .name_wrapper
                                 text-align: left
+                                margin-left: 10px
+                                p
+                                    margin: 0
+                                    text-align: left
+                                    font-weight: 500
+                                small
+                                    font-size: 11px
+                                    display: none
                         .progress_bar
                             width: 150px
                             display: flex
@@ -375,9 +385,11 @@ export default {
                             h1
                                 font-size: 12px
                                 margin: 0
+                                color: $text_color
                             p
                                 font-size: 11px
                                 margin: 0
+                                color: $text_color
 
         .map
             grid-area: map
@@ -404,7 +416,7 @@ export default {
                         font-size: 20px
                     .stat
                         p
-                            font-size: 11px
+                            font-size: 12px
 
 @media screen and (max-width: 1100px)
     .dashboard_content
@@ -437,9 +449,27 @@ export default {
                 display: none
             .lists
                 grid-gap: 10px
+                .list_client
+                    ul.list_client_wrapper
+                        li
+                            padding: 0 15px
+                .list_credits
+                    table
+                        thead
+                            display: none
+                        tbody
+                            .client
+                                .name_wrapper small
+                                    display: block
+                            tr
+                                td
+                                    display: none
+                                td
+                                    &:nth-child(1)
+                                        display: flex
             .numbers_stats
                 grid-template-columns: 1fr
                 grid-gap: 10px
                 .number_item
-                    padding: 15px 20px
+                    padding: 15px
 </style>

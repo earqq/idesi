@@ -4,7 +4,13 @@
       <img src="img/empty_2.svg" >
       <h1> No se Encontraron Prestamos </h1>
       <p>Registra un nuevo cliente para crear prestamos.</p>
-      <router-link class="add_client button_primary small" :to="{name:'registrar/natural'}" >
+      <router-link class="add_client button_primary small" :to="{name:'registrar/natural'}" v-if="tipo_persona=='PN' && id_rol!='5'">
+        <span>
+          CREAR CLIENTE
+        </span>
+        <i class="material-icons-outlined">add</i>
+      </router-link>
+      <router-link  class="add_client button_primary small" :to="{name:'registrar/juridico'}"  v-if="tipo_persona=='PJ' && id_rol!='5'">
         <span>
           CREAR CLIENTE
         </span>
@@ -41,7 +47,7 @@
                 <img src="https://picsum.photos/100/100" v-if="false"/>
                 <div class="avatar_alt" v-else> {{prestamo.apellidos?prestamo.apellidos.substring(0,1):prestamo.razon_social.substring(0,1) }} </div>
               </div>
-              <p class="card-document">{{prestamo.nombres}} {{prestamo.apellidos || prestamo.razon_social}}</p>
+              <p class="truncate">{{prestamo.nombres}} {{prestamo.apellidos || prestamo.razon_social}}</p>
             </div>
             <div class="detail">
               <h2> {{prestamo.producto}} </h2>
@@ -68,7 +74,6 @@
                   <li> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}"  >Evaluación</router-link></li>
                   <li> <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
                 </ul>
-
               </div>
             </div>
             
@@ -96,7 +101,7 @@
                     <img src="https://picsum.photos/100/100" v-if="false" />
                     <div class="avatar_alt" v-else>  {{prestamo.apellidos?prestamo.apellidos.substring(0,1):prestamo.razon_social.substring(0,1) }} </div>              
                   </div>
-                  <p> {{prestamo.nombres}} {{prestamo.apellidos || prestamo.razon_social}}</p>
+                  <p class="truncate"> {{prestamo.nombres}} {{prestamo.apellidos || prestamo.razon_social}}</p>
                 </td>
                 <td> {{prestamo.producto}} </td>
                 <td> S/ {{prestamo.importe}}</td>
@@ -380,6 +385,7 @@ export default {
               cursor: pointer
               opacity: .5
               color: $text_color
+              user-select: none
             ul
               position: absolute
               background-color: #fff
@@ -468,4 +474,39 @@ export default {
             p
               margin: 0
               margin-left: 10px
+
+@media screen and (max-width: 1000px)
+  .credits_content
+    .options_bar
+      grid-template-columns: 1fr
+      .switch_view
+        display: none
+
+@media screen and (max-width: 720px)
+  .credits_content
+    .options_bar
+      .switch_view
+        display: none
+
+@media screen and (max-width: 500px)
+  .credits_content
+    .options_bar
+      padding: 0
+      padding-bottom: 15px
+      position: sticky
+      top: 55px
+      z-index: 7
+      .search_bar
+        padding: 0
+        padding-left: 10px
+        border-radius: 0
+        border: none
+        border-bottom: 1px solid $line_color
+        height: 50px
+        select
+          padding: 0 5px
+    .table_container
+      .table_grid
+        grid-gap: 10px
+        padding: 0 15px
 </style>

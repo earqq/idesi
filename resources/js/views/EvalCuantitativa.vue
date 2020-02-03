@@ -180,7 +180,7 @@
                 </div>
               </div>
 
-              <div class="form_buttons">
+              <div class="form_buttons all">
                 <a class="button_primary medium next" @click="next(1)">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
@@ -496,7 +496,7 @@
               </div>
 
               <div class="form_step_wrapper in_bottom">
-                <h3 class="title">Gasto Financiero del cónyuge ò Conviviente (Personales) </h3>
+                <h3 class="title">Gasto Financiero del cónyuge o Conviviente (Personales) </h3>
                 <div class="form_list no_border">
                   <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero_personal" v-bind:key="index">
                     <h3 class="title">Entidad {{index + 1}}
@@ -544,7 +544,7 @@
                   <a class="button_primary medium next" @click.prevent="guardar()" :class="{loading: loading}">
                     <div class="load_spinner"></div>
                   <span>FINALIZAR</span>
-                  <i class="material-icons-outlined">navigate_next</i>
+                  <i class="material-icons-outlined">check</i>
                 </a>
                 </div>
 

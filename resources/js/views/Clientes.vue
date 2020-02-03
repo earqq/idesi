@@ -56,6 +56,9 @@
 
         <div class="table_grid"  v-if=" type_list=='1'">
           <article class="client_card" v-for="cliente in clientes" :key="cliente.id" >
+            <div class="request" v-show="cliente.estado=='0'">
+              <i class="material-icons-outlined">email</i>
+            </div>
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
@@ -73,8 +76,10 @@
                   <img src="https://picsum.photos/100/100" v-if="false"/>
                   <div class="avatar_alt" v-else>{{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }}</div>
                 </div>
-                <p class="card-document">{{cliente.apellidos || cliente.razon_social}}</p>
-                <small class="card-name" >{{cliente.nombres || cliente.documento}}</small>
+                <div class="name_wrapper">
+                  <p class="truncate">{{cliente.apellidos || cliente.razon_social}}</p>
+                  <small class="truncate" >{{cliente.nombres || cliente.documento}}</small>
+                </div>
               </div>
             </router-link>
           </article>
@@ -100,7 +105,7 @@
                     <img src="https://picsum.photos/200/300" v-if="false" />
                     <div class="avatar_alt" v-else> {{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }} </div>
                   </div>
-                  <p> {{cliente.nombres}} {{cliente.apellidos || cliente.razon_social}}</p>
+                  <p class="truncate"> {{cliente.nombres}} {{cliente.apellidos || cliente.razon_social}}</p>
                 </td>
                 <td>
                   {{cliente.celular || '--'}}
@@ -303,6 +308,14 @@ export default {
         box-sizing: border-box
         transition: all ease-in-out .3s
         border: 1px solid $line_color
+        position: relative
+        .request
+          position: absolute
+          left: 10px
+          top: 5px
+          i
+            font-size: 20px
+            color: $primary_color
         .options
           display: flex
           align-items: center
@@ -321,6 +334,7 @@ export default {
             cursor: pointer
             opacity: .5
             color: $text_color
+            user-select: none
           ul
             position: absolute
             background-color: #fff
@@ -394,18 +408,20 @@ export default {
                 height: 55px
                 border-radius: 50%
                 object-fit: cover
-            p, small
-              color: $text_color
-              margin: 0
-            p
-              font-weight: 500
-              font-size: 12px
-              margin-top: 10px
+            .name_wrapper
               text-align: center
-              line-height: 1.3
-            small
-              font-size: 11px
-              display: block
+              p, small
+                color: $text_color
+                margin: 0
+              p
+                font-weight: 500
+                font-size: 12px
+                margin-top: 10px
+                text-align: center
+                line-height: 1.3
+              small
+                font-size: 11px
+                display: block
     .table_wrapper
       padding: 0 20px
       box-sizing: border-box
@@ -460,7 +476,7 @@ export default {
     .options_bar
       grid-template-columns: 1fr
       padding: 0
-      padding-bottom: 20px
+      padding-bottom: 15px
       position: sticky
       top: 55px
       z-index: 7
@@ -469,15 +485,39 @@ export default {
         padding-left: 10px
         border-radius: 0
         border: none
-        border-bottom: 1px solid #eef3fb
+        border-bottom: 1px solid $line_color
+        height: 50px
         select
           padding: 0 5px
       .add_client
-        width: 40px
+        width: 50px
+        height: 50px
         position: fixed
         bottom: 15px
         right: 15px
     .table_container
       .table_grid
         grid-gap: 10px
+        padding: 0 15px
+        .client_card
+          a 
+            .detail
+              flex-direction: row
+              padding: 20px 15px
+              justify-content: flex-start
+              padding-top: 0
+              .avatar
+                margin-right: 10px
+                .avatar_alt
+                  width: 40px
+                  height: 40px
+                  font-size: 15px
+                img
+                  width: 40px
+                  height: 40px
+              .name_wrapper
+                text-align: left
+                p
+                  margin-top: 0
+                  text-align: left
 </style>

@@ -228,7 +228,7 @@
               </div>
             </div>
 
-            <div class="form_buttons">
+            <div class="form_buttons all">
               <a class="button_primary medium next" @click="next(1)">
                 <span> SIGUIENTE </span>
                 <i class="material-icons-outlined"> navigate_next </i>
@@ -299,7 +299,7 @@
                   </div>
 
                   <div class="input_wrapper">
-                    <label>Cargo/ Ocupaciòn</label>
+                    <label>Cargo/ Ocupación</label>
                     <input type="text" :maxlength="20" v-model="form.laboral.cargo_ocupacion">
                   </div>
 
@@ -328,7 +328,7 @@
                   </div>
 
                   <div class="input_wrapper">
-                    <label for="nacimiento">Direcciòn</label>
+                    <label for="nacimiento">Dirección</label>
                     <input type="text" :maxlength="45" v-model="form.laboral.direccion">
                   </div>
 
@@ -998,11 +998,14 @@ export default {
         .then(response => {
               this.loading=false
             if(response.data.success){ 
+
                 this.$toast.success(
-                    "La Solicutud feu registrada",
+                    "La solicitud fue registrada",
                     "Exitoso",
                     toastOptions.success
                   )
+                this.$router.push({ name: 'clientes'})
+
               // this.resetForm();
               // this.$router.push({ name: 'clientes'})
             }else{

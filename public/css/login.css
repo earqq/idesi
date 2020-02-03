@@ -211,6 +211,7 @@
 
 .input_wrapper .vs__dropdown-toggle {
   border: none;
+  padding: 0 !important;
 }
 
 .input_wrapper .vs__dropdown-toggle .vs__selected {

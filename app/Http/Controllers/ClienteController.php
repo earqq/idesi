@@ -45,7 +45,7 @@ class ClienteController extends Controller
         if(Auth::user()->idrol == '1' || Auth::user()->idrol == '5'){
 
             $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
-              ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular','naturals.direccion_cliente')
+              ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular','naturals.direccion_cliente', 'clientes.estado')
               ->where('clientes.documento', 'LIKE', "%{$request->search_input}%")
               ->orWhere('naturals.nombres', 'LIKE', "%{$request->search_input}%")
               ->orWhere('naturals.apellidos', 'LIKE', "%{$request->search_input}%")
