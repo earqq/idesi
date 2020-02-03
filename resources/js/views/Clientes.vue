@@ -56,9 +56,6 @@
 
         <div class="table_grid"  v-if=" type_list=='1'">
           <article class="client_card" v-for="cliente in clientes" :key="cliente.id" >
-            <div class="request" v-show="cliente.estado=='0'">
-              <i class="material-icons-outlined">email</i>
-            </div>
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
@@ -73,6 +70,9 @@
             <router-link :to="{ name:'perfil', params: { documento: cliente.documento,persona:form.tipo_persona } }">
               <div class="detail">
                 <div class="avatar">
+                  <div class="request" v-show="cliente.estado=='0'">
+                    <i class="material-icons-outlined">email</i>
+                  </div>
                   <img src="https://picsum.photos/100/100" v-if="false"/>
                   <div class="avatar_alt" v-else>{{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }}</div>
                 </div>
@@ -309,13 +309,6 @@ export default {
         transition: all ease-in-out .3s
         border: 1px solid $line_color
         position: relative
-        .request
-          position: absolute
-          left: 10px
-          top: 5px
-          i
-            font-size: 20px
-            color: $primary_color
         .options
           display: flex
           align-items: center
@@ -392,6 +385,24 @@ export default {
             padding: 40px 20px
             width: 100%
             .avatar
+              position: relative
+              .request
+                position: absolute
+                left: 0
+                top: 0
+                width: 55px
+                height: 55px
+                background-color: lighten($highlight_color, 45%)
+                border-radius: 50%
+                display: flex
+                align-items: center
+                justify-content: center
+                font-size: 17px
+                font-weight: 600
+                color: $highlight_color
+                i
+                  font-size: 20px
+                  color: $highlight_color
               .avatar_alt
                 width: 55px
                 height: 55px
@@ -508,6 +519,10 @@ export default {
               padding-top: 0
               .avatar
                 margin-right: 10px
+                .request
+                  width: 40px
+                  height: 40px
+                  font-size: 15px
                 .avatar_alt
                   width: 40px
                   height: 40px
