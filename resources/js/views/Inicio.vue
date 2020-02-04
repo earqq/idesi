@@ -43,12 +43,15 @@
                             <i class="material-icons-outlined">add</i>
                         </router-link>
                     </div>
-                    <h2 class="title" v-if="!clientes.length==0"> Nuevo Clientes </h2>
+                    <h2 class="title" v-if="!clientes.length==0"> Nuevos Clientes </h2>
                     <ul class="list_client_wrapper" v-if="!clientes.length==0">
                         <li v-for="cliente in clientes" :key="cliente.id">
                             <div class="avatar">
+                                <div class="request" v-show="cliente.estado=='0'">
+                                    <i class="material-icons-outlined">email</i>
+                                </div>
                                 <img src="https://picsum.photos/200/300" v-if="false"/>
-                                <div class="avatar_alt" v-else> c </div>
+                                <div class="avatar_alt" :class="{denied : cliente.estado=='2'}" v-else> c </div>
                             </div>
                             <div class="name">
                                 <h1 class="truncate" v-text="cliente.nombres+' '+cliente.apellidos"> </h1>
@@ -362,6 +365,24 @@ export default {
                         padding: 0 20px
                         .avatar
                             margin-right: 10px
+                            position: relative
+                            .request
+                                position: absolute
+                                left: 0
+                                top: 0
+                                width: 35px
+                                height: 35px
+                                background-color: lighten($highlight_color, 45%)
+                                border-radius: 50%
+                                display: flex
+                                align-items: center
+                                justify-content: center
+                                font-size: 17px
+                                font-weight: 600
+                                color: $highlight_color
+                                i
+                                    font-size: 18px
+                                    color: $highlight_color
                             .avatar_alt
                                 width: 35px
                                 height: 35px
@@ -373,6 +394,9 @@ export default {
                                 font-size: 17px
                                 font-weight: 600
                                 color: $primary_color
+                                &.denied
+                                    background-color: lighten($require_color, 45%)
+                                    color: $require_color
                             img
                                 width: 30px
                                 height: 30px
@@ -472,4 +496,9 @@ export default {
                 grid-gap: 10px
                 .number_item
                     padding: 15px
+
+@media screen and (max-width: 500px)
+    .dashboard_content
+        .dashboard_wrapper
+            padding: 15px
 </style>

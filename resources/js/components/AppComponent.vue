@@ -5,7 +5,9 @@
     </form>  
     <nav>
         <div class="menu_items">
-            <img class="logo" src="/img/logo_alt.svg">
+            <router-link :to="{name: 'inicio'}" class="logo" >
+              <img src="/img/logo_alt.svg">
+            </router-link>
             <transition name="fade" mode="in-out">
               <div class="overlay" @click="menu_user = false" v-show="menu_user"></div>
             </transition>
@@ -189,8 +191,9 @@ nav
   top: 0
   border-bottom: 1px solid $line_color
   .logo
-    height: 30px
-    margin-left: 20px
+    img
+      height: 30px
+      margin-left: 20px
   .menu_items
     display: flex
     justify-content: space-between
@@ -389,4 +392,5 @@ nav
       .items_wrapper
         ul
           display: none
+
 </style>
