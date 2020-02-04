@@ -441,7 +441,7 @@
                           <input type="text"  v-model="evaluacion.propiedades[index].concepto" />
                         </div>
                         <div class="input_wrapper">
-                          <label>Pago</label>
+                          <label>Valor del bien</label>
                           <vue-numeric  currency="S/. " separator="," v-model="evaluacion.propiedades[index].valor_estimado"  v-bind:precision="2"></vue-numeric>
                         </div>
                       </div>

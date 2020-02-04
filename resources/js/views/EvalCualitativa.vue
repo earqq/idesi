@@ -281,7 +281,13 @@
                       </h3>
                       <div class="form_content">
                         <div class="group_form">
-
+                          <div class="input_wrapper">
+                            <label>Estudia</label>
+                            <select v-model='hijo.estudia' @change='cambiarEstudio(index)' >
+                              <option value='0'>No estudia</option>
+                              <option value='1'>Si estudia</option>
+                            </select>
+                          </div>
                           <div class="input_wrapper">
                             <label>Edad</label>
                             <input type="text" v-model="hijo.edad" />
@@ -290,20 +296,22 @@
                           <div class="input_wrapper">
                             <label>Colegio</label>
                             <select
+                              :disabled='hijo.estudia=="0"'
                               v-model="hijo.colegio"
-                                @change="seleccionColegiosCosto(index)"
-                              >
-                                <option
-                                  v-for="(colegio,index) in colegios"
-                                  v-bind:value="colegio.nombre"
-                                  :key="index"
-                                >{{ colegio.nombre }}</option>
-                              </select>
+                              @change="seleccionColegiosCosto(index)"
+                            >
+                            <option
+                              v-for="(colegio,index) in colegios"
+                              v-bind:value="colegio.nombre"
+                              :key="index"
+                            >{{ colegio.nombre }}</option>
+                            </select>
                           </div>
 
                           <div class="input_wrapper">
                             <label>Grado</label>
                             <select
+                                :disabled='hijo.estudia=="0"'
                                 v-model="hijo.grado"
                                 @change="seleccionColegiosCosto(index)"
                               >
@@ -316,10 +324,12 @@
                           <div class="input_wrapper">
                             <label>Costo</label>
                                 <input
+                                v-if='hijo.estudia'
                                 type="text"
                                 :value="'S/. '+hijo.costo"
-                                disabled
-                              />
+                                :disabled='hijo.estudia=="0"'
+                                />
+                          
                           </div>
 
                         </div>
@@ -664,6 +674,9 @@ export default {
     
   },
   methods: {
+    cambiarEstudio(index){
+        this.evaluacion.familiar.hijos[index].costo = 0;
+    },
     next(index) {
       window.scrollTo(0,0)
       this.tab = index + 1
@@ -734,6 +747,7 @@ export default {
         });
       // console.log(this.evaluacion.familiar.hijos[index].grado)
     }
+    
   },
   async mounted() {
  
@@ -778,7 +792,9 @@ export default {
               edad: "",
               colegio: "PRINCIPITO",
               grado: "INICIAL",
-              costo: 0
+              costo: 0,
+              estudia: 1
+
             });
             this.seleccionColegiosCosto(this.i)
           }

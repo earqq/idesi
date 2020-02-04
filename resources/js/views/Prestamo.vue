@@ -606,7 +606,7 @@
                   ></vue-numeric>
                 </div>
                 <div class="input_wrapper">
-                  <label>Plazo</label>
+                  <label>Cuotas</label>
                   <input
                     type="number"
                     v-model="form.plazo"
@@ -624,7 +624,7 @@
                   <vue-numeric v-model="form.cuotas" v-bind:precision="1"></vue-numeric>
                 </div>
                 <div class="input_wrapper">
-                  <label>Aporte</label>
+                  <label>Aporte a la fecha</label>
                   <vue-numeric
                     currency="S/. "
                     separator=","
