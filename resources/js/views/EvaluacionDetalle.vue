@@ -8,10 +8,10 @@
           class="tab"
           @click="tab = 1"
           :class=" {selected: tab == 1}">
-          <p>Detalles</p>
+          <p>DETALLES</p>
         </div>
         <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
-          <p>Evaluación</p>
+          <p>EVALUACIÓN</p>
         </div>
       </section>
       <div class="evaluation_detail_wrapper">
@@ -23,7 +23,7 @@
                   <button
                     type="button"
                     @click="cargarPdf()"
-                    class="add_section">
+                    class="add_section download">
                     <span>DESCARGAR EXPEDIENTE DE PRESTAMO</span>
                     <i class="material-icons-outlined">download</i>
                   </button>
@@ -61,8 +61,8 @@
                       <strong>Forma </strong> 
                       <p>{{prestamo.forma}}</p>
                     </li>
-                    <li></li>
-                    <li></li>
+                    <li class="spanner"></li>
+                    <li class="spanner"></li>
                   </div>
                 </div>
 
@@ -87,9 +87,9 @@
                       </thead>
                       <tbody>
                         <tr  v-for="evaluacion in form.evaluacion" :key="evaluacion.id" :class="{final_result: evaluacion.idrol == 4}">
-                          <td v-text="evaluacion.name"></td>
-                          <td v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
-                          <td> {{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
+                          <td class="client" v-text="evaluacion.name"></td>
+                          <td class="observation" v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
+                          <td class="date"> {{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
                           <td class="state"> <span :class="stateEvaluation(evaluacion.estado)">  </span> {{evaluacion.estado | toCapitalize}} <strong v-show="evaluacion.idrol == 4"> ( Decisión )</strong> </td>
                         </tr>
                       </tbody>
@@ -128,8 +128,8 @@
                       <strong>Forma </strong> 
                       <p>{{prestamo.forma_final ? prestamo.forma_final : "--"}}</p>
                     </li>
-                    <li></li>
-                    <li></li>
+                    <li class="spanner"></li>
+                    <li class="spanner"></li>
                   </div>
                 </div>
               </div>
@@ -725,7 +725,7 @@ export default {
     flex: 1
     .tab_inline
       background-color: white
-      height: 35px
+      height: 40px
       display: flex
       box-shadow: $shadow
       position: sticky
@@ -745,7 +745,7 @@ export default {
         &.selected
           border-bottom: 2px solid $primary_color
           p
-              color: $primary_color
+            color: $primary_color
         p
           margin: 0
           font-size: 12px
@@ -789,6 +789,11 @@ export default {
             background-color: inherit
         tbody
           tr
+            td.client
+              text-transform: uppercase
+            td
+              text-transform: lowercase
+              text-align: left
             &.final_result
               background-color: rgba($primary_color, .03) !important
               border-left: 3px solid $primary_color
@@ -805,8 +810,8 @@ export default {
             height: 12px
             border-radius: 50%
             background-color: $line_color
-            margin-right: 12px
-            margin-top: -2px
+            margin-right: 5px
+            margin-top: 0px
             &.accept
               background-color: $primary_color
             &.observed
@@ -883,4 +888,40 @@ export default {
         margin-top: 15px
         i
           font-size: 20px
+
+@media screen and (max-width: 720px)
+  .evaluation_content
+    .evaluation_detail
+      .evaluation_detail_wrapper
+        table
+          thead
+            display: none
+          tbody
+            tr
+              flex-direction: column
+              td
+                padding: 1px 15px
+                &:first-child
+                  padding-top: 15px
+                &:last-child
+                  padding-bottom: 15px
+                &.observation
+                  color: rgba($text_color, .77)
+                &.client
+                  font-weight: 500
+                &.date
+                  display: none
+
+
+@media screen and (max-width: 500px)
+  .evaluation_content
+    .evaluation_detail
+      .tab_inline
+        .tab
+          flex: 1
+          flex-basis: 0
+          margin-left: 0
+      .evaluation_detail_wrapper
+        margin-top: 15px
+        margin-bottom: 15px   
 </style>

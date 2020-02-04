@@ -60,7 +60,11 @@
     </div>
 
     <div class="files_containter">
-      
+      <div class="slide_mobile"  @click="show_slide = !show_slide">
+        <i class="material-icons-outlined">{{!show_slide ? 'menu_open' : 'close'}}</i>
+        <span>CHECKLIST</span>
+      </div>
+
       <div class="files_grid">
         <a class="add_file" @click="flagModalUpload = true" >
           <span>
@@ -81,33 +85,7 @@
             </a>
           </div> 
         </div>
-      <!--
-        <div class="file_item"  @click="cualitativaPdf()">
-          <div class="file_detail">
-            <a :href="'#'"
-              >
-              <i class="material-icons-outlined"> picture_as_pdf </i>
-              <div class="file_info">
-                <p> evaluacion_cualitativa </p> 
-                <small> 27 de enero de 2020 </small>            
-              </div>
-            </a>
-          </div>
-        </div> -->
-
-        <!-- <div class="file_item"  @click="cuantitativaPdf()">
-          <div class="file_detail">
-            <a :href="'#'"
-              >
-              <i class="material-icons-outlined"> picture_as_pdf </i>
-              <div class="file_info">
-                <p> evaluacion_cuantitativa </p> 
-                <small> 27 de enero de 2020 </small>            
-              </div>
-            </a>
-          </div>
-        </div> -->
-
+   
         <div class="file_item" v-for="(archivo, index) in archivos" :key="index">
           <div class="file_detail" v-if="archivo.tipo=='imagen'">
             <a :href="'../storage/'+person.documento+'_'+person.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
@@ -132,8 +110,8 @@
         </div>
         <a v-show="archivos.length || 0 < 5" class="spanner" v-for="i in 5" :key="i*1.5"  ></a>
       </div>
-
-      <aside class="checklist">
+      
+      <aside class="checklist"  :class="{showing: show_slide}">
         <div class="checklist_wrapper no_scroll">
           <div class="tree">
             <li>
@@ -321,6 +299,7 @@ export default {
   components: {  LoaderFile},
   data() {
     return {
+      show_slide: false,
       fileInto: false,
       flagModalUpload: false,
       resource: "clientes",
@@ -572,10 +551,12 @@ export default {
   .files_containter
     display: grid
     grid-template-columns: 1fr 320px
+    .slide_mobile
+      display: none
     .files_grid
       display: grid
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr) )
-      grid-gap: 15px
+      grid-gap: 10px
       padding: 20px
       box-sizing: border-box
       grid-auto-rows: max-content
@@ -748,4 +729,74 @@ export default {
               i
                 font-size: 13px
                 display: none
+
+@media screen and (max-width: 720px)
+  .documents_content
+    .files_containter
+      grid-template-columns: 1fr 250px
+
+@media screen and (max-width: 500px)
+  .documents_content
+    .files_containter
+      grid-template-columns: 1fr
+      .slide_mobile
+        background-color: white
+        box-shadow: $shadow
+        display: flex
+        align-items: center
+        height: 40px
+        position: sticky
+        top: 55px
+        border-bottom: 1px solid $line_color
+        z-index: 4
+        cursor: pointer
+        i
+          margin-top: -2px
+          padding-left: 10px
+        span
+          font-size: 12px
+          font-weight: 700
+          margin-left: 10px
+      .files_grid
+        padding: 15px
+        .file_item
+          height: auto
+          .file_detail 
+            a
+              flex-direction: row
+              i
+                font-size: 24px
+                flex: inherit
+                width: 50px
+              .file_info
+                border-top: none
+                flex: 1
+                padding: 15px 20px
+                padding-left: 0px
+        .add_file
+          width: 50px
+          height: 50px
+          position: fixed
+          bottom: 15px
+          right: 15px
+          border-radius: 3px
+          overflow: hidden
+          p
+            display: none
+          span
+            width: 100%
+            height: 100%
+            border-radius: 0
+            &:before
+              display: none
+      aside.checklist
+        width: 100%
+        position: fixed
+        top: 95px
+        z-index: 5
+        right: -100%
+        transition: all ease-in-out .3s
+        height: calc(100vh - 95px)
+        &.showing
+          right: 0
 </style>

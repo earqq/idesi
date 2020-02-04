@@ -901,7 +901,7 @@ export default {
               this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, persona: 'PN' }})
             }else{
                 this.$toast.error(
-                  "El prestamo fue creado",
+                  "No se pudo crear prestamo",
                   "Error",
                   toastOptions.error
                 )

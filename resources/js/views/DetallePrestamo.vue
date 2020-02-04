@@ -47,7 +47,7 @@
                   <strong>Destino de crédito   </strong> 
                   <p>{{prestamo_detalle.destino_inicial}}</p>
                 </li>
-                <li></li>
+                <li class="spanner"></li>
               </div>
             </div>
 
@@ -82,8 +82,8 @@
                   <strong>Forma </strong> 
                   <p>{{prestamo_detalle.forma}}</p>
                 </li>
-                <li></li>
-                <li></li>
+                <li class="spanner"></li>
+                <li class="spanner"></li>
               </div>
             </div>
 
@@ -109,9 +109,9 @@
                       v-for="evaluacion in evaluacion"
                       :key="evaluacion.id"
                       :class="{final_result: evaluacion.idrol == 4}">
-                      <td v-text="evaluacion.name"></td>
-                      <td v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
-                      <td>{{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
+                      <td class="client" v-text="evaluacion.name"></td>
+                      <td class="observation" v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
+                      <td class="date">{{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
                       <td class="state">
                         <span :class="stateEvaluation(evaluacion.estado)"></span>
                         {{evaluacion.estado | toCapitalize}}
@@ -565,6 +565,11 @@ export default {
             background-color: inherit
         tbody
           tr
+            td.client
+              text-transform: uppercase
+            td
+              text-transform: lowercase
+              text-align: left
             &.final_result
               background-color: rgba($primary_color, .03) !important
               border-left: 3px solid $primary_color
@@ -581,13 +586,40 @@ export default {
             height: 12px
             border-radius: 50%
             background-color: $line_color
-            margin-right: 12px
-            margin-top: -2px
+            margin-right: 5px
+            margin-top: 0px
             &.accept
               background-color: $primary_color
             &.observed
               background-color: $highlight_color
             &.denied
               background-color: $require_color
+
+@media screen and (max-width: 720px)
+  .credit_detail_content
+    .create_client_content
+      table
+        thead
+          display: none
+        tbody
+          tr
+            flex-direction: column
+            td
+              padding: 1px 15px
+              &:first-child
+                padding-top: 15px
+              &:last-child
+                padding-bottom: 15px
+              &.observation
+                color: rgba($text_color, .77)
+              &.client
+                font-weight: 500
+              &.date
+                display: none
+
+@media screen and (max-width: 500px)
+  .credit_detail_content
+    .create_client_content
+      margin: 15px 0
 </style>
  

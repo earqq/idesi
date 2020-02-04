@@ -1,7 +1,7 @@
 <template>
   <div class="profile_content">
 
-    <aside class="profile_detail">
+    <aside class="profile_detail no_scroll" :class="{showing: show_slide}">
       <div class="head_profile">
         <div class="bg">
           <div class="options_profile">
@@ -68,6 +68,11 @@
       </ul>
     </aside>
 
+    <div class="slide_mobile"  @click="show_slide = !show_slide">
+      <i class="material-icons-outlined">{{!show_slide ? 'menu_open' : 'close'}}</i>
+      <span>PERFIL</span>
+    </div>
+
     <div class="empty_message" v-if="prestamos.length==0">
       <img src="img/empty_2.svg" >
       <h1> Sin Prestamos Registrados </h1>
@@ -83,6 +88,7 @@
     </div>
 
     <div class="credits_grid" v-else>
+     
       <div class="table_grid" >
         <router-link  v-if="tipo_persona=='PN' && cliente.estado=='1' && id_rol!='5'"  class="add_credit" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
           <span>
@@ -159,7 +165,8 @@ export default {
       loader: 1,
       loader_loan: 1,
       tipo_general: 1,
-      option_loan: 1
+      option_loan: 1,
+      show_slide: false
     };
   },
   mounted() { 
@@ -242,11 +249,14 @@ export default {
 .profile_content
   display: grid
   grid-template-columns: 300px 1fr
+  .slide_mobile
+    display: none
   .profile_detail
     background-color: white
     box-shadow: $shadow
     border-right: 1px solid $line_color
     height: calc(100vh - 55px)
+    overflow: auto
     .head_profile
       display: flex
       flex-direction: column
@@ -353,7 +363,7 @@ export default {
       small
         font-size: 11px
         display: block
-    ul
+    & > ul
       margin: 0
       padding: 0
       blockquote.message_request
@@ -426,7 +436,7 @@ export default {
     box-sizing: border-box
     .table_grid
       display: grid
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr) )
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr) )
       grid-gap: 15px
       box-sizing: border-box
       .add_credit
@@ -549,6 +559,7 @@ export default {
               cursor: pointer
               opacity: .5
               color: $text_color
+              user-select: none
             ul
               position: absolute
               background-color: #fff
@@ -594,5 +605,42 @@ export default {
                     display: block
                     text-decoration: none
                     color: black
-      
+
+@media screen and (max-width: 720px)
+  .profile_content
+    grid-template-columns: 250px 1fr
+
+@media screen and (max-width: 500px)
+  .profile_content
+    grid-template-columns: 1fr
+    .slide_mobile
+      background-color: white
+      box-shadow: $shadow
+      display: flex
+      align-items: center
+      height: 40px
+      position: sticky
+      top: 55px
+      border-bottom: 1px solid $line_color
+      z-index: 4
+      cursor: pointer
+      i
+        margin-top: -2px
+        padding-left: 10px
+      span
+        font-size: 12px
+        font-weight: 700
+        margin-left: 10px
+    .credits_grid
+      padding: 15px
+    .profile_detail
+      width: 100%
+      position: fixed
+      top: 95px
+      z-index: 5
+      left: -100%
+      transition: all ease-in-out .3s
+      height: calc(100vh - 95px)
+      &.showing
+        left: 0
 </style>

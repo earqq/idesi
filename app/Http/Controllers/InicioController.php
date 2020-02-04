@@ -21,7 +21,7 @@ class InicioController extends Controller
         $prestamo_pendiente = Prestamo::where('estado','PENDIENTE')->count();
 
         /* ULTIMOS CLIENTES */
-        $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')->select('clientes.documento','naturals.nombres','naturals.apellidos','clientes.created_at')->latest()->take(7)->get();
+        $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')->select('clientes.documento','naturals.nombres','naturals.apellidos','clientes.created_at', 'clientes.estado')->latest()->take(7)->get();
         // $juridico = Juridico::join('juridicos','clientes.id','=','juridicos.clientes_id')->select('clientes.documento as juridico_documento','juridicos.razon_social','clientes.created_at as juridico_creacion')->latest()->take(7)->get();
         $prestamos = Prestamo::latest()->take(7)->get();
         return compact('cliente','prestamo_rechazado','prestamo_total','prestamo_pendiente','clientes','prestamos');
