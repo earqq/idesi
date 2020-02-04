@@ -67,8 +67,8 @@
                             <td> <span class="title">F. NACIMIENTO</span> <span > {{$natural->nacimiento}} </span> </td>
                         </tr>
                         <tr>
-                            <td> <span class="title">NACIONALIDAD</span> <span >Peruana</span> </td>
-                            <td colspan="2"> <span class="title">DEPARTAMENTO</span> <span >HUANUCO</span>  PROVINCIA <span>HUANUCO </span> DISTRITO <span>HUANUCO</span></td>
+                            <td> <span class="title">NACIONALIDAD</span> <span >{{$cliente->pais}} </span> </td>
+                            <td colspan="2"> <span class="title">DEPARTAMENTO</span> <span > {{$cliente->departamento}}</span>  <span class="title">PROVINCIA</span>  {{$cliente->provincia}}  <span class="title"> DISTRITO</span>   {{$cliente->distrito}} </td>
                         </tr>
                         <tr>
                             <td> <span class="title">ESTADO CIVIL</span> <span >{{$natural->estado_civil}}</span> </td>
@@ -82,7 +82,14 @@
                             <td colspan="3"> <span class="title">DIRECCIÓN</span> <span > {{$natural->direccion_cliente}} </span> </td>
                         </tr>
                         <tr>
-                            <td colspan="3"> <span class="title">NÚMERO</span> {{$natural->numero}}  <span class="title">MZ</span>  {{$natural->manzana}} <span class="title">LOTE </span> {{$natural->lote}}  <span class="title">DPTO</span> {{$natural->dpto}}  <span class="title">INT</span> {{$natural->int}}  <span class="title">PISO </span>{{$natural->piso}}</td>
+                            <td> <span class="title">NÚMERO</span> {{$natural->numero}}</td>
+                            <td> <span class="title">MZ</span>  {{$natural->manzana}} </td>
+                            <td> <span class="title">LOTE </span> {{$natural->lote}}  </td>
+                        </tr>
+                        <tr>
+                            <td> <span class="title">DPTO</span> {{$natural->dpto}}</td>
+                            <td> <span class="title">INT</span> {{$natural->int}}</td>
+                            <td> <span class="title">PISO </span>{{$natural->piso}}</td>
                         </tr>
                         
                         <tr>
@@ -134,11 +141,14 @@
                         </tr>
                         
                         <tr>
-                            <td> <span class="title">DISTRITO</span> <span > {{$laboral->distrito}} </span> </td>
-                            <td> <span class="title">PROVINCIA</span> {{$laboral->provincia}} <span > </span> </td>
-                            <td> <span class="title">DEPARTAMENTO</span> {{$laboral->departamento}} <span class="title"> PAIS </span> {{$laboral->pais}} </td>
+                            <td colspan="3"><span class="title"> PAIS </span> {{$laboral->pais}}</td>
                         </tr>
-
+                        <tr>
+                            <td> <span class="title">DISTRITO</span> <span > {{$distrito->descripcion}} </span> </td>
+                            <td> <span class="title">PROVINCIA</span> {{$provincia->descripcion}} <span > </span> </td>
+                            <td> <span class="title">DEPARTAMENTO</span> {{$departamento->descripcion}} </td>
+                        </tr>
+ 
                         <tr>
                             <td colspan="3"> <span class="title">REFERENCIA</span> {{$laboral->referencia}} <span > </span> </td>
                         </tr>
@@ -263,7 +273,12 @@
                 <tbody>
                           
                     <tr>
-                            <td colspan="3"><span class="title">Inscripción</span> S/. {{$asociativa->inscripcion}} <span class="title">Aporte</span> S/. {{$asociativa->aporte}}  <span class="title">Fondo. Preven.</span> S/. {{$asociativa->fondo}}  <span class="title">Fondo Preven. Opc </span> S/. {{$asociativa->fondo_opcional}}  </td> 
+                            <td colspan="2"><span class="title">Inscripción</span> S/. {{$asociativa->inscripcion}}</td> 
+                            <td><span class="title">Aporte</span> S/. {{$asociativa->aporte}} </td>
+                    </tr>
+                    <tr>
+                            <td colspan="2"> <span class="title">Fondo. Preven.</span> S/. {{$asociativa->fondo}}  </td> 
+                            <td> <span class="title">Fondo Preven. Opc </span> S/. {{$asociativa->fondo_opcional}} </td>
                     </tr>
                 </tbody>
             </table>

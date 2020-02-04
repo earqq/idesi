@@ -5,27 +5,52 @@
         <div
           class="tab"
           @click="tab = 1"
-          :class="{selected: tab == 1}"
+          :class="[{selected: tab == 1}]"
         >
           <span>1</span>
           <p>SOLICITUD</p>
         </div>
-        <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
+        <div class="tab" @click="tab = 2" :class="{selected: tab == 2}" v-if="validateStep1">
           <span>2</span>
           <p>CLIENTE</p>
         </div>
-        <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
+
+        <div class="tab" v-else>
+          <span>2</span>
+          <p>CLIENTE</p>
+        </div>
+
+        <div class="tab" @click="tab = 3" :class="{selected: tab == 3}" v-if="validateStep1 && validateStep2">
           <span>3</span>
           <p>AVAL</p>
         </div>
-        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}">
+
+        <div class="tab"  v-else>
+          <span>3</span>
+          <p>AVAL</p>
+        </div>
+
+        
+        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}" v-if="validateStep1 && validateStep2">
           <span>4</span>
           <p>GARANTIA</p>
         </div>
-        <div class="tab" @click="tab = 5" :class="{selected: tab ==5}">
+
+        <div class="tab" v-else>
+          <span>4</span>
+          <p>GARANTIA</p>
+        </div>
+
+
+        <div class="tab" @click="tab = 5" :class="{selected: tab ==5}" v-if="validateStep1 && validateStep2">
           <span>5</span>
           <p>PROPUESTA</p>
         </div>
+        <div class="tab" v-else>
+          <span>5</span>
+          <p>PROPUESTA</p>
+        </div>
+
       </div>
     </section>
 
@@ -81,7 +106,11 @@
           </div>
 
           <div class="form_buttons all">
-            <a class="button_primary medium next" @click="next(1)">
+            <a class="button_primary medium next" @click="next(1)" v-if="validateStep1">
+              <span>SIGUIENTE</span>
+              <i class="material-icons-outlined">navigate_next</i>
+            </a>
+            <a class="button_primary medium next" v-else>
               <span>SIGUIENTE</span>
               <i class="material-icons-outlined">navigate_next</i>
             </a>
@@ -93,23 +122,27 @@
             <h3 class="title">Datos del Titular</h3>
             <div class="form_content">
               <div class="group_form">
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateNombre}">
                   <label>Nombres</label>
                   <input type="text" v-model="form.natural.nombres" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateApellidos}">
                   <label>Apellidos</label>
                   <input type="text" v-model="form.natural.apellidos" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateDocumento}">
                   <label>Documento</label>
                   <input type="text" v-model="form.cliente.documento" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateNacimiento}">
                   <label>Fecha de nacimiento</label>
                   <input type="date" v-model="form.natural.nacimiento" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateCivil}">
                   <label>Estado Civil</label>
                   <select v-model="form.natural.estado_civil">
                     <option value="SOLTERO">SOLTERO</option>
@@ -118,22 +151,26 @@
                     <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
                     <option value="VIUDO">VIUDO</option>
                   </select>
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateOcupacion}">
                   <label>Ocupación</label>
                   <input type="text" v-model="form.natural.ocupacion" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" >
                   <label>Teléfono</label>
                   <input type="text" v-model="form.natural.telefono" />
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateCelular}">
                   <label>Celular</label>
                   <input type="text" v-mask="'### ### ###'" v-model="form.natural.celular" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateDireccion}">
                   <label>Dirección Consignado</label>
                   <input type="text" v-model="form.natural.direccion" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper">
                   <label>Dirección Reniec</label>
@@ -144,23 +181,27 @@
               <span class="separator"></span>
 
               <div class="group_form">
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateDepartamento}">
                   <label>Departamento</label>
                   <input type="text" v-model="form.natural.domicilio_departamento" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateProvincia}">
                   <label>Provincia</label>
                   <input type="text" v-model="form.natural.domicilio_provincia" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateDistrito}">
                   <label>Distrito</label>
                   <input type="text" v-model="form.natural.domicilio_distrito" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateReferencia}">
                   <label>Referencia</label>
                   <input type="text" v-model="form.natural.referencia" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateDomicilio}">
                   <label>Tipo Domicilio</label>
                   <select v-model="form.natural.tipo_domicilio">
                     <option value="PROPIA">PROPIA</option>
@@ -169,14 +210,17 @@
                     <option value="DE LOS FAMILIARES">DE LOS FAMILIARES</option>
                     <option value="ALQUILADA">ALQUILADA</option>
                   </select>
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateCentro}">
                   <label>Centro Laboral</label>
                   <input type="text" v-model="form.natural.centro_laboral" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateDireccionLaboral}">
                   <label>Dirección centro laboral</label>
                   <input type="text" v-model="form.natural.direccion_laboral" />
+                  <div class="message">Se requiere esta información</div>
                 </div>
               </div>
             </div>
@@ -289,7 +333,11 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click="next(2)">
+            <a class="button_primary medium next" @click="next(2)" v-if="validateStep2 && validateStep1">
+              <span>SIGUIENTE</span>
+              <i class="material-icons-outlined">navigate_next</i>
+            </a>
+            <a class="button_primary medium next" v-else>
               <span>SIGUIENTE</span>
               <i class="material-icons-outlined">navigate_next</i>
             </a>
@@ -652,7 +700,79 @@ export default {
     },
     validateStep1() {
       return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
+    },
+    validateNombre(){
+      return this.form.natural.nombres.length>4;
     }
+    ,
+    validateApellidos(){
+      return this.form.natural.apellidos.length>5;
+    }
+    ,
+    validateDocumento(){
+      return this.form.cliente.documento.length>=8
+    }
+    ,
+    validateNacimiento(){
+      return this.form.natural.nacimiento.length>4
+    }
+    ,
+    validateCivil(){
+      return this.form.natural.estado_civil.length>5
+    }
+    ,
+    validateOcupacion(){
+      return this.form.natural.ocupacion.length>4
+    }
+    ,
+    validateCelular(){
+      return  this.form.natural.celular.length>9
+    }
+    ,
+    validateDireccion(){
+      return  this.form.natural.direccion.length>5
+    }
+    ,
+    validateDepartamento(){
+      return this.form.natural.domicilio_departamento.length>4
+    }
+    ,
+    validateProvincia(){
+      return this.form.natural.domicilio_provincia.length>4
+    }
+    ,
+    validateDistrito(){
+      return this.form.natural.domicilio_distrito.length>4
+    }
+    ,
+    validateReferencia(){
+      return this.form.natural.referencia.length>5
+    }
+    ,
+    validateDomicilio(){
+      return this.form.natural.tipo_domicilio.length>5
+    }
+    ,
+    validateCentro(){
+      return this.form.natural.centro_laboral.length>5
+    }
+    ,
+    validateDireccionLaboral(){
+      return this.form.natural.direccion_laboral.length>6
+    },
+
+    validateStep2(){
+      return this.validateNombre && this.validateApellidos && 
+             this.validateDocumento && this.validateNacimiento &&
+             this.validateCivil && this.validateOcupacion && 
+             this.validateCelular && this.validateDireccion && 
+             this.validateDepartamento && this.validateProvincia &&
+             this.validateDistrito && this.validateReferencia && 
+             this.validateDomicilio && this.validateCentro && 
+             this.validateDireccionLaboral
+    }
+
+
   },
   created() {
     this.initForm()

@@ -812,7 +812,7 @@ export default {
           direccion: "",
           direccion_registros: "",
           referencia: "",
-          tipo_domicilio: 0,
+          tipo_domicilio: "PROPIA",
           centro_laboral: "",
           direccion_laboral: "",
           genero: "MASCULINO",

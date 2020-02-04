@@ -161,15 +161,15 @@ class ClienteController extends Controller
 
             DB::beginTransaction();
 
-            // return $request;
-            // $cliente = Cliente::where('documento', $request->cliente['documento'])->first();
-            // if($cliente){
-            //     DB::rollBack();
-            //     return [
-            //         'success' => false,
-            //     ];
-            // }
-            // else{
+             
+            $cliente = Cliente::where('documento', $request->cliente['documento'])->first();
+            if($cliente){
+                DB::rollBack();
+                return [
+                    'success' => false,
+                ];
+            }
+            else{
                 $cliente = new Cliente();
                 $cliente->users_id = Auth::user()->id;
                 $cliente->tipo_documento = $request->cliente['tipo_documento'];
@@ -248,6 +248,13 @@ class ClienteController extends Controller
                 $laboral->naturals_id= $natural->id;    
                 $laboral->save();
 
+                if($laboral->estado_laboral=='TRABAJA'){
+
+                    $departamento = Departamento::find($laboral->departamento)->first();
+                    $provincia = Provincia::find($laboral->provincia)->first();
+                    $distrito = Distrito::find($laboral->distrito)->first();
+                }
+
                 $familiar = New Familiar;
                 $familiar->hijos= $request->familia['hijos'];
                 $familiar->numero= $request->familia['numero'];    
@@ -305,7 +312,7 @@ class ClienteController extends Controller
                 $declaracion->naturals_id= $natural->id; 
                 $declaracion->save();
 
-                $pdf = PDF::loadView('reportes.inscripcion',compact('laboral','adicional','asociativa','declaracion','familiar','cliente','detallesfam','natural'));
+                $pdf = PDF::loadView('reportes.inscripcion',compact('laboral','adicional','asociativa','declaracion','familiar','cliente','detallesfam','natural','departamento','provincia','distrito'));
 
                 if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
                 }
@@ -317,7 +324,7 @@ class ClienteController extends Controller
                     'data' => 'Cliente creado',
                 ];
     
-            // }
+            }
  
 
         } catch (Exception $e){
