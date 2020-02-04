@@ -174,7 +174,7 @@
                 </table>
               </div>
 
-              <button type="button" class="add_section" :class="{no_border: list_vistas.length == 0 }" @click="startCamera" >
+              <button v-if='mobile' type="button" class="add_section" :class="{no_border: list_vistas.length == 0 }" @click="startCamera" >
                 <span> CAPTURAR FOTO DE NEGOCIO </span>
                 <i class="material-icons-outlined">camera_alt</i> 
               </button>
@@ -206,12 +206,14 @@ export default {
         rotateControl: false,
         fullscreenControl: false,
       },
+      screen:screen,
       resource: "clientes",
       location: null,
       gettingLocation: false,
       errorStr: null,
       video: {},
       canvas: {},
+      mobile:false,
       captura: "",
       camara_prendida: false,
       prestamo: this.$route.params.prestamo,
@@ -242,6 +244,7 @@ export default {
     google: gmapApi
   },
   async created() {
+    
     await this.views();
     /**
      * DATOS VIES
@@ -249,6 +252,19 @@ export default {
     await this.initForm();
   },
   mounted() {
+      if (process.client) { // en lado del servidor no existe windown, document, etc
+          if (window.innerWidth < 850) this.mobile = true
+          else this.mobile = false
+
+          this.$nextTick(() => {
+              window.addEventListener('resize', () => {
+                  if (window.innerWidth < 850) this.mobile = true
+                  else this.mobile = false
+              })
+          })
+      }
+      console.log("si viene")
+      console.log(this.mobile)
     this.geolocate();
 
     if (!("geolocation" in navigator)) {
