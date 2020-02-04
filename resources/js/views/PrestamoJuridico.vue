@@ -19,18 +19,36 @@
           <p>EMPRESA</p>
         </div>
 
-        <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
+        <div class="tab" @click="tab = 3" :class="{selected: tab == 3}" v-if="validateStep1 && validateStep2">
           <span>3</span>
           <p>AVAL</p>
         </div>
-        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}">
+        <div class="tab" v-else>
+          <span>3</span>
+          <p>AVAL</p>
+        </div>
+
+        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}" v-if="validateStep1 && validateStep2">
           <span>4</span>
           <p>GARANTIA</p>
         </div>
-        <div class="tab" @click="tab = 5" :class="{selected: tab ==5}">
+
+        <div class="tab" v-else>
+          <span>4</span>
+          <p>GARANTIA</p>
+        </div>
+
+
+        <div class="tab" @click="tab = 5" :class="{selected: tab ==5}" v-if="validateStep1 && validateStep2">
           <span>5</span>
           <p>PROPUESTA</p>
         </div>
+
+        <div class="tab" v-else>
+          <span>5</span>
+          <p>PROPUESTA</p>
+        </div>
+
       </div>
     </section>
     <section class="client_forms">
@@ -116,11 +134,13 @@
                 <div class="input_wrapper" :class="{require: !validateActividad}">
                   <label>Actividad</label>
                   <input type="text"  v-model="form.juridico.actividad_principal" />
+                  <div class="message">Actividad de la empresa</div>
                 </div>
 
                 <div class="input_wrapper" :class="{require: !validatePartida}">
                   <label>Número de partida</label>
                   <input type="text" v-model="form.juridico.partida_registral"  />
+                  <div class="message">N° de partida la empresa</div>
                 </div>
                 <div class="input_wrapper">
                   <label>Teléfono</label>
@@ -129,14 +149,17 @@
                 <div class="input_wrapper" :class="{require: !validateDireccionEmpresa}">
                   <label>Dirección</label>
                   <input type="text" v-model="form.juridico.direccion"  />
+                  <div class="message">Dirección de la emrpesa</div>
                 </div>
                 <div class="input_wrapper" :class="{require: !validateFechaConstitucion}">
                   <label>Fecha de constitución</label>
                   <input type="date" v-model="form.juridico.fecha_constitucion"  />
+                  <div class="message">Fecha de inicio de la empresa</div>
                 </div>
                 <div class="input_wrapper" :class="{require: !validateEmail}">
                   <label>Email</label>
                   <input type="text" v-model="form.juridico.email"  />
+                  <div class="message">Ingrese correo de la empresa</div>
                 </div>
               </div>
 
@@ -153,16 +176,19 @@
                     v-mask="'########'"
                   />
                   <div class="message">número de documento inválido</div>
+                  <div class="message">Numero de documento del representante</div>
                 </div>
 
                 <div class="input_wrapper" :class="{require: !validateNombres}">
                   <label>Nombres y Apellidos</label>
                   <input type="text" v-model="form.representante.nombres_representante" />
+                  <div class="message">Nombre del representante</div>
                 </div>
 
                 <div class="input_wrapper" :class="{require: !validateNacimiento}">
                   <label>Fecha de Nacimiento</label>
                   <input type="date" v-model="form.representante.nacimiento_representante" />
+                  <div class="message">Fecha de nacimiento del representante</div>
                 </div>
 
                 <div class="input_wrapper" :class="{require: !validateCivil}">
@@ -174,11 +200,13 @@
                     <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
                     <option value="VIUDO">VIUDO</option>
                   </select>
+                  <div class="message">Estado civil del representante</div>
                 </div>
 
                 <div class="input_wrapper" :class="{require: !validateOcupacion}">
                   <label>Ocupación</label>
                   <input type="text" v-model="form.representante.ocupacion_representante" />
+                  <div class="message">Ingrese ocupacion del representante</div>
                 </div>
 
 
@@ -194,11 +222,13 @@
                     v-mask="'### ### ###'"
                     v-model="form.representante.celular_representante"
                   />
+                  <div class="message">Ingrese número de celular</div>
                 </div>
 
                 <div class="input_wrapper" :class="{require: !validateDireccionRepresetante}">
                   <label>Dirección</label>
                   <input type="text" v-model="form.representante.direccion_representante" />
+                  <div class="message">Ingrese su dirección</div>
                 </div>
               </div>
               <div class="separator"></div>
@@ -209,21 +239,25 @@
                 <div class="input_wrapper" :class="{require: !validateDepartamento}">
                   <label>Departamento</label>
                   <input type="text" v-model="form.representante.departamento_representante" />
+                  <div class="message">Seleccione departamento</div>
                 </div>
 
                 <div class="input_wrapper" :class="{require: !validateProvincia}">
                   <label>Provincia</label>
                   <input type="text" v-model="form.representante.provincia_representante" />
+                  <div class="message">Seleccione provincia</div>
                 </div>
 
                 <div class="input_wrapper" :class="{require: !validateDistrito}">
                   <label>Distrito</label>
                   <input type="text" v-model="form.representante.distrito_representante" />
+                  <div class="message">Seleccione distrito</div>
                 </div>
 
                 <div class="input_wrapper" :class="{require: !validateReferencia}">
                   <label>Referencia</label>
                     <input type="text" v-model="form.representante.referencia_representante" />
+                    <div class="message">La referencia es invalido</div>
                 </div>
 
 
@@ -236,16 +270,19 @@
                     <option value="DE LOS FAMILIARES">DE LOS FAMILIARES</option>
                     <option value="ALQUILADA">ALQUILADA</option>
                   </select>
+                  <div class="message">Tipo de vivienda invalido</div>
                 </div>
 
                 <div class="input_wrapper" :class="{require: !validatePoderes}">
                   <label>Poderes (Asiento)</label>
                     <input type="text" v-model="form.representante.poderes_representante" />
+                    <div class="message">Ingrese poderes</div>
                 </div>
 
                 <div class="input_wrapper" :class="{require: !validateFechaCargo}">
                   <label>Fecha inicio (Cargo) </label>
                   <input type="date" v-model="form.representante.fecha_inicio_representante"/>
+                  <div class="message">Fecha incorrecta</div>
                 </div>
               </div>
           
@@ -257,7 +294,11 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click="next(2)">
+            <a class="button_primary medium next" @click="next(2)"  v-if="validateStep1 && validateStep2">
+              <span>SIGUIENTE</span>
+              <i class="material-icons-outlined">navigate_next</i>
+            </a>
+            <a class="button_primary medium next"  v-else>
               <span>SIGUIENTE</span>
               <i class="material-icons-outlined">navigate_next</i>
             </a>
@@ -651,28 +692,46 @@ export default {
       return this.form.representante.direccion_representante.length > 6
     },
     validateDepartamento() {
-      return this.form.representante.departamento_representante.length > 6
+      return this.form.representante.departamento_representante.length > 4
     },
     validateProvincia() {
-      return this.form.representante.provincia_representante.length > 6
+      return this.form.representante.provincia_representante.length > 4
     },
     validateDistrito() {
-      return this.form.representante.distrito_representante.length > 6
+      return this.form.representante.distrito_representante.length > 4
     },
     validateReferencia() {
-      return this.form.representante.referencia_representante.length > 6
+      return this.form.representante.referencia_representante.length > 4
     },
     validateTipoDomicilio() {
       return this.form.representante.tipo_domicilio_representante.length > 4
     },
     validatePoderes() {
-      return this.form.representante.poderes_representante.length > 6
+      return this.form.representante.poderes_representante.length > 3
     },
     validateFechaCargo() {
-      return this.form.representante.fecha_inicio_representante.length > 6
+      return this.form.representante.fecha_inicio_representante.length > 4
     },
     validateStep2(){
-
+      return  this.validateActividad &&
+              this.validatePartida &&
+              this.validateDireccionEmpresa &&
+              this.validateFechaConstitucion &&
+              this.validateEmail &&
+              this.validateDocumentoRepresentante &&
+              this.validateNombres &&
+              this.validateNacimiento &&
+              this.validateCivil &&
+              this.validateOcupacion &&
+              this.validateCelular &&
+              this.validateDireccionRepresetante &&
+              this.validateDepartamento &&
+              this.validateProvincia &&
+              this.validateDistrito &&
+              this.validateReferencia &&
+              this.validateTipoDomicilio &&
+              this.validatePoderes &&
+              this.validateFechaCargo
     }
   },
   created() {

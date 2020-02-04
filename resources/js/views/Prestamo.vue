@@ -761,6 +761,35 @@ export default {
       return this.form.natural.direccion_laboral.length>6
     },
 
+
+     validateDocumentoConyuge(){
+      return this.form.natural.direccion_laboral.length>6
+    },
+
+     validateNombreConyuge(){
+      return this.form.natural.direccion_laboral.length>6
+    },
+
+     validateNacimientoConyuge(){
+      return this.form.natural.direccion_laboral.length>6
+    },
+
+     validateOcupacionConyuge(){
+      return this.form.natural.direccion_laboral.length>6
+    },
+
+     validateCelularConyuge(){
+      return this.form.natural.direccion_laboral.length>6
+    },
+
+     validateCentroConyuge(){
+      return this.form.natural.direccion_laboral.length>6
+    },
+
+     validateDireccionConyuge(){
+      return this.form.natural.direccion_laboral.length>6
+    },
+
     validateStep2(){
       return this.validateNombre && this.validateApellidos && 
              this.validateDocumento && this.validateNacimiento &&
