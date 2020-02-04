@@ -69,7 +69,7 @@
                     v-model="form.monto_inicial"
                     v-bind:precision="2"
                   ></vue-numeric>
-                  <div class="message">Se requiere esta información</div>
+                  <div class="message">Monto de solicitud invalido</div>
                 </div>
                 <div class="input_wrapper">
                   <label>Forma</label>
@@ -92,14 +92,14 @@
                     v-model="form.disponibilidad_pago_inicial"
                     v-bind:precision="2"
                   ></vue-numeric> 
-                  <div class="message">Se requiere esta información</div>
+                  <div class="message">La disponibilidad es invalida</div>
                 </div>
               </div>
               <div class="group_form all">
                 <div class="input_wrapper" :class="{require: !validateDestino}">
                   <label>Destino de crédito (propuesta cliente)</label>
                   <textarea  v-model="form.destino_inicial"  />
-                  <div class="message">Se requiere esta información</div>
+                  <div class="message">Información de destino es corta</div>
                 </div>
               </div>
             </div>
@@ -785,32 +785,24 @@ export default {
 
         this.form.cliente.departamento =
           response.data["cliente"]["departamento"];
-        this.form.cliente.provincia = response.data["cliente"]["provincia"];
+        this.form.cliente.provincia = response.data["cliente"]["provincia"] || ""
         // this.filterDistricts()
-        this.form.cliente.distrito = response.data["cliente"]["distrito"];
-        this.form.natural.estado_civil =
-          response.data["natural"]["estado_civil"];
-        this.form.natural.ocupacion = response.data["natural"]["ocupacion"];
-        this.form.natural.domicilio_distrito =
-          response.data["natural"]["domicilio_distrito"];
-        this.form.natural.domicilio_provincia =
-          response.data["natural"]["domicilio_provincia"];
-        this.form.natural.domicilio_departamento =
-          response.data["natural"]["domicilio_departamento"];
-        this.form.natural.telefono = response.data["natural"]["telefono"];
-        this.form.natural.celular = response.data["natural"]["celular"];
-        this.form.natural.nombres = response.data["natural"]["nombres"];
-        this.form.natural.apellidos = response.data["natural"]["apellidos"];
-        this.form.natural.nacimiento = response.data["natural"]["nacimiento"];
-        this.form.natural.direccion =
-          response.data["natural"]["direccion_cliente"];
-        this.form.natural.referencia = response.data["natural"]["referencia"];
-        this.form.natural.tipo_domicilio =
-          response.data["natural"]["tipo_domicilio"];
-        this.form.natural.centro_laboral =
-          response.data["natural"]["centro_laboral"];
-        this.form.natural.direccion_laboral =
-          response.data["natural"]["direccion_laboral"];
+        this.form.cliente.distrito = response.data["cliente"]["distrito"] || ""
+        this.form.natural.estado_civil = response.data["natural"]["estado_civil"] || ""
+        this.form.natural.ocupacion = response.data["natural"]["ocupacion"] || ""
+        this.form.natural.domicilio_distrito = response.data["natural"]["domicilio_distrito"] || ""
+        this.form.natural.domicilio_provincia = response.data["natural"]["domicilio_provincia"] || ""
+        this.form.natural.domicilio_departamento = response.data["natural"]["domicilio_departamento"] || ""
+        this.form.natural.telefono = response.data["natural"]["telefono"] || ""
+        this.form.natural.celular = response.data["natural"]["celular"] || ""
+        this.form.natural.nombres = response.data["natural"]["nombres"] || ""
+        this.form.natural.apellidos = response.data["natural"]["apellidos"] || ""
+        this.form.natural.nacimiento = response.data["natural"]["nacimiento"] || ""
+        this.form.natural.direccion = response.data["natural"]["direccion_cliente"] || ""
+        this.form.natural.referencia = response.data["natural"]["referencia"] || ""
+        this.form.natural.tipo_domicilio = response.data["natural"]["tipo_domicilio"] || ""
+        this.form.natural.centro_laboral = response.data["natural"]["centro_laboral"] || ""
+        this.form.natural.direccion_laboral = response.data["natural"]["direccion_laboral"] || ""
 
         if (response.data["tiene_conyuge"] == "SI") { 
           this.form.conyugue.documento_conyugue =

@@ -405,6 +405,8 @@ class ClienteController extends Controller
                         $jur_rep = Juridico::find($representante->juridicos_id);
                         $jur_rep->documento_representante = $rp['documento'];
                         $jur_rep->nombres_representante = $rp['nombres'] ;
+                        $jur_rep->tipo_domicilio_representante  = 'PROPIO' ;
+                        $jur_rep->estado_civil_representante  = 'SOLTERO' ;
                         $jur_rep->save();
                     }
                     
