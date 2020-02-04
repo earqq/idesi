@@ -442,6 +442,7 @@ class EvaluacionesController extends Controller
         $liquidez=0;
         $solvencia=0;
 
+        \Log::alert("llega hasta esta parte");
         //PASIVO DEUDAS
         //titular
         foreach($request->titular["gasto_financiero"] as $gasto){
@@ -534,21 +535,23 @@ class EvaluacionesController extends Controller
 
             // FLUJO PARA CREDITOS DIARIOS MINIMO INGRESO
             $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['lunes'];
-            if($request->titular["ingresos_negocio"][0]['martes'] < $fc_diario_minimo_ingreso);
+            if($request->titular["ingresos_negocio"][0]['martes'] < $fc_diario_minimo_ingreso && $request->titular["ingresos_negocio"][0]['martes']>0)
             $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['martes'];
-            if($request->titular["ingresos_negocio"][0]['miercoles']<$fc_diario_minimo_ingreso)
+            if($request->titular["ingresos_negocio"][0]['miercoles']<$fc_diario_minimo_ingreso && $request->titular["ingresos_negocio"][0]['miercoles']>0)
             $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['miercoles'];
-            if($request->titular["ingresos_negocio"][0]['jueves']<$fc_diario_minimo_ingreso)
+            if($request->titular["ingresos_negocio"][0]['jueves']<$fc_diario_minimo_ingreso && $request->titular["ingresos_negocio"][0]['jueves']>0)
             $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['jueves'];
-            if($request->titular["ingresos_negocio"][0]['viernes']<$fc_diario_minimo_ingreso)
+            if($request->titular["ingresos_negocio"][0]['viernes']<$fc_diario_minimo_ingreso && $request->titular["ingresos_negocio"][0]['viernes']>0)
             $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['viernes'];
-            if($request->titular["ingresos_negocio"][0]['sabado']<$fc_diario_minimo_ingreso)
+            if($request->titular["ingresos_negocio"][0]['sabado']<$fc_diario_minimo_ingreso && $request->titular["ingresos_negocio"][0]['sabado']>0)
             $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['sabado'];
-            if($request->titular["ingresos_negocio"][0]['domingo']<$fc_diario_minimo_ingreso)
+            if($request->titular["ingresos_negocio"][0]['domingo']<$fc_diario_minimo_ingreso && $request->titular["ingresos_negocio"][0]['domingo']>0)
             $fc_diario_minimo_ingreso=$request->titular["ingresos_negocio"][0]['domingo'];    
 
             \Log::alert("FLUJO PARA CREDITOS DIARIOS MINIMO INGRESO: ".$fc_diario_minimo_ingreso);
-          
+            
+            \Log::alert("si viene aca: " );
+            \Log::alert($fc_diario_minimo_ingreso);
             $fc_diario_cuota=$prestamo->cuotas;
             \Log::alert("FLUJO PARA CREDITOS DIARIOS CUOTA: ".$fc_diario_cuota);
             
