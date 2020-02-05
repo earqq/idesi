@@ -33,7 +33,9 @@
                     <th style="border: none;"></th>
                 </tr>
                 <tr >
-                    <td  rowspan="2" valign="middle" align="left"  style="width: 70%">lgo</td>
+                    <td  rowspan="2" valign="middle" align="left"  style="width: 70%">
+                        <img src="{{env('RUTA')}}/public/img/logo.png" alt="" srcset="">
+                    </td>
                 
                 <td colspan="2" style="padding: 10px 0;"><span class="title">Fecha</span> {{$prestamo->created_at}}</td>
                 </tr>
@@ -57,13 +59,13 @@
             <table style="width: 100%;"   border="1" cellpadding="5" cellspacing="0">
                 <tbody>
                         <tr>
-                            <td> <span class="title">Monto</span> <span > S/. {{$prestamo->monto_inicial}}</span> </td>
-                            <td> <span class="title">Plazo</span> <span > {{$prestamo->plazo_inicial}}</span> </td>
-                            <td> <span class="title">Disponibilidad de pago</span> <span > {{$prestamo->disponibilidad_pago_inicial}}</span> </td>
+                            <td> <span class="title">MONTO</span> <span > S/. {{$prestamo->monto_inicial}}</span> </td>
+                            <td> <span class="title">PLAZO</span> <span > {{$prestamo->plazo_inicial}}</span> </td>
+                            <td> <span class="title">DISPONIBILIDAD DE PAGO</span> <span >S/. {{$prestamo->disponibilidad_pago_inicial}}</span> </td>
                         </tr>
                         <tr>
                             <td colspan="2" ><span class="title">DESTINO</span> <span > {{$prestamo->destino_inicial}}</span> </td>
-                            <td> <span class="title">Forma</span> <span > {{$prestamo->forma_inicial}}</span> </td>
+                            <td> <span class="title">FORMA</span> <span > {{$prestamo->forma_inicial}}</span> </td>
                         </tr>
 
                 </tbody>
@@ -263,14 +265,14 @@
                         
 
                         <tr>
-                            <td colspan="3"> <span class="title">PRODUCTO</span><span > {{$prestamo->producto}}</span> </td>
-                            <td> <span class="title">FORMA</span> <span > {{$prestamo->forma}}</span> </td>
+                            <td colspan="4"> <span class="title">PRODUCTO</span><span > {{$prestamo->producto}}</span> </td>
+                            {{-- <td> <span class="title">FORMA</span> <span > {{$prestamo->forma}}</span> </td> --}}
                         </tr>
                         <tr>
-                            <td> <span class="title">IMPORTE</span> <span > {{$prestamo->importe}}</span> </td>
+                            <td> <span class="title">IMPORTE</span> <span >S/. {{$prestamo->importe}}</span> </td>
                             <td> <span class="title">PLAZO</span> <span > {{$prestamo->plazo}}</span> </td>
                             <td> <span class="title">CUOTAS</span> <span > {{$prestamo->cuotas}} </span> </td>
-                            <td> <span class="title">APORTE</span> <span > {{$prestamo->aporte}} </span> </td>
+                            <td> <span class="title">APORTE</span> <span >S/. {{$prestamo->aporte}} </span> </td>
                         </tr>
                         @foreach ($avals as $aval)
                         <tr>
@@ -282,7 +284,7 @@
                         @foreach ($garantias as $garantia)
                         <tr>
                                 <td colspan="3"> <span class="title">Bien de garantia </span> <span > {{$garantia->bien_garantia}} </span> </td>
-                                <td><span class="title">INS.</span><span > [ X ] </span>  <span class="title">D.J</span> <span>[ X ]</span></td>
+                                <td><span class="title">INS.</span><span > [ {{$garantia->inscripcion}} ] </span>  <span class="title">D.J</span> <span>[ {{$garantia->declaracion_jurada}}]</span></td>
                         </tr>
                         @endforeach
                         
@@ -304,38 +306,79 @@
                     </thead>
                     <tbody>
                             
+                        @if ($evaluacion != '')
+                            @foreach ($evaluacion as $eval)
+                                    <tr>
+                                        @if ($eval->estado=='OBSERVADO')
+                                            <td> <span class="title">APROBADO</span><span > [    --     ]</span> </td>
+                                            <td> <span class="title">DESAPROBADO</span> <span > [    --     ]</span> </td>
+                                            <td> <span class="title">OBSERVADO</span> <span style="background: #009688;color:#fff"  > [     X    ]</span> </td>
+                                        @elseif($eval->estado=='APROBADO')
+                                            <td> <span class="title">APROBADO</span><span style="background: #009688;color:#fff" > [     X    ]</span> </td>
+                                            <td> <span class="title">DESAPROBADO</span> <span > [   --      ]</span> </td>
+                                            <td> <span class="title">OBSERVADO</span> <span > [    --     ]</span> </td>
+                                        @elseif($eval->estado=='DESAPROBADO')
+                                            <td> <span class="title">APROBADO</span><span > [     --    ]</span> </td>
+                                            <td> <span class="title">DESAPROBADO</span> <span style="background: #009688;color:#fff"  > [    X     ]</span> </td>
+                                            <td> <span class="title">OBSERVADO</span> <span > [   --      ]</span> </td>
+                                        @endif
+                                    </tr>
+                                    <tr>
+                                    <td colspan="3"> <span class="title">INDICACIONES</span> <span > {{$eval->detalle}}</span> </td>
+                                    </tr> 
+                                
+                            @endforeach
+                        @else
+
+                            <tr>
+                                <td colspan="3" style="text-align: center">NO EXISTE EVALUACIÓN</td>
+                            </tr>
+                            
+                        @endif
+
     
-                            <tr>
-                                <td> <span class="title">APROBADO</span><span >[         ]</span> </td>
-                                <td> <span class="title">DESAPROBADO</span> <span >[         ]</span> </td>
-                                <td> <span class="title">OBSERVADO</span> <span >[         ]</span> </td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"> <span class="title">INDICACIONES</span> <span > </span> </td>
-                            </tr>
-                            <tr style="background: #e4e4e4;">
+                    </tbody>
+                </table>
+
+                <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th colspan="2" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">COMITÉ DE CRÉDITO FINAL</th>
+                            <th style="background: #fff;border: 1px solid #e4e4e4;"> <span > </span> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            {{-- <tr style="background: #e4e4e4;">
                                 <td colspan="2"> <span class="title">¿OBSERVACIONES LEVANTADAS?</span>SI <span > [ X ] </span>  NO <span > [  ] </span></td>
                                 <td style="background: #fff"> <span > </span> </td>
-                            </tr>
-                            <tr>
-                                    <td> <span class="title">APROBADO</span><span >[         ]</span> </td>
-                                    <td> <span class="title">DESAPROBADO</span> <span >[         ]</span> </td>
-                                    <td> <span class="title">OBSERVADO</span> <span >[         ]</span> </td>
-                            </tr>
-                            <tr>
-                                    <td colspan="2"> <span class="title">PRODUCTO</span> <span> PLASO SIMPLE</span> </td>
-                                    <td> <span class="title">APORTE</span> <span > CUOTAS</span> </td>
-                            </tr>
-                            <tr>
-                                    <td> <span class="title">IMPORTE</span> <span > 5400</span> </td>
-                                    <td> <span class="title">PLAZO</span> <span > 15</span> </td>
-                                    <td> <span class="title">CUOTAS</span> <span > 21 </span> </td>
+                            </tr> --}}
+                            @if ($prestamo->estado == 'PENDIENTE')
+                                <tr>
+                                    <td colspan="3" style="text-align: center"> LA SOLICITUD DE CREDITO ESTA EN EVALUACIÓN</td>
                                 </tr>
-                            <tr>
-                                    <td colspan="3"> <span class="title">TAZA</span> <span > 23 </span> </td>
+                            @elseif($prestamo->estado == 'DESAPROBADO')
+                                <tr>
+                                    <td colspan="3" style="text-align: center"> LA SOLICITUD DE CREDITO FUE RECHAZADA</td>
                                 </tr>
-                            
-    
+                            @elseif($prestamo->estado == 'APROBADO')
+                                <tr>
+                                    <td colspan="3" style="text-align: center"> LA SOLICITUD DE CREDITO FUE APROBADA</td>
+                                </tr>
+                                <tr>
+                                        <td colspan="2"> <span class="title">PRODUCTO</span> <span> {{$prestamo->producto_final}} </span> </td>
+                                        <td> <span class="title">APORTE</span> {{$prestamo->aporte_final}}  </td>
+                                </tr>
+                                <tr>
+                                        <td> <span class="title">IMPORTE</span> <span > {{$prestamo->importe_final}}</span> </td>
+                                        <td> <span class="title">PLAZO</span> <span > {{$prestamo->plazo_final}}</span> </td>
+                                        <td> <span class="title">CUOTAS</span> <span > {{$prestamo->cuota_final}} </span> </td>
+                                    </tr>
+                                <tr>
+                                        <td colspan="3"> <span class="title">TAZA</span> <span > {{$prestamo->taza_final}} </span> </td>
+                                </tr>
+                            @endif
+
     
                     </tbody>
                 </table>

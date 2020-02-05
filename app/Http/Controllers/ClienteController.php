@@ -715,6 +715,7 @@ class ClienteController extends Controller
 
         try{
 
+            // return $request;
             DB::beginTransaction();
             
             $cliente = Cliente::where('documento',$request->cliente['documento'])->first(); 
@@ -749,6 +750,7 @@ class ClienteController extends Controller
                    $conyugue->ocupacion =  $request->conyugue['ocupacion_conyugue'];
                    $conyugue->telefono =  $request->conyugue['telefono_conyugue'] ;
                    $conyugue->celular =  $request->conyugue['celular_conyugue'];
+                   $conyugue->trabaja =  $request->conyugue['trabaja_conyugue'];
                    $conyugue->socio =  $request->conyugue['socio_conyugue'];
                    $conyugue->codigo_socio =  $request->conyugue['codigo_socio_conyugue'];
                    $conyugue->aporte_socio =  $request->conyugue['aporte_socio_conyugue'];
@@ -1066,9 +1068,9 @@ class ClienteController extends Controller
     
             $avals = Aval::where('prestamos_id',$prestamo->id)->get();
             $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+            $evaluacion = Evaluacion::where('prestamos_id',$prestamo->id)->get();
     
-    
-            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge'));
+            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge','evaluacion'));
             return $pdf->stream('solicitud_de_credito.pdf');
 
         }

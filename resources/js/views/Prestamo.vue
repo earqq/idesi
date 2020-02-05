@@ -309,12 +309,12 @@
                   </div>
                   <div class="input_wrapper" >
                     <label>¿Trabaja?</label>
-                    <select v-model="form.conyugue.trabaja">
+                    <select v-model="form.conyugue.trabaja_conyugue">
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
                     </select>
                   </div>
-                  <div class="input_wrapper"  :class="{require: !validateCentroConyuge}" v-if="form.conyugue.trabaja=='SI'">
+                  <div class="input_wrapper"  :class="{require: !validateCentroConyuge}" v-if="form.conyugue.trabaja_conyugue=='SI'">
                     <label>Centro Laboral</label>
                     <input type="text" v-model="form.conyugue.centro_laboral_conyugue" />
                   </div>
@@ -322,7 +322,7 @@
                     <label>Centro Laboral</label>
                     <input type="text" disabled />
                   </div>
-                  <div class="input_wrapper"  :class="{require: !validateDireccionConyuge}" v-if="form.conyugue.trabaja=='SI'">
+                  <div class="input_wrapper"  :class="{require: !validateDireccionConyuge}" v-if="form.conyugue.trabaja_conyugue=='SI'">
                     <label>Dirección centro laboral</label>
                     <input type="text" v-model="form.conyugue.direccion_laboral_conyugue" />
                   </div>
@@ -794,11 +794,6 @@ export default {
      validateAporteConyuge(){
       return String(this.form.conyugue.aporte_socio_conyugue).length>=1
     },
-
-     validateTrabajaConyuge(){
-      return this.form.natural.direccion_laboral.length>6
-    },
-
      validateCentroConyuge(){
       return this.form.conyugue.centro_laboral_conyugue.length>6
     },
@@ -808,7 +803,29 @@ export default {
     },
 
     validateStep2(){
-      return this.validateNombre && this.validateApellidos && 
+      if(this.form.conyugue.conyuge_tiene=='SI'){
+
+          return this.validateNombre && this.validateApellidos && 
+             this.validateDocumento && this.validateNacimiento &&
+             this.validateCivil && this.validateOcupacion && 
+             this.validateCelular && this.validateDireccion && 
+             this.validateDepartamento && this.validateProvincia &&
+             this.validateDistrito && this.validateReferencia && 
+             this.validateDomicilio && this.validateCentro && 
+             this.validateDireccionLaboral &&
+              this.validateDocumentoConyuge &&
+              this.validateNombreConyuge &&
+              this.validateNacimientoConyuge &&
+              this.validateOcupacionConyuge &&
+              this.validateCelularConyuge &&
+              this.validateCodigoConyuge &&
+              this.validateAporteConyuge &&
+              this.validateCentroConyuge &&
+              this.validateDireccionConyuge
+
+      }
+      else{
+        return this.validateNombre && this.validateApellidos && 
              this.validateDocumento && this.validateNacimiento &&
              this.validateCivil && this.validateOcupacion && 
              this.validateCelular && this.validateDireccion && 
@@ -816,6 +833,8 @@ export default {
              this.validateDistrito && this.validateReferencia && 
              this.validateDomicilio && this.validateCentro && 
              this.validateDireccionLaboral
+      }
+
     }
 
 
@@ -863,6 +882,8 @@ export default {
             response.data["conyugue"]["ocupacion"];
           this.form.conyugue.telefono_conyugue =
             response.data["conyugue"]["telefono"];
+          this.form.conyugue.trabaja_conyugue =
+            response.data["conyugue"]["trabaja"] || 'SI';
           this.form.conyugue.celular_conyugue =
             response.data["conyugue"]["celular"];
           this.form.conyugue.centro_laboral_conyugue =
@@ -976,7 +997,7 @@ export default {
           celular_conyugue: "",
           centro_laboral_conyugue: "",
           direccion_laboral_conyugue: "",
-          socio_conyugue: "NO",
+          socio_conyugue: "SI",
           codigo_socio_conyugue: "",
           aporte_socio_conyugue: "",
           conyuge_tiene: 0
