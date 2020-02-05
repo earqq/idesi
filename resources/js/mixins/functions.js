@@ -20,9 +20,8 @@ export const serviceNumber = {
             }
           },
         filterProvince() {
-            this.form.laboral.provincia = null 
-            this.form.laboral.distrito = null
-            console.log("sdad");
+            this.form.laboral.provincia = '0'
+            this.form.laboral.distrito = '0'
             this.filterProvinces()
         },
         filterProvinces() {
@@ -31,7 +30,7 @@ export const serviceNumber = {
             })
         },
         filterDistrict() {
-            this.form.laboral.distrito = null
+            this.form.laboral.distrito = '0'
             this.filterDistricts()
         },
         filterDistricts() {
@@ -39,6 +38,28 @@ export const serviceNumber = {
                 return f.provincia_id === this.form.laboral.provincia
             })
         },
+
+      filterProvinceTitular() {
+          this.form.natural.domicilio_provincia = '0'
+          this.form.natural.domicilio_distrito = '0'
+          this.filterProvincesTitular()
+      },
+      filterProvincesTitular() {
+
+        console.log()
+          this.provincesTitular = this.all_provinces.filter(f => {
+              return f.departamento_id === this.form.natural.domicilio_departamento
+          })
+      },
+      filterDistrictTitular() {
+          this.form.natural.domicilio_distrito = '0'
+          this.filterDistrictsTitular()
+      },
+      filterDistrictsTitular() {
+          this.districtsTitular = this.all_districts.filter(f => {
+              return f.provincia_id === this.form.natural.domicilio_provincia
+          })
+      },
         
     }
 };

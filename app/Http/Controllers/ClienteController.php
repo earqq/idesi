@@ -212,8 +212,11 @@ class ClienteController extends Controller
                 $natural->domicilio_provincia= $request->natural['domicilio_provincia'];    
                 $natural->domicilio_departamento= $request->natural['domicilio_departamento'];    
                 $natural->correo= $request->natural['correo'];    
-                
                 $natural->save();
+
+                $departamento_domicilio = Departamento::find($natural->domicilio_departamento)->first();
+                $provincia_domicilio = Provincia::find($natural->domicilio_provincia)->first();
+                $distrito_domicilio = Distrito::find($natural->domicilio_distrito)->first();
 
                 $laboral = new Laboral();
                 $laboral->estado_laboral= $request->laboral['estado_laboral'];    
@@ -310,9 +313,11 @@ class ClienteController extends Controller
                 $declaracion->observaciones= $request->declaracion['obervaciones'];    
                 $declaracion->estado= $request->declaracion['estado'];    
                 $declaracion->naturals_id= $natural->id; 
-                $declaracion->save();
+                $declaracion->save(); 
 
-                $pdf = PDF::loadView('reportes.inscripcion',compact('laboral','adicional','asociativa','declaracion','familiar','cliente','detallesfam','natural','departamento','provincia','distrito'));
+                $pdf = PDF::loadView('reportes.inscripcion',compact('laboral','adicional','asociativa','declaracion','familiar','cliente',
+                                                                    'detallesfam','natural','departamento','provincia','distrito',
+                                                                    'departamento_domicilio','provincia_domicilio','distrito_domicilio'));
 
                 if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
                 }
