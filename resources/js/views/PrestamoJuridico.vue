@@ -801,18 +801,18 @@ export default {
     this.$http
       .get(`/${this.resource}/datos/prestamo/juridico/` + this.$route.params.dni)
       .then(response => {
-        this.form.cliente.departamento = response.data["cliente"]["departamento"];
-        this.form.cliente.provincia = response.data["cliente"]["provincia"];
-        this.form.cliente.distrito = response.data["cliente"]["distrito"];
+        this.form.cliente.departamento = response.data["cliente"]["departamento"] || "";
+        this.form.cliente.provincia = response.data["cliente"]["provincia"] || "";
+        this.form.cliente.distrito = response.data["cliente"]["distrito"] || "";
  
-         this.form.juridico.razon_social =  response.data["juridico"]["razon_social"];
-         this.form.juridico.nombre_comercial = response.data["juridico"]["nombre_comercial"];
-         this.form.juridico.actividad_principal =  response.data["juridico"]["actividad_principal"];
-         this.form.juridico.partida_registral =  response.data["juridico"]["partida_registral"];
-         this.form.juridico.telefono = response.data["juridico"]["telefono"];
-         this.form.juridico.direccion = response.data["juridico"]["direccion"];
+         this.form.juridico.razon_social =  response.data["juridico"]["razon_social"] || "";
+         this.form.juridico.nombre_comercial = response.data["juridico"]["nombre_comercial"] || "";
+         this.form.juridico.actividad_principal =  response.data["juridico"]["actividad_principal"] || "";
+         this.form.juridico.partida_registral =  response.data["juridico"]["partida_registral"] || "";
+         this.form.juridico.telefono = response.data["juridico"]["telefono"] || "";
+         this.form.juridico.direccion = response.data["juridico"]["direccion"] || "";
         //  this.form.juridico.nacimiento = response.data["juridico"]["nacimiento"];
-         this.form.juridico.email = response.data["juridico"]["email"];
+         this.form.juridico.email = response.data["juridico"]["email"] || "";
 
 
          this.form.representante.nombres_representante = response.data["juridico"]["nombres_representante"] || ""

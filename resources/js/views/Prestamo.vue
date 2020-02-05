@@ -905,7 +905,7 @@ export default {
       .then(response => { 
 
         this.form.cliente.departamento =
-          response.data["cliente"]["departamento"];
+          response.data["cliente"]["departamento"] || "";
         this.form.cliente.provincia = response.data["cliente"]["provincia"] || ""
         // this.filterDistricts()
         this.form.cliente.distrito = response.data["cliente"]["distrito"] || ""
@@ -926,32 +926,19 @@ export default {
         this.form.natural.direccion_laboral = response.data["natural"]["direccion_laboral"] || ""
 
         if (response.data["tiene_conyuge"] == "SI") { 
-          this.form.conyugue.documento_conyugue =
-            response.data["conyugue"]["documento"];
-          this.form.conyugue.nombres_conyugue =
-            response.data["conyugue"]["nombres"];
-          this.form.conyugue.nacimiento_conyugue =
-            response.data["conyugue"]["nacimiento"];
-          this.form.conyugue.estado_civil_conyugue =
-            response.data["conyugue"]["estado_civil"];
-          this.form.conyugue.ocupacion_conyugue =
-            response.data["conyugue"]["ocupacion"];
-          this.form.conyugue.telefono_conyugue =
-            response.data["conyugue"]["telefono"];
-          this.form.conyugue.trabaja_conyugue =
-            response.data["conyugue"]["trabaja"] || 'SI';
-          this.form.conyugue.celular_conyugue =
-            response.data["conyugue"]["celular"];
-          this.form.conyugue.centro_laboral_conyugue =
-            response.data["conyugue"]["centro_laboral"];
-          this.form.conyugue.direccion_laboral_conyugue =
-            response.data["conyugue"]["direccion"];
-          this.form.conyugue.socio_conyugue =
-            response.data["conyugue"]["socio"];
-          this.form.conyugue.codigo_socio_conyugue =
-            response.data["conyugue"]["codigo_socio"];
-          this.form.conyugue.aporte_socio_conyugue =
-            response.data["conyugue"]["aporte_socio"];
+          this.form.conyugue.documento_conyugue = response.data["conyugue"]["documento"] || "";
+          this.form.conyugue.nombres_conyugue = response.data["conyugue"]["nombres"] || "";
+          this.form.conyugue.nacimiento_conyugue = response.data["conyugue"]["nacimiento"] || "";
+          this.form.conyugue.estado_civil_conyugue =  response.data["conyugue"]["estado_civil"] || "";
+          this.form.conyugue.ocupacion_conyugue = response.data["conyugue"]["ocupacion"] || "";
+          this.form.conyugue.telefono_conyugue = response.data["conyugue"]["telefono"] || "";
+          this.form.conyugue.trabaja_conyugue = response.data["conyugue"]["trabaja"] || 'SI';
+          this.form.conyugue.celular_conyugue = response.data["conyugue"]["celular"] || "";
+          this.form.conyugue.centro_laboral_conyugue = response.data["conyugue"]["centro_laboral"] || "";
+          this.form.conyugue.direccion_laboral_conyugue = response.data["conyugue"]["direccion"] || "";
+          this.form.conyugue.socio_conyugue = response.data["conyugue"]["socio"] || "SI";
+          this.form.conyugue.codigo_socio_conyugue = response.data["conyugue"]["codigo_socio"] || "";
+          this.form.conyugue.aporte_socio_conyugue = response.data["conyugue"]["aporte_socio"] || "";
           this.form.conyugue.conyuge_tiene = "SI";
         } else {
           this.form.conyugue.conyuge_tiene = "NO"; 
