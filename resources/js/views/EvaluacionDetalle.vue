@@ -1,17 +1,19 @@
 <template>
-
 <div class="evaluation_content">
-
     <div class="evaluation_detail"> 
+      
       <section class="tab_inline">
         <div
           class="tab"
-          @click="tab = 1"
+          @click="tab = 1; show_slide=false"
           :class=" {selected: tab == 1}">
           <p>DETALLES</p>
         </div>
-        <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
+        <div class="tab" @click="tab = 2; show_slide=false" :class="{selected: tab == 2}">
           <p>EVALUACIÓN</p>
+        </div>
+        <div  v-if="estado_evaluado==1 && prestamo.estado=='PENDIENTE' && (rol=='3' || rol=='4')" class="tab slide_mobile"  :class="{selected: tab == 3}"  @click="tab = 3; show_slide = true">
+          <p>FIRMAR</p>
         </div>
       </section>
       <div class="evaluation_detail_wrapper">
@@ -467,10 +469,8 @@
       </div>
     </div>
  
-    <aside class="evaluation" v-if="estado_evaluado==1 && prestamo.estado=='PENDIENTE' && (rol=='3' || rol=='4')">
-      <div class="title">Evaluador</div>
+    <aside class="evaluation no_scroll" :class="{showing: show_slide}" v-if="estado_evaluado==1 && prestamo.estado=='PENDIENTE' && (rol=='3' || rol=='4')">
       <div class="evaluation_wrapper">
-
         <div class="input_box">
           <div class="input_box_wrapper">
             <div class="input_checkbox_wrapper radio" >
@@ -566,6 +566,7 @@ export default {
   mixins: [serviceNumber],
   data() {
     return {
+      show_slide: false,
       resource: "evaluaciones",
       id_prestamo: 0, 
       detalle: {},
@@ -742,6 +743,8 @@ export default {
         border-bottom: 2px solid transparent
         user-select: none
         margin-left: 20px
+        &.slide_mobile
+          display: none
         &.selected
           border-bottom: 2px solid $primary_color
           p
@@ -828,6 +831,7 @@ export default {
     flex-direction: column
     position: sticky
     top: 55px
+    overflow: auto
     .title
       border-bottom: 1px solid $line_color
       font-size: 11px
@@ -889,6 +893,25 @@ export default {
         i
           font-size: 20px
 
+@media screen and (max-width: 1000px)
+  .evaluation_content
+    .evaluation_detail
+      .tab_inline
+        .tab
+          &.slide_mobile
+            display: flex
+    .evaluation
+      width: 100%
+      position: fixed
+      top: 95px
+      z-index: 5
+      right: -100%
+      transition: all ease-in-out .3s
+      height: calc(100vh - 95px)
+      &.showing
+        right: 0
+      .button_primary
+        height: 45px
 @media screen and (max-width: 720px)
   .evaluation_content
     .evaluation_detail
@@ -923,5 +946,5 @@ export default {
           margin-left: 0
       .evaluation_detail_wrapper
         margin-top: 15px
-        margin-bottom: 15px   
+        margin-bottom: 15px
 </style>

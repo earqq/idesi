@@ -1,6 +1,5 @@
 <template>
   <div class="documents_content">
-    
     <div class="modal_content" v-if="flagModalUpload" >
       <div class="modal_wrapper">
         <div class="title"> 
@@ -60,9 +59,14 @@
     </div>
 
     <div class="files_containter">
-      <div class="slide_mobile"  @click="show_slide = !show_slide">
-        <i class="material-icons-outlined">{{!show_slide ? 'menu_open' : 'close'}}</i>
-        <span>CHECKLIST</span>
+
+      <div class="tab_inline slide_mobile"  >
+        <div class="tab" :class="{selected: tab == 1}" @click="tab = 1; show_slide=false">
+          <p>DOCUMENTOS</p>
+        </div>
+        <div class="tab" :class="{selected: tab == 2}" @click="tab = 2; show_slide=true">
+          <p> CHECKLIST </p>
+        </div>
       </div>
 
       <div class="files_grid">
@@ -300,6 +304,7 @@ export default {
   data() {
     return {
       show_slide: false,
+      tab: 1,
       fileInto: false,
       flagModalUpload: false,
       resource: "clientes",
@@ -552,7 +557,37 @@ export default {
     display: grid
     grid-template-columns: 1fr 320px
     .slide_mobile
-      display: none
+      &.tab_inline
+        background-color: white
+        height: 40px
+        display: flex
+        box-shadow: $shadow
+        position: sticky
+        top: 55px
+        z-index: 8
+        border-bottom: 1px solid $line_color
+        display: none
+        .tab
+          width: 100px
+          display: flex
+          align-items: center
+          justify-content: center
+          height: 100%
+          cursor: pointer
+          border-bottom: 2px solid transparent
+          user-select: none
+          margin-left: 20px
+          &.selected
+            border-bottom: 2px solid $primary_color
+            p
+              color: $primary_color
+          p
+            margin: 0
+            font-size: 12px
+            font-weight: 700
+            margin-left: 10px
+            color: rgba($text_color, .5)
+            margin-bottom: -1px
     .files_grid
       display: grid
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr) )
@@ -740,23 +775,12 @@ export default {
     .files_containter
       grid-template-columns: 1fr
       .slide_mobile
-        background-color: white
-        box-shadow: $shadow
-        display: flex
-        align-items: center
-        height: 40px
-        position: sticky
-        top: 55px
-        border-bottom: 1px solid $line_color
-        z-index: 4
-        cursor: pointer
-        i
-          margin-top: -2px
-          padding-left: 10px
-        span
-          font-size: 12px
-          font-weight: 700
-          margin-left: 10px
+        &.tab_inline
+          display: flex
+          .tab
+            flex: 1
+            flex-basis: 0
+            margin-left: 0
       .files_grid
         padding: 15px
         .file_item

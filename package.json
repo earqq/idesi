@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "apexcharts": "^3.8.4",
+        "google-maps": "^3.3.0",
         "vue-apexcharts": "^1.5.2",
         "vue-date-pick": "^1.2.1",
         "vue-inputmask": "^0.2.1",

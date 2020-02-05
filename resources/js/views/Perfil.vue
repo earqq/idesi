@@ -1,6 +1,5 @@
 <template>
   <div class="profile_content">
-
     <aside class="profile_detail no_scroll" :class="{showing: show_slide}">
       <div class="head_profile">
         <div class="bg">
@@ -68,9 +67,13 @@
       </ul>
     </aside>
 
-    <div class="slide_mobile"  @click="show_slide = !show_slide">
-      <i class="material-icons-outlined">{{!show_slide ? 'menu_open' : 'close'}}</i>
-      <span>PERFIL</span>
+    <div class="tab_inline slide_mobile"  >
+      <div class="tab" :class="{selected: tab == 1}" @click="tab = 1; show_slide=true">
+        <p>PERFIL</p>
+      </div>
+      <div class="tab" :class="{selected: tab == 2}" @click="tab = 2; show_slide=false">
+        <p> PRESTAMOS </p>
+      </div>
     </div>
 
     <div class="empty_message" v-if="prestamos.length==0">
@@ -166,7 +169,8 @@ export default {
       loader_loan: 1,
       tipo_general: 1,
       option_loan: 1,
-      show_slide: false
+      show_slide: false,
+      tab: 2
     };
   },
   mounted() { 
@@ -250,7 +254,37 @@ export default {
   display: grid
   grid-template-columns: 300px 1fr
   .slide_mobile
-    display: none
+    &.tab_inline
+      background-color: white
+      height: 40px
+      display: flex
+      box-shadow: $shadow
+      position: sticky
+      top: 55px
+      z-index: 8
+      border-bottom: 1px solid $line_color
+      display: none
+      .tab
+        width: 100px
+        display: flex
+        align-items: center
+        justify-content: center
+        height: 100%
+        cursor: pointer
+        border-bottom: 2px solid transparent
+        user-select: none
+        margin-left: 20px
+        &.selected
+          border-bottom: 2px solid $primary_color
+          p
+            color: $primary_color
+        p
+          margin: 0
+          font-size: 12px
+          font-weight: 700
+          margin-left: 10px
+          color: rgba($text_color, .5)
+          margin-bottom: -1px
   .profile_detail
     background-color: white
     box-shadow: $shadow
@@ -614,23 +648,12 @@ export default {
   .profile_content
     grid-template-columns: 1fr
     .slide_mobile
-      background-color: white
-      box-shadow: $shadow
-      display: flex
-      align-items: center
-      height: 40px
-      position: sticky
-      top: 55px
-      border-bottom: 1px solid $line_color
-      z-index: 4
-      cursor: pointer
-      i
-        margin-top: -2px
-        padding-left: 10px
-      span
-        font-size: 12px
-        font-weight: 700
-        margin-left: 10px
+      &.tab_inline
+        display: flex
+        .tab
+          flex: 1
+          flex-basis: 0
+          margin-left: 0
     .credits_grid
       padding: 15px
     .profile_detail

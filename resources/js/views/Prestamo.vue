@@ -30,7 +30,6 @@
           <p>AVAL</p>
         </div>
 
-        
         <div class="tab" @click="tab = 4" :class="{selected: tab == 4}" v-if="validateStep1 && validateStep2">
           <span>4</span>
           <p>GARANTIA</p>

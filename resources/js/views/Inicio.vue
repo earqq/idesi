@@ -45,7 +45,7 @@
                     </div>
                     <h2 class="title" v-if="!clientes.length==0"> Nuevos Clientes </h2>
                     <ul class="list_client_wrapper" v-if="!clientes.length==0">
-                        <li v-for="cliente in clientes" :key="cliente.id">
+                        <li v-for="cliente in clientes" :key="cliente.id" @click="goToClient(cliente)">
                             <div class="avatar">
                                 <div class="request" v-show="cliente.estado=='0'">
                                     <i class="material-icons-outlined">email</i>
@@ -202,6 +202,11 @@ export default {
         this.prestamo_pendiente = response.data['prestamo_pendiente'];
         });
     },
+    methods: {
+        goToClient(cliente) {
+            //this.$router.push({ name:'perfil', params: { documento: cliente.documento, persona: "PN" } })
+        }
+    }
 }
 </script> 
 <style lang="sass" scoped>
@@ -363,6 +368,7 @@ export default {
                         border-bottom: 1px solid $line_color
                         box-sizing: border-box 
                         padding: 0 20px
+                        cursor: pointer
                         .avatar
                             margin-right: 10px
                             position: relative
