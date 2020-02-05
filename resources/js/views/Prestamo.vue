@@ -244,7 +244,7 @@
               </h3>
               <div class="form_content" >
                 <div class="group_form" >
-                  <div class="input_wrapper">
+                  <div class="input_wrapper"  :class="{require: !validateDocumentoConyuge}">
                     <label>Documento de Identidad</label>
                     <input
                       type="text"
@@ -254,11 +254,11 @@
                     />
                     <div class="message">número de documento inválido</div>
                   </div>
-                  <div class="input_wrapper">
+                  <div class="input_wrapper"  :class="{require: !validateNombreConyuge}">
                     <label>Nombres y Apellidos</label>
                     <input type="text" v-model="form.conyugue.nombres_conyugue" />
                   </div>
-                  <div class="input_wrapper">
+                  <div class="input_wrapper"  :class="{require: !validateNacimientoConyuge}">
                     <label>Fecha de Nacimiento</label>
                     <input type="date" v-model="form.conyugue.nacimiento_conyugue" />
                   </div>
@@ -272,7 +272,7 @@
                       <option value="VIUDO">VIUDO</option>
                     </select>
                   </div>
-                  <div class="input_wrapper">
+                  <div class="input_wrapper"  :class="{require: !validateOcupacionConyuge}">
                     <label>Ocupación</label>
                     <input type="text" v-model="form.conyugue.ocupacion_conyugue" />
                   </div>
@@ -283,45 +283,52 @@
                       <option value="NO">NO</option>
                     </select>
                   </div>
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateCodigoConyuge}" v-if="form.conyugue.socio_conyugue=='SI'" >
                     <label>Código</label>
-                    <input
-                      type="text"
-                      v-model="form.conyugue.codigo_socio_conyugue"
-                      v-if="form.conyugue.socio_conyugue=='SI'"
-                    />
-                    <input type="text" disabled v-else />
+                    <input  type="text"  v-model="form.conyugue.codigo_socio_conyugue"/>
                   </div>
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" v-else>
+                    <label>Código</label>
+                    <input type="text" disabled />
+                  </div>
+                  <div class="input_wrapper" :class="{require: !validateAporteConyuge}" v-if="form.conyugue.socio_conyugue=='SI'">
                     <label>Aporte</label>
-                    <vue-numeric
-                      currency="S/. "
-                      separator=","
-                      v-model="form.conyugue.aporte_socio_conyugue"
-                      v-bind:precision="2"
-                      v-if="form.conyugue.socio_conyugue=='SI'"
-                    ></vue-numeric>
-                    <input type="text" disabled v-else />
+                    <vue-numeric currency="S/. " separator="," v-model="form.conyugue.aporte_socio_conyugue" v-bind:precision="2"></vue-numeric>
+                  </div>
+                  <div class="input_wrapper" v-else>
+                    <label>Aporte</label>
+                    <input type="text" disabled/>
                   </div>
                   <div class="input_wrapper">
                     <label>Teléfono</label>
                     <input type="text" v-model="form.conyugue.telefono_conyugue" />
                   </div>
-                  <div class="input_wrapper">
+                  <div class="input_wrapper"  :class="{require: !validateCelularConyuge}">
                     <label>Celular</label>
-                    <input
-                      type="text"
-                      v-mask="'### ### ###'"
-                      v-model="form.conyugue.celular_conyugue"
-                    />
+                    <input  type="text"  v-mask="'### ### ###'"  v-model="form.conyugue.celular_conyugue" />
                   </div>
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" >
+                    <label>¿Trabaja?</label>
+                    <select v-model="form.conyugue.trabaja">
+                      <option value="SI">SI</option>
+                      <option value="NO">NO</option>
+                    </select>
+                  </div>
+                  <div class="input_wrapper"  :class="{require: !validateCentroConyuge}" v-if="form.conyugue.trabaja=='SI'">
                     <label>Centro Laboral</label>
                     <input type="text" v-model="form.conyugue.centro_laboral_conyugue" />
                   </div>
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" v-else>
+                    <label>Centro Laboral</label>
+                    <input type="text" disabled />
+                  </div>
+                  <div class="input_wrapper"  :class="{require: !validateDireccionConyuge}" v-if="form.conyugue.trabaja=='SI'">
                     <label>Dirección centro laboral</label>
                     <input type="text" v-model="form.conyugue.direccion_laboral_conyugue" />
+                  </div>
+                  <div class="input_wrapper"  v-else>
+                    <label>Dirección centro laboral</label>
+                    <input type="text"/>
                   </div>
                 </div>
               </div>
@@ -763,31 +770,41 @@ export default {
 
 
      validateDocumentoConyuge(){
-      return this.form.natural.direccion_laboral.length>6
+      return this.form.conyugue.documento_conyugue.length>=8
     },
 
      validateNombreConyuge(){
-      return this.form.natural.direccion_laboral.length>6
+      return this.form.conyugue.nombres_conyugue.length>6
     },
 
      validateNacimientoConyuge(){
-      return this.form.natural.direccion_laboral.length>6
+      return this.form.conyugue.nacimiento_conyugue.length>6
     },
 
      validateOcupacionConyuge(){
-      return this.form.natural.direccion_laboral.length>6
+      return this.form.conyugue.ocupacion_conyugue.length>6
     },
 
      validateCelularConyuge(){
+      return this.form.conyugue.celular_conyugue.length>6
+    },
+     validateCodigoConyuge(){
+      return this.form.conyugue.codigo_socio_conyugue.length>=3
+    },
+     validateAporteConyuge(){
+      return String(this.form.conyugue.aporte_socio_conyugue).length>=1
+    },
+
+     validateTrabajaConyuge(){
       return this.form.natural.direccion_laboral.length>6
     },
 
      validateCentroConyuge(){
-      return this.form.natural.direccion_laboral.length>6
+      return this.form.conyugue.centro_laboral_conyugue.length>6
     },
 
      validateDireccionConyuge(){
-      return this.form.natural.direccion_laboral.length>6
+      return this.form.conyugue.direccion_laboral_conyugue.length>6
     },
 
     validateStep2(){
@@ -955,6 +972,7 @@ export default {
           estado_civil_conyugue: "SOLTERO",
           ocupacion_conyugue: "",
           telefono_conyugue: "",
+          trabaja_conyugue: "SI",
           celular_conyugue: "",
           centro_laboral_conyugue: "",
           direccion_laboral_conyugue: "",
