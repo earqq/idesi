@@ -636,7 +636,60 @@ export default {
       districts: [],
       loading: false,
       errors: {},
-      form: {},
+      form: {
+        idprestamo: -1,
+        garantias: [],
+        avals: [],
+        cliente: {
+          departamento: "",
+          provincia: "",
+          distrito: "",
+          documento: this.$route.params.dni
+        },
+        juridico: {
+          razon_social: "",
+          nombre_comercial: "",
+          actividad_principal: "",
+          partida_registral: "0",
+          telefono: "",
+          direccion: "",
+          email:"",
+          nacimiento:"",
+          fecha_constitucion:""
+        },
+        representante: {
+          nombres_representante: "",
+          documento_representante: "",
+          nacimiento_representante: "",
+          estado_civil_representante: "0",
+          ocupacion_representante: "",
+          telefono_representante: "",
+          celular_representante: "",
+          direccion_representante:"",
+          distrito_representante:"",
+          provincia_representante:"",
+          departamento_representante:"",
+          referencia_representante:"",
+          tipo_domicilio_representante:"",
+          poderes_representante:"",
+          fecha_inicio_representante:"",
+        },
+        monto_inicial: "",
+        plazo_inicial: "5",
+        disponibilidad_pago_inicial: "",
+        destino_inicial: "",
+        forma_inicial: "DIARIO",
+        producto: "CREDIDIARIO",
+        forma: "DIARIO",
+        meses: 0,
+        importe: 0,
+        aporte: 0,
+        plazo: 5,
+        coutas: 0,
+        tasa: 0.0,
+        comentarios: "",
+        estado: "PENDIENTE"
+      },
       tab: 1
     };
   },
@@ -735,7 +788,7 @@ export default {
     }
   },
   created() {
-    this.initForm()
+    // this.initForm()
     this.clickAddAval()
     this.clickAddGarantia()
 
@@ -780,7 +833,7 @@ export default {
 
 
         
-      });
+      }); 
   },
 
   methods: {
@@ -847,65 +900,14 @@ export default {
       this.form.garantias.splice(index, 1);
     },
     clearForm() {
-      this.initForm();
+      // this.initForm();
     },
-    initForm() {
-      this.errors = {};
-      this.form = {
-        idprestamo: -1,
-        garantias: [],
-        avals: [],
-        cliente: {
-          departamento: "",
-          provincia: "",
-          distrito: "",
-          documento: this.$route.params.dni
-        },
-        juridico: {
-          razon_social: "",
-          nombre_comercial: "",
-          actividad_principal: "",
-          partida_registral: "0",
-          telefono: "",
-          direccion: "",
-          email:"",
-          nacimiento:"",
-          fecha_constitucion:""
-        },
-        representante: {
-          nombres_representante: "",
-          documento_representante: "",
-          nacimiento_representante: "",
-          estado_civil_representante: "0",
-          ocupacion_representante: "",
-          telefono_representante: "",
-          celular_representante: "",
-          direccion_representante:"",
-          distrito_representante:"",
-          provincia_representante:"",
-          departamento_representante:"",
-          referencia_representante:"",
-          tipo_domicilio_representante:"",
-          poderes_representante:"",
-          fecha_inicio_representante:"",
-        },
-        monto_inicial: "",
-        plazo_inicial: "5",
-        disponibilidad_pago_inicial: "",
-        destino_inicial: "",
-        forma_inicial: "DIARIO",
-        producto: "CREDIDIARIO",
-        forma: "DIARIO",
-        meses: 0,
-        importe: 0,
-        aporte: 0,
-        plazo: 5,
-        coutas: 0,
-        tasa: 0.0,
-        comentarios: "",
-        estado: "PENDIENTE"
-      };
-    },
+    // initForm() {
+    //   this.errors = {};
+    //   this.form = {
+
+    //   };
+    // },
     datosCliente() {
       let me = this;
       if(this.form.representante.documento_representante.length==8){
