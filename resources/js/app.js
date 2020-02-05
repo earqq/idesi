@@ -17,6 +17,14 @@ import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.css'; 
 import * as VueGoogleMaps from 'vue2-google-maps';
 
+/*google maps para geocoding */
+import GoogleMapsLoader from "google-maps";
+const mapsApiKey = "AIzaSyAbyVLUSddPTErLdnCbHoXpRO7Y1S4FuDA";
+GoogleMapsLoader.KEY = mapsApiKey;
+GoogleMapsLoader.LIBRARIES = ["geometry", "places"];
+
+
+
 import VueMoment from 'vue-moment'
 import VueTheMask from 'vue-the-mask'
 

@@ -1,6 +1,32 @@
 <template>
   <div class="credit_detail_content">
 
+    <div class="modal_content" v-if="flagModalPhoto" >
+      <div class="modal_wrapper photo_viewer">
+        <div class="title"> 
+          <h1> Infomacion de Foto </h1>
+          <i  @click="flagModalPhoto = false" class="material-icons-outlined">close</i>
+        </div>
+        <div class="photo_viewer" v-if="currentPhoto">
+          <img :src="'../storage/'+cliente.documento+'_'+cliente.id+'/prestamo_'+currentPhoto.prestamos_id+'/imagen/'+currentPhoto.nombre+'.'+currentPhoto.extension">
+          <div class="map_wrapper">
+            <GmapMap
+              :center="{lat:  Number(currentPhoto.latitud), lng: Number(currentPhoto.altitud) }"
+              :zoom="15"
+              style="width: 100%; height: 270px"
+              :options="optionsMap">
+                    <Gmap-Marker 
+                    :position="{
+                      lat: Number(currentPhoto.latitud),
+                      lng: Number(currentPhoto.altitud),
+                    }"
+                  ></Gmap-Marker>
+            </GmapMap>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="camera_screen_content" v-if="camara_prendida">
       <div class="camera_screen_wrapper">
         <div  class="close_camera">
@@ -130,45 +156,22 @@
                 <table class="table_photos">
                   <thead>
                     <tr>
-                      <th>Foto</th>
+                      <th class="photo">Foto</th>
                       <th>Ubicación</th>
                       <th>Fecha</th>
-                      <th class="options">Opciones</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="visita in list_vistas" :key="visita.id">
+                    <tr v-for="visita in list_vistas" :key="visita.id" @click="selectPhoto(visita)">
                       <td class="photo">
                         <img :src="'../storage/'+cliente.documento+'_'+cliente.id+'/prestamo_'+visita.prestamos_id+'/imagen/'+visita.nombre+'.'+visita.extension">
                       </td>
                       <td class="place_photo">
                         <i class="material-icons-outlined">place</i>
-                        <p> {{visita.latitud}} , {{visita.altitud}}</p>
-                        <!-- <GmapMap
-                          :center="{lat:  Number(visita.latitud), lng: Number(visita.altitud) }"
-                          :zoom="15"
-                          style="width: 500px; height: 300px"
-                          :options="optionsMap">
-                                <Gmap-Marker 
-                                :position="{
-                                  lat: Number(visita.latitud),
-                                  lng: Number(visita.altitud),
-                                }"
-                              ></Gmap-Marker>
-                        </GmapMap> -->
+                        <p v-if="geocoder"> {{ getLocationName(visita.latitud, visita.altitud, visita)}} {{visita.location_name ? visita.location_name : 'Desconocido'}}</p>
+                        
                       </td>
                       <td v-text="stringDate(visita.created_at)"></td>
-                      <td class="options">
-                        <i class="material-icons-outlined" >more_horiz</i>
-                        <ul>
-                          <li>
-                            Ver Foto
-                          </li>
-                          <li>
-                            Eliminar
-                          </li>
-                        </ul>
-                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -191,6 +194,10 @@
 import moment from "moment";
 import { gmapApi } from "vue2-google-maps";
 import { STYLES_MAP } from '../constants'
+
+import GoogleMapsLoader from 'google-maps'
+import Vue from 'vue'
+
 
 export default {
   name: "visita",
@@ -237,8 +244,11 @@ export default {
             position: "topRight"
           }
         }
-      }
-    };
+      },
+      geocoder: null,
+      flagModalPhoto: false,
+      currentPhoto: null
+    }
   },
   computed: {
     google: gmapApi
@@ -263,8 +273,7 @@ export default {
               })
           })
       }
-      console.log("si viene")
-      console.log(this.mobile)
+
     this.geolocate();
 
     if (!("geolocation" in navigator)) {
@@ -283,9 +292,29 @@ export default {
         this.gettingLocation = false;
         this.errorStr = err.message;
       }
-    );
-  },
+    )
+
+    GoogleMapsLoader.load((google) => {
+      this.initMap(google)
+    })
+  },  
   methods: {
+    selectPhoto (visita) {
+      this.flagModalPhoto = true
+      this.currentPhoto = visita
+    },
+    getLocationName (lat, lng, visita) {
+      if (lat != undefined) {
+        let latlng = new google.maps.LatLng(Number(lat) , Number(lng))
+        this.geocoder.geocode( {'location': latlng} , (results, status) => {
+          if (results && results[0]) Vue.set(visita, "location_name", results[0].formatted_address)
+        })
+      }
+    },
+    initMap (google) {
+      this.geocoder = new google.maps.Geocoder()
+      this.getLocationName()
+    },
     startCamera() {
         this.captura = null 
         this.camara_prendida = true
@@ -469,6 +498,16 @@ export default {
 @import "../../sass/variables"
 .credit_detail_content
   position: relative
+  .photo_viewer
+    border: 1px solid $line_color
+    border-radius: 4px
+    overflow: hidden
+    img
+      width: 100%
+      height: 400px
+      object-fit: cover
+    .map_wrapper
+      height: 250px
   .camera_screen_content
     position: fixed
     left: 0
@@ -557,6 +596,7 @@ export default {
           border-bottom: 1px solid $bg_color
       tbody
         tr
+          cursor: pointer
           &:last-child
             border-bottom: 0
         td
@@ -567,10 +607,12 @@ export default {
           &.photo
             img
               border-radius: 4px
-              width: 60px
-              height: 40px
+              width: 80px
+              height: 50px
               object-fit: cover
               display: block
+      .photo
+        max-width: 200px
     table.table_evaluations
         thead, tbody
           tr
@@ -615,6 +657,19 @@ export default {
   .credit_detail_content
     .create_client_content
       table
+        &.table_photos
+          tbody
+            tr
+              td.photo
+                img
+                  width: 150px
+                  height: 100px
+              td.place_photo
+                padding: 7px 15px
+                i
+                  margin-left: -5px
+          .photo
+            max-width: 100%
         thead
           display: none
         tbody

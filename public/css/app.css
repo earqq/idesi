@@ -12733,6 +12733,10 @@ a.text-dark:focus {
   box-sizing: border-box;
 }
 
+.modal_content .modal_wrapper.photo_viewer {
+  width: 650px;
+}
+
 .modal_content .modal_wrapper .title {
   display: -webkit-box;
   display: flex;
