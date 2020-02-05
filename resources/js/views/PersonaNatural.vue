@@ -1081,14 +1081,11 @@ export default {
      this.$http.get(`/${this.resource}/datos/`).then(response => {
         this.all_departments = response.data.departments;
         this.all_provinces = response.data.provinces;
-        this.all_districts = response.data.districts;
-        this.filterProvincesTitular()
+        this.all_districts = response.data.districts; 
       });
 
       
-
-    
-    console.log(this.all_provinces)
+ 
   }
 };
 </script>

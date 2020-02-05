@@ -93,7 +93,7 @@
                   <p>{{prestamo_detalle.plazo}}</p>
                 </li>
                   <li>
-                  <strong>Cuotas del Sistema </strong> 
+                  <strong>Cuota del Sistema </strong> 
                   <p>{{prestamo_detalle.cuotas}}</p>
                 </li>
                   <li>

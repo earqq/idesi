@@ -46,7 +46,7 @@ export const serviceNumber = {
       },
       filterProvincesTitular() {
 
-        console.log()
+        console.log(this.all_departments)
           this.provincesTitular = this.all_provinces.filter(f => {
               return f.departamento_id === this.form.natural.domicilio_departamento
           })

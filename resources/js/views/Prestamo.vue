@@ -182,17 +182,52 @@
               <div class="group_form">
                 <div class="input_wrapper" :class="{require: !validateDepartamento}">
                   <label>Departamento</label>
-                  <input type="text" v-model="form.natural.domicilio_departamento" />
-                  <div class="message">Se requiere esta información</div>
+                   <select
+                        v-model="form.natural.domicilio_departamento"
+                        
+                        @change="filterProvincesTitularMe"
+                        dusk="departamentos_id">
+                      <option value="0">SELECCIONE</option>
+                      <option
+                        v-for="option in all_departments"
+                        :key="option.id"
+                        :value="option.id"
+                        :label="option.descripcion"
+                      >></option>
+                  </select>
+                  <!-- <input type="text" v-model="form.natural.domicilio_departamento" /> -->
                 </div>
                 <div class="input_wrapper" :class="{require: !validateProvincia}">
-                  <label>Provincia</label>
-                  <input type="text" v-model="form.natural.domicilio_provincia" />
+                  <label>Provincia</label> 
+                  <select
+                      v-model="form.natural.domicilio_provincia"
+                      filterable
+                      @change="filterDistrictTitularMe"
+                      dusk="provincias_id">
+                      <option value="0">SELECCIONE</option>
+                      <option
+                        v-for="option in provincesTitular"
+                        :key="option.id"
+                        :value="option.id"
+                        :label="option.descripcion"
+                      >></option>
+                  </select>
                   <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDistrito}">
                   <label>Distrito</label>
-                  <input type="text" v-model="form.natural.domicilio_distrito" />
+                  <select
+                        v-model="form.natural.domicilio_distrito"
+                        filterable
+                        dusk="distritos_id">
+                        <option value="0">SELECCIONE</option>
+                      <option
+                        v-for="option in districtsTitular"
+                        :key="option.id"
+                        :value="option.id"
+                        :label="option.descripcion"
+                      >></option>
+                    </select> 
                   <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper" :class="{require: !validateReferencia}">
@@ -675,10 +710,14 @@ export default {
     return {
       resource: "clientes",
       tab: 1,
-      districts: [],
+      all_departments: [],
+      all_provinces: [],
+      all_districts: [],
+      provincesTitular: [],
+      districtsTitular: [],
       errors: {},
       form: {
-        idprestamo: -1,
+        idprestamo: -1, 
         garantias: [],
         avals: [],
         cliente: {
@@ -797,15 +836,15 @@ export default {
     }
     ,
     validateDepartamento(){
-      return this.form.natural.domicilio_departamento.length>4
+      return true
     }
     ,
     validateProvincia(){
-      return this.form.natural.domicilio_provincia.length>4
+      return true
     }
     ,
     validateDistrito(){
-      return this.form.natural.domicilio_distrito.length>4
+      return true
     }
     ,
     validateReferencia(){
@@ -895,8 +934,7 @@ export default {
 
 
   },
-  created() {
-    // this.initForm()
+  created() { 
     this.clickAddAval()
     this.clickAddGarantia()
 
@@ -906,8 +944,7 @@ export default {
 
         this.form.cliente.departamento =
           response.data["cliente"]["departamento"] || "";
-        this.form.cliente.provincia = response.data["cliente"]["provincia"] || ""
-        // this.filterDistricts()
+        this.form.cliente.provincia = response.data["cliente"]["provincia"] || "" 
         this.form.cliente.distrito = response.data["cliente"]["distrito"] || ""
         this.form.natural.estado_civil = response.data["natural"]["estado_civil"] || ""
         this.form.natural.ocupacion = response.data["natural"]["ocupacion"] || ""
@@ -947,6 +984,19 @@ export default {
   },
 
   methods: {
+    filterProvincesTitularMe() {
+          // this.form.natural.domicilio_provincia= '0'
+          // this.form.natural.domicilio_distrito= '0'
+          this.provincesTitular = this.all_provinces.filter(f => {
+              return f.departamento_id == this.form.natural.domicilio_departamento
+          })
+      },
+      filterDistrictTitularMe() {
+          // this.form.natural.domicilio_distrito= '0'
+          this.districtsTitular = this.all_districts.filter(f => {
+              return f.provincia_id == this.form.natural.domicilio_provincia
+          })
+      },
     next(index) {
       window.scrollTo(0,0)
       this.tab = index + 1
@@ -1083,7 +1133,18 @@ export default {
       this.backMixin_handleBack("/perfil/" + this.form.cliente.documento);
     }
   },
-  mounted() {
+  async mounted() {
+
+    await this.$http.get(`/${this.resource}/datos/`).then(response => {
+        this.all_departments = response.data.departments;
+        this.all_provinces = response.data.provinces;
+        this.all_districts = response.data.districts; 
+        
+    });
+
+    await this.filterProvincesTitularMe()
+    await this.filterDistrictTitularMe()
+
     if (this.form.producto == "CREDIDIARIO") {
       this.form.meses = (Number(this.form.plazo) / 30).toFixed(2);
     } else if (this.form.producto == "CREDISEMANA") {

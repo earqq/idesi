@@ -4,13 +4,13 @@
       <img src="img/empty_2.svg" >
       <h1> No se Encontraron Prestamos </h1>
       <p>Registra un nuevo cliente para crear prestamos.</p>
-      <router-link class="add_client button_primary small" :to="{name:'registrar/natural'}" v-if="tipo_persona=='PN' && id_rol!='5'">
+      <router-link class="add_client button_primary small" :to="{name:'registrar/natural'}" v-if="tipo_persona=='PN' && id_rol=='2'">
         <span>
           CREAR CLIENTE
         </span>
         <i class="material-icons-outlined">add</i>
       </router-link>
-      <router-link  class="add_client button_primary small" :to="{name:'registrar/juridico'}"  v-if="tipo_persona=='PJ' && id_rol!='5'">
+      <router-link  class="add_client button_primary small" :to="{name:'registrar/juridico'}"  v-if="tipo_persona=='PJ' && id_rol=='2'">
         <span>
           CREAR CLIENTE
         </span>

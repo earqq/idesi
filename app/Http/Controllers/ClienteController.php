@@ -617,8 +617,7 @@ class ClienteController extends Controller
             DB::commit();
 
             return [
-                'success' => true,
-                'data' => 'CLIENTE ADMITIDO',
+                'success' => true
             ];
 
     } catch (Exception $e){
@@ -656,8 +655,34 @@ class ClienteController extends Controller
             DB::commit();
 
             return [
-                'success' => true,
-                'data' => 'CLIENTE RECHAZADO',
+                'success' => true
+            ];
+
+            } catch (Exception $e){
+                return [
+                    'success' => false,
+                ];
+                DB::rollBack();
+            }
+    }
+
+
+    
+    public function enviarEvaluar($prestamo)
+    {
+
+        try{
+
+            DB::beginTransaction();
+
+            $prestamo = Prestamo::find($prestamo);
+            $prestamo->estado_analista = 'EVALUACION';
+            $prestamo->save();
+        
+            DB::commit();
+
+            return [
+                'success' => true
             ];
 
             } catch (Exception $e){

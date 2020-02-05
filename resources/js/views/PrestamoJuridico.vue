@@ -139,6 +139,8 @@
 
                 <div class="input_wrapper" :class="{require: !validatePartida}">
                   <label>Número de partida</label>
+                  <p>{{String(form.juridico.partida_registral).length}}</p>
+                  <p>{{form.juridico.direccion.length}}</p>
                   <input type="text" v-model="form.juridico.partida_registral"  />
                   <div class="message">N° de partida la empresa</div>
                 </div>
@@ -174,8 +176,7 @@
                     v-model="form.representante.documento_representante"
                     @keyup="datosCliente()"
                     v-mask="'########'"
-                  />
-                  <div class="message">número de documento inválido</div>
+                  /> 
                   <div class="message">Numero de documento del representante</div>
                 </div>
 
@@ -650,7 +651,7 @@ export default {
           razon_social: "",
           nombre_comercial: "",
           actividad_principal: "",
-          partida_registral: "0",
+          partida_registral: "",
           telefono: "",
           direccion: "",
           email:"",
@@ -712,7 +713,8 @@ export default {
       return this.form.juridico.actividad_principal.length > 4
     },
     validatePartida() {
-      return this.form.juridico.partida_registral.length > 3
+      
+      return String(this.form.juridico.partida_registral).length > 3
     },
     validateDireccionEmpresa() {
       return this.form.juridico.direccion.length > 6

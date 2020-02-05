@@ -57,8 +57,9 @@
             <h1>SOLICITUD DE ACEPTACIÓN</h1>
             <p> Se ha registrado un nuevo cliente esperando por aprobación.  </p>
             <div class="actions">
-              <a class="denied" @click="rechazarSolicitud"> RECHAZAR </a>
-              <a class="button_primary small" @click="aceptarSolicitud">
+              <a class="denied" @click="rechazarSolicitud"  :class="{loading: loading}"><div class="load_spinner"></div>  RECHAZAR </a>
+              <a class="button_primary small" @click="aceptarSolicitud" :class="{loading: loading}">
+                <div class="load_spinner"></div>
                 <span> ACEPTAR </span>
               </a>
             </div>
@@ -112,7 +113,7 @@
             <h2> {{prestamo.producto}} </h2>
             <div class="progress_bar">
               <span class="bar"></span>
-              <p>0% </p>
+              <p>0% </p> 
             </div> 
             <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
           </div>
@@ -123,13 +124,14 @@
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
-                <li> 
+                <li v-if="prestamo.estado_analista=='PROCESO'"> 
                   <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id,dni:cliente.documento}}"> Editar </router-link>
-                  <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id,dni:cliente.documento}}"> Editar </router-link>
+                  <router-link  v-else-if="tipo_persona=='PJ'" :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id,dni:cliente.documento}}"> Editar </router-link>
                 </li>
-                <li v-if="prestamo.cualitativa=='0'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_persona}}" >E. Cualitativa</router-link> </li>
-                <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1' "> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_persona}}" >E. Cuantitativa</router-link> </li>
-                <li> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}"  >Evaluación</router-link></li>
+                <li v-if="prestamo.cualitativa=='0' && prestamo.estado_analista=='PROCESO'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_persona}}" >E. Cualitativa</router-link> </li>
+                <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1'  && prestamo.estado_analista=='PROCESO'"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_persona}}" >E. Cuantitativa</router-link> </li>
+                <li v-if="prestamo.cuantitativa=='1' && prestamo.cualitativa=='1'  && prestamo.estado_analista=='PROCESO'" @click="enviarEvaluar(prestamo.id)"> Enviar a Evaluación</li>
+                <li v-if="prestamo.estado_analista=='EVALUACION'"> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}"  >Evaluación</router-link></li>
                 <li> <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
               </ul>
             </div>
@@ -145,16 +147,13 @@
 </template>
 
 <script>
-import { serviceNumber } from "../mixins/functions";
-import LoaderPrestamo from "./componentes/loader/prestamos.vue";
-import LoaderPerfil from "./componentes/loader/perfil.vue";
-import Visitas from "./Visita.vue";
+import { serviceNumber } from "../mixins/functions"; 
 import moment from "moment";
-
+import { toastOptions } from '../constants.js'
 
 export default {
   mixins: [serviceNumber],
-  components: {  LoaderPrestamo, LoaderPerfil, Visitas },
+  // components: {  LoaderPrestamo, LoaderPerfil},
   data() {
     return {
       resource: "clientes",
@@ -164,6 +163,7 @@ export default {
       idprestamo: 0,
       prestamos: {},
       id_usuario: 0 ,
+      loading: false,
       id_rol:0,
       loader: 1,
       loader_loan: 1,
@@ -209,18 +209,75 @@ export default {
                       });
               }
     },
+    enviarEvaluar(id){ 
+          this.$http
+            .get(`/${this.resource}/enviarEvaluar/` + id)
+            .then(response => {
+            if(response.data.success){
+                this.$toast.success(
+                    "El prestamo fue enviado a evaluación",
+                    "Exitoso",
+                    toastOptions.success
+                  ) 
+                
+                this.datosClientesPerfil()
+
+                }else{
+                    this.$toast.error(
+                      "No se pudo enviar el prestamo",
+                      "Error",
+                      toastOptions.error
+                    )
+                }
+              
+            });
+    },
     aceptarSolicitud(){
+      this.loading= true
           this.$http
             .get(`/${this.resource}/aceptar/solicitud/` + this.cliente.idcliente+'/'+this.tipo_persona)
             .then(response => {
-              this.datosClientesPerfil()
+            this.loading = false
+            if(response.data.success){
+                this.$toast.success(
+                    "El cliente fue aceptado",
+                    "Exitoso",
+                    toastOptions.success
+                  ) 
+                
+                this.datosClientesPerfil()
+
+                }else{
+                    this.$toast.error(
+                      "No se pudo aceptar la solicitud",
+                      "Error",
+                      toastOptions.error
+                    )
+                }
+              
             });
     },
     rechazarSolicitud(){
+      this.loading = true
           this.$http
             .get(`/${this.resource}/rechazar/solicitud/` + this.cliente.idcliente+'/'+this.tipo_persona)
             .then(response => {
-              this.datosClientesPerfil()
+            this.loading = false
+            if(response.data.success){
+                this.$toast.success(
+                    "El cliente fue rechazado",
+                    toastOptions.success
+                  ) 
+                
+                this.datosClientesPerfil()
+
+                }else{
+                    this.$toast.error(
+                      "No se pudo rechazar al solicitud",
+                      "Error",
+                      toastOptions.error
+                    )
+                }
             });
     },
     retornar() {
