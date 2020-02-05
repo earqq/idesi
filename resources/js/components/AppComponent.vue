@@ -46,7 +46,7 @@
                       <div class="avatar_alt" v-else> {{currentUser.name.substring(0,1)}} </div>
                     </div>
                       <h1>
-                        <p>{{currentUser.name}}</p>
+                        <p class="truncate">{{currentUser.name}}</p>
                         <a href="#">
                           Editar
                         </a>
@@ -68,7 +68,7 @@
                       <div class="avatar_alt" v-else> {{currentUser.name.substring(0,1)}} </div>
                     </div>
                     <h1>
-                      <p>{{currentUser.name}}</p>
+                      <p class="truncate">{{currentUser.name}}</p>
                       <a href="#">
                         Editar
                       </a>

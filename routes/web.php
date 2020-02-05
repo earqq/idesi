@@ -51,6 +51,9 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('clientes/nuevo/juridico', 'ClienteController@storeJuridico');
         Route::get('clientes/datos', 'ClienteController@datos');
         Route::get('clientes/datos/prestamo/{documento}', 'ClienteController@general');
+
+        Route::get('clientes/enviarEvaluar/{prestamo}', 'ClienteController@enviarEvaluar');
+
         Route::get('clientes/entregarPrestamo/{prestamo}', 'ClienteController@entregarPrestamo');
         Route::get('clientes/datos/prestamo/juridico/{documento}', 'ClienteController@generalJuridico');
         Route::get('clientes/perfil/cliente/{documento}', 'ClienteController@showCliente');

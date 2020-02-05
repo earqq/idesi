@@ -134,15 +134,50 @@
               <div class="group_form">
                 <div class="input_wrapper">
                   <label>Departamento</label>
-                  <input  type="text" v-model="form.natural.domicilio_departamento" />
+                  <select
+                        v-model="form.natural.domicilio_departamento"
+                        
+                        @change="filterProvincesTitularMe"
+                        dusk="departamentos_id">
+                      <option value="0">SELECCIONE</option>
+                      <option
+                        v-for="option in all_departments"
+                        :key="option.id"
+                        :value="option.id"
+                        :label="option.descripcion"
+                      >></option>
+                  </select> 
                 </div>
                 <div class="input_wrapper">
                   <label>Provincia</label>
-                  <input type="text" v-model="form.natural.domicilio_provincia"  />
+                  <select
+                      v-model="form.natural.domicilio_provincia"
+                      filterable
+                      @change="filterDistrictTitularMe"
+                      dusk="provincias_id">
+                      <option value="0">SELECCIONE</option>
+                      <option
+                        v-for="option in provincesTitular"
+                        :key="option.id"
+                        :value="option.id"
+                        :label="option.descripcion"
+                      >></option>
+                  </select> 
                 </div>
                 <div class="input_wrapper">
                   <label>Distrito</label>
-                  <input type="text" v-model="form.natural.domicilio_distrito"  />
+                  <select
+                        v-model="form.natural.domicilio_distrito"
+                        filterable
+                        dusk="distritos_id">
+                        <option value="0">SELECCIONE</option>
+                      <option
+                        v-for="option in districtsTitular"
+                        :key="option.id"
+                        :value="option.id"
+                        :label="option.descripcion"
+                      >></option>
+                    </select>  
                 </div>
                 <div class="input_wrapper">
                   <label>Referencia</label>
@@ -528,7 +563,7 @@
                     <option value="CONSUMO ESPECIAL">CONSUMO ESPECIAL</option>
                   </select>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateImporte}">
                   <label>Importe</label>
                   <vue-numeric
                     currency="S/. "
@@ -537,7 +572,7 @@
                     v-bind:precision="2"
                   ></vue-numeric>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validatePlazo}">
                   <label>Plazo</label>
                   <input
                     type="number"
@@ -551,11 +586,11 @@
                   <label>Meses</label>
                   <input type="text" v-model="form.meses" disabled />
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateCuota}">
                   <label>Cuota del sistema</label>
                   <vue-numeric v-model="form.cuotas" v-bind:precision="1"></vue-numeric>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateAporte}">
                   <label>Aporte</label>
                   <vue-numeric
                     class="form-control"
@@ -565,7 +600,7 @@
                     v-bind:precision="2"
                   ></vue-numeric>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateInfo}">
                   <label>Prob. Infocorp</label>
                   <vue-numeric v-model="form.probabilidad_infocorp" v-bind:precision="1"></vue-numeric>
                 </div>
@@ -585,7 +620,12 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click.prevent="submit()" :class="{loading: loading}">
+            <a class="button_primary medium next" @click.prevent="submit()" :class="{loading: loading}" v-if="validateStep1">
+              <div class="load_spinner"></div>
+              <span>FINALIZAR</span>
+              <i class="material-icons-outlined">check</i>
+            </a>
+            <a class="button_primary medium next" v-else>
               <div class="load_spinner"></div>
               <span>FINALIZAR</span>
               <i class="material-icons-outlined">check</i>
@@ -612,8 +652,8 @@ export default {
       all_departments: [],
       all_provinces: [],
       all_districts: [],
-      provinces: [],
-      districts: [],
+      provincesTitular: [],
+      districtsTitular: [],
       errors: {},
       tab: 1,
       loading: false,
@@ -633,30 +673,27 @@ export default {
     };
   },
   computed: {
-    validateName() {
-      // return this.form.natural.nombres.length > 2
+    validateImporte() {
+      return String(this.form.importe).length > 0 && this.form.importe !=0
     },
-    validateLastname() {
-      // return this.form.natural.apellidos.length > 2
+    validatePlazo() {
+      return String(this.form.plazo).length > 0 && this.form.plazo != 0 
     },
-    validateDoc() {
-      let result = false;
-      // if (this.form.cliente.tipo_documento == 'DNI') result = this.form.cliente.documento.length == 8
-      // else if (this.form.cliente.tipo_documento == 'CE') result = this.form.cliente.documento.length == 11
-      return result;
+    validateAporte() {
+      return String(this.form.aporte).length > 0 && this.form.aporte !=0
+    },
+     validateInfo() {
+      return String(this.form.probabilidad_infocorp).length >= 1
+    },
+    validateCuota() {
+      return String(this.form.cuotas).length>=1 && this.form.cuotas !=0
     },
     validateStep1() {
-      return this.validateDoc && this.validateName && this.validateLastname;
+      return this.validateImporte && this.validatePlazo && this.validateAporte && this.validateInfo && this.validateCuota;
     }
   },
   created() {
     this.initForm();
-
-    this.$http.get(`/${this.resource}/datos/`).then(response => {
-      this.all_departments = response.data.departments;
-      this.all_provinces = response.data.provinces;
-      this.all_districts = response.data.districts;
-    });
 
     this.$http
       .get(`/${this.resource}/prestamo/ver/` + this.$route.params.prestamo)
@@ -680,20 +717,20 @@ export default {
         this.form.natural.tipo_domicilio = response.data["natural"]["tipo_domicilio"];
         this.form.natural.centro_laboral = response.data["natural"]["centro_laboral"];
         this.form.natural.direccion_laboral = response.data["natural"]["direccion_laboral"];
-
+        console.log(response.data)
         if (response.data["tiene_conyuge"]=='SI') {
-          this.form.conyuge.documento_conyugue = response.data["conyuge"]["documento"];
-          this.form.conyuge.nombres_conyugue =  response.data["conyuge"]["nombres"];
-          this.form.conyuge.nacimiento_conyugue =  response.data["conyuge"]["nacimiento"];
-          this.form.conyuge.estado_civil_conyugue =  response.data["conyuge"]["estado_civil"];
-          this.form.conyuge.ocupacion_conyugue = response.data["conyuge"]["ocupacion"];
-          this.form.conyuge.telefono_conyugue = response.data["conyuge"]["telefono"];
-          this.form.conyuge.celular_conyugue = response.data["conyuge"]["celular"];
-          this.form.conyuge.centro_laboral_conyugue = response.data["conyuge"]["centro_laboral"];
-          this.form.conyuge.direccion_laboral_conyugue = response.data["conyuge"]["direccion"];
-          this.form.conyuge.socio_conyugue = response.data["conyuge"]["socio"];
-          this.form.conyuge.codigo_socio_conyugue = response.data["conyuge"]["codigo_socio"];
-          this.form.conyuge.aporte_socio_conyugue = response.data["conyuge"]["aporte_socio"];
+          this.form.conyuge.documento_conyugue = response.data["conyugue"]["documento"];
+          this.form.conyuge.nombres_conyugue =  response.data["conyugue"]["nombres"];
+          this.form.conyuge.nacimiento_conyugue =  response.data["conyugue"]["nacimiento"];
+          this.form.conyuge.estado_civil_conyugue =  response.data["conyugue"]["estado_civil"];
+          this.form.conyuge.ocupacion_conyugue = response.data["conyugue"]["ocupacion"];
+          this.form.conyuge.telefono_conyugue = response.data["conyugue"]["telefono"];
+          this.form.conyuge.celular_conyugue = response.data["conyugue"]["celular"];
+          this.form.conyuge.centro_laboral_conyugue = response.data["conyugue"]["centro_laboral"];
+          this.form.conyuge.direccion_laboral_conyugue = response.data["conyugue"]["direccion"];
+          this.form.conyuge.socio_conyugue = response.data["conyugue"]["socio"];
+          this.form.conyuge.codigo_socio_conyugue = response.data["conyugue"]["codigo_socio"];
+          this.form.conyuge.aporte_socio_conyugue = response.data["conyugue"]["aporte_socio"];
           this.form.conyuge.conyuge_tiene='SI';
         }else{
           this.form.conyuge.conyuge_tiene='NO';
@@ -720,7 +757,18 @@ export default {
       });
   },
 
+
   methods: {
+      filterProvincesTitularMe() { 
+        this.provincesTitular = this.all_provinces.filter(f => {
+            return f.departamento_id == this.form.natural.domicilio_departamento
+        })
+    },
+    filterDistrictTitularMe() { 
+        this.districtsTitular = this.all_districts.filter(f => {
+            return f.provincia_id == this.form.natural.domicilio_provincia
+        })
+    },
     next(index) {
        this.tab = index + 1;
        this.saving()
@@ -913,6 +961,20 @@ export default {
         });
     }
   },
+
+    async mounted() {
+
+    await this.$http.get(`/${this.resource}/datos/`).then(response => {
+        this.all_departments = response.data.departments;
+        this.all_provinces = response.data.provinces;
+        this.all_districts = response.data.districts; 
+        
+    });
+
+    await this.filterProvincesTitularMe()
+    await this.filterDistrictTitularMe()
+
+  }
 };
 </script>
 <style lang="scss">

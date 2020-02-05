@@ -139,6 +139,8 @@
 
                 <div class="input_wrapper" :class="{require: !validatePartida}">
                   <label>Número de partida</label>
+                  <p>{{String(form.juridico.partida_registral).length}}</p>
+                  <p>{{form.juridico.direccion.length}}</p>
                   <input type="text" v-model="form.juridico.partida_registral"  />
                   <div class="message">N° de partida la empresa</div>
                 </div>
@@ -174,8 +176,7 @@
                     v-model="form.representante.documento_representante"
                     @keyup="datosCliente()"
                     v-mask="'########'"
-                  />
-                  <div class="message">número de documento inválido</div>
+                  /> 
                   <div class="message">Numero de documento del representante</div>
                 </div>
 
@@ -636,7 +637,60 @@ export default {
       districts: [],
       loading: false,
       errors: {},
-      form: {},
+      form: {
+        idprestamo: -1,
+        garantias: [],
+        avals: [],
+        cliente: {
+          departamento: "",
+          provincia: "",
+          distrito: "",
+          documento: this.$route.params.dni
+        },
+        juridico: {
+          razon_social: "",
+          nombre_comercial: "",
+          actividad_principal: "",
+          partida_registral: "",
+          telefono: "",
+          direccion: "",
+          email:"",
+          nacimiento:"",
+          fecha_constitucion:""
+        },
+        representante: {
+          nombres_representante: "",
+          documento_representante: "",
+          nacimiento_representante: "",
+          estado_civil_representante: "0",
+          ocupacion_representante: "",
+          telefono_representante: "",
+          celular_representante: "",
+          direccion_representante:"",
+          distrito_representante:"",
+          provincia_representante:"",
+          departamento_representante:"",
+          referencia_representante:"",
+          tipo_domicilio_representante:"",
+          poderes_representante:"",
+          fecha_inicio_representante:"",
+        },
+        monto_inicial: "",
+        plazo_inicial: "5",
+        disponibilidad_pago_inicial: "",
+        destino_inicial: "",
+        forma_inicial: "DIARIO",
+        producto: "CREDIDIARIO",
+        forma: "DIARIO",
+        meses: 0,
+        importe: 0,
+        aporte: 0,
+        plazo: 5,
+        coutas: 0,
+        tasa: 0.0,
+        comentarios: "",
+        estado: "PENDIENTE"
+      },
       tab: 1
     };
   },
@@ -659,7 +713,8 @@ export default {
       return this.form.juridico.actividad_principal.length > 4
     },
     validatePartida() {
-      return this.form.juridico.partida_registral.length > 3
+      
+      return String(this.form.juridico.partida_registral).length > 3
     },
     validateDireccionEmpresa() {
       return this.form.juridico.direccion.length > 6
@@ -735,7 +790,7 @@ export default {
     }
   },
   created() {
-    this.initForm()
+    // this.initForm()
     this.clickAddAval()
     this.clickAddGarantia()
 
@@ -748,18 +803,18 @@ export default {
     this.$http
       .get(`/${this.resource}/datos/prestamo/juridico/` + this.$route.params.dni)
       .then(response => {
-        this.form.cliente.departamento = response.data["cliente"]["departamento"];
-        this.form.cliente.provincia = response.data["cliente"]["provincia"];
-        this.form.cliente.distrito = response.data["cliente"]["distrito"];
+        this.form.cliente.departamento = response.data["cliente"]["departamento"] || "";
+        this.form.cliente.provincia = response.data["cliente"]["provincia"] || "";
+        this.form.cliente.distrito = response.data["cliente"]["distrito"] || "";
  
-         this.form.juridico.razon_social =  response.data["juridico"]["razon_social"];
-         this.form.juridico.nombre_comercial = response.data["juridico"]["nombre_comercial"];
-         this.form.juridico.actividad_principal =  response.data["juridico"]["actividad_principal"];
-         this.form.juridico.partida_registral =  response.data["juridico"]["partida_registral"];
-         this.form.juridico.telefono = response.data["juridico"]["telefono"];
-         this.form.juridico.direccion = response.data["juridico"]["direccion"];
+         this.form.juridico.razon_social =  response.data["juridico"]["razon_social"] || "";
+         this.form.juridico.nombre_comercial = response.data["juridico"]["nombre_comercial"] || "";
+         this.form.juridico.actividad_principal =  response.data["juridico"]["actividad_principal"] || "";
+         this.form.juridico.partida_registral =  response.data["juridico"]["partida_registral"] || "";
+         this.form.juridico.telefono = response.data["juridico"]["telefono"] || "";
+         this.form.juridico.direccion = response.data["juridico"]["direccion"] || "";
         //  this.form.juridico.nacimiento = response.data["juridico"]["nacimiento"];
-         this.form.juridico.email = response.data["juridico"]["email"];
+         this.form.juridico.email = response.data["juridico"]["email"] || "";
 
 
          this.form.representante.nombres_representante = response.data["juridico"]["nombres_representante"] || ""
@@ -780,7 +835,7 @@ export default {
 
 
         
-      });
+      }); 
   },
 
   methods: {
@@ -847,65 +902,14 @@ export default {
       this.form.garantias.splice(index, 1);
     },
     clearForm() {
-      this.initForm();
+      // this.initForm();
     },
-    initForm() {
-      this.errors = {};
-      this.form = {
-        idprestamo: -1,
-        garantias: [],
-        avals: [],
-        cliente: {
-          departamento: "",
-          provincia: "",
-          distrito: "",
-          documento: this.$route.params.dni
-        },
-        juridico: {
-          razon_social: "",
-          nombre_comercial: "",
-          actividad_principal: "",
-          partida_registral: "0",
-          telefono: "",
-          direccion: "",
-          email:"",
-          nacimiento:"",
-          fecha_constitucion:""
-        },
-        representante: {
-          nombres_representante: "",
-          documento_representante: "",
-          nacimiento_representante: "",
-          estado_civil_representante: "0",
-          ocupacion_representante: "",
-          telefono_representante: "",
-          celular_representante: "",
-          direccion_representante:"",
-          distrito_representante:"",
-          provincia_representante:"",
-          departamento_representante:"",
-          referencia_representante:"",
-          tipo_domicilio_representante:"",
-          poderes_representante:"",
-          fecha_inicio_representante:"",
-        },
-        monto_inicial: "",
-        plazo_inicial: "5",
-        disponibilidad_pago_inicial: "",
-        destino_inicial: "",
-        forma_inicial: "DIARIO",
-        producto: "CREDIDIARIO",
-        forma: "DIARIO",
-        meses: 0,
-        importe: 0,
-        aporte: 0,
-        plazo: 5,
-        coutas: 0,
-        tasa: 0.0,
-        comentarios: "",
-        estado: "PENDIENTE"
-      };
-    },
+    // initForm() {
+    //   this.errors = {};
+    //   this.form = {
+
+    //   };
+    // },
     datosCliente() {
       let me = this;
       if(this.form.representante.documento_representante.length==8){

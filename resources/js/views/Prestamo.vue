@@ -30,7 +30,6 @@
           <p>AVAL</p>
         </div>
 
-        
         <div class="tab" @click="tab = 4" :class="{selected: tab == 4}" v-if="validateStep1 && validateStep2">
           <span>4</span>
           <p>GARANTIA</p>
@@ -183,17 +182,52 @@
               <div class="group_form">
                 <div class="input_wrapper" :class="{require: !validateDepartamento}">
                   <label>Departamento</label>
-                  <input type="text" v-model="form.natural.domicilio_departamento" />
-                  <div class="message">Se requiere esta información</div>
+                   <select
+                        v-model="form.natural.domicilio_departamento"
+                        
+                        @change="filterProvincesTitularMe"
+                        dusk="departamentos_id">
+                      <option value="0">SELECCIONE</option>
+                      <option
+                        v-for="option in all_departments"
+                        :key="option.id"
+                        :value="option.id"
+                        :label="option.descripcion"
+                      >></option>
+                  </select>
+                  <!-- <input type="text" v-model="form.natural.domicilio_departamento" /> -->
                 </div>
                 <div class="input_wrapper" :class="{require: !validateProvincia}">
-                  <label>Provincia</label>
-                  <input type="text" v-model="form.natural.domicilio_provincia" />
+                  <label>Provincia</label> 
+                  <select
+                      v-model="form.natural.domicilio_provincia"
+                      filterable
+                      @change="filterDistrictTitularMe"
+                      dusk="provincias_id">
+                      <option value="0">SELECCIONE</option>
+                      <option
+                        v-for="option in provincesTitular"
+                        :key="option.id"
+                        :value="option.id"
+                        :label="option.descripcion"
+                      >></option>
+                  </select>
                   <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDistrito}">
                   <label>Distrito</label>
-                  <input type="text" v-model="form.natural.domicilio_distrito" />
+                  <select
+                        v-model="form.natural.domicilio_distrito"
+                        filterable
+                        dusk="distritos_id">
+                        <option value="0">SELECCIONE</option>
+                      <option
+                        v-for="option in districtsTitular"
+                        :key="option.id"
+                        :value="option.id"
+                        :label="option.descripcion"
+                      >></option>
+                    </select> 
                   <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper" :class="{require: !validateReferencia}">
@@ -309,12 +343,12 @@
                   </div>
                   <div class="input_wrapper" >
                     <label>¿Trabaja?</label>
-                    <select v-model="form.conyugue.trabaja">
+                    <select v-model="form.conyugue.trabaja_conyugue">
                       <option value="SI">SI</option>
                       <option value="NO">NO</option>
                     </select>
                   </div>
-                  <div class="input_wrapper"  :class="{require: !validateCentroConyuge}" v-if="form.conyugue.trabaja=='SI'">
+                  <div class="input_wrapper"  :class="{require: !validateCentroConyuge}" v-if="form.conyugue.trabaja_conyugue=='SI'">
                     <label>Centro Laboral</label>
                     <input type="text" v-model="form.conyugue.centro_laboral_conyugue" />
                   </div>
@@ -322,7 +356,7 @@
                     <label>Centro Laboral</label>
                     <input type="text" disabled />
                   </div>
-                  <div class="input_wrapper"  :class="{require: !validateDireccionConyuge}" v-if="form.conyugue.trabaja=='SI'">
+                  <div class="input_wrapper"  :class="{require: !validateDireccionConyuge}" v-if="form.conyugue.trabaja_conyugue=='SI'">
                     <label>Dirección centro laboral</label>
                     <input type="text" v-model="form.conyugue.direccion_laboral_conyugue" />
                   </div>
@@ -676,9 +710,70 @@ export default {
     return {
       resource: "clientes",
       tab: 1,
-      districts: [],
+      all_departments: [],
+      all_provinces: [],
+      all_districts: [],
+      provincesTitular: [],
+      districtsTitular: [],
       errors: {},
-      form: {},
+      form: {
+        idprestamo: -1, 
+        garantias: [],
+        avals: [],
+        cliente: {
+          departamento: "",
+          provincia: "",
+          distrito: "",
+          documento: this.$route.params.dni
+        },
+        natural: {
+          nombres: "",
+          apellidos: "",
+          nacimiento: "",
+          estado_civil: "SOLTERO",
+          ocupacion: "",
+          telefono: "",
+          celular: "",
+          direccion: "",
+          referencia: "",
+          tipo_domicilio: "PROPIA",
+          centro_laboral: "",
+          direccion_laboral: "",
+          domicilio_departamento: "",
+          domicilio_provincia: "",
+          domicilio_distrito: ""
+        },
+        conyugue: {
+          documento_conyugue: "",
+          nombres_conyugue: "",
+          nacimiento_conyugue: "",
+          estado_civil_conyugue: "SOLTERO",
+          ocupacion_conyugue: "",
+          telefono_conyugue: "",
+          trabaja_conyugue: "SI",
+          celular_conyugue: "",
+          centro_laboral_conyugue: "",
+          direccion_laboral_conyugue: "",
+          socio_conyugue: "SI",
+          codigo_socio_conyugue: "",
+          aporte_socio_conyugue: "",
+          conyuge_tiene: 0
+        },
+        monto_inicial: "",
+        plazo_inicial: "5",
+        disponibilidad_pago_inicial: "",
+        destino_inicial: "",
+        forma_inicial: "DIARIO",
+        producto: "CREDIDIARIO",
+        forma: "DIARIO",
+        meses: 0,
+        importe: 0,
+        aporte: 0,
+        plazo: 0,
+        coutas: 0,
+        tasa: 0.0,
+        comentarios: "",
+        estado: "PENDIENTE"},
       contador_aval: 0,
       loading: false,
       contador_garantia: 0, 
@@ -741,15 +836,15 @@ export default {
     }
     ,
     validateDepartamento(){
-      return this.form.natural.domicilio_departamento.length>4
+      return true
     }
     ,
     validateProvincia(){
-      return this.form.natural.domicilio_provincia.length>4
+      return true
     }
     ,
     validateDistrito(){
-      return this.form.natural.domicilio_distrito.length>4
+      return true
     }
     ,
     validateReferencia(){
@@ -794,11 +889,6 @@ export default {
      validateAporteConyuge(){
       return String(this.form.conyugue.aporte_socio_conyugue).length>=1
     },
-
-     validateTrabajaConyuge(){
-      return this.form.natural.direccion_laboral.length>6
-    },
-
      validateCentroConyuge(){
       return this.form.conyugue.centro_laboral_conyugue.length>6
     },
@@ -808,7 +898,29 @@ export default {
     },
 
     validateStep2(){
-      return this.validateNombre && this.validateApellidos && 
+      if(this.form.conyugue.conyuge_tiene=='SI'){
+
+          return this.validateNombre && this.validateApellidos && 
+             this.validateDocumento && this.validateNacimiento &&
+             this.validateCivil && this.validateOcupacion && 
+             this.validateCelular && this.validateDireccion && 
+             this.validateDepartamento && this.validateProvincia &&
+             this.validateDistrito && this.validateReferencia && 
+             this.validateDomicilio && this.validateCentro && 
+             this.validateDireccionLaboral &&
+              this.validateDocumentoConyuge &&
+              this.validateNombreConyuge &&
+              this.validateNacimientoConyuge &&
+              this.validateOcupacionConyuge &&
+              this.validateCelularConyuge &&
+              this.validateCodigoConyuge &&
+              this.validateAporteConyuge &&
+              this.validateCentroConyuge &&
+              this.validateDireccionConyuge
+
+      }
+      else{
+        return this.validateNombre && this.validateApellidos && 
              this.validateDocumento && this.validateNacimiento &&
              this.validateCivil && this.validateOcupacion && 
              this.validateCelular && this.validateDireccion && 
@@ -816,12 +928,13 @@ export default {
              this.validateDistrito && this.validateReferencia && 
              this.validateDomicilio && this.validateCentro && 
              this.validateDireccionLaboral
+      }
+
     }
 
 
   },
-  created() {
-    this.initForm()
+  created() { 
     this.clickAddAval()
     this.clickAddGarantia()
 
@@ -830,9 +943,8 @@ export default {
       .then(response => { 
 
         this.form.cliente.departamento =
-          response.data["cliente"]["departamento"];
-        this.form.cliente.provincia = response.data["cliente"]["provincia"] || ""
-        // this.filterDistricts()
+          response.data["cliente"]["departamento"] || "";
+        this.form.cliente.provincia = response.data["cliente"]["provincia"] || "" 
         this.form.cliente.distrito = response.data["cliente"]["distrito"] || ""
         this.form.natural.estado_civil = response.data["natural"]["estado_civil"] || ""
         this.form.natural.ocupacion = response.data["natural"]["ocupacion"] || ""
@@ -851,30 +963,19 @@ export default {
         this.form.natural.direccion_laboral = response.data["natural"]["direccion_laboral"] || ""
 
         if (response.data["tiene_conyuge"] == "SI") { 
-          this.form.conyugue.documento_conyugue =
-            response.data["conyugue"]["documento"];
-          this.form.conyugue.nombres_conyugue =
-            response.data["conyugue"]["nombres"];
-          this.form.conyugue.nacimiento_conyugue =
-            response.data["conyugue"]["nacimiento"];
-          this.form.conyugue.estado_civil_conyugue =
-            response.data["conyugue"]["estado_civil"];
-          this.form.conyugue.ocupacion_conyugue =
-            response.data["conyugue"]["ocupacion"];
-          this.form.conyugue.telefono_conyugue =
-            response.data["conyugue"]["telefono"];
-          this.form.conyugue.celular_conyugue =
-            response.data["conyugue"]["celular"];
-          this.form.conyugue.centro_laboral_conyugue =
-            response.data["conyugue"]["centro_laboral"];
-          this.form.conyugue.direccion_laboral_conyugue =
-            response.data["conyugue"]["direccion"];
-          this.form.conyugue.socio_conyugue =
-            response.data["conyugue"]["socio"];
-          this.form.conyugue.codigo_socio_conyugue =
-            response.data["conyugue"]["codigo_socio"];
-          this.form.conyugue.aporte_socio_conyugue =
-            response.data["conyugue"]["aporte_socio"];
+          this.form.conyugue.documento_conyugue = response.data["conyugue"]["documento"] || "";
+          this.form.conyugue.nombres_conyugue = response.data["conyugue"]["nombres"] || "";
+          this.form.conyugue.nacimiento_conyugue = response.data["conyugue"]["nacimiento"] || "";
+          this.form.conyugue.estado_civil_conyugue =  response.data["conyugue"]["estado_civil"] || "";
+          this.form.conyugue.ocupacion_conyugue = response.data["conyugue"]["ocupacion"] || "";
+          this.form.conyugue.telefono_conyugue = response.data["conyugue"]["telefono"] || "";
+          this.form.conyugue.trabaja_conyugue = response.data["conyugue"]["trabaja"] || 'SI';
+          this.form.conyugue.celular_conyugue = response.data["conyugue"]["celular"] || "";
+          this.form.conyugue.centro_laboral_conyugue = response.data["conyugue"]["centro_laboral"] || "";
+          this.form.conyugue.direccion_laboral_conyugue = response.data["conyugue"]["direccion"] || "";
+          this.form.conyugue.socio_conyugue = response.data["conyugue"]["socio"] || "SI";
+          this.form.conyugue.codigo_socio_conyugue = response.data["conyugue"]["codigo_socio"] || "";
+          this.form.conyugue.aporte_socio_conyugue = response.data["conyugue"]["aporte_socio"] || "";
           this.form.conyugue.conyuge_tiene = "SI";
         } else {
           this.form.conyugue.conyuge_tiene = "NO"; 
@@ -883,6 +984,19 @@ export default {
   },
 
   methods: {
+    filterProvincesTitularMe() {
+          // this.form.natural.domicilio_provincia= '0'
+          // this.form.natural.domicilio_distrito= '0'
+          this.provincesTitular = this.all_provinces.filter(f => {
+              return f.departamento_id == this.form.natural.domicilio_departamento
+          })
+      },
+      filterDistrictTitularMe() {
+          // this.form.natural.domicilio_distrito= '0'
+          this.districtsTitular = this.all_districts.filter(f => {
+              return f.provincia_id == this.form.natural.domicilio_provincia
+          })
+      },
     next(index) {
       window.scrollTo(0,0)
       this.tab = index + 1
@@ -934,70 +1048,14 @@ export default {
       this.form.garantias.splice(index, 1);
     },
     clearForm() {
-      this.initForm();
+      // this.initForm();
     },
-    initForm() {
-      this.errors = {};
-      this.form = {
-        idprestamo: -1,
-        garantias: [],
-        avals: [],
-        cliente: {
-          departamento: "",
-          provincia: "",
-          distrito: "",
-          documento: this.$route.params.dni
-        },
-        natural: {
-          nombres: "",
-          apellidos: "",
-          nacimiento: "",
-          estado_civil: "SOLTERO",
-          ocupacion: "",
-          telefono: "",
-          celular: "",
-          direccion: "",
-          referencia: "",
-          tipo_domicilio: "PROPIA",
-          centro_laboral: "",
-          direccion_laboral: "",
-          domicilio_departamento: "",
-          domicilio_provincia: "",
-          domicilio_distrito: ""
-        },
-        conyugue: {
-          documento_conyugue: "",
-          nombres_conyugue: "",
-          nacimiento_conyugue: "",
-          estado_civil_conyugue: "SOLTERO",
-          ocupacion_conyugue: "",
-          telefono_conyugue: "",
-          trabaja_conyugue: "SI",
-          celular_conyugue: "",
-          centro_laboral_conyugue: "",
-          direccion_laboral_conyugue: "",
-          socio_conyugue: "NO",
-          codigo_socio_conyugue: "",
-          aporte_socio_conyugue: "",
-          conyuge_tiene: 0
-        },
-        monto_inicial: "",
-        plazo_inicial: "5",
-        disponibilidad_pago_inicial: "",
-        destino_inicial: "",
-        forma_inicial: "DIARIO",
-        producto: "CREDIDIARIO",
-        forma: "DIARIO",
-        meses: 0,
-        importe: 0,
-        aporte: 0,
-        plazo: 0,
-        coutas: 0,
-        tasa: 0.0,
-        comentarios: "",
-        estado: "PENDIENTE"
-      };
-    },
+    // initForm() {
+    //   this.errors = {};
+    //   this.form = {
+        
+    //   }
+    // },
     datosCliente() {
       let me = this;
       // me.loader = "true";
@@ -1075,7 +1133,18 @@ export default {
       this.backMixin_handleBack("/perfil/" + this.form.cliente.documento);
     }
   },
-  mounted() {
+  async mounted() {
+
+    await this.$http.get(`/${this.resource}/datos/`).then(response => {
+        this.all_departments = response.data.departments;
+        this.all_provinces = response.data.provinces;
+        this.all_districts = response.data.districts; 
+        
+    });
+
+    await this.filterProvincesTitularMe()
+    await this.filterDistrictTitularMe()
+
     if (this.form.producto == "CREDIDIARIO") {
       this.form.meses = (Number(this.form.plazo) / 30).toFixed(2);
     } else if (this.form.producto == "CREDISEMANA") {

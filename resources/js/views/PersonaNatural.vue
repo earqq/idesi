@@ -149,19 +149,58 @@
                   </div>
 
                   <div class="input_wrapper">
-                      <label>Distrito</label>
-                      <input type="text" v-model="form.natural.domicilio_distrito" :maxlength="45" />
+                      <label>Departamento</label>
+                      <select
+                        v-model="form.natural.domicilio_departamento"
+                        filterable
+                        @change="filterProvinceTitular"
+                        dusk="departamentos_id">
+                      <option value="0">SELECCIONE</option>
+                      <option
+                        v-for="option in all_departments"
+                        :key="option.id"
+                        :value="option.id"
+                        :label="option.descripcion"
+                      >></option>
+                    </select>
                   </div>
 
                   <div class="input_wrapper">
                       <label>Provincia</label>
-                      <input type="text" v-model="form.natural.domicilio_provincia" :maxlength="45" />
+                      <select
+                      v-model="form.natural.domicilio_provincia"
+                      filterable
+                      @change="filterDistrictTitular"
+                      dusk="provincias_id">
+                      <option value="0">SELECCIONE</option>
+                      <option
+                        v-for="option in provincesTitular"
+                        :key="option.id"
+                        :value="option.id"
+                        :label="option.descripcion"
+                      >></option>
+                    </select>
                   </div>
 
                   <div class="input_wrapper">
-                      <label>Departamento</label>
-                      <input type="text" v-model="form.natural.domicilio_departamento" :maxlength="45" />
+                      <label>Distrito</label>
+                      <select
+                        v-model="form.natural.domicilio_distrito"
+                        filterable
+                        dusk="distritos_id">
+                      <option value="0">SELECCIONE</option>
+                      <option
+                        v-for="option in districtsTitular"
+                        :key="option.id"
+                        :value="option.id"
+                        :label="option.descripcion"
+                      >></option>
+                    </select>
                   </div>
+
+
+
+
 
                 </div>
 
@@ -743,8 +782,11 @@ export default {
       all_provinces: [],
       all_districts: [],
       provinces: [],
-      loading: false,
       districts: [],
+      provincesTitular: [],
+      districtsTitular: [],
+      loading: false,
+
       form: {
         familia: {
           numero: 1
@@ -762,21 +804,6 @@ export default {
       }, 
       tab: 1
     };
-  },
-  async created() {
-
-    this.$http.get(`/${this.resource}/datos/`).then(response => {
-      this.all_departments = response.data.departments;
-      this.all_provinces = response.data.provinces;
-      this.all_districts = response.data.districts;
-    });
-
-
-    await this.initForm();
-    
-    this.$http.get(`/evaluaciones/giro`).then(response => {
-      this.giros = response.data;
-    });
   },
   methods: {
     next(index) {
@@ -823,9 +850,9 @@ export default {
           dpto: "",
           int: "",
           piso:"",
-          domicilio_distrito:"",
-          domicilio_provincia:"",
-          domicilio_departamento:"",
+          domicilio_distrito:"0",
+          domicilio_provincia:"0",
+          domicilio_departamento:"0",
           correo:"",
         },
         laboral:{
@@ -843,9 +870,9 @@ export default {
           int: "",
           piso:"",
           lote:"",
-          distrito:"",
-          provincia:"",
-          departamento:"",
+          distrito:"0",
+          provincia:"0",
+          departamento:"0",
           pais:"PERÚ",
           referencia:"",
           telefono:"",
@@ -884,8 +911,6 @@ export default {
           estado: "PENDIENTE",
           fecha: ""
         }
-
-        
       };
     },
     conyugeAsignacion(){
@@ -1041,7 +1066,26 @@ export default {
       if(val.length==8){
           this.datosCliente()
       }
-    },   
+    },
+  },
+  created() {
+        this.initForm();
+  },
+  mounted() {
+
+
+    this.$http.get(`/evaluaciones/giro`).then(response => {
+      this.giros = response.data;
+    });
+
+     this.$http.get(`/${this.resource}/datos/`).then(response => {
+        this.all_departments = response.data.departments;
+        this.all_provinces = response.data.provinces;
+        this.all_districts = response.data.districts; 
+      });
+
+      
+ 
   }
 };
 </script>

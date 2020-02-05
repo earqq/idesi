@@ -8,21 +8,27 @@
               <i  @click="closeModal()" class="material-icons-outlined">close</i>
             </div>
             <form>
+                <div class="form_content">
+                  <div class="group_form">
+                    <div class="input_wrapper">
+                          <label>Tipo documento</label>
+                          <select v-model="tipo_documento"> 
+                              <option value="DNI">DNI</option>
+                              <option value="RUC">RUC</option>
+                              <option value="CEDULA">CEDULA</option>
+                              <option value="PASS">PASS</option>
+                          </select>                                        
+                      </div>
 
-                <div class="input_wrapper">
-                    <label>Tipo documento</label>
-                    <select v-model="tipo_documento">
-                        <option value="DNI">DNI</option>
-                        <option value="RUC">RUC</option>
-                        <option value="CEDULA">CEDULA</option>
-                        <option value="PASS">PASS</option>
-                    </select>                                        
+                      <div class="input_wrapper" :class="{require: ! num_documento}">
+                          <label>Número documento</label>
+                          <input type="text" v-model="num_documento" v-mask="'########'">
+                      </div>
+                  </div>
                 </div>
+ 
 
-                <div class="input_wrapper" :class="{require: ! num_documento}">
-                    <label>Número documento</label>
-                    <input type="text" v-model="num_documento" v-mask="'########'">
-                </div>
+
 
                 <div class="input_wrapper" :class="{require: !name}">
                     <label>Nombre</label>

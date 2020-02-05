@@ -29,7 +29,7 @@
                 <tr >
                     <td  colspan="2" valign="middle" align="left"  style="width: 70%;border: none;"><span>SOLICITUD DE ADMISIÓN - PERSONA NATURAL</span></td>
                 
-                    <td rowspan="2" style="padding: 10px 0;"><span class="title"> ***  Logo ****</span> </td>
+                    <td rowspan="2" style="padding: 10px 0;"><span class="title"> <img src="{{env('RUTA')}}/public/img/logo.png" alt="" srcset=""></span> </td>
                 </tr>
                     
                 <tr>
@@ -93,12 +93,11 @@
                         </tr>
                         
                         <tr>
-                            <td> <span class="title">DISTRITO</span> <span >{{$natural->domicilio_distrito}}</span> </td>
-                            <td> <span class="title">PROVINCIA</span> {{$natural->domicilio_provincia}} <span > </span> </td>
-                            <td> <span class="title">DEPARTAMENTO</span> {{$natural->domicilio_departamento}} <span >  </span> </td>
+                            <td> <span class="title">DEPARTAMENTO</span> {{$departamento_domicilio->descripcion}} <span >  </span> </td>
+                            <td> <span class="title">PROVINCIA</span> {{$provincia_domicilio->descripcion}} <span > </span> </td>
+                            <td> <span class="title">DISTRITO</span> <span >{{$distrito_domicilio->descripcion}}</span> </td>                  
                         </tr>
-
-
+                        
                         <tr>
                             <td colspan="3"> <span class="title">REFERENCIA</span> <span > {{$natural->referencia}} </span> </td>
                         </tr>
@@ -259,7 +258,7 @@
                                 <td><span class="title">RELACIÓN CON EL SOLICITANTE</span> {{$adicional->relacion}}</td>
                             </tr>
                             <tr>
-                                <td colspan="3"> ***************************** Esta sección debe ser llenada por la Cooperativa *******************************</td>
+                                <td colspan="3" style="text-align: center"> ***************************** Esta sección debe ser llenada por la Cooperativa *******************************</td>
                             </tr>
                 </tbody>
             </table>

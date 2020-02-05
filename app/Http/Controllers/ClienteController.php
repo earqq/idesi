@@ -212,8 +212,11 @@ class ClienteController extends Controller
                 $natural->domicilio_provincia= $request->natural['domicilio_provincia'];    
                 $natural->domicilio_departamento= $request->natural['domicilio_departamento'];    
                 $natural->correo= $request->natural['correo'];    
-                
                 $natural->save();
+
+                $departamento_domicilio = Departamento::find($natural->domicilio_departamento)->first();
+                $provincia_domicilio = Provincia::find($natural->domicilio_provincia)->first();
+                $distrito_domicilio = Distrito::find($natural->domicilio_distrito)->first();
 
                 $laboral = new Laboral();
                 $laboral->estado_laboral= $request->laboral['estado_laboral'];    
@@ -310,9 +313,11 @@ class ClienteController extends Controller
                 $declaracion->observaciones= $request->declaracion['obervaciones'];    
                 $declaracion->estado= $request->declaracion['estado'];    
                 $declaracion->naturals_id= $natural->id; 
-                $declaracion->save();
+                $declaracion->save(); 
 
-                $pdf = PDF::loadView('reportes.inscripcion',compact('laboral','adicional','asociativa','declaracion','familiar','cliente','detallesfam','natural','departamento','provincia','distrito'));
+                $pdf = PDF::loadView('reportes.inscripcion',compact('laboral','adicional','asociativa','declaracion','familiar','cliente',
+                                                                    'detallesfam','natural','departamento','provincia','distrito',
+                                                                    'departamento_domicilio','provincia_domicilio','distrito_domicilio'));
 
                 if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
                 }
@@ -612,8 +617,7 @@ class ClienteController extends Controller
             DB::commit();
 
             return [
-                'success' => true,
-                'data' => 'CLIENTE ADMITIDO',
+                'success' => true
             ];
 
     } catch (Exception $e){
@@ -651,8 +655,34 @@ class ClienteController extends Controller
             DB::commit();
 
             return [
-                'success' => true,
-                'data' => 'CLIENTE RECHAZADO',
+                'success' => true
+            ];
+
+            } catch (Exception $e){
+                return [
+                    'success' => false,
+                ];
+                DB::rollBack();
+            }
+    }
+
+
+    
+    public function enviarEvaluar($prestamo)
+    {
+
+        try{
+
+            DB::beginTransaction();
+
+            $prestamo = Prestamo::find($prestamo);
+            $prestamo->estado_analista = 'EVALUACION';
+            $prestamo->save();
+        
+            DB::commit();
+
+            return [
+                'success' => true
             ];
 
             } catch (Exception $e){
@@ -715,6 +745,7 @@ class ClienteController extends Controller
 
         try{
 
+            // return $request;
             DB::beginTransaction();
             
             $cliente = Cliente::where('documento',$request->cliente['documento'])->first(); 
@@ -749,6 +780,7 @@ class ClienteController extends Controller
                    $conyugue->ocupacion =  $request->conyugue['ocupacion_conyugue'];
                    $conyugue->telefono =  $request->conyugue['telefono_conyugue'] ;
                    $conyugue->celular =  $request->conyugue['celular_conyugue'];
+                   $conyugue->trabaja =  $request->conyugue['trabaja_conyugue'];
                    $conyugue->socio =  $request->conyugue['socio_conyugue'];
                    $conyugue->codigo_socio =  $request->conyugue['codigo_socio_conyugue'];
                    $conyugue->aporte_socio =  $request->conyugue['aporte_socio_conyugue'];
@@ -1066,9 +1098,9 @@ class ClienteController extends Controller
     
             $avals = Aval::where('prestamos_id',$prestamo->id)->get();
             $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+            $evaluacion = Evaluacion::where('prestamos_id',$prestamo->id)->get();
     
-    
-            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge'));
+            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge','evaluacion'));
             return $pdf->stream('solicitud_de_credito.pdf');
 
         }
