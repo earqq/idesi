@@ -13,7 +13,7 @@
             </transition>
             <div class="items_wrapper">
               <ul>
-                  <li :class="{selected: tab == 'inicio'}" v-if="tipo=='1' || tipo=='2' || tipo=='3' || tipo=='4' | tipo=='5' ">
+                  <li :class="{selected: tab == 'inicio'}" v-if="tipo=='1'  || tipo=='4' | tipo=='5' ">
                     <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
                   </li>
 
@@ -139,6 +139,8 @@ export default {
       axios.get("/currentUser")
       .then(res => { 
         this.currentUser = res.data
+        if(this.currentUser.idrol==2 || this.currentUser.idrol==3)
+          this.$router.push('clientes')
       })
     }
   },

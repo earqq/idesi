@@ -14,6 +14,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function login(){
+        $user = auth::user();
+        return view('index');
+    }
     public function index(Request $request)
     {
         $buscar = $request->buscar;
