@@ -677,7 +677,64 @@ export default {
       tab: 1,
       districts: [],
       errors: {},
-      form: {},
+      form: {
+        idprestamo: -1,
+        garantias: [],
+        avals: [],
+        cliente: {
+          departamento: "",
+          provincia: "",
+          distrito: "",
+          documento: this.$route.params.dni
+        },
+        natural: {
+          nombres: "",
+          apellidos: "",
+          nacimiento: "",
+          estado_civil: "SOLTERO",
+          ocupacion: "",
+          telefono: "",
+          celular: "",
+          direccion: "",
+          referencia: "",
+          tipo_domicilio: "PROPIA",
+          centro_laboral: "",
+          direccion_laboral: "",
+          domicilio_departamento: "",
+          domicilio_provincia: "",
+          domicilio_distrito: ""
+        },
+        conyugue: {
+          documento_conyugue: "",
+          nombres_conyugue: "",
+          nacimiento_conyugue: "",
+          estado_civil_conyugue: "SOLTERO",
+          ocupacion_conyugue: "",
+          telefono_conyugue: "",
+          trabaja_conyugue: "SI",
+          celular_conyugue: "",
+          centro_laboral_conyugue: "",
+          direccion_laboral_conyugue: "",
+          socio_conyugue: "SI",
+          codigo_socio_conyugue: "",
+          aporte_socio_conyugue: "",
+          conyuge_tiene: 0
+        },
+        monto_inicial: "",
+        plazo_inicial: "5",
+        disponibilidad_pago_inicial: "",
+        destino_inicial: "",
+        forma_inicial: "DIARIO",
+        producto: "CREDIDIARIO",
+        forma: "DIARIO",
+        meses: 0,
+        importe: 0,
+        aporte: 0,
+        plazo: 0,
+        coutas: 0,
+        tasa: 0.0,
+        comentarios: "",
+        estado: "PENDIENTE"},
       contador_aval: 0,
       loading: false,
       contador_garantia: 0, 
@@ -839,7 +896,7 @@ export default {
 
   },
   created() {
-    this.initForm()
+    // this.initForm()
     this.clickAddAval()
     this.clickAddGarantia()
 
@@ -954,70 +1011,14 @@ export default {
       this.form.garantias.splice(index, 1);
     },
     clearForm() {
-      this.initForm();
+      // this.initForm();
     },
-    initForm() {
-      this.errors = {};
-      this.form = {
-        idprestamo: -1,
-        garantias: [],
-        avals: [],
-        cliente: {
-          departamento: "",
-          provincia: "",
-          distrito: "",
-          documento: this.$route.params.dni
-        },
-        natural: {
-          nombres: "",
-          apellidos: "",
-          nacimiento: "",
-          estado_civil: "SOLTERO",
-          ocupacion: "",
-          telefono: "",
-          celular: "",
-          direccion: "",
-          referencia: "",
-          tipo_domicilio: "PROPIA",
-          centro_laboral: "",
-          direccion_laboral: "",
-          domicilio_departamento: "",
-          domicilio_provincia: "",
-          domicilio_distrito: ""
-        },
-        conyugue: {
-          documento_conyugue: "",
-          nombres_conyugue: "",
-          nacimiento_conyugue: "",
-          estado_civil_conyugue: "SOLTERO",
-          ocupacion_conyugue: "",
-          telefono_conyugue: "",
-          trabaja_conyugue: "SI",
-          celular_conyugue: "",
-          centro_laboral_conyugue: "",
-          direccion_laboral_conyugue: "",
-          socio_conyugue: "SI",
-          codigo_socio_conyugue: "",
-          aporte_socio_conyugue: "",
-          conyuge_tiene: 0
-        },
-        monto_inicial: "",
-        plazo_inicial: "5",
-        disponibilidad_pago_inicial: "",
-        destino_inicial: "",
-        forma_inicial: "DIARIO",
-        producto: "CREDIDIARIO",
-        forma: "DIARIO",
-        meses: 0,
-        importe: 0,
-        aporte: 0,
-        plazo: 0,
-        coutas: 0,
-        tasa: 0.0,
-        comentarios: "",
-        estado: "PENDIENTE"
-      };
-    },
+    // initForm() {
+    //   this.errors = {};
+    //   this.form = {
+        
+    //   }
+    // },
     datosCliente() {
       let me = this;
       // me.loader = "true";

@@ -262,7 +262,7 @@ export default {
     await this.initForm();
   },
   mounted() {
-      if (process.client) { // en lado del servidor no existe windown, document, etc
+      if (process.client) {  // en lado del servidor no existe windown, document, etc
           if (window.innerWidth < 850) this.mobile = true
           else this.mobile = false
 
@@ -273,7 +273,7 @@ export default {
               })
           })
       }
-
+ 
     this.geolocate();
 
     if (!("geolocation" in navigator)) {
