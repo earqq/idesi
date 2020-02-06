@@ -105,26 +105,35 @@ class ClienteController extends Controller
     {
         //
     }
-    public function search($type,$text){
-
-        $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
-        ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular','naturals.direccion_cliente', 'clientes.estado')
-        ->where('clientes.documento', 'LIKE', "%{$request->search_input}%")
-        ->orWhere('naturals.nombres', 'LIKE', "%{$request->search_input}%")
-        ->orWhere('naturals.apellidos', 'LIKE', "%{$request->search_input}%")
+    public function search($state,$text=''){
+        $clients = Cliente::leftJoin('naturals','clientes.id','=','naturals.clientes_id')
+        ->leftJoin('juridicos','clientes.id','=','juridicos.clientes_id')
+        ->where(function($query) use($state){
+            if($state!=3){
+                $query->where('estado',$state);
+            }
+        })
+        ->where(function($query) use($text){
+            if($text!=''){
+                $query->orWhere('naturals.nombres', 'LIKE', "%{$text}%")
+                ->orWhere('clientes.documento', 'LIKE', "%{$text}%")
+                ->orWhere('naturals.apellidos', 'LIKE', "%{$text}%")
+                ->orWhere('juridicos.razon_social', 'LIKE', "%{$text}%");
+            }
+        })
         ->orderBy('clientes.id','desc')
-        ->paginate(10);
-
-        $rol=  Auth::user()->idrol;
-        return compact('clientes','rol');
-
-        $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
-        ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular','naturals.direccion_cliente')
-        ->orderBy('clientes.id','desc')
-        ->where('users_id','=',Auth::user()->id)
-        ->paginate(10);
-        $rol=  Auth::user()->idrol;
-        return compact('clientes','rol');
+        ->select('clientes.documento',
+                'naturals.nombres',
+                'naturals.apellidos',
+                'naturals.celular',
+                'naturals.direccion_cliente', 
+                'juridicos.razon_social', 
+                'juridicos.celular', 
+                'juridicos.direccion', 
+                'clientes.estado')
+        ->take(30)
+        ->get();    
+        return $clients;
     }
     /**
      * Store a newly created resource in storage.

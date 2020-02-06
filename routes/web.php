@@ -47,7 +47,7 @@ Route::group(['middleware'=>['auth']],function(){
 
 
         //Buscar clientes
-        Route::get('clientes/search/{type}/{text}','ClienteController@search');
+        Route::get('clientes/search/{state}/{text?}','ClienteController@search');
 
         Route::get('clientes/listado','ClienteController@index');
         Route::get('clientes/listado/juridico','ClienteController@indexJuridico');
