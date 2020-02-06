@@ -82,7 +82,7 @@ class EvaluacionController extends Controller
 
     public function prestamosJuridico(Request $request)
     {
-        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '3' || Auth::user()->idrol == '4' ||  Auth::user()->idrol == '5'){
+        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '4' ||  Auth::user()->idrol == '5'){
             $prestamo = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
             ->join('juridicos','clientes.id',"=","juridicos.clientes_id")
             ->select('clientes.documento','juridicos.razon_social','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
@@ -106,9 +106,11 @@ class EvaluacionController extends Controller
                 return compact('prestamo','rol');
         }
         elseif(Auth::user()->idrol == '3'){
+
+            
             $prestamo = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
             ->join('juridicos','clientes.id',"=","juridicos.clientes_id")
-            ->select('clientes.documento','juridicos.razon_social','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
+            ->select('clientes.documento','juridicos.razon_social','prestamos.estado','prestamos.producto','prestamos.estado_analista','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
             ->where('prestamos.estado_analista','=', 'EVALUACION')
 
             ->get();
@@ -116,7 +118,7 @@ class EvaluacionController extends Controller
                 return compact('prestamo','rol');
         }
 
-    }
+    }    
 
     /**
      * Show the form for creating a new resource.
