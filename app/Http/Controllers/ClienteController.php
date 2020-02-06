@@ -639,7 +639,7 @@ class ClienteController extends Controller
             $cliente = Cliente::find($id);
             $cliente->estado = 2;
             $cliente->save();
-            
+             
             if($tipo=='PN'){
                 $natural = Natural::where('clientes_id',$id)->first();
                 $declaracion = Declaracion::where('naturals_id',$natural->id)->first();
