@@ -34,14 +34,8 @@
                 <div class="list_client">
                     <div class="empty_message" v-if="clientes.length==0">
                         <img src="img/empty.svg" >
-                        <h1> No se Encontraron Clientes </h1>
+                        <h1> No Se Encontraron Clientes </h1>
                         <p>Registra un nuevo cliente para continuar.</p>
-                        <router-link  class="add_client button_primary small" :to="{name:'registrar/natural'}" >
-                            <span>
-                            CREAR CLIENTE
-                            </span>
-                            <i class="material-icons-outlined">add</i>
-                        </router-link>
                     </div>
                     <h2 class="title" v-if="!clientes.length==0"> Nuevos Clientes </h2>
                     <ul class="list_client_wrapper" v-if="!clientes.length==0">
@@ -63,14 +57,8 @@
                 <div class="list_credits">
                     <div class="empty_message" v-if="true">
                         <img src="img/empty_2.svg" >
-                        <h1> No se Encontraron Prestamos </h1>
+                        <h1> No Se Encontraron Prestamos </h1>
                         <p>Registra un nuevo cliente para crear prestamos.</p>
-                        <router-link  class="add_client button_primary small" :to="{name:'registrar/natural'}" >
-                            <span>
-                            CREAR CLIENTE
-                            </span>
-                            <i class="material-icons-outlined">add</i>
-                        </router-link>
                     </div>
                     <h2 class="title" v-if="false"> Ultimos Prestamos </h2>
                     <div class="table_wrapper "  v-if="false">
