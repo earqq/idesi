@@ -10,13 +10,13 @@ window.Vue = require('vue');
 const moment = require('moment')
 require('moment/locale/es')
 
-
+import store from './store'
 import router from './rutas';
 import Axios from 'axios'
 import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.css'; 
 import * as VueGoogleMaps from 'vue2-google-maps';
-
+import Vuex from 'vuex'
 /*google maps para geocoding */
 import GoogleMapsLoader from "google-maps";
 const mapsApiKey = "AIzaSyAbyVLUSddPTErLdnCbHoXpRO7Y1S4FuDA";
@@ -29,6 +29,7 @@ import VueApexCharts from 'vue-apexcharts'
 
 Vue.use(VueTheMask)
 Vue.use(VueMoment, { moment })
+Vue.use(Vuex)
 
 Vue.prototype.$http = Axios
 Vue.component('apexchart', VueApexCharts)
@@ -49,5 +50,7 @@ Vue.component('app', require('./components/AppComponent.vue').default);
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    store
+
 });
