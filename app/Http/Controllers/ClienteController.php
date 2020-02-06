@@ -57,11 +57,16 @@ class ClienteController extends Controller
         })
         ->where(function($query) use($text){
             if($text!=''){
+                $text=strtoupper($text);
                 $query->orWhere('naturals.nombres', 'LIKE', "%{$text}%")
                 ->orWhere('clientes.documento', 'LIKE', "%{$text}%")
                 ->orWhere('naturals.apellidos', 'LIKE', "%{$text}%")
                 ->orWhere('juridicos.razon_social', 'LIKE', "%{$text}%");
             }
+        })
+        ->where(function($query){
+            if(Auth::user()->idrol == '2')
+                $query->where('clientes.users_id','=', Auth::user()->id);  
         })
         ->orderBy('clientes.id','desc')
         ->select('clientes.documento',
