@@ -136,13 +136,9 @@ export default {
     getCurrentUser () {
       axios.get("/currentUser")
       .then(res => { 
-        this.currentUser = res.data
-        // if(this.currentUser.idrol==2){
-        //   this.$router.push('clientes')
-        // }
-        // else if(this.currentUser.idrol==3 || this.currentUser.idrol==4 || this.currentUser.idrol==5 ){
-        //   this.$router.push('evaluaciones')
-        // }
+        this.currentUser = res.data   
+        this.$store.state.currentUser = res.data
+        console.log(this.$store.state.currentUser)    
       })
     }
   },
