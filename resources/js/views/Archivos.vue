@@ -51,8 +51,9 @@
           </label>
         </div>
 
-        <button class="button_primary medium" type="button" @click="uploadFile">
-          <span> CARGAR ARCHIVO </span>
+        <button class="button_primary medium" type="button" @click="uploadFile" :class="{loading: loading}">
+          <div class="load_spinner"></div>
+          <span> CARGAR ARCHIVO </span> 
         </button>
       </div>
     </div>
@@ -403,6 +404,7 @@ export default {
       this.errors = {};
     },
     uploadFile() {
+      this.loading=true
       this.formData = new FormData();
       this.formData.append("name", this.fileName);
       this.formData.append("prestamo_id", this.$route.params.prestamo);
@@ -413,6 +415,7 @@ export default {
           headers: { "Content-Type": "multipart/form-data" }
         })
         .then(response => {
+          this.loading=false
           this.resetForm();
           this.listFile();
           $('#file').val('')
