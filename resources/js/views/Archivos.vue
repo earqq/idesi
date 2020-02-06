@@ -77,6 +77,20 @@
           <p> NUEVO ARCHIVO  </p>
         </a>
 
+       <div class="file_item">
+          <div class="file_detail">
+            <a class="" :href="'../storage/'+person.documento+'_'+person.id+'/general/documento/inscripcion_de_socio.pdf'" target="_blank">
+                 <i class="material-icons-outlined"> picture_as_pdf </i>
+              <div class="file_info">
+                <p> Solicitud de Admisión </p> 
+                <small> 27 de enero de 2020 </small>            
+              </div>
+                  
+            </a>
+            
+          </div> 
+        </div>
+
          <div class="file_item"  @click="solicitudPdf()">
           <div class="file_detail">
             <a :href="'#'"
@@ -89,6 +103,7 @@
             </a>
           </div> 
         </div>
+
    
         <div class="file_item" v-for="(archivo, index) in archivos" :key="index">
           <div class="file_detail" v-if="archivo.tipo=='imagen'">

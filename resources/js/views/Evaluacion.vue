@@ -169,7 +169,7 @@ export default {
         this.prestamos = response.data
       })
      
-    },
+    }, 
     evalaucionEcho(prestamo){
       this.$http.get(`/${this.resource}/veridicarEvaluacion/`+ prestamo).then(response => {
         console.log(response.data)

@@ -9,7 +9,7 @@
           :class=" {selected: tab == 1}">
           <p>DETALLES</p>
         </div>
-        <div class="tab" @click="tab = 2; show_slide=false" :class="{selected: tab == 2}">
+        <div class="tab" @click="tab = 2; show_slide=false" :class="{selected: tab == 2}" v-if="prestamo.cuantitativa == '1' && prestamo.cualitativa=='1'">
           <p>EVALUACIÓN</p>
         </div>
         <div  v-if="estado_evaluado==1 && prestamo.estado=='PENDIENTE' && (rol=='3' || rol=='4')" class="tab slide_mobile"  :class="{selected: tab == 3}"  @click="tab = 3; show_slide = true">
