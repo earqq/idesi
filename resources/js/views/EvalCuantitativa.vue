@@ -858,23 +858,23 @@ export default {
     },
 
     validateNegocioAlquiler() {
-      return  String(this.evaluacion.titular.gasto_negocio[0].pago).length > 1
+      return  String(this.evaluacion.titular.gasto_negocio[0].pago).length > 0
     },
 
       validateNegocioEmpleado() {
-      return  String(this.evaluacion.titular.gasto_negocio[1].pago).length > 1
+      return  String(this.evaluacion.titular.gasto_negocio[1].pago).length > 0
     },
 
       validateNegocioImpuesto() {
-      return  String(this.evaluacion.titular.gasto_negocio[2].pago).length > 1
+      return  String(this.evaluacion.titular.gasto_negocio[2].pago).length > 0
     },
 
       validateNegocioAgua() {
-      return  String(this.evaluacion.titular.gasto_negocio[3].pago).length > 1
+      return  String(this.evaluacion.titular.gasto_negocio[3].pago).length > 0
     },
 
       validateNegocioLuz() {
-      return  String(this.evaluacion.titular.gasto_negocio[4].pago).length > 1
+      return  String(this.evaluacion.titular.gasto_negocio[4].pago).length > 0
     },
 
 

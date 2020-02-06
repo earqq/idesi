@@ -73,7 +73,7 @@
                   </select>
                 </div>
                 <div class="input_wrapper">
-                  <label>Plazo</label>
+                  <label>Cuotas</label>
                   <input type="number" v-model="form.plazo_inicial"  />
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
@@ -139,8 +139,6 @@
 
                 <div class="input_wrapper" :class="{require: !validatePartida}">
                   <label>Número de partida</label>
-                  <p>{{String(form.juridico.partida_registral).length}}</p>
-                  <p>{{form.juridico.direccion.length}}</p>
                   <input type="text" v-model="form.juridico.partida_registral"  />
                   <div class="message">N° de partida la empresa</div>
                 </div>
@@ -558,7 +556,7 @@
                   ></vue-numeric>
                 </div>
                 <div class="input_wrapper">
-                  <label>Plazo</label>
+                  <label>Cuotas</label>
                   <input
                     type="number"
                     v-model="form.plazo"
@@ -827,6 +825,7 @@ export default {
          this.form.representante.direccion_representante =  response.data["juridico"]["direccion_representante"] || ""
          this.form.representante.distrito_representante =  response.data["juridico"]["distrito_representante"] || ""
          this.form.representante.departamento_representante =  response.data["juridico"]["departamento_representante"] || ""
+         this.form.representante.provincia_representante =  response.data["juridico"]["provincia_representante"] || ""
          this.form.representante.referencia_representante =  response.data["juridico"]["referencia_representante"] || ""
          this.form.representante.tipo_domicilio_representante =  response.data["juridico"]["tipo_domicilio_representante"] || ""
          this.form.representante.poderes_representante =  response.data["juridico"]["poderes_representante"] || ""

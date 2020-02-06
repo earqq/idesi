@@ -13,11 +13,11 @@
             </transition>
             <div class="items_wrapper">
               <ul>
-                  <li :class="{selected: tab == 'inicio'}" v-if="tipo=='1'  || tipo=='4' | tipo=='5' ">
+                  <li :class="{selected: tab == 'inicio'}" v-if="currentUser.idrol=='1'  || currentUser.idrol=='4' | currentUser.idrol=='5' ">
                     <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
                   </li>
 
-                  <li :class="{selected: tab == 'clientes'}" v-if="tipo=='1' || tipo=='2' || tipo=='5'">
+                  <li :class="{selected: tab == 'clientes'}" v-if="currentUser.idrol=='1' || currentUser.idrol=='2' || currentUser.idrol=='5'">
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                   </li>
   
@@ -25,7 +25,7 @@
                     <router-link :to="{name: 'evaluaciones'}"  >Prestamos</router-link>
                   </li>
 
-                  <li :class="{selected: tab == 'usuarios'}" v-if="tipo=='1'"> 
+                  <li :class="{selected: tab == 'usuarios'}" v-if="currentUser.idrol=='1'"> 
                     <router-link :to="{name: 'usuarios'}"  >Usuarios</router-link>
                   </li>
               </ul>
@@ -76,22 +76,23 @@
                   </div>
                 </div>
                 <ul>
-                  <li :class="{selected: tab == 'inicio'}" v-if="tipo=='1' || tipo=='2' || tipo=='3' || tipo=='4' | tipo=='5' ">
+                  <p>{{currentUser}}</p>
+                  <li :class="{selected: tab == 'inicio'}" v-if="currentUser.idrol=='1'">
                     <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
                   </li>
 
-                  <li :class="{selected: tab == 'clientes'}" v-if="tipo=='1' || tipo=='2' || tipo=='5'">
+                  <li :class="{selected: tab == 'clientes'}" v-if="currentUser.idrol=='1' || currentUser.idrol=='2'">
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                   </li>
 
                   <li :class="{selected: tab == 'evaluaciones'}">
-                    <router-link :to="{name: 'evaluaciones'}"  >Prestamos</router-link>
+                    <router-link :to="{name: 'evaluaciones'}"  >{{currentUser}}</router-link>
                   </li>
 
-                  <li :class="{selected: tab == 'usuarios'}" v-if="tipo=='1'"> 
+                  <li :class="{selected: tab == 'usuarios'}" v-if="currentUser.idrol=='1'"> 
                     <router-link :to="{name: 'usuarios'}"  >Usuarios</router-link>
                   </li>
-                  <li class="logout" v-if="tipo=='1'"> 
+                  <li class="logout"> 
                     <a @click="logout">
                       Cerrar Sesión
                     </a>
@@ -126,9 +127,6 @@ export default {
     }
   },
   async created() {
-    await this.$http.get(`/${this.resource}/tipo/`).then(response => {
-      this.tipo = response.data.idrol
-    })
     this.getCurrentUser()
   },
   methods:{
@@ -139,8 +137,12 @@ export default {
       axios.get("/currentUser")
       .then(res => { 
         this.currentUser = res.data
-        if(this.currentUser.idrol==2 || this.currentUser.idrol==3)
-          this.$router.push('clientes')
+        // if(this.currentUser.idrol==2){
+        //   this.$router.push('clientes')
+        // }
+        // else if(this.currentUser.idrol==3 || this.currentUser.idrol==4 || this.currentUser.idrol==5 ){
+        //   this.$router.push('evaluaciones')
+        // }
       })
     }
   },
@@ -162,17 +164,7 @@ export default {
         })
     })
 
-    // this.$toast.success(
-    //   "El prestamo fue creado",
-    //   "Exitoso",
-    //   toastOptions.success
-    // )
 
-    // this.$toast.error(
-    //   "El prestamo fue creado",
-    //   "Error",
-    //   toastOptions.error
-    // )
   }
 }
 </script>

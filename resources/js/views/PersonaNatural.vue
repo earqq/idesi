@@ -2,27 +2,53 @@
   <div class="create_client_content">
     <section class="tabs_section">
       <div class="tabs_wrapper">
-        <div class="tab " @click="tab = 1" :class="{selected: tab == 1}">
+        <div class="tab " @click="tab = 1" :class="{selected: tab == 1}" >
           <span>1</span>
           <p>PERSONALES</p>
         </div>
-        <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
+        <div class="tab" @click="tab = 2" :class="{selected: tab == 2}" v-if="validateStep1">
           <span>2</span>
           <p>LABORALES</p>
         </div>
-        <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
+
+        <div class="tab " @click="tabError()" v-else>
+          <span>1</span>
+          <p>LABORALES</p>
+        </div>
+        
+        <div class="tab" @click="tab = 3" :class="{selected: tab == 3}" v-if="validateStep1 && validateStep2">
           <span>3</span>
           <p>FAMILIARES</p>
         </div>
-        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}">
+        <div class="tab" @click="tabError()" v-else>
+          <span>3</span>
+          <p>FAMILIARES</p>
+        </div>
+
+        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}"  v-if="validateStep1 && validateStep2">
           <span>4</span>
           <p>ADICIONALES</p>
         </div>
-        <div class="tab" @click="tab = 5" :class="{selected: tab == 5}">
+        <div class="tab" @click="tabError" v-else>
+          <span>4</span>
+          <p>ADICIONALES</p>
+        </div>
+
+        <div class="tab" @click="tab = 5" :class="{selected: tab == 5}"  v-if="validateStep1 && validateStep2">
           <span>5</span>
           <p>OBLIGACIONES</p>
         </div>
-        <div class="tab" @click="tab = 6" :class="{selected: tab == 6}">
+
+        <div class="tab" @click="tabError" v-else >
+          <span>5</span>
+          <p>OBLIGACIONES</p>
+        </div>
+
+        <div class="tab" @click="tab = 6" :class="{selected: tab == 6}"  v-if="validateStep1 && validateStep2">
+          <span>6</span>
+          <p>DECLARACIÓN</p>
+        </div>
+        <div class="tab" @click="tabError" v-else>
           <span>6</span>
           <p>DECLARACIÓN</p>
         </div>
@@ -41,55 +67,64 @@
 
                 <div class="group_form">
 
-                  <div class="input_wrapper"  >
+                  <div class="input_wrapper" >
                     <label>Tipo de Documento</label>
                     <select v-model="form.cliente.tipo_documento" >
                       <option value="DNI">DNI</option>
                       <option value="CE">CE</option>
                       <option value="PASAPORTE">PASAPORTE</option>
                     </select>
+                    
                   </div>
     
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateNumero}">
                     <label for="documento">Número</label>
                     <input type="text"  v-if="form.cliente.tipo_documento=='DNI'" v-model="form.cliente.documento"   v-mask="'########'" />
                     <input type="text"  v-else-if="form.cliente.tipo_documento=='CE'" v-model="form.cliente.documento"  />
                     <input type="text"  v-else  disabled/>
+                    <div class="message">N° de documento invalido</div>
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateNacimiento}">
                     <label for="nacimiento">Fecha de Nacimiento</label>
                     <input type="date" v-model="form.natural.nacimiento" > 
+                    <div class="message">N° de documento invalido</div>
                   </div>
 
-                  <div class="input_wrapper" >
+                  <div class="input_wrapper"  :class="{require: !validateNombres}" >
                     <label for="nombres">Nombres</label>
                     <input type="text" v-model="form.natural.nombres" placeholder />
+                    <div class="message">Se requeire nombres</div>
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateApellidos}">
                     <label for="apellidos">Apellidos</label>
                     <input type="text" v-model="form.natural.apellidos" placeholder />
+                    <div class="message">Se requiere apellidos</div>
                   </div>
 
-                  <div class="input_wrapper" >
+                  <div class="input_wrapper"  :class="{require: !validateNacionalidad}">
                     <label for="apellidos">Nacionalidad</label>
                     <input type="text"  :maxlength="15"  v-model="form.cliente.pais"/>
+                    <div class="message">Nombre de nacionalidad invalida</div>
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateDepartamento}">
                     <label for="apellidos">Departamento de Nacimiento</label>
                     <input type="text" v-model="form.cliente.departamento" :maxlength="45"  />
+                    <div class="message">Nombre de departamento invalido</div>
                   </div>
 
-                  <div class="input_wrapper" >
+                  <div class="input_wrapper" :class="{require: !validateProvincia}" >
                     <label for="apellidos">Provincia de Nacimiento</label>
                     <input type="text" v-model="form.cliente.provincia" :maxlength="45"  />
+                    <div class="message">Nombre de provincia invalido</div>
                   </div>
 
-                  <div class="input_wrapper" >
+                  <div class="input_wrapper"  :class="{require: !validateDistrito}">
                     <label for="apellidos">Distrito de Nacimiento</label>
                     <input type="text" v-model="form.cliente.distrito" :maxlength="45"  />
+                    <div class="message">Nombre de distrito invalido</div>
                   </div>
 
                 </div>
@@ -127,9 +162,10 @@
                     </select>
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateOcupacion}">
                       <label>Ocupación</label>
                       <input type="text" v-model="form.natural.ocupacion" :maxlength="50" />
+                      <div class="message">Información muy corta</div>
                   </div>
 
                 </div>
@@ -138,9 +174,10 @@
 
                 <div class="group_form">
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateDomicilio}">
                       <label>Domicilio Declarado</label>
                       <input type="text" v-model="form.natural.direccion" :maxlength="70" />
+                      <div class="message">Información muy corta</div>
                   </div>
 
                   <div class="input_wrapper">
@@ -165,7 +202,7 @@
                     </select>
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateProvinciaDomicilio}">
                       <label>Provincia</label>
                       <select
                       v-model="form.natural.domicilio_provincia"
@@ -180,9 +217,10 @@
                         :label="option.descripcion"
                       >></option>
                     </select>
+                    <div class="message">Seleccione provincia</div>
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateDistritoDomicilio}">
                       <label>Distrito</label>
                       <select
                         v-model="form.natural.domicilio_distrito"
@@ -196,11 +234,8 @@
                         :label="option.descripcion"
                       >></option>
                     </select>
+                    <div class="message">Seleccione distrito</div>
                   </div>
-
-
-
-
 
                 </div>
 
@@ -238,9 +273,10 @@
                       <input type="text" v-model="form.natural.piso" :maxlength="5" />
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateReferencia}">
                       <label>Referencia</label>
                       <input type="text" v-model="form.natural.referencia" :maxlength="50" />
+                      <div class="message">Información muy corta</div>
                   </div>
 
                   <div class="input_wrapper">
@@ -248,13 +284,14 @@
                       <input type="text" v-model="form.natural.telefono" :maxlength="10" />
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateCelular}">
                       <label>Celular</label>
                       <input
                         type="text"
                         v-mask="'### ### ###'"
                         v-model="form.natural.celular"
                       />
+                      <div class="message">Información muy corta</div>
                   </div>
 
                   <div class="input_wrapper">
@@ -268,7 +305,11 @@
             </div>
 
             <div class="form_buttons all">
-              <a class="button_primary medium next" @click="next(1)">
+              <a class="button_primary medium next" @click="next(1)" v-if="validateStep1">
+                <span> SIGUIENTE </span>
+                <i class="material-icons-outlined"> navigate_next </i>
+              </a>
+              <a class="button_primary medium next" @click="tabError()" v-else>
                 <span> SIGUIENTE </span>
                 <i class="material-icons-outlined"> navigate_next </i>
               </a>
@@ -301,9 +342,10 @@
                     </select>
                   </div>
 
-                  <div class="input_wrapper" v-if="form.laboral.estado_laboral=='OTROS'">
+                  <div class="input_wrapper" :class="{require: !validateEspecifique}" v-if="form.laboral.estado_laboral=='OTROS'">
                     <label>Especifique</label>
                     <input type="text"  :maxlength="45" v-model="form.laboral.especificacion">
+                    <div class="message">Especifique su trabajo</div>
                   </div>
 
                 </div>
@@ -321,9 +363,10 @@
                     </select>
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateRazon}">
                     <label>Razon Social</label>
                     <input type="text" :maxlength="45" v-model="form.laboral.razon_social">
+                    <div class="message">Se requeire la razón social</div>
                   </div>
 
                   <div class="input_wrapper">
@@ -337,14 +380,16 @@
                     </select>
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateCargo}">
                     <label>Cargo/ Ocupación</label>
                     <input type="text" :maxlength="20" v-model="form.laboral.cargo_ocupacion">
+                    <div class="message">Se requiere su ocupación</div>
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateFechaIngreso}">
                     <label for="nacimiento">Fecha de Ingreso</label>
-                    <input type="date" v-model="form.laboral.fecha_ingreso"> 
+                    <input type="date" v-model="form.laboral.fecha_ingreso">
+                    <div class="message">Fecha de ingreso a la empresa</div>
                   </div>
 
                 </div>
@@ -353,7 +398,7 @@
 
                 <div class="group_form"  v-if="form.laboral.estado_laboral=='TRABAJA'">
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateGiro}">
                     <label>Giro de Negocio</label>
                     <v-select
                       label="giro_negocio"
@@ -364,11 +409,13 @@
                         No se encontro giro de negocio
                       </span>
                     </v-select>
+                    <div class="message">Se requiere giro de negocio</div>
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateDireccion}">
                     <label for="nacimiento">Dirección</label>
                     <input type="text" :maxlength="45" v-model="form.laboral.direccion">
+                    <div class="message">Dirección de la empresa</div>
                   </div>
 
                   <div class="input_wrapper">
@@ -381,7 +428,7 @@
                       <select
                         v-model="form.laboral.departamento"
                         filterable
-                        @change="filterProvince"
+                        @change="filterProvincesLaboralMe"
                         dusk="departamentos_id">
                       <option value="0">SELECCIONE</option>
                       <option
@@ -394,25 +441,25 @@
 
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper"  :class="{require: !validateProvinciaDomicilioLaboral}">
                       <label>Provincia</label>
                       <select
                       v-model="form.laboral.provincia"
                       filterable
-                      @change="filterDistrict"
+                      @change="filterDistrictLaboralMe"
                       dusk="provincias_id">
                       <option value="0">SELECCIONE</option>
                       <option
-                        v-for="option in provinces"
+                        v-for="option in provincesLaboral"
                         :key="option.id"
                         :value="option.id"
                         :label="option.descripcion"
                       >></option>
                     </select>
-
+                    <div class="message">Seleccione provincia</div>
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper"  :class="{require: !validateDistritoDomicilioLaboral}">
                       <label>Distrito</label>
                       <select
                         v-model="form.laboral.distrito"
@@ -420,13 +467,13 @@
                         dusk="distritos_id">
                       <option value="0">SELECCIONE</option>
                       <option
-                        v-for="option in districts"
+                        v-for="option in districtsLaboral"
                         :key="option.id"
                         :value="option.id"
                         :label="option.descripcion"
                       >></option>
                     </select>
-
+                    <div class="message">Seleccione Distrito</div>
                   </div> 
 
                 </div> 
@@ -465,9 +512,10 @@
                       <input type="text" v-model="form.laboral.piso" :maxlength="5" />
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateReferenciaLaboral}">
                       <label>Referencia</label>
                       <input type="text" v-model="form.laboral.referencia" :maxlength="45" />
+                      <div class="message">Referencia de la dirección</div>
                   </div>
 
                   <div class="input_wrapper">
@@ -475,13 +523,14 @@
                       <input type="text" v-model="form.laboral.telefono" :maxlength="10" />
                   </div>
     
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateCelularLaboral}">
                       <label>Celular</label>
                       <input
                         type="text"
                         v-mask="'### ### ###'"
                         v-model="form.laboral.celular"
                       />
+                      <div class="message">Celular de la empresa</div>
                   </div>
 
                   <div class="input_wrapper">
@@ -500,7 +549,11 @@
                 <i class="material-icons-outlined"> navigate_before </i>
                 <span> ATRAS </span>
               </a>
-              <a class="button_primary medium next" @click="next(2)">
+              <a class="button_primary medium next" @click="next(2)"  v-if="validateStep1 && validateStep2">
+                <span> SIGUIENTE </span>
+                <i class="material-icons-outlined"> navigate_next </i>
+              </a>
+              <a class="button_primary medium next" @click="tabError" v-else>
                 <span> SIGUIENTE </span>
                 <i class="material-icons-outlined"> navigate_next </i>
               </a>
@@ -527,7 +580,7 @@
                       <option value="NO">NO</option>
                     </select>
                   </div> 
-
+ 
                   <div class="input_wrapper" v-if="form.familia.hijos=='SI'">
                     <label>Nro de hijos</label>
                     <input type="text" :maxlength="2" v-mask="'##'" v-model="form.familia.numero" @change="completarHijos">
@@ -781,8 +834,8 @@ export default {
       all_departments: [],
       all_provinces: [],
       all_districts: [],
-      provinces: [],
-      districts: [],
+      provincesLaboral: [],
+      districtsLaboral: [],
       provincesTitular: [],
       districtsTitular: [],
       loading: false,
@@ -805,7 +858,129 @@ export default {
       tab: 1
     };
   },
+   computed: {
+    
+    validateNumero() {
+      return String(this.form.cliente.documento).length>7;
+    },
+    validateNacimiento() {
+      return this.form.natural.nacimiento.length>4;
+    },
+    validateNombres() {
+      return this.form.natural.nombres.length>3;
+    },
+    validateApellidos() {
+      return this.form.natural.apellidos.length>4;
+    },
+    validateNacionalidad() {
+      return this.form.cliente.pais.length>3;
+    },
+    validateDepartamento() {
+      return this.form.cliente.departamento.length>3;
+    },
+    validateProvincia() {
+      return this.form.cliente.provincia.length>3
+    },
+    validateDistrito() {
+      return this.form.cliente.distrito.length>3;
+    },
+    validateOcupacion() {
+      return this.form.natural.ocupacion.length>3;
+    },
+    validateDomicilio() {
+      return this.form.natural.direccion.length>3;
+    },
+    validateReferencia() {
+      return this.form.natural.referencia.length>3;
+    },
+    validateCelular() {
+      return this.form.natural.celular.length>3;
+    },
+    validateProvinciaDomicilio() {
+      return this.form.natural.domicilio_provincia!='0';
+    },
+    validateDistritoDomicilio() {
+      return this.form.natural.domicilio_distrito!='0';
+    },
+    validateStep1(){
+      return  this.validateNumero  &&
+              this.validateNacimiento &&
+              this.validateNombres &&
+              this.validateApellidos &&
+              this.validateNacionalidad &&
+              this.validateDepartamento &&
+              this.validateProvincia &&
+              this.validateDistrito &&
+              this.validateOcupacion &&
+              this.validateDomicilio &&
+              this.validateReferencia &&
+              this.validateProvinciaDomicilio &&
+              this.validateDistritoDomicilio &&
+              this.validateCelular 
+    },
+
+     validateRazon() {
+      return this.form.laboral.razon_social.length>3;
+    },
+     validateCargo() {
+      return this.form.laboral.cargo_ocupacion.length>3;
+    },
+     validateFechaIngreso() {
+      return this.form.laboral.fecha_ingreso.length>4;
+    },
+     validateGiro() {
+      return this.form.laboral.giro_negocio.length>3;
+    },
+     validateDireccion() {
+      return this.form.laboral.direccion.length>3;
+    },
+     validateReferenciaLaboral() {
+      return this.form.laboral.referencia.length>3;
+    },
+     validateCelularLaboral() {
+      return this.form.laboral.celular.length>3;
+    },
+     validateEspecifique() {
+      return this.form.laboral.especificacion.length>3;
+    },
+     validateProvinciaDomicilioLaboral() {
+      return this.form.laboral.provincia!='0';
+    },
+    validateDistritoDomicilioLaboral() {
+      return this.form.laboral.distrito!='0';
+    },
+    validateStep2(){
+
+      if(this.form.laboral.estado_laboral=='TRABAJA'){
+              return this.validateRazon &&
+                    this.validateCargo &&
+                    this.validateFechaIngreso &&
+                    this.validateGiro &&
+                    this.validateDireccion &&
+                    this.validateReferenciaLaboral &&
+                    this.validateCelularLaboral &&
+                    this.validateDistritoDomicilioLaboral &&
+                    this.validateProvinciaDomicilioLaboral
+      }
+      else if(this.form.laboral.estado_laboral=='OTROS'){
+                return  this.validateEspecifique
+      }
+      else{
+        return true
+      }
+
+    }
+
+
+  },
   methods: {
+    tabError(){
+       this.$toast.error(
+          "Rellene los datos necesarios",
+          "Error",
+          toastOptions.error
+        )
+    },
     next(index) {
       window.scrollTo(0,0)
       this.tab = index + 1
@@ -850,9 +1025,9 @@ export default {
           dpto: "",
           int: "",
           piso:"",
-          domicilio_distrito:"0",
-          domicilio_provincia:"0",
-          domicilio_departamento:"0",
+          domicilio_distrito:"100101",
+          domicilio_provincia:"1001",
+          domicilio_departamento:"10",
           correo:"",
         },
         laboral:{
@@ -870,9 +1045,9 @@ export default {
           int: "",
           piso:"",
           lote:"",
-          distrito:"0",
-          provincia:"0",
-          departamento:"0",
+          distrito:"100101",
+          provincia:"1001",
+          departamento:"10",
           pais:"PERÚ",
           referencia:"",
           telefono:"",
@@ -958,7 +1133,6 @@ export default {
 
     },
     resetForm() {
-      // this.initForm();
     },
     datosCliente() {
       let me = this;
@@ -1046,7 +1220,30 @@ export default {
       if (this.form.familia.numero == '' && this.form.familia.numero <= 1 && this.form.familia.hijos=='SI') {
         this.form.familia.hijos = 'NO'
       }
-    }
+    },
+    filterProvincesTitularMe() {
+          this.provincesTitular = this.all_provinces.filter(f => {
+              return f.departamento_id == this.form.natural.domicilio_departamento
+          })
+      },
+    filterDistrictTitularMe() {
+        this.districtsTitular = this.all_districts.filter(f => {
+            return f.provincia_id == this.form.natural.domicilio_provincia
+        })
+    },
+    filterProvincesLaboralMe() {
+      this.form.laboral.provincia = '0'
+      this.form.laboral.distrito = '0'
+          this.provincesLaboral = this.all_provinces.filter(f => {
+              return f.departamento_id == this.form.laboral.departamento
+          })
+      },
+    filterDistrictLaboralMe() {
+      this.form.laboral.distrito = '0'
+        this.districtsLaboral = this.all_districts.filter(f => {
+            return f.provincia_id == this.form.laboral.provincia
+        })
+    },
   },
   watch: {
     'form.familia.numero'(new_value,old_value){
@@ -1071,18 +1268,23 @@ export default {
   created() {
         this.initForm();
   },
-  mounted() {
-
+  async mounted() {
 
     this.$http.get(`/evaluaciones/giro`).then(response => {
       this.giros = response.data;
     });
 
-     this.$http.get(`/${this.resource}/datos/`).then(response => {
+    await this.$http.get(`/${this.resource}/datos/`).then(response => {
         this.all_departments = response.data.departments;
         this.all_provinces = response.data.provinces;
         this.all_districts = response.data.districts; 
       });
+
+    await this.filterProvincesTitularMe()
+    await this.filterDistrictTitularMe()
+
+    await this.filterProvincesLaboralMe()
+    await this.filterDistrictLaboralMe()
 
       
  

@@ -70,7 +70,7 @@
       </div>
 
       <div class="files_grid">
-        <a class="add_file" @click="flagModalUpload = true" >
+        <a class="add_file" @click="flagModalUpload = true" v-if="currentUser.idrol=='2' && person.estado_analista=='PROCESO'">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
@@ -298,6 +298,7 @@
 <script>
 import { serviceNumber } from "../mixins/functions";
 import LoaderFile from "./componentes/loader/listado-file.vue";
+ import { toastOptions } from '../constants.js'
 export default {
   mixins: [serviceNumber],
   components: {  LoaderFile},
@@ -315,16 +316,6 @@ export default {
       form: {},
       check: 0,
       loaderFile:1,
-      notificationSystem: {
-        options: {
-          success: {
-            position: "topRight"
-          },
-          error: {
-            position: "topRight"
-          }
-        }
-      },
       files: {},
       file: {},
       loading: false,
@@ -338,23 +329,18 @@ export default {
       notification: false,
       message: "",
       errors: {},
-
+      currentUser: {},
       person: {},
       archivos: [],
-      notificationSystem: {
-        options: {
-          success: {
-            position: "topRight"
-          },
-          error: {
-            position: "topRight"
-          }
-        }
-      }
     };
   },
   created() {
     this.listFile();
+    axios.get("/currentUser")
+      .then(res => { 
+        this.currentUser = res.data
+        console.log(this.currentUser)
+      })
   },
 
   methods: {
@@ -367,11 +353,9 @@ export default {
         this.archivos = response.data["files"];
         this.subidos = response.data["subidos"];
         this.loaderFile=0
-        console.log(this.person.cuantitativa)
       });
     },
     dragFinish (i, e) {
-      console.log(e.dataTransfer.files[0])
       this.attachment.content = e.dataTransfer.files[0]
       this.fileInto = false
     },
@@ -382,7 +366,6 @@ export default {
       this.fileInto = false
     },
     onFileChange (e) {
-      console.log(event.target.files[0])
       this.attachment.content = event.target.files[0];
     },
     sendPdf () {
@@ -402,11 +385,6 @@ export default {
         .then(response => {
           this.resetForm();
           this.listFile();
-          this.$toast.error(
-            ".",
-            "El archivo fue eliminado",
-            this.notificationSystem.options.error
-          );
         })
         .catch(error => {
           this.errors = error.response.data.errors;
@@ -416,7 +394,7 @@ export default {
     resetForm() {
       this.formData = {};
       this.fileName = "";
-      this.attachment = "";
+      this.attachment.content = "";
       this.f
     },
     anyError() {
@@ -439,12 +417,13 @@ export default {
           this.resetForm();
           this.listFile();
           $('#file').val('')
-          this.$toast.success(
-            ".",
-            "Archivo Registrado",
-            this.notificationSystem.options.success
-          );
           this.flagModalUpload = false
+          this.$toast.success(
+            "El archivo fue subido",
+            "Exitoso",
+            toastOptions.success
+          )
+
         })
         .catch(error => {
           this.errors = error.response.data.errors;

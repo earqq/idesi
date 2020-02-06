@@ -56,7 +56,7 @@
                     <select v-model="idrol" >
                         <option value="2">Analista</option>
                         <option value="3">Evaluador</option>
-                        <option value="4">Evaluador Final</option>
+                        <option value="4" v-if="evaluador_final==0">Evaluador Final</option>
                         <option value="5">Plataforma</option> 
                     </select>
                 </div>
@@ -207,6 +207,7 @@
                 idrol: '2',
                 arrayPersona : [],
                 arrayRol : [],
+                evaluador_final: 0,
                 modal : 0,
                 tituloModal : '',
                 tipoAccion : 1,
@@ -274,12 +275,11 @@
                 var url=  '/user?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
-                    me.arrayPersona = respuesta.personas.data;
+                    me.arrayPersona = respuesta.personas.data; 
                     me.pagination= respuesta.pagination;
                     me.loaderCargaPagina =1;
                     me.loading = false;
-
-                    console.log(me.arrayPersona)
+                    me.evaluador_final = respuesta.evaluador_final;
                 })
                 .catch(function (error) {
                     console.log(error);

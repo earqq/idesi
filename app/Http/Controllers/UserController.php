@@ -23,6 +23,14 @@ class UserController extends Controller
         $buscar = $request->buscar;
         $criterio = $request->criterio;
         
+        $evaluador_final = 0;
+
+        $evaluador = User::where('idrol','4')->first();
+
+        if($evaluador){
+            $evaluador_final = 1;
+        }
+
         if ($buscar==''){
             $personas = User::join('roles','users.idrol','=','roles.id')
             ->select('users.id','users.name','users.tipo_documento','users.num_documento','users.direccion','users.telefono'
@@ -45,7 +53,8 @@ class UserController extends Controller
                 'from'         => $personas->firstItem(),
                 'to'           => $personas->lastItem(),
             ],
-            'personas' => $personas
+            'personas' => $personas,
+            'evaluador_final' => $evaluador_final
         ];
     }
 

@@ -50,7 +50,7 @@
                   </select>
                 </div>
                 <div class="input_wrapper">
-                  <label>Plazo</label>
+                  <label>Cuotas</label>
                   <input type="number" v-model="form.plazo_inicial"  />
                 </div>
                 <div class="input_wrapper">
@@ -495,7 +495,7 @@
                   ></vue-numeric>
                 </div>
                 <div class="input_wrapper">
-                  <label>Plazo</label>
+                  <label>Cuotas</label>
                   <input
                     type="number"
                     v-model="form.plazo"
@@ -616,7 +616,6 @@ export default {
          this.form.juridico.fecha_constitucion = response.data["juridico"]["fecha_constitucion"];
          this.form.juridico.email = response.data["juridico"]["email"];
 
-
          this.form.representante.nombres_representante = response.data["juridico"]["nombres_representante"];
          this.form.representante.documento_representante = response.data["juridico"]["documento_representante"];
          this.form.representante.nacimiento_representante =  response.data["juridico"]["nacimiento_representante"];
@@ -627,6 +626,7 @@ export default {
          this.form.representante.direccion_representante =  response.data["juridico"]["direccion_representante"];
          this.form.representante.distrito_representante =  response.data["juridico"]["distrito_representante"];
          this.form.representante.departamento_representante =  response.data["juridico"]["departamento_representante"];
+         this.form.representante.provincia_representante =  response.data["juridico"]["provincia_representante"];
          this.form.representante.referencia_representante =  response.data["juridico"]["referencia_representante"];
          this.form.representante.tipo_domicilio_representante =  response.data["juridico"]["tipo_domicilio_representante"];
          this.form.representante.poderes_representante =  response.data["juridico"]["poderes_representante"];
@@ -764,6 +764,7 @@ export default {
           direccion_representante:"",
           distrito_representante:"",
           provincia_representante:"",
+          
           departamento_representante:"",
           referencia_representante:"",
           tipo_domicilio_representante:"",

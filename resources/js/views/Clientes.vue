@@ -25,8 +25,14 @@
           <i class="material-icons-outlined">search</i>
           <input type="text" placeholder="Buscar Cliente" v-model="search_input" @input="search_product">
           <select  v-model="form.tipo_persona" @change="getType()" >
-            <option value="PN">Persona Natural</option>
-            <option value="PJ">Persona Juridica</option>
+            <option value="PN">PEROSNA NATURAL</option>
+            <option value="PJ">PERSONA JURIDICA</option>
+          </select>
+          <select  v-model="form.tipo_persona" @change="getType()" >
+            <option value="PN">TODOS</option>
+            <option value="PJ">APROBADO</option>
+            <option value="PJ">RECHAZADOS</option>
+            <option value="PJ">PENDIENTES</option>
           </select>
         </div>
         <div class="switch_view">
@@ -160,16 +166,6 @@ export default {
       last_page: 1,
       form: {},
       rol: 0,
-      notificationSystem: {
-        options: {
-          success: {
-            position: "topRight"
-          },
-          error: {
-            position: "topRight"
-          }
-        }
-      },
       queryCount: 0
     }
   },
@@ -180,12 +176,9 @@ export default {
     await this.getRecords();
   },
   methods: {
-    async search_product() {
-      // this.search_status = 0;
+    async search_product() { 
       await this.getRecords();
       this.queryCount ++
-
-      // this.search_status = 1;
     },
     type_list_card(){
       this.type_list=1

@@ -80,7 +80,7 @@
                   </select>
                 </div>
                 <div class="input_wrapper">
-                  <label>Plazo</label>
+                  <label>Cuotas</label>
                   <input type="number" v-model="form.plazo_inicial"  />
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
