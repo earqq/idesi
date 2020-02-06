@@ -17,7 +17,7 @@
                     <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
                   </li>
 
-                  <li :class="{selected: tab == 'clientes'}" v-if="currentUser.idrol=='1' || currentUser.idrol=='2' || currentUser.idrol=='5'">
+                  <li :class="{selected: tab == 'clientes'}" v-if="currentUser.idrol=='1' || currentUser.idrol=='2' || currentUser.idrol=='4'">
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                   </li>
   
