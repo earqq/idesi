@@ -80,7 +80,7 @@
               </div>
 
               <div class="form_buttons all">
-                <a class="button_primary medium next" @click=" (validateStep1 && validateStep2) ? next(1) : tabError()">
+                <a class="button_primary medium next" @click=" (validateStep1) ? next(1) : tabError()">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
