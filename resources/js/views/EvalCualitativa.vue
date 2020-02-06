@@ -6,7 +6,7 @@
             <span>1</span>
             <p>PRINCIPALES</p>
           </div>
-          <div class="tab" @click="tab = 2" :class="{selected: tab == 2}" v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ'">
+          <div class="tab" @click=" validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}" v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ'">
             <span>2</span>
             <p>NEGOCIO</p>
           </div>
@@ -14,19 +14,19 @@
             <span>2</span>
             <p>TRANSPORTE</p>
           </div>
-          <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
+          <div class="tab" @click=" (validateStep1 && validateStep2) ? tab = 3 : tabError()" :class="{selected: tab == 3}">
             <span>3</span>
             <p>FAMILIARES</p>
           </div>
-          <div class="tab" @click="tab = 4" :class="{selected: tab == 4}">
+          <div class="tab" @click="validateStep1 && validateStep2 ? tab = 4 : tabError()" :class="{selected: tab == 4}">
             <span>4</span>
             <p>CENTRAL DE RIESGO</p>
           </div>
-          <div class="tab" @click="tab = 5" :class="{selected: tab ==5}">
+          <div class="tab" @click="validateStep1 && validateStep2 ? tab = 5 : tabError()" :class="{selected: tab ==5}">
             <span>5</span>
             <p>REFERENCIAS</p>
           </div>
-          <div class="tab" @click="tab = 6" :class="{selected: tab ==6}">
+          <div class="tab" @click="validateStep1 && validateStep2 ? tab = 6 : tabError()" :class="{selected: tab ==6}">
             <span>6</span>
             <p>COLATERAL</p>
           </div>
@@ -80,7 +80,7 @@
               </div>
 
               <div class="form_buttons all">
-                <a class="button_primary medium next" @click="next(1)">
+                <a class="button_primary medium next" @click=" (validateStep1 && validateStep2) ? next(1) : tabError()">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
@@ -96,9 +96,10 @@
 
                   <div class="group_form"  v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ' ">
 
-                        <div class="input_wrapper">
+                        <div class="input_wrapper" :class="{require: !validateUbicacion}">
                           <label>Ubicacion del negocio</label>
                           <input type="text" v-model="evaluacion.negocio.ubicacion"  />
+                          <div class="message">Ingrese dirección del negocio</div>
                         </div>
                         
                         <div class="input_wrapper">
@@ -155,14 +156,16 @@
 
                   <div class="group_form" v-else>
 
-                        <div class="input_wrapper">
+                        <div class="input_wrapper" :class="{require: !validateMarca}">
                           <label>Marca</label>
                           <input type="text" v-model="evaluacion.vehiculo.marca"  />
+                          <div class="message">Ingrese marca del vehiculo</div>
                         </div>
                         
-                        <div class="input_wrapper">
+                        <div class="input_wrapper" :class="{require: !validateModelo}">
                           <label>Modelo</label>
                           <input type="text" v-model="evaluacion.vehiculo.modelo"  />
+                          <div class="message">Ingrese modelo del vehiculo</div>
                         </div>
 
                         <div class="input_wrapper">
@@ -197,14 +200,16 @@
                           </select>
                         </div>
 
-                        <div class="input_wrapper">
+                        <div class="input_wrapper" :class="{require: !validateServicio}">
                           <label>Tipo servicio que brinda</label>
                           <input type="text" v-model="evaluacion.vehiculo.tipo_servicio_brinda"  />
+                          <div class="message">ingrese tiempo de servicio</div>
                         </div>
 
-                        <div class="input_wrapper">
+                        <div class="input_wrapper" :class="{require: !validateAntiguedad}">
                           <label>Antiguedad realizando el servicio</label>
                           <input type="text" v-model="evaluacion.vehiculo.antiguedad_servicio"  />
+                          <div class="message">Ingrese antiguedad de servicio</div>
                         </div>
 
                         <div class="input_wrapper">
@@ -234,7 +239,7 @@
                   <i class="material-icons-outlined">navigate_before</i>
                   <span>ATRAS</span>
                 </a>
-                <a class="button_primary medium next" @click="next(2)">
+                <a class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(2) : tabError()">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
@@ -342,7 +347,7 @@
                   <i class="material-icons-outlined">navigate_before</i>
                   <span>ATRAS</span>
                 </a>
-                <a class="button_primary medium next" @click="next(3)">
+                <a class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(3) : tabError()">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
@@ -464,7 +469,7 @@
                   <i class="material-icons-outlined">navigate_before</i>
                   <span>ATRAS</span>
                 </a>
-                <a class="button_primary medium next" @click="next(4)">
+                <a class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(4) : tabError()">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
@@ -518,7 +523,7 @@
                     <i class="material-icons-outlined">navigate_before</i>
                     <span>ATRAS</span>
                   </a>
-                  <a class="button_primary medium next" @click="next(5)">
+                  <a class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(5) : tabError()">
                     <span>SIGUIENTE</span>
                     <i class="material-icons-outlined">navigate_next</i>
                   </a>
@@ -557,7 +562,7 @@
                   <i class="material-icons-outlined">navigate_before</i>
                   <span>ATRAS</span>
                 </a>
-                <a class="button_primary medium next" @click.prevent="guardar()" :class="{loading: loading}">
+                <a class="button_primary medium next" @click.prevent="(validateStep1 && validateStep2) ? guardar() : tabError()" :class="{loading: loading}">
                   <div class="load_spinner"></div>
                   <span>FINALIZAR</span>
                   <i class="material-icons-outlined">check</i>
@@ -670,10 +675,52 @@ export default {
 
     validateStep1() {
       return this.validateFuenteIngreso && this.validateDestinoCredito;
-    }
+    },
+
+    validateUbicacion() {
+      return this.evaluacion.negocio.ubicacion.length > 3
+    },
+
+    validateMarca() {
+      return this.evaluacion.vehiculo.marca.length > 3
+    },
+
+    validateModelo() {
+      return this.evaluacion.vehiculo.modelo.length > 3
+    },
+
+    validateServicio() {
+      return this.evaluacion.vehiculo.tipo_servicio_brinda.length > 3
+    },
+
+    validateAntiguedad() {
+      return this.evaluacion.vehiculo.antiguedad_servicio.length > 3
+    },
+
+    validateStep2(){
+      if(this.evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  this.evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ'){
+         return this.validateUbicacion
+      }else{
+          return  this.validateMarca &&
+                  this.validateModelo &&
+                  this.validateServicio &&
+                  this.validateAntiguedad
+      }
+     
+    },
+
+
+
     
   },
   methods: {
+        tabError(){
+       this.$toast.error(
+          "Rellene los datos necesarios",
+          "Error",
+          toastOptions.error
+        )
+    },
     cambiarEstudio(index){
         this.evaluacion.familiar.hijos[index].costo = 0;
     },

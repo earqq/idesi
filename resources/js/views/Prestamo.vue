@@ -10,42 +10,23 @@
           <span>1</span>
           <p>SOLICITUD</p>
         </div>
-        <div class="tab" @click="tab = 2" :class="{selected: tab == 2}" v-if="validateStep1">
+        <div class="tab" @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}"  >
           <span>2</span>
           <p>CLIENTE</p>
         </div>
 
-        <div class="tab" v-else>
-          <span>2</span>
-          <p>CLIENTE</p>
-        </div>
-
-        <div class="tab" @click="tab = 3" :class="{selected: tab == 3}" v-if="validateStep1 && validateStep2">
+        <div class="tab" @click=" (validateStep1 && validateStep2) ? tab = 3: tabError()" :class="{selected: tab == 3}" >
           <span>3</span>
           <p>AVAL</p>
         </div>
 
-        <div class="tab"  v-else>
-          <span>3</span>
-          <p>AVAL</p>
-        </div>
-
-        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}" v-if="validateStep1 && validateStep2">
-          <span>4</span>
-          <p>GARANTIA</p>
-        </div>
-
-        <div class="tab" v-else>
+        <div class="tab" @click="(validateStep1 && validateStep2) ? tab = 4 : tabError()" :class="{selected: tab == 4}">
           <span>4</span>
           <p>GARANTIA</p>
         </div>
 
 
-        <div class="tab" @click="tab = 5" :class="{selected: tab ==5}" v-if="validateStep1 && validateStep2">
-          <span>5</span>
-          <p>PROPUESTA</p>
-        </div>
-        <div class="tab" v-else>
+        <div class="tab" @click="(validateStep1 && validateStep2) ? tab = 5: tabError()" :class="{selected: tab ==5}" >
           <span>5</span>
           <p>PROPUESTA</p>
         </div>
@@ -105,11 +86,7 @@
           </div>
 
           <div class="form_buttons all">
-            <a class="button_primary medium next" @click="next(1)" v-if="validateStep1">
-              <span>SIGUIENTE</span>
-              <i class="material-icons-outlined">navigate_next</i>
-            </a>
-            <a class="button_primary medium next" v-else>
+            <a class="button_primary medium next" @click=" validateStep1 ? next(1) : tabError()">
               <span>SIGUIENTE</span>
               <i class="material-icons-outlined">navigate_next</i>
             </a>
@@ -374,11 +351,7 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click="next(2)" v-if="validateStep2 && validateStep1">
-              <span>SIGUIENTE</span>
-              <i class="material-icons-outlined">navigate_next</i>
-            </a>
-            <a class="button_primary medium next" v-else>
+            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1) ? next(2) : tabError()" >
               <span>SIGUIENTE</span>
               <i class="material-icons-outlined">navigate_next</i>
             </a>
@@ -542,7 +515,7 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click="next(3)">
+            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1) ? next(3) : tabError()">
               <span>SIGUIENTE</span>
               <i class="material-icons-outlined">navigate_next</i>
             </a>
@@ -607,7 +580,7 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click="next(4)">
+            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1) ? next(4) : tabError()">
               <span>SIGUIENTE</span>
               <i class="material-icons-outlined">navigate_next</i>
             </a>
@@ -686,7 +659,7 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click.prevent="submit()" :class="{loading: loading}">
+            <a class="button_primary medium next" @click.prevent=" (validateStep2 && validateStep1) ? submit() : tabError()" :class="{loading: loading}">
               <div class="load_spinner"></div>
               <span>FINALIZAR</span>
               <i class="material-icons-outlined">check</i>
@@ -984,6 +957,13 @@ export default {
   },
 
   methods: {
+    tabError(){
+       this.$toast.error(
+          "Rellene los datos necesarios",
+          "Error",
+          toastOptions.error
+        )
+    },
     filterProvincesTitularMe() {
           // this.form.natural.domicilio_provincia= '0'
           // this.form.natural.domicilio_distrito= '0'

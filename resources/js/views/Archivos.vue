@@ -8,24 +8,23 @@
         </div>
         <div class="input_wrapper">
           <select v-model="fileName">
-            <option value="0" disabled selected> Seleccionar Documento </option>
-            <option value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
-            <option value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
-            <option value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option> 
-            <option value="copia_dni"  v-if="!subidos.copia_dni" >Copias DNI</option>
-            <option value="recibo_agua_casa" v-if="!subidos.recibo_agua_casa">Recibo de agua de casa</option>
-            <option  value="recibo_luz_casa" v-if="!subidos.recibo_luz_casa">Recibo de luz de casa</option> 
-            <option value="titulo_casa" v-if="!subidos.titulo_casa">Titulo de propiedad de casa</option>
-            <option value="contrato_alquiler_casa" v-if="!subidos.contrato_alquiler_casa">Contrato de alquiler de casa</option>
-            <option value="foto_casa" v-if="!subidos.foto_casa">Fotos de casa</option>
-              <option value="recibo_agua_negocio" v-if="!subidos.recibo_agua_negocio">Recibo de agua del negocio</option>
-            <option value="recibo_luz_negocio" v-if="!subidos.recibo_luz_negocio">Recibo de luz del negocio</option>
-            <option value="contrato_alquiler_negocio" v-if="!subidos.contrato_alquiler_negocio">Contrato de alquiler del negocio</option>
-            <option value="boleta_compra" v-if="!subidos.boleta_compra">Boleta de compras del negocio</option>
-            <option value="boleta_venta" v-if="!subidos.boleta_venta">Boleta de ventas del negocio</option>
-            <option value="factura_compra" v-if="!subidos.factura_compra">Factura de compras del negocio</option>
-            <option value="factura_venta" v-if="!subidos.factura_venta">Factura de ventas del negocio</option>
-            <option value="fotos_negocio" v-if="!subidos.fotos_negocio">Fotos del negocio</option>
+            <option selected value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
+            <option selected value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
+            <option selected  value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option> 
+            <option selected value="copia_dni"  v-if="!subidos.copia_dni" >Copias DNI</option>
+            <option selected value="recibo_agua_casa" v-if="!subidos.recibo_agua_casa">Recibo de agua de casa</option>
+            <option selected  value="recibo_luz_casa" v-if="!subidos.recibo_luz_casa">Recibo de luz de casa</option> 
+            <option selected value="titulo_casa" v-if="!subidos.titulo_casa">Titulo de propiedad de casa</option>
+            <option selected value="contrato_alquiler_casa" v-if="!subidos.contrato_alquiler_casa">Contrato de alquiler de casa</option>
+            <option selected value="foto_casa" v-if="!subidos.foto_casa">Fotos de casa</option>
+            <option selected value="recibo_agua_negocio" v-if="!subidos.recibo_agua_negocio">Recibo de agua del negocio</option>
+            <option selected value="recibo_luz_negocio" v-if="!subidos.recibo_luz_negocio">Recibo de luz del negocio</option>
+            <option selected value="contrato_alquiler_negocio" v-if="!subidos.contrato_alquiler_negocio">Contrato de alquiler del negocio</option>
+            <option selected value="boleta_compra" v-if="!subidos.boleta_compra">Boleta de compras del negocio</option>
+            <option selected value="boleta_venta" v-if="!subidos.boleta_venta">Boleta de ventas del negocio</option>
+            <option selected value="factura_compra" v-if="!subidos.factura_compra">Factura de compras del negocio</option>
+            <option selected value="factura_venta" v-if="!subidos.factura_venta">Factura de ventas del negocio</option>
+            <option selected value="fotos_negocio" v-if="!subidos.fotos_negocio">Fotos del negocio</option>
 
           </select>
         </div>

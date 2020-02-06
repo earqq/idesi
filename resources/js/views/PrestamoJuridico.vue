@@ -10,41 +10,22 @@
           <span>1</span>
           <p>SOLICITUD</p>
         </div>
-        <div class="tab" @click="tab = 2" :class="{selected: tab == 2}" v-if="validateStep1">
-          <span>2</span>
-          <p>EMPRESA</p>
-        </div>
-        <div class="tab" v-else>
+        <div class="tab" @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}">
           <span>2</span>
           <p>EMPRESA</p>
         </div>
 
-        <div class="tab" @click="tab = 3" :class="{selected: tab == 3}" v-if="validateStep1 && validateStep2">
-          <span>3</span>
-          <p>AVAL</p>
-        </div>
-        <div class="tab" v-else>
+        <div class="tab" @click="(validateStep1 && validateStep2) ? tab = 3 : tabError()" :class="{selected: tab == 3}">
           <span>3</span>
           <p>AVAL</p>
         </div>
 
-        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}" v-if="validateStep1 && validateStep2">
+        <div class="tab" @click="(validateStep1 && validateStep2) ? tab = 4 : tabError()" :class="{selected: tab == 4}">
           <span>4</span>
           <p>GARANTIA</p>
         </div>
 
-        <div class="tab" v-else>
-          <span>4</span>
-          <p>GARANTIA</p>
-        </div>
-
-
-        <div class="tab" @click="tab = 5" :class="{selected: tab ==5}" v-if="validateStep1 && validateStep2">
-          <span>5</span>
-          <p>PROPUESTA</p>
-        </div>
-
-        <div class="tab" v-else>
+        <div class="tab" @click="(validateStep1 && validateStep2) ? tab = 5 : tabError()" :class="{selected: tab ==5}" >
           <span>5</span>
           <p>PROPUESTA</p>
         </div>
@@ -838,6 +819,13 @@ export default {
   },
 
   methods: {
+      tabError(){
+       this.$toast.error(
+          "Rellene los datos necesarios",
+          "Error",
+          toastOptions.error
+        )
+    },
     next(index) {
         this.tab = index + 1;
     },

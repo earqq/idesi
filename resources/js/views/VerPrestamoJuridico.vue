@@ -485,7 +485,7 @@
                     <option value="CONSUMO ESPECIAL">CONSUMO ESPECIAL</option>
                   </select>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateImporte}">
                   <label>Importe</label>
                   <vue-numeric
                     currency="S/. "
@@ -493,8 +493,9 @@
                     v-model="form.importe"
                     v-bind:precision="2"
                   ></vue-numeric>
+                  <div class="message">Ingrese importe</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validatePlazo}">
                   <label>Cuotas</label>
                   <input
                     type="number"
@@ -503,16 +504,18 @@
                     :max="48"
                     @keyup="meses_numero"
                   />
+                  <div class="message">Ingrese cuota</div>
                 </div>
                 <div class="input_wrapper">
                   <label>Meses</label>
                   <input type="text" v-model="form.meses" disabled />
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateCuota}">
                   <label>Cuota del sistema</label>
                   <vue-numeric v-model="form.cuotas" v-bind:precision="1"></vue-numeric>
+                  <div class="message">Ingrese cuotas del sistema</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateAporte}">
                   <label>Aporte</label>
                   <vue-numeric
                     
@@ -521,10 +524,12 @@
                     v-model="form.aporte"
                     v-bind:precision="2"
                   ></vue-numeric>
+                  <div class="message">Ingrese aporte</div>
                 </div>
-                <div class="input_wrapper">
+                <div class="input_wrapper" :class="{require: !validateInfo}">
                   <label>Prob. Infocorp</label>
                   <vue-numeric v-model="form.probabilidad_infocorp" v-bind:precision="1"></vue-numeric>
+                  <div class="message">Se requiere este campo</div>
                 </div>
               </div>
 
@@ -542,7 +547,7 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click.prevent="submit()" :class="{loading: loading}">
+            <a class="button_primary medium next" @click.prevent=" validateStep2 ? submit() : tabError()" :class="{loading: loading}">
               <div class="load_spinner"></div>
               <span>FINALIZAR</span>
               <i class="material-icons-outlined">check</i>
@@ -575,17 +580,36 @@ export default {
     };
   },
       computed: {
-            validateMonto() {
-              return String(this.form.monto_inicial).length > 1
+            // validateMonto() {
+            //   return String(this.form.monto_inicial).length > 1
+            // },
+            // validateDiponibilidad() {
+            //   return String(this.form.disponibilidad_pago_inicial).length > 1
+            // },
+            // validateDestino() {
+            //   return this.form.destino_inicial.length > 6
+            // },
+            // validateStep1() {
+            //   return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
+            // },
+
+          validateImporte() {
+              return String(this.form.importe).length > 0 && this.form.importe !=0
             },
-            validateDiponibilidad() {
-              return String(this.form.disponibilidad_pago_inicial).length > 1
+            validatePlazo() {
+              return String(this.form.plazo).length > 0 && this.form.plazo != 0 
             },
-            validateDestino() {
-              return this.form.destino_inicial.length > 6
+            validateAporte() {
+              return String(this.form.aporte).length > 0 && this.form.aporte !=0
             },
-            validateStep1() {
-              return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
+            validateInfo() {
+              return String(this.form.probabilidad_infocorp).length >= 1
+            },
+            validateCuota() {
+              return String(this.form.cuotas).length>=1 && this.form.cuotas !=0
+            },
+            validateStep2() {
+              return this.validateImporte && this.validatePlazo && this.validateAporte && this.validateInfo && this.validateCuota;
             }
   },
   created() {
@@ -655,6 +679,13 @@ export default {
   },
 
   methods: {
+      tabError(){
+       this.$toast.error(
+          "Rellene los datos necesarios",
+          "Error",
+          toastOptions.error
+        )
+    },
     next(index) {
         this.tab = index + 1;
         this.saving()
