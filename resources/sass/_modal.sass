@@ -1,20 +1,23 @@
 .modal_content
     width: 100%
     height: 100vh
-    display: flex
-    justify-content: center
-    align-items: center
     background-color: rgba($text_color, .7)
     position: fixed
     left: 0
     top: 0
     z-index: 16
+    overflow: auto
+    padding: 20px
+    box-sizing: border-box
     .modal_wrapper
         background-color: white
         border-radius: 4px
         padding: 30px
         width: 470px
         box-sizing: border-box
+        display: inline-block
+        margin-left: 50%
+        transform: translate(-50%)
         &.photo_viewer
             width: 650px
         .title
@@ -38,3 +41,20 @@
             width: 170px
             float: right
             margin-top: 0
+
+@media screen and (max-width: 670px)
+    .modal_content
+        .modal_wrapper
+            &.photo_viewer
+                padding: 15px
+                width: 100%
+                button
+                    width: 100%
+
+@media screen and (max-width: 500px)
+    .modal_content
+        .modal_wrapper
+            padding: 15px
+            width: 100%
+            button
+                width: 100%

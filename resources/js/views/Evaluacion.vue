@@ -1,23 +1,7 @@
 <template>
   <div>
-    <div class="empty_message" v-if="prestamos.length==0 && queryCount==0">
-      <img src="img/empty_2.svg" >
-      <h1> No se Encontraron Prestamos </h1>
-      <p>Registra un nuevo cliente para crear prestamos.</p>
-      <router-link class="add_client button_primary small" :to="{name:'registrar/natural'}" v-if="tipo_persona=='PN' && id_rol=='2'">
-        <span>
-          CREAR CLIENTE
-        </span>
-        <i class="material-icons-outlined">add</i>
-      </router-link>
-      <router-link  class="add_client button_primary small" :to="{name:'registrar/juridico'}"  v-if="tipo_persona=='PJ' && id_rol=='2'">
-        <span>
-          CREAR CLIENTE
-        </span>
-        <i class="material-icons-outlined">add</i>
-      </router-link>
-    </div>
-    <div class="credits_content" v-else >
+
+    <div class="credits_content" >
 
       <div class="options_bar">
         <div class="search_bar">
@@ -38,7 +22,13 @@
         </div>
       </div> 
 
-      <div class="table_container">
+      <div class="empty_message" v-if="prestamos.length==0 && queryCount==0">
+        <img src="img/empty_2.svg" >
+        <h1> No Se Encontraron Prestamos </h1>
+        <p>Registra un nuevo cliente para crear prestamos.</p>
+      </div>
+
+      <div class="table_container" v-else >
 
         <div class="table_grid"  v-if="type_list==0">
           <article class="credit_card" v-for="prestamo in prestamos" :key="prestamo.id" >
@@ -222,6 +212,8 @@ export default {
 @import "../../sass/variables"
 @import "../../sass/buttons"
 .credits_content
+  .empty_message
+    height: calc(100vh - 135px)
   .options_bar
     display: grid
     grid-template-columns: 1fr 120px

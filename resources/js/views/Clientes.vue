@@ -1,24 +1,6 @@
 <template>
   <div>
-    <div class="empty_message" v-if="clientes.length==0 && queryCount == 0">
-      <img src="img/empty.svg" >
-      <h1> No Se Encontraron Clientes </h1>
-      <p>Registra un nuevo cliente para continuar.</p>
-      <router-link  class="add_client button_primary small" :to="{name:'registrar/natural'}"  v-if="form.tipo_persona=='PN' && rol!='5'">
-        <span>
-          CREAR CLIENTE
-        </span>
-        <i class="material-icons-outlined">add</i>
-      </router-link>
-      <router-link  class="add_client button_primary small" :to="{name:'registrar/juridico'}"  v-if="form.tipo_persona=='PJ' && rol!='5'">
-        <span>
-          CREAR CLIENTE
-        </span>
-        <i class="material-icons-outlined">add</i>
-      </router-link>
-    </div>
-
-    <div class="clients_content" v-else >
+    <div class="clients_content" >
 
       <div class="options_bar">
         <div class="search_bar">
@@ -58,8 +40,13 @@
         </router-link>
       </div>
 
-      <div class="table_container">
+      <div class="empty_message" v-if="clientes.length==0 && queryCount > 0">
+        <img src="img/empty.svg" >
+        <h1> No Se Encontraron Clientes </h1>
+        <p>Registra un nuevo cliente para continuar.</p>
+      </div>
 
+      <div class="table_container" v-else >
         <div class="table_grid"  v-if=" type_list=='1'">
           <article class="client_card" v-for="cliente in clientes" :key="cliente.id" >
             <div class="options">
@@ -152,8 +139,6 @@
 </template> 
 
 <script>
- 
- 
 export default {
   name: 'clients', 
   data() {
@@ -200,6 +185,7 @@ export default {
         .then(response => {
           this.clientes = response.data['clientes'].data
           this.rol = response.data['rol']
+          this.queryCount ++
         })
       }else{
         return this.$http 
@@ -208,6 +194,7 @@ export default {
         )
         .then(response => {
           this.clientes = response.data['clientes'].data
+          this.queryCount ++
         })
       }
     },
@@ -228,6 +215,8 @@ export default {
 @import "../../sass/variables"
 @import "../../sass/buttons"
 .clients_content
+  .empty_message
+    height: calc(100vh - 135px)
   .options_bar
     display: grid
     grid-template-columns: 1fr 120px 200px
