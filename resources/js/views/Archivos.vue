@@ -69,7 +69,7 @@
       </div>
 
       <div class="files_grid">
-        <a class="add_file" @click="flagModalUpload = true" v-if="currentUser.idrol=='2' && person.estado_analista=='PROCESO'">
+        <a class="add_file" @click="flagModalUpload = true" v-if="$store.state.currentUser.idrol=='2' && person.estado_analista=='PROCESO'">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
@@ -328,18 +328,12 @@ export default {
       notification: false,
       message: "",
       errors: {},
-      currentUser: {},
       person: {},
       archivos: [],
     };
   },
   created() {
-    this.listFile();
-    axios.get("/currentUser")
-      .then(res => { 
-        this.currentUser = res.data
-        console.log(this.currentUser)
-      })
+    this.listFile();   
   },
 
   methods: {
