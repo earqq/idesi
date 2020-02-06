@@ -548,8 +548,11 @@
         </div>
 
         <button class="button_primary medium" @click="firmarEvaluacion()">
-          <span>
+          <span v-if='$store.state.currentUser.idrol==3'>
             FIRMAR EVALUACIÓN
+          </span>
+          <span v-else>
+            FINALIZAR EVALUACIÓN
           </span>
           <i class="material-icons-outlined">fingerprint</i>
         </button> 

@@ -35,10 +35,12 @@ class PrestamosController extends Controller
                 ->orWhere('juridicos.razon_social', 'LIKE', "%{$text}%")
                 ->orWhere('prestamos.producto', 'LIKE', "%{$text}%");
             }
-        })
+        })  
         ->where(function($query){
             if(Auth::user()->idrol == '3')
                 $query->where('prestamos.estado_analista','=', 'EVALUACION');
+            elseif(Auth::user()->idrol == '4')
+                $query->where('prestamos.estado_analista','!=', 'PROCESO');
             elseif(Auth::user()->idrol == '2')
                 $query->where('prestamos.users_id','=', Auth::user()->id);  
         })
