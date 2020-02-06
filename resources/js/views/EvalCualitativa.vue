@@ -500,7 +500,7 @@
                             </div>
                             <div class="input_wrapper">
                               <label>Telefono</label>
-                              <input v-model="referencia.telefono" type="text" />
+                              <input v-model="referencia.telefono" type="text" maxlength='11' />
                             </div>
 
                           </div>
