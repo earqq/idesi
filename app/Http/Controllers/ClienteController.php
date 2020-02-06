@@ -1118,8 +1118,8 @@ class ClienteController extends Controller
             $juridico = Juridico::where('clientes_id',$cliente->id)->first();
             $avals = Aval::where('prestamos_id',$prestamo->id)->get();
             $garantias = Garantia::where('prestamos_id',$prestamo->id)->get(); 
-
-            $pdf = \PDF::loadView('reportes.prestamoJuridico',compact('prestamo','cliente','avals','garantias','juridico'));
+            $evaluacion = Evaluacion::where('prestamos_id',$prestamo->id)->get();
+            $pdf = \PDF::loadView('reportes.prestamoJuridico',compact('prestamo','cliente','avals','garantias','juridico','evaluacion'));
             Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf', $pdf->output());
 
             $pdf = new \LynX39\LaraPdfMerger\PdfManage;
@@ -1141,8 +1141,8 @@ class ClienteController extends Controller
                 }
             }
 
-            $pdf->merge('file', public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/general/documento/adjunto_'.$cliente->documento.'.pdf'), 'P');
-
+            // $pdf->merge('file', public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/general/documento/adjunto_'.$cliente->documento.'.pdf'), 'P');
+            $pdf->merge("archivo_adjunto.pdf", "download");
         }
         else
         {
