@@ -233,8 +233,8 @@
                         
 
                         <tr>
-                            <td colspan="3"> <span class="title">PRODUCTO</span><span > {{$prestamo->producto}}</span> </td>
-                            <td> <span class="title">FORMA</span> <span > {{$prestamo->forma}}</span> </td>
+                            <td colspan="4"> <span class="title">PRODUCTO</span><span > {{$prestamo->producto}}</span> </td>
+                            {{-- <td> <span class="title">FORMA</span> <span > {{$prestamo->forma}}</span> </td> --}}
                         </tr>
                         <tr>
                             <td> <span class="title">IMPORTE</span> <span > {{$prestamo->importe}}</span> </td>
@@ -252,7 +252,7 @@
                         @foreach ($garantias as $garantia)
                         <tr>
                                 <td colspan="3"> <span class="title">Bien de garantia </span> <span > {{$garantia->bien_garantia}} </span> </td>
-                                <td><span class="title">INS.</span><span > [ X ] </span>  <span class="title">D.J</span> <span>[ X ]</span></td>
+                                <td><span class="title">INS.</span><span > [ {{$garantia->inscripcion}} ] </span>  <span class="title">D.J</span> <span>[ {{$garantia->declaracion_jurada}} ]</span></td>
                         </tr>
                         @endforeach
                         
