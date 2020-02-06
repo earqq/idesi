@@ -38,64 +38,6 @@ use Illuminate\Support\Facades\Storage;
 class ClienteController extends Controller
 {
 
-    public function index(Request $request)
-    {
-
-
-        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '4' || Auth::user()->idrol == '5'){
-
-            $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
-              ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular','naturals.direccion_cliente', 'clientes.estado')
-              ->where('clientes.documento', 'LIKE', "%{$request->search_input}%")
-              ->orWhere('naturals.nombres', 'LIKE', "%{$request->search_input}%")
-              ->orWhere('naturals.apellidos', 'LIKE', "%{$request->search_input}%")
-              ->orderBy('clientes.id','desc')
-              ->paginate(10);
-
-            $rol=  Auth::user()->idrol;
-            return compact('clientes','rol');
-
-        }
-        else{
-            $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
-              ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular','naturals.direccion_cliente')
-              ->orderBy('clientes.id','desc')
-              ->where('users_id','=',Auth::user()->id)
-              ->paginate(10);
-              $rol=  Auth::user()->idrol;
-              return compact('clientes','rol');
-        }
-
-    }
-
-
-    public function indexJuridico(Request $request)
-    {
-        if(Auth::user()->idrol == '1' ||Auth::user()->idrol == '4' || Auth::user()->idrol == '5'){
-
-            $clientes = Cliente::join('juridicos','clientes.id','=','juridicos.clientes_id')
-              ->select('clientes.documento', 'juridicos.razon_social', 'juridicos.celular','juridicos.direccion')
-              ->where('juridicos.razon_social', 'LIKE', "%{$request->search_input}%")
-              ->orWhere('clientes.documento', 'LIKE', "%{$request->search_input}%")
-              ->orderBy('clientes.id','desc')
-              ->paginate(10);
-              $rol=  Auth::user()->idrol;
-              return compact('clientes','rol');
-
-        }
-        else{
-            $clientes = Cliente::join('juridicos','clientes.id','=','juridicos.clientes_id')
-              ->select('clientes.documento','juridicos.razon_social', 'juridicos.celular','juridicos.direccion')
-              ->orderBy('clientes.id','desc')
-              ->where('users_id','=',Auth::user()->id)
-              ->paginate(10);
-              $rol=  Auth::user()->idrol;
-              return compact('clientes','rol');
-        }
-
-    }
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -282,6 +224,9 @@ class ClienteController extends Controller
                 $laboral->naturals_id= $natural->id;    
                 $laboral->save();
 
+                $departamento='';
+                $provincia='';
+                $distrito='';
                 if($laboral->estado_laboral=='TRABAJA'){
                     
                     $departamento = Departamento::where('id',$laboral->departamento)->first();
@@ -361,15 +306,12 @@ class ClienteController extends Controller
                 ];
     
             }
- 
-
         } catch (Exception $e){
             return [
                 'success' => false,
             ];
             DB::rollBack();
         }
-       
     }
 
     public function storeJuridico(Request $request)
