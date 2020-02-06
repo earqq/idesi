@@ -10,41 +10,22 @@
           <span>1</span>
           <p>SOLICITUD</p>
         </div>
-        <div class="tab" @click="tab = 2" :class="{selected: tab == 2}" v-if="validateStep1">
-          <span>2</span>
-          <p>EMPRESA</p>
-        </div>
-        <div class="tab" v-else>
+        <div class="tab" @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}">
           <span>2</span>
           <p>EMPRESA</p>
         </div>
 
-        <div class="tab" @click="tab = 3" :class="{selected: tab == 3}" v-if="validateStep1 && validateStep2">
-          <span>3</span>
-          <p>AVAL</p>
-        </div>
-        <div class="tab" v-else>
+        <div class="tab" @click="(validateStep1 && validateStep2) ? tab = 3 : tabError()" :class="{selected: tab == 3}">
           <span>3</span>
           <p>AVAL</p>
         </div>
 
-        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}" v-if="validateStep1 && validateStep2">
+        <div class="tab" @click="(validateStep1 && validateStep2) ? tab = 4 : tabError()" :class="{selected: tab == 4}">
           <span>4</span>
           <p>GARANTIA</p>
         </div>
 
-        <div class="tab" v-else>
-          <span>4</span>
-          <p>GARANTIA</p>
-        </div>
-
-
-        <div class="tab" @click="tab = 5" :class="{selected: tab ==5}" v-if="validateStep1 && validateStep2">
-          <span>5</span>
-          <p>PROPUESTA</p>
-        </div>
-
-        <div class="tab" v-else>
+        <div class="tab" @click="(validateStep1 && validateStep2) ? tab = 5 : tabError()" :class="{selected: tab ==5}" >
           <span>5</span>
           <p>PROPUESTA</p>
         </div>
@@ -73,7 +54,7 @@
                   </select>
                 </div>
                 <div class="input_wrapper">
-                  <label>Plazo</label>
+                  <label>Cuotas</label>
                   <input type="number" v-model="form.plazo_inicial"  />
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
@@ -139,8 +120,6 @@
 
                 <div class="input_wrapper" :class="{require: !validatePartida}">
                   <label>Número de partida</label>
-                  <p>{{String(form.juridico.partida_registral).length}}</p>
-                  <p>{{form.juridico.direccion.length}}</p>
                   <input type="text" v-model="form.juridico.partida_registral"  />
                   <div class="message">N° de partida la empresa</div>
                 </div>
@@ -558,7 +537,7 @@
                   ></vue-numeric>
                 </div>
                 <div class="input_wrapper">
-                  <label>Plazo</label>
+                  <label>Cuotas</label>
                   <input
                     type="number"
                     v-model="form.plazo"
@@ -827,6 +806,7 @@ export default {
          this.form.representante.direccion_representante =  response.data["juridico"]["direccion_representante"] || ""
          this.form.representante.distrito_representante =  response.data["juridico"]["distrito_representante"] || ""
          this.form.representante.departamento_representante =  response.data["juridico"]["departamento_representante"] || ""
+         this.form.representante.provincia_representante =  response.data["juridico"]["provincia_representante"] || ""
          this.form.representante.referencia_representante =  response.data["juridico"]["referencia_representante"] || ""
          this.form.representante.tipo_domicilio_representante =  response.data["juridico"]["tipo_domicilio_representante"] || ""
          this.form.representante.poderes_representante =  response.data["juridico"]["poderes_representante"] || ""
@@ -839,6 +819,13 @@ export default {
   },
 
   methods: {
+      tabError(){
+       this.$toast.error(
+          "Rellene los datos necesarios",
+          "Error",
+          toastOptions.error
+        )
+    },
     next(index) {
         this.tab = index + 1;
     },

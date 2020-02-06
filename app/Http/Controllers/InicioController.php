@@ -15,9 +15,11 @@ class InicioController extends Controller
      */
     public function index()
     {
-        $cliente = Cliente::where('estado','1')->count();
+        $cliente = Cliente::count();
+        // $cliente = Cliente::where('estado','1')->count();
         $prestamo_rechazado = Prestamo::where('estado','RECHAZADO')->count();
-        $prestamo_total = Prestamo::where('estado','APROBADO')->count();
+        $prestamo_total = Prestamo::count();
+        // $prestamo_total = Prestamo::where('estado','APROBADO')->count();
         $prestamo_pendiente = Prestamo::where('estado','PENDIENTE')->count();
 
         /* ULTIMOS CLIENTES */

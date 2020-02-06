@@ -8,24 +8,23 @@
         </div>
         <div class="input_wrapper">
           <select v-model="fileName">
-            <option value="0" disabled selected> Seleccionar Documento </option>
-            <option value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
-            <option value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
-            <option value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option> 
-            <option value="copia_dni"  v-if="!subidos.copia_dni" >Copias DNI</option>
-            <option value="recibo_agua_casa" v-if="!subidos.recibo_agua_casa">Recibo de agua de casa</option>
-            <option  value="recibo_luz_casa" v-if="!subidos.recibo_luz_casa">Recibo de luz de casa</option> 
-            <option value="titulo_casa" v-if="!subidos.titulo_casa">Titulo de propiedad de casa</option>
-            <option value="contrato_alquiler_casa" v-if="!subidos.contrato_alquiler_casa">Contrato de alquiler de casa</option>
-            <option value="foto_casa" v-if="!subidos.foto_casa">Fotos de casa</option>
-              <option value="recibo_agua_negocio" v-if="!subidos.recibo_agua_negocio">Recibo de agua del negocio</option>
-            <option value="recibo_luz_negocio" v-if="!subidos.recibo_luz_negocio">Recibo de luz del negocio</option>
-            <option value="contrato_alquiler_negocio" v-if="!subidos.contrato_alquiler_negocio">Contrato de alquiler del negocio</option>
-            <option value="boleta_compra" v-if="!subidos.boleta_compra">Boleta de compras del negocio</option>
-            <option value="boleta_venta" v-if="!subidos.boleta_venta">Boleta de ventas del negocio</option>
-            <option value="factura_compra" v-if="!subidos.factura_compra">Factura de compras del negocio</option>
-            <option value="factura_venta" v-if="!subidos.factura_venta">Factura de ventas del negocio</option>
-            <option value="fotos_negocio" v-if="!subidos.fotos_negocio">Fotos del negocio</option>
+            <option selected value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
+            <option selected value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
+            <option selected  value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option> 
+            <option selected value="copia_dni"  v-if="!subidos.copia_dni" >Copias DNI</option>
+            <option selected value="recibo_agua_casa" v-if="!subidos.recibo_agua_casa">Recibo de agua de casa</option>
+            <option selected  value="recibo_luz_casa" v-if="!subidos.recibo_luz_casa">Recibo de luz de casa</option> 
+            <option selected value="titulo_casa" v-if="!subidos.titulo_casa">Titulo de propiedad de casa</option>
+            <option selected value="contrato_alquiler_casa" v-if="!subidos.contrato_alquiler_casa">Contrato de alquiler de casa</option>
+            <option selected value="foto_casa" v-if="!subidos.foto_casa">Fotos de casa</option>
+            <option selected value="recibo_agua_negocio" v-if="!subidos.recibo_agua_negocio">Recibo de agua del negocio</option>
+            <option selected value="recibo_luz_negocio" v-if="!subidos.recibo_luz_negocio">Recibo de luz del negocio</option>
+            <option selected value="contrato_alquiler_negocio" v-if="!subidos.contrato_alquiler_negocio">Contrato de alquiler del negocio</option>
+            <option selected value="boleta_compra" v-if="!subidos.boleta_compra">Boleta de compras del negocio</option>
+            <option selected value="boleta_venta" v-if="!subidos.boleta_venta">Boleta de ventas del negocio</option>
+            <option selected value="factura_compra" v-if="!subidos.factura_compra">Factura de compras del negocio</option>
+            <option selected value="factura_venta" v-if="!subidos.factura_venta">Factura de ventas del negocio</option>
+            <option selected value="fotos_negocio" v-if="!subidos.fotos_negocio">Fotos del negocio</option>
 
           </select>
         </div>
@@ -70,7 +69,7 @@
       </div>
 
       <div class="files_grid">
-        <a class="add_file" @click="flagModalUpload = true" >
+        <a class="add_file" @click="flagModalUpload = true" v-if="currentUser.idrol=='2' && person.estado_analista=='PROCESO'">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
@@ -298,6 +297,7 @@
 <script>
 import { serviceNumber } from "../mixins/functions";
 import LoaderFile from "./componentes/loader/listado-file.vue";
+ import { toastOptions } from '../constants.js'
 export default {
   mixins: [serviceNumber],
   components: {  LoaderFile},
@@ -315,16 +315,6 @@ export default {
       form: {},
       check: 0,
       loaderFile:1,
-      notificationSystem: {
-        options: {
-          success: {
-            position: "topRight"
-          },
-          error: {
-            position: "topRight"
-          }
-        }
-      },
       files: {},
       file: {},
       loading: false,
@@ -338,23 +328,18 @@ export default {
       notification: false,
       message: "",
       errors: {},
-
+      currentUser: {},
       person: {},
       archivos: [],
-      notificationSystem: {
-        options: {
-          success: {
-            position: "topRight"
-          },
-          error: {
-            position: "topRight"
-          }
-        }
-      }
     };
   },
   created() {
     this.listFile();
+    axios.get("/currentUser")
+      .then(res => { 
+        this.currentUser = res.data
+        console.log(this.currentUser)
+      })
   },
 
   methods: {
@@ -367,11 +352,9 @@ export default {
         this.archivos = response.data["files"];
         this.subidos = response.data["subidos"];
         this.loaderFile=0
-        console.log(this.person.cuantitativa)
       });
     },
     dragFinish (i, e) {
-      console.log(e.dataTransfer.files[0])
       this.attachment.content = e.dataTransfer.files[0]
       this.fileInto = false
     },
@@ -382,7 +365,6 @@ export default {
       this.fileInto = false
     },
     onFileChange (e) {
-      console.log(event.target.files[0])
       this.attachment.content = event.target.files[0];
     },
     sendPdf () {
@@ -402,11 +384,6 @@ export default {
         .then(response => {
           this.resetForm();
           this.listFile();
-          this.$toast.error(
-            ".",
-            "El archivo fue eliminado",
-            this.notificationSystem.options.error
-          );
         })
         .catch(error => {
           this.errors = error.response.data.errors;
@@ -416,7 +393,7 @@ export default {
     resetForm() {
       this.formData = {};
       this.fileName = "";
-      this.attachment = "";
+      this.attachment.content = "";
       this.f
     },
     anyError() {
@@ -439,12 +416,13 @@ export default {
           this.resetForm();
           this.listFile();
           $('#file').val('')
-          this.$toast.success(
-            ".",
-            "Archivo Registrado",
-            this.notificationSystem.options.success
-          );
           this.flagModalUpload = false
+          this.$toast.success(
+            "El archivo fue subido",
+            "Exitoso",
+            toastOptions.success
+          )
+
         })
         .catch(error => {
           this.errors = error.response.data.errors;

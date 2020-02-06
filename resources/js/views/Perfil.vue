@@ -52,7 +52,7 @@
           <p v-if="cliente.estado==1">Aprobado</p> 
           <p v-if="cliente.estado==2">Rechazado</p> 
         </li>
-        <blockquote class="message_request" v-if="cliente.estado==0 && id_rol=='1'">
+        <blockquote class="message_request" v-if="cliente.estado==0 && (id_rol=='1' && id_rol=='4')">
           <div class="message_request_wrapper">
             <h1>SOLICITUD DE ACEPTACIÓN</h1>
             <p> Se ha registrado un nuevo cliente esperando por aprobación.  </p>

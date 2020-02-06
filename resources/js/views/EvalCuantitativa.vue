@@ -7,11 +7,11 @@
             <span>1</span>
             <p>DATOS TITULAR</p>
           </div>
-          <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
+          <div class="tab" @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}">
             <span>2</span>
             <p>DATOS CÓNYUGE</p>
           </div>
-          <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
+          <div class="tab" @click="validateStep1 ? tab = 3 : tabError()" :class="{selected: tab == 3}">
             <span>3</span>
             <p>DATOS HOGAR</p>
           </div>
@@ -41,31 +41,31 @@
                         </div>
 
                         <div class="group_form small all" >
-                          <div class="input_wrapper" :class="{require: !validateNegocioLunes}">
-                            <label>Lunes</label>
+                          <div class="input_wrapper" :class="{require: !validateNegocioLunes && index==0}">
+                            <label>Lunes</label> 
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].lunes" v-bind:precision="2"></vue-numeric>
                           </div>
-                          <div class="input_wrapper" :class="{require: !validateNegocioMartes}">
+                          <div class="input_wrapper" :class="{require: !validateNegocioMartes && index==0}">
                             <label>Martes</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].martes" v-bind:precision="2"></vue-numeric>
                           </div>
-                          <div class="input_wrapper" :class="{require: !validateNegocioMiercoles}">
+                          <div class="input_wrapper" :class="{require: !validateNegocioMiercoles && index==0}">
                             <label>Miercoles</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].miercoles" v-bind:precision="2"></vue-numeric>
                           </div>
-                          <div class="input_wrapper" :class="{require: !validateNegocioJueves}">
+                          <div class="input_wrapper" :class="{require: !validateNegocioJueves && index==0}">
                             <label>Jueves</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].jueves" v-bind:precision="2"></vue-numeric>
                           </div>
-                          <div class="input_wrapper" :class="{require: !validateNegocioViernes}">
+                          <div class="input_wrapper" :class="{require: !validateNegocioViernes && index==0}">
                             <label>Viernes</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].viernes" v-bind:precision="2"></vue-numeric>
                           </div>
-                          <div class="input_wrapper" :class="{require: !validateNegocioSabado}">
+                          <div class="input_wrapper" :class="{require: !validateNegocioSabado && index==0}">
                             <label>Sabado</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].sabado" v-bind:precision="2"></vue-numeric>
                           </div>
-                          <div class="input_wrapper" :class="{require: !validateNegocioDomingo}">
+                          <div class="input_wrapper" :class="{require: !validateNegocioDomingo && index==0}">
                             <label>Domingo</label>
                             <vue-numeric   :change="negocioIngresosSubtotal(index)" currency="S/. " separator="," v-model="evaluacion.titular.ingresos_negocio[index].domingo" v-bind:precision="2"></vue-numeric>
                           </div>
@@ -114,12 +114,12 @@
 
                     <div class="input_wrapper" :class="{require: !validateNegocioMargen}">
                       <label>Margen de Costo</label>
-                      <input type="text" v-model="evaluacion.titular.margen_costo" />
+                      <input type="text" v-model="evaluacion.titular.margen_costo" @keyup="cambioValor()"/>
                     </div>
 
                     <div class="input_wrapper" :class="{require: !validateNegocioValor}">
                       <label>Valor Inventario</label>
-                      <input type="text" v-model="evaluacion.titular.valor_inventario" />
+                      <input type="text"  v-model="evaluacion.titular.valor_inventario"  />
                     </div>
 
                   </div>
@@ -181,7 +181,7 @@
               </div>
 
               <div class="form_buttons all">
-                <a class="button_primary medium next" @click="next(1)">
+                <a class="button_primary medium next" @click="validateStep1 ? next(1): tabError() ">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
@@ -378,7 +378,7 @@
                   <i class="material-icons-outlined">navigate_before</i>
                   <span>ATRAS</span>
                 </a>
-                <a class="button_primary medium next" @click="next(2)">
+                <a class="button_primary medium next" @click="validateStep1 ? next(2): tabError() ">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
@@ -541,7 +541,7 @@
                     <i class="material-icons-outlined">navigate_before</i>
                     <span>ATRAS</span>
                   </a>
-                  <a class="button_primary medium next" @click.prevent="guardar()" :class="{loading: loading}">
+                  <a class="button_primary medium next" @click.prevent="validateStep1 ? guardar(): tabError()" :class="{loading: loading}">
                     <div class="load_spinner"></div>
                   <span>FINALIZAR</span>
                   <i class="material-icons-outlined">check</i>
@@ -828,62 +828,82 @@ export default {
     computed: {
 
     validateNegocioLunes() {
-      return  String(this.evaluacion.titular.ingresos_negocio[0].lunes).length > 1
+      return  String(this.evaluacion.titular.ingresos_negocio[0].lunes).length > 0
     },
     validateNegocioMartes() {
-      return  String(this.evaluacion.titular.ingresos_negocio[0].martes).length > 1
+      return  String(this.evaluacion.titular.ingresos_negocio[0].martes).length > 0
     },
     validateNegocioMiercoles() {
-      return  String(this.evaluacion.titular.ingresos_negocio[0].miercoles).length > 1
+      return  String(this.evaluacion.titular.ingresos_negocio[0].miercoles).length > 0
     },
     validateNegocioJueves() {
-      return  String(this.evaluacion.titular.ingresos_negocio[0].jueves).length > 1
+      return  String(this.evaluacion.titular.ingresos_negocio[0].jueves).length > 0
     },
     validateNegocioViernes() {
-      return  String(this.evaluacion.titular.ingresos_negocio[0].viernes).length > 1
+      return  String(this.evaluacion.titular.ingresos_negocio[0].viernes).length > 0
     },
     validateNegocioSabado() {
-      return  String(this.evaluacion.titular.ingresos_negocio[0].sabado).length > 1
+      return  String(this.evaluacion.titular.ingresos_negocio[0].sabado).length > 0
     },
     validateNegocioDomingo() {
-      return  String(this.evaluacion.titular.ingresos_negocio[0].domingo).length > 1
+      return  String(this.evaluacion.titular.ingresos_negocio[0].domingo).length > 0
     },
 
     validateNegocioMargen() {
-      return  this.evaluacion.titular.margen_costo.length > 1
+      return  this.evaluacion.titular.margen_costo.length > 0
     },
 
     validateNegocioValor() {
-      return  this.evaluacion.titular.valor_inventario.length > 1
+      return  this.evaluacion.titular.valor_inventario.length > 0
     },
 
     validateNegocioAlquiler() {
-      return  String(this.evaluacion.titular.gasto_negocio[0].pago).length > 1
+      return  String(this.evaluacion.titular.gasto_negocio[0].pago).length > 0
     },
 
       validateNegocioEmpleado() {
-      return  String(this.evaluacion.titular.gasto_negocio[1].pago).length > 1
+      return  String(this.evaluacion.titular.gasto_negocio[1].pago).length > 0
     },
 
       validateNegocioImpuesto() {
-      return  String(this.evaluacion.titular.gasto_negocio[2].pago).length > 1
+      return  String(this.evaluacion.titular.gasto_negocio[2].pago).length > 0
     },
 
       validateNegocioAgua() {
-      return  String(this.evaluacion.titular.gasto_negocio[3].pago).length > 1
+      return  String(this.evaluacion.titular.gasto_negocio[3].pago).length > 0
     },
 
       validateNegocioLuz() {
-      return  String(this.evaluacion.titular.gasto_negocio[4].pago).length > 1
+      return  String(this.evaluacion.titular.gasto_negocio[4].pago).length > 0
     },
 
 
 
     validateStep1() {
-      // return this.validateFuenteIngreso && this.validateDestinoCredito;
+      return  this.validateNegocioLunes &&
+              this.validateNegocioMartes &&
+              this.validateNegocioMiercoles &&
+              this.validateNegocioJueves &&
+              this.validateNegocioViernes &&
+              this.validateNegocioSabado &&
+              this.validateNegocioDomingo &&
+              this.validateNegocioMargen &&
+              this.validateNegocioValor &&
+              this.validateNegocioAlquiler &&
+              this.validateNegocioEmpleado &&
+              this.validateNegocioImpuesto &&
+              this.validateNegocioAgua &&
+              this.validateNegocioLuz
     }
   },
   methods: {
+    tabError(){
+       this.$toast.error(
+          "Rellene los datos necesarios",
+          "Error",
+          toastOptions.error
+        )
+    },
 
     next(index) {
       window.scrollTo(0,0)
@@ -892,6 +912,13 @@ export default {
     prev(index) {
       window.scrollTo(0,0)
       this.tab = index - 1
+    },
+    cambioValor(){
+      if(this.evaluacion.titular.margen_costo>0){
+          this.evaluacion.titular.valor_inventario = ''
+      }else{
+          this.evaluacion.titular.valor_inventario = 0
+      }
     },
     clickAddEntidad() { 
       this.evaluacion.conyuge.gasto_financiero.push({

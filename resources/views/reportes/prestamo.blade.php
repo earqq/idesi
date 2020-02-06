@@ -167,8 +167,8 @@
             @else
             <tbody>
                 <tr>
-                    <td colspan="3">
-                        <span>*****************************************  NO REGISTRA CONYUGE  **********************************</span>
+                    <td colspan="3" style="text-align: center">
+                          NO REGISTRA CONYUGE   
                     </td>
                 </tr>
 
@@ -300,41 +300,42 @@
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                     <thead>
                         <tr>
-                            <th colspan="2" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">COMITÉ DE CRÉDITO</th>
-                            <th style="background: #fff;border: 1px solid #e4e4e4;"> <span > </span> </th>
+                            <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">COMITÉ DE CRÉDITO</th>
+                            {{-- <th style="background: #fff;border: 1px solid #e4e4e4;"> <span > </span> </th> --}}
                         </tr>
                     </thead>
                     <tbody>
                             
-                        @if ($evaluacion != '')
-                            @foreach ($evaluacion as $eval)
-                                    <tr>
-                                        @if ($eval->estado=='OBSERVADO')
-                                            <td> <span class="title">APROBADO</span><span > [    --     ]</span> </td>
-                                            <td> <span class="title">DESAPROBADO</span> <span > [    --     ]</span> </td>
-                                            <td> <span class="title">OBSERVADO</span> <span style="background: #009688;color:#fff"  > [     X    ]</span> </td>
-                                        @elseif($eval->estado=='APROBADO')
-                                            <td> <span class="title">APROBADO</span><span style="background: #009688;color:#fff" > [     X    ]</span> </td>
-                                            <td> <span class="title">DESAPROBADO</span> <span > [   --      ]</span> </td>
-                                            <td> <span class="title">OBSERVADO</span> <span > [    --     ]</span> </td>
-                                        @elseif($eval->estado=='DESAPROBADO')
-                                            <td> <span class="title">APROBADO</span><span > [     --    ]</span> </td>
-                                            <td> <span class="title">DESAPROBADO</span> <span style="background: #009688;color:#fff"  > [    X     ]</span> </td>
-                                            <td> <span class="title">OBSERVADO</span> <span > [   --      ]</span> </td>
-                                        @endif
-                                    </tr>
-                                    <tr>
-                                    <td colspan="3"> <span class="title">INDICACIONES</span> <span > {{$eval->detalle}}</span> </td>
-                                    </tr> 
-                                
-                            @endforeach
-                        @else
+                           @if ($evaluacion)
+                                @foreach ($evaluacion as $eval)
+                                        <tr>
+                                            @if ($eval->estado=='OBSERVADO')
+                                                <td> <span class="title">APROBADO</span><span > [    --     ]</span> </td>
+                                                <td> <span class="title">DESAPROBADO</span> <span > [    --     ]</span> </td>
+                                                <td> <span class="title">OBSERVADO</span> <span style="background: #009688;color:#fff"  > [     X    ]</span> </td>
+                                            @elseif($eval->estado=='APROBADO')
+                                                <td> <span class="title">APROBADO</span><span style="background: #009688;color:#fff" > [     X    ]</span> </td>
+                                                <td> <span class="title">DESAPROBADO</span> <span > [   --      ]</span> </td>
+                                                <td> <span class="title">OBSERVADO</span> <span > [    --     ]</span> </td>
+                                            @elseif($eval->estado=='DESAPROBADO')
+                                                <td> <span class="title">APROBADO</span><span > [     --    ]</span> </td>
+                                                <td> <span class="title">DESAPROBADO</span> <span style="background: #009688;color:#fff"  > [    X     ]</span> </td>
+                                                <td> <span class="title">OBSERVADO</span> <span > [   --      ]</span> </td>
+                                            @endif
+                                        </tr>
+                                        <tr>
+                                        <td colspan="3"> <span class="title">INDICACIONES</span> <span > {{$eval->detalle}}</span> </td>
+                                        </tr> 
+                                    
+                                @endforeach
 
-                            <tr>
-                                <td colspan="3" style="text-align: center">NO EXISTE EVALUACIÓN</td>
-                            </tr>
-                            
-                        @endif
+                            @else
+                                <tr>
+                                    <td colspan="3" style="text-align: center">
+                                            NO REGISTRA EVALUACIONES
+                                    </td>
+                                </tr>
+                            @endif
 
     
                     </tbody>
@@ -343,8 +344,8 @@
                 <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                     <thead>
                         <tr>
-                            <th colspan="2" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">COMITÉ DE CRÉDITO FINAL</th>
-                            <th style="background: #fff;border: 1px solid #e4e4e4;"> <span > </span> </th>
+                            <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">COMITÉ DE CRÉDITO FINAL</th>
+                            {{-- <th style="background: #fff;border: 1px solid #e4e4e4;"> <span > </span> </th> --}}
                         </tr>
                     </thead>
                     <tbody>

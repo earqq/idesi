@@ -105,7 +105,27 @@ class ClienteController extends Controller
     {
         //
     }
+    public function search($type,$text){
 
+        $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
+        ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular','naturals.direccion_cliente', 'clientes.estado')
+        ->where('clientes.documento', 'LIKE', "%{$request->search_input}%")
+        ->orWhere('naturals.nombres', 'LIKE', "%{$request->search_input}%")
+        ->orWhere('naturals.apellidos', 'LIKE', "%{$request->search_input}%")
+        ->orderBy('clientes.id','desc')
+        ->paginate(10);
+
+        $rol=  Auth::user()->idrol;
+        return compact('clientes','rol');
+
+        $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
+        ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular','naturals.direccion_cliente')
+        ->orderBy('clientes.id','desc')
+        ->where('users_id','=',Auth::user()->id)
+        ->paginate(10);
+        $rol=  Auth::user()->idrol;
+        return compact('clientes','rol');
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -214,11 +234,12 @@ class ClienteController extends Controller
                 $natural->correo= $request->natural['correo'];    
                 $natural->save();
 
-                $departamento_domicilio = Departamento::find($natural->domicilio_departamento)->first();
-                $provincia_domicilio = Provincia::find($natural->domicilio_provincia)->first();
-                $distrito_domicilio = Distrito::find($natural->domicilio_distrito)->first();
+                $departamento_domicilio = Departamento::where('id',$natural->domicilio_departamento)->first();
+                $provincia_domicilio = Provincia::where('id',$natural->domicilio_provincia)->first();
+                $distrito_domicilio = Distrito::where('id',$natural->domicilio_distrito)->first();
 
-                $laboral = new Laboral();
+                
+                $laboral = new Laboral(); 
                 $laboral->estado_laboral= $request->laboral['estado_laboral'];    
                 $laboral->tipo_trabajador= $request->laboral['tipo_trabajador'];    
                 $laboral->razon_social= $request->laboral['razon_social'];    
@@ -252,10 +273,10 @@ class ClienteController extends Controller
                 $laboral->save();
 
                 if($laboral->estado_laboral=='TRABAJA'){
-
-                    $departamento = Departamento::find($laboral->departamento)->first();
-                    $provincia = Provincia::find($laboral->provincia)->first();
-                    $distrito = Distrito::find($laboral->distrito)->first();
+                    
+                    $departamento = Departamento::where('id',$laboral->departamento)->first();
+                    $provincia = Provincia::where('id',$laboral->provincia)->first();
+                    $distrito = Distrito::where('id',$laboral->distrito)->first();
                 }
 
                 $familiar = New Familiar;
@@ -1172,16 +1193,17 @@ class ClienteController extends Controller
             $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
             $avals = Aval::where('prestamos_id',$prestamo->id)->get();
             $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+            $evaluacion = Evaluacion::where('prestamos_id',$prestamo->id)->get();
             $tiene_conyuge = '';
             
             if($conyugue){
                 $tiene_conyuge='SI'; 
             }
             else{
-                $tiene_conyuge='NO';
+                $tiene_conyuge='NO'; 
             }     
             
-            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge'));
+            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','natural','conyugue','tiene_conyuge','evaluacion'));
             Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf', $pdf->output());
 
             $pdf = new \LynX39\LaraPdfMerger\PdfManage;

@@ -3,30 +3,36 @@
 
       <section class="tabs_section">
         <div class="tabs_wrapper">
-          <div class="tab " @click="tab = 1" :class="{selected: tab == 1}">
+          <div class="tab " @click="tab = 1" :class="{selected: tab == 1}" >
             <span>1</span> 
             <p>PERSONALES</p>
           </div>
-          <div class="tab" @click="tab = 2" :class="{selected: tab == 2}">
+          <div class="tab" @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}" >
             <span>2</span>
             <p>LEGALES</p>
           </div>
-          <div class="tab" @click="tab = 3" :class="{selected: tab == 3}">
+          
+          <div class="tab" @click="validateStep1 ? tab = 3 : tabError()" :class="{selected: tab == 3}"  >
             <span>3</span>
             <p>DIRECTORES</p>
           </div>
-          <div class="tab" @click="tab = 4" :class="{selected: tab == 4}">
+
+          <div class="tab" @click="validateStep1 ? tab = 4 : tabError()" :class="{selected: tab == 4}"  >
             <span>4</span>
             <p>ACCIONISTAS</p>
           </div>
-          <div class="tab" @click="tab = 5" :class="{selected: tab == 5}">
+
+          <div class="tab" @click="validateStep1 ? tab = 5 : tabError()" :class="{selected: tab == 5}" >
             <span>5</span>
             <p>OBLIGACIONES</p>
           </div>
-          <div class="tab" @click="tab = 6" :class="{selected: tab == 6}">
+
+
+          <div class="tab" @click="validateStep1 ? tab = 6 : tabError()" :class="{selected: tab == 6}" >
             <span>6</span>
             <p>DECLARACIÓN</p>
           </div>
+
         </div>
       </section>
 
@@ -43,12 +49,12 @@
               <div class="form_content">
                 <div class="group_form">
                 
-                  <div class="input_wrapper" >
+                  <div class="input_wrapper" :class="{require: !validateRuc}" >
                     <label>Ruc</label>
                     <input type="text"  v-model="form.cliente.documento" @keyup='getCompanyData(form.cliente.documento)' v-mask="'###########'"  />
                   </div>
 
-                  <div class="input_wrapper" >
+                  <div class="input_wrapper" :class="{require: !validateRazon}">
                     <label >Razon Social</label>
                     <input type="text" :maxlength="200" v-model="form.juridico.razon_social" placeholder />
                   </div>
@@ -58,17 +64,17 @@
                     <input type="text" :maxlength="200" v-model="form.juridico.nombre_comercial" placeholder />
                   </div>
 
-                  <div class="input_wrapper" >
+                  <div class="input_wrapper" :class="{require: !validateActividad}">
                     <label>Actividad Principal</label>
                     <input type="text" maxlength='200' v-model="form.juridico.actividad_principal" placeholder />
                   </div>
 
-                  <div class="input_wrapper" >
+                  <div class="input_wrapper" :class="{require: !validatePartida}">
                     <label>Nro. de Partida Registral</label>
                     <input type="number" v-mask="'########'" v-model="form.juridico.partida_registral"  />
                   </div>
 
-                  <div class="input_wrapper" >
+                  <div class="input_wrapper" :class="{require: !validateOficina}">
                     <label>Oficina Principal</label>
                     <input type="text" :maxlength="100" v-model="form.juridico.oficina_principal" placeholder />
                   </div>
@@ -84,27 +90,27 @@
                     </select>
                   </div>
 
-                  <div class="input_wrapper"  >
+                  <div class="input_wrapper"  :class="{require: !validateDireccion}">
                       <label>Dirección</label>
                       <input type="text" :maxlength="200"  v-model="form.juridico.direccion" />
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validatePais}">
                     <label>País</label>
                     <input type="text" v-model="form.cliente.pais" :maxlength="15" />
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateDistrito}">
                     <label>Distrito</label>
                     <input type="text" v-model="form.cliente.distrito" :maxlength="45" />
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateProvincia}">
                     <label>Provincia</label>
                     <input type="text" v-model="form.cliente.provincia" :maxlength="45" />
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateDepartamento}">
                     <label>Departamento</label>
                     <input type="text" v-model="form.cliente.departamento" :maxlength="45" />
                   </div>
@@ -145,7 +151,7 @@
                       <input type="text" v-model="form.juridico.piso"  :maxlength="5" />
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateReferencia}">
                     <label>Referencia</label>
                     <input type="text" :maxlength="45" v-model="form.juridico.referencia" />
                   </div>
@@ -155,7 +161,7 @@
                     <input type="text" :maxlength="15" v-model="form.juridico.telefono" />
                   </div>
 
-                  <div class="input_wrapper">
+                  <div class="input_wrapper" :class="{require: !validateCelular}">
                     <label>Celular</label>
                     <input
                       type="text"
@@ -175,7 +181,7 @@
             </div>
 
             <div class="form_buttons all">
-                <a class="button_primary medium next" @click="next(1)">
+                <a class="button_primary medium next" @click="validateStep1 ? next(1) : tabError()">
                   <span> SIGUIENTE </span>
                   <i class="material-icons-outlined"> navigate_next </i>
                 </a>
@@ -221,7 +227,7 @@
                 <i class="material-icons-outlined"> navigate_before </i>
                 <span> ATRAS </span>
               </a>
-              <a class="button_primary medium next" @click="next(2)">
+              <a class="button_primary medium next" @click="validateStep1 ? next(2) : tabError()">
                 <span> SIGUIENTE </span>
                 <i class="material-icons-outlined"> navigate_next </i>
               </a>
@@ -243,7 +249,7 @@
                     <div class="group_form">
                       <div class="input_wrapper">
                         <label>Doc. Identidad</label>
-                        <input type="number" @keyup='getPersonData(d)'  :maxlength="8" v-model="d.documento"/>
+                        <input type="text" @keyup='getPersonData(d)'  v-mask="'########'" v-model="d.documento"/>
                       </div>
                       <div class="input_wrapper">
                         <label>Apellidos y Nombres</label>
@@ -267,7 +273,7 @@
                 <i class="material-icons-outlined"> navigate_before </i>
                 <span> ATRAS </span>
               </a>
-              <a class="button_primary medium next" @click="next(3)">
+              <a class="button_primary medium next" @click="validateStep1 ? next(3) : tabError()">
                 <span> SIGUIENTE </span>
                 <i class="material-icons-outlined"> navigate_next </i>
               </a>
@@ -288,7 +294,7 @@
                     <div class="group_form">
                       <div class="input_wrapper">
                         <label> Doc. Identidad </label>
-                        <input type="number" @keyup='getPersonData(a)'  :maxlength="8" v-model="a.documento"/>
+                        <input type="number" @keyup='getPersonData(a)'  v-mask="'########'" v-model="a.documento"/>
                       </div>
                       <div class="input_wrapper">
                         <label> Apellidos y Nombres </label>
@@ -310,7 +316,7 @@
                 <i class="material-icons-outlined"> navigate_before </i>
                 <span> ATRAS </span>
               </a>
-              <a class="button_primary medium next" @click="next(4)">
+              <a class="button_primary medium next" @click="validateStep1 ? next(4) : tabError()">
                 <span> SIGUIENTE </span>
                 <i class="material-icons-outlined"> navigate_next </i>
               </a>
@@ -346,7 +352,7 @@
                 <i class="material-icons-outlined"> navigate_before </i>
                 <span> ATRAS </span>
               </a>
-              <a class="button_primary medium next" @click="next(5)">
+              <a class="button_primary medium next" @click="validateStep1 ? next(5) : tabError()">
                 <span> SIGUIENTE </span>
                 <i class="material-icons-outlined"> navigate_next </i>
               </a>
@@ -384,7 +390,7 @@
                 <i class="material-icons-outlined"> navigate_before </i>
                 <span> ATRAS </span>
               </a>
-              <a class="button_primary medium next" @click.prevent="submit()" :class="{loading: loading}">
+              <a class="button_primary medium next" @click.prevent="validateStep1 ? submit() : tabError()" :class="{loading: loading}">
                 <div class="load_spinner"></div>
                 <span> FINALIZAR </span>
                 <i class="material-icons-outlined">check</i>
@@ -420,11 +426,69 @@ mixins: [serviceNumber],
           },
           error: {
             position: "topRight"
-          }
+          } 
         }
       }, 
       tab: 1
     };
+  },
+    computed: {
+    
+    validateRuc() {
+      return this.form.cliente.documento.length>10;
+    },
+    validateRazon() {
+      return this.form.juridico.razon_social.length>3;
+    },
+    validateActividad() {
+      return this.form.juridico.actividad_principal.length>4;
+    },
+    validatePartida() {
+      return this.form.juridico.partida_registral.length>3;
+    },
+    validateDireccion() {
+      return this.form.juridico.direccion.length>3;
+    },
+    validatePais() {
+      return this.form.cliente.pais.length>3
+    },
+    validateDistrito() {
+      return this.form.cliente.distrito.length>3;
+    },
+    validateProvincia() {
+      return this.form.cliente.provincia.length>3;
+    },
+    validateDepartamento() {
+      return this.form.cliente.departamento.length>3;
+    },
+    validateReferencia() {
+      return this.form.juridico.referencia.length>3;
+    },
+    validateCelular() {
+      return this.form.juridico.celular.length>3;
+    },
+    validateOficina() {
+      return this.form.juridico.oficina_principal.length>3;
+    },
+
+    validateStep1(){
+      return  this.validateRuc &&
+              this.validateRazon &&
+              this.validateActividad &&
+              this.validatePartida &&
+              this.validateDireccion &&
+              this.validatePais &&
+              this.validateDistrito &&
+              this.validateProvincia &&
+              this.validateDepartamento &&
+              this.validateReferencia &&
+              this.validateCelular &&
+              this.validateOficina
+    },
+
+
+
+
   },
   async created() {
     await this.initForm();
@@ -435,6 +499,13 @@ mixins: [serviceNumber],
     this.clickAddAccionista()
   },
   methods: {
+      tabError(){
+       this.$toast.error(
+          "Rellene los datos necesarios",
+          "Error",
+          toastOptions.error
+        )
+    },
     getCompanyData(ruc){
       if(ruc.length==11){
           let me = this;
@@ -517,7 +588,7 @@ mixins: [serviceNumber],
         director:[],
         accionista:[],
         asociativa:{
-          inscripcion: "",
+          inscripcion: 30,
           aporte:"",
         },
         declaracion:{
@@ -600,7 +671,7 @@ mixins: [serviceNumber],
               this.$router.push({ name: 'clientes'})
             }else{
                 this.$toast.error(
-                  "Error en Regsitro",
+                  "Ya existe el cliente",
                   "Error",
                   toastOptions.error
                 )

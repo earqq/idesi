@@ -1,32 +1,16 @@
 <template>
   <div>
-    <div class="empty_message" v-if="clientes.length==0 && queryCount == 0">
-      <img src="img/empty.svg" >
-      <h1> No Se Encontraron Clientes </h1>
-      <p>Registra un nuevo cliente para continuar.</p>
-      <router-link  class="add_client button_primary small" :to="{name:'registrar/natural'}"  v-if="form.tipo_persona=='PN' && rol!='5'">
-        <span>
-          CREAR CLIENTE
-        </span>
-        <i class="material-icons-outlined">add</i>
-      </router-link>
-      <router-link  class="add_client button_primary small" :to="{name:'registrar/juridico'}"  v-if="form.tipo_persona=='PJ' && rol!='5'">
-        <span>
-          CREAR CLIENTE
-        </span>
-        <i class="material-icons-outlined">add</i>
-      </router-link>
-    </div>
-
-    <div class="clients_content" v-else >
+    <div class="clients_content" >
 
       <div class="options_bar">
         <div class="search_bar">
           <i class="material-icons-outlined">search</i>
-          <input type="text" placeholder="Buscar Cliente" v-model="search_input" @input="search_product">
-          <select  v-model="form.tipo_persona" @change="getType()" >
-            <option value="PN">Persona Natural</option>
-            <option value="PJ">Persona Juridica</option>
+          <input type="text" placeholder="Buscar Cliente" v-model="search.text" @input="search_product">         
+          <select  v-model="search.type" @change="getClients()" >
+            <option value="3">TODOS</option>
+            <option value="1">APROBADO</option>
+            <option value="2">RECHAZADOS</option>
+            <option value="0">PENDIENTES</option>
           </select>
         </div>
         <div class="switch_view">
@@ -52,8 +36,13 @@
         </router-link>
       </div>
 
-      <div class="table_container">
+      <div class="empty_message" v-if="clientes.length==0 && queryCount > 0">
+        <img src="img/empty.svg" >
+        <h1> No Se Encontraron Clientes </h1>
+        <p>Registra un nuevo cliente para continuar.</p>
+      </div>
 
+      <div class="table_container" v-else >
         <div class="table_grid"  v-if=" type_list=='1'">
           <article class="client_card" v-for="cliente in clientes" :key="cliente.id" >
             <div class="options">
@@ -146,8 +135,6 @@
 </template> 
 
 <script>
- 
- 
 export default {
   name: 'clients', 
   data() {
@@ -160,32 +147,23 @@ export default {
       last_page: 1,
       form: {},
       rol: 0,
-      notificationSystem: {
-        options: {
-          success: {
-            position: "topRight"
-          },
-          error: {
-            position: "topRight"
-          }
-        }
-      },
-      queryCount: 0
+      queryCount: 0,
+      search:{
+        type:3,
+        text:''
+      }
     }
   },
   async created() {
     await this.initForm();
   },
   async mounted() {
-    await this.getRecords();
+    await this.getClients();
   },
   methods: {
-    async search_product() {
-      // this.search_status = 0;
-      await this.getRecords();
+    async search_product() { 
+      await this.getClients();
       this.queryCount ++
-
-      // this.search_status = 1;
     },
     type_list_card(){
       this.type_list=1
@@ -193,30 +171,18 @@ export default {
     type_list_list(){
       this.type_list=0
     },
-    getType(){
-      this.queryCount = 0
-      this.getRecords()
-    },
-    getRecords() {
+    getClients() {
       this.clientes= [];
-      if(this.form.tipo_persona=='PN'){
-        return this.$http 
+      this.$http 
         .get(
-          `/${this.resource}/listado?search_input=${this.search_input}`
+          `/clientes/search/`+this.search.type+'/'+this.seach.text,          
         )
         .then(response => {
-          this.clientes = response.data['clientes'].data
-          this.rol = response.data['rol']
+          console.log("viene response: ",response)
+          // this.clientes = response.data['clientes'].data
+          // this.rol = response.data['rol']
+          // this.queryCount ++
         })
-      }else{
-        return this.$http 
-        .get(
-          `/${this.resource}/listado/juridico?search_input=${this.search_input}`
-        )
-        .then(response => {
-          this.clientes = response.data['clientes'].data
-        })
-      }
     },
     initForm() {
       this.form = {
@@ -235,6 +201,8 @@ export default {
 @import "../../sass/variables"
 @import "../../sass/buttons"
 .clients_content
+  .empty_message
+    height: calc(100vh - 135px)
   .options_bar
     display: grid
     grid-template-columns: 1fr 120px 200px

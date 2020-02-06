@@ -23,11 +23,8 @@ const mapsApiKey = "AIzaSyAbyVLUSddPTErLdnCbHoXpRO7Y1S4FuDA";
 GoogleMapsLoader.KEY = mapsApiKey;
 GoogleMapsLoader.LIBRARIES = ["geometry", "places"];
 
-
-
 import VueMoment from 'vue-moment'
 import VueTheMask from 'vue-the-mask'
-
 import VueApexCharts from 'vue-apexcharts'
 
 Vue.use(VueTheMask)
