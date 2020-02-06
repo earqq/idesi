@@ -420,7 +420,7 @@
 
                   <div class="input_wrapper">
                       <label>Pais</label>
-                      <input type="text" v-model="form.laboral.pais" :maxlength="20" />
+                      <input type="text" disabled v-model="form.laboral.pais" :maxlength="20" />
                   </div>
 
                   <div class="input_wrapper">
@@ -996,7 +996,7 @@ export default {
           documento: "",
           codigo: "",
           tipo_cliente: this.tipo_persona,
-          pais: "",
+          pais: "Peru",
           departamento: "",
           provincia: "",
           distrito: "",
