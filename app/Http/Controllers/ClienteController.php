@@ -123,6 +123,7 @@ class ClienteController extends Controller
         })
         ->orderBy('clientes.id','desc')
         ->select('clientes.documento',
+                'clientes.tipo_cliente',
                 'naturals.nombres',
                 'naturals.apellidos',
                 'naturals.celular',
