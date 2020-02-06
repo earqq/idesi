@@ -42,7 +42,7 @@ class ClienteController extends Controller
     {
 
 
-        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '5'){
+        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '4' || Auth::user()->idrol == '5'){
 
             $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
               ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular','naturals.direccion_cliente', 'clientes.estado')

@@ -133,7 +133,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='4' ){
+                         if(res.data.idrol=='4' || res.data.idrol=='1' ){
                                 next()
                          }else{
                             next('/error')
