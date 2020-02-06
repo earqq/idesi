@@ -42,7 +42,7 @@ class ClienteController extends Controller
     {
 
 
-        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '5'){
+        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '4' || Auth::user()->idrol == '5'){
 
             $clientes = Cliente::join('naturals','clientes.id','=','naturals.clientes_id')
               ->select('clientes.documento','naturals.nombres','naturals.apellidos','naturals.celular','naturals.direccion_cliente', 'clientes.estado')
@@ -71,7 +71,7 @@ class ClienteController extends Controller
 
     public function indexJuridico(Request $request)
     {
-        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '5'){
+        if(Auth::user()->idrol == '1' ||Auth::user()->idrol == '4' || Auth::user()->idrol == '5'){
 
             $clientes = Cliente::join('juridicos','clientes.id','=','juridicos.clientes_id')
               ->select('clientes.documento', 'juridicos.razon_social', 'juridicos.celular','juridicos.direccion')
@@ -1109,8 +1109,8 @@ class ClienteController extends Controller
             $juridico = Juridico::where('clientes_id',$cliente->id)->first();
             $avals = Aval::where('prestamos_id',$prestamo->id)->get();
             $garantias = Garantia::where('prestamos_id',$prestamo->id)->get(); 
-
-            $pdf = \PDF::loadView('reportes.prestamoJuridico',compact('prestamo','cliente','avals','garantias','juridico'));
+            $evaluacion = Evaluacion::where('prestamos_id',$prestamo->id)->get();
+            $pdf = \PDF::loadView('reportes.prestamoJuridico',compact('prestamo','cliente','avals','garantias','juridico','evaluacion'));
             return $pdf->stream('solicitud_de_credito.pdf');
 
         }
