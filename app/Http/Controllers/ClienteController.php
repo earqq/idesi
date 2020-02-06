@@ -1136,8 +1136,8 @@ class ClienteController extends Controller
                 }
             }
 
-            $pdf->merge('file', public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/general/documento/adjunto_'.$cliente->documento.'.pdf'), 'P');
-
+            // $pdf->merge('file', public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/general/documento/adjunto_'.$cliente->documento.'.pdf'), 'P');
+            $pdf->merge("archivo_adjunto.pdf", "download");
         }
         else
         {
