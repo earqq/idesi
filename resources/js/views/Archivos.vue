@@ -398,6 +398,7 @@ export default {
       this.errors = {};
     },
     uploadFile() {
+      this.loading=true
       this.formData = new FormData();
       this.formData.append("name", this.fileName);
       this.formData.append("prestamo_id", this.$route.params.prestamo);
@@ -408,6 +409,7 @@ export default {
           headers: { "Content-Type": "multipart/form-data" }
         })
         .then(response => {
+          this.loading=false
           this.resetForm();
           this.listFile();
           $('#file').val('')
