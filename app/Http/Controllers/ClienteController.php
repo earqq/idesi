@@ -71,7 +71,7 @@ class ClienteController extends Controller
 
     public function indexJuridico(Request $request)
     {
-        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '5'){
+        if(Auth::user()->idrol == '1' ||Auth::user()->idrol == '4' || Auth::user()->idrol == '5'){
 
             $clientes = Cliente::join('juridicos','clientes.id','=','juridicos.clientes_id')
               ->select('clientes.documento', 'juridicos.razon_social', 'juridicos.celular','juridicos.direccion')
