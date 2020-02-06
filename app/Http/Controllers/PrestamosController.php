@@ -18,27 +18,29 @@ class PrestamosController extends Controller
     }
 
     public function search($state,$text=''){
-        \Log::alert("viene prestamos");
         $prestamos = Prestamo::leftJoin('clientes','prestamos.clientes_id',"=","clientes.id")
         ->leftJoin('naturals','clientes.id','=','naturals.clientes_id')
         ->leftJoin('juridicos','clientes.id','=','juridicos.clientes_id')
         ->where(function($query) use($state){
             if($state!='TODOS'){
-                $query->where('estado',$state);
+                $query->where('prestamos.estado',$state);
             }
         })
         ->where(function($query) use($text){
             if($text!=''){
+                $text=strtoupper($text);
                 $query->orWhere('naturals.nombres', 'LIKE', "%{$text}%")
                 ->orWhere('clientes.documento', 'LIKE', "%{$text}%")
                 ->orWhere('naturals.apellidos', 'LIKE', "%{$text}%")
                 ->orWhere('juridicos.razon_social', 'LIKE', "%{$text}%")
                 ->orWhere('prestamos.producto', 'LIKE', "%{$text}%");
             }
-        })
+        })  
         ->where(function($query){
             if(Auth::user()->idrol == '3')
                 $query->where('prestamos.estado_analista','=', 'EVALUACION');
+            elseif(Auth::user()->idrol == '4')
+                $query->where('prestamos.estado_analista','!=', 'PROCESO');
             elseif(Auth::user()->idrol == '2')
                 $query->where('prestamos.users_id','=', Auth::user()->id);  
         })
@@ -59,8 +61,6 @@ class PrestamosController extends Controller
                 'prestamos.id')
         ->take(30)
         ->get();    
-        \Log::alert("sale prestamos");
-        \Log::alert($prestamos);
         return $prestamos;
 
     }

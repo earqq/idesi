@@ -48,7 +48,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2' ){
+                         if(res.data.idrol=='2' || res.data.idrol=='4'  ){
                                 next()
                          }else{
                             next('/error')
@@ -64,7 +64,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2' ){
+                         if(res.data.idrol=='2' || res.data.idrol=='4' ){
                                 next()
                          }else{
                             next('/error')
