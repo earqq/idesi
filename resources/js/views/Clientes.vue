@@ -24,7 +24,13 @@
  
         <router-link  class="add_client button_primary medium" :to="{name:'registrar/natural'}"  >
           <span>
-            CREAR CLIENTE
+            CREAR NATURAL
+          </span>
+          <i class="material-icons-outlined">add</i>
+        </router-link> 
+        <router-link  class="add_client button_primary medium" :to="{name:'registrar/juridico'}"  >
+          <span>
+            CREAR JURIDICO
           </span>
           <i class="material-icons-outlined">add</i>
         </router-link>     
@@ -50,7 +56,7 @@
                 </li>
               </ul>   
             </div>
-            <router-link :to="{ name:'perfil', params: { documento: cliente.documento,persona:form.tipo_persona } }">
+            <router-link :to="{ name:'perfil', params: { documento: cliente.documento,persona:cliente.tipo_cliente } }">
               <div class="detail">
                 <div class="avatar">
                   <div class="request" v-show="cliente.estado=='0'">

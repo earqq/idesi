@@ -255,7 +255,7 @@
 
                 <div class="input_wrapper" :class="{require: !validatePoderes}">
                   <label>Poderes (Asiento)</label>
-                    <input type="text" v-model="form.representante.poderes_representante" />
+                    <input type="text" v-model="form.representante.poderes_representante" v-mask="'####'" />
                     <div class="message">Ingrese poderes</div>
                 </div>
 

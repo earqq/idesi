@@ -221,7 +221,7 @@
 
                 <div class="input_wrapper">
                   <label>Poderes (Asiento)</label>
-                    <input type="text" v-model="form.representante.poderes_representante" />
+                    <input type="text" v-model="form.representante.poderes_representante"  v-mask="'####'"/>
                 </div>
 
                 <div class="input_wrapper">

@@ -123,6 +123,7 @@ class ClienteController extends Controller
         })
         ->orderBy('clientes.id','desc')
         ->select('clientes.documento',
+                'clientes.tipo_cliente',
                 'naturals.nombres',
                 'naturals.apellidos',
                 'naturals.celular',
@@ -668,7 +669,7 @@ class ClienteController extends Controller
             $cliente = Cliente::find($id);
             $cliente->estado = 2;
             $cliente->save();
-            
+             
             if($tipo=='PN'){
                 $natural = Natural::where('clientes_id',$id)->first();
                 $declaracion = Declaracion::where('naturals_id',$natural->id)->first();

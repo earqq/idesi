@@ -253,19 +253,20 @@ export default {
                       "Error",
                       toastOptions.error
                     )
-                }
+                } 
               
             });
     },
-    rechazarSolicitud(){
+    rechazarSolicitud(){ 
       this.loading = true
           this.$http
             .get(`/${this.resource}/rechazar/solicitud/` + this.cliente.idcliente+'/'+this.tipo_persona)
             .then(response => {
-            this.loading = false
-            if(response.data.success){
+            this.loading = false 
+            if(response.data.success==true){
                 this.$toast.success(
                     "El cliente fue rechazado",
+                    "Exitoso",
                     toastOptions.success
                   ) 
                 
