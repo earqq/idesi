@@ -46,8 +46,9 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('/rol', 'RolController@rolUser');
 
 
-        //Buscar clientes
+        //Busquedas
         Route::get('clientes/search/{state}/{text?}','ClienteController@search');
+        Route::get('prestamos/search/{state}/{text?}','PrestamosController@search');
 
         Route::get('clientes/listado','ClienteController@index');
         Route::get('clientes/listado/juridico','ClienteController@indexJuridico');

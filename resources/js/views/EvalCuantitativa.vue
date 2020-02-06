@@ -576,6 +576,7 @@ export default {
       loading: false,
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
+        tipo_persona :this.$route.params.persona,
         propuesta: {
           producto: "",
           monto: 1,

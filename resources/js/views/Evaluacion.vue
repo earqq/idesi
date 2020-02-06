@@ -6,10 +6,12 @@
       <div class="options_bar">
         <div class="search_bar">
           <i class="material-icons-outlined">search</i>
-          <input type="text" placeholder="Buscar Prestamos"  v-model="search_input" @input="search_credit">
-          <select v-model="tipo_persona" @change="getType()">
-            <option value="PN">Persona Natural</option>
-            <option value="PJ">Persona Juridica</option>
+          <input type="text" placeholder="Buscar Prestamos"  v-model="search.text" @input="getPrestamos">
+          <select v-model="search.state" @change="getPrestamos()">
+            <option value="TODOS">TODOS</option>
+            <option value="PENDIENTE">PENDIENTE</option>
+            <option value="APROBADO">APROBADO</option>
+            <option value="DESAPROBADO">DESAPROBADO</option>
           </select>
         </div>
         <div class="switch_view">
@@ -139,6 +141,10 @@ export default {
       id_usuario: 0 ,
       id_rol:0,
       type_list: 0,
+      search:{
+        state:'PENDIENTE',
+        text:''
+      },
       queryCount: 0
     };
   },
@@ -146,12 +152,6 @@ export default {
     await this.getPrestamos();
   },
   methods: {
-    async search_credit() {
-      // this.search_status = 0;
-      await this.getPrestamos();
-      this.queryCount ++
-      // this.search_status = 1;
-    },
     entregarPrestamos(id){
       this.$http
         .get(`/clientes/entregarPrestamo/` + id)
@@ -161,29 +161,14 @@ export default {
     },
     getPrestamos() {
       this.prestamos = []
-      if(this.tipo_persona=='PN'){
-        return this.$http 
-        .get(
-          `/${this.resource}/prestamos?search_input=${this.search_input}`
-        )
-        .then(response => {
-          this.prestamos = response.data.prestamo;
-          this.id_rol = response.data.rol;
-        })
-
-      }else{
-        return this.$http 
-        .get(
-          `/${this.resource}/prestamosJuridicos?search_input=${this.search_input}`
-        )
-        .then(response => {
-          this.prestamos = response.data.prestamo
-          this.id_rol = response.data.rol
-        })
-      }
-    },
-    getType(){
-      this.getPrestamos()
+      this.$http 
+      .get(
+        '/prestamos/search/'+this.search.state+'/'+this.search.text
+      )
+      .then(response => {
+        this.prestamos = response.data
+      })
+     
     },
     evalaucionEcho(prestamo){
       this.$http.get(`/${this.resource}/veridicarEvaluacion/`+ prestamo).then(response => {
