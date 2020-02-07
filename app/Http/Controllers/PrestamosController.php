@@ -21,6 +21,7 @@ class PrestamosController extends Controller
         $prestamos = Prestamo::leftJoin('clientes','prestamos.clientes_id',"=","clientes.id")
         ->leftJoin('naturals','clientes.id','=','naturals.clientes_id')
         ->leftJoin('juridicos','clientes.id','=','juridicos.clientes_id')
+        ->rightJoin('evaluacions','evaluacions.prestamos_id','prestamos.id')
         ->where(function($query) use($state){
             if($state!='TODOS'){
                 $query->where('prestamos.estado',$state);
@@ -37,8 +38,11 @@ class PrestamosController extends Controller
             }
         })  
         ->where(function($query){
-            if(Auth::user()->idrol == '3')
-                $query->where('prestamos.estado_analista','=', 'EVALUACION');
+            if(Auth::user()->idrol == '3'){
+                $query->where('prestamos.estado_analista','=', 'EVALUACION')
+                ->where('prestamos.estado','PENDIENTE')
+                ->where('evaluacions.users_id','!=',Auth::user()->id);
+            }
             elseif(Auth::user()->idrol == '4')
                 $query->where('prestamos.estado_analista','!=', 'PROCESO');
             elseif(Auth::user()->idrol == '2')
