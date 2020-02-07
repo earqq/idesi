@@ -137,13 +137,15 @@
                             <label>Entidad</label>
                             <input  type="text" disabled='disabled' v-model="evaluacion.titular.gasto_financiero[index].entidad" />
                           </div>
-                          <div class="input_wrapper">
+                          <div class="input_wrapper" :class="{require: !validateSaldoCapitalTitular1}">
                             <label>Saldo Capital</label>
                             <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_financiero[index].saldo_capital" v-bind:precision="2"></vue-numeric>
+                            <div class="message">Ingrese saldo capital de prestamo</div>
                           </div>
-                          <div class="input_wrapper">
+                          <div class="input_wrapper" :class="{require: !validateCuotaTitular1}">
                             <label>Cuota</label>
                             <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_financiero[index].cuota" v-bind:precision="2"></vue-numeric>
+                            <div class="message">Ingrese cuota de prestamo</div>
                           </div>
                       </div>
                     </div>
@@ -878,23 +880,49 @@ export default {
       return  String(this.evaluacion.titular.gasto_negocio[4].pago).length > 0
     },
 
-
+    validateSaldoCapitalTitular1(){
+        return  String(this.evaluacion.titular.gasto_financiero[0].saldo_capital).length > 1
+    },
+    validateCuotaTitular1(){
+        return  String(this.evaluacion.titular.gasto_financiero[0].cuota).length > 1
+    },
 
     validateStep1() {
-      return  this.validateNegocioLunes &&
-              this.validateNegocioMartes &&
-              this.validateNegocioMiercoles &&
-              this.validateNegocioJueves &&
-              this.validateNegocioViernes &&
-              this.validateNegocioSabado &&
-              this.validateNegocioDomingo &&
-              this.validateNegocioMargen &&
-              this.validateNegocioValor &&
-              this.validateNegocioAlquiler &&
-              this.validateNegocioEmpleado &&
-              this.validateNegocioImpuesto &&
-              this.validateNegocioAgua &&
-              this.validateNegocioLuz
+      if(this.evaluacion.titular.gasto_financiero.length>0 )
+      {
+                return  this.validateNegocioLunes &&
+                        this.validateNegocioMartes &&
+                        this.validateNegocioMiercoles &&
+                        this.validateNegocioJueves &&
+                        this.validateNegocioViernes &&
+                        this.validateNegocioSabado &&
+                        this.validateNegocioDomingo &&
+                        this.validateNegocioMargen &&
+                        this.validateNegocioValor &&
+                        this.validateNegocioAlquiler &&
+                        this.validateNegocioEmpleado &&
+                        this.validateNegocioImpuesto &&
+                        this.validateNegocioAgua &&
+                        this.validateNegocioLuz &&
+                        this.validateSaldoCapitalTitular1 &&
+                        this.validateCuotaTitular1
+      }else{
+
+        return  this.validateNegocioLunes &&
+                this.validateNegocioMartes &&
+                this.validateNegocioMiercoles &&
+                this.validateNegocioJueves &&
+                this.validateNegocioViernes &&
+                this.validateNegocioSabado &&
+                this.validateNegocioDomingo &&
+                this.validateNegocioMargen &&
+                this.validateNegocioValor &&
+                this.validateNegocioAlquiler &&
+                this.validateNegocioEmpleado &&
+                this.validateNegocioImpuesto &&
+                this.validateNegocioAgua &&
+                this.validateNegocioLuz
+      }
     }
   },
   methods: {
