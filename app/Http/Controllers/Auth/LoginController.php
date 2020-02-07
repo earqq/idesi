@@ -16,7 +16,7 @@ class LoginController extends Controller
 
         $this->validateLogin($request);   
 
-       if (Auth::attempt(['usuario' => $request->usuario,'password' => $request->password,'condicion'=>1])){
+       if (Auth::attempt(['usuario' => $request->usuario,'password' => $request->password])){
            return redirect()->route('inicio');
        }
 

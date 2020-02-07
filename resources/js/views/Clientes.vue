@@ -22,13 +22,13 @@
           </a>
         </div>
  
-        <router-link v-if='$store.state.currentUser.idrol==2 || $store.state.currentUser.idrol==4' class="add_client button_primary medium" :to="{name:'registrar/natural'}"  >
+        <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4' class="add_client button_primary medium" :to="{name:'registrar/natural'}"  >
           <span>
             CREAR NATURAL
           </span>
           <i class="material-icons-outlined">add</i>
         </router-link> 
-        <router-link v-if='$store.state.currentUser.idrol==2 || $store.state.currentUser.idrol==4'  class="add_client button_primary medium" :to="{name:'registrar/juridico'}"  >
+        <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4'  class="add_client button_primary medium" :to="{name:'registrar/juridico'}"  >
           <span>
             CREAR JURIDICO
           </span>

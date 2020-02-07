@@ -25,7 +25,7 @@
           <p>FAMILIARES</p>
         </div>
 
-        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}"  v-if="validateStep1 && validateStep2">
+        <div class="tab" @click="tab = 4" :class="{selected: tab == 4}"  v-if="validateStep1 && validateStep2 && validateStep3">
           <span>4</span>
           <p>ADICIONALES</p>
         </div>
@@ -88,7 +88,7 @@
                   <div class="input_wrapper" :class="{require: !validateNacimiento}">
                     <label for="nacimiento">Fecha de Nacimiento</label>
                     <input type="date" v-model="form.natural.nacimiento" > 
-                    <div class="message">N° de documento invalido</div>
+                    <div class="message">Fecha invalida</div>
                   </div>
 
                   <div class="input_wrapper"  :class="{require: !validateNombres}" >
@@ -637,12 +637,12 @@
                         <label> Nombres </label>
                         <input type="text" v-model="row.nombres" :maxlength="45" class="form-control" />
                       </div>
-
-                      <div class="input_wrapper">
-                        <label> Fecha de Nacimiento </label>
-                        <input type="date" v-model="row.nacimiento">
+                     
+                      <div class="input_wrapper" :class="{require: !validateNacimientoHijos}">
+                        <label for="nacimiento">Fecha de Nacimiento</label>
+                        <input type="date" v-model="row.nacimiento"> 
+                        <div class="message">N° de fecha invalido</div>
                       </div>
-
                       <div class="input_wrapper">
                         <label> ¿Socio? </label>
                         <select v-model="row.socio" class="form-control">
@@ -665,7 +665,11 @@
                 <i class="material-icons-outlined"> navigate_before </i>
                 <span> ATRAS </span>
               </a>
-              <a class="button_primary medium next" @click="next(3)">
+              <a class="button_primary medium next" @click="next(3)"  v-if="validateStep3">
+                <span> SIGUIENTE </span>
+                <i class="material-icons-outlined"> navigate_next </i>
+              </a>
+              <a class="button_primary medium next" @click="tabError" v-else>
                 <span> SIGUIENTE </span>
                 <i class="material-icons-outlined"> navigate_next </i>
               </a>
@@ -866,6 +870,15 @@ export default {
     validateNacimiento() {
       return this.form.natural.nacimiento.length>4;
     },
+    validateNacimientoHijos() {
+      let response=true
+      this.form.detalles.map(detail=>{
+        if(detail.nacimiento=='')
+          response=false
+      })
+      console.log("response: "+response)
+      return response
+    },
     validateNombres() {
       return this.form.natural.nombres.length>3;
     },
@@ -969,8 +982,10 @@ export default {
         return true
       }
 
+    },
+    validateStep3(){
+      return this.validateNacimientoHijos
     }
-
 
   },
   methods: {

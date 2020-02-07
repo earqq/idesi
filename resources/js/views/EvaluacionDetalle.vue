@@ -88,11 +88,11 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr  v-for="evaluacion in form.evaluacion" :key="evaluacion.id" :class="{final_result: evaluacion.idrol == 4}">
+                        <tr  v-for="evaluacion in form.evaluacion" :key="evaluacion.id" :class="{final_result: evaluacion.nivel == 4}">
                           <td class="client" v-text="evaluacion.name"></td>
                           <td class="observation" v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
                           <td class="date"> {{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
-                          <td class="state"> <span :class="stateEvaluation(evaluacion.estado)">  </span> {{evaluacion.estado | toCapitalize}} <strong v-show="evaluacion.idrol == 4"> ( Decisión )</strong> </td>
+                          <td class="state"> <span :class="stateEvaluation(evaluacion.estado)">  </span> {{evaluacion.estado | toCapitalize}} <strong v-show="evaluacion.nivel == 4"> ( Decisión )</strong> </td>
                         </tr>
                       </tbody>
                     </table>
@@ -548,7 +548,7 @@
         </div>
 
         <button class="button_primary medium" @click="firmarEvaluacion()">
-          <span v-if='$store.state.currentUser.idrol==3'>
+          <span v-if='$store.state.currentUser.nivel==3'>
             FIRMAR EVALUACIÓN
           </span>
           <span v-else>
@@ -601,7 +601,7 @@ export default {
   },
   mounted(){
       this.$http.get(`/rol`).then(response => {
-        this.rol=response.data.idrol
+        this.rol=response.data.nivel
       });
     this.methodsDetalle(this.$route.params.prestamo);
   },

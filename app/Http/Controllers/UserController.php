@@ -21,39 +21,17 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $buscar = $request->buscar;
-        $criterio = $request->criterio;
-        
         $evaluador_final = 0;
-
-        $evaluador = User::where('idrol','4')->first();
-
+        $evaluador = User::where('nivel','4')->first();
+        $users=User::where('nivel','>',1)
+        ->where('name','like', '%'. $buscar . '%')
+        ->paginate(10);
         if($evaluador){
             $evaluador_final = 1;
         }
-
-        if ($buscar==''){
-            $personas = User::join('roles','users.idrol','=','roles.id')
-            ->select('users.id','users.name','users.tipo_documento','users.num_documento','users.direccion','users.telefono'
-                     ,'users.email','users.usuario','users.password','users.condicion','users.idrol','roles.nombre as rol')
-            ->orderBy('users.id', 'desc')->paginate(10);
-        }
-        else{
-            $personas = User::join('roles','users.idrol','=','roles.id')
-            ->select('users.id','users.name','users.tipo_documento','users.num_documento','users.direccion','users.telefono'
-                     ,'users.email','users.usuario','users.password','users.condicion','users.idrol','roles.nombre as rol')
-            ->where('users.'.$criterio, 'like', '%'. $buscar . '%')->orderBy('id', 'desc')->paginate(10);
-        }
         
-        return [
-            'pagination' => [
-                'total'        => $personas->total(),
-                'current_page' => $personas->currentPage(),
-                'per_page'     => $personas->perPage(),
-                'last_page'    => $personas->lastPage(),
-                'from'         => $personas->firstItem(),
-                'to'           => $personas->lastItem(),
-            ],
-            'personas' => $personas,
+        return [          
+            'users' => $users,
             'evaluador_final' => $evaluador_final
         ];
     }
@@ -67,20 +45,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         if (!$request->ajax()) return redirect('/');
-
+        \Log::alert($request->all());
         try{
             DB::beginTransaction();
             $user = new User();
-            $user->idrol = $request->idrol;          
+            $user->nivel = $request->nivel;          
             $user->name = $request->name;
-            $user->tipo_documento = $request->tipo_documento;
-            $user->num_documento = $request->num_documento;
-            $user->direccion = $request->direccion;
-            $user->telefono = $request->telefono;
-            $user->email = $request->email;
             $user->usuario = $request->usuario;
             $user->password = bcrypt( $request->password);
-            $user->condicion = '1';
             $user->save();
 
             DB::commit();
@@ -107,7 +79,7 @@ class UserController extends Controller
             $user->usuario = $request->usuario;
             $user->password = bcrypt( $request->password);
             $user->condicion = '1';
-            $user->idrol = $request->idrol;
+            $user->nivel = $request->nivel;
             $user->save();
 
             DB::commit();

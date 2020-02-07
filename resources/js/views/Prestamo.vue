@@ -131,7 +131,7 @@
                 </div>
                 <div class="input_wrapper" :class="{require: !validateOcupacion}">
                   <label>Ocupación</label>
-                  <input type="text" v-model="form.natural.ocupacion" />
+                  <input type="text" v-model="form.natural.ocupacion" maxlength='100' />
                   <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper" >
@@ -296,7 +296,7 @@
                   </div>
                   <div class="input_wrapper" :class="{require: !validateCodigoConyuge}" v-if="form.conyugue.socio_conyugue=='SI'" >
                     <label>Código</label>
-                    <input  type="text"  v-model="form.conyugue.codigo_socio_conyugue"/>
+                    <input  type="text"  v-model="form.conyugue.codigo_socio_conyugue" maxlength='10'/>
                   </div>
                   <div class="input_wrapper" v-else>
                     <label>Código</label>
@@ -466,21 +466,18 @@
                         <option value="NO">NO</option>
                       </select>
                     </div>
-                    <div class="input_wrapper">
+                    <div  v-if="row.socio=='SI'" class="input_wrapper">
                       <label>Codigo</label>
-                      <input type="text" v-model="row.codigo_socio" v-if="row.socio=='SI'" />
-                      <input type="text" v-else disabled />
+                      <input type="text" v-model="row.codigo_socio"  maxlength='10' />
                     </div>
-                    <div class="input_wrapper">
+                    <div  v-if="row.socio=='SI'" class="input_wrapper">
                       <label>Aporte</label>
                       <vue-numeric
                         currency="S/. "
                         separator=","
                         v-model="row.aporte_socio"
                         v-bind:precision="2"
-                        v-if="row.socio=='SI'"
                       ></vue-numeric>
-                      <input type="text" v-else disabled />
                     </div>
               
                     <div class="input_wrapper">
@@ -746,7 +743,7 @@ export default {
         coutas: 0,
         tasa: 0.0,
         comentarios: "",
-        estado: "PENDIENTE"},
+        estado: "PROCESO"},
       contador_aval: 0,
       loading: false,
       contador_garantia: 0, 

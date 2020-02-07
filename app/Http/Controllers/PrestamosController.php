@@ -38,14 +38,14 @@ class PrestamosController extends Controller
             }
         })  
         ->where(function($query){
-            if(Auth::user()->idrol == '3'){
-                $query->where('prestamos.estado_analista','=', 'EVALUACION')
+            if(Auth::user()->nivel == '3'){
+                $query->where('prestamos.estado','=', 'PENDIENTE')
                 ->where('prestamos.estado','PENDIENTE')
                 ->where('evaluacions.users_id','!=',Auth::user()->id);
             }
-            elseif(Auth::user()->idrol == '4')
-                $query->where('prestamos.estado_analista','!=', 'PROCESO');
-            elseif(Auth::user()->idrol == '2')
+            elseif(Auth::user()->nivel == '4')
+                $query->where('prestamos.estado','=', 'PENDIENTE');
+            elseif(Auth::user()->nivel == '2')
                 $query->where('prestamos.users_id','=', Auth::user()->id);  
         })
         ->select('clientes.documento',
@@ -55,7 +55,6 @@ class PrestamosController extends Controller
                 'juridicos.celular', 
                 'juridicos.direccion', 
                 'prestamos.estado',
-                'prestamos.estado_analista',
                 'prestamos.producto',
                 'prestamos.importe',
                 'prestamos.plazo',

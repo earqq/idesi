@@ -5,96 +5,50 @@
           <div class="modal_wrapper">
             <div class="title"> 
               <h1> {{tipoAccion == 1 ? 'Crear' : 'Actualizar'}} Usuario </h1>
-              <i  @click="closeModal()" class="material-icons-outlined">close</i>
+              <i  @click="flagModalUser = false" class="material-icons-outlined">close</i>
             </div>
             <form>
-                <div class="form_content">
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                          <label>Tipo documento</label>
-                          <select v-model="tipo_documento"> 
-                              <option value="DNI">DNI</option>
-                              <option value="RUC">RUC</option>
-                              <option value="CEDULA">CEDULA</option>
-                              <option value="PASS">PASS</option>
-                          </select>                                        
-                      </div>
 
-                      <div class="input_wrapper" :class="{require: ! num_documento}">
-                          <label>Número documento</label>
-                          <input type="text" v-model="num_documento" v-mask="'########'">
-                      </div>
-                  </div>
-                </div>
- 
-
-
-
-                <div class="input_wrapper" :class="{require: !name}">
+                <div class="input_wrapper" :class="{require: user.name.length<4}">
                     <label>Nombre</label>
-                    <input type="text" v-model="name" >                                        
+                    <input type="text" v-model="user.name" >                                        
                 </div>
                 
-                
                 <div class="input_wrapper">
-                    <label>Dirección</label>
-                    <input type="text" v-model="direccion">
-                </div>
-
-                <div class="input_wrapper">
-                    <label>Teléfono</label>
-                    <input type="text" v-model="telefono">
-                </div> 
-
-                <div class="input_wrapper" :class="{require: !email}">
-                    <label>Email</label>
-                    <input type="email" v-model="email">
-                </div>
-
-                <div class="input_wrapper">
-                    <label>Roles</label>
-                    <select v-model="idrol" >
-                        <option value="2">Analista</option>
+                    <label>Nivel</label>
+                    <select v-model="user.nivel" >
+                        <option value="2" v-if="evaluador_final==0">Evaluador Final</option>
                         <option value="3">Evaluador</option>
-                        <option value="4" v-if="evaluador_final==0">Evaluador Final</option>
+                        <option value="4">Analista</option>
                         <option value="5">Plataforma</option> 
                     </select>
                 </div>
 
-                <div class="input_wrapper" :class="{require: !usuario}">
+                <div class="input_wrapper" :class="{require: user.usuario.length<4}">
                     <label>Usuario</label>
-                    <input type="text" v-model="usuario" >
+                    <input type="text" v-model="user.usuario" >
                 </div>
 
-                <div class="input_wrapper" :class="{require: !password}">
+                <div class="input_wrapper" :class="{require: user.password.length<4}">
                     <label>Contraseña</label>
-                    <input type="text" v-model="password" >
+                    <input type="text" v-model="user.password" >
                 </div>
-
-                <div v-show="errorPersona" class="form-group row div-error">
-                    <div class="text-center text-error">
-                        <div v-for="error in errorMostrarMsjPersona" :key="error" v-text="error">
-                        </div>
-                    </div>
-                </div>
+             
 
             </form>
-            <button type="button" v-if="tipoAccion==1" class="button_primary medium" :class="{loading: loading}" @click="registrarPersona()">
+            <button type="button" :disabled='!validateUser' class="button_primary medium" :class="{loading: loading}" @click="registerUser()">
               <span>
               REGISTRAR
               </span>
               <div class="load_spinner"></div>
-            </button>
-            <button type="button" v-if="tipoAccion==2" class="button_primary medium" @click="actualizarPersona()">
-              <span>ACTUALIZAR</span> 
-            </button>
+            </button>            
           </div>
         </div>
 
         <div class="options_bar">
             <div class="search_bar">
             <i class="material-icons-outlined">search</i>
-                <input type="text" placeholder="Buscar Usuario">
+                <input type="text" v-model='search.text' placeholder="Buscar Usuario">
             </div>
             <div class="switch_view">
             <a @click="type_list = 1" :class="{selected: type_list == 1}">
@@ -115,33 +69,27 @@
 
         <div class="table_container">
             <div class="table_grid"  v-if="type_list=='1'">
-              <article class="user_card" v-for="persona in arrayPersona" :key="persona.id" >
+              <article class="user_card" v-for="user in users" :key="user.id" >
                 <div class="options">
                   <i class="material-icons-outlined" >more_horiz</i>
                   <ul>
-                    <li @click="openEditModal(persona)">
+                    <li @click="openEditModal(user)">
                       Editar
-                    </li>
-                    <li v-if="persona.condicion" @click="desactivarUsuario(persona.id)">
-                      Desactivar
-                    </li>
-                    <li v-else  @click="activarUsuario(persona.id)">
-                      Activar
-                    </li>
+                    </li>                     
                   </ul>   
                 </div>
                 <div class="detail">
                   <div class="avatar">
                     <img src="https://picsum.photos/100/100" v-if="false"/>
-                    <div class="avatar_alt" v-else>{{ persona.name.substring(0,1) }}</div>
+                    <div class="avatar_alt" v-else>{{ user.name.substring(0,1) }}</div>
                   </div>
                   <div class="name_wrapper">
-                    <p class="truncate">{{persona.name}}</p>
-                    <small class="truncate" >{{persona.rol}}</small>
+                    <p class="truncate">{{user.name}}</p>
+                    <small class="truncate" >{{user.nivel}}</small>
                   </div>
                 </div>
               </article>
-              <a v-show="arrayPersona.length < 6" class="spanner" v-for="i in 6" :key="i*1.3"  >
+              <a v-show="users.length < 6" class="spanner" v-for="i in 6" :key="i*1.3"  >
               </a>
             </div>
 
@@ -150,34 +98,22 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Número</th>
-                            <th>Teléfono</th>
-                            <th>Email</th>
                             <th>Usuario</th>
-                            <th>Role</th>
+                            <th>Nivel</th>
                             <th class="options">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="persona in arrayPersona" :key="persona.id">
-                            <td v-text="persona.name"></td>
-                            <td v-text="persona.num_documento"></td>
-                            <td v-text="persona.telefono"></td>
-                            <td v-text="persona.email"></td>
-                            <td v-text="persona.usuario"></td>
-                            <td v-text="persona.rol"></td>
+                        <tr v-for="user in users" :key="user.id">
+                            <td v-text="user.name"></td>
+                            <td v-text="user.usuario"></td>
+                            <td v-text="user.nivel"></td>
                             <td class="options">
                               <i class="material-icons-outlined" >more_horiz</i>
                               <ul>
-                                <li @click="openEditModal(persona)">
+                                <li @click="openEditModal(user)">
                                   Editar
-                                </li>
-                                <li v-if="persona.condicion" @click="desactivarUsuario(persona.id)">
-                                  Desactivar
-                                </li>
-                                <li v-else  @click="activarUsuario(persona.id)">
-                                  Activar
-                                </li>
+                                </li>                              
                               </ul>
                             </td>
                         </tr>                                
@@ -195,138 +131,45 @@
         data (){
             return {
                 flagModalUser: false, 
-                persona_id: 0,
-                name : '',
-                tipo_documento : '',
-                num_documento : '',
-                direccion : '',
-                telefono : '',
-                email : '',
-                usuario: '',
-                password:'',
-                idrol: '2',
-                arrayPersona : [],
-                arrayRol : [],
+                user:{
+                  name : '',
+                  usuario: '',
+                  password:'',
+                  nivel: '1',
+                  id:0 
+                },
+                users : [],
                 evaluador_final: 0,
-                modal : 0,
-                tituloModal : '',
-                tipoAccion : 1,
-                errorPersona : 0,
-                errorMostrarMsjPersona : [],
-                pagination : {
-                    'total' : 0,
-                    'current_page' : 0, 
-                    'per_page' : 0,
-                    'last_page' : 0,
-                    'from' : 0,
-                    'to' : 0,
-                },
-                offset : 3,
-                criterio : 'name',
-                buscar : '',
-                loading: false,
-                loaderCargaPagina: 0,
-                notificationSystem: {
-                    options: {
-                        success: {
-                            position: "topRight"
-                        },
-                        error: {
-                            position: "topRight"
-                        }
-                    }
-                },
-                type_list: 1
-
+                loading: false,               
+                type_list: 1,
+                search:{
+                  text:''
+                }
             }
         },
-        computed:{
-            isActived: function(){
-                return this.pagination.current_page;
-            },
-            //Calcula los elementos de la paginación
-            pagesNumber: function() {
-                if(!this.pagination.to) {
-                    return [];
-                }
-                
-                var from = this.pagination.current_page - this.offset; 
-                if(from < 1) {
-                    from = 1;
-                }
-
-                var to = from + (this.offset * 2); 
-                if(to >= this.pagination.last_page){
-                    to = this.pagination.last_page;
-                }  
-
-                var pagesArray = [];
-                while(from <= to) {
-                    pagesArray.push(from);
-                    from++;
-                }
-                return pagesArray;             
-
-            }
-        }, 
         methods : {
-            listarPersona (page,buscar,criterio){
+            getUsers (){
                 let me=this;
-                var url=  '/user?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
+                var url=  '/user?buscar='+ this.search.text 
                 axios.get(url).then(function (response) {
                     var respuesta= response.data;
-                    me.arrayPersona = respuesta.personas.data; 
-                    me.pagination= respuesta.pagination;
-                    me.loaderCargaPagina =1;
-                    me.loading = false;
+                    me.users = respuesta.users.data; 
                     me.evaluador_final = respuesta.evaluador_final;
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
-            },
-            selectRol(){
-                let me=this;
-                var url= '/rol/selectRol';
-                axios.get(url).then(function (response) {
-                    //console.log(response);
-                    var respuesta= response.data;
-                    me.arrayRol = respuesta.roles;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-            },
-
-            cambiarPagina(page,buscar,criterio){
-                let me = this;
-                //Actualiza la página actual
-                me.pagination.current_page = page;
-                //Envia la petición para visualizar la data de esa página
-                me.listarPersona(page,buscar,criterio);
-            },
-            registrarPersona (){
+            },          
+            registerUser (){
 
                 this.loading=true
-                if (this.validarPersona()){
-                    this.loading= false
-                    return;
-                }
-                axios.post('/user/registrar',{
-                    'name': this.name,
-                    'tipo_documento': this.tipo_documento,
-                    'num_documento' : this.num_documento,
-                    'direccion' : this.direccion,
-                    'telefono' : this.telefono,
-                    'email' : this.email,
-                    'idrol' : this.idrol,
-                    'usuario': this.usuario,
-                    'password': this.password
 
-                }).then( response => {
+                axios.post('/user/registrar',
+                  this.user
+                ).then( response => {
                     this.flagModalUser = false
                     this.loading=false
-                    this.listarPersona(1,'','name');
+                    this.getUsers();
                     this.$toast.success(
                         "El usuario fue creado",
                         toastOptions.success
@@ -338,198 +181,40 @@
                         toastOptions.error
                     )
                 })
-            },
-            actualizarPersona(){
-                this.loading= true
-               if (this.validarPersona()){
-                   this.loading = false
-                    return;
-                }
-                axios.put('/user/actualizar',{
-                    'name': this.name,
-                    'tipo_documento': this.tipo_documento,
-                    'num_documento' : this.num_documento,
-                    'direccion' : this.direccion,
-                    'telefono' : this.telefono,
-                    'email' : this.email,
-                    'idrol' : this.idrol,
-                    'usuario': this.usuario,
-                    'password': this.password,
-                    'id': this.persona_id
-                }).then( response => {
-                    this.flagModalUser = false
-                    this.loading = false
-                    this.listarPersona(1,'','name');
-                    this.$toast.success(
-                        "El usuario fue editado",
-                        toastOptions.success
-                    )
-                }).catch( error => {
-                    console.log(error);
-                    this.$toast.success(
-                        "Error al editar usuario",
-                        toastOptions.error
-                    )
-                }); 
-            },
-            validarPersona(){
-
-
-                this.errorPersona=0;
-                this.errorMostrarMsjPersona =[];
-
-                if (!this.name) this.errorMostrarMsjPersona.push("El nombre de la pesona no puede estar vacío.");
-                if (!this.usuario) this.errorMostrarMsjPersona.push("El nombre de usuario no puede estar vacío.");
-                if (!this.password) this.errorMostrarMsjPersona.push("La password del usuario no puede estar vacía.");
-                if (this.idrol==0) this.errorMostrarMsjPersona.push("Seleccione una Rol.");
-                if (this.errorMostrarMsjPersona.length) this.errorPersona = 1;
-
-                return this.errorPersona;
-            },
-            closeModal(){
-                this.flagModalUser = false
-                this.modal=0
-                this.tituloModal=''
-                this.name=''
-                this.tipo_documento='DNI'
-                this.num_documento=''
-                this.direccion=''
-                this.telefono=''
-                this.email=''
-                this.usuario=''
-                this.password=''
-                this.idrol=0
-                this.errorPersona=0
-            },
+            },        
             openEditModal (data) {
-              this.tipoAccion = 2
               this.flagModalUser = true
-              this.persona_id=data['id']
-              this.name = data['name']
-              this.tipo_documento = data['tipo_documento']
-              this.num_documento = data['num_documento']
-              this.direccion = data['direccion']
-              this.telefono = data['telefono']
-              this.email = data['email']
-              this.usuario = data['usuario']
-              this.password=data['password']
-              this.idrol=data['idrol']
+              this.user.id = data['id']
+              this.user.name = data['name']
+              this.user.usuario = data['usuario']
+              this.user.password=data['password']
+              this.user.nivel=data['nivel']
             },
             openModal(){
               this.tipoAccion = 1
               this.flagModalUser = true
-              this.name= ''
-              this.tipo_documento='DNI'
-              this.num_documento=''
-              this.direccion=''
-              this.telefono=''
-              this.email=''
-              this.usuario=''
-              this.password=''
-              this.idrol='2'
-                // this.selectRol();
-            },
-            desactivarUsuario(id){
-               const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: 'btn btn-success',
-                        cancelButton: 'btn btn-danger'
-                    },
-                    buttonsStyling: false,
-                    })
-
-                    swalWithBootstrapButtons.fire({
-                    title: 'Esta seguro de desactivar usuario?',
-                    // text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Aceptar',
-                    cancelButtonText: 'Cancelar',
-                    reverseButtons: true
-                    }).then((result) => {
-                    if (result.value) {
-                        
-                        let me = this;
-
-                            axios.put( '/user/desactivar',{
-                                'id': id
-                            }).then(function (response) {
-                                me.listarPersona(1,'','name');
-                                this.$toast.success(
-                                        "El usuario fue desactivado",
-                                        toastOptions.success
-                                    )
-                            }).catch(function (error) {
-                                console.log(error);
-                                this.$toast.success(
-                                        "El usuario fue desactivado",
-                                        toastOptions.success
-                                    )
-                            });
-                        
-                    } else if (
-                        // Read more about handling dismissals
-                        result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        swalWithBootstrapButtons.fire(
-                        'Cancelado',
-                        'El registro no fue desactivado',
-                        'error'
-                        )
-                    }
-                    })
-            },
-            activarUsuario(id){
-                const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: 'btn btn-success',
-                        cancelButton: 'btn btn-danger'
-                    },
-                    buttonsStyling: false,
-                    })
-
-                    swalWithBootstrapButtons.fire({
-                    title: 'Esta seguro de activar usuario?',
-                    // text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Aceptar',
-                    cancelButtonText: 'Cancelar',
-                    reverseButtons: true
-                    }).then((result) => {
-                    if (result.value) {
-                        
-                       let me = this;
-
-                                axios.put('/user/activar',{
-                                    'id': id
-                                }).then(function (response) {
-                                    me.listarPersona(1,'','name');
-                                    
-                                     this.$toast.success(
-                                        "El usuario fue acivado",
-                                        toastOptions.success
-                                    )           
-
-                                }).catch(function (error) {
-                                    console.log(error);
-                                });
-                        
-                    } else if (
-                        result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        swalWithBootstrapButtons.fire(
-                        'Cancelado',
-                        'El registro no fue desactivado',
-                        'error'
-                        )
-                    }
-                    })
+              this.user.name= ''
+              this.user.usuario=''
+              this.user.password=''
+              this.user.nivel='4'
             },
         },
+        computed:{
+          validateUser(){
+            if(this.user.name.length>3 && 
+              this.user.usuario.length>3 && 
+              this.user.password.length>2
+              ){
+                return true
+              }
+            else{
+
+              return false
+            } 
+          }
+        },
         mounted() {
-            this.listarPersona(1,this.buscar,this.criterio);
-            this.selectRol();
+            this.getUsers();
         }
     }
 </script>

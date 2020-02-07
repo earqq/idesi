@@ -70,7 +70,7 @@
       </div>
 
       <div class="files_grid">
-        <a class="add_file" @click="flagModalUpload = true" v-if="$store.state.currentUser.idrol=='2' && prestamo.estado_analista=='PROCESO'">
+        <a class="add_file" @click="flagModalUpload = true" v-if="$store.state.currentUser.nivel=='2' && prestamo.estado=='PROCESO'">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
@@ -79,7 +79,7 @@
 
        <div class="file_item">
           <div class="file_detail">
-            <a class="" :href="'../storage/'+person.documento+'_'+person.id+'/general/documento/inscripcion_de_socio.pdf'" target="_blank">
+            <a class="" :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/general/documento/inscripcion_de_socio.pdf'" target="_blank">
                  <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
                 <p> Solicitud de Admisión </p> 

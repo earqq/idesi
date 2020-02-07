@@ -124,14 +124,14 @@
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
-                <li v-if="prestamo.estado_analista=='PROCESO'"> 
+                <li v-if="prestamo.estado=='PROCESO'"> 
                   <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id,dni:cliente.documento}}"> Editar </router-link>
                   <router-link  v-else-if="tipo_persona=='PJ'" :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id,dni:cliente.documento}}"> Editar </router-link>
                 </li>
-                <li v-if="prestamo.cualitativa=='0' && prestamo.estado_analista=='PROCESO'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_persona}}" >E. Cualitativa</router-link> </li>
-                <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1'  && prestamo.estado_analista=='PROCESO'"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_persona}}" >E. Cuantitativa</router-link> </li>
-                <li v-if="prestamo.cuantitativa=='1' && prestamo.cualitativa=='1'  && prestamo.estado_analista=='PROCESO'" @click="enviarEvaluar(prestamo.id)"> Enviar a Evaluación</li>
-                <li v-if="prestamo.estado_analista=='EVALUACION'"> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}"  >Evaluación</router-link></li>
+                <li v-if="prestamo.cualitativa=='0' && prestamo.estado=='PROCESO'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_persona}}" >E. Cualitativa</router-link> </li>
+                <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1'  && prestamo.estado=='PROCESO'"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_persona}}" >E. Cuantitativa</router-link> </li>
+                <li v-if="prestamo.cuantitativa=='1' && prestamo.cualitativa=='1'  && prestamo.estado=='PROCESO'" @click="enviarEvaluar(prestamo.id)"> Enviar a Evaluación</li>
+                <li v-if="prestamo.estado=='PENDIENTE'"> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}"  >Evaluación</router-link></li>
                 <li> <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
               </ul>
             </div>

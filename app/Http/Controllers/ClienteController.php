@@ -65,7 +65,7 @@ class ClienteController extends Controller
             }
         })
         ->where(function($query){
-            if(Auth::user()->idrol == '2')
+            if(Auth::user()->nivel == '2')
                 $query->where('clientes.users_id','=', Auth::user()->id);  
         })
         ->orderBy('clientes.id','desc')
@@ -546,7 +546,7 @@ class ClienteController extends Controller
 
         $prestamos = Prestamo::where('clientes_id',"=",$clientes->idcliente)->get();
         $usuario = Auth::user()->id; 
-        $rol =  Auth::user()->idrol;
+        $rol =  Auth::user()->nivel;
 
         // return 'cliente'=>$clientes;
         return ['cliente'=>$clientes, 'prestamos'=>$prestamos,'usuario'=>$usuario,'rol'=>$rol];
@@ -563,7 +563,7 @@ class ClienteController extends Controller
 
         $prestamos = Prestamo::where('clientes_id',"=",$clientes->idcliente)->get();
         $usuario = Auth::user()->id; 
-        $rol =  Auth::user()->idrol;
+        $rol =  Auth::user()->nivel;
 
         // return 'cliente'=>$clientes;
         return ['cliente'=>$clientes, 'prestamos'=>$prestamos,'usuario'=>$usuario,'rol'=>$rol];
@@ -654,7 +654,7 @@ class ClienteController extends Controller
             DB::beginTransaction();
 
             $prestamo = Prestamo::find($prestamo);
-            $prestamo->estado_analista = 'EVALUACION';
+            $prestamo->estado = 'PENDIENTE';
             $prestamo->save();
         
             DB::commit();
@@ -682,9 +682,9 @@ class ClienteController extends Controller
         $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
 
         $evaluacion = Evaluacion::join('users','evaluacions.users_id','=','users.id')
-                    ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name', 'users.idrol')
+                    ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name', 'users.nivel')
                     ->where('prestamos_id',$prestamo->id)
-                    ->orderBy('users.idrol', 'DESC')->get(); 
+                    ->orderBy('users.nivel', 'DESC')->get(); 
 
         return compact('visita','prestamo','evaluacion','cliente');
         
