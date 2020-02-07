@@ -13,7 +13,7 @@
             </transition>
             <div class="items_wrapper">
               <ul>
-                  <li :class="{selected: tab == 'inicio'}" v-if="currentUser.idrol=='1'  || currentUser.idrol=='4' | currentUser.idrol=='5' ">
+                  <li :class="{selected: tab == 'inicio'}" v-if="currentUser.idrol=='1'  || currentUser.idrol=='4' ">
                     <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
                   </li>
 

@@ -17,7 +17,7 @@ export default new Router({
                          }else if(res.data.idrol=='2'){
                                 next('/clientes')
                          }
-                         else if(res.data.idrol=='3'){
+                         else if(res.data.idrol=='3' || res.data.idrol=='5'  ){
                             next('/evaluaciones')
                             }
                     })
@@ -147,17 +147,7 @@ export default new Router({
             path: '/evaluaciones',
             name: 'evaluaciones',
             component: require('./views/Evaluacion').default,
-            beforeEnter: (to, from, next) => {
-                axios.get("/currentUser")
-                    .then(res => { 
-        
-                         if(res.data.idrol=='2' || res.data.idrol=='3' || res.data.idrol=='4' ){
-                                next()
-                         }else{
-                            next('/error')
-                         }
-                    })
-            }
+          
         },
 
         {

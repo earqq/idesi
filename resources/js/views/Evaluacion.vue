@@ -149,7 +149,7 @@ export default {
     };
   },
   async created() { 
-    await this.getPrestamos();
+    await this.getPrestamos();   
   },
   methods: {
     entregarPrestamos(id){
@@ -166,7 +166,11 @@ export default {
         '/prestamos/search/'+this.search.state+'/'+this.search.text
       )
       .then(response => {
-        this.prestamos = response.data
+        response.data.map(prestamo=>{
+          if(!this.prestamos.find(element=>element.id==prestamo.id)){
+            this.prestamos.push(prestamo)
+          }
+        })
       })
      
     }, 
@@ -188,7 +192,7 @@ export default {
         'CONSUMO': 'Meses',
         'CONSUMO ESPECIAL': 'Meses',
         }
-    }
+    },   
   }
 };
 </script>
