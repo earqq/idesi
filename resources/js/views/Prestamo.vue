@@ -48,6 +48,7 @@
                     separator=","
                     v-model="form.monto_inicial"
                     v-bind:precision="2"
+                    maxlength='11'
                   ></vue-numeric>
                   <div class="message">Monto de solicitud invalido</div>
                 </div>
@@ -62,7 +63,7 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Cuotas</label>
-                  <input type="number" v-model="form.plazo_inicial"  />
+                  <input type="number" v-model="form.cuotas_inicial" maxlength=11  />
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
                   <label>Disponibilidad de pago</label>
@@ -70,7 +71,8 @@
                     currency="S/. "
                     separator=","
                     v-model="form.disponibilidad_pago_inicial"
-                    v-bind:precision="2"
+                    v-bind:precision="2"  
+                    maxlength='11'
                   ></vue-numeric> 
                   <div class="message">La disponibilidad es invalida</div>
                 </div>
@@ -260,7 +262,7 @@
                     <input
                       type="text"
                       v-model="form.conyugue.documento_conyugue"
-                      @change="datosCliente()"
+                      @keyup="datosCliente()"
                       v-mask="'########'"
                     />
                     <div class="message">número de documento inválido</div>
@@ -298,18 +300,11 @@
                     <label>Código</label>
                     <input  type="text"  v-model="form.conyugue.codigo_socio_conyugue" maxlength='10'/>
                   </div>
-                  <div class="input_wrapper" v-else>
-                    <label>Código</label>
-                    <input type="text" disabled />
-                  </div>
+                  
                   <div class="input_wrapper" :class="{require: !validateAporteConyuge}" v-if="form.conyugue.socio_conyugue=='SI'">
-                    <label>Aporte</label>
+                    <label>Aporte </label>
                     <vue-numeric currency="S/. " separator="," v-model="form.conyugue.aporte_socio_conyugue" v-bind:precision="2"></vue-numeric>
-                  </div>
-                  <div class="input_wrapper" v-else>
-                    <label>Aporte</label>
-                    <input type="text" disabled/>
-                  </div>
+                  </div>                 
                   <div class="input_wrapper">
                     <label>Teléfono</label>
                     <input type="text" v-model="form.conyugue.telefono_conyugue" />
@@ -501,7 +496,7 @@
               </div>
             </div>
 
-            <button type="button" @click="clickAddAval" class="add_section">
+            <button type="button" @click="clickAddAval" class="add_section" v-if="form.avals.length<=1">
               <span>AGREGAR AVAL</span>
               <i class="material-icons-outlined">add</i> 
             </button>
@@ -566,7 +561,7 @@
               </div>
             </div>
 
-            <button type="button" @click="clickAddGarantia" class="add_section">
+            <button type="button" @click="clickAddGarantia" class="add_section" v-if="form.garantias.length<=1">
               <span>AGREGAR GARANTIA</span>
               <i class="material-icons-outlined">add</i> 
             </button>
@@ -724,13 +719,13 @@ export default {
           celular_conyugue: "",
           centro_laboral_conyugue: "",
           direccion_laboral_conyugue: "",
-          socio_conyugue: "SI",
+          socio_conyugue: "NO",
           codigo_socio_conyugue: "",
           aporte_socio_conyugue: "",
           conyuge_tiene: 0
         },
         monto_inicial: "",
-        plazo_inicial: "5",
+        cuotas_inicial: "5",
         disponibilidad_pago_inicial: "",
         destino_inicial: "",
         forma_inicial: "DIARIO",
@@ -853,17 +848,23 @@ export default {
      validateCelularConyuge(){
       return this.form.conyugue.celular_conyugue.length>6
     },
-     validateCodigoConyuge(){
-      return this.form.conyugue.codigo_socio_conyugue.length>=3
+    validateCodigoConyuge(){
+      if(this.form.conyugue.socio_conyugue=='SI'){
+        return this.form.conyugue.codigo_socio_conyugue.length>=3
+      }
+      else return true
     },
-     validateAporteConyuge(){
-      return String(this.form.conyugue.aporte_socio_conyugue).length>=1
+    validateAporteConyuge(){
+      if(this.form.conyugue.socio_conyugue=='SI'){
+        return String(this.form.conyugue.aporte_socio_conyugue)>=1
+      }
+      else return true
     },
-     validateCentroConyuge(){
+    validateCentroConyuge(){
       return this.form.conyugue.centro_laboral_conyugue.length>6
     },
 
-     validateDireccionConyuge(){
+    validateDireccionConyuge(){
       return this.form.conyugue.direccion_laboral_conyugue.length>6
     },
 
@@ -882,9 +883,9 @@ export default {
               this.validateNombreConyuge &&
               this.validateNacimientoConyuge &&
               this.validateOcupacionConyuge &&
-              this.validateCelularConyuge &&
               this.validateCodigoConyuge &&
               this.validateAporteConyuge &&
+              this.validateCelularConyuge &&
               this.validateCentroConyuge &&
               this.validateDireccionConyuge
 
@@ -1036,11 +1037,14 @@ export default {
     datosCliente() {
       let me = this;
       // me.loader = "true";
-      axios
+      if(this.form.conyugue.documento_conyugue.length>7){
+        axios
         .post("/consulta/doc", {
           documento: this.form.conyugue.documento_conyugue
         })
         .then(function(response) { 
+          console.log(' si viene')
+          if(response.data)
           me.form.conyugue.nombres_conyugue =
             response.data["nombres"] + " " + response.data["surnames"];
 
@@ -1050,6 +1054,7 @@ export default {
           console.log(error);
           // me.initForm();
         });
+      }
     },
     meses_numero() {
       if (this.form.producto == "CREDIDIARIO") { 

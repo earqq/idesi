@@ -557,8 +557,11 @@ class EvaluacionesController extends Controller
             
             $fc_diario_disponible_diario=$fc_diario_minimo_ingreso-$fc_diario_cuota;
             \Log::alert("FLUJO PARA CREDITOS DIARIOS DISPONIBLE DIARIOS: ".$fc_diario_disponible_diario);
+            if($fc_diario_minimo_ingreso>0)
+                $fc_diario_participacion_cuota=($fc_diario_cuota/$fc_diario_minimo_ingreso)*100;
+            else 
+                $fc_diario_participacion_cuota=($fc_diario_cuota/1)*100;
             
-            $fc_diario_participacion_cuota=($fc_diario_cuota/$fc_diario_minimo_ingreso)*100;
             \Log::alert("FLUJO PARA CREDITOS DIARIOS PARTICIPACION CUOTA: ".$fc_diario_participacion_cuota);
 
             if($fc_diario_participacion_cuota>100 || $fc_diario_participacion_cuota<0)

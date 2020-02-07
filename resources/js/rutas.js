@@ -12,7 +12,7 @@ export default new Router({
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
                     .then(res => { 
-                         if(res.data.nivel=='1' || res.data.nivel=='1' ){
+                         if(res.data.nivel=='1' || res.data.nivel=='2' ){
                                 next()
                          }else if(res.data.nivel=='4'){
                                 next('/clientes')

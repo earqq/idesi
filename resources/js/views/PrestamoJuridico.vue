@@ -427,7 +427,7 @@
               </div>
             </div>
 
-            <button type="button" @click="clickAddAval" class="add_section">
+            <button type="button" @click="clickAddAval" class="add_section"  v-if="form.avals.length<=1">
               <span>AGREGAR AVAL</span>
               <i class="material-icons-outlined">add</i> 
             </button>
@@ -493,7 +493,7 @@
               </div>
             </div>
 
-            <button type="button" @click="clickAddGarantia" class="add_section">
+            <button type="button" @click="clickAddGarantia" class="add_section"  v-if="form.garantias.length<=1">
               <span>AGREGAR GARANTIA</span>
               <i class="material-icons-outlined">add</i> 
             </button>

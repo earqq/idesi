@@ -76,7 +76,6 @@
                   </div>
                 </div>
                 <ul>
-                  <p>{{currentUser}}</p>
                   <li :class="{selected: tab == 'inicio'}" v-if="currentUser.nivel=='1'">
                     <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
                   </li>

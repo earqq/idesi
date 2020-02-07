@@ -65,7 +65,7 @@ class ClienteController extends Controller
             }
         })
         ->where(function($query){
-            if(Auth::user()->nivel == '2')
+            if(Auth::user()->nivel == '4')
                 $query->where('clientes.users_id','=', Auth::user()->id);  
         })
         ->orderBy('clientes.id','desc')
@@ -779,7 +779,7 @@ class ClienteController extends Controller
             $prestamo->clientes_id = $cliente->id;
             $prestamo->users_id = Auth::user()->id;
             $prestamo->monto_inicial = $request->input('monto_inicial');
-            $prestamo->plazo_inicial = $request->input('plazo_inicial');
+            $prestamo->cuotas_inicial = $request->input('cuotas_inicial');
             $prestamo->disponibilidad_pago_inicial = $request->input('disponibilidad_pago_inicial');
             $prestamo->destino_inicial = $request->input('destino_inicial');
             $prestamo->forma_inicial = $request->input('forma_inicial');

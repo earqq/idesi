@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('usuario', 15);
             $table->string('password', 191);
             $table->rememberToken();
-            $table->unsignedInteger('nivel');
+            $table->unsignedInteger('nivel')->default('1');
 
             $table->unique(["usuario"], 'users_usuario_unique');
             $table->nullableTimestamps();

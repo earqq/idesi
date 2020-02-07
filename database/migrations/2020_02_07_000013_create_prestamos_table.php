@@ -24,8 +24,8 @@ class CreatePrestamosTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->double('monto_inicial')->nullable()->default(null);
-            $table->integer('plazo_inicial')->nullable()->default(null);
-            $table->string('disponibilidad_pago_inicial', 30)->nullable()->default(null);
+            $table->double('cuotas_inicial')->nullable()->default(null);
+            $table->double('disponibilidad_pago_inicial')->nullable()->default(null);
             $table->text('destino_inicial')->nullable()->default(null);
             $table->string('forma_inicial', 30)->nullable()->default(null);
             $table->string('producto', 40)->nullable()->default(null);

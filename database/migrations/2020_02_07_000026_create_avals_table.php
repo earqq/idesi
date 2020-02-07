@@ -28,7 +28,7 @@ class CreateAvalsTable extends Migration
             $table->string('nombres', 50)->nullable()->default(null);
             $table->string('apellidos', 50)->nullable()->default(null);
             $table->date('nacimiento')->nullable()->default(null);
-            $table->string('estado_civil', 20)->nullable()->default(null);
+            $table->string('estado_civil', 30)->nullable()->default(null);
             $table->string('ocupacion', 40)->nullable()->default(null);
             $table->string('telefono', 10)->nullable()->default(null);
             $table->string('celular', 15)->nullable()->default(null);

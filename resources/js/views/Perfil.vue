@@ -52,7 +52,7 @@
           <p v-if="cliente.estado==1">Aprobado</p> 
           <p v-if="cliente.estado==2">Rechazado</p> 
         </li>
-        <blockquote class="message_request" v-if="cliente.estado==0 && (id_rol=='1' || id_rol=='4')">
+        <blockquote class="message_request" v-if="cliente.estado==0 &&  this.$store.state.currentUser.nivel=='2'">
           <div class="message_request_wrapper">
             <h1>SOLICITUD DE ACEPTACIÓN</h1>
             <p> Se ha registrado un nuevo cliente esperando por aprobación.  </p>
@@ -81,11 +81,11 @@
       <img src="img/empty_2.svg" >
       <h1> Sin Prestamos Registrados </h1>
       <p>Todavía no se han registrado ningun prestamo a este cliente.</p>
-      <router-link  v-if="tipo_persona=='PN' && cliente.estado=='1' && id_rol!='5'"  class="button_primary small" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
+      <router-link  v-if="tipo_persona=='PN' && cliente.estado=='1'"  class="button_primary small" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
       </router-link>
-      <router-link  v-else-if="tipo_persona=='PJ' && cliente.estado=='1' && id_rol!='5'" class="button_primary small" :to="{name: 'prestamojuridico', params:{dni:cliente.documento}}">
+      <router-link  v-else-if="tipo_persona=='PJ' && cliente.estado=='1'" class="button_primary small" :to="{name: 'prestamojuridico', params:{dni:cliente.documento}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
       </router-link>
@@ -94,14 +94,14 @@
     <div class="credits_grid" v-else>
      
       <div class="table_grid" >
-        <router-link  v-if="tipo_persona=='PN' && cliente.estado=='1' && id_rol!='5'"  class="add_credit" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
+        <router-link  v-if="tipo_persona=='PN' && cliente.estado=='1'"  class="add_credit" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
           <p> NUEVO PRESTAMO  </p>
         </router-link>
 
-        <router-link  v-else-if="tipo_persona=='PJ' && cliente.estado=='1' && id_rol!='5'" class="add_credit" :to="{name: 'prestamojuridico', params:{dni:cliente.documento}}">
+        <router-link  v-else-if="tipo_persona=='PJ' && cliente.estado=='1'" class="add_credit" :to="{name: 'prestamojuridico', params:{dni:cliente.documento}}">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
@@ -164,7 +164,6 @@ export default {
       prestamos: {},
       id_usuario: 0 ,
       loading: false,
-      id_rol:0,
       loader: 1,
       loader_loan: 1,
       tipo_general: 1,
@@ -190,7 +189,6 @@ export default {
                         this.cliente = response.data["cliente"];
                         this.prestamos = response.data["prestamos"];
                         this.id_usuario = response.data['usuario'];
-                        this.id_rol = response.data['rol'];
                         this.loader = 0;
                         this.loader_loan = 0; 
                       });
@@ -203,11 +201,11 @@ export default {
                         this.cliente = response.data["cliente"];
                         this.prestamos = response.data["prestamos"];
                         this.id_usuario = response.data['usuario'];
-                        this.id_rol = response.data['rol'];
                         this.loader = 0;
                         this.loader_loan = 0;  
                       });
               }
+
     },
     enviarEvaluar(id){ 
           this.$http
