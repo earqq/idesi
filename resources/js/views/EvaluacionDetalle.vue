@@ -14,7 +14,7 @@
           <p>EVALUACIÓN</p>
         </div>
         <div
-          v-if="estado_evaluado==1 && prestamo.estado=='PENDIENTE' && (rol=='3' || rol=='4')"
+          v-if="estado_evaluado==1 && prestamo.estado=='PENDIENTE' && (currentUserNivel=='3' || currentUserNivel=='4')"
           class="tab slide_mobile"
           :class="{selected: tab == 3}"
           @click="tab = 3; show_slide = true"
@@ -91,6 +91,13 @@
                         </tr>
                       </thead>
                       <tbody>
+<<<<<<< HEAD
+                        <tr  v-for="evaluacion in form.evaluacion" :key="evaluacion.id" :class="{final_result: evaluacion.nivel == 4}">
+                          <td class="client" v-text="evaluacion.name"></td>
+                          <td class="observation" v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
+                          <td class="date"> {{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
+                          <td class="state"> <span :class="stateEvaluation(evaluacion.estado)">  </span> {{evaluacion.estado | toCapitalize}} <strong v-show="evaluacion.nivel == 4"> ( Decisión )</strong> </td>
+=======
                         <tr
                           v-for="evaluacion in form.evaluacion"
                           :key="evaluacion.id"
@@ -107,6 +114,7 @@
                             {{evaluacion.estado | toCapitalize}}
                             <strong v-show="evaluacion.idrol == 4">( Decisión )</strong>
                           </td>
+>>>>>>> f8c06949eed642c3e17189c76a7d1d12eea7ae76
                         </tr>
                       </tbody>
                     </table>
@@ -504,7 +512,7 @@
     <aside
       class="evaluation no_scroll"
       :class="{showing: show_slide}"
-      v-if="estado_evaluado==1 && prestamo.estado=='PENDIENTE' && (rol=='3' || rol=='4')"
+      v-if="estado_evaluado==1 && prestamo.estado=='PENDIENTE' && (currentUserNivel=='3' || currentUserNivel=='4')"
     >
       <div class="evaluation_wrapper">
         <div class="input_box">
@@ -522,7 +530,7 @@
                 <span>Aprobado</span>
               </label>
             </div>
-            <div class="input_checkbox_wrapper radio" v-if="rol=='3'">
+            <div class="input_checkbox_wrapper radio" v-if="currentUserNivel=='3'">
               <input
                 type="radio"
                 id="radio2"
@@ -545,24 +553,24 @@
               />
               <label class="box_content" for="radio3">
                 <div class="box"></div>
-                <span>{{rol== '3' ? 'Desaprobado' : 'Rechazado'}}</span>
+                <span>{{currentUserNivel== '3' ? 'Desaprobado' : 'Rechazado'}}</span>
               </label>
             </div>
           </div>
         </div>
 
         <div class="form_content">
-          <div class="input_wrapper" v-if="rol=='3'">
+          <div class="input_wrapper" v-if="currentUserNivel=='3'">
             <label>Comentarios</label>
             <textarea v-model="form.detalle"></textarea>
           </div>
 
-          <div class="input_wrapper" v-if="rol=='4'">
+          <div class="input_wrapper" v-if="currentUserNivel=='4'">
             <label for>Producto</label>
             <input type="text" v-model="form.producto" />
           </div>
 
-          <div class="inline_inputs" v-if="rol=='4'">
+          <div class="inline_inputs" v-if="currentUserNivel=='4'">
             <div class="input_wrapper">
               <label for>Aporte</label>
               <input type="text" v-model="form.aporte" />
@@ -574,12 +582,12 @@
             </div>
           </div>
 
-          <div class="input_wrapper" v-if="rol=='4'">
+          <div class="input_wrapper" v-if="currentUserNivel=='4'">
             <label for>Importe</label>
             <input type="text" v-model="form.importe" />
           </div>
 
-          <div class="inline_inputs" v-if="rol=='4'">
+          <div class="inline_inputs" v-if="currentUserNivel=='4'">
             <div class="input_wrapper">
               <label for>Cuotas</label>
               <input type="text" v-model="form.cuotas" />
@@ -593,7 +601,7 @@
         </div>
 
         <button class="button_primary medium" @click="firmarEvaluacion()">
-          <span v-if="$store.state.currentUser.idrol==3">FIRMAR EVALUACIÓN</span>
+          <span v-if="$store.state.currentUser.nivel==3">FIRMAR EVALUACIÓN</span>
           <span v-else>FINALIZAR EVALUACIÓN</span>
           <i class="material-icons-outlined">fingerprint</i>
         </button>
@@ -616,7 +624,7 @@ export default {
       tab: 1,
       cuantitativa: {},
       estado_evaluado: 0,
-      rol: "",
+      currentUserNivel: "",
       prestamo: {},
       form: {
         evaluacion: []
@@ -640,9 +648,7 @@ export default {
     await this.formInit();
   },
   mounted() {
-    this.$http.get(`/rol`).then(response => {
-      this.rol = response.data.idrol;
-    });
+    this.currentUserNivel = this.$store.state.currentUser.nivel
     this.methodsDetalle(this.$route.params.prestamo);
   },
   methods: {
@@ -668,7 +674,7 @@ export default {
             this.cuantitativa = response.data.cuantitativa;
           this.form.evaluacion = response.data.evaluacion;
           this.listFile(id);
-          if (this.rol == "4") {
+          if (this.currentUserNivel == "4") {
             this.form.producto = this.prestamo.producto;
             this.form.aporte = this.prestamo.aporte;
             this.form.importe = this.prestamo.importe;
@@ -682,7 +688,7 @@ export default {
         });
     },
     formInit() {
-      if (this.rol == "4") {
+      if (this.currentUserNivel == "4") {
         this.form = {
           producto: "",
           aporte: "",
@@ -694,7 +700,7 @@ export default {
           prestamos_id: "",
           evaluacion: []
         };
-      } else if (this.rol == "3") {
+      } else if (this.currentUserNivel == "3") {
         this.form = {
           detalle: "",
           estado: "",
@@ -707,8 +713,8 @@ export default {
     },
     firmarEvaluacion() {
       console.log("role");
-      console.log(this.rol);
-      if (this.rol == "4") {
+      console.log(this.currentUserNivel);
+      if (this.currentUserNivel == "4") {
         // if() {
         //       return this.$message.error('Los montos ingresados superan al monto a pagar o son incorrectos');
         //  }
@@ -723,7 +729,7 @@ export default {
               this.notificationSystem.options.success
             );
           });
-      } else if (this.rol == "3") {
+      } else if (this.currentUserNivel == "3") {
         this.$http
           .post(`/${this.resource}/prestamos/evaluar`, this.form)
           .then(response => {

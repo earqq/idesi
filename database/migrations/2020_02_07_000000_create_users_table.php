@@ -24,32 +24,13 @@ class CreateUsersTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name', 191);
-            $table->string('tipo_documento', 20)->nullable()->default(null);
-            $table->string('num_documento', 20);
-            $table->string('direccion', 70)->nullable()->default(null);
-            $table->string('telefono', 20)->nullable()->default(null);
-            $table->string('email', 191);
-            $table->string('usuario', 191);
+            $table->string('usuario', 15);
             $table->string('password', 191);
-            $table->tinyInteger('condicion')->default('1');
-            $table->timestamp('email_verified_at')->nullable()->default(null);
             $table->rememberToken();
-            $table->unsignedInteger('idrol');
-
-            $table->index(["idrol"], 'users_idrol_foreign');
+            $table->unsignedInteger('nivel')->default('1');
 
             $table->unique(["usuario"], 'users_usuario_unique');
-
-            $table->unique(["num_documento"], 'users_num_documento_unique');
-
-            $table->unique(["email"], 'users_email_unique');
             $table->nullableTimestamps();
-
-
-            $table->foreign('idrol', 'users_idrol_foreign')
-                ->references('id')->on('roles')
-                ->onDelete('restrict')
-                ->onUpdate('restrict');
         });
     }
 

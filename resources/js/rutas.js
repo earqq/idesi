@@ -12,12 +12,12 @@ export default new Router({
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
                     .then(res => { 
-                         if(res.data.idrol=='4' || res.data.idrol=='1' ){
+                         if(res.data.nivel=='1' || res.data.nivel=='2' ){
                                 next()
-                         }else if(res.data.idrol=='2'){
+                         }else if(res.data.nivel=='4'){
                                 next('/clientes')
                          }
-                         else if(res.data.idrol=='3' || res.data.idrol=='5'  ){
+                         else if(res.data.nivel=='3' || res.data.nivel=='5'  ){
                             next('/evaluaciones')
                             }
                     })
@@ -32,7 +32,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
                         
-                         if(res.data.idrol=='3'){
+                         if(res.data.nivel=='3'){
                                 next('/evaluaciones')
                          }else{
                                 next()
@@ -48,7 +48,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2' || res.data.idrol=='4'  ){
+                         if(res.data.nivel=='2' || res.data.nivel=='4'  ){
                                 next()
                          }else{
                             next('/error')
@@ -64,7 +64,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2' || res.data.idrol=='4' ){
+                         if(res.data.nivel=='2' || res.data.nivel=='4' ){
                                 next()
                          }else{
                             next('/error')
@@ -85,7 +85,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2' ){
+                         if(res.data.nivel=='4' ){
                                 next()
                          }else{
                             next('/error')
@@ -101,7 +101,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2' ){
+                         if(res.data.nivel=='4' ){
                                 next()
                          }else{
                             next('/error')
@@ -117,7 +117,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2' || res.data.idrol=='3' || res.data.idrol=='4' || res.data.idrol=='5' ){
+                         if(res.data.nivel=='2' || res.data.nivel=='3' || res.data.nivel=='4' || res.data.nivel=='5' ){
                                 next()
                          }else{
                             next('/error')
@@ -133,7 +133,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='4' || res.data.idrol=='1' ){
+                         if(res.data.nivel=='1' ){
                                 next()
                          }else{
                             next('/error')
@@ -158,7 +158,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2'  || res.data.idrol=='4'  ){
+                         if(res.data.nivel=='2'  || res.data.nivel=='4'  ){
                                 next()
                          }else{
                             next('/error')
@@ -174,7 +174,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2' || res.data.idrol=='3' || res.data.idrol=='4' ){
+                         if(res.data.nivel=='2' || res.data.nivel=='3' || res.data.nivel=='4' ){
                                 next()
                          }else{
                             next('/error')
@@ -190,7 +190,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2' || res.data.idrol=='4'){
+                         if(res.data.nivel=='2' || res.data.nivel=='4'){
                                 next()
                          }else{
                             next('/error')
@@ -206,7 +206,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2'   || res.data.idrol=='4'   ){
+                         if(res.data.nivel=='2'   || res.data.nivel=='4'   ){
                                 next()
                          }else{
                             next('/error')
@@ -222,7 +222,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2' || res.data.idrol=='3' || res.data.idrol=='4'){
+                         if(res.data.nivel=='2' || res.data.nivel=='3' || res.data.nivel=='4'){
                                 next()
                          }else{
                             next('/error')
@@ -238,7 +238,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2' || res.data.idrol=='3' || res.data.idrol=='4' || res.data.idrol=='5' ){
+                         if(res.data.nivel=='2' || res.data.nivel=='3' || res.data.nivel=='4' || res.data.nivel=='5' ){
                                 next()
                          }else{
                             next('/error')
@@ -254,7 +254,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2'  || res.data.idrol=='4'   ){
+                         if(res.data.nivel=='2'  || res.data.nivel=='4'   ){
                                 next()
                          }else{
                             next('/error')
@@ -270,7 +270,7 @@ export default new Router({
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.idrol=='2'   || res.data.idrol=='4'   ){
+                         if(res.data.nivel=='2'   || res.data.nivel=='4'   ){
                                 next()
                          }else{
                             next('/error')

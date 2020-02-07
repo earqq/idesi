@@ -37,7 +37,7 @@ class EvaluacionController extends Controller
 
     public function prestamosJuridico(Request $request)
     {
-        if(Auth::user()->idrol == '1' || Auth::user()->idrol == '4' ||  Auth::user()->idrol == '5'){
+        if(Auth::user()->nivel == '1' || Auth::user()->nivel == '4' ||  Auth::user()->nivel == '5'){
             $prestamo = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
             ->join('juridicos','clientes.id',"=","juridicos.clientes_id")
             ->select('clientes.documento','juridicos.razon_social','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
@@ -46,30 +46,30 @@ class EvaluacionController extends Controller
             ->orWhere('prestamos.producto', 'LIKE', "%{$request->search_input}%")
             ->orWhere('prestamos.estado', 'LIKE', "%{$request->search_input}%")
             ->get();
-                $rol =  Auth::user()->idrol;
+                $rol =  Auth::user()->nivel;
                 return compact('prestamo','rol');
         }
         
-        elseif(Auth::user()->idrol == '2'){
+        elseif(Auth::user()->nivel == '2'){
             $prestamo = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
             ->join('juridicos','clientes.id',"=","juridicos.clientes_id")
             ->select('clientes.documento','juridicos.razon_social','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
             ->where('prestamos.users_id',Auth::user()->id)
             ->get();
                 $usuario = Auth::user()->id; 
-                $rol =  Auth::user()->idrol;
+                $rol =  Auth::user()->nivel;
                 return compact('prestamo','rol');
         }
-        elseif(Auth::user()->idrol == '3'){
+        elseif(Auth::user()->nivel == '3'){
 
             
             $prestamo = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
             ->join('juridicos','clientes.id',"=","juridicos.clientes_id")
-            ->select('clientes.documento','juridicos.razon_social','prestamos.estado','prestamos.producto','prestamos.estado_analista','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
-            ->where('prestamos.estado_analista','=', 'EVALUACION')
+            ->select('clientes.documento','juridicos.razon_social','prestamos.estado','prestamos.producto','prestamos.importe','prestamos.plazo','prestamos.cualitativa','prestamos.cuantitativa','prestamos.created_at','prestamos.id')
+            ->where('prestamos.estado','=', 'PENDIENTE')
 
             ->get();
-                $rol =  Auth::user()->idrol;
+                $rol =  Auth::user()->nivel;
                 return compact('prestamo','rol');
         }
 
@@ -118,14 +118,14 @@ class EvaluacionController extends Controller
     {
         $prestamo = Prestamo::find($id);
         $evaluacion = Evaluacion::join('users','evaluacions.users_id','=','users.id')
-                ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name', 'users.idrol')
+                ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name', 'users.nivel')
                 ->where('prestamos_id',$prestamo->id)
-                ->orderBy('users.idrol', 'DESC')->get();
+                ->orderBy('users.nivel', 'DESC')->get();
 
         $cuantitativa = ResultadoCuantitativa::where('prestamo_id', $prestamo->id)->first();
         $estado_evaluado = 0;
 
-        if(Auth::user()->idrol==4){
+        if(Auth::user()->nivel==4){
 
             if($prestamo->estado =='PENDIENTE' ){
                 $estado_evaluado = 1;

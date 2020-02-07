@@ -23,6 +23,6 @@ class Role extends Model
      */
     public function users()
     {
-        return $this->hasMany('App\User', 'idrol');
+        return $this->hasMany('App\User', 'nivel');
     }
 }

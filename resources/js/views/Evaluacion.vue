@@ -7,7 +7,7 @@
         <div class="search_bar" >
           <i class="material-icons-outlined">search</i>
           <input type="text" placeholder="Buscar Prestamos"  v-model="search.text" @input="getPrestamos">
-          <select v-model="search.state" v-if='$store.state.currentUser.idrol!="3"' @change="getPrestamos()">
+          <select v-model="search.state" v-if='$store.state.currentUser.nivel!="3"' @change="getPrestamos()">
             <option value="TODOS">TODOS</option>
             <option value="PENDIENTE">PENDIENTE</option>
             <option value="APROBADO">APROBADO</option>
@@ -57,7 +57,7 @@
               <div class="options">
                 <i class="material-icons-outlined" >more_horiz</i>
                 <ul>
-                  <li v-if='$store.state.currentUser.idrol=="2"'> 
+                  <li v-if='$store.state.currentUser.nivel=="2"'> 
                     <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                     <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                   </li>

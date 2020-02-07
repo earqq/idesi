@@ -42,8 +42,6 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('/inicio/datos', 'InicioController@index');
         
 
-        Route::get('/rol/selectRol', 'RolController@selectRol');
-        Route::get('/rol', 'RolController@rolUser');
 
 
         //Busquedas

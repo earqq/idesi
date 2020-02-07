@@ -13,11 +13,11 @@
             </transition>
             <div class="items_wrapper">
               <ul>
-                  <li :class="{selected: tab == 'inicio'}" v-if="currentUser.idrol=='1'  || currentUser.idrol=='4' ">
+                  <li :class="{selected: tab == 'inicio'}" v-if="currentUser.nivel=='1'  || currentUser.nivel=='2' ">
                     <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
                   </li>
 
-                  <li :class="{selected: tab == 'clientes'}" v-if="currentUser.idrol=='1' || currentUser.idrol=='2' || currentUser.idrol=='4'">
+                  <li :class="{selected: tab == 'clientes'}" v-if="currentUser.nivel=='1' || currentUser.nivel=='2' || currentUser.nivel=='4'">
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                   </li>
   
@@ -25,7 +25,7 @@
                     <router-link :to="{name: 'evaluaciones'}"  >Prestamos</router-link>
                   </li>
 
-                  <li :class="{selected: tab == 'usuarios'}" v-if="currentUser.idrol=='1'"> 
+                  <li :class="{selected: tab == 'usuarios'}" v-if="currentUser.nivel=='1'"> 
                     <router-link :to="{name: 'usuarios'}"  >Usuarios</router-link>
                   </li>
               </ul>
@@ -76,12 +76,11 @@
                   </div>
                 </div>
                 <ul>
-                  <p>{{currentUser}}</p>
-                  <li :class="{selected: tab == 'inicio'}" v-if="currentUser.idrol=='1'">
+                  <li :class="{selected: tab == 'inicio'}" v-if="currentUser.nivel=='1'">
                     <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
                   </li>
 
-                  <li :class="{selected: tab == 'clientes'}" v-if="currentUser.idrol=='1' || currentUser.idrol=='2'">
+                  <li :class="{selected: tab == 'clientes'}" v-if="currentUser.nivel=='1' || currentUser.nivel=='2'">
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                   </li>
 
@@ -89,7 +88,7 @@
                     <router-link :to="{name: 'evaluaciones'}"  >{{currentUser}}</router-link>
                   </li>
 
-                  <li :class="{selected: tab == 'usuarios'}" v-if="currentUser.idrol=='1'"> 
+                  <li :class="{selected: tab == 'usuarios'}" v-if="currentUser.nivel=='1'"> 
                     <router-link :to="{name: 'usuarios'}"  >Usuarios</router-link>
                   </li>
                   <li class="logout"> 

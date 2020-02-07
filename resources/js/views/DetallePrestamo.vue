@@ -134,14 +134,14 @@
                     <tr
                       v-for="evaluacion in evaluacion"
                       :key="evaluacion.id"
-                      :class="{final_result: evaluacion.idrol == 4}">
+                      :class="{final_result: evaluacion.nivel == 4}">
                       <td class="client" v-text="evaluacion.name"></td>
                       <td class="observation" v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
                       <td class="date">{{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
                       <td class="state">
                         <span :class="stateEvaluation(evaluacion.estado)"></span>
                         {{evaluacion.estado | toCapitalize}}
-                        <strong v-show="evaluacion.idrol == 4">( Decisión )</strong>
+                        <strong v-show="evaluacion.nivel == 4">( Decisión )</strong>
                       </td>
                     </tr>
                   </tbody>

@@ -388,7 +388,7 @@
                     </div>
                     <div class="input_wrapper">
                       <label>Codigo</label>
-                      <input type="text" v-model="row.codigo_socio" v-if="row.socio=='SI'" />
+                      <input type="text" v-model="row.codigo_socio" v-if="row.socio=='SI'" maxlength="10" />
                       <input type="text" v-else disabled />
                     </div>
                     <div class="input_wrapper">
@@ -668,7 +668,7 @@ export default {
         coutas: 0,
         tasa: 0.0,
         comentarios: "",
-        estado: "PENDIENTE"
+        estado: "PROCESO"
       },
       tab: 1
     };

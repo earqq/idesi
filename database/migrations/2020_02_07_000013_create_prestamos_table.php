@@ -24,8 +24,8 @@ class CreatePrestamosTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->double('monto_inicial')->nullable()->default(null);
-            $table->integer('plazo_inicial')->nullable()->default(null);
-            $table->string('disponibilidad_pago_inicial', 30)->nullable()->default(null);
+            $table->double('cuotas_inicial')->nullable()->default(null);
+            $table->double('disponibilidad_pago_inicial')->nullable()->default(null);
             $table->text('destino_inicial')->nullable()->default(null);
             $table->string('forma_inicial', 30)->nullable()->default(null);
             $table->string('producto', 40)->nullable()->default(null);
@@ -46,8 +46,7 @@ class CreatePrestamosTable extends Migration
             $table->decimal('tasa_final', 11, 2)->nullable()->default(null);
             $table->integer('cuantitativa')->nullable()->default(null);
             $table->integer('cualitativa')->nullable()->default(null);
-            $table->string('estado', 15)->nullable()->default(null); // PENDIENTE , APROBADO , DESAPROBADO
-            $table->string('estado_analista', 15)->nullable()->default('PROCESO'); // PROCESO , EVALUANDO , FINALIZADO
+            $table->string('estado', 15)->nullable()->default(null);
             $table->unsignedInteger('clientes_id');
             $table->unsignedInteger('users_id');
             $table->double('probabilidad_infocorp')->nullable()->default(null);
