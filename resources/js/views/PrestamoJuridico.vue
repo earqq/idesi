@@ -427,7 +427,7 @@
               </div>
             </div>
 
-            <button type="button" @click="clickAddAval" class="add_section">
+            <button type="button" @click="clickAddAval" class="add_section"  v-if="form.avals.length<=1">
               <span>AGREGAR AVAL</span>
               <i class="material-icons-outlined">add</i> 
             </button>
@@ -493,7 +493,7 @@
               </div>
             </div>
 
-            <button type="button" @click="clickAddGarantia" class="add_section">
+            <button type="button" @click="clickAddGarantia" class="add_section"  v-if="form.garantias.length<=1">
               <span>AGREGAR GARANTIA</span>
               <i class="material-icons-outlined">add</i> 
             </button>
@@ -650,7 +650,7 @@ export default {
           provincia_representante:"",
           departamento_representante:"",
           referencia_representante:"",
-          tipo_domicilio_representante:"",
+          tipo_domicilio_representante:"PROPIA",
           poderes_representante:"",
           fecha_inicio_representante:"",
         },
@@ -664,7 +664,7 @@ export default {
         meses: 0,
         importe: 0,
         aporte: 0,
-        plazo: 5,
+        plazo: 0,
         coutas: 0,
         tasa: 0.0,
         comentarios: "",

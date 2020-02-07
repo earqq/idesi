@@ -8,6 +8,7 @@
         </div>
         <div class="input_wrapper">
           <select v-model="fileName">
+            <option value='seleccione'>Seleccione</option>
             <option selected value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
             <option selected value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
             <option selected  value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option> 
@@ -51,9 +52,8 @@
           </label>
         </div>
 
-        <button class="button_primary medium" type="button" @click="uploadFile" :class="{loading: loading}">
-          <div class="load_spinner"></div>
-          <span> CARGAR ARCHIVO </span> 
+        <button v-if='fileName!="seleccione"' class="button_primary medium" type="button" @click="uploadFile">
+          <span> CARGAR ARCHIVO </span>
         </button>
       </div>
     </div>
@@ -70,12 +70,26 @@
       </div>
 
       <div class="files_grid">
-        <a class="add_file" @click="flagModalUpload = true" v-if="currentUser.idrol=='2' && person.estado_analista=='PROCESO'">
+        <a class="add_file" @click="flagModalUpload = true" v-if="$store.state.currentUser.idrol=='2' && prestamo.estado_analista=='PROCESO'">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
           <p> NUEVO ARCHIVO  </p>
         </a>
+
+       <div class="file_item">
+          <div class="file_detail">
+            <a class="" :href="'../storage/'+person.documento+'_'+person.id+'/general/documento/inscripcion_de_socio.pdf'" target="_blank">
+                 <i class="material-icons-outlined"> picture_as_pdf </i>
+              <div class="file_info">
+                <p> Solicitud de Admisión </p> 
+                <small> 27 de enero de 2020 </small>            
+              </div>
+                  
+            </a>
+            
+          </div> 
+        </div>
 
          <div class="file_item"  @click="solicitudPdf()">
           <div class="file_detail">
@@ -89,10 +103,11 @@
             </a>
           </div> 
         </div>
+
    
         <div class="file_item" v-for="(archivo, index) in archivos" :key="index">
           <div class="file_detail" v-if="archivo.tipo=='imagen'">
-            <a :href="'../storage/'+person.documento+'_'+person.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+            <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
               target="_blank">
               <i class="material-icons-outlined"> collections </i>
               <div class="file_info">
@@ -102,7 +117,7 @@
             </a>
           </div>
           <div class="file_detail" v-if="archivo.tipo=='documento'">
-            <a :href="'../storage/'+person.documento+'_'+person.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+            <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
               target="_blank">
               <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
@@ -320,7 +335,7 @@ export default {
       file: {},
       loading: false,
       formData: {},
-      fileName: "0",
+      fileName: "seleccione",
       attachment: {
         content: null
       },
@@ -329,27 +344,21 @@ export default {
       notification: false,
       message: "",
       errors: {},
-      currentUser: {},
-      person: {},
+      prestamo: {},
       archivos: [],
     };
   },
   created() {
-    this.listFile();
-    axios.get("/currentUser")
-      .then(res => { 
-        this.currentUser = res.data
-        console.log(this.currentUser)
-      })
+    this.listFile();   
   },
 
   methods: {
     retornar() {
-      this.backMixin_handleBack('/perfil/'+this.person.documento);
+      this.backMixin_handleBack('/perfil/'+this.prestamo.documento);
     },
     listFile() {
       this.$http.get(`/files/${this.$route.params.prestamo}`).then(response => {
-        this.person = response.data["datos"];
+        this.prestamo = response.data["datos"];
         this.archivos = response.data["files"];
         this.subidos = response.data["subidos"];
         this.loaderFile=0
@@ -393,7 +402,7 @@ export default {
     },
     resetForm() {
       this.formData = {};
-      this.fileName = "";
+      this.fileName = "seleccione";
       this.attachment.content = "";
       this.f
     },

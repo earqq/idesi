@@ -4,10 +4,10 @@
     <div class="credits_content" >
 
       <div class="options_bar">
-        <div class="search_bar">
+        <div class="search_bar" >
           <i class="material-icons-outlined">search</i>
           <input type="text" placeholder="Buscar Prestamos"  v-model="search.text" @input="getPrestamos">
-          <select v-model="search.state" @change="getPrestamos()">
+          <select v-model="search.state" v-if='$store.state.currentUser.idrol!="3"' @change="getPrestamos()">
             <option value="TODOS">TODOS</option>
             <option value="PENDIENTE">PENDIENTE</option>
             <option value="APROBADO">APROBADO</option>
@@ -57,14 +57,14 @@
               <div class="options">
                 <i class="material-icons-outlined" >more_horiz</i>
                 <ul>
-                  <li v-if="id_rol==2"> 
+                  <li v-if='$store.state.currentUser.idrol=="2"'> 
                     <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                     <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                   </li>
                   <li v-if="prestamo.cualitativa=='0' && id_rol=='2'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id,documento:prestamo.documento,persona:tipo_persona}}" >E. Cualitativa</router-link> </li>
                   <li v-if="prestamo.cuantitativa=='0' && prestamo.cualitativa=='1' && id_rol=='2' "> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id,documento:prestamo.documento,persona:tipo_persona}}" >E. Cuantitativa</router-link> </li>
                   <li> <router-link :to="{name:'/evaluacion/detalle/', params:{prestamo:prestamo.id}}"  >Evaluación</router-link></li>
-                  <li> <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
+                  <li > <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
                 </ul>
               </div>
             </div>
@@ -142,14 +142,14 @@ export default {
       id_rol:0,
       type_list: 0,
       search:{
-        state:'PENDIENTE',
+        state:'TODOS',
         text:''
       },
       queryCount: 0
     };
   },
   async created() { 
-    await this.getPrestamos();
+    await this.getPrestamos();   
   },
   methods: {
     entregarPrestamos(id){
@@ -166,10 +166,14 @@ export default {
         '/prestamos/search/'+this.search.state+'/'+this.search.text
       )
       .then(response => {
-        this.prestamos = response.data
+        response.data.map(prestamo=>{
+          if(!this.prestamos.find(element=>element.id==prestamo.id)){
+            this.prestamos.push(prestamo)
+          }
+        })
       })
      
-    },
+    }, 
     evalaucionEcho(prestamo){
       this.$http.get(`/${this.resource}/veridicarEvaluacion/`+ prestamo).then(response => {
         console.log(response.data)
@@ -188,7 +192,7 @@ export default {
         'CONSUMO': 'Meses',
         'CONSUMO ESPECIAL': 'Meses',
         }
-    }
+    },   
   }
 };
 </script>
