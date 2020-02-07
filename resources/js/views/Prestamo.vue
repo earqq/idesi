@@ -383,10 +383,12 @@
 
                     <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
                       <label>Ruc</label>
+                      
                       <input
                         type="text"
                         v-model="row.empresa_ruc"
                         v-mask="'###########'"
+                        @keyup='getCompanyData(row.empresa_ruc,index)'
                       />
                     </div>
 
@@ -1061,6 +1063,27 @@ export default {
         this.form.meses = (Number(this.form.plazo) / 4).toFixed(2);
       } else {
         this.form.meses = (Number(this.form.plazo) / 1).toFixed(2);
+      }
+    },
+    getCompanyData(ruc,index){
+      
+      if(ruc.length==11){
+          let me = this;
+          axios
+            .post("/consulta/doc", {
+              documento: me.ruc
+            })
+            .then(function(response) {          
+              if(response.data){
+                  
+                 me.form.avals[index].empresa_razon_social=response.data.RAZON
+                 me.form.avals[index].empresa_direccion=response.data.DIRECCION
+              }
+            })
+            .catch(function(error) {
+              console.log(error);
+        });
+        console.log()
       }
     },
     datosAval(index) {

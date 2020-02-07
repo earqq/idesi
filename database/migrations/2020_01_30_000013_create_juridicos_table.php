@@ -45,7 +45,7 @@ class CreateJuridicosTable extends Migration
             $table->string('nombres_representante', 60)->nullable()->default(null);
             $table->string('documento_representante', 10)->nullable()->default(null);
             $table->date('nacimiento_representante')->nullable()->default(null);
-            $table->string('estado_civil_representante', 15)->nullable()->default(null);
+            $table->string('estado_civil_representante', 25)->nullable()->default(null);
             $table->string('ocupacion_representante', 10)->nullable()->default(null);
             $table->string('telefono_representante', 10)->nullable()->default(null);
             $table->string('celular_representante', 15)->nullable()->default(null);
@@ -54,7 +54,7 @@ class CreateJuridicosTable extends Migration
             $table->string('provincia_representante', 25)->nullable()->default(null);
             $table->string('departamento_representante', 25)->nullable()->default(null);
             $table->string('referencia_representante', 20)->nullable()->default(null);
-            $table->string('tipo_domicilio_representante', 15)->nullable()->default(null);
+            $table->string('tipo_domicilio_representante', 25)->nullable()->default(null);
             $table->string('poderes_representante', 10)->nullable()->default(null);
             $table->date('fecha_inicio_representante')->nullable()->default(null);
 
