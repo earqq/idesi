@@ -52,7 +52,7 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Cuotas</label>
-                  <input type="number" v-model="form.plazo_inicial"  />
+                  <input type="number" v-model="form.cuotas_inicial"  />
                 </div>
                 <div class="input_wrapper">
                   <label>Disponibilidad de pago</label>
@@ -737,7 +737,7 @@ export default {
         }
 
         this.form.monto_inicial=response.data['prestamo']['monto_inicial'];
-        this.form.plazo_inicial=response.data['prestamo']['plazo_inicial'];
+        this.form.cuotas_inicial=response.data['prestamo']['cuotas_inicial'];
         this.form.disponibilidad_pago_inicial=response.data['prestamo']['disponibilidad_pago_inicial'];
         this.form.destino_inicial=response.data['prestamo']['destino_inicial'];
         this.form.forma_inicial=response.data['prestamo']['forma_inicial'];
@@ -887,7 +887,7 @@ export default {
           conyuge_tiene: 0,
         },
         monto_inicial: "",
-        plazo_inicial: "0",
+        cuotas_inicial: "0",
         disponibilidad_pago_inicial: "",
         destino_inicial: "",
         forma_inicial: "0",

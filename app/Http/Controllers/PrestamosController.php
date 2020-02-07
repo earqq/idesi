@@ -20,7 +20,7 @@ class PrestamosController extends Controller
     public function search($state,$text=''){
         $prestamos = Prestamo::leftJoin('clientes','prestamos.clientes_id',"=","clientes.id")
         ->leftJoin('naturals','clientes.id','=','naturals.clientes_id')
-        ->leftJoin('juridicos','clientes.id','=','juridicos.clientes_id')
+        ->leftJoin('juridicos','clientes.id','=','juridicos.clientes_id')       
         ->rightJoin('evaluacions','evaluacions.prestamos_id','prestamos.id')
         ->where(function($query) use($state){
             if($state!='TODOS'){
@@ -43,9 +43,9 @@ class PrestamosController extends Controller
                 ->where('prestamos.estado','PENDIENTE')
                 ->where('evaluacions.users_id','!=',Auth::user()->id);
             }
-            elseif(Auth::user()->nivel == '4')
-                $query->where('prestamos.estado','=', 'PENDIENTE');
             elseif(Auth::user()->nivel == '2')
+                $query->where('prestamos.estado','=', 'PENDIENTE');
+            elseif(Auth::user()->nivel == '4')
                 $query->where('prestamos.users_id','=', Auth::user()->id);  
         })
         ->select('clientes.documento',

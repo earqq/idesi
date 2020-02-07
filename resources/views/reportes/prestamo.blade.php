@@ -60,7 +60,7 @@
                 <tbody>
                         <tr>
                             <td> <span class="title">MONTO</span> <span > S/. {{$prestamo->monto_inicial}}</span> </td>
-                            <td> <span class="title">PLAZO</span> <span > {{$prestamo->plazo_inicial}}</span> </td>
+                            <td> <span class="title">PLAZO</span> <span > {{$prestamo->cuotas_inicial}}</span> </td>
                             <td> <span class="title">DISPONIBILIDAD DE PAGO</span> <span >S/. {{$prestamo->disponibilidad_pago_inicial}}</span> </td>
                         </tr>
                         <tr>

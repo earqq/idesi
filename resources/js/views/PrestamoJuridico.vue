@@ -55,7 +55,7 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Cuotas</label>
-                  <input type="number" v-model="form.plazo_inicial"  />
+                  <input type="number" v-model="form.cuotas_inicial"  />
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
                   <label>Disponibilidad de pago</label>
@@ -655,7 +655,7 @@ export default {
           fecha_inicio_representante:"",
         },
         monto_inicial: "",
-        plazo_inicial: "5",
+        cuotas_inicial: "5",
         disponibilidad_pago_inicial: "",
         destino_inicial: "",
         forma_inicial: "DIARIO",

@@ -70,7 +70,7 @@
       </div>
 
       <div class="files_grid">
-        <a class="add_file" @click="flagModalUpload = true" v-if="$store.state.currentUser.nivel=='2' && prestamo.estado=='PROCESO'">
+        <a class="add_file" @click="flagModalUpload = true" v-if="$store.state.currentUser.nivel=='4' && prestamo.estado=='PROCESO'">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>

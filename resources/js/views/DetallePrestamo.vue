@@ -63,7 +63,7 @@
                 </li>
                   <li>
                   <strong>Plazo </strong> 
-                  <p>{{prestamo_detalle.plazo_inicial}}</p>
+                  <p>{{prestamo_detalle.cuotas_inicial}}</p>
                 </li>
                   <li>
                   <strong>Disponibilidad de pago </strong> 
