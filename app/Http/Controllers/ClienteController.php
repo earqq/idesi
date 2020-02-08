@@ -743,16 +743,15 @@ class ClienteController extends Controller
             $natural->telefono = $request->natural['telefono'];
             $natural->tipo_domicilio =  $request->natural['tipo_domicilio'];
             $natural->save();
-            
             if($request->conyugue['conyuge_tiene']=='SI'){
                 $conyugue = Conyugue::where('naturals_id',$natural->id)->first();
                 if(!$conyugue){
                     $conyugue = new Conyugue;
-                   }
-                   $conyugue->centro_laboral= $request->conyugue['centro_laboral_conyugue'];
-                   $conyugue->direccion = $request->conyugue['direccion_laboral_conyugue'] ;
-                   $conyugue->documento = $request->conyugue['documento_conyugue'] ;
-                   $conyugue->estado_civil =  $request->conyugue['estado_civil_conyugue'] ;
+                }   
+                $conyugue->centro_laboral= $request->conyugue['centro_laboral_conyugue'];
+                $conyugue->direccion = $request->conyugue['direccion_laboral_conyugue'] ;
+                $conyugue->documento = $request->conyugue['documento_conyugue'] ;
+                $conyugue->estado_civil =  $request->conyugue['estado_civil_conyugue'] ;
                    $conyugue->nacimiento =  $request->conyugue['nacimiento_conyugue'];
                    $conyugue->nombres =  $request->conyugue['nombres_conyugue'];
                    $conyugue->ocupacion =  $request->conyugue['ocupacion_conyugue'];

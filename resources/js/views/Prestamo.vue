@@ -263,7 +263,7 @@
                       type="text"
                       v-model="form.conyugue.documento_conyugue"
                       @keyup="datosCliente()"
-                      v-mask="'########'"
+                      maxlength='15'
                     />
                     <div class="message">número de documento inválido</div>
                   </div>
@@ -307,7 +307,7 @@
                   </div>                 
                   <div class="input_wrapper">
                     <label>Teléfono</label>
-                    <input type="text" v-model="form.conyugue.telefono_conyugue" />
+                    <input type="text" v-model="form.conyugue.telefono_conyugue" maxlength='11' />
                   </div>
                   <div class="input_wrapper"  :class="{require: !validateCelularConyuge}">
                     <label>Celular</label>
@@ -724,7 +724,7 @@ export default {
           socio_conyugue: "NO",
           codigo_socio_conyugue: "",
           aporte_socio_conyugue: "",
-          conyuge_tiene: 0
+          conyuge_tiene: "NO"
         },
         monto_inicial: "",
         cuotas_inicial: "5",
@@ -832,7 +832,7 @@ export default {
 
 
      validateDocumentoConyuge(){
-      return this.form.conyugue.documento_conyugue.length>=8
+      return String(this.form.conyugue.documento_conyugue).length > 6
     },
 
      validateNombreConyuge(){
@@ -1045,7 +1045,6 @@ export default {
           documento: this.form.conyugue.documento_conyugue
         })
         .then(function(response) { 
-          console.log(' si viene')
           if(response.data)
           me.form.conyugue.nombres_conyugue =
             response.data["nombres"] + " " + response.data["surnames"];
@@ -1107,7 +1106,7 @@ export default {
         });
     },
     submit() {
- 
+      console.log(this.form)
         this.loading= true
       this.$http
         .post(`/${this.resource}/prestamo`, this.form)

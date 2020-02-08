@@ -205,7 +205,7 @@
             </div>
           </div>
 
-          <div class="form_step_wrapper in_bottom" v-if="form.conyuge.conyuge_tiene=='SI'">
+          <div class="form_step_wrapper in_bottom" v-if="form.conyugue.conyuge_tiene=='SI'">
             <h3 class="title">
               Cónyuge o Conviviente
               <button  class="delete_section" type="button"  @click.prevent="clickRemoveconyuge()">
@@ -218,7 +218,7 @@
                   <label>Documento de Identidad</label>
                   <input
                     type="text"
-                    v-model="form.conyuge.documento_conyugue"
+                    v-model="form.conyugue.documento_conyugue"
                     @change="datosCliente()"
                     v-mask="'########'"
                   />
@@ -226,15 +226,15 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Nombres y Apellidos</label>
-                  <input type="text" v-model="form.conyuge.nombres_conyugue"  />
+                  <input type="text" v-model="form.conyugue.nombres_conyugue"  />
                 </div>
                 <div class="input_wrapper">
                   <label>Fecha de Nacimiento</label>
-                  <input type="date" v-model="form.conyuge.nacimiento_conyugue"/>
+                  <input type="date" v-model="form.conyugue.nacimiento_conyugue"/>
                 </div>
                 <div class="input_wrapper">
                   <label>Estado Civil</label>
-                  <select v-model="form.conyuge.estado_civil_conyugue">
+                  <select v-model="form.conyugue.estado_civil_conyugue">
                     <option value="SOLTERO">SOLTERO</option>
                     <option value="CASADO">CASADO</option>
                     <option value="CONVIVIENTE">CONVIVIENTE</option>
@@ -244,44 +244,49 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Ocupación</label>
-                  <input type="text" v-model="form.conyuge.ocupacion_conyugue" />
+                  <input type="text" v-model="form.conyugue.ocupacion_conyugue" />
                 </div>
                 <div class="input_wrapper">
                   <label>Socio</label>
-                  <select v-model="form.conyuge.socio_conyugue">
+                  <select v-model="form.conyugue.socio_conyugue">
                     <option value="SI">SI</option>
                     <option value="NO">NO</option>
                   </select>
                 </div>
                 <div class="input_wrapper">
                   <label>Código</label>
-                  <input type="text" v-model="form.conyuge.codigo_socio_conyugue"  v-if="form.conyuge.socio_conyugue=='SI'"/>
-                  <input type="text"  disabled v-else>
+                  <input type="text" v-model="form.conyugue.codigo_socio_conyugue"  v-if="form.conyugue.socio_conyugue=='SI'"/>
                 </div>
                 <div class="input_wrapper">
                   <label>Aporte</label>
-                  <vue-numeric currency="S/. " separator="," v-model="form.conyuge.aporte_socio_conyugue"  v-bind:precision="2" v-if="form.conyuge.socio_conyugue=='SI'"></vue-numeric>
-                  <input type="text"  disabled v-else>
+                  <vue-numeric currency="S/. " separator="," v-model="form.conyugue.aporte_socio_conyugue"  v-bind:precision="2" v-if="form.conyugue.socio_conyugue=='SI'"></vue-numeric>
                 </div>
                 <div class="input_wrapper">
                   <label>Teléfono</label>
-                  <input type="text" v-model="form.conyuge.telefono_conyugue" />
+                  <input type="text" v-model="form.conyugue.telefono_conyugue" />
                 </div>
                 <div class="input_wrapper">
                   <label>Celular</label>
                   <input
                     type="text"
                     v-mask="'### ### ###'"
-                    v-model="form.conyuge.celular_conyugue"
+                    v-model="form.conyugue.celular_conyugue"
                   />
                 </div>
-                <div class="input_wrapper">
+                  <div class="input_wrapper" >
+                    <label>¿Trabaja?</label>
+                    <select v-model="form.conyugue.trabaja_conyugue">
+                      <option value="SI">SI</option>
+                      <option value="NO">NO</option>
+                    </select>
+                  </div>
+                <div v-if='form.conyugue.trabaja_conyugue' class="input_wrapper">
                   <label>Centro Laboral</label>
-                  <input type="text" v-model="form.conyuge.centro_laboral_conyugue"/>
+                  <input type="text" v-model="form.conyugue.centro_laboral_conyugue"/>
                 </div>
-                <div class="input_wrapper">
+                <div v-if='form.conyugue.trabaja_conyugue' class="input_wrapper">
                   <label>Dirección centro laboral</label>
-                  <input type="text" v-model="form.conyuge.direccion_laboral_conyugue" />
+                  <input type="text" v-model="form.conyugue.direccion_laboral_conyugue" />
                 </div>
               </div>
             </div>
@@ -291,7 +296,7 @@
             type="button"
             @click.prevent="clickAddconyuge"
             class="add_section in_bottom"
-            v-if="form.conyuge.conyuge_tiene=='NO'">
+            v-if="form.conyugue.conyuge_tiene=='NO'">
             <span>AGREGAR CÓNYUGE O CONVIVIENTE</span>
             <i class="material-icons-outlined">add</i> 
           </button>
@@ -719,21 +724,22 @@ export default {
         this.form.natural.direccion_laboral = response.data["natural"]["direccion_laboral"];
         console.log(response.data)
         if (response.data["tiene_conyuge"]=='SI') {
-          this.form.conyuge.documento_conyugue = response.data["conyugue"]["documento"];
-          this.form.conyuge.nombres_conyugue =  response.data["conyugue"]["nombres"];
-          this.form.conyuge.nacimiento_conyugue =  response.data["conyugue"]["nacimiento"];
-          this.form.conyuge.estado_civil_conyugue =  response.data["conyugue"]["estado_civil"];
-          this.form.conyuge.ocupacion_conyugue = response.data["conyugue"]["ocupacion"];
-          this.form.conyuge.telefono_conyugue = response.data["conyugue"]["telefono"];
-          this.form.conyuge.celular_conyugue = response.data["conyugue"]["celular"];
-          this.form.conyuge.centro_laboral_conyugue = response.data["conyugue"]["centro_laboral"];
-          this.form.conyuge.direccion_laboral_conyugue = response.data["conyugue"]["direccion"];
-          this.form.conyuge.socio_conyugue = response.data["conyugue"]["socio"];
-          this.form.conyuge.codigo_socio_conyugue = response.data["conyugue"]["codigo_socio"];
-          this.form.conyuge.aporte_socio_conyugue = response.data["conyugue"]["aporte_socio"];
-          this.form.conyuge.conyuge_tiene='SI';
+          this.form.conyugue.documento_conyugue = response.data["conyugue"]["documento"];
+          this.form.conyugue.nombres_conyugue =  response.data["conyugue"]["nombres"];
+          this.form.conyugue.nacimiento_conyugue =  response.data["conyugue"]["nacimiento"];
+          this.form.conyugue.estado_civil_conyugue =  response.data["conyugue"]["estado_civil"];
+          this.form.conyugue.ocupacion_conyugue = response.data["conyugue"]["ocupacion"];
+          this.form.conyugue.telefono_conyugue = response.data["conyugue"]["telefono"];
+          this.form.conyugue.celular_conyugue = response.data["conyugue"]["celular"];
+          this.form.conyugue.trabaja_conyugue = response.data["conyugue"]["trabaja"];
+          this.form.conyugue.centro_laboral_conyugue = response.data["conyugue"]["centro_laboral"];
+          this.form.conyugue.direccion_laboral_conyugue = response.data["conyugue"]["direccion"];
+          this.form.conyugue.socio_conyugue = response.data["conyugue"]["socio"];
+          this.form.conyugue.codigo_socio_conyugue = response.data["conyugue"]["codigo_socio"];
+          this.form.conyugue.aporte_socio_conyugue = response.data["conyugue"]["aporte_socio"];
+          this.form.conyugue.conyuge_tiene='SI';
         }else{
-          this.form.conyuge.conyuge_tiene='NO';
+          this.form.conyugue.conyuge_tiene='NO';
         }
 
         this.form.monto_inicial=response.data['prestamo']['monto_inicial'];
@@ -784,10 +790,10 @@ export default {
        this.tab = index - 1;
     },
     clickAddconyuge(){
-      this.form.conyuge.conyuge_tiene='SI'
+      this.form.conyugue.conyuge_tiene='SI'
     },
     clickRemoveconyuge(){
-      this.form.conyuge.conyuge_tiene='NO'
+      this.form.conyugue.conyuge_tiene='NO'
     },
     clickAddAval() {
       // this.contador_aval++;
@@ -871,7 +877,7 @@ export default {
           domicilio_provincia: "",
           domicilio_distrito: ""
         },
-        conyuge: {
+        conyugue: {
           documento_conyugue: "",
           nombres_conyugue: "",
           nacimiento_conyugue: "",
@@ -879,6 +885,7 @@ export default {
           ocupacion_conyugue: "",
           telefono_conyugue: "",
           celular_conyugue: "",
+          trabaja_conyugue:'',
           centro_laboral_conyugue: "",
           direccion_laboral_conyugue: "",
           socio_conyugue: 0,
@@ -900,7 +907,7 @@ export default {
         coutas: 0,
         tasa: 0.0,
         comentarios: "",
-        estado: "PENDIENTE",
+        estado: "PROCESO",
       };
     },
     datosCliente() {
@@ -908,10 +915,10 @@ export default {
       // me.loader = "true";
       axios
         .post("/consulta/doc", {
-          documento: this.form.conyuge.documento_conyugue
+          documento: this.form.conyugue.documento_conyugue
         })
         .then(function(response) { 
-          me.form.conyuge.nombres_conyugue = response.data["nombres"] +' '+ response.data["surnames"];
+          me.form.conyugue.nombres_conyugue = response.data["nombres"] +' '+ response.data["surnames"];
 
           // me.loader = false;
         })
