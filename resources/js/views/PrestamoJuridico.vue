@@ -782,6 +782,8 @@ export default {
     this.$http
       .get(`/${this.resource}/datos/prestamo/juridico/` + this.$route.params.dni)
       .then(response => {
+        console.log("response")
+        console.log(response)
         this.form.cliente.departamento = response.data["cliente"]["departamento"] || "";
         this.form.cliente.provincia = response.data["cliente"]["provincia"] || "";
         this.form.cliente.distrito = response.data["cliente"]["distrito"] || "";
@@ -808,7 +810,7 @@ export default {
          this.form.representante.departamento_representante =  response.data["juridico"]["departamento_representante"] || ""
          this.form.representante.provincia_representante =  response.data["juridico"]["provincia_representante"] || ""
          this.form.representante.referencia_representante =  response.data["juridico"]["referencia_representante"] || ""
-         this.form.representante.tipo_domicilio_representante =  response.data["juridico"]["tipo_domicilio_representante"] || ""
+         this.form.representante.tipo_domicilio_representante =  response.data["juridico"]["tipo_domicilio_representante"] || "PROPIA"
          this.form.representante.poderes_representante =  response.data["juridico"]["poderes_representante"] || ""
          this.form.representante.fecha_inicio_representante =  response.data["juridico"]["fecha_inicio_representante"] || ""
         

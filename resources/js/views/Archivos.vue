@@ -52,7 +52,7 @@
           </label>
         </div>
 
-        <button v-if='fileName!="seleccione"' class="button_primary medium" type="button" @click="uploadFile">
+        <button v-if='fileName!="seleccione" && attachment.content.name.length>1' class="button_primary medium" type="button" @click="uploadFile">
           <span> CARGAR ARCHIVO </span>
         </button>
       </div>

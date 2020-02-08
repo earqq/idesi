@@ -388,7 +388,7 @@ class ClienteController extends Controller
                         $jur_rep = Juridico::find($representante->juridicos_id);
                         $jur_rep->documento_representante = $rp['documento'];
                         $jur_rep->nombres_representante = $rp['nombres'] ;
-                        $jur_rep->tipo_domicilio_representante  = 'PROPIO' ;
+                        $jur_rep->tipo_domicilio_representante  = 'PROPIA' ;
                         $jur_rep->estado_civil_representante  = 'SOLTERO' ;
                         $jur_rep->save();
                     }
@@ -916,7 +916,7 @@ class ClienteController extends Controller
             $prestamo->clientes_id = $cliente->id;
             $prestamo->users_id = Auth::user()->id;
             $prestamo->monto_inicial = $request->input('monto_inicial');
-            $prestamo->plazo_inicial = $request->input('plazo_inicial');
+            $prestamo->cuotas_inicial = $request->input('cuotas_inicial');
             $prestamo->disponibilidad_pago_inicial = $request->input('disponibilidad_pago_inicial');
             $prestamo->destino_inicial = $request->input('destino_inicial');
             $prestamo->forma_inicial = $request->input('forma_inicial');

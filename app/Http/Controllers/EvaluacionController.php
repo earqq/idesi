@@ -251,7 +251,7 @@ class EvaluacionController extends Controller
 
     public function evaluarFinal(Request $request)
     {
-      
+        \Log::alert($request);
             try{
 
                    DB::beginTransaction();

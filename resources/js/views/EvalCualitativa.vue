@@ -14,7 +14,7 @@
             <span>2</span>
             <p>TRANSPORTE</p>
           </div>
-          <div class="tab" @click=" (validateStep1 && validateStep2) ? tab = 3 : tabError()" :class="{selected: tab == 3}">
+          <div v-if='$route.params.prestamo=="PN"' class="tab" @click=" (validateStep1 && validateStep2) ? tab = 3 : tabError()" :class="{selected: tab == 3}">
             <span>3</span>
             <p>FAMILIARES</p>
           </div>
@@ -79,12 +79,12 @@
                 </div>
               </div>
 
-              <div class="form_buttons all">
+              <div  class="form_buttons all">
                 <a class="button_primary medium next" @click=" (validateStep1) ? next(1) : tabError()">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
-              </div>
+              </div>          
             </div>
             
             <div v-show="tab == 2" class="form_step">
@@ -239,7 +239,11 @@
                   <i class="material-icons-outlined">navigate_before</i>
                   <span>ATRAS</span>
                 </a>
-                <a class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(2) : tabError()">
+                <a v-if='$route.params.prestamo=="PN"' class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(2) : tabError()">
+                  <span>SIGUIENTE</span>
+                  <i class="material-icons-outlined">navigate_next</i>
+                </a>
+                <a v-else class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(3) : tabError()">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
@@ -247,7 +251,7 @@
 
             </div>
 
-            <div v-show="tab == 3" class="form_step">
+            <div v-show="tab == 3" v-if='$route.params.prestamo=="PN"' class="form_step">
               <div class="form_step_wrapper">
                 <h3 class="title">Información Familiar</h3>
                 <div class="form_content">
@@ -328,7 +332,7 @@
 
                           <div class="input_wrapper">
                             <label>Costo</label>
-                                <input
+                                  <input
                                 v-if='hijo.estudia'
                                 type="text"
                                 :value="'S/. '+hijo.costo"

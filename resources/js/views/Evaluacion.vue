@@ -57,7 +57,7 @@
               <div class="options">
                 <i class="material-icons-outlined" >more_horiz</i>
                 <ul>
-                  <li v-if='$store.state.currentUser.nivel=="2"'> 
+                  <li v-if='$store.state.currentUser.nivel=="4"'> 
                     <router-link  v-if="tipo_persona=='PN'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                     <router-link  v-else :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id}}"> Editar </router-link>
                   </li>

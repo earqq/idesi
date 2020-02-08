@@ -498,7 +498,10 @@ class EvaluacionesController extends Controller
         if($endeudamiento<0.4) $endeudamiento_resultado='BIEN';
         \Log::alert('ENDEUDAMIENTO RESULTADO: '.$endeudamiento_resultado);
         //MARGEN NETO
+        if($ingresos_ventas_total>1)
         $margen_neto=$disponible_desp_cuota_total/$ingresos_ventas_total;
+        else 
+            $margen_neto=$disponible_desp_cuota_total/1;
         \Log::alert('RATIOS MARGEN NETO: '.$margen_neto);
         $margen_neto_resultado='MAL';
         if($margen_neto>0.05) $margen_neto_resultado='BIEN';
