@@ -29,21 +29,12 @@ Route::group(['middleware'=>['auth']],function(){
             return view('index');
         });
         
-
-        Route::get('user/tipo','UserController@tipo');
-
-        Route::get('/user', 'UserController@index');
+        Route::resource('user','UserController');
         Route::get('/currentUser', 'UserController@currentUser');
-        Route::post('/user/registrar', 'UserController@store');
-        Route::put('/user/actualizar', 'UserController@update');
-        Route::put('/user/desactivar', 'UserController@desactivar');
-        Route::put('/user/activar', 'UserController@activar');
 
+        
         Route::get('/inicio/datos', 'InicioController@index');
         
-
-
-
         //Busquedas
         Route::get('clientes/search/{state}/{text?}','ClienteController@search');
         Route::get('prestamos/search/{state}/{text?}','PrestamosController@search');

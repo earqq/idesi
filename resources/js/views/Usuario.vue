@@ -4,7 +4,7 @@
         <div class="modal_content" v-if="flagModalUser">
           <div class="modal_wrapper">
             <div class="title"> 
-              <h1> {{tipoAccion == 1 ? 'Crear' : 'Actualizar'}} Usuario </h1>
+              <h1> {{user.id == 0 ? 'Crear' : 'Actualizar'}} Usuario </h1>
               <i  @click="flagModalUser = false" class="material-icons-outlined">close</i>
             </div>
             <form>
@@ -29,16 +29,17 @@
                     <input type="text" v-model="user.usuario" >
                 </div>
 
-                <div class="input_wrapper" :class="{require: user.password.length<4}">
+                <div class="input_wrapper" :class="{require: !validateUserPassword}">
                     <label>Contraseña</label>
                     <input type="text" v-model="user.password" >
                 </div>
-             
-
             </form>
-            <button type="button" :disabled='!validateUser' class="button_primary medium" :class="{loading: loading}" @click="registerUser()">
-              <span>
+            <button type="button" v-if='validateUser' class="button_primary medium" :class="{loading: loading}" @click="registerUser()">
+              <span v-if='user.id==0'>
               REGISTRAR
+              </span>
+              <span v-else>
+                ACTUALIZAR
               </span>
               <div class="load_spinner"></div>
             </button>            
@@ -48,7 +49,7 @@
         <div class="options_bar">
             <div class="search_bar">
             <i class="material-icons-outlined">search</i>
-                <input type="text" v-model='search.text' placeholder="Buscar Usuario">
+                <input type="text" v-model='search.text' @keyup='getUsers()' placeholder="Buscar Usuario">
             </div>
             <div class="switch_view">
             <a @click="type_list = 1" :class="{selected: type_list == 1}">
@@ -61,7 +62,7 @@
     
             <a class="add_client button_primary medium" @click="openModal()">
                 <span>
-                    NUEVO USUARIO
+                    NUEVO USUARIO 
                 </span>
                 <i class="material-icons-outlined">add</i>
             </a>
@@ -70,10 +71,10 @@
         <div class="table_container">
             <div class="table_grid"  v-if="type_list=='1'">
               <article class="user_card" v-for="user in users" :key="user.id" >
-                <div class="options">
+                <div  class="options">
                   <i class="material-icons-outlined" >more_horiz</i>
-                  <ul>
-                    <li @click="openEditModal(user)">
+                  <ul v-if='user.nivel>2' >
+                    <li  @click="openEditModal(user)">
                       Editar
                     </li>                     
                   </ul>   
@@ -85,7 +86,7 @@
                   </div>
                   <div class="name_wrapper">
                     <p class="truncate">{{user.name}}</p>
-                    <small class="truncate" >{{user.nivel}}</small>
+                    <small class="truncate" >{{levels[user.nivel]}}</small>
                   </div>
                 </div>
               </article>
@@ -107,10 +108,10 @@
                         <tr v-for="user in users" :key="user.id">
                             <td v-text="user.name"></td>
                             <td v-text="user.usuario"></td>
-                            <td v-text="user.nivel"></td>
+                            <td v-text="levels[user.nivel]"></td>
                             <td class="options">
                               <i class="material-icons-outlined" >more_horiz</i>
-                              <ul>
+                              <ul  v-if='user.nivel>2'>
                                 <li @click="openEditModal(user)">
                                   Editar
                                 </li>                              
@@ -144,6 +145,13 @@
                 type_list: 1,
                 search:{
                   text:''
+                },
+                levels:{
+                  '1' : 'Administrador',
+                  '2' : 'Evaluador final',
+                  '3' : 'Evaluador',
+                  '4' : 'Analista',
+                  '5' : 'Plataforma',
                 }
             }
         },
@@ -164,7 +172,7 @@
 
                 this.loading=true
 
-                axios.post('/user/registrar',
+                axios.post('/user',
                   this.user
                 ).then( response => {
                     this.flagModalUser = false
@@ -172,12 +180,14 @@
                     this.getUsers();
                     this.$toast.success(
                         "El usuario fue creado",
+                        'Exitoso',
                         toastOptions.success
                     )
                 }).catch( error => {
                     console.log(error);
                     this.$toast.success(
                         "Error al crear usuario ",
+                        'Fallo',
                         toastOptions.error
                     )
                 })
@@ -187,30 +197,37 @@
               this.user.id = data['id']
               this.user.name = data['name']
               this.user.usuario = data['usuario']
-              this.user.password=data['password']
               this.user.nivel=data['nivel']
             },
             openModal(){
-              this.tipoAccion = 1
               this.flagModalUser = true
               this.user.name= ''
+              this.user.id= 0
               this.user.usuario=''
               this.user.password=''
-              this.user.nivel='4'
+              this.user.nivel=4
             },
         },
         computed:{
+          validateUserName(){
+            return this.user.name.length>3
+          },
+          validateUserUsuario(){
+            return this.user.usuario.length>3
+          },
+          validateUserPassword(){
+            if(this.user.id==0)
+              return this.user.password.length>3
+            else return true
+          },
           validateUser(){
-            if(this.user.name.length>3 && 
-              this.user.usuario.length>3 && 
-              this.user.password.length>2
-              ){
+            if(this.validateUserName && 
+                this.validateUserUsuario &&
+                this.validateUserPassword
+              )
                 return true
-              }
-            else{
-
-              return false
-            } 
+              else
+                return false
           }
         },
         mounted() {

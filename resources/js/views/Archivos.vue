@@ -83,7 +83,7 @@
                  <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
                 <p> Solicitud de Admisión </p> 
-                <small> 27 de enero de 2020 </small>            
+                <small> 27 de enero de 2020 </small>              
               </div>
                   
             </a>

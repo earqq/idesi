@@ -411,7 +411,7 @@ import VueNumeric from 'vue-numeric'
 
 export default {
 mixins: [serviceNumber],
-  components: {VueNumeric}, 
+  components: {VueNumeric},   
   data() {
     return {
       resource: "clientes",
