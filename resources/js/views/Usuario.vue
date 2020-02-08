@@ -157,21 +157,17 @@
         },
         methods : {
             getUsers (){
-                let me=this;
                 var url=  '/user?buscar='+ this.search.text 
-                axios.get(url).then(function (response) {
-                    var respuesta= response.data;
-                    me.users = respuesta.users.data; 
-                    me.evaluador_final = respuesta.evaluador_final;
+                axios.get(url).then(res => {
+                    this.users = res.data.users.data; 
+                    this.evaluador_final = res.data.evaluador_final;
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
             },          
             registerUser (){
-
                 this.loading=true
-
                 axios.post('/user',
                   this.user
                 ).then( response => {
