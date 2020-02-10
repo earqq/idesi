@@ -391,7 +391,7 @@
                 <i class="material-icons-outlined"> navigate_before </i>
                 <span> ATRAS </span>
               </a>
-              <a class="button_primary medium next" @click.prevent="validateStep1 ? registar() : tabError()" :class="{loading: loading}">
+              <a class="button_primary medium next" @click.prevent="validateStep1 ? registrar() : tabError()" :class="{loading: loading}">
                 <div class="load_spinner"></div>
                 <span> FINALIZAR </span>
                 <i class="material-icons-outlined">check</i>
@@ -646,7 +646,7 @@ mixins: [serviceNumber],
         });
     },
 
-    registar() {
+    registrar() {
      
      this.loading=true
       axios
@@ -659,7 +659,7 @@ mixins: [serviceNumber],
                     "Exitoso",
                     toastOptions.success
                   )
-              // this.$router.push({ name: 'clientes'})
+              this.$router.push({ name: 'clientes'})
             }else{
                 this.loading=false
                 this.$toast.error(

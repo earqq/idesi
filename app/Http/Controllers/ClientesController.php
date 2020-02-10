@@ -90,7 +90,7 @@ class ClientesController extends Controller
 
             DB::beginTransaction();
             $cliente = Cliente::find($id);
-            $cliente->estado = 1;
+            $cliente->estado = 2;
             $cliente->save();
 
             DB::commit();
@@ -115,7 +115,7 @@ class ClientesController extends Controller
             DB::beginTransaction();
 
             $cliente = Cliente::find($id);
-            $cliente->estado = 2;
+            $cliente->estado = 3;
             $cliente->save();
             DB::commit();
             return [
@@ -233,13 +233,7 @@ class ClientesController extends Controller
         $cliente = Cliente::where('documento',$documento)->first();
         $persona = Persona::where('clientes_id',$cliente->id)->first();
         $conyugue = Conyuge::where('naturals_id',$persona->id)->first();
-        $tiene_conyuge = '';
-        if($conyugue){
-            $tiene_conyuge='SI'; 
-        }
-        else{
-            $tiene_conyuge='NO';
-        }     
+      
         return compact('cliente','persona','conyugue','tiene_conyuge');
     }
 

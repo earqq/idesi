@@ -708,15 +708,7 @@ export default {
     },
     validateStep1() {
       return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
-    },
-    validateNombre(){
-      return this.prestamo.cliente.empresa.nombres.length>4;
-    }
-    ,
-    validateApellidos(){
-      return this.prestamo.cliente.empresa.apellidos.length>5;
-    }
-    ,
+    },   
     validateActividad(){
       return true
     },
@@ -755,19 +747,20 @@ export default {
     }
     ,
     validateNacimiento(){
-      if(this.prestamo.cliente.empresa.fecha_nacimiento)
-      return this.prestamo.cliente.empresa.fecha_nacimiento.length>4
+      if(this.prestamo.cliente.empresa.representante.fecha_nacimiento)
+      return this.prestamo.cliente.empresa.representante.fecha_nacimiento.length>4
       else return true
     }
     ,
     validateCivil(){
-      if(this.prestamo.cliente.empresa.estado_civil)
-        return this.prestamo.cliente.empresa.estado_civil.length>5
+      
+      if(this.prestamo.cliente.empresa.representante.estado_civil)
+        return this.prestamo.cliente.empresa.representante.estado_civil.length>5
     }
     ,
     validateOcupacion(){
-      if(this.prestamo.cliente.empresa.ocupacion)
-      return this.prestamo.cliente.empresa.ocupacion.length>4
+      if(this.prestamo.cliente.empresa.representante.ocupacion)
+      return this.prestamo.cliente.empresa.representante.ocupacion.length>4
     }
     ,
     validateCelular(){
@@ -792,10 +785,6 @@ export default {
     ,
     validateReferencia(){
       return this.prestamo.cliente.ubicacion_referencia.length>5
-    }
-    ,
-    validateDomicilio(){
-      return this.prestamo.cliente.empresa.tipo_domicilio.length>5
     }
     ,
     validateCentro(){
@@ -855,37 +844,13 @@ export default {
     },
 
     validateStep2(){
-      if(this.prestamo.cliente.empresa.conyuge.conyuge_tiene=='SI'){
 
-          return this.validateNombre && this.validateApellidos && 
-             this.validateDocumento && this.validateNacimiento &&
+        return this.validateNombres && this.validateDocumento && this.validateNacimiento &&
              this.validateCivil && this.validateOcupacion && 
              this.validateCelular && this.validateDireccion && 
              this.validateDepartamento && this.validateProvincia &&
              this.validateDistrito && this.validateReferencia && 
-             this.validateDomicilio && this.validateCentro && 
-             this.validateDireccionLaboral &&
-              this.validateDocumentoConyuge &&
-              this.validateNombreConyuge &&
-              this.validateNacimientoConyuge &&
-              this.validateOcupacionConyuge &&
-              this.validateCodigoConyuge &&
-              this.validateAporteConyuge &&
-              this.validateCelularConyuge &&
-              this.validateCentroConyuge &&
-              this.validateDireccionConyuge
-
-      }
-      else{
-        return this.validateNombre && this.validateApellidos && 
-             this.validateDocumento && this.validateNacimiento &&
-             this.validateCivil && this.validateOcupacion && 
-             this.validateCelular && this.validateDireccion && 
-             this.validateDepartamento && this.validateProvincia &&
-             this.validateDistrito && this.validateReferencia && 
-             this.validateDomicilio && this.validateCentro && 
-             this.validateDireccionLaboral
-      }
+             this.validateCentro && this.validateDireccionLaboral
 
     }
 
@@ -977,14 +942,14 @@ export default {
     datosCliente() {
       let me = this;
       // me.loader = "true";
-      if(this.prestamo.cliente.empresa.conyuge.documento.length>7){
+      if(this.prestamo.cliente.empresa.representante.documento.length>7){
         axios
         .post("/consulta/doc", {
-          documento: this.prestamo.cliente.empresa.conyuge.documento
+          documento: this.prestamo.cliente.empresa.representante.documento
         })
         .then(function(response) { 
           if(response.data)
-          me.prestamo.cliente.empresa.conyuge.nombres =
+          me.prestamo.cliente.empresa.representante.nombres =
             response.data["nombres"] + " " + response.data["surnames"];
 
           // me.loader = false;
@@ -1045,7 +1010,7 @@ export default {
         });
     },
     registrar() {
-        this.loading= true
+      this.loading= true
       this.$http
         .post(`/prestamos`, this.prestamo)
         .then(response => {

@@ -11,6 +11,7 @@ use App\Conyuge;
 use App\Aval;
 use App\Cliente;
 use App\Subido;
+use App\RepresentanteLegal;
 use App\Garantia;
 class PrestamosController extends Controller
 {
@@ -127,39 +128,75 @@ class PrestamosController extends Controller
             $cliente->ubicacion_referencia = $request->cliente['ubicacion_referencia'];
             $cliente->save();
 
-            $persona = Persona::find($request->cliente['persona']['id']);
-            $persona->nombres = $request->cliente['persona']['nombres'];
-            $persona->apellidos = $request->cliente['persona']['apellidos'];
-            $persona->centro_laboral = $request->cliente['persona']['centro_laboral'];
-            $persona->direccion_laboral = $request->cliente['persona']['direccion_laboral'];
-            $persona->estado_civil = $request->cliente['persona']['estado_civil'];
-            $persona->fecha_nacimiento = $request->cliente['persona']['fecha_nacimiento'];
-            $persona->ocupacion = $request->cliente['persona']['ocupacion'];
-            $persona->tipo_domicilio =  $request->cliente['persona']['tipo_domicilio'];
-            $persona->save();
+            if($cliente->tipo_cliente==1){
+                //Prestamos para personas
+                $persona = $cliente->persona;
+                $persona->nombres = $request->cliente['persona']['nombres'];
+                $persona->apellidos = $request->cliente['persona']['apellidos'];
+                $persona->centro_laboral = $request->cliente['persona']['centro_laboral'];
+                $persona->direccion_laboral = $request->cliente['persona']['direccion_laboral'];
+                $persona->estado_civil = $request->cliente['persona']['estado_civil'];
+                $persona->fecha_nacimiento = $request->cliente['persona']['fecha_nacimiento'];
+                $persona->ocupacion = $request->cliente['persona']['ocupacion'];
+                $persona->tipo_domicilio =  $request->cliente['persona']['tipo_domicilio'];
+                $persona->save();
+                if(strlen($request->cliente['persona']['conyuge']['documento'])>5){
+                    $conyugue = new Conyuge;
+                    if($persona->conyuge)
+                    $conyugue = $persona->conyuge;
+                    $conyugue->centro_laboral= $request->cliente['persona']['conyuge']['centro_laboral'];
+                    $conyugue->direccion_laboral = $request->cliente['persona']['conyuge']['direccion_laboral'] ;
+                    $conyugue->documento = $request->cliente['persona']['conyuge']['documento'] ;
+                    $conyugue->estado_civil =  $request->cliente['persona']['conyuge']['estado_civil'] ;
+                    $conyugue->fecha_nacimiento =  $request->cliente['persona']['conyuge']['fecha_nacimiento'];
+                    $conyugue->nombres =  $request->cliente['persona']['conyuge']['nombres'];
+                    $conyugue->ocupacion =  $request->cliente['persona']['conyuge']['ocupacion'];
+                    $conyugue->telefono =  $request->cliente['persona']['conyuge']['telefono'] ;
+                    $conyugue->celular =  $request->cliente['persona']['conyuge']['celular'];
+                    $conyugue->trabaja =  $request->cliente['persona']['conyuge']['trabaja'];
+                    $conyugue->socio =  $request->cliente['persona']['conyuge']['socio'];
+                    $conyugue->codigo_socio =  $request->cliente['persona']['conyuge']['codigo_socio'];
+                    $conyugue->aporte_socio =  $request->cliente['persona']['conyuge']['aporte_socio'];
+                    $conyugue->persona_id = $persona->id;   
+                    $conyugue->save();
+                }
+            }else{ //Prestamos para empresas
+                $empresa= $cliente->empresa;
+                $empresa->razon_social=$request->cliente['empresa']['razon_social'];
+                $empresa->nombre_comercial=$request->cliente['empresa']['nombre_comercial'];
+                $empresa->actividad_principal=$request->cliente['empresa']['actividad_principal'];
+                $empresa->partida_registral=$request->cliente['empresa']['partida_registral'];
+                $empresa->oficina_principal=$request->cliente['empresa']['oficina_principal'];
+                $empresa->tipo_negocio=$request->cliente['empresa']['tipo_negocio'];
+                $empresa->fecha_constitucion=$request->cliente['empresa']['fecha_constitucion'];
+                $empresa->save();
 
-
-
-            if(strlen($request->cliente['persona']['conyuge']['documento'])>5){
-                $conyugue = new Conyuge;
-                if($persona->conyuge)
-                $conyugue = $persona->conyuge;
-                $conyugue->centro_laboral= $request->cliente['persona']['conyuge']['centro_laboral'];
-                $conyugue->direccion_laboral = $request->cliente['persona']['conyuge']['direccion_laboral'] ;
-                $conyugue->documento = $request->cliente['persona']['conyuge']['documento'] ;
-                $conyugue->estado_civil =  $request->cliente['persona']['conyuge']['estado_civil'] ;
-                $conyugue->fecha_nacimiento =  $request->cliente['persona']['conyuge']['fecha_nacimiento'];
-                $conyugue->nombres =  $request->cliente['persona']['conyuge']['nombres'];
-                $conyugue->ocupacion =  $request->cliente['persona']['conyuge']['ocupacion'];
-                $conyugue->telefono =  $request->cliente['persona']['conyuge']['telefono'] ;
-                $conyugue->celular =  $request->cliente['persona']['conyuge']['celular'];
-                $conyugue->trabaja =  $request->cliente['persona']['conyuge']['trabaja'];
-                $conyugue->socio =  $request->cliente['persona']['conyuge']['socio'];
-                $conyugue->codigo_socio =  $request->cliente['persona']['conyuge']['codigo_socio'];
-                $conyugue->aporte_socio =  $request->cliente['persona']['conyuge']['aporte_socio'];
-                $conyugue->persona_id = $persona->id;   
-                $conyugue->save();
+                $representante= new RepresentanteLegal;
+                if($request->cliente['empresa']['representante']['id'])
+                    $representante=RepresentanteLegal::find($request->cliente['empresa']['representante']['id']);
+                $representante->nombres=$request->cliente['empresa']['representante']['nombres'];
+                $representante->documento=$request->cliente['empresa']['representante']['documento'];
+                $representante->cargo=$request->cliente['empresa']['representante']['cargo'];
+                $representante->fecha_nacimiento=$request->cliente['empresa']['representante']['fecha_nacimiento'];
+                $representante->ocupacion=$request->cliente['empresa']['representante']['ocupacion'];
+                $representante->telefono=$request->cliente['empresa']['representante']['telefono'];
+                $representante->celular=$request->cliente['empresa']['representante']['celular'];
+                $representante->ubicacion_direccion=$request->cliente['empresa']['representante']['ubicacion_direccion'];
+                $representante->ubicacion_departamento=$request->cliente['empresa']['representante']['ubicacion_departamento'];
+                $representante->ubicacion_provincia=$request->cliente['empresa']['representante']['ubicacion_provincia'];
+                $representante->ubicacion_distrito=$request->cliente['empresa']['representante']['ubicacion_distrito'];
+                $representante->ubicacion_referencia=$request->cliente['empresa']['representante']['ubicacion_referencia'];
+                $representante->tipo_domicilio=$request->cliente['empresa']['representante']['tipo_domicilio'];
+                $representante->poderes=$request->cliente['empresa']['representante']['poderes'];
+                $representante->fecha_inicio=$request->cliente['empresa']['representante']['fecha_inicio'];
+                $representante->estado_civil=$request->cliente['empresa']['representante']['estado_civil'];
+                $representante->empresa_id=$empresa->id;
+                $representante->save();
             }
+
+
+
+            
             $prestamo->avales()->delete();
             foreach ($request->avales as $item) {
                 $aval= new Aval;

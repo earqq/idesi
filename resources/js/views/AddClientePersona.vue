@@ -1275,7 +1275,7 @@ export default {
       this.$http
         .post(`/personas`, this.cliente)
         .then(response => {
-              this.loading=false
+            this.loading=false
             if(response.data.success){ 
 
                 this.$toast.success(

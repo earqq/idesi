@@ -30,6 +30,6 @@ class Empresa extends Model
      */
     public function representante()
     {
-        return $this->hasOne('App\Representante', 'empresa_id');
+        return $this->hasOne('App\RepresentanteLegal', 'empresa_id');
     }
 }

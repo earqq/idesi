@@ -59,11 +59,11 @@
             <router-link :to="{ name:'perfil', params: { id: cliente.id } }">
               <div class="detail">
                 <div class="avatar">
-                  <div class="request" v-show="cliente.estado=='0'">
+                  <div class="request" v-show="cliente.estado=='1'">
                     <i class="material-icons-outlined">email</i>
                   </div>
                   <img src="https://picsum.photos/100/100" v-if="false"/>
-                  <div class="avatar_alt" :class="{denied : cliente.estado=='2'}" v-else>{{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }}</div>
+                  <div class="avatar_alt" :class="{denied : cliente.estado=='3'}" v-else>{{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }}</div>
                 </div>
                 <div class="name_wrapper">
                   <p class="truncate">{{cliente.apellidos || cliente.razon_social}}</p>
@@ -91,11 +91,11 @@
               <tr  v-for="cliente in clientes" :key="cliente.id">
                 <td class="client">
                   <div class="avatar">
-                    <div class="request" v-show="cliente.estado=='0'">
+                    <div class="request" v-show="cliente.estado=='1'">
                       <i class="material-icons-outlined">email</i>
                     </div>
                     <img src="https://picsum.photos/200/300" v-if="false" />
-                    <div class="avatar_alt"  :class="{denied : cliente.estado=='2'}" v-else> {{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }} </div>
+                    <div class="avatar_alt"  :class="{denied : cliente.estado=='3'}" v-else> {{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }} </div>
                   </div>
                   <p class="truncate"> {{cliente.nombres}} {{cliente.apellidos || cliente.razon_social}}</p>
                 </td>
