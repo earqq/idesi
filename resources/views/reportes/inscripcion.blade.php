@@ -33,7 +33,7 @@
                 </tr>
                     
                 <tr>
-                <td colspan="2" style="padding: 10px 0;border: none;"><span class="title">Nro de Registro</span> 45222  <span class="title">Agencia</span> Huánuco </td>
+                <td colspan="2" style="padding: 10px 0;border: none;"><span class="title">Nro de Registro</span> {{$cliente->numero_registro}}  <span class="title">Agencia</span> {{$cliente->agencia}} </td>
                 </tr>
             </table>
 
@@ -42,7 +42,7 @@
                 <thead>
                     <tr>
                         <th colspan="3" style="text-align: inherit;border: none;font-size:12px">Sr. Presidente del Consejo de Administración de la Cooperativa de Ahorro
-                         y Crédito Sembrar, solicito ser aceptado(a) como socio(a), asimismo me comprometo a cumplir con las disposiciones del Estatuto y Leyes vigentes.</th>
+                        y Crédito Sembrar, solicito ser aceptado(a) como socio(a), asimismo me comprometo a cumplir con las disposiciones del Estatuto y Leyes vigentes.</th>
                     </tr>
                 </thead>
             </table>

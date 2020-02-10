@@ -22,15 +22,15 @@
           </a>
         </div>
  
-        <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4' class="add_client button_primary medium" :to="{name:'registrar/natural'}"  >
+        <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4' class="add_client button_primary medium" :to="{name:'registrar/persona'}"  >
           <span>
-            CREAR NATURAL
+            CREAR PERSONA
           </span>
           <i class="material-icons-outlined">add</i>
         </router-link> 
-        <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4'  class="add_client button_primary medium" :to="{name:'registrar/juridico'}"  >
+        <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4'  class="add_client button_primary medium" :to="{name:'registrar/empresa'}"  >
           <span>
-            CREAR JURIDICO
+            CREAR EMPRESA
           </span>
           <i class="material-icons-outlined">add</i>
         </router-link>     
@@ -56,7 +56,7 @@
                 </li>
               </ul>   
             </div>
-            <router-link :to="{ name:'perfil', params: { documento: cliente.documento,persona:cliente.tipo_cliente } }">
+            <router-link :to="{ name:'perfil', params: { id: cliente.id } }">
               <div class="detail">
                 <div class="avatar">
                   <div class="request" v-show="cliente.estado=='0'">
@@ -175,13 +175,10 @@ export default {
           '/clientes/search/'+this.search.state+'/'+this.search.text,          
         )
         .then(response => {
+          console.log("respuesta:"+ console.log(response))
           this.clientes=response.data
         })
     },   
-    resetForm() {
-      this.initForm();
-    },
-    
   }
 };
 </script>

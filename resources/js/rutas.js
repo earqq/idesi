@@ -7,7 +7,7 @@ export default new Router({
     routes:[
         {
             path: '/',
-            name: 'inicio',
+            name: 'main',
             component: require('./views/Inicio').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
@@ -24,6 +24,22 @@ export default new Router({
             }
 
         },
+        {
+            path: '/clientes/:id/',
+            name: 'perfil', 
+            component: require('./views/Cliente').default,
+            beforeEnter: (to, from, next) => {
+                axios.get("/currentUser")
+                    .then(res => { 
+        
+                         if(res.data.nivel=='2'  || res.data.nivel=='4'  ){
+                                next()
+                         }else{
+                            next('/error')
+                         }
+                    })
+            }
+        }, 
         { 
             path: '/clientes',
             name: 'clientes',
@@ -41,9 +57,9 @@ export default new Router({
             }
         },
         {
-            path: '/clientes/registrar/natural',
-            name: 'registrar/natural',
-            component: require('./views/PersonaNatural').default,
+            path: '/clientes/registrar/persona',
+            name: 'registrar/persona',
+            component: require('./views/AddClientePersona').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
                     .then(res => { 
@@ -57,9 +73,9 @@ export default new Router({
             }
         },
         {
-            path: '/clientes/registrar/juridico',
-            name: 'registrar/juridico',
-            component: require('./views/PersonaJuridico').default,
+            path: '/clientes/registrar/empresa',
+            name: 'registrar/empresa',
+            component: require('./views/AddClienteEmpresa').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
                     .then(res => { 
@@ -76,6 +92,42 @@ export default new Router({
             path: '/error',
             name: 'error',
             component: require('./views/Error').default
+        },
+        {
+            path: '/prestamo/:clienteID',
+            name: 'prestamo',
+            component: require('./views/AddPersonaPrestamo').default,
+            beforeEnter: (to, from, next) => {
+                axios.get("/currentUser")
+                    .then(res => { 
+        
+                         if(res.data.nivel=='2'  || res.data.nivel=='4'   ){
+                                next()
+                         }else{
+                            next('/error')
+                         }
+                    })
+            }
+        },
+        {
+            path: '/prestamojuridico/:dni',
+            name: 'prestamojuridico',
+            component: require('./views/PrestamoJuridico').default,
+            beforeEnter: (to, from, next) => {
+                axios.get("/currentUser")
+                    .then(res => { 
+        
+                         if(res.data.nivel=='2'   || res.data.nivel=='4'   ){
+                                next()
+                         }else{
+                            next('/error')
+                         }
+                    })
+            }
+        },
+        {
+            path: '*',
+            component: require('./views/404').default
         },
         { 
             path: '/eval-cualitativa/:prestamo/:documento/:persona',
@@ -150,22 +202,7 @@ export default new Router({
           
         },
 
-        {
-            path: '/perfil/:documento/:persona',
-            name: 'perfil', 
-            component: require('./views/Perfil').default,
-            beforeEnter: (to, from, next) => {
-                axios.get("/currentUser")
-                    .then(res => { 
-        
-                         if(res.data.nivel=='2'  || res.data.nivel=='4'  ){
-                                next()
-                         }else{
-                            next('/error')
-                         }
-                    })
-            }
-        }, 
+    
         {
             path: '/evaluacion/detalle/:prestamo',
             name: '/evaluacion/detalle/',
@@ -246,42 +283,7 @@ export default new Router({
                     })
             }
         },
-        {
-            path: '/prestamo/:dni',
-            name: 'prestamo',
-            component: require('./views/Prestamo').default,
-            beforeEnter: (to, from, next) => {
-                axios.get("/currentUser")
-                    .then(res => { 
-        
-                         if(res.data.nivel=='2'  || res.data.nivel=='4'   ){
-                                next()
-                         }else{
-                            next('/error')
-                         }
-                    })
-            }
-        },
-        {
-            path: '/prestamojuridico/:dni',
-            name: 'prestamojuridico',
-            component: require('./views/PrestamoJuridico').default,
-            beforeEnter: (to, from, next) => {
-                axios.get("/currentUser")
-                    .then(res => { 
-        
-                         if(res.data.nivel=='2'   || res.data.nivel=='4'   ){
-                                next()
-                         }else{
-                            next('/error')
-                         }
-                    })
-            }
-        },
-        {
-            path: '*',
-            component: require('./views/404').default
-        },
+
     ],
     mode: 'hash'
 })

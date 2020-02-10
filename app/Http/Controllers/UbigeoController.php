@@ -19,7 +19,13 @@ class UbigeoController extends Controller
  
         return compact('departments', 'provinces', 'districts',  'locations');
     }
-
+    public function listar(){
+        
+        $departments = Departamento::where('activo',1)->orderBy('descripcion')->get();
+        $provinces = Provincia::where('activo',1)->orderBy('descripcion')->get();
+        $districts = Distrito::where('activo',1)->orderBy('descripcion')->get();
+        return  ['departments'=>$departments, 'provinces'=>$provinces, 'districts'=>$districts];
+    }
     public function getLocationCascade()
     {
         $locations = [];
