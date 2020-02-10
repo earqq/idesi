@@ -16,38 +16,20 @@ class Empresa extends Model
      */
     public function accionistas()
     {
-        return $this->hasMany('App\Accionista', 'juridicos_id');
+        return $this->hasMany('App\Accionista', 'empresa_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function asociativas()
-    {
-        return $this->hasMany('App\Asociativa', 'juridicos_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function declaracionsJuridicos()
-    {
-        return $this->hasMany('App\DeclaracionsJuridico', 'juridicos_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+   
     public function directores()
     {
-        return $this->hasMany('App\Directore', 'juridicos_id');
+        return $this->hasMany('App\Director', 'empresa_id');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function representantes()
+    public function representante()
     {
-        return $this->hasMany('App\Representante', 'juridicos_id');
+        return $this->hasOne('App\Representante', 'empresa_id');
     }
 }

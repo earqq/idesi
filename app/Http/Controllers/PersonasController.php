@@ -65,7 +65,6 @@ class PersonasController extends Controller
                 $cliente->documento = $request->documento;
                 $cliente->tipo_cliente = $request->tipo_cliente;
                 $cliente->pais = strtoupper($request->pais);
-              
                 $cliente->estado = 1;
                 $cliente->ubicacion_referencia=strtoupper( $request->ubicacion_referencia);    
                 $cliente->ubicacion_manzana=strtoupper( $request->ubicacion_manzana);    

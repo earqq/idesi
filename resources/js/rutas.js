@@ -110,21 +110,21 @@ export default new Router({
             }
         },
         {
-            path: '/prestamojuridico/:dni',
-            name: 'prestamojuridico',
-            component: require('./views/PrestamoJuridico').default,
+            path: '/prestamo-empresa/:clienteID',
+            name: 'prestamoEmpresa',
+            component: require('./views/RegistrarPrestamoEmpresa').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
                     .then(res => { 
         
-                         if(res.data.nivel=='2'   || res.data.nivel=='4'   ){
+                         if(res.data.nivel=='2'  || res.data.nivel=='4'   ){
                                 next()
                          }else{
                             next('/error')
                          }
                     })
             }
-        },
+        },       
         {
             path: '*',
             component: require('./views/404').default

@@ -27,6 +27,18 @@ class CreateRepresentantesLegalesTable extends Migration
             $table->integer('documento')->nullable()->default(null);
             $table->string('cargo', 20)->nullable()->default(null);
             $table->unsignedInteger('empresa_id');
+            $table->date('fecha_nacimiento')->nullable();
+            $table->string('ocupacion', 50)->nullable();
+            $table->string('telefono', 10)->nullable();
+            $table->string('celular', 15)->nullable();
+            $table->string('ubicacion_direccion', 100)->nullable();
+            $table->string('ubicacion_departamento', 100)->nullable();
+            $table->string('ubicacion_provincia', 100)->nullable();
+            $table->string('ubicacion_distrito', 100)->nullable();
+            $table->string('ubicacion_referencia', 100)->nullable();
+            $table->string('tipo_domicilio', 15)->nullable();
+            $table->string('poderes', 10)->nullable();
+            $table->date('fecha_inicio')->nullable();
 
             $table->index(["empresa_id"], 'fk_representantes_juridicos1_idx');
             $table->softDeletes();

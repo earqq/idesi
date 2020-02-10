@@ -78,7 +78,7 @@ class ClientesController extends Controller
 
     public function show($id)
     {
-        $cliente=Cliente::with('persona.trabajo','persona.conyuge','empresa','prestamos')
+        $cliente=Cliente::with('persona.trabajo','persona.conyuge','empresa.representante','prestamos')
         ->find($id);
         return $cliente;        
     }
