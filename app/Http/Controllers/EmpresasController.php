@@ -12,6 +12,8 @@ use App\RepresentanteLegal;
 use App\Director;
 use App\Accionista;
 use App\Declaracion;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Storage;
 class EmpresasController extends Controller
 {
     /**
@@ -98,6 +100,9 @@ class EmpresasController extends Controller
                     $representanteLegal->empresa_id= $empresa->id;
                     $representanteLegal->save();
                 }
+
+                $representante = RepresentanteLegal::where('empresa_id',$empresa->id)->get();
+
                 foreach ($request->empresa['directores'] as $ep=>$dr) {
                     $director= new Director;
                     $director->nombres = $dr['nombres'];
@@ -106,6 +111,9 @@ class EmpresasController extends Controller
                     $director->empresa_id= $empresa->id;
                     $director->save();
                 }
+
+                $directores = Director::where('empresa_id',$empresa->id)->get();
+
                 foreach ($request->empresa['accionistas'] as $ep=>$ac) {
                     $accionista= new Accionista;
                     $accionista->nombres = $ac['nombres'];
@@ -114,6 +122,7 @@ class EmpresasController extends Controller
                     $accionista->save();
                 }
                
+                $accionistas = Accionista::where('empresa_id',$empresa->id)->get();
 
                 $obligacion = New Obligacion;
                 $obligacion->inscripcion= $request->asociativa['inscripcion'];    
@@ -127,10 +136,13 @@ class EmpresasController extends Controller
                 $declaracion->cliente_id= $cliente->id;
                 $declaracion->save();
                 
-                // $pdf = PDF::loadView('reportes.inscripcionJuridico',compact('cliente','juridico','asociativa','declaracion','listaAccionista','tiene_accionistas','listaDirector','tiene_directores','listaRepresentante','tiene_representantes'));
+                $pdf = PDF::loadView('reportes.inscripcionJuridico',compact('cliente','empresa','representante',
+                'directores','accionistas','obligacion','declaracion'));
 
-                // if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
-                // }
+                if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
+                }
+
+
                 DB::commit();
                     return [
                         'success' => true,

@@ -17,6 +17,7 @@ use App\Declaracion;
 use App\Distrito;
 use Barryvdh\DomPDF\Facade as PDF;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 class PersonasController extends Controller
 {
     /**
@@ -64,7 +65,8 @@ class PersonasController extends Controller
                 $cliente->documento = $request->documento;
                 $cliente->tipo_cliente = $request->tipo_cliente;
                 $cliente->pais = strtoupper($request->pais);
-                $cliente->estado = 0;
+              
+                $cliente->estado = 1;
                 $cliente->ubicacion_referencia=strtoupper( $request->ubicacion_referencia);    
                 $cliente->ubicacion_manzana=strtoupper( $request->ubicacion_manzana);    
                 $cliente->ubicacion_numero= $request->ubicacion_numero;    
@@ -101,13 +103,16 @@ class PersonasController extends Controller
                 $persona->trabajo_especificacion= $request->persona['trabajo_especificacion'];   
                 $persona->save();
 
-                $departamento_domicilio = Departamento::where('id',$persona->domicilio_departamento)->first();
-                $provincia_domicilio = Provincia::where('id',$persona->domicilio_provincia)->first();
-                $distrito_domicilio = Distrito::where('id',$persona->domicilio_distrito)->first();
+                $departamento_domicilio = Departamento::where('id',$cliente->ubicacion_departamento)->first();
+                $provincia_domicilio = Provincia::where('id',$cliente->ubicacion_provincia)->first();
+                $distrito_domicilio = Distrito::where('id',$cliente->ubicacion_distrito)->first();
+ 
 
                 if($persona->estado_trabajo=='TRABAJA'){
 
-                    $trabajo = new Trabajo(); 
+                    $trabajo = new Trabajo();
+                    $trabajo->estado_laboral = $request->persona['estado_trabajo'];
+                    $trabajo->especificacion = $request->persona['trabajo_especificacion'];     
                     $trabajo->tipo_trabajador= $request->trabajo['tipo_trabajador'];    
                     $trabajo->ingreso_mensual= $request->trabajo['ingreso_mensual'];  
                     $trabajo->cargo_ocupacion= $request->trabajo['cargo_ocupacion'];    
@@ -142,25 +147,36 @@ class PersonasController extends Controller
                     $parienteDetalle->persona_id= $persona->id;
                     $parienteDetalle->save();
                 }
+
+                $hijos = Hijo::where('persona_id',$persona->id)->get();
+                
                 if($request->tools["conyuge"])
                 {
                     $conyuge= new Conyuge;
                     $conyuge->nombres= $request->persona['conyuge']['nombres'];
                     $conyuge->documento= $request->persona['conyuge']['documento'];
+                    $conyuge->ocupacion= $request->persona['conyuge']['ocupacion'];
                     $conyuge->fecha_nacimiento = $request->persona['conyuge']['fecha_nacimiento'];
                     $conyuge->socio = $request->persona['conyuge']['socio'];
                     $conyuge->estado_civil = 'CONVIVIENTE';
                     $conyuge->persona_id = $persona->id;   
                     $conyuge->save();
                 }
+
+                $conyuge = Conyuge::where('persona_id',$persona->id)->first();
+
                 if($request->persona["representante"]['documento']!=''){
                     $representante = New Representante;
                     $representante->nombres= $request->persona["representante"]['nombres'];    
                     $representante->tipo_documento= $request->persona["representante"]['tipo_documento'];    
                     $representante->documento= $request->persona["representante"]['documento'];    
+                    $representante->relacion= $request->persona["representante"]['tipo_relacion'];    
                     $representante->persona_id= $persona->id; 
                     $representante->save();
                 }
+
+                $representante = Representante::where('persona_id', $persona->id)->first();
+
                 $obligacion = New Obligacion;
                 $obligacion->inscripcion= $request->obligacion['inscripcion'];    
                 $obligacion->aporte= $request->obligacion['aporte'];    
@@ -176,12 +192,12 @@ class PersonasController extends Controller
                 $declaracion->cliente_id= $cliente->id; 
                 $declaracion->save(); 
 
-                // $pdf = PDF::loadView('reportes.inscripcion',compact('trabajo','representante','obligacion','declaracion','familiar','cliente',
-                //                                                     'hijos','persona','departamento','provincia','distrito',
-                //                                                     'departamento_domicilio','provincia_domicilio','distrito_domicilio'));
+                $pdf = PDF::loadView('reportes.inscripcion',compact('trabajo','representante','obligacion','declaracion','cliente',
+                                                                    'hijos','conyuge','persona','departamento','provincia','distrito',
+                                                                    'departamento_domicilio','provincia_domicilio','distrito_domicilio'));
 
-                // if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
-                // }
+                if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
+                }
                 
 
                 DB::commit();

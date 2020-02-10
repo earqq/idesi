@@ -29,8 +29,8 @@
                 <tr >
                     <td  colspan="2" valign="middle" align="left"  style="width: 70%;border: none;"><span>SOLICITUD DE ADMISIÓN - PERSONA JURIDICA</span></td>
                 
-                    <td rowspan="2" style="padding: 10px 0;"><span class="title"> ***  Logo ****</span> </td>
-                </tr>
+                    <td rowspan="2" style="padding: 10px 0;"><span class="title"> <img src="{{env('RUTA')}}/public/img/logo.png" alt="" srcset=""></span>  </td>
+                </tr> 
                     
                 <tr>
                 <td colspan="2" style="padding: 10px 0;border: none;"><span class="title">Nro de Registro</span> 45222  <span class="title">Agencia</span> Huánuco </td>
@@ -58,7 +58,7 @@
                 <tbody>
                         <tr>
                             <td colspan="2">
-                            <span class="title">RAZON SOCIAL</span> {{$juridico->razon_social}} <span > </span>
+                            <span class="title">RAZON SOCIAL</span> {{$empresa->razon_social}} <span > </span>
                             </td>
                             <td >
                             <span class="title">RUC</span> {{$cliente->documento}} <span > </span>
@@ -66,36 +66,42 @@
                         </tr>
 
                         <tr>
-                            <td colspan="2"> <span class="title">NOMBRE COMERCIAL </span>  <span>{{$cliente->nombre_comercial}} </span> </td>
-                            <td> <span class="title">ACTIVIDAD PRINCIPAL</span> <span > {{$juridico->actividad_principal}} </span> </td>
+                            <td colspan="2"> <span class="title">NOMBRE COMERCIAL </span>  <span>{{$empresa->nombre_comercial}} </span> </td>
+                            <td> <span class="title">ACTIVIDAD PRINCIPAL</span> <span > {{$empresa->actividad_principal}} </span> </td>
                         </tr>
                         <tr>
-                            <td colspan="2"> <span class="title">NRO. FR PARTIDA REGISTRAL</span> <span > {{$juridico->partida_registral}} </span> </td>
-                            <td> <span class="title">OFICINA REGISTRAL</span> <span> {{$juridico->oficina_principal}}</span> </td>
+                            <td colspan="2"> <span class="title">NRO. FR PARTIDA REGISTRAL</span> <span > {{$empresa->partida_registral}} </span> </td>
+                            <td> <span class="title">OFICINA REGISTRAL</span> <span> {{$empresa->oficina_principal}}</span> </td>
                         </tr>
                         <tr>
-                            <td> <span class="title">P.N CON NEGOCIO </span> <span >{{$juridico->tipo_negocio}}</span> </td>
-                            <td colspan="2"> <span class="title">DIRECCIÓN</span> {{$juridico->direccion}} <span > </span> </td>
+                            <td> <span class="title">P.N CON NEGOCIO </span> <span >{{$empresa->tipo_negocio}}</span> </td>
+                            <td colspan="2"> <span class="title">DIRECCIÓN</span> {{$cliente->ubicacion_direccion_declarada}} <span > </span> </td>
                         </tr>
                         <tr>
-                            <td colspan="3"> <span class="title">NÚMERO</span> {{$juridico->numero}}  <span class="title">MZ</span>  {{$juridico->manzana}} <span class="title">LOTE </span> {{$juridico->lote}}  <span class="title">DPTO</span> {{$juridico->pdto}}  <span class="title">INT</span> {{$juridico->int}}  <span class="title">PISO </span>{{$juridico->piso}}</td>
+                            <td> <span class="title">NÚMERO</span> {{$cliente->ubicacion_numero}}</td>
+                            <td> <span class="title">MZ</span>  {{$cliente->ubicacion_manzana}} </td>
+                            <td> <span class="title">LOTE </span> {{$cliente->ubicacion_lote}}  </td>
                         </tr>
-                        
                         <tr>
-                            <td> <span class="title">DISTRITO</span> <span >{{$cliente->distrito}}</span> </td>
-                            <td> <span class="title">PROVINCIA</span> {{$cliente->provincia}} <span > </span> </td>
-                            <td> <span class="title">DEPARTAMENTO</span> {{$cliente->departamento}} <span >  </span> </td>
+                            <td> <span class="title">DPTO</span> {{$cliente->ubicacion_nro_departamento}}</td>
+                            <td> <span class="title">INT</span> {{$cliente->ubicacion_interior}}</td>
+                            <td> <span class="title">PISO </span>{{$cliente->ubicacion_piso}}</td>
+                        </tr>
+                        <tr>
+                            <td> <span class="title">DISTRITO</span> <span >{{$cliente->ubicacion_distrito}}</span> </td>
+                            <td> <span class="title">PROVINCIA</span> {{$cliente->ubicacion_provincia}} <span > </span> </td>
+                            <td> <span class="title">DEPARTAMENTO</span> {{$cliente->ubicacion_departamento}} <span >  </span> </td>
                         </tr>
 
 
                         <tr>
-                            <td colspan="3"> <span class="title">REFERENCIA</span> <span > {{$juridico->referencia}} </span> </td>
+                            <td colspan="3"> <span class="title">REFERENCIA</span> <span > {{$cliente->ubicacion_referencia}} </span> </td>
                         </tr>
                         
                         <tr>
-                            <td> <span class="title">TELÉFONO</span> <span >{{$juridico->telefono}} </span> </td>
-                            <td> <span class="title">CELULAR</span> {{$juridico->celular}}  <span > </span> </td>
-                            <td> <span class="title">EMAIL</span> {{$juridico->correo}} <span >  </span> </td>
+                            <td> <span class="title">TELÉFONO</span> <span >{{$cliente->telefono}} </span> </td>
+                            <td> <span class="title">CELULAR</span> {{$cliente->celular}}  <span > </span> </td>
+                            <td> <span class="title">EMAIL</span> {{$cliente->email}} <span >  </span> </td>
                         </tr>
 
                 </tbody>
@@ -119,13 +125,14 @@
                                             </tr>
                                            
                                         </thead>
-                                        @if ($tiene_representantes=='SI')
+
+                                        @if (isset($representante))
                                             <tbody>
-                                                @foreach ($listaRepresentante as  $representante)
+                                                @foreach ($representante as  $rep)
                                                         <tr>
-                                                            <td>{{$representante->nombres}}</td>
-                                                            <td>{{$representante->documento}}</td>
-                                                            <td>{{$representante->cargo}}</td>
+                                                            <td>{{$rep->nombres}}</td>
+                                                            <td>{{$rep->documento}}</td>
+                                                            <td>{{$rep->cargo}}</td>
                                                         </tr>
                                                 @endforeach           
                                             </tbody>
@@ -163,13 +170,13 @@
                                             </tr>
                                            
                                         </thead>
-                                        @if ($tiene_directores=='SI')
+                                        @if (isset($directores))
                                             <tbody>
-                                                @foreach ($listaDirector as  $director)
+                                                @foreach ($directores as  $dir)
                                                         <tr>
-                                                            <td>{{$director->nombres}}</td>
-                                                            <td>{{$director->documento}}</td>
-                                                            <td>{{$director->cargo}}</td>
+                                                            <td>{{$dir->nombres}}</td>
+                                                            <td>{{$dir->documento}}</td>
+                                                            <td>{{$dir->cargo}}</td>
                                                         </tr>
                                                 @endforeach           
                                             </tbody>
@@ -206,12 +213,12 @@
                                             </tr>
                                            
                                         </thead>
-                                        @if ($tiene_accionistas=='SI')
+                                        @if (isset($accionistas))
                                             <tbody>
-                                                @foreach ($listaAccionista as  $accionista)
+                                                @foreach ($accionistas as  $acci)
                                                         <tr>
-                                                            <td>{{$accionista->nombres}}</td>
-                                                            <td>{{$accionista->documento}}</td>
+                                                            <td>{{$acci->nombres}}</td>
+                                                            <td>{{$acci->documento}}</td>
                                                         </tr>
                                                 @endforeach           
                                             </tbody>
@@ -240,7 +247,7 @@
                 <tbody>
                           
                     <tr>
-                            <td colspan="3"><span class="title">Inscripción</span> S/. {{$asociativa->inscripcion}} <span class="title">Aporte</span> S/. {{$asociativa->aporte}}</td> 
+                            <td colspan="3"><span class="title">Inscripción</span> S/. {{$obligacion->inscripcion}} <span class="title">Aporte</span> S/. {{$obligacion->aporte}}</td> 
                     </tr>
                 </tbody>
             </table>
@@ -261,7 +268,7 @@
                         <td colspan="2" style="height: 70px;"> <div style="border: 1px solid; width: 100px; height: 70px;margin: 0 auto;"></div> </td>
                     </tr>
                     <tr>
-                        <td><span class="title">Estado</span> {{$declaracion->estado}}</td>
+                        <td><span class="title">Estado</span> {{$cliente->estado}}</td>
                         <td colspan="2"><span class="title">Fecha</span> {{$declaracion->created_at}}</td>
                     </tr>
 
