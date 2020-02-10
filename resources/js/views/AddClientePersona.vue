@@ -1283,14 +1283,15 @@ export default {
                     "Exitoso",
                     toastOptions.success
                   )
-                this.$router.push({ name: 'clientes'})
+
+              this.$router.push({ name: 'clientes'})
 
               // this.resetForm();
               // this.$router.push({ name: 'clientes'})
             }else{
                 this.loading=false
                 this.$toast.error(
-                  "Documento ya existe",
+                  "Error cliente",
                   "Error",
                   toastOptions.error
                 )

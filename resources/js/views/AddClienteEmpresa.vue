@@ -371,8 +371,8 @@
                   <div class="input_wrapper all">
                     <label>Es sujeto a informar a la UIF Perú</label>
                       <select v-model="cliente.declaracion.uif" class="form-control">
-                      <option value="SI">SI</option>
-                      <option value="NO">NO</option>
+                      <option value="1">SI</option>
+                      <option value="0">NO</option>
                     </select>
                   </div>
                 </div>
@@ -456,7 +456,7 @@ mixins: [serviceNumber],
           aporte:"",
         },
         declaracion:{
-          uif: "NO",
+          uif: "0",
           estado: "PENDIENTE",
           observaciones: "",
         }
@@ -660,7 +660,7 @@ mixins: [serviceNumber],
                     "Exitoso",
                     toastOptions.success
                   )
-              this.$router.push({ name: 'clientes'})
+              // this.$router.push({ name: 'clientes'})
             }else{
                 this.loading=false
                 this.$toast.error(
