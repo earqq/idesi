@@ -23,18 +23,18 @@ class CreateConyugesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('documento')->nullable()->default(null);
-            $table->string('nombres', 100)->nullable()->default(null);
-            $table->date('fecha_nacimiento')->nullable()->default(null);
-            $table->string('estado_civil', 30)->nullable()->default(null);
-            $table->string('ocupacion', 100)->nullable()->default(null);
-            $table->string('telefono', 10)->nullable()->default(null);
-            $table->string('celular', 15)->nullable()->default(null);
-            $table->string('centro_laboral', 200)->nullable()->default(null);
-            $table->string('direccion_centro_laboral')->nullable()->default(null);
-            $table->boolean('socio')->nullable()->default(null);
-            $table->string('codigo_socio', 10)->nullable()->default(null);
-            $table->decimal('aporte_socio', 11, 2)->nullable()->default(null);
+            $table->integer('documento')->nullable();
+            $table->string('nombres', 100)->nullable();
+            $table->date('fecha_nacimiento')->nullable();
+            $table->string('estado_civil', 30)->nullable();
+            $table->string('ocupacion', 100)->nullable();
+            $table->string('telefono', 10)->nullable();
+            $table->string('celular', 15)->nullable();
+            $table->string('centro_laboral', 200)->nullable();
+            $table->string('direccion_centro_laboral')->nullable();
+            $table->boolean('socio')->nullable();
+            $table->string('codigo_socio', 10)->nullable();
+            $table->decimal('aporte_socio', 11, 2)->nullable();
             $table->unsignedInteger('persona_id');
             $table->boolean('trabaja')->nullable()->default(null);
 

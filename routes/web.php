@@ -42,11 +42,12 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('clientes/search/{state}/{text?}','ClientesController@listar');
         Route::get('clientes/aceptar/solicitud/{id}', 'ClientesController@aceptarSolicitud');
         Route::get('clientes/rechazar/solicitud/{id}', 'ClientesController@rechazarSolicitud');
-
+        
         //Ubigeo
         Route::get('ubigeo', 'UbigeoController@listar');
+        //Prestamos
+        Route::resource('prestamos','PrestamosController');
         
-
 
         Route::get('prestamos/search/{state}/{text?}','PrestamosController@search');
 

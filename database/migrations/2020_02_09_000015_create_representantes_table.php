@@ -23,9 +23,9 @@ class CreateRepresentantesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('tipo_documento', 9)->nullable()->default(null);
-            $table->string('documento', 9)->nullable()->default(null);
-            $table->string('relacion', 6)->nullable()->default(null);
+            $table->string('tipo_documento', 9)->nullable();
+            $table->string('documento', 9)->nullable();
+            $table->string('relacion', 6)->nullable();
             $table->unsignedInteger('persona_id');
             $table->string('nombres', 100)->nullable();
 

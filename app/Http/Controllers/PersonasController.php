@@ -143,25 +143,24 @@ class PersonasController extends Controller
                     $parienteDetalle->persona_id= $persona->id;
                     $parienteDetalle->save();
                 }
-                if($request->persona["conyuge"])
+                if($request->tools["conyuge"])
                 {
                     $conyuge= new Conyuge;
-                    $conyuge->nombres= $hijo['nombres'];
-                    $conyuge->documento= $hijo['documento'];
-                    $conyuge->fecha_nacimiento = $hijo['fecha_nacimiento'];
-                    $conyuge->socio = $hijo['socio'];
+                    $conyuge->nombres= $request->persona['conyuge']['nombres'];
+                    $conyuge->documento= $request->persona['conyuge']['documento'];
+                    $conyuge->fecha_nacimiento = $request->persona['conyuge']['fecha_nacimiento'];
+                    $conyuge->socio = $request->persona['conyuge']['socio'];
                     $conyuge->persona_id = $persona->id;   
                     $conyuge->save();
                 }
-
-
-                $representante = New Representante;
-                $representante->nombres= $request->persona["representante"]['nombres'];    
-                $representante->tipo_documento= $request->persona["representante"]['tipo_documento'];    
-                $representante->documento= $request->persona["representante"]['documento'];    
-                $representante->persona_id= $persona->id; 
-                $representante->save();
-
+                if($request->persona["representante"]['documento']!=''){
+                    $representante = New Representante;
+                    $representante->nombres= $request->persona["representante"]['nombres'];    
+                    $representante->tipo_documento= $request->persona["representante"]['tipo_documento'];    
+                    $representante->documento= $request->persona["representante"]['documento'];    
+                    $representante->persona_id= $persona->id; 
+                    $representante->save();
+                }
                 $obligacion = New Obligacion;
                 $obligacion->inscripcion= $request->obligacion['inscripcion'];    
                 $obligacion->aporte= $request->obligacion['aporte'];    

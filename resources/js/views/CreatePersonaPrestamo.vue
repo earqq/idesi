@@ -226,12 +226,12 @@
                 </div>
                 <div class="input_wrapper" :class="{require: !validateCentro}">
                   <label>Centro Laboral</label>
-                  <input type="text" v-model="prestamo.cliente.persona.trabajo.centro_laboral" />
+                  <input type="text" v-model="prestamo.cliente.persona.trabajo.empresa_razon_social" />
                   <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDireccionLaboral}">
                   <label>Dirección centro laboral</label>
-                  <input type="text" v-model="prestamo.cliente.persona.trabajo.direccion_centro_laboral" />
+                  <input type="text" v-model="prestamo.cliente.persona.trabajo.empresa_direccion" />
                   <div class="message">Se requiere esta información</div>
                 </div>
               </div>
@@ -241,12 +241,12 @@
             type="button"
             @click.prevent="clickAddconyuge"
             class="add_section in_bottom"
-            v-if="!prestamo.cliente.persona.conyuge">
+            v-if="!prestamo.cliente.persona.tiene_conyuge">
             <span>AGREGAR CÓNYUGE O CONVIVIENTE</span>
             <i class="material-icons-outlined">add</i> 
           </button>
 
-          <div class="form_list " v-if="prestamo.cliente.persona.conyuge">
+          <div class="form_list " v-if="prestamo.cliente.persona.tiene_conyuge">
             <div class="form_step_wrapper in_bottom" >
               <h3 class="title">
                 CÓNYUGE o Conviviente
@@ -291,8 +291,8 @@
                   <div class="input_wrapper">
                     <label>Socio</label>
                     <select v-model="prestamo.cliente.persona.conyuge.socio">
-                      <option value="1">SI</option>
-                      <option value="0">NO</option>
+                      <option value="true">SI</option>
+                      <option value="false">NO</option>
                     </select>
                   </div>
                   <div class="input_wrapper" :class="{require: !validateCodigoConyuge}" v-if="prestamo.cliente.persona.conyuge.socio" >
@@ -315,8 +315,8 @@
                   <div class="input_wrapper" >
                     <label>¿Trabaja?</label>
                     <select v-model="prestamo.cliente.persona.conyuge.trabaja">
-                      <option value="1">SI</option>
-                      <option value="0">NO</option>
+                      <option value="true">SI</option>
+                      <option value="false">NO</option>
                     </select>
                   </div>
                   <div class="input_wrapper"  :class="{require: !validateCentroConyuge}" v-if="prestamo.cliente.persona.conyuge.trabaja">
@@ -325,7 +325,7 @@
                   </div>
                   <div class="input_wrapper"  :class="{require: !validateDireccionConyuge}" v-if="prestamo.cliente.persona.conyuge.trabaja">
                     <label>Dirección centro laboral</label>
-                    <input type="text" v-model="prestamo.cliente.persona.conyuge.direccion_laboral" />
+                    <input type="text" v-model="prestamo.cliente.persona.conyuge.direccion_centro_laboral" />
                   </div>
                 </div>
               </div>
@@ -491,7 +491,7 @@
               </div>
             </div>
 
-            <button type="button" @click="clickAddAval" class="add_section" v-if="prestamo.avals.length<=1">
+            <button type="button" @click="clickAddAval" class="add_section" v-if="prestamo.avales.length<=1">
               <span>AGREGAR AVAL</span>
               <i class="material-icons-outlined">add</i> 
             </button>
@@ -699,7 +699,8 @@ export default {
             trabajo:{
               empresa_direccion: "",
               empresa_razon_social: "",
-            },         
+            },   
+            tiene_conyuge:0,      
             conyuge: {
               documento: "",
               nombres: "",
@@ -775,7 +776,7 @@ export default {
     }
     ,
     validateNacimiento(){
-      return this.prestamo.cliente.persona.nacimiento.length>4
+      return this.prestamo.cliente.persona.fecha_nacimiento.length>4
     }
     ,
     validateCivil(){
@@ -787,11 +788,11 @@ export default {
     }
     ,
     validateCelular(){
-      return  this.prestamo.cliente.persona.celular.length>9
+      return  this.prestamo.cliente.celular.length>9
     }
     ,
     validateDireccion(){
-      return  this.prestamo.cliente.persona.direccion.length>5
+      return  this.prestamo.cliente.ubicacion_direccion_declarada.length>5
     }
     ,
     validateDepartamento(){
@@ -807,7 +808,7 @@ export default {
     }
     ,
     validateReferencia(){
-      return this.prestamo.cliente.persona.referencia.length>5
+      return this.prestamo.cliente.ubicacion_referencia.length>5
     }
     ,
     validateDomicilio(){
@@ -815,11 +816,15 @@ export default {
     }
     ,
     validateCentro(){
-      return this.prestamo.cliente.persona.centro_laboral.length>5
+      if(this.prestamo.cliente.persona.trabajo)
+      return this.prestamo.cliente.persona.trabajo.empresa_razon_social.length>5
+      else return true
     }
     ,
     validateDireccionLaboral(){
-      return this.prestamo.cliente.persona.direccion_centro_laboral.length>6
+      if(this.prestamo.cliente.persona.trabajo)
+      return this.prestamo.cliente.persona.trabajo.empresa_direccion.length>6
+      else return true
     },
 
 
@@ -836,14 +841,18 @@ export default {
     },
 
      validateOcupacionConyuge(){
-      return this.prestamo.cliente.persona.conyuge.ocupacion.length>6
+      if(this.prestamo.cliente.persona.conyuge && this.prestamo.cliente.persona.conyuge.ocupacion)
+        return this.prestamo.cliente.persona.conyuge.ocupacion.length>6
+      else true
     },
 
-     validateCelularConyuge(){
+    validateCelularConyuge(){
+      if(this.prestamo.cliente.persona.conyuge && this.prestamo.cliente.persona.conyuge.celular)
       return this.prestamo.cliente.persona.conyuge.celular.length>6
+      else true
     },
     validateCodigoConyuge(){
-      if(this.prestamo.cliente.persona.conyuge.socio){
+      if(this.prestamo.cliente.persona.conyuge.socio && this.prestamo.cliente.persona.conyuge.codigo_socio){
         return this.prestamo.cliente.persona.conyuge.codigo_socio.length>=3
       }
       else return true
@@ -859,7 +868,7 @@ export default {
     },
 
     validateDireccionConyuge(){
-      return this.prestamo.cliente.persona.conyuge.direccion_laboral.length>6
+      return this.prestamo.cliente.persona.conyuge.direccion_centro_laboral.length>6
     },
 
     validateStep2(){
@@ -909,7 +918,10 @@ export default {
         console.log("respose")  
         console.log(response)
         this.prestamo.cliente=response.data
-
+        if(this.prestamo.cliente.persona.conyuge)
+          this.prestamo.cliente.persona.tiene_conyuge=1
+        else
+          this.prestamo.cliente.persona.tiene_conyuge=0
       });
   },
 
@@ -925,13 +937,13 @@ export default {
           // this.prestamo.cliente.persona.domicilio_provincia= '0'
           // this.prestamo.cliente.persona.domicilio_distrito= '0'
           this.provincesTitular = this.all_provinces.filter(f => {
-              return f.departamento_id == this.prestamo.cliente.persona.domicilio_departamento
+              return f.departamento_id == this.prestamo.cliente.ubicacion_departamento
           })
       },
       filterDistrictTitularMe() {
-          // this.prestamo.cliente.persona.domicilio_distrito= '0'
+          // this.prestamo.cliente.domicilio_distrito= '0'
           this.districtsTitular = this.all_districts.filter(f => {
-              return f.provincia_id == this.prestamo.cliente.persona.domicilio_provincia
+              return f.provincia_id == this.prestamo.cliente.ubicacion_provincia
           })
       },
     next(index) {
@@ -943,13 +955,13 @@ export default {
       this.tab = index - 1
     },
     clickAddconyuge() {
-      this.prestamo.cliente.persona.conyuge.conyuge_tiene = "SI";
+      this.prestamo.cliente.persona.tiene_conyuge=true
     },
     clickRemoveconyuge() {
-      this.prestamo.cliente.persona.conyuge.conyuge_tiene = "NO";
+      this.prestamo.cliente.persona.tiene_conyuge=false
     },
     clickAddAval() { 
-      this.prestamo.avals.push({
+      this.prestamo.avales.push({
         documento: "",
         nombres: "",
         apellidos: "",
@@ -962,7 +974,7 @@ export default {
         distrito: "",
         centro_laboral: "",
         direccion_centro_laboral: "",
-        socio: "NO",
+        socio: false,
         codigo_socio: "",
         aporte_socio: "",
         tipo_persona: "pn",
@@ -972,7 +984,7 @@ export default {
       });
     },
     clickRemoveAval(index) {
-      this.prestamo.avals.splice(index, 1);
+      this.prestamo.avales.splice(index, 1);
     },
     clickAddGarantia() {
       // this.contador_garantia++;
@@ -1034,8 +1046,8 @@ export default {
             .then(function(response) {          
               if(response.data){
                   
-                 me.prestamo.avals[index].empresa_razon_social=response.data.RAZON
-                 me.prestamo.avals[index].empresa_direccion=response.data.DIRECCION
+                 me.prestamo.avales[index].empresa_razon_social=response.data.RAZON
+                 me.prestamo.avales[index].empresa_direccion=response.data.DIRECCION
               }
             })
             .catch(function(error) {
@@ -1049,11 +1061,11 @@ export default {
       // me.loader = "true";
       axios
         .post("/consulta/doc", {
-          documento: this.prestamo.avals[index].documento
+          documento: this.prestamo.avales[index].documento
         })
         .then(function(response) { 
-          me.prestamo.avals[index].nombres = response.data["nombres"];
-          me.prestamo.avals[index].apellidos = response.data["surnames"];
+          me.prestamo.avales[index].nombres = response.data["nombres"];
+          me.prestamo.avales[index].apellidos = response.data["surnames"];
 
           // me.loader = false;
         })
@@ -1063,10 +1075,9 @@ export default {
         });
     },
     registrar() {
-      console.log(this.prestamo)
         this.loading= true
       this.$http
-        .post(`/${this.resource}/prestamo`, this.prestamo)
+        .post(`/prestamos`, this.prestamo)
         .then(response => {
 
             this.loading = false
@@ -1087,7 +1098,13 @@ export default {
 
         })
 
-        .then(() => {
+        .catch(err=>{
+          this.loading=false
+          this.$toast.error(
+            "Error en el registro",
+            "Error",
+            toastOptions.error
+          )
         });
     },
     retornar() {

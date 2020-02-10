@@ -13,7 +13,7 @@ class Persona extends Model
 
     public function trabajo()
     {
-        return $this->hasMany('App\Trabajo', 'persona_id');
+        return $this->hasOne('App\Trabajo', 'persona_id');
     }
     public function hijos()
     {
@@ -22,7 +22,7 @@ class Persona extends Model
 
     public function conyuge()
     {
-        return $this->hasMany('App\Conyuge', 'persona_id');
+        return $this->hasOne('App\Conyuge', 'persona_id');
     }
 
     /**
