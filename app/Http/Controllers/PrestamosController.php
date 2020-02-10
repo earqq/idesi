@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Prestamo;
 use Auth;
+use DB;
+use App\Persona;
+use App\Conyuge;
+use App\Aval;
+use App\Cliente;
+use App\Subido;
+use App\Garantia;
 class PrestamosController extends Controller
 {
     /**
@@ -81,124 +88,114 @@ class PrestamosController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         try{
-
-            // return $request;
-            DB::beginTransaction();
-            
-            $cliente = Cliente::where('documento',$request->cliente['documento'])->first(); 
-            $cliente->save();
-
-            $persona = Persona::where('clientes_id',$cliente->id)->first();
-            $persona->celular = $request->persona['celular'];
-            $persona->nombres = $request->persona['nombres'];
-            $persona->apellidos = $request->persona['apellidos'];
-            $persona->centro_trabajo = $request->persona['centro_trabajo'];
-            $persona->direccion_cliente = $request->persona['direccion'];
-            $persona->direccion_trabajo = $request->persona['direccion_trabajo'];
-            $persona->estado_civil = $request->persona['estado_civil'];
-            $persona->nacimiento = $request->persona['nacimiento'];
-            $persona->ocupacion = $request->persona['ocupacion'];
-            $persona->referencia = $request->persona['referencia'];
-            $persona->telefono = $request->persona['telefono'];
-            $persona->tipo_domicilio =  $request->persona['tipo_domicilio'];
-            $persona->save();
-            if($request->conyugue['conyuge_tiene']=='SI'){
-                $conyugue = Conyuge::where('naturals_id',$persona->id)->first();
-                if(!$conyugue){
-                    $conyugue = new Conyuge;
-                }   
-                $conyugue->centro_trabajo= $request->conyugue['centro_trabajo_conyugue'];
-                $conyugue->direccion = $request->conyugue['direccion_trabajo_conyugue'] ;
-                $conyugue->documento = $request->conyugue['documento_conyugue'] ;
-                $conyugue->estado_civil =  $request->conyugue['estado_civil_conyugue'] ;
-                   $conyugue->nacimiento =  $request->conyugue['nacimiento_conyugue'];
-                   $conyugue->nombres =  $request->conyugue['nombres_conyugue'];
-                   $conyugue->ocupacion =  $request->conyugue['ocupacion_conyugue'];
-                   $conyugue->telefono =  $request->conyugue['telefono_conyugue'] ;
-                   $conyugue->celular =  $request->conyugue['celular_conyugue'];
-                   $conyugue->trabaja =  $request->conyugue['trabaja_conyugue'];
-                   $conyugue->socio =  $request->conyugue['socio_conyugue'];
-                   $conyugue->codigo_socio =  $request->conyugue['codigo_socio_conyugue'];
-                   $conyugue->aporte_socio =  $request->conyugue['aporte_socio_conyugue'];
-                   $conyugue->naturals_id = $persona->id;   
-                   $conyugue->save();
-            }
-
-            
-            if($request->input('idprestamo')<0){
-               $prestamo = new Prestamo();
-               $prestamo->cualitativa = 0;
-               $prestamo->cuantitativa = 0;
-            }
-            else{
-                $prestamo = Prestamo::where('id',$request->input('idprestamo'))->first();
-            }
-
-            $prestamo->clientes_id = $cliente->id;
-            $prestamo->users_id = Auth::user()->id;
-            $prestamo->monto_inicial = $request->input('monto_inicial');
-            $prestamo->cuotas_inicial = $request->input('cuotas_inicial');
-            $prestamo->disponibilidad_pago_inicial = $request->input('disponibilidad_pago_inicial');
-            $prestamo->destino_inicial = $request->input('destino_inicial');
-            $prestamo->forma_inicial = $request->input('forma_inicial');
-            $prestamo->meses = $request->input('meses');
-            $prestamo->producto = $request->input('producto');
-            $prestamo->forma = $request->input('forma');
-            $prestamo->importe = $request->input('importe');
-            $prestamo->aporte = $request->input('aporte');
-            $prestamo->probabilidad_infocorp = $request->input('probabilidad_infocorp');
-            $prestamo->plazo = $request->input('plazo');
-            $prestamo->cuotas = $request->input('cuotas');
-            $prestamo->tasa = $request->input('tasa');
-            $prestamo->comentarios = $request->input('comentarios');
-            $prestamo->estado = $request->input('estado');
+            \Log::alert($request->all());
+            $prestamo = new Prestamo();                
+            if($request->id!=0)
+                $prestamo = Prestamo::find($request->id);
+ 
+            $prestamo->cliente_id = $request->cliente["id"];
+            $prestamo->user_id = Auth::user()->id;
+            $prestamo->monto_inicial = $request->monto_inicial;
+            $prestamo->cuotas_inicial = $request->cuotas_inicial;
+            $prestamo->disponibilidad_pago_inicial = $request->disponibilidad_pago_inicial;
+            $prestamo->destino_inicial = $request->destino_inicial;
+            $prestamo->forma_inicial = $request->forma_inicial;
+            $prestamo->meses = $request->meses;
+            $prestamo->producto = $request->producto;
+            $prestamo->forma = $request->forma;
+            $prestamo->importe = $request->importe;
+            $prestamo->aporte = $request->aporte;
+            $prestamo->probabilidad_infocorp = $request->probabilidad_infocorp;
+            $prestamo->cuotas = $request->cuotas;
+            $prestamo->cuota_sistema = $request->cuota_sistema;
+            $prestamo->tasa = $request->tasa;
+            $prestamo->comentarios = $request->comentarios;
+            $prestamo->estado = $request->estado;
             
             $prestamo->save();
-
+            DB::beginTransaction();
             
-                Aval::where('prestamos_id', $prestamo->id)->delete();
-                foreach ($request->avals as $ep=>$avals) {
-                    $aval= new Aval;
-                    $aval->documento = $avals['documento'];
-                    $aval->tipo_persona = $avals['tipo_persona'];
-                    $aval->nombres = $avals['nombres'];
-                    $aval->apellidos = $avals['apellidos'];
-                    $aval->nacimiento = $avals['nacimiento'];
-                    $aval->estado_civil = $avals['estado_civil'];
-                    $aval->ocupacion = $avals['ocupacion'];
-                    $aval->telefono = $avals['telefono'];
-                    $aval->celular = $avals['celular'];
-                    $aval->direccion = $avals['direccion'];
-                    $aval->distrito = $avals['distrito'];
-                    $aval->centro_trabajo = $avals['centro_trabajo'];
-                    $aval->direccion_trabajo = $avals['direccion_trabajo'];
-                    $aval->socio = $avals['socio'];
-                    $aval->codigo_socio = $avals['codigo_socio'];
-                    $aval->aporte_socio = $avals['aporte_socio'];
-                    $aval->empresa_ruc = $avals['empresa_ruc'];
-                    $aval->empresa_razon_social = $avals['empresa_razon_social'];
-                    $aval->empresa_direccion = $avals['empresa_direccion'];
-                    $aval->prestamos_id = $prestamo->id;
-                    $aval->save();
-                }
+            $cliente=Cliente::find($request->cliente['id']);
+            $cliente->celular = $request->cliente['celular'];
+            $cliente->telefono = $request->cliente['telefono'];
+            $cliente->ubicacion_direccion_declarada = $request->cliente['ubicacion_direccion_declarada'];
+            $cliente->ubicacion_referencia = $request->cliente['ubicacion_referencia'];
+            $cliente->ubicacion_departamento = $request->cliente['ubicacion_departamento'];
+            $cliente->ubicacion_provincia = $request->cliente['ubicacion_provincia'];
+            $cliente->ubicacion_provincia = $request->cliente['ubicacion_provincia'];
+            $cliente->ubicacion_referencia = $request->cliente['ubicacion_referencia'];
+            $cliente->ubicacion_referencia = $request->cliente['ubicacion_referencia'];
+            $cliente->save();
+
+            $persona = Persona::find($request->cliente['persona']['id']);
+            $persona->nombres = $request->cliente['persona']['nombres'];
+            $persona->apellidos = $request->cliente['persona']['apellidos'];
+            $persona->centro_laboral = $request->cliente['persona']['centro_laboral'];
+            $persona->direccion_laboral = $request->cliente['persona']['direccion_laboral'];
+            $persona->estado_civil = $request->cliente['persona']['estado_civil'];
+            $persona->fecha_nacimiento = $request->cliente['persona']['fecha_nacimiento'];
+            $persona->ocupacion = $request->cliente['persona']['ocupacion'];
+            $persona->tipo_domicilio =  $request->cliente['persona']['tipo_domicilio'];
+            $persona->save();
+
+
+
+            if(strlen($request->cliente['persona']['conyuge']['documento'])>5){
+                $conyugue = new Conyuge;
+                if($persona->conyuge)
+                $conyugue = $persona->conyuge;
+                $conyugue->centro_laboral= $request->cliente['persona']['conyuge']['centro_laboral'];
+                $conyugue->direccion_laboral = $request->cliente['persona']['conyuge']['direccion_laboral'] ;
+                $conyugue->documento = $request->cliente['persona']['conyuge']['documento'] ;
+                $conyugue->estado_civil =  $request->cliente['persona']['conyuge']['estado_civil'] ;
+                $conyugue->fecha_nacimiento =  $request->cliente['persona']['conyuge']['fecha_nacimiento'];
+                $conyugue->nombres =  $request->cliente['persona']['conyuge']['nombres'];
+                $conyugue->ocupacion =  $request->cliente['persona']['conyuge']['ocupacion'];
+                $conyugue->telefono =  $request->cliente['persona']['conyuge']['telefono'] ;
+                $conyugue->celular =  $request->cliente['persona']['conyuge']['celular'];
+                $conyugue->trabaja =  $request->cliente['persona']['conyuge']['trabaja'];
+                $conyugue->socio =  $request->cliente['persona']['conyuge']['socio'];
+                $conyugue->codigo_socio =  $request->cliente['persona']['conyuge']['codigo_socio'];
+                $conyugue->aporte_socio =  $request->cliente['persona']['conyuge']['aporte_socio'];
+                $conyugue->persona_id = $persona->id;   
+                $conyugue->save();
+            }
+            $prestamo->avales()->delete();
+            foreach ($request->avales as $item) {
+                $aval= new Aval;
+                $aval->documento = $item['documento'];
+                $aval->tipo_persona = $item['tipo_persona'];
+                $aval->nombres = $item['nombres'];
+                $aval->apellidos = $item['apellidos'];
+                $aval->fecha_nacimiento = $item['fecha_nacimiento'];
+                $aval->estado_civil = $item['estado_civil'];
+                $aval->ocupacion = $item['ocupacion'];
+                $aval->telefono = $item['telefono'];
+                $aval->celular = $item['celular'];
+                $aval->direccion = $item['direccion'];
+                $aval->distrito = $item['distrito'];
+                $aval->centro_laboral = $item['centro_laboral'];
+                $aval->direccion_centro_laboral = $item['direccion_centro_laboral'];
+                $aval->socio = $item['socio'];
+                $aval->codigo_socio = $item['codigo_socio'];
+                $aval->aporte_socio = $item['aporte_socio'];
+                $aval->empresa_ruc = $item['empresa_ruc'];
+                $aval->empresa_razon_social = $item['empresa_razon_social'];
+                $aval->empresa_direccion = $item['empresa_direccion'];
+                $aval->prestamo_id = $prestamo->id;
+                $aval->save();
+            }
+            $prestamo->garantias()->delete();
+            foreach ($request->garantias as $ep=>$garantias) {
+                $garantia= new Garantia;
+                $garantia->bien_garantia = $garantias['bien_garantia'];
+                $garantia->inscripcion = $garantia['inscripcion'];
+                $garantia->declaracion_jurada = $garantia['declaracion_jurada'];
+                $garantia->prestamo_id = $prestamo->id;
+                $garantia->save();
+            }
     
-                Garantia::where('prestamos_id', $prestamo->id)->delete();
-                foreach ($request->garantias as $ep=>$garantias) {
-                    $garantia= new Garantia;
-                    $garantia->bien_garantia = $garantias['bien_garantia'];
-                    if($garantias['tipo']=='INS'){
-                        $garantia->inscripcion = 'SI';
-                        $garantia->tipo = $garantias['tipo'];
-                    }else{
-                        $garantia->declaracion_jurada = 'SI';
-                        $garantia->tipo = $garantias['tipo'];
-                    }
-    
-                    $garantia->prestamos_id = $prestamo->id;
-                    $garantia->save();
-                }
-    
-            if($request->input('idprestamo')<0){
+            if($request->id==0){
                 $subido= new Subido;
                 $subido->prestamos_id=$prestamo->id;
                 $subido->save();

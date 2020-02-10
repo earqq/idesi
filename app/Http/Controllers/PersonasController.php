@@ -64,7 +64,6 @@ class PersonasController extends Controller
                 $cliente->documento = $request->documento;
                 $cliente->tipo_cliente = $request->tipo_cliente;
                 $cliente->pais = strtoupper($request->pais);
-              
                 $cliente->estado = 0;
                 $cliente->ubicacion_referencia=strtoupper( $request->ubicacion_referencia);    
                 $cliente->ubicacion_manzana=strtoupper( $request->ubicacion_manzana);    
@@ -150,6 +149,7 @@ class PersonasController extends Controller
                     $conyuge->documento= $request->persona['conyuge']['documento'];
                     $conyuge->fecha_nacimiento = $request->persona['conyuge']['fecha_nacimiento'];
                     $conyuge->socio = $request->persona['conyuge']['socio'];
+                    $conyuge->estado_civil = 'CONVIVIENTE';
                     $conyuge->persona_id = $persona->id;   
                     $conyuge->save();
                 }

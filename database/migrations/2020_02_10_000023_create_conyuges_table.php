@@ -36,7 +36,7 @@ class CreateConyugesTable extends Migration
             $table->string('codigo_socio', 10)->nullable();
             $table->decimal('aporte_socio', 11, 2)->nullable();
             $table->unsignedInteger('persona_id');
-            $table->boolean('trabaja')->nullable()->default(null);
+            $table->boolean('trabaja')->nullable()->default('0');
 
             $table->index(["persona_id"], 'fk_conyugue_naturals1_idx');
             $table->softDeletes();

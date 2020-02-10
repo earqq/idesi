@@ -47,23 +47,23 @@ class CreatePrestamosTable extends Migration
             $table->integer('cuantitativa')->nullable()->default(null);
             $table->integer('cualitativa')->nullable()->default(null);
             $table->string('estado', 15)->nullable()->default(null);
-            $table->unsignedInteger('clientes_id');
-            $table->unsignedInteger('users_id');
+            $table->unsignedInteger('cliente_id');
+            $table->unsignedInteger('user_id');
             $table->double('probabilidad_infocorp')->nullable()->default(null);
 
-            $table->index(["clientes_id"], 'fk_prestamos_clientes1_idx');
+            $table->index(["cliente_id"], 'fk_prestamos_clientes1_idx');
 
-            $table->index(["users_id"], 'fk_prestamos_users1_idx');
+            $table->index(["user_id"], 'fk_prestamos_users1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('clientes_id', 'fk_prestamos_clientes1_idx')
+            $table->foreign('cliente_id', 'fk_prestamos_clientes1_idx')
                 ->references('id')->on('clientes')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->foreign('users_id', 'fk_prestamos_users1_idx')
+            $table->foreign('user_id', 'fk_prestamos_users1_idx')
                 ->references('id')->on('users')
                 ->onDelete('no action')
                 ->onUpdate('no action');

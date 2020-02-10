@@ -64,7 +64,7 @@ class EmpresasController extends Controller
                 $cliente->ubicacion_departamento = $request->ubicacion_departamento;
                 $cliente->ubicacion_provincia = $request->ubicacion_provincia;
                 $cliente->ubicacion_distrito = $request->ubicacion_distrito;
-                $cliente->estado = 0;
+                $cliente->estado = 1;
                 $cliente->ubicacion_direccion_declarada= $request->ubicacion_direccion_declarada;    
                 $cliente->ubicacion_direccion_sistema= $request->ubicacion_direccion_declarada;    
                 $cliente->ubicacion_numero= $request->ubicacion_numero;    

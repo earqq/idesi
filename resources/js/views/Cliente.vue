@@ -77,27 +77,16 @@
       <img src="img/empty_2.svg" >
       <h1> Sin Prestamos Registrados </h1>
       <p>Todavía no se han registrado ningun prestamo a este cliente.</p>
-      <router-link  v-if="cliente.tipo_cliente=='1' && cliente.estado=='1'"  class="button_primary small" :to="{name: 'prestamo', params:{clienteID:cliente.id}}">
+      <router-link  v-if=" cliente.estado=='1'"  class="button_primary small" :to="{name: 'prestamo', params:{clienteID:cliente.id}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
-      </router-link>
-      <router-link  v-else-if="cliente.tipo_cliente=='2' && cliente.estado=='1'" class="button_primary small" :to="{name: 'prestamojuridico', params:{clienteID:cliente.id}}">
-        <span> NUEVO PRESTAMO  </span>
-        <i class="material-icons-outlined">add</i>
-      </router-link>
+      </router-link>   
     </div>
 
     <div class="credits_grid" v-else>
      
       <div class="table_grid" >
-        <router-link  v-if="cliente.tipo_cliente=='1' && cliente.estado=='1'"  class="add_credit" :to="{name: 'prestamo', params:{dni:cliente.documento}}">
-          <span>
-            <i class="material-icons-outlined">add</i>
-          </span>
-          <p> NUEVO PRESTAMO  </p>
-        </router-link>
-
-        <router-link  v-else-if="cliente.tipo_cliente=='2' && cliente.estado=='1'" class="add_credit" :to="{name: 'prestamojuridico', params:{dni:cliente.documento}}">
+        <router-link  v-if="cliente.estado=='1'"  class="add_credit" :to="{name: 'prestamo', params:{clienteID:cliente.id}}">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
@@ -133,7 +122,7 @@
             </div>
           </div>
         </article>
-        <a v-show="prestamos.length < 4 && prestamos.length > 0" class="spanner" v-for="i in 4" :key="i*1.5"  >
+        <a v-show="cliente.prestamos.length < 4 && cliente.prestamos.length > 0" class="spanner" v-for="i in 4" :key="i*1.5"  >
         </a>
       </div>
     

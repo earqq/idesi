@@ -33,6 +33,6 @@ class Cliente extends Model
      */
     public function prestamos()
     {
-        return $this->hasMany('App\Prestamo', 'clientes_id');
+        return $this->hasMany('App\Prestamo', 'cliente_id');
     }
 }

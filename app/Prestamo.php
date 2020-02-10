@@ -16,62 +16,47 @@ class Prestamo extends Model
      */
     public function cliente()
     {
-        return $this->belongsTo('App\Cliente', 'clientes_id');
+        return $this->belongsTo('App\Cliente', 'cliente_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+  
     public function user()
     {
-        return $this->belongsTo('App\User', 'users_id');
+        return $this->belongsTo('App\User', 'user_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+
     public function archivos()
     {
-        return $this->hasMany('App\Archivo', 'prestamos_id');
+        return $this->hasMany('App\Archivo', 'prestamo_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function avals()
+  
+    public function avales()
     {
-        return $this->hasMany('App\Aval', 'prestamos_id');
+        return $this->hasMany('App\Aval', 'prestamo_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function evaluacions()
+ 
+    public function evaluaciones()
     {
-        return $this->hasMany('App\Evaluacion', 'prestamos_id');
+        return $this->hasMany('App\Evaluacion', 'prestamo_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function garantias()
     {
-        return $this->hasMany('App\Garantia', 'prestamos_id');
+        return $this->hasMany('App\Garantia', 'prestamo_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+  
     public function subidos()
     {
-        return $this->hasMany('App\Subido', 'prestamos_id');
+        return $this->hasMany('App\Subido', 'prestamo_id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+
     public function vistas()
     {
-        return $this->hasMany('App\Vista', 'prestamos_id');
+        return $this->hasMany('App\Vista', 'prestamo_id');
     }
 }

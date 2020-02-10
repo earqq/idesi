@@ -95,7 +95,7 @@
           </div>
         </div>
 
-        <div v-show="tab == 2" class="form_step">
+        <div v-if='prestamo.cliente.tipo_cliente==1' v-show="tab == 2" class="form_step">
           <div class="form_step_wrapper">
             <h3 class="title">Datos del Titular</h3>
             <div class="form_content">
@@ -146,7 +146,7 @@
                   <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDireccion}">
-                  <label>Dirección Consignado</label>
+                  <label>Dirección Declarada</label>
                   <input type="text" v-model="prestamo.cliente.ubicacion_direccion_declarada" />
                   <div class="message">Se requiere esta información</div>
                 </div>
@@ -230,7 +230,7 @@
                   <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDireccionLaboral}">
-                  <label>Dirección centro laboral</label>
+                  <label>Dirección centro laboral </label>
                   <input type="text" v-model="prestamo.cliente.persona.trabajo.empresa_direccion" />
                   <div class="message">Se requiere esta información</div>
                 </div>
@@ -239,18 +239,18 @@
           </div>
           <button
             type="button"
-            @click.prevent="clickAddconyuge"
+            @click="clickAddconyuge"
             class="add_section in_bottom"
-            v-if="!prestamo.cliente.persona.tiene_conyuge">
+            v-if="tools.tiene_conyuge==false">
             <span>AGREGAR CÓNYUGE O CONVIVIENTE</span>
             <i class="material-icons-outlined">add</i> 
           </button>
 
-          <div class="form_list " v-if="prestamo.cliente.persona.tiene_conyuge">
+          <div class="form_list " v-if="tools.tiene_conyuge==true">
             <div class="form_step_wrapper in_bottom" >
               <h3 class="title">
-                CÓNYUGE o Conviviente
-                <button  class="delete_section" type="button"  @click.prevent="clickRemoveconyuge()">
+                CÓNYUGE o Conviviente 
+                <button  class="delete_section" type="button"  @click="clickRemoveconyuge()">
                   <i class="material-icons-outlined"> delete </i>
                 </button>
               </h3>
@@ -343,7 +343,202 @@
             </a>
           </div>
         </div>
+        <!-- Para empresas -->
+        <div v-if='prestamo.cliente.tipo_cliente==2' v-show="tab == 2" class="form_step">
+          <div class="form_step_wrapper">
+            <h3 class="title">Datos de la Empresa</h3>
+            <div class="form_content">
 
+              <div class="group_form">
+
+                <div class="input_wrapper">
+                  <label>Razón Social</label>
+                  <input type="text"  v-model="prestamo.cliente.empresa.razon_social"  disabled/>
+                </div>
+
+                <div class="input_wrapper">
+                  <label>Ruc</label>
+                  <input type="text"  v-model="prestamo.cliente.documento" disabled/>
+                </div>
+
+                <div class="input_wrapper">
+                  <label>Nombre comercial</label>
+                  <input type="text" maxlength="50" v-model="prestamo.cliente.empresa.nombre_comercial"  />
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validateActividad}">
+                  <label>Actividad</label>
+                  <input type="text"  v-model="prestamo.cliente.empresa.actividad_principal" />
+                  <div class="message">Actividad de la empresa</div>
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validatePartida}">
+                  <label>Número de partida</label>
+                  <input type="text" v-model="prestamo.cliente.empresa.partida_registral"  />
+                  <div class="message">N° de partida la empresa</div>
+                </div>
+                <div class="input_wrapper">
+                  <label>Teléfono</label>
+                  <input type="text" v-model="prestamo.cliente.empresa.telefono"  />
+                </div>
+                <div class="input_wrapper" :class="{require: !validateDireccionEmpresa}">
+                  <label>Dirección</label>
+                  <input type="text" v-model="prestamo.cliente.empresa.direccion"  />
+                  <div class="message">Dirección de la emrpesa</div>
+                </div>
+                <div class="input_wrapper" :class="{require: !validateFechaConstitucion}">
+                  <label>Fecha de constitución</label>
+                  <input type="date" v-model="prestamo.cliente.empresa.fecha_constitucion"  />
+                  <div class="message">Fecha de inicio de la empresa</div>
+                </div>
+                <div class="input_wrapper" :class="{require: !validateEmail}">
+                  <label>Email</label>
+                  <input type="text" v-model="prestamo.cliente.empresa.email"  />
+                  <div class="message">Ingrese correo de la empresa</div>
+                </div>
+              </div>
+
+              <span class="separator"></span>
+
+              <div class="group_form">
+
+                <div class="input_wrapper" :class="{require: !validateDocumentoRepresentante}">
+                  <label>Documento de Identidad</label>
+                  <input
+                    type="text"
+                    v-model="form.representante.documento_representante"
+                    @keyup="datosCliente()"
+                    v-mask="'########'"
+                  /> 
+                  <div class="message">Numero de documento del representante</div>
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validateNombres}">
+                  <label>Nombres y Apellidos</label>
+                  <input type="text" v-model="form.representante.nombres_representante" />
+                  <div class="message">Nombre del representante</div>
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validateNacimiento}">
+                  <label>Fecha de Nacimiento</label>
+                  <input type="date" v-model="form.representante.nacimiento_representante" />
+                  <div class="message">Fecha de nacimiento del representante</div>
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validateCivil}">
+                  <label>Estado Civil</label>
+                  <select v-model="form.representante.estado_civil_representante">
+                    <option value="SOLTERO">SOLTERO</option>
+                    <option value="CASADO">CASADO</option>
+                    <option value="CONVIVIENTE">CONVIVIENTE</option>
+                    <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
+                    <option value="VIUDO">VIUDO</option>
+                  </select>
+                  <div class="message">Estado civil del representante</div>
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validateOcupacion}">
+                  <label>Ocupación</label>
+                  <input type="text" v-model="form.representante.ocupacion_representante" />
+                  <div class="message">Ingrese ocupacion del representante</div>
+                </div>
+
+
+                <div class="input_wrapper" >
+                  <label>Teléfono</label>
+                  <input type="text" v-model="form.representante.telefono_representante" />
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validateCelular}">
+                  <label>Celular</label>
+                  <input
+                    type="text"
+                    v-mask="'### ### ###'"
+                    v-model="form.representante.celular_representante"
+                  />
+                  <div class="message">Ingrese número de celular</div>
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validateDireccionRepresetante}">
+                  <label>Dirección</label>
+                  <input type="text" v-model="form.representante.direccion_representante" />
+                  <div class="message">Ingrese su dirección</div>
+                </div>
+              </div>
+              <div class="separator"></div>
+
+              <div class="group_form">
+
+
+                <div class="input_wrapper" :class="{require: !validateDepartamento}">
+                  <label>Departamento</label>
+                  <input type="text" v-model="form.representante.departamento_representante" />
+                  <div class="message">Seleccione departamento</div>
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validateProvincia}">
+                  <label>Provincia</label>
+                  <input type="text" v-model="form.representante.provincia_representante" />
+                  <div class="message">Seleccione provincia</div>
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validateDistrito}">
+                  <label>Distrito</label>
+                  <input type="text" v-model="form.representante.distrito_representante" />
+                  <div class="message">Seleccione distrito</div>
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validateReferencia}">
+                  <label>Referencia</label>
+                    <input type="text" v-model="form.representante.referencia_representante" />
+                    <div class="message">La referencia es invalido</div>
+                </div>
+
+
+                <div class="input_wrapper" :class="{require: !validateTipoDomicilio}">
+                  <label>Tipo Domicilio</label>
+                  <select v-model="form.representante.tipo_domicilio_representante">
+                    <option value="PROPIA">PROPIA</option>
+                    <option value="PROPIA HIPOTECA">PROPIA HIPOTECA</option>
+                    <option value="DE LOS PADRES">DE LOS PADRES</option>
+                    <option value="DE LOS FAMILIARES">DE LOS FAMILIARES</option>
+                    <option value="ALQUILADA">ALQUILADA</option>
+                  </select>
+                  <div class="message">Tipo de vivienda invalido</div>
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validatePoderes}">
+                  <label>Poderes (Asiento)</label>
+                    <input type="text" v-model="form.representante.poderes_representante" v-mask="'####'" />
+                    <div class="message">Ingrese poderes</div>
+                </div>
+
+                <div class="input_wrapper" :class="{require: !validateFechaCargo}">
+                  <label>Fecha inicio (Cargo) </label>
+                  <input type="date" v-model="form.representante.fecha_inicio_representante"/>
+                  <div class="message">Fecha incorrecta</div>
+                </div>
+              </div>
+          
+            </div>
+          </div>
+
+          <div class="form_buttons">
+            <a class="button_inline_primary medium prev" @click="prev(2)">
+              <i class="material-icons-outlined">navigate_before</i>
+              <span>ATRAS</span>
+            </a>
+            <a class="button_primary medium next" @click="next(2)"  v-if="validateStep1 && validateStep2">
+              <span>SIGUIENTE</span>
+              <i class="material-icons-outlined">navigate_next</i>
+            </a>
+            <a class="button_primary medium next"  v-else>
+              <span>SIGUIENTE</span>
+              <i class="material-icons-outlined">navigate_next</i>
+            </a>
+          </div>
+        </div>
+        <!-- Fin empresas -->
         <div v-show="tab == 3" class="form_step">
           <div class="form_step_wrapper">
             <div class="form_list no_border" >
@@ -374,7 +569,7 @@
                         type="text"
                         v-model="row.empresa_ruc"
                         v-mask="'###########'"
-                        @keyup='getCompanyData(row.empresa_ruc,index)'
+                        @keyup='ObtenerDatosAvalEmpresa(row.empresa_ruc,index)'
                       />
                     </div>
 
@@ -452,8 +647,8 @@
                     <div class="input_wrapper">
                       <label>Socio</label>
                       <select v-model="row.socio">
-                        <option value="1">SI</option>
-                        <option value="0">NO</option>
+                        <option value="true">SI</option>
+                        <option value="false">NO</option>
                       </select>
                     </div>
                     <div  v-if="row.socio" class="input_wrapper">
@@ -676,6 +871,9 @@ export default {
       provincesTitular: [],
       districtsTitular: [],
       errors: {},
+      tools:{
+        tiene_conyuge:false,      
+      },
       prestamo: {
         id: 0, 
         garantias: [],
@@ -697,10 +895,10 @@ export default {
             ocupacion: "",
             tipo_domicilio: "PROPIA",
             trabajo:{
+              empresa_ruc:"",
               empresa_direccion: "",
               empresa_razon_social: "",
             },   
-            tiene_conyuge:0,      
             conyuge: {
               documento: "",
               nombres: "",
@@ -728,8 +926,8 @@ export default {
         meses: 0,
         importe: 0,
         aporte: 0,
-        plazo: 0,
-        coutas: 0,
+        cuotas: 0,
+        cuota_sistema:0,
         tasa: 0.0,
         comentarios: "",
         estado: "PROCESO"
@@ -908,24 +1106,51 @@ export default {
 
 
   },
-  created() { 
+  async created() { 
+    await this.obtenerDatosCliente()
     this.clickAddAval()
     this.clickAddGarantia()
 
-    this.$http
+  
+  },
+
+  methods: {
+    obtenerDatosCliente(){
+      this.$http
       .get(`/clientes/` + this.$route.params.clienteID)
       .then(response => { 
         console.log("respose")  
         console.log(response)
         this.prestamo.cliente=response.data
+        if(!this.prestamo.cliente.persona.trabajo){
+          this.prestamo.cliente.persona.trabajo={
+              empresa_ruc:"",
+              empresa_direccion: "",
+              empresa_razon_social: "",
+            }
+        }
+        if(!this.prestamo.cliente.persona.conyuge){
+          this.prestamo.cliente.persona.conyuge={
+              documento: "",
+              nombres: "",
+              fecha_nacimiento: "",
+              estado_civil: "SOLTERO",
+              ocupacion: "",
+              telefono: "",
+              celular: "",
+              trabaja: 1,
+              centro_laboral: "",
+              direccion_centro_laboral: "",
+              socio: 0,
+              codigo_socio: "",
+              aporte_socio: "",
+          }
+        }
+        this.tools.tiene_conyuge=false
         if(this.prestamo.cliente.persona.conyuge)
-          this.prestamo.cliente.persona.tiene_conyuge=1
-        else
-          this.prestamo.cliente.persona.tiene_conyuge=0
+          this.tools.tiene_conyuge=true
       });
-  },
-
-  methods: {
+    },
     tabError(){
        this.$toast.error(
           "Rellene los datos necesarios",
@@ -940,12 +1165,12 @@ export default {
               return f.departamento_id == this.prestamo.cliente.ubicacion_departamento
           })
       },
-      filterDistrictTitularMe() {
-          // this.prestamo.cliente.domicilio_distrito= '0'
-          this.districtsTitular = this.all_districts.filter(f => {
-              return f.provincia_id == this.prestamo.cliente.ubicacion_provincia
-          })
-      },
+    filterDistrictTitularMe() {
+        // this.prestamo.cliente.domicilio_distrito= '0'
+        this.districtsTitular = this.all_districts.filter(f => {
+            return f.provincia_id == this.prestamo.cliente.ubicacion_provincia
+        })
+    },
     next(index) {
       window.scrollTo(0,0)
       this.tab = index + 1
@@ -955,10 +1180,11 @@ export default {
       this.tab = index - 1
     },
     clickAddconyuge() {
-      this.prestamo.cliente.persona.tiene_conyuge=true
+      this.tools.tiene_conyuge=true
     },
-    clickRemoveconyuge() {
-      this.prestamo.cliente.persona.tiene_conyuge=false
+    clickRemoveconyuge() {      
+      this.tools.tiene_conyuge=false
+      this.prestamo.cliente.persona.documento=''  
     },
     clickAddAval() { 
       this.prestamo.avales.push({
@@ -987,7 +1213,6 @@ export default {
       this.prestamo.avales.splice(index, 1);
     },
     clickAddGarantia() {
-      // this.contador_garantia++;
       this.prestamo.garantias.push({
         bien_garantia: "",
         tipo: ""
@@ -996,15 +1221,7 @@ export default {
     clickRemoveGarantia(index) {
       this.prestamo.garantias.splice(index, 1);
     },
-    clearForm() {
-      // this.initForm();
-    },
-    // initForm() {
-    //   this.errors = {};
-    //   this.prestamo = {
-        
-    //   }
-    // },
+  
     datosCliente() {
       let me = this;
       // me.loader = "true";
@@ -1027,21 +1244,22 @@ export default {
       }
     },
     meses_numero() {
+      console.log("si viene");
       if (this.prestamo.producto == "CREDIDIARIO") { 
-        this.prestamo.meses = (Number(this.prestamo.plazo) / 30).toFixed(2);
+        this.prestamo.meses = (Number(this.prestamo.cuotas) / 30).toFixed(2);
       } else if (this.prestamo.producto == "CREDISEMANA") {
-        this.prestamo.meses = (Number(this.prestamo.plazo) / 4).toFixed(2);
+        this.prestamo.meses = (Number(this.prestamo.cuotas) / 4).toFixed(2);
       } else {
-        this.prestamo.meses = (Number(this.prestamo.plazo) / 1).toFixed(2);
+        this.prestamo.meses = (Number(this.prestamo.cuotas) / 1).toFixed(2);
       }
     },
-    getCompanyData(ruc,index){
+    ObtenerDatosAvalEmpresa(ruc,index){
       
       if(ruc.length==11){
           let me = this;
           axios
             .post("/consulta/doc", {
-              documento: me.ruc
+              documento: ruc
             })
             .then(function(response) {          
               if(response.data){
@@ -1124,11 +1342,11 @@ export default {
     await this.filterDistrictTitularMe()
 
     if (this.prestamo.producto == "CREDIDIARIO") {
-      this.prestamo.meses = (Number(this.prestamo.plazo) / 30).toFixed(2);
+      this.prestamo.meses = (Number(this.prestamo.cuotas) / 30).toFixed(2);
     } else if (this.prestamo.producto == "CREDISEMANA") {
-      this.prestamo.meses = (Number(this.prestamo.plazo) / 4).toFixed(2);
+      this.prestamo.meses = (Number(this.prestamo.cuotas) / 4).toFixed(2);
     } else if (this.prestamo.producto == "MENSUAL") {
-      this.prestamo.meses = Number(this.prestamo.plazo) / 1;
+      this.prestamo.meses = Number(this.prestamo.cuotas) / 1;
     }
   }
 };
