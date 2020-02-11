@@ -31,14 +31,16 @@ Route::group(['middleware'=>['auth']],function(){
         
         Route::resource('user','UserController');
         Route::get('/currentUser', 'UserController@currentUser');
-
+ 
         
         //Personas
         Route::resource('personas','PersonasController');
         //Empresas
         Route::resource('empresas','EmpresasController');
-        //Clientes
+        //prestamoID:'0's
         Route::resource('clientes','ClientesController');
+        Route::get('clientes/datos/prestamo/{id}', 'PrestamosController@show');
+
         Route::get('clientes/search/{state}/{text?}','ClientesController@listar');
         Route::get('clientes/aceptar/solicitud/{id}', 'ClientesController@aceptarSolicitud');
         Route::get('clientes/rechazar/solicitud/{id}', 'ClientesController@rechazarSolicitud');
@@ -61,7 +63,7 @@ Route::group(['middleware'=>['auth']],function(){
 
 
 
-        Route::get('clientes/datos/prestamo/{documento}', 'ClientesController@general');
+        
         Route::get('clientes/enviarEvaluar/{prestamo}', 'ClientesController@enviarEvaluar');
 
         Route::get('clientes/entregarPrestamo/{prestamo}', 'ClientesController@entregarPrestamo');

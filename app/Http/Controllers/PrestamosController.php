@@ -89,7 +89,11 @@ class PrestamosController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         try{
+
             \Log::alert($request->all());
+
+            DB::beginTransaction();
+
             $prestamo = new Prestamo();                
             if($request->id!=0)
                 $prestamo = Prestamo::find($request->id);
@@ -114,7 +118,6 @@ class PrestamosController extends Controller
             $prestamo->estado = $request->estado;
             
             $prestamo->save();
-            DB::beginTransaction();
             
             $cliente=Cliente::find($request->cliente['id']);
             $cliente->celular = $request->cliente['celular'];
@@ -145,7 +148,7 @@ class PrestamosController extends Controller
                     if($persona->conyuge)
                     $conyugue = $persona->conyuge;
                     $conyugue->centro_laboral= $request->cliente['persona']['conyuge']['centro_laboral'];
-                    $conyugue->direccion_laboral = $request->cliente['persona']['conyuge']['direccion_laboral'] ;
+                    $conyugue->direccion_centro_laboral = $request->cliente['persona']['conyuge']['direccion_centro_laboral'] ;
                     $conyugue->documento = $request->cliente['persona']['conyuge']['documento'] ;
                     $conyugue->estado_civil =  $request->cliente['persona']['conyuge']['estado_civil'] ;
                     $conyugue->fecha_nacimiento =  $request->cliente['persona']['conyuge']['fecha_nacimiento'];
@@ -194,9 +197,6 @@ class PrestamosController extends Controller
                 $representante->save();
             }
 
-
-
-            
             $prestamo->avales()->delete();
             foreach ($request->avales as $item) {
                 $aval= new Aval;
@@ -242,7 +242,6 @@ class PrestamosController extends Controller
                 $subidos->inscripcion_socio=1;
                 $subidos->save();
             }
-    
             DB::commit();
 
             return [
@@ -265,10 +264,10 @@ class PrestamosController extends Controller
      */
     public function show($id)
     {
-        $prestamo = Prestamo::with('cliente.persona.hijo')->find($id);
-        return $prestamo;
+        $prestamoDatos= Prestamo::with('avales','garantias','cliente.persona.hijos')->find($id);
+        return $prestamoDatos;
+        
     }
-
     /**
      * Show the form for editing the specified resource.
      *
