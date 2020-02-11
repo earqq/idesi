@@ -81,14 +81,14 @@
                 <tbody>
                         <tr>
                             <td colspan="3">
-                            <span class="title">Apellidos y Nombres</span>  <span > {{$natural->apellidos}} {{$natural->nombres}}</span>
+                            <span class="title">Apellidos y Nombres</span>  <span > {{$persona->apellidos}} {{$persona->nombres}}</span>
                             </td>
                         </tr>
 
                         <tr>
                             <td> <span class="title">Dni</span> <span >{{$cliente->documento}}</span> </td>
-                        <td> <span class="title">F. Nacimiento</span> <span > {{$natural->nacimiento}}</span> </td>
-                            <td> <span class="title">Estado civil</span> <span > {{$natural->estado_civil}} </span> </td>
+                        <td> <span class="title">F. Nacimiento</span> <span > {{$persona->fecha_nacimiento}}</span> </td>
+                            <td> <span class="title">Estado civil</span> <span > {{$persona->estado_civil}} </span> </td>
                         </tr>
                         <tr>
                             <td> <span class="title">Departamento</span> <span >HUANUCO</span> </td>
@@ -97,24 +97,24 @@
                         </tr>
                         <tr>
                             
-                            <td> <span class="title">Telefono</span> <span > {{$natural->telefono}}</span> </td>
-                            <td colspan="2"> <span class="title">Celular</span> <span > {{$natural->celular}} </span> </td>
+                            <td> <span class="title">Telefono</span> <span > {{$cliente->telefono}}</span> </td>
+                            <td colspan="2"> <span class="title">Celular</span> <span > {{$cliente->celular}} </span> </td>
                         </tr>
                         <tr>
-                            <td colspan="3"> <span class="title">Ocupación</span> <span > {{$natural->ocupacion}}</span> </td>
+                            <td colspan="3"> <span class="title">Ocupación</span> <span > {{$persona->ocupacion}}</span> </td>
                         </tr>
                         <tr>
-                            <td colspan="3"> <span class="title">Dirección</span> <span > {{$natural->direccion_cliente}}</span> </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="2"> <span class="title">Referencia</span> <span > {{$natural->referencia}}</span> </td>
-                            <td> <span class="title">Tipo de domicilio</span> <span > {{$natural->tipo_domicilio}}</span> </td>
+                            <td colspan="3"> <span class="title">Dirección</span> <span > {{$cliente->ubicacion_direccion_declarada}}</span> </td>
                         </tr>
 
                         <tr>
-                        <td > <span class="title">Centro laboral</span>  <span > {{$natural->centro_laboral}}</span> </td>
-                            <td colspan="2"> <span class="title">Dirección</span> <span > {{$natural->direccion_laboral}} </span> </td>
+                            <td colspan="2"> <span class="title">Referencia</span> <span > {{$cliente->ubicacion_referencia}}</span> </td>
+                            <td> <span class="title">Tipo de domicilio</span> <span > {{$persona->tipo_domicilio}}</span> </td>
+                        </tr>
+
+                        <tr>
+                        <td > <span class="title">Centro laboral</span>  <span > {{$persona->centro_laboral}}</span> </td>
+                            <td colspan="2"> <span class="title">Dirección</span> <span > {{$persona->direccion_laboral}} </span> </td>
                         </tr>
 
                 </tbody>
@@ -125,30 +125,30 @@
                     <tr>
                         <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">CONYUGE O CONVIVIENTE</th>
                     </tr>
-                </thead>
-                @if ($tiene_conyuge=='SI')
+                </thead> 
+                @if (isset($conyuge))
                 <tbody>
                     <tr>
                         <td colspan="3">
-                        <span class="title"> Apellidos y Nombres</span>  <span > {{$conyugue->nombres}}</span>
+                        <span class="title"> Apellidos y Nombres</span>  <span > {{$conyuge->nombres}}</span>
                         </td>
                     </tr>
 
                     <tr>
-                        <td> <span class="title">Dni</span> <span > {{$conyugue->documento}}</span> </td>
-                        <td> <span class="title">F. Nacimiento</span> <span > {{$conyugue->nacimiento}}</span> </td>
-                        <td> <span class="title">Estado civil</span> <span > {{$conyugue->estado_civil}} </span> </td>
+                        <td> <span class="title">Dni</span> <span > {{$conyuge->documento}}</span> </td>
+                        <td> <span class="title">F. Nacimiento</span> <span > {{$conyuge->fecha_nacimiento}}</span> </td>
+                        <td> <span class="title">Estado civil</span> <span > {{$conyuge->estado_civil}} </span> </td>
                     </tr>
                     <tr>
-                        <td> <span class="title">Ocupación</span> <span > {{$conyugue->ocupacion}}</span> </td>
-                        <td> <span class="title">Teléfono</span> <span > {{$conyugue->telefono}}</span> </td>
-                        <td> <span class="title">Celular</span> <span > {{$conyugue->celular}} </span> </td>
+                        <td> <span class="title">Ocupación</span> <span > {{$conyuge->ocupacion}}</span> </td>
+                        <td> <span class="title">Teléfono</span> <span > {{$conyuge->telefono}}</span> </td>
+                        <td> <span class="title">Celular</span> <span > {{$conyuge->celular}} </span> </td>
                     </tr>
                     <tr>
-                        @if ($conyugue->socio == 'si')
+                        @if ($conyuge->socio == 'si')
                         <td> <span class="title">¿Es socio?</span> SI <span > [ X ] </span>  NO <span > [  ] </span> </td>
-                        <td> <span class="title">Codigo de socio </span><span > {{$conyugue->codigo_socio}}</span> </td>
-                        <td> <span class="title">Aporte</span> <span > S/. {{$conyugue->aporte_socio}}</span> </td>
+                        <td> <span class="title">Codigo de socio </span><span > {{$conyuge->codigo_socio}}</span> </td>
+                        <td> <span class="title">Aporte</span> <span > S/. {{$conyuge->aporte_socio}}</span> </td>
                         @else
                         <td> <span class="title">¿Es socio?</span> SI <span > [  ] </span>  NO <span > [ X ] </span> </td>
                         <td> <span class="title">Codigo de socio </span><span > -- --</span> </td>
@@ -159,8 +159,8 @@
                     </tr>
 
                     <tr>
-                        <td > <span class="title">Centro laboral</span>  <span > {{$conyugue->centro_laboral}}</span> </td>
-                        <td colspan="2" > <span class="title">Dirección</span> <span > {{$conyugue->direccion}} </span> </td>
+                        <td > <span class="title">Centro laboral</span>  <span > {{$conyuge->centro_laboral}}</span> </td>
+                        <td colspan="2" > <span class="title">Dirección</span> <span > {{$conyuge->direccion}} </span> </td>
                     </tr>
 
             </tbody>
@@ -306,7 +306,7 @@
                     </thead>
                     <tbody>
                             
-                           @if ($evaluacion)
+                           {{-- @if ($evaluacion)
                                 @foreach ($evaluacion as $eval)
                                         <tr>
                                             @if ($eval->estado=='OBSERVADO')
@@ -335,7 +335,7 @@
                                             NO REGISTRA EVALUACIONES
                                     </td>
                                 </tr>
-                            @endif
+                            @endif --}}
 
     
                     </tbody>

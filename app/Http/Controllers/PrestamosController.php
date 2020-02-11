@@ -144,6 +144,7 @@ class PrestamosController extends Controller
                 $persona->tipo_domicilio =  $request->cliente['persona']['tipo_domicilio'];
                 $persona->save();
                 if(strlen($request->cliente['persona']['conyuge']['documento'])>5){
+                    
                     $conyugue = new Conyuge;
                     if($persona->conyuge)
                     $conyugue = $persona->conyuge;
@@ -222,12 +223,14 @@ class PrestamosController extends Controller
                 $aval->prestamo_id = $prestamo->id;
                 $aval->save();
             }
-            $prestamo->garantias()->delete();
+            $prestamo->garantias()->delete(); 
+            
             foreach ($request->garantias as $ep=>$garantias) {
+
                 $garantia= new Garantia;
                 $garantia->bien_garantia = $garantias['bien_garantia'];
-                $garantia->inscripcion = $garantia['inscripcion'];
-                $garantia->declaracion_jurada = $garantia['declaracion_jurada'];
+                $garantia->inscripcion = $garantias['inscripcion'];
+                $garantia->declaracion_jurada = $garantias['declaracion_jurada'];
                 $garantia->prestamo_id = $prestamo->id;
                 $garantia->save();
             }
@@ -266,7 +269,7 @@ class PrestamosController extends Controller
     {
         $prestamoDatos= Prestamo::with('avales','garantias')->find($id);
         return $prestamoDatos;
-        
+
     }
 
     /**

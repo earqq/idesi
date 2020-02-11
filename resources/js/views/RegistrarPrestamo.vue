@@ -453,15 +453,15 @@
                     <div class="input_wrapper">
                       <label>Socio</label>
                       <select v-model="row.socio">
-                        <option value="true">SI</option>
-                        <option value="false">NO</option>
+                        <option value="1">SI</option>
+                        <option value="0">NO</option>
                       </select>
                     </div>
-                    <div  v-if="row.socio" class="input_wrapper">
+                    <div  v-if="row.socio=='1'" class="input_wrapper">
                       <label>Codigo</label>
                       <input type="text" v-model="row.codigo_socio"  maxlength='10' />
                     </div>
-                    <div  v-if="row.socio" class="input_wrapper">
+                    <div  v-if="row.socio=='1'" class="input_wrapper">
                       <label>Aporte</label>
                       <vue-numeric
                         currency="S/. "
@@ -698,12 +698,7 @@ export default {
             fecha_nacimiento: "",
             estado_civil: "SOLTERO",
             ocupacion: "",
-            tipo_domicilio: "PROPIA",
-            trabajo:{
-              empresa_ruc:"",
-              empresa_direccion: "",
-              empresa_razon_social: "",
-            },   
+            tipo_domicilio: "PROPIA",  
             conyuge: {
               documento: "",
               nombres: "",
@@ -937,19 +932,19 @@ export default {
         if(this.prestamo.cliente.persona.conyuge){
           this.tools.tiene_conyuge=true
           this.prestamo.cliente.persona.conyuge={
-              documento: this.prestamo.cliente.persona.conyuge.documento,
-              nombres: this.prestamo.cliente.persona.conyuge.nombres,
-              fecha_nacimiento: this.prestamo.cliente.persona.conyuge.fecha_nacimiento,
-              estado_civil: this.prestamo.cliente.persona.conyuge.estado_civil,
-              ocupacion: this.prestamo.cliente.persona.conyuge.ocupacion,
-              telefono: "",
-              celular: "",
-              trabaja: this.prestamo.cliente.persona.conyuge.trabaja,
-              centro_laboral: "",
-              direccion_centro_laboral: "",
-              socio: this.prestamo.cliente.persona.conyuge.socio,
-              codigo_socio: "",
-              aporte_socio: "",
+              documento: this.prestamo.cliente.persona.conyuge.documento || "",
+              nombres: this.prestamo.cliente.persona.conyuge.nombres || "",
+              fecha_nacimiento: this.prestamo.cliente.persona.conyuge.fecha_nacimiento || "",
+              estado_civil: this.prestamo.cliente.persona.conyuge.estado_civil || "",
+              ocupacion: this.prestamo.cliente.persona.conyuge.ocupacion || "",
+              telefono: this.prestamo.cliente.persona.conyuge.telefono || "",
+              celular: this.prestamo.cliente.persona.conyuge.celular || "",
+              trabaja: this.prestamo.cliente.persona.conyuge.trabaja || "",
+              centro_laboral: this.prestamo.cliente.persona.conyuge.centro_laboral || "",
+              direccion_centro_laboral: this.prestamo.cliente.persona.conyuge.direccion_centro_laboral || "",
+              socio: this.prestamo.cliente.persona.conyuge.socio || "",
+              codigo_socio: this.prestamo.cliente.persona.conyuge.codigo_socio || "",
+              aporte_socio: this.prestamo.cliente.persona.conyuge.aporte_socio || "",
           }
         }else{
           this.tools.tiene_conyuge=false
@@ -960,7 +955,7 @@ export default {
             this.$http
       .get(`clientes/datos/prestamo/` + this.$route.params.prestamoID)
       .then(response => {  
-        console.log(response.data)
+        console.log(response.data.avales)
 
               this.prestamo.monto_inicial= response.data.monto_inicial
               this.prestamo.cuotas_inicial= response.data.cuotas_inicial 
@@ -983,6 +978,16 @@ export default {
               this.prestamo.plazo_final= response.data.plazo_final  
               this.prestamo.cuota_final= response.data.cuota_final  
               this.prestamo.tasa_final= response.data.tasa_final
+
+              if(response.data.avales){
+                this.prestamo.avales= response.data.avales
+              }
+
+              if(response.data.garantias){
+                this.prestamo.garantias = response.data.garantias
+              }
+              
+              
       });
     },
     tabError(){
@@ -1049,7 +1054,7 @@ export default {
         distrito: "",
         centro_laboral: "",
         direccion_centro_laboral: "",
-        socio: false,
+        socio: 0,
         codigo_socio: "",
         aporte_socio: "",
         tipo_persona: "pn",
@@ -1063,6 +1068,8 @@ export default {
     },
     clickAddGarantia() {
       this.prestamo.garantias.push({
+        inscripcion: "",
+        declaracion_jurada:"",
         bien_garantia: "",
         tipo: ""
       });
@@ -1154,7 +1161,7 @@ export default {
                     "Exitoso",
                     toastOptions.success
                   )
-              this.$router.push({ name: 'cliente', params: { clienteID: this.$route.params.clienteID, persona: this.$route.params.prestamoID }})
+              this.$router.push({ name: 'perfil', params: { id: this.$route.params.clienteID}})
             }else{
                 this.$toast.error(
                   "No se pudo crear prestamo",

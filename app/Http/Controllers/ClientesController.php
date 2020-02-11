@@ -385,26 +385,26 @@ class ClientesController extends Controller
         
     }
 
-    public function prestamoVer($prestamo)
-    {
+    // public function prestamoVer($prestamo)
+    // {
 
-        $prestamo= Prestamo::find($prestamo);
-        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
-        $persona = Persona::where('clientes_id',$cliente->id)->first();
-        $conyugue = Conyuge::where('naturals_id',$persona->id)->first();
-        $avals = Aval::where('prestamos_id',$prestamo->id)->get();
-        $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
-        $tiene_conyuge = '';
-        if($conyugue){
-            $tiene_conyuge='SI'; 
-        }
-        else{
-            $tiene_conyuge='NO';
-        }    
+    //     $prestamo= Prestamo::find($prestamo);
+    //     $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+    //     $persona = Persona::where('clientes_id',$cliente->id)->first();
+    //     $conyugue = Conyuge::where('naturals_id',$persona->id)->first();
+    //     $avals = Aval::where('prestamos_id',$prestamo->id)->get();
+    //     $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
+    //     $tiene_conyuge = '';
+    //     if($conyugue){
+    //         $tiene_conyuge='SI'; 
+    //     }
+    //     else{
+    //         $tiene_conyuge='NO';
+    //     }    
 
-        return compact('prestamo', 'cliente','avals','garantias','persona','conyugue','tiene_conyuge');
+    //     return compact('prestamo', 'cliente','avals','garantias','persona','conyugue','tiene_conyuge');
    
-    }
+    // }
 
     public function prestamoVerJuridico($prestamo)
     {
@@ -434,7 +434,7 @@ class ClientesController extends Controller
     public function SolicitudPdf($prestamo){
 
         $prestamo= Prestamo::find($prestamo);
-        $cliente = Cliente::where('id',$prestamo->clientes_id)->first(); 
+        $cliente = Cliente::where('id',$prestamo->cliente_id)->first(); 
 
         if($cliente->tipo_documento == 'RUC'){
             $juridico = Juridico::where('clientes_id',$cliente->id)->first();
@@ -447,21 +447,15 @@ class ClientesController extends Controller
         }
         else
         {
-            $persona = Persona::where('clientes_id',$cliente->id)->first();
-            $conyugue = Conyuge::where('naturals_id',$persona->id)->first();
-            $tiene_conyuge = '';
-            if($conyugue){
-                $tiene_conyuge='SI'; 
-            }
-            else{
-                $tiene_conyuge='NO';
-            }     
+            $persona = Persona::where('cliente_id',$cliente->id)->first();
+            $conyuge = Conyuge::where('persona_id',$persona->id)->first();
+
+            // return $persona;
+            $avals = Aval::where('prestamo_id',$prestamo->id)->get();
+            $garantias = Garantia::where('prestamo_id',$prestamo->id)->get();
+            // $evaluacion = Evaluacion::where('prestamo_id',$prestamo->id)->get();
     
-            $avals = Aval::where('prestamos_id',$prestamo->id)->get();
-            $garantias = Garantia::where('prestamos_id',$prestamo->id)->get();
-            $evaluacion = Evaluacion::where('prestamos_id',$prestamo->id)->get();
-    
-            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','persona','conyugue','tiene_conyuge','evaluacion'));
+            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','persona','conyuge'));
             return $pdf->stream('solicitud_de_credito.pdf');
 
         }
