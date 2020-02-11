@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Prestamo;
 use App\Archivo;
-use App\Subido;
 use App\Negocio;
 use App\Imports\NegociosImport;
 use App\Evaluacion;
@@ -700,12 +699,7 @@ class AnalisisController extends Controller
                 $prestamo->save();
 
 
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->evaluacion_cuantitativa=1;
-                $subidos->save();
-                
-
-                $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+                $cliente = Cliente::where('id',$prestamo->cliente_id)->first();
                 $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
                 if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cuantitativa.pdf', $pdf->output())){
                     
@@ -713,7 +707,7 @@ class AnalisisController extends Controller
                     $archivo->nombre = 'evaluacion_cuantitativa';
                     $archivo->tipo = 'documento';
                     $archivo->extension='pdf';
-                    $archivo->prestamos_id= $prestamo->id;
+                    $archivo->prestamo_id= $prestamo->id;
                     $archivo->save();
                 }
 

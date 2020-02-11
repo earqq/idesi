@@ -1018,7 +1018,7 @@ export default {
             "Exitoso",
             toastOptions.success
           ) 
-        this.$router.push({ name: 'perfil', params: { clienteID: this.cliente_id}})
+        this.$router.push({ name: 'perfil', params: { id: this.cliente_id}})
       }).catch(err=>{
           this.loading=false
           this.$toast.error(

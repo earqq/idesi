@@ -11,8 +11,11 @@ use App\Conyuge;
 use App\Aval;
 use App\Cliente;
 use App\Subido;
+use App\Evaluacion;
 use App\RepresentanteLegal;
 use App\Garantia;
+use App\Cuantitativa;
+use App\ResultadoAnalisis;
 class PrestamosController extends Controller
 {
     /**
@@ -26,10 +29,7 @@ class PrestamosController extends Controller
     }
 
     public function search($state,$text=''){
-        $prestamos = Prestamo::leftJoin('clientes','prestamos.clientes_id',"=","clientes.id")
-        ->leftJoin('naturals','clientes.id','=','naturals.clientes_id')
-        ->leftJoin('juridicos','clientes.id','=','juridicos.clientes_id')       
-        ->leftJoin('evaluacions','evaluacions.prestamos_id','prestamos.id')
+        $prestamos=Prestamo::with('cliente.persona','cliente.empresa','evaluaciones')
         ->where(function($query) use($state){
             if($state!='TODOS'){
                 $query->where('prestamos.estado',$state);
@@ -38,35 +38,20 @@ class PrestamosController extends Controller
         ->where(function($query) use($text){
             if($text!=''){
                 $text=strtoupper($text);
-                $query->orWhere('naturals.nombres', 'LIKE', "%{$text}%")
+                $query->orWhere('cliente.persona.nombres', 'LIKE', "%{$text}%")
                 ->orWhere('clientes.documento', 'LIKE', "%{$text}%")
-                ->orWhere('naturals.apellidos', 'LIKE', "%{$text}%")
-                ->orWhere('juridicos.razon_social', 'LIKE', "%{$text}%")
-                ->orWhere('prestamos.producto', 'LIKE', "%{$text}%");
+                ->orWhere('cliente.persona.apellidos', 'LIKE', "%{$text}%")
+                ->orWhere('cliente.empresa.razon_social', 'LIKE', "%{$text}%")
+                ->orWhere('producto', 'LIKE', "%{$text}%");
             }
         })  
         ->where(function($query){
-            if(Auth::user()->nivel == '3'){
-                $query->where('prestamos.estado','PENDIENTE');
-                // ->where('evaluacions.users_id','!=',Auth::user()->id);
-            }
-            elseif(Auth::user()->nivel == '4')
-                $query->where('prestamos.users_id','=', Auth::user()->id);  
-        })
-        ->select('clientes.documento',
-                'naturals.nombres',
-                'naturals.apellidos',
-                'juridicos.razon_social', 
-                'juridicos.celular', 
-                'juridicos.direccion', 
-                'prestamos.estado',
-                'prestamos.producto',
-                'prestamos.importe',
-                'prestamos.plazo',
-                'prestamos.cualitativa',
-                'prestamos.cuantitativa',
-                'prestamos.created_at',
-                'prestamos.id')
+            if(Auth::user()->nivel == '3')
+                $query->where('estado',2);
+            else if(Auth::user()->nivel == '4')
+                $query->where('user_id','=', Auth::user()->id);  
+        })   
+        ->where('estado','!=',1)
         ->take(30)
         ->get();    
         return $prestamos;
@@ -256,41 +241,75 @@ class PrestamosController extends Controller
      */
     public function show($id)
     {
-        $prestamoDatos= Prestamo::with('avales','garantias','cliente.persona.hijos')->find($id);
-        return $prestamoDatos;
-
+        $prestamo= Prestamo::with('avales','garantias','cliente.persona.hijos','resultadoAnalisis','evaluaciones')->find($id);
+        return $prestamo;
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function enviarEvaluacion($prestamoID)
     {
-        //
+        $prestamo = Prestamo::find($prestamoID);
+        $prestamo->estado = 2;
+        $prestamo->save();
     }
+    public function evaluar(Request $request)
+    {   
+      
+        if(Auth::user()->nivel==2){
+            $prestamo=Prestamo::find($request->id);
+            if($request->evaluacion['estado']==4 ){
+                $prestamo->producto_final = 0;
+                $prestamo->forma_final = 0;
+                $prestamo->aporte_final = 0;
+                $prestamo->importe_final = 0;
+                $prestamo->plazo_final = 0;
+                $prestamo->cuota_final = 0;
+                $prestamo->tasa_final = 0;
+                $prestamo->estado = $request->evaluacion['estado'];
+                $prestamo->save();
+            }else{
+                $prestamo->producto_final = $request->evaluacion['producto'];
+                $prestamo->aporte_final = $request->evaluacion['aporte'];
+                $prestamo->importe_final = $request->evaluacion['importe'];
+                $prestamo->plazo_final = $request->evaluacion['cuotas'];
+                $prestamo->cuota_final = $request->evaluacion['cuota_sistema'];
+                $prestamo->tasa_final = $request->evaluacion['tasa'];
+                $prestamo->estado = $request->evaluacion['estado'];
+                $prestamo->save();
+            }
+        }else{
+            $evaluacion = new Evaluacion();
+            $evaluacion->detalle  = $request->evaluacion['detalle'] ;
+            $evaluacion->estado  = $request->evaluacion['estado'];
+            $evaluacion->prestamo_id  = $request->id;
+            $evaluacion->user_id  = Auth::user()->id;
+            $evaluacion->save();        
+        }
+    } 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+
+
+    public function evaluarFinal(Request $request)
     {
-        //
-    }
+            try{
+
+                   DB::beginTransaction();
+                    
+                   $prestamo = Prestamo::find($request['prestamos_id']);
+                   
+                   
+    
+                    DB::commit();
+                    return [
+                        'success' => true,
+                        'data' => 'Cliente creado',
+                    ];
+    
+            } catch (Exception $e){
+                return [
+                    'success' => false,
+                ];
+                DB::rollBack();
+            }
+    } 
 }

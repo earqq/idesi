@@ -321,7 +321,7 @@
                             <td colspan="2"> <span class="title">¿OBSERVACIONES LEVANTADAS?</span>SI <span > [ X ] </span>  NO <span > [  ] </span></td>
                             <td style="background: #fff"> <span > </span> </td>
                         </tr> --}}
-                        @if ($prestamo->estado == 'PENDIENTE')
+                        @if ($prestamo->estado == 2)
                             <tr>
                                 <td colspan="3" style="text-align: center"> LA SOLICITUD DE CREDITO ESTA EN EVALUACIÓN</td>
                             </tr>

@@ -678,7 +678,7 @@ export default {
         cuota_sistema:0,
         tasa: 0.0,
         comentarios: "",
-        estado: "PROCESO"
+        estado: 1
       },
       contador_aval: 0,
       loading: false,
