@@ -1348,7 +1348,7 @@ export default {
   },
   async mounted() {
 
-    this.$http.get(`/evaluaciones/giro`).then(response => {
+    this.$http.get(`/extras/giro`).then(response => {
       this.giros = response.data;
     });
 

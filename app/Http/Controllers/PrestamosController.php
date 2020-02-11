@@ -265,7 +265,8 @@ class PrestamosController extends Controller
      */
     public function show($id)
     {
-        //
+        $prestamo = Prestamo::with('cliente.persona.hijo')->find($id);
+        return $prestamo;
     }
 
     /**

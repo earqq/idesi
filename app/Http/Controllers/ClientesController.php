@@ -233,7 +233,13 @@ class ClientesController extends Controller
         $cliente = Cliente::where('documento',$documento)->first();
         $persona = Persona::where('clientes_id',$cliente->id)->first();
         $conyugue = Conyuge::where('naturals_id',$persona->id)->first();
-      
+        $tiene_conyuge = '';
+        if($conyugue){
+            $tiene_conyuge='SI'; 
+        }
+        else{
+            $tiene_conyuge='NO';
+        }     
         return compact('cliente','persona','conyugue','tiene_conyuge');
     }
 
