@@ -143,7 +143,7 @@ class PrestamosController extends Controller
                 $persona->ocupacion = $request->cliente['persona']['ocupacion'];
                 $persona->tipo_domicilio =  $request->cliente['persona']['tipo_domicilio'];
                 $persona->save();
-                if(strlen($request->cliente['persona']['conyuge']['documento'])>5){
+                if($request->cliente['persona']['conyuge'] && strlen($request->cliente['persona']['conyuge']['documento'])>5){
                     
                     $conyugue = new Conyuge;
                     if($persona->conyuge)
@@ -233,17 +233,6 @@ class PrestamosController extends Controller
                 $garantia->declaracion_jurada = $garantias['declaracion_jurada'];
                 $garantia->prestamo_id = $prestamo->id;
                 $garantia->save();
-            }
-    
-            if($request->id==0){
-                $subido= new Subido;
-                $subido->prestamos_id=$prestamo->id;
-                $subido->save();
-    
-                $subidos = Subido::find($subido->id);
-                $subidos->solicitud_credito=1;
-                $subidos->inscripcion_socio=1;
-                $subidos->save();
             }
             DB::commit();
 

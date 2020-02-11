@@ -14,7 +14,7 @@
             <span>2</span>
             <p>TRANSPORTE</p>
           </div>
-          <div v-if='$route.params.prestamo=="PN"' class="tab" @click=" (validateStep1 && validateStep2) ? tab = 3 : tabError()" :class="{selected: tab == 3}">
+          <div v-if='prestamo.cliente.tipo_cliente==1' class="tab" @click=" (validateStep1 && validateStep2) ? tab = 3 : tabError()" :class="{selected: tab == 3}">
             <span>3</span>
             <p>FAMILIARES</p>
           </div>
@@ -239,7 +239,7 @@
                   <i class="material-icons-outlined">navigate_before</i>
                   <span>ATRAS</span>
                 </a>
-                <a v-if='$route.params.prestamo=="PN"' class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(2) : tabError()">
+                <a v-if='prestamo.cliente.tipo_cliente==1' class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(2) : tabError()">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
@@ -251,7 +251,7 @@
 
             </div>
 
-            <div v-show="tab == 3" v-if='$route.params.prestamo=="PN"' class="form_step">
+            <div v-show="tab == 3" v-if='prestamo.cliente.tipo_cliente==1' class="form_step">
               <div class="form_step_wrapper">
                 <h3 class="title">Información Familiar</h3>
                 <div class="form_content">
@@ -299,7 +299,7 @@
                           </div>
                           <div class="input_wrapper">
                             <label>Edad</label>
-                            <input type="text" v-model="hijo.edad" />
+                            <input type="text" v-model="hijo.edad"  disabled/>
                           </div>
 
                           <div class="input_wrapper">
@@ -596,6 +596,11 @@ export default {
       tab: 1, 
       colegios: [],
       i: 0,
+      prestamo:{
+        cliente:{
+          tipo_cliente:1
+        }
+      },
       loading:false,
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
@@ -784,7 +789,7 @@ export default {
     seleccionColegiosCosto(index) {
       this.$http 
         .get(
-          `/evaluaciones/colegio/costo?grado=` +
+          `/extras/colegio/costo?grado=` +
             this.evaluacion.familiar.hijos[index].grado +
             `&colegio=` + 
             this.evaluacion.familiar.hijos[index].colegio
@@ -793,26 +798,30 @@ export default {
           this.evaluacion.familiar.hijos[index].costo = response.data.costo;
         });
       // console.log(this.evaluacion.familiar.hijos[index].grado)
+    },
+    obtenerEdad(Edad) {
+    var today = new Date();
+    var birthDate = new Date(Edad);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age = age - 1;
     }
-    
+
+    return age;
+}
   },
   async mounted() {
     this.$http.get(`/prestamos/`+this.$route.params.prestamo).then(response => {
-      console.log("prestamo")
-      console.log(response.data)
+      this.prestamo=response.data
       this.evaluacion.principal.destino_credito_descripcion=response.data.destino_inicial || ''
 
-      if(response.data.cliente.persona && response.sata.cliente.persona.hijo.length>0){
-
-          this.evaluacion.familiar.numero_hijos = response.sata.cliente.persona.hijo.length
+      if(response.data.cliente.persona && response.data.cliente.persona.hijos.length>0){
+          this.evaluacion.familiar.numero_hijos = response.data.cliente.persona.hijos.length
           this.evaluacion.familiar.miembros_familia = this.evaluacion.familiar.numero_hijos;
-          for (
-            this.i = 0;
-            this.i < this.evaluacion.familiar.numero_hijos;
-            this.i++
-          ) {
+          response.data.cliente.persona.hijos.map(hijo=>{
             this.evaluacion.familiar.hijos.push({
-              edad: "",
+              edad: this.obtenerEdad(hijo.fecha_nacimiento),
               colegio: "PRINCIPITO",
               grado: "INICIAL",
               costo: 0,
@@ -820,7 +829,7 @@ export default {
 
             });
             this.seleccionColegiosCosto(this.i)
-          }
+          })
         }
     });
     this.$http.get(`/extras/giro`).then(response => {

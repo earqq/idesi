@@ -21,9 +21,8 @@ class CreateEmpresasTable extends Migration
     public function up()
     {
         Schema::create($this->tableName, function (Blueprint $table) {
-            $table->engine = 'InnoDB';
+            $table->engine = 'EXAMPLE';
             $table->increments('id');
-            $table->unsignedInteger('cliente_id');
             $table->string('razon_social', 200)->nullable()->default(null);
             $table->string('nombre_comercial', 200)->nullable()->default(null);
             $table->string('actividad_principal', 200)->nullable()->default(null);
@@ -31,13 +30,14 @@ class CreateEmpresasTable extends Migration
             $table->string('oficina_principal', 100)->nullable()->default(null);
             $table->string('tipo_negocio', 10)->nullable()->default(null);
             $table->date('fecha_constitucion')->nullable()->default(null);
+            $table->unsignedInteger('cliente_id');
 
-            $table->index(["cliente_id"], 'fk_juridicos_clientes1_idx');
+            $table->index(["cliente_id"], 'fk_empresas_clientes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('cliente_id', 'fk_juridicos_clientes1_idx')
+            $table->foreign('cliente_id', 'fk_empresas_clientes1_idx')
                 ->references('id')->on('clientes')
                 ->onDelete('no action')
                 ->onUpdate('no action');

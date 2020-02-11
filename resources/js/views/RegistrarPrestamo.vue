@@ -878,7 +878,7 @@ export default {
     },
 
     validateStep2(){
-      if(this.prestamo.cliente.persona.conyuge.conyuge_tiene=='SI'){
+      if(this.tools.tiene_conyuge){
 
           return this.validateNombre && this.validateApellidos && 
              this.validateDocumento && this.validateNacimiento &&
@@ -916,6 +916,7 @@ export default {
   },
   async created() { 
     await this.obtenerDatosCliente()
+      if(this.$route.params.prestamoID!='0')
           this.obtenerDatosPrestamo()
     // this.clickAddAval()
     // this.clickAddGarantia()
@@ -952,11 +953,9 @@ export default {
       });
     },
     obtenerDatosPrestamo(){
-            this.$http
+      this.$http
       .get(`clientes/datos/prestamo/` + this.$route.params.prestamoID)
       .then(response => {  
-        console.log(response.data.avales)
-
               this.prestamo.monto_inicial= response.data.monto_inicial
               this.prestamo.cuotas_inicial= response.data.cuotas_inicial 
               this.prestamo.disponibilidad_pago_inicial= response.data.disponibilidad_pago_inicial 

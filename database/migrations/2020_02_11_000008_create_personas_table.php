@@ -23,7 +23,6 @@ class CreatePersonasTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('cliente_id');
             $table->string('nombres', 100)->nullable();
             $table->string('apellidos', 100)->nullable();
             $table->date('fecha_nacimiento')->nullable();
@@ -39,13 +38,14 @@ class CreatePersonasTable extends Migration
             $table->string('nacimiento_departamento', 100)->nullable();
             $table->string('nacimiento_provincia', 100)->nullable();
             $table->string('nacimiento_distrito', 100)->nullable();
+            $table->unsignedInteger('cliente_id');
 
-            $table->index(["cliente_id"], 'fk_naturals_clientes1_idx');
+            $table->index(["cliente_id"], 'fk_personas_clientes1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('cliente_id', 'fk_naturals_clientes1_idx')
+            $table->foreign('cliente_id', 'fk_personas_clientes1_idx')
                 ->references('id')->on('clientes')
                 ->onDelete('no action')
                 ->onUpdate('no action');

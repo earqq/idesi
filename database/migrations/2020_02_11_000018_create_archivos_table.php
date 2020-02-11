@@ -23,10 +23,9 @@ class CreateArchivosTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('nombre_archivo', 50);
+            $table->string('nombre', 50);
             $table->string('tipo', 10)->nullable()->default(null);
             $table->string('extension', 5)->nullable()->default(null);
-            $table->char('estado', 1)->nullable()->default(null);
             $table->unsignedInteger('prestamo_id');
 
             $table->index(["prestamo_id"], 'fk_archivos_prestamos1_idx');

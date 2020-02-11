@@ -4,17 +4,17 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVistasTable extends Migration
+class CreateGeolocalizacionTable extends Migration
 {
     /**
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'vistas';
+    public $tableName = 'geolocalizacion';
 
     /**
      * Run the migrations.
-     * @table vistas
+     * @table geolocalizacion
      *
      * @return void
      */
@@ -25,19 +25,17 @@ class CreateVistasTable extends Migration
             $table->increments('id');
             $table->string('imagen', 45)->nullable()->default(null);
             $table->date('fecha')->nullable()->default(null);
-            $table->string('hora', 10)->nullable()->default(null);
-            $table->string('motivo', 50)->nullable()->default(null);
+            $table->time('hora')->nullable()->default(null);
             $table->string('latitud', 50)->nullable()->default(null);
             $table->string('altitud', 50)->nullable()->default(null);
-            $table->char('estado', 1)->nullable()->default(null);
-            $table->unsignedInteger('prestamos_id');
+            $table->unsignedInteger('prestamo_id');
 
-            $table->index(["prestamos_id"], 'fk_vistas_prestamos1_idx');
+            $table->index(["prestamo_id"], 'fk_vistas_prestamos1_idx');
             $table->softDeletes();
             $table->nullableTimestamps();
 
 
-            $table->foreign('prestamos_id', 'fk_vistas_prestamos1_idx')
+            $table->foreign('prestamo_id', 'fk_vistas_prestamos1_idx')
                 ->references('id')->on('prestamos')
                 ->onDelete('no action')
                 ->onUpdate('no action');

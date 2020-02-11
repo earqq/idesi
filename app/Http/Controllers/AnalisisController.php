@@ -753,9 +753,7 @@ class AnalisisController extends Controller
             $prestamo->cualitativa=1;
             $prestamo->save();
 
-            $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-            $subidos->evaluacion_cualitativa=1;
-            $subidos->save();
+   
 
             $cliente = Cliente::where('id',$prestamo->cliente_id)->first();
             $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
@@ -764,7 +762,7 @@ class AnalisisController extends Controller
                 $archivo->nombre = 'evaluacion_cualitativa';
                 $archivo->tipo = 'documento';
                 $archivo->extension='pdf';
-                $archivo->prestamos_id= $prestamo->id;
+                $archivo->prestamo_id= $prestamo->id;
                 $archivo->save();
             }
 
