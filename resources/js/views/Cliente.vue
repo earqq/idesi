@@ -77,11 +77,11 @@
       <img src="img/empty_2.svg" >
       <h1> Sin Prestamos Registrados </h1>
       <p>Todavía no se han registrado ningun prestamo a este cliente.</p>
-      <router-link  v-if=" cliente.estado=='2' && cliente.tipo_cliente=='1'"  class="button_primary small" :to="{name: 'prestamo', params:{clienteID:cliente.id}}">
+      <router-link  v-if=" cliente.estado=='2' && cliente.tipo_cliente=='1'"  class="button_primary small" :to="{name: 'prestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
       </router-link>   
-      <router-link  v-if=" cliente.estado=='2' && cliente.tipo_cliente=='2'"  class="button_primary small" :to="{name: 'prestamoEmpresa', params:{clienteID:cliente.id}}">
+      <router-link  v-if=" cliente.estado=='2' && cliente.tipo_cliente=='2'"  class="button_primary small" :to="{name: 'prestamoEmpresa', params:{clienteID:cliente.id,prestamoID:0}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
       </router-link>   
@@ -90,13 +90,13 @@
     <div class="credits_grid" v-else>
      
       <div class="table_grid" >
-        <router-link  v-if="cliente.estado=='2' && cliente.tipo_cliente=='1'"  class="add_credit" :to="{name: 'prestamo', params:{clienteID:cliente.id}}">
+        <router-link  v-if="cliente.estado=='2' && cliente.tipo_cliente=='1'"  class="add_credit" :to="{name: 'prestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
           <p> NUEVO PRESTAMO  </p>
         </router-link>
-         <router-link  v-if="cliente.estado=='2' && cliente.tipo_cliente=='2'"  class="add_credit" :to="{name: 'prestamoEmpresa', params:{clienteID:cliente.id}}">
+         <router-link  v-if="cliente.estado=='2' && cliente.tipo_cliente=='2'"  class="add_credit" :to="{name: 'prestamoEmpresa', params:{clienteID:cliente.id,prestamoID:'0'}}">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
@@ -119,7 +119,7 @@
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
                 <li v-if="prestamo.estado=='PROCESO'"> 
-                  <router-link  v-if="cliente.tipo_cliente=='1'" :to="{name:'/editar/solicitud/credito/natural/', params:{prestamo:prestamo.id,dni:cliente.documento}}"> Editar </router-link>
+                  <router-link  v-if="cliente.tipo_cliente=='1'" :to="{name:'prestamo', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
                   <router-link  v-else-if="cliente.tipo_cliente=='2'" :to="{name:'/editar/solicitud/credito/juridica/', params:{prestamo:prestamo.id,dni:cliente.documento}}"> Editar </router-link>
                 </li>
                 <li v-if="prestamo.cualitativa=='0' && prestamo.estado=='PROCESO'"> <router-link :to="{name:'evalCualtitativa', params:{prestamo:prestamo.id,documento:cliente.documento,persona:tipo_cliente}}" >E. Cualitativa</router-link> </li>
@@ -183,9 +183,12 @@ export default {
       this.$http
         .get('/clientes/' + this.$route.params.id)
         .then(response => {
+          
           this.cliente=response.data
           this.loader = 0;
           this.loader_loan = 0; 
+
+          console.log(this.cliente.prestamos.id)
       });
 
     },

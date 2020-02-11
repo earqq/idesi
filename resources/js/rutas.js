@@ -94,12 +94,12 @@ export default new Router({
             component: require('./views/Error').default
         },
         {
-            path: '/prestamo/:clienteID',
-            name: 'prestamo',
+            path: '/prestamo/:clienteID/:prestamoID',
+            name: 'prestamo', 
             component: require('./views/RegistrarPrestamo').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
-                    .then(res => { 
+                    .then(res => {  
         
                          if(res.data.nivel=='2'  || res.data.nivel=='4'   ){
                                 next()
@@ -110,7 +110,7 @@ export default new Router({
             }
         },
         {
-            path: '/prestamo-empresa/:clienteID',
+            path: '/prestamo-empresa/:clienteID/:prestamoID',
             name: 'prestamoEmpresa',
             component: require('./views/RegistrarPrestamoEmpresa').default,
             beforeEnter: (to, from, next) => {

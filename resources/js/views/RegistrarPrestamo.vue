@@ -291,16 +291,16 @@
                   <div class="input_wrapper">
                     <label>Socio</label>
                     <select v-model="prestamo.cliente.persona.conyuge.socio">
-                      <option value="true">SI</option>
-                      <option value="false">NO</option>
+                      <option value="1">SI</option>
+                      <option value="0">NO</option>
                     </select>
-                  </div>
-                  <div class="input_wrapper" :class="{require: !validateCodigoConyuge}" v-if="prestamo.cliente.persona.conyuge.socio" >
+                  </div> 
+                  <div class="input_wrapper" :class="{require: !validateCodigoConyuge}" v-if="prestamo.cliente.persona.conyuge.socio==1" >
                     <label>Código</label>
                     <input  type="text"  v-model="prestamo.cliente.persona.conyuge.codigo_socio" maxlength='10'/>
                   </div>
                   
-                  <div class="input_wrapper" :class="{require: !validateAporteConyuge}" v-if="prestamo.cliente.persona.conyuge.socio">
+                  <div class="input_wrapper" :class="{require: !validateAporteConyuge}" v-if="prestamo.cliente.persona.conyuge.socio==1">
                     <label>Aporte </label>
                     <vue-numeric currency="S/. " separator="," v-model="prestamo.cliente.persona.conyuge.aporte_socio" v-bind:precision="2"></vue-numeric>
                   </div>                 
@@ -315,15 +315,17 @@
                   <div class="input_wrapper" >
                     <label>¿Trabaja?</label>
                     <select v-model="prestamo.cliente.persona.conyuge.trabaja">
-                      <option value="true">SI</option>
-                      <option value="false">NO</option>
+                      <option value="1">SI</option>
+                      <option value="0">NO</option>
                     </select>
                   </div>
-                  <div class="input_wrapper"  :class="{require: !validateCentroConyuge}" v-if="prestamo.cliente.persona.conyuge.trabaja">
+
+                  <div class="input_wrapper"  :class="{require: !validateCentroConyuge}" v-if="prestamo.cliente.persona.conyuge.trabaja==1">
                     <label>Centro Laboral</label>
                     <input type="text" v-model="prestamo.cliente.persona.conyuge.centro_laboral" />
                   </div>
-                  <div class="input_wrapper"  :class="{require: !validateDireccionConyuge}" v-if="prestamo.cliente.persona.conyuge.trabaja">
+
+                  <div class="input_wrapper"  :class="{require: !validateDireccionConyuge}" v-if="prestamo.cliente.persona.conyuge.trabaja==1">
                     <label>Dirección centro laboral</label>
                     <input type="text" v-model="prestamo.cliente.persona.conyuge.direccion_centro_laboral" />
                   </div>
@@ -349,7 +351,7 @@
               <div class="sub_step_wrapper " v-for="(row, index) in prestamo.avales" :key="index">
                 <h3 class="title">
                   Aval {{index + 1}}
-                  <button v-if="index > 0"
+                  <button 
                     class="delete_section"
                     type="button"
                     @click.prevent="clickRemoveAval(index)">
@@ -514,8 +516,7 @@
               <div class="sub_step_wrapper " v-for="(row, index) in prestamo.garantias" :key="index">
                 <h3 class="title">
                   Garantia {{index + 1}}
-                  <button
-                    v-if="index > 0"
+                  <button 
                     class="delete_section"
                     type="button"
                     @click.prevent="clickRemoveGarantia(index)">
@@ -679,7 +680,7 @@ export default {
         tiene_conyuge:false,      
       },
       prestamo: {
-        id: 0, 
+        id: this.$route.params.prestamoID, 
         garantias: [],
         avales: [],
         cliente: {
@@ -714,7 +715,7 @@ export default {
               trabaja: 1,
               centro_laboral: "",
               direccion_centro_laboral: "",
-              socio: 0,
+              socio: false,
               codigo_socio: "",
               aporte_socio: "",
             },
@@ -831,11 +832,19 @@ export default {
 
 
      validateDocumentoConyuge(){
-      return String(this.prestamo.cliente.persona.conyuge.documento).length > 6
+       if(this.prestamo.cliente.persona.conyuge){
+          return String(this.prestamo.cliente.persona.conyuge.documento).length > 6
+       }else{
+         return true
+       }
     },
 
      validateNombreConyuge(){
-      return this.prestamo.cliente.persona.conyuge.nombres.length>6
+       if(this.prestamo.cliente.persona.conyuge){
+         return this.prestamo.cliente.persona.conyuge.nombres.length>6
+       }else{
+         return true
+       }   
     },
 
      validateNacimientoConyuge(){
@@ -912,47 +921,68 @@ export default {
   },
   async created() { 
     await this.obtenerDatosCliente()
-    this.clickAddAval()
-    this.clickAddGarantia()
+          this.obtenerDatosPrestamo()
+    // this.clickAddAval()
+    // this.clickAddGarantia()
 
   
   },
 
   methods: {
-    obtenerDatosCliente(){
+    obtenerDatosCliente(){ 
       this.$http
       .get(`/clientes/` + this.$route.params.clienteID)
-      .then(response => { 
-        console.log("respose")  
-        console.log(response)
+      .then(response => {  
         this.prestamo.cliente=response.data
-        if(!this.prestamo.cliente.persona.trabajo){
-          this.prestamo.cliente.persona.trabajo={
-              empresa_ruc:"",
-              empresa_direccion: "",
-              empresa_razon_social: "",
-            }
-        }
-        if(!this.prestamo.cliente.persona.conyuge){
+        if(this.prestamo.cliente.persona.conyuge){
+          this.tools.tiene_conyuge=true
           this.prestamo.cliente.persona.conyuge={
-              documento: "",
-              nombres: "",
-              fecha_nacimiento: "",
-              estado_civil: "SOLTERO",
-              ocupacion: "",
+              documento: this.prestamo.cliente.persona.conyuge.documento,
+              nombres: this.prestamo.cliente.persona.conyuge.nombres,
+              fecha_nacimiento: this.prestamo.cliente.persona.conyuge.fecha_nacimiento,
+              estado_civil: this.prestamo.cliente.persona.conyuge.estado_civil,
+              ocupacion: this.prestamo.cliente.persona.conyuge.ocupacion,
               telefono: "",
               celular: "",
-              trabaja: 1,
+              trabaja: this.prestamo.cliente.persona.conyuge.trabaja,
               centro_laboral: "",
               direccion_centro_laboral: "",
-              socio: 0,
+              socio: this.prestamo.cliente.persona.conyuge.socio,
               codigo_socio: "",
               aporte_socio: "",
           }
-        }
-        this.tools.tiene_conyuge=false
-        if(this.prestamo.cliente.persona.conyuge)
-          this.tools.tiene_conyuge=true
+        }else{
+          this.tools.tiene_conyuge=false
+        }    
+      });
+    },
+    obtenerDatosPrestamo(){
+            this.$http
+      .get(`clientes/datos/prestamo/` + this.$route.params.prestamoID)
+      .then(response => {  
+        console.log(response.data)
+
+              this.prestamo.monto_inicial= response.data.monto_inicial
+              this.prestamo.cuotas_inicial= response.data.cuotas_inicial 
+              this.prestamo.disponibilidad_pago_inicial= response.data.disponibilidad_pago_inicial 
+              this.prestamo.destino_inicial= response.data.destino_inicial  
+              this.prestamo.forma_inicial= response.data.forma_inicial 
+              this.prestamo.producto =  response.data.producto 
+              this.prestamo.forma= response.data.forma  
+              this.prestamo.importe= response.data.importe 
+              this.prestamo.meses= response.data.meses 
+              this.prestamo.aporte= response.data.aporte 
+              this.prestamo.cuota_sistema= response.data.cuota_sistema 
+              this.prestamo.cuotas= response.data.cuotas 
+              this.prestamo.tasa= response.data.tasa  
+              this.prestamo.comentarios= response.data.comentarios  
+              this.prestamo.producto_final= response.data.producto_final 
+              this.prestamo.forma_final= response.data.forma_final 
+              this.prestamo.aporte_final= response.data.aporte_final 
+              this.prestamo.importe_final= response.data.importe_final  
+              this.prestamo.plazo_final= response.data.plazo_final  
+              this.prestamo.cuota_final= response.data.cuota_final  
+              this.prestamo.tasa_final= response.data.tasa_final
       });
     },
     tabError(){
@@ -984,6 +1014,21 @@ export default {
       this.tab = index - 1
     },
     clickAddconyuge() {
+      this.prestamo.cliente.persona.conyuge={
+              documento: "",
+              nombres: "",
+              fecha_nacimiento: "",
+              estado_civil: "SOLTERO",
+              ocupacion: "",
+              telefono: "",
+              celular: "",
+              trabaja: 1,
+              centro_laboral: "",
+              direccion_centro_laboral: "",
+              socio: false,
+              codigo_socio: "",
+              aporte_socio: "",
+      }
       this.tools.tiene_conyuge=true
     },
     clickRemoveconyuge() {      
@@ -1109,7 +1154,7 @@ export default {
                     "Exitoso",
                     toastOptions.success
                   )
-              this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, persona: 'PN' }})
+              this.$router.push({ name: 'cliente', params: { clienteID: this.$route.params.clienteID, persona: this.$route.params.prestamoID }})
             }else{
                 this.$toast.error(
                   "No se pudo crear prestamo",
