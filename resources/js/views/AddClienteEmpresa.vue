@@ -11,7 +11,7 @@
             <span>2</span>
             <p>LEGALES</p>
           </div>
-          
+           
           <div class="tab" @click="validateStep1 ? tab = 3 : tabError()" :class="{selected: tab == 3}"  >
             <span>3</span>
             <p>DIRECTORES</p>

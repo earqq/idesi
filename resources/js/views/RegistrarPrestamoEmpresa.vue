@@ -297,7 +297,7 @@
               <div class="sub_step_wrapper " v-for="(row, index) in prestamo.avales" :key="index">
                 <h3 class="title">
                   Aval {{index + 1}}
-                  <button v-if="index > 0"
+                  <button  
                     class="delete_section"
                     type="button"
                     @click.prevent="clickRemoveAval(index)">
@@ -462,8 +462,7 @@
               <div class="sub_step_wrapper " v-for="(row, index) in prestamo.garantias" :key="index">
                 <h3 class="title">
                   Garantia {{index + 1}}
-                  <button
-                    v-if="index > 0"
+                  <button 
                     class="delete_section"
                     type="button"
                     @click.prevent="clickRemoveGarantia(index)">
@@ -858,8 +857,8 @@ export default {
   },
   async created() { 
     await this.obtenerDatosCliente()
-    this.clickAddAval()
-    this.clickAddGarantia()
+    // this.clickAddAval()
+    // this.clickAddGarantia()
 
   
   },
