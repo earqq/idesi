@@ -7,14 +7,16 @@
           <i  @click="flagModalUpload = false" class="material-icons-outlined">close</i>
         </div>
         <div class="input_wrapper">
-          <select v-model="fileName" >
+          <select v-model="fileName">
             <option value='seleccione'>Seleccione</option> 
-            <!-- <option selected value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option> -->
-            <!-- <option selected value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option> -->
-            <option selected  value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option> 
-            <option selected value="copia_dni"  v-if="!subidos.copia_dni" >Copias DNI</option>
-            <option selected value="recibo_agua_casa" v-if="!subidos.recibo_agua_casa">Recibo de agua de casa</option>
-            <option selected  value="recibo_luz_casa" v-if="!subidos.recibo_luz_casa">Recibo de luz de casa</option> 
+
+            <option v-for="(list, index) in porSubir" :key="index"  :value="list.nombre">
+              {{list.nombre}}
+            </option>
+            <!-- <option selected  value="reporte_de_central"  >Reporte de central de riesgo</option> 
+            <option selected value="copia_dni"   >Copias DNI</option>
+            <option selected value="recibo_agua_casa"  >Recibo de agua de casa</option>
+            <option selected  value="recibo_luz_casa"  >Recibo de luz de casa</option> 
             <option selected value="titulo_casa" v-if="!subidos.titulo_casa">Titulo de propiedad de casa</option>
             <option selected value="contrato_alquiler_casa" v-if="!subidos.contrato_alquiler_casa">Contrato de alquiler de casa</option>
             <option selected value="foto_casa" v-if="!subidos.foto_casa">Fotos de casa</option>
@@ -25,7 +27,7 @@
             <option selected value="boleta_venta" v-if="!subidos.boleta_venta">Boleta de ventas del negocio</option>
             <option selected value="factura_compra" v-if="!subidos.factura_compra">Factura de compras del negocio</option>
             <option selected value="factura_venta" v-if="!subidos.factura_venta">Factura de ventas del negocio</option>
-            <option selected value="fotos_negocio" v-if="!subidos.fotos_negocio">Fotos del negocio</option>
+            <option selected value="fotos_negocio" v-if="!subidos.fotos_negocio">Fotos del negocio</option> -->
 
           </select>
         </div>
@@ -348,55 +350,72 @@ export default {
       archivos: [],
       lista: [
         {
-          nombre: "inscripcion_de_socio"
+          nombre: "inscripcion_de_socio",
+          estado: false
         },
         {
-          nombre: "solicitud_credito"
+          nombre: "solicitud_credito",
+          estado: false
         },
         {
-          nombre:  "reporte_de_central"
+          nombre:  "reporte_de_central",
+          estado: false
         },
         {
-          nombre:  "copia_dni"
+          nombre:  "copia_dni",
+          estado: false
         },
         {
-          nombre:  "recibo_agua_casa"
+          nombre:  "recibo_agua_casa",
+          estado: false
         },
         {
-          nombre:  "recibo_luz_casa"
+          nombre:  "recibo_luz_casa",
+          estado: false
         },
         {
-          nombre:  "titulo_casa"
+          nombre:  "titulo_casa",
+          estado: false
         },
         {
-          nombre:  "contrato_alquiler_casa"
+          nombre:  "contrato_alquiler_casa",
+          estado: false
         },
         {
-          nombre:   "foto_casa"
+          nombre:   "foto_casa",
+          estado: false
         },
         {
-          nombre: "recibo_agua_negocio"
+          nombre: "recibo_agua_negocio",
+          estado: false
         },
         {
-          nombre:  "recibo_agua_negocio"
+          nombre:  "recibo_agua_negocio",
+          estado: false
         },
         {
-          nombre:  "recibo_luz_negocio"
+          nombre:  "recibo_luz_negocio",
+          estado: false
         },
         {
-          nombre:  "contrato_alquiler_negocio"
+          nombre:  "contrato_alquiler_negocio",
+          estado: false
         },
         {
-          nombre:   "boleta_compra"
+          nombre:   "boleta_compra",
+          estado: false
         },
         {
-          nombre: "boleta_venta"
+          nombre: "boleta_venta",
+          estado: false
         },
         {
-          nombre:   "factura_venta"
+          nombre:   "factura_venta",
+          estado: false
         },
         {
-          nombre:  "fotos_negocio"
+          nombre:  "fotos_negocio",
+          estado: false
         } 
       ],
       porSubir: []
@@ -411,12 +430,24 @@ export default {
       this.backMixin_handleBack('/perfil/'+this.prestamo.documento);
     },
     listFile() {
-      this.$http.get(`/files/${this.$route.params.prestamo}`).then(response => {
+      this.$http.get(`/files/${this.$route.params.prestamoID}`).then(response => {
         this.prestamo = response.data["datos"];
         this.archivos = response.data["files"];
         this.loaderFile=0
+
+        this.lista.map(item=>{
+          var a = this.archivos.find(f=>f.nombre == item.nombre)
+          if(a){
+            item.estado= true
+          }else{
+            this.porSubir.push({
+              nombre: item.nombre
+            })
+          }
+          // console.log(a);
+        })
  
-        console.log(this.lista)
+        console.log(this.porSubir[0].nombre)
       });
     },
     dragFinish (i, e) {
@@ -468,10 +499,11 @@ export default {
       this.errors = {};
     },
     uploadFile() {
+      console.log(this.$route.params.prestamoID)
       this.loading=true
       this.formData = new FormData();
       this.formData.append("name", this.fileName);
-      this.formData.append("prestamo_id", this.$route.params.prestamo);
+      this.formData.append("prestamo_id", this.$route.params.prestamoID);
       this.formData.append("file", this.attachment.content);
 
       this.$http
@@ -497,16 +529,16 @@ export default {
         });
     },
     cargarPdf(){
-                window.open('/clientes/adjuntarPdf/'+this.$route.params.prestamo,'_blank'); 
+                window.open('/clientes/adjuntarPdf/'+this.$route.params.prestamoID,'_blank'); 
       },
       solicitudPdf(){
-                window.open('/clientes/solicitudPdf/'+this.$route.params.prestamo,'_blank'); 
+                window.open('/clientes/solicitudPdf/'+this.$route.params.prestamoID,'_blank'); 
       },
       cualitativaPdf(){
-                window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamo,'_blank'); 
+                window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamoID,'_blank'); 
       },
       cuantitativaPdf(){
-               window.open('/evaluacion/cuantitativaPdf/'+this.$route.params.prestamo,'_blank'); 
+               window.open('/evaluacion/cuantitativaPdf/'+this.$route.params.prestamoID,'_blank'); 
       }
   },
   computed: {

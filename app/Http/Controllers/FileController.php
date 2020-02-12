@@ -43,15 +43,15 @@ class FileController extends Controller
         $max_size = (int)ini_get('upload_max_filesize') * 1000;
         $all_ext = implode(',', $this->allExtensions());
 
-        $model = new Archivo();  
-
         $file = $request->file('file');
 
         $ext = $file->getClientOriginalExtension();
         $type = $this->getType($ext);
         
+      \Log::alert($request['prestamo_id']);
+
         $prestamo= Prestamo::find($request['prestamo_id']);
-        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        $cliente = Cliente::where('id',$prestamo->cliente_id)->first();
         $nombre = $request['name'];
         $extension = $ext;
 
@@ -60,112 +60,21 @@ class FileController extends Controller
             if($type=='imagen'){
                 $pdf=PDF::loadView('reportes.imagen',compact('prestamo','cliente','nombre','extension'));
                 Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/imagenpdf/'.$request['name'].'.pdf', $pdf->output());
-            }
-            if($request['name'] == 'inscripcion_de_socio'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->inscripcion_socio=1;
-                $subidos->save();
-            }            
-            if($request['name'] == 'solicitud_credito'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->solicitud_credito=1;
-                $subidos->save();
-            }            
-            if($request['name'] == 'reporte_de_central'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->reporte_de_central=1;
-                $subidos->save();
-            }            
-            if($request['name'] == 'evaluacion_cualitativa'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->evaluacion_cualitativa=1;
-                $subidos->save();
-            }            
-            if($request['name'] == 'evaluacion_cuantitativa'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->evaluacion_cuantitativa=1;
-                $subidos->save();
-            }            
-            if($request['name'] == 'copia_dni'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->copia_dni=1;
-                $subidos->save();
-            }            
-            if($request['name'] == 'recibo_agua_casa'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->recibo_agua_casa=1;
-                $subidos->save();
-            }            
-            if($request['name'] == 'recibo_luz_casa'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->recibo_luz_casa=1;
-                $subidos->save();
-            }  
-            
-            if($request['name'] == 'titulo_casa'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->titulo_casa=1;
-                $subidos->save();
-            }  
-            if($request['name'] == 'contrato_alquiler_casa'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->contrato_alquiler_casa=1;
-                $subidos->save();
-            }  
-            if($request['name'] == 'foto_casa'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->foto_casa=1;
-                $subidos->save();
-            }  
-            if($request['name'] == 'recibo_agua_negocio'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->recibo_agua_negocio=1;
-                $subidos->save();
-            }  
-            if($request['name'] == 'recibo_luz_negocio'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->recibo_luz_negocio=1;
-                $subidos->save();
-            }  
-            if($request['name'] == 'contrato_alquiler_negocio'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->contrato_alquiler_negocio=1;
-                $subidos->save();
-            }  
-            if($request['name'] == 'boleta_compra'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->boleta_compra=1;
-                $subidos->save();
-            }  
-            if($request['name'] == 'boleta_venta'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->boleta_venta=1;
-                $subidos->save();
-            }  
-            if($request['name'] == 'factura_compra'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->factura_compra=1;
-                $subidos->save();
-            }  
-            if($request['name'] == 'factura_venta'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->factura_venta=1;
-                $subidos->save();
-            }
-            if($request['name'] == 'fotos_negocio'){
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->fotos_negocio=1;
-                $subidos->save();
             } 
+            
+            \Log::alert("asdasd");
+            \Log::alert($request['prestamo_id']);
 
-            
-            
-            return $model::create([
-                    'nombre' => $request['name'],
-                    'tipo' => $type,
-                    'extension' => $ext,
-                    'prestamos_id' => $request['prestamo_id']
-                ]);
+            $archivo = new Archivo;
+            $archivo->nombre = $request['name'];
+            $archivo->tipo = $type;
+            $archivo->extension= $ext;
+            $archivo->prestamo_id = $request['prestamo_id'];
+            $archivo->save();
+
+            \Log::alert("aaaa");
+            \Log::alert($request['prestamo_id']);
+
         }
  
         return response()->json(false);
@@ -319,7 +228,7 @@ class FileController extends Controller
     private function getUserDir($id)
     {   
         $prestamo = Prestamo::where('id',$id)->first();
-        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
+        $cliente = Cliente::where('id',$prestamo->cliente_id)->first();
         return $cliente->documento.'_' . $cliente->id;
     }
 

@@ -125,7 +125,7 @@
                 <li v-if="!prestamo.cualitativa && prestamo.estado==1"> <router-link :to="{name:'evalCualitativa', params:{prestamo:prestamo.id}}" >E. Cualitativa</router-link> </li>
                 <li v-if="!prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
                 <li v-if="prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1" @click="enviarEvaluar(prestamo.id)"> Enviar a Evaluación</li>
-                <li> <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
+                <li> <router-link :to="{name:'archivos', params:{prestamoID:prestamo.id}}" > Documentos </router-link> </li>
               </ul>
             </div>
           </div>
