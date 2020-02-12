@@ -931,6 +931,13 @@ export default {
       .get(`/clientes/` + this.$route.params.clienteID)
       .then(response => {  
         this.prestamo.cliente=response.data
+        console.log(this.prestamo)
+        if(!this.prestamo.cliente.persona.trabajo){
+          this.prestamo.cliente.persona.trabajo={
+            empresa_razon_social:'',
+            empresa_direccion:""
+          }
+        }
         if(this.prestamo.cliente.persona.conyuge){
           this.tools.tiene_conyuge=true
           this.prestamo.cliente.persona.conyuge={
@@ -977,8 +984,7 @@ export default {
               this.prestamo.importe_final= response.data.importe_final || ""  
               this.prestamo.plazo_final= response.data.plazo_final  || "" 
               this.prestamo.cuota_final= response.data.cuota_final  || "" 
-              this.prestamo.tasa_final= response.data.tasa_final || ""
-
+              this.prestamo.tasa_final= response.data.tasa_final || ""            
               if(response.data.avales){
                 this.prestamo.avales= response.data.avales
               }

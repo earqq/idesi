@@ -106,7 +106,7 @@ class PersonasController extends Controller
                 $provincia_domicilio = Provincia::where('id',$cliente->ubicacion_provincia)->first();
                 $distrito_domicilio = Distrito::where('id',$cliente->ubicacion_distrito)->first();
  
-
+                $trabajo='';
                 if($persona->estado_trabajo=='TRABAJA'){
 
                     $trabajo = new Trabajo();
