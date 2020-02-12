@@ -121,7 +121,7 @@
                 <li v-if="prestamo.estado==1"> 
                   <router-link  v-if="cliente.tipo_cliente=='1'" :to="{name:'prestamo', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
                   <router-link  v-else-if="cliente.tipo_cliente=='2'" :to="{name:'prestamoEmpresa', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
-                </li>
+                </li> 
                 <li v-if="!prestamo.cualitativa && prestamo.estado==1"> <router-link :to="{name:'evalCualitativa', params:{prestamo:prestamo.id}}" >E. Cualitativa</router-link> </li>
                 <li v-if="!prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
                 <li v-if="prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1" @click="enviarEvaluar(prestamo.id)"> Enviar a Evaluación</li>
@@ -187,7 +187,7 @@ export default {
           this.loader = 0;
           this.loader_loan = 0; 
 
-          console.log(this.cliente.prestamos.id)
+          console.log(this.cliente.prestamos)
       });
 
     },

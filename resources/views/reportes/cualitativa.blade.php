@@ -31,7 +31,7 @@
                 <tr >
                     <td  colspan="2" valign="middle" align="left"  style="width: 80%;border: none;"><span>EVALUACIÓN CUALITATIVA DEL PRESTAMO</span></td>
                 
-                    <td rowspan="2" style="padding: 10px 0;"><span class="title"> ***  Logo ****</span> </td>
+                    <td rowspan="2" style="padding: 10px 0;"><span class="title"> <img src="{{env('RUTA')}}/public/img/logo.png" alt="" srcset=""></span> </td>
                 </tr>
                     
                 <tr>
@@ -176,7 +176,7 @@
                    </tr> 
                     <tr colspan="3" >
                         <table style="width: 100%;margin-bottom: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
-                                <thead>            
+                                <thead>             
                                     <tr>
                                         <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Entidad Financiera</th>
                                         <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Cap. Trabajo</th> 

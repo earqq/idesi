@@ -7,10 +7,10 @@
           <i  @click="flagModalUpload = false" class="material-icons-outlined">close</i>
         </div>
         <div class="input_wrapper">
-          <select v-model="fileName">
-            <option value='seleccione'>Seleccione</option>
-            <option selected value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
-            <option selected value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
+          <select v-model="fileName" >
+            <option value='seleccione'>Seleccione</option> 
+            <!-- <option selected value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option> -->
+            <!-- <option selected value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option> -->
             <option selected  value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option> 
             <option selected value="copia_dni"  v-if="!subidos.copia_dni" >Copias DNI</option>
             <option selected value="recibo_agua_casa" v-if="!subidos.recibo_agua_casa">Recibo de agua de casa</option>
@@ -88,7 +88,7 @@
                   
             </a>
             
-          </div> 
+          </div>  
         </div>
 
          <div class="file_item"  @click="solicitudPdf()">
@@ -107,7 +107,7 @@
    
         <div class="file_item" v-for="(archivo, index) in archivos" :key="index">
           <div class="file_detail" v-if="archivo.tipo=='imagen'">
-            <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+            <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
               target="_blank">
               <i class="material-icons-outlined"> collections </i>
               <div class="file_info">
@@ -117,7 +117,7 @@
             </a>
           </div>
           <div class="file_detail" v-if="archivo.tipo=='documento'">
-            <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+            <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
               target="_blank">
               <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
@@ -134,14 +134,14 @@
         <div class="checklist_wrapper no_scroll">
           <div class="tree">
             <li>
-              <div class="state" :class="{complete: subidos.inscripcion_socio}" >
+              <div class="state complete">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Inscripcion de socio</a>
             </li>
 
             <li >
-              <div class="state" :class="{complete: subidos.solicitud_credito}" >
+              <div class="state complete" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Solicitud de credito</a>
@@ -346,6 +346,60 @@ export default {
       errors: {},
       prestamo: {},
       archivos: [],
+      lista: [
+        {
+          nombre: "inscripcion_de_socio"
+        },
+        {
+          nombre: "solicitud_credito"
+        },
+        {
+          nombre:  "reporte_de_central"
+        },
+        {
+          nombre:  "copia_dni"
+        },
+        {
+          nombre:  "recibo_agua_casa"
+        },
+        {
+          nombre:  "recibo_luz_casa"
+        },
+        {
+          nombre:  "titulo_casa"
+        },
+        {
+          nombre:  "contrato_alquiler_casa"
+        },
+        {
+          nombre:   "foto_casa"
+        },
+        {
+          nombre: "recibo_agua_negocio"
+        },
+        {
+          nombre:  "recibo_agua_negocio"
+        },
+        {
+          nombre:  "recibo_luz_negocio"
+        },
+        {
+          nombre:  "contrato_alquiler_negocio"
+        },
+        {
+          nombre:   "boleta_compra"
+        },
+        {
+          nombre: "boleta_venta"
+        },
+        {
+          nombre:   "factura_venta"
+        },
+        {
+          nombre:  "fotos_negocio"
+        } 
+      ],
+      porSubir: []
     };
   },
   created() {
@@ -360,8 +414,9 @@ export default {
       this.$http.get(`/files/${this.$route.params.prestamo}`).then(response => {
         this.prestamo = response.data["datos"];
         this.archivos = response.data["files"];
-        this.subidos = response.data["subidos"];
         this.loaderFile=0
+ 
+        console.log(this.lista)
       });
     },
     dragFinish (i, e) {

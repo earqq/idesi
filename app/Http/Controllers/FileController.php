@@ -24,19 +24,18 @@ class FileController extends Controller
 
     public function index($id)
     {
-        $pretamos = Prestamo::join('clientes','prestamos.clientes_id',"=","clientes.id")
+        $pretamos = Prestamo::join('clientes','prestamos.cliente_id',"=","clientes.id")
                             ->select('clientes.documento','clientes.id','prestamos.cuantitativa','prestamos.cualitativa','prestamos.estado')
                             ->where('prestamos.id',$id)->first();
 
         $model = new Archivo();
-        $files = $model::where('prestamos_id', $id)->get();
+        $files = $model::where('prestamo_id', $id)->get();
 
-        $subidos = Subido::where('prestamos_id', $id)->first();
 
-        return ['files'=>$files,'datos'=>$pretamos,'subidos'=>$subidos];
+        return ['files'=>$files,'datos'=>$pretamos];
 
     }
-
+ 
 
     public function store(Request $request)
     {
@@ -322,6 +321,51 @@ class FileController extends Controller
         $prestamo = Prestamo::where('id',$id)->first();
         $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
         return $cliente->documento.'_' . $cliente->id;
+    }
+
+    public function expediente($prestamoID){
+
+
+        $prestamo= Prestamo::with('cliente.persona.conyuge','cliente.empresa','avales','garantias','archivos')->find($prestamoID);
+        $cliente=$prestamo->cliente;
+        $persona=$cliente->persona;
+        $conyuge=$persona->conyuge;
+        $empresa=$cliente->empresa;
+        $avales=$prestamo->avales;
+        $garantias=$prestamo->garantias;
+        $archivos=$prestamo->archivos;
+        if(Storage::disk('local')->exists('/public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/adjunto_'.$cliente->documento.'.pdf')){
+            if(Storage::disk('local')->delete('/public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/adjunto_'.$cliente->documento.'.pdf')){
+
+                if(Storage::disk('local')->exists('/public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf')){
+                    if(Storage::disk('local')->delete('/public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf')){
+
+                    }
+                }
+            }
+
+        }     
+        
+        $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge','prestamo'));
+        Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf', $pdf->output());
+
+        $pdf = new \LynX39\LaraPdfMerger\PdfManage;
+        $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf'), 'all');
+        $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/solicitud_credito.pdf'), 'all');
+
+        foreach ($archivos as $ep=>$rp) {
+            if($rp->tipo=='documento'){
+
+                $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/'.$rp->tipo.'/'.$rp->nombre.'.'.$rp->extension), 'all');
+            }
+        }
+        foreach ($archivos as $ep=>$rp) {
+            if($rp->tipo=='imagen'){
+                $pdf->addPDF(public_path('/storage/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/imagenpdf/'.$rp->nombre.'.pdf'), 'all');
+            }
+        }
+
+        $pdf->merge("archivo_adjunto.pdf", "download");
     }
 }
 

@@ -289,7 +289,7 @@
                                     <td colspan="3">Completar esta sección solo si el/la solicitante menor de edad se haya inscrito a traves de un(a) representate</td> 
                             </tr>
  
-                            @isset($representante)
+                            @if (isset($representante))
                             <tr>
                                 <td colspan="3" ><span class="title">NOMBRES Y APELLIDOS(representante)</span> {{$representante->nombres}}  </td>
                             </tr>
@@ -298,10 +298,17 @@
                                 <td><span class="title">N° </span> {{$representante->documento}}</td>
                                 <td><span class="title">RELACIÓN CON EL SOLICITANTE</span> {{$representante->tipo_relacion}}</td>
                             </tr> 
-                            @endisset
                             <tr>
                                 <td colspan="3" style="text-align: center"> ***************************** Esta sección debe ser llenada por la Cooperativa *******************************</td>
                             </tr>
+                               
+                            @else
+                            <tr>
+                                <td colspan="3" style="text-align: center">
+                                     *************** EL SOLICITANTE NO ES MENOR DE EDAD ***************
+                                </td>
+                            </tr>
+                            @endif
                 </tbody>
             </table>
 
