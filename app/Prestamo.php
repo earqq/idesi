@@ -48,14 +48,11 @@ class Prestamo extends Model
         return $this->hasMany('App\Garantia', 'prestamo_id');
     }
 
-  
-    public function subidos()
+    public function resultadoAnalisis()
     {
-        return $this->hasMany('App\Subido', 'prestamo_id');
+        return $this->hasOne('App\ResultadoAnalisis', 'prestamo_id');
     }
-
-
-    public function vistas()
+    public function geolocalizacion()
     {
         return $this->hasMany('App\Vista', 'prestamo_id');
     }

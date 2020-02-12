@@ -429,9 +429,9 @@ export default {
         });
     },
     stateEvaluation(estado) {
-      if (estado == "APROBADO") return "accept";
-      if (estado == "OBSERVADO") return "observed";
-      if (estado == "DESAPROBADO") return "denied";
+      if (estado == 3) return "accept";
+      if (estado == 4) return "observed";
+      if (estado == 4) return "denied";
       return;
     },
     storePhoto() {

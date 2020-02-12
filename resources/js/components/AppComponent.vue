@@ -21,8 +21,8 @@
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                   </li>
   
-                  <li :class="{selected: tab == 'evaluaciones'}">
-                    <router-link :to="{name: 'evaluaciones'}"  >Prestamos</router-link>
+                  <li :class="{selected: tab == 'prestamos'}">
+                    <router-link :to="{name: 'prestamos'}"  >Prestamos</router-link>
                   </li>
 
                   <li :class="{selected: tab == 'usuarios'}" v-if="currentUser.nivel=='1'"> 
@@ -84,8 +84,8 @@
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                   </li>
 
-                  <li :class="{selected: tab == 'evaluaciones'}">
-                    <router-link :to="{name: 'evaluaciones'}"  >{{currentUser}}</router-link>
+                  <li :class="{selected: tab == 'prestamos'}">
+                    <router-link :to="{name: 'prestamos'}"  >{{currentUser}}</router-link>
                   </li>
 
                   <li :class="{selected: tab == 'usuarios'}" v-if="currentUser.nivel=='1'"> 
@@ -137,7 +137,6 @@ export default {
       .then(res => { 
         this.currentUser = res.data   
         this.$store.state.currentUser = res.data
-        console.log(this.$store.state.currentUser)    
       })
     }
   },

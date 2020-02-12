@@ -46,7 +46,7 @@ class CreatePrestamosTable extends Migration
             $table->decimal('tasa_final', 11, 2)->nullable()->default(null);
             $table->boolean('cuantitativa')->nullable()->default('0');
             $table->boolean('cualitativa')->nullable()->default('0');
-            $table->string('estado', 15)->nullable()->default(null);
+            $table->integer('estado')->nullable()->default(null);
             $table->unsignedInteger('cliente_id');
             $table->unsignedInteger('user_id');
             $table->double('probabilidad_infocorp')->nullable()->default(null);

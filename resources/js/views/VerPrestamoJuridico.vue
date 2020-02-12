@@ -817,7 +817,7 @@ export default {
         coutas: 0,
         tasa: 0.0,
         comentarios: "",
-        estado: "PENDIENTE"
+        estado: 2
       };
     },
     datosCliente() {

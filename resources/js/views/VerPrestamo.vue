@@ -907,7 +907,7 @@ export default {
         coutas: 0,
         tasa: 0.0,
         comentarios: "",
-        estado: "PROCESO",
+        estado: 1,
       };
     },
     datosCliente() {

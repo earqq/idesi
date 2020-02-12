@@ -595,7 +595,6 @@ export default {
       entidades: [],
       tab: 1, 
       colegios: [],
-      i: 0,
       prestamo:{
         cliente:{
           tipo_cliente:1
@@ -772,11 +771,11 @@ export default {
       .then(response => {
           this.loading = false
           this.$toast.success(
-              "La Evaluacion fue realizada",
+            "La Evaluacion fue realizada",
               "Exitoso",
               toastOptions.success
             )
-          this.$router.push({ name: 'perfil', params: { documento: this.evaluacion.cliente.id}})       
+          this.$router.push({ name: 'perfil', params: { id: this.prestamo.cliente.id}})       
       }).catch(err=>{
           this.loading = false
           this.$toast.error(
@@ -819,7 +818,7 @@ export default {
       if(response.data.cliente.persona && response.data.cliente.persona.hijos.length>0){
           this.evaluacion.familiar.numero_hijos = response.data.cliente.persona.hijos.length
           this.evaluacion.familiar.miembros_familia = this.evaluacion.familiar.numero_hijos;
-          response.data.cliente.persona.hijos.map(hijo=>{
+          response.data.cliente.persona.hijos.map((hijo,index)=>{
             this.evaluacion.familiar.hijos.push({
               edad: this.obtenerEdad(hijo.fecha_nacimiento),
               colegio: "PRINCIPITO",
@@ -828,7 +827,7 @@ export default {
               estudia: 1
 
             });
-            this.seleccionColegiosCosto(this.i)
+            this.seleccionColegiosCosto(index)
           })
         }
     });

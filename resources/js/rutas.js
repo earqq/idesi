@@ -18,7 +18,7 @@ export default new Router({
                                 next('/clientes')
                          }
                          else if(res.data.nivel=='3' || res.data.nivel=='5'  ){
-                            next('/evaluaciones')
+                            next('/prestamos')
                             }
                     })
             }
@@ -49,7 +49,7 @@ export default new Router({
                     .then(res => { 
                         
                          if(res.data.nivel=='3'){
-                                next('/evaluaciones')
+                                next('/prestamos')
                          }else{
                                 next()
                          }
@@ -94,37 +94,54 @@ export default new Router({
             component: require('./views/Error').default
         },
         {
-            path: '/prestamo/:clienteID/:prestamoID',
+            path: '/prestamos',
+            name: 'prestamos',
+            component: require('./views/Prestamos').default,
+        },       
+        {
+            path: '/prestamos/persona/registrar/:clienteID/:prestamoID',
             name: 'prestamo', 
             component: require('./views/RegistrarPrestamo').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
                     .then(res => {  
-        
-                         if(res.data.nivel=='2'  || res.data.nivel=='4'   ){
-                                next()
-                         }else{
-                            next('/error')
-                         }
+                        if(res.data.nivel=='2'  || res.data.nivel=='4'   ){
+                            next()
+                        }else{
+                        next('/error')
+                        }
                     })
             }
         },
         {
-            path: '/prestamo-empresa/:clienteID/:prestamoID',
+            path: '/prestamos/empresa/registrar/:clienteID/:prestamoID',
             name: 'prestamoEmpresa',
             component: require('./views/RegistrarPrestamoEmpresa').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
                     .then(res => { 
-        
-                         if(res.data.nivel=='2'  || res.data.nivel=='4'   ){
-                                next()
-                         }else{
+                        if(res.data.nivel=='2'  || res.data.nivel=='4')
+                            next()
+                        else
                             next('/error')
-                         }
                     })
             }
         },       
+        {
+            path: '/prestamos/evaluar/:prestamoID',
+            name: '/prestamos/evaluar/',
+            component: require('./views/EvaluarPrestamo').default,
+            beforeEnter: (to, from, next) => {
+                axios.get("/currentUser")
+                    .then(res => { 
+                        if(res.data.nivel=='2' || res.data.nivel=='3'){
+                            next()
+                        }else{
+                            next('/error')
+                        }
+                    })
+            }
+        },
         {
             path: '*',
             component: require('./views/404').default
@@ -195,62 +212,9 @@ export default new Router({
             
         },
  
-        {
-            path: '/evaluaciones',
-            name: 'evaluaciones',
-            component: require('./views/Evaluacion').default,
-          
-        },
-
+   
     
-        {
-            path: '/evaluacion/detalle/:prestamo',
-            name: '/evaluacion/detalle/',
-            component: require('./views/EvaluacionDetalle').default,
-            beforeEnter: (to, from, next) => {
-                axios.get("/currentUser")
-                    .then(res => { 
         
-                         if(res.data.nivel=='2' || res.data.nivel=='3' || res.data.nivel=='4' ){
-                                next()
-                         }else{
-                            next('/error')
-                         }
-                    })
-            }
-        },
-        {
-            path: '/editar/solicitud/credito/natural/:prestamo/:dni',
-            name: '/editar/solicitud/credito/natural/',
-            component: require('./views/VerPrestamo').default,
-            beforeEnter: (to, from, next) => {
-                axios.get("/currentUser")
-                    .then(res => { 
-        
-                         if(res.data.nivel=='2' || res.data.nivel=='4'){
-                                next()
-                         }else{
-                            next('/error')
-                         }
-                    })
-            }
-        },
-        { 
-            path: '/editar/solicitud/credito/juridica/:prestamo/:dni',
-            name: '/editar/solicitud/credito/juridica/',
-            component: require('./views/VerPrestamoJuridico').default,
-            beforeEnter: (to, from, next) => {
-                axios.get("/currentUser")
-                    .then(res => { 
-        
-                         if(res.data.nivel=='2'   || res.data.nivel=='4'   ){
-                                next()
-                         }else{
-                            next('/error')
-                         }
-                    })
-            }
-        },
         {  
             path: '/archivos/:prestamo', 
             name: 'archivos',

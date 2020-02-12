@@ -456,7 +456,7 @@ mixins: [serviceNumber],
         },
         declaracion:{
           uif: "0",
-          estado: "PENDIENTE",
+          estado: 2,
           observaciones: "",
         }
       },
