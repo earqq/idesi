@@ -151,12 +151,17 @@ class PersonasController extends Controller
                 
                 if($request->tools["conyuge"])
                 {
+                    
                     $conyuge= new Conyuge;
                     $conyuge->nombres= $request->persona['conyuge']['nombres'];
                     $conyuge->documento= $request->persona['conyuge']['documento'];
                     $conyuge->ocupacion= $request->persona['conyuge']['ocupacion'];
                     $conyuge->fecha_nacimiento = $request->persona['conyuge']['fecha_nacimiento'];
-                    $conyuge->socio = $request->persona['conyuge']['socio'];
+                    if($request->persona['conyuge']['socio']==1){
+                        $conyuge->socio = true; 
+                    }else{
+                        $conyuge->socio = false; 
+                    }
                     $conyuge->estado_civil = 'CONVIVIENTE';
                     $conyuge->persona_id = $persona->id;   
                     $conyuge->save();

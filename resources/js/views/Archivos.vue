@@ -149,29 +149,29 @@
               <a href="#">Solicitud de credito</a>
             </li>
 
-            <li >
-              <div class="state"  :class="{complete: subidos.reporte_de_central}" >
+            <li > 
+              <div class="state"  :class="{complete: verificar('reporte_de_central')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Reporte de central de riesgo</a>
             </li>
 
             <li  >
-              <div class="state" :class="{complete: subidos.evaluacion_cualitativa}" >
+              <div class="state" :class="{complete: verificar('evaluacion_cualitativa')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Evaluacion cualitativa</a>
             </li>
 
             <li >
-              <div class="state"  :class="{complete: subidos.evaluacion_cuantitativa}" >
+              <div class="state"  :class="{complete: verificar('evaluacion_cuantitativa')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Evaluacion de cuantitativa</a>
             </li>
 
             <li>
-              <div class="state"  :class="{complete: subidos.copia_dni}" >
+              <div class="state"  :class="{complete: verificar('copia_dni')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Copia DNI</a>
@@ -181,13 +181,13 @@
           <div class="tree">
             <div class="title">Documentos de casa</div>
             <li >
-              <div class="state"  :class="{complete: subidos.recibo_agua_casa}" >
+              <div class="state"  :class="{complete: verificar('recibo_agua_casa')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Recibo de agua </a>
             </li>
             <li>
-              <div class="state"  :class="{complete: subidos.recibo_luz_casa}" >
+              <div class="state"  :class="{complete: verificar('recibo_luz_casa')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Recibo de luz</a>
@@ -199,19 +199,19 @@
               <a href="#">Ubicacion</a>
             </li>
             <li>
-              <div class="state" :class="{complete: subidos.titulo_casa}" >
+              <div class="state" :class="{complete: verificar('titulo_casa')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Titulo de propiedad</a>
             </li>
             <li>
-              <div class="state" :class="{complete: subidos.contrato_alquiler_casa}">
+              <div class="state" :class="{complete: verificar('contrato_alquiler_casa')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Contrato de alquiler</a>
             </li>
             <li>
-              <div class="state" :class="{complete: subidos.foto_casa}">
+              <div class="state" :class="{complete: verificar('foto_casa')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Fotos de casa</a>
@@ -222,13 +222,13 @@
             <div class="title">Documentos del negocio</div>
 
             <li> 
-              <div class="state" :class="{ complete: subidos.recibo_agua_negocio}">
+              <div class="state" :class="{ complete: verificar('recibo_agua_negocio')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Recibo de agua</a>
             </li>
              <li>
-              <div class="state" :class="{ complete: subidos.recibo_luz_negocio}">
+              <div class="state" :class="{ complete: verificar('recibo_luz_negocio')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Recibo de luz</a>
@@ -240,37 +240,37 @@
               <a href="#">Ubicacion</a>
             </li>
             <li>
-              <div class="state" :class="{ complete: subidos.contrato_alquiler_negocio}">
+              <div class="state" :class="{ complete: verificar('contrato_alquiler_negocio')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Contrato de alquiler</a>
             </li>
             <li>
-              <div class="state" :class="{ complete: subidos.fotos_negocio}">
+              <div class="state" :class="{ complete: verificar('fotos_negocio')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Fotos de negocio</a>
             </li>
             <li>
-              <div class="state" :class="{ complete: subidos.boleta_compra}">
+              <div class="state" :class="{ complete: verificar('boleta_compra')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Boletas de compras</a>
             </li>
              <li>
-              <div class="state" :class="{ complete: subidos.factura_compra}">
+              <div class="state" :class="{ complete: verificar('factura_compra')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Facturas de compras</a>
             </li>
             <li>
-              <div class="state" :class="{ complete: subidos.boleta_venta}">
+              <div class="state" :class="{ complete: verificar('boleta_venta')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Boletas  de ventas</a>
             </li>
             <li>
-              <div class="state" :class="{ complete: subidos.factura_venta}" >
+              <div class="state" :class="{ complete: verificar('factura_venta')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#"> Facturas de ventas</a>
@@ -471,6 +471,20 @@ export default {
     },
     cancelDeleting() {
       this.deletingFile = {};
+    },
+    verificar(ad){
+      var a = 0
+      this.archivos.map(item=>{
+          
+          if(item.nombre==ad){
+            a =1
+            
+          }
+        })
+      if(a==1){
+          return true
+      }
+     
     },
     deleteFile() {
       this.$http
