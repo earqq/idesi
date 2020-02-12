@@ -211,7 +211,7 @@ export default new Router({
     
         
         {  
-            path: '/archivos/:prestamo', 
+            path: '/archivos/:prestamoID', 
             name: 'archivos',
             component: require('./views/Archivos').default,
             beforeEnter: (to, from, next) => {

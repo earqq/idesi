@@ -32,7 +32,7 @@
                 <tr >
                     <td  colspan="2" valign="middle" align="left"  style="width: 80%;border: none;"><span>EVALUACIÓN CUANTITATIVA DEL PRESTAMO</span></td>
                 
-                    <td rowspan="2" style="padding: 10px 0;"><span class="title"> ***  Logo ****</span> </td>
+                    <td rowspan="2" style="padding: 10px 0;"><span class="title"> <img src="{{env('RUTA')}}/public/img/logo.png" alt="" srcset=""></span> </td>
                 </tr>
                     
                 <tr>
@@ -114,6 +114,7 @@
                                        
                                     </thead>
                                     <tbody>
+        
                                         @for ($i = 0; $i <=1; $i++)
                                         @if ($cuantitativa->titular['ingresos_por_categoria'][$i]['concepto'])
                                         <tr>
@@ -129,6 +130,7 @@
                          </tr>
 
                          <!-- giro del negocio -->
+                         
                          <tr>
                              <td><span class="title">GIRO DEL NEGOCIO </span> <span> {{$cuantitativa->titular['giro_negocio']}} </span></td>
                              <td><span class="title">MARGEN COSTO </span> <span> {{$cuantitativa->titular['margen_costo']}} </span></td>
@@ -150,13 +152,20 @@
                                        
                                     </thead>
                                     <tbody> 
-                                        @foreach ($cuantitativa->titular['gasto_financiero'] as $cuant)
+
+                                        @forelse ($cuantitativa->titular['gasto_financiero'] as $cuant)
                                             <tr>
                                                 <td>{{$cuant['entidad']}}</td>
                                                 <td>S/. {{$cuant['saldo_capital']}}</td> 
                                                 <td>S/. {{$cuant['cuota']}}</td> 
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                        <tr>
+                                            <td colspan="3" style="text-align: center">
+                                                ********** NO REGISTRA DATOS **********
+                                            </td>
+                                        </tr>
+                                        @endforelse 
                                         
                                     </tbody>
                                 </table>
@@ -180,12 +189,20 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @foreach($cuantitativa->titular['gasto_negocio'] as $gasto_tit)
-                                        <tr>
-                                            <td>{{$gasto_tit['entidad']}}</td>
-                                            <td>S/. {{$gasto_tit['pago']}}</td>  
-                                        </tr>
-                                        @endforeach
+
+                                        @forelse ($cuantitativa->titular['gasto_negocio'] as $gasto_tit)
+                                            <tr>
+                                                <td>{{$gasto_tit['entidad']}}</td>
+                                                <td>S/. {{$gasto_tit['pago']}}</td>  
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="2" style="text-align: center">
+                                                    ********** NO REGISTRA DATOS **********
+                                                </td>
+                                            </tr>
+                                        @endforelse
+ 
                                         
                                     </tbody>
                                 </table>
@@ -226,24 +243,30 @@
                                         </tr>
                                        
                                     </thead>
-                                    <tbody>                                       
-                                        @foreach($cuantitativa->conyuge['ingresos_negocio'] as $conyuge_ingreso)
-                                        @if ($conyuge_ingreso['concepto'])
-                                         
-                                         
+                                    <tbody>
+                                        
+                                        @forelse ($cuantitativa->conyuge['ingresos_negocio'] as $conyuge_ingreso)
+                                            @if ($conyuge_ingreso['concepto'])  
+                                            <tr>
+                                                <td>{{$conyuge_ingreso['concepto']}}</td>
+                                                <td>S/. {{$conyuge_ingreso['lunes']}}</td>
+                                                <td>S/. {{$conyuge_ingreso['martes']}}</td>
+                                                <td>S/. {{$conyuge_ingreso['miercoles']}}</td>
+                                                <td>S/. {{$conyuge_ingreso['jueves']}}</td>
+                                                <td>S/. {{$conyuge_ingreso['viernes']}}</td>
+                                                <td>S/. {{$conyuge_ingreso['sabado']}}</td>
+                                                <td>S/. {{$conyuge_ingreso['domingo']}}</td>
+                                                <td style="background: #009688;color:#fff">S/. {{$conyuge_ingreso['subtotal']}}</td>
+                                            </tr>
+                                            @endif
+                                        @empty
                                         <tr>
-                                            <td>{{$conyuge_ingreso['concepto']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['lunes']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['martes']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['miercoles']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['jueves']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['viernes']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['sabado']}}</td>
-                                            <td>S/. {{$conyuge_ingreso['domingo']}}</td>
-                                            <td style="background: #009688;color:#fff">S/. {{$conyuge_ingreso['subtotal']}}</td>
+                                            <td colspan="9" style="text-align: center">
+                                                ********** NO REGISTRA DATOS **********
+                                            </td>
                                         </tr>
-                                        @endif
-                                        @endforeach
+                                        @endforelse
+ 
                                     </tbody>
                                 </table>
                              </td>
@@ -265,26 +288,35 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @foreach($cuantitativa->conyuge['ingresos_por_categoria'] as $ingreso_cat)
-                                        @if ($ingreso_cat['concepto'])
-                                          
-                                        <tr>
-                                            <td>{{$ingreso_cat['concepto']}}</td>
-                                            <td>S/. {{$ingreso_cat['mes']}}</td> 
-                                        </tr>
-                                        @endif
-                                        @endforeach
+
+                                        @forelse ($cuantitativa->conyuge['ingresos_por_categoria'] as $ingreso_cat)
+                                            @if ($ingreso_cat['concepto'])  
+                                                <tr>
+                                                    <td>{{$ingreso_cat['concepto']}}</td>
+                                                    <td>S/. {{$ingreso_cat['mes']}}</td> 
+                                                </tr> 
+                                            @endif
+                                        @empty
+                                            <tr>
+                                                <td colspan="2" style="text-align: center">
+                                                    ********** NO REGISTRA DATOS **********
+                                                </td>
+                                            </tr>
+                                        @endforelse
+ 
                                     </tbody>
                                 </table>
                              </td>
                          </tr>
 
                          <!-- giro del negocio -->
-                         <tr>
-                            <td><span class="title">GIRO DEL NEGOCIO </span> <span> {{$cuantitativa->conyuge['giro_negocio']}} </span></td>
-                            <td><span class="title">MARGEN COSTO </span> <span> {{$cuantitativa->conyuge['margen_costo']}} </span></td>
-                            <td><span class="title">VALOR INVENTARIO </span> <span> {{$cuantitativa->conyuge['valor_inventario']}} </span></td>
-                        </tr>
+                         @if ($cuantitativa->conyuge['giro_negocio'])
+                            <tr>
+                                <td><span class="title">GIRO DEL NEGOCIO </span> <span> {{$cuantitativa->conyuge['giro_negocio']}} </span></td>
+                                <td><span class="title">MARGEN COSTO </span> <span> {{$cuantitativa->conyuge['margen_costo']}} </span></td>
+                                <td><span class="title">VALOR INVENTARIO </span> <span> {{$cuantitativa->conyuge['valor_inventario']}} </span></td>
+                            </tr> 
+                         @endif  
                          <!-- GASTOS FINANCIEROS -->
                          <tr>
                             <td colspan="3"> <span class="title">GASTO FINANCIERO CÓNYUGE</td>
@@ -303,16 +335,24 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @foreach($cuantitativa->conyuge['gasto_financiero'] as $conyuge_gasto)
-                                            @if ($conyuge_gasto['entidad'])
-                                            
+
+                                        @forelse ($cuantitativa->conyuge['gasto_financiero'] as $conyuge_gasto)
+                                        @if ($conyuge_gasto['entidad'])
                                             <tr>
                                                 <td>{{$conyuge_gasto['entidad']}}</td>
                                                 <td>S/. {{$conyuge_gasto['saldo_capital']}}</td> 
                                                 <td>S/. {{$conyuge_gasto['cuota']}}</td> 
+                                            </tr> 
+                                        @endif
+                                            
+                                        @empty
+                                            <tr>
+                                                <td colspan="3" style="text-align: center">
+                                                    ********** NO REGISTRA DATOS **********
+                                                </td>
                                             </tr>
-                                            @endif
-                                        @endforeach
+                                        @endforelse
+
                                     </tbody>
                                 </table>
                              </td>
@@ -335,12 +375,19 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @foreach($cuantitativa->conyuge['gasto_negocio'] as $conyuge_gasto)
-                                        <tr>
-                                            <td>{{$conyuge_gasto['entidad']}}</td>
-                                            <td>S/. {{$conyuge_gasto['pago']}}</td>  
-                                        </tr>
-                                        @endforeach
+                                        @forelse ($cuantitativa->conyuge['gasto_negocio'] as $conyuge_gasto)
+                                            <tr>
+                                                <td>{{$conyuge_gasto['entidad']}}</td>
+                                                <td>S/. {{$conyuge_gasto['pago']}}</td>  
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="2" style="text-align: center">
+                                                    ********** NO REGISTRA DATOS **********
+                                                </td>
+                                            </tr>
+                                        @endforelse 
+
                                     </tbody>
                                 </table>
                              </td>
@@ -374,12 +421,19 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @foreach($cuantitativa->gastos_hogar as $gastos_hogar)
-                                        <tr>
-                                            <td>{{$gastos_hogar['concepto']}}</td>
-                                            <td>S/. {{$gastos_hogar['pago']}}</td> 
-                                        </tr>
-                                        @endforeach
+
+                                        @forelse ($cuantitativa->gastos_hogar as $gastos_hogar)
+                                            <tr>
+                                                <td>{{$gastos_hogar['concepto']}}</td>
+                                                <td>S/. {{$gastos_hogar['pago']}}</td> 
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="2" style="text-align: center">
+                                                    ********** NO REGISTRA DATOS **********
+                                                </td>
+                                            </tr>
+                                        @endforelse
                                         
                                     </tbody>
                                 </table>
@@ -402,15 +456,22 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @foreach($cuantitativa->propiedades as $propiedades)
-                                        @if ($propiedades['concepto'])
-                                         
+                                        
+                                        @forelse ($cuantitativa->propiedades as $propiedades)
+                                            <tr>
+                                                <td>{{$propiedades['concepto']}}</td>
+                                                <td>S/. {{$propiedades['valor_estimado']}}</td> 
+                                            </tr>
+                                        @empty
                                         <tr>
-                                            <td>{{$propiedades['concepto']}}</td>
-                                            <td>S/. {{$propiedades['valor_estimado']}}</td> 
+                                            <td colspan="2" style="text-align: center">
+                                                ********** NO REGISTRA DATOS **********
+                                            </td>
                                         </tr>
-                                        @endif
-                                        @endforeach
+                                            
+                                        @endforelse
+
+                                        
                                     </tbody>
                                 </table>
                              </td>
@@ -434,17 +495,28 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @foreach ($cuantitativa->titular['gasto_financiero_personal'] as $cuant)
-                                        <tr>
-                                            <td>{{$cuant['entidad']}}</td>
-                                            <td>S/. {{$cuant['saldo_capital']}}</td> 
-                                            <td>S/. {{$cuant['cuota']}}</td> 
-                                        </tr>
-                                        @endforeach
+
+                                        @forelse ($cuantitativa->titular['gasto_financiero_personal'] as $cuant)
+                                            @if ($cuant['entidad'])
+                                                <tr>
+                                                    <td>{{$cuant['entidad']}}</td>
+                                                    <td>S/. {{$cuant['saldo_capital']}}</td> 
+                                                    <td>S/. {{$cuant['cuota']}}</td> 
+                                                </tr> 
+                                            @endif
+                                            
+                                        @empty
+                                            <tr>
+                                                <td colspan="3" style="text-align: center">
+                                                      ********** NO REGISTRA DATOS **********
+                                                </td>
+                                            </tr>
+                                        @endforelse 
+
                                     </tbody>
                                 </table>
                              </td>
-                         </tr
+                        </tr>
  
                          <tr>
                             <td colspan="3"> <span class="title">GASTO FINANCIERO PERSONAL CÓNYUGE O CONVIVIENTE</td>
@@ -463,13 +535,24 @@
                                        
                                     </thead>
                                     <tbody>
-                                        @foreach ($cuantitativa->conyuge['gasto_financiero_personal'] as $cuant)
-                                        <tr>
-                                            <td>{{$cuant['entidad']}}</td>
-                                            <td>S/. {{$cuant['saldo_capital']}}</td> 
-                                            <td>S/. {{$cuant['cuota']}}</td> 
-                                        </tr>
-                                        @endforeach
+
+                                        @forelse ($cuantitativa->conyuge['gasto_financiero_personal'] as $cuant)
+                                        @if ($cuant['entidad'])
+                                            <tr>
+                                                <td>{{$cuant['entidad']}}</td>
+                                                <td>S/. {{$cuant['saldo_capital']}}</td> 
+                                                <td>S/. {{$cuant['cuota']}}</td> 
+                                            </tr>
+                                        @endif
+                                            
+                                        @empty
+                                            <tr>
+                                                <td colspan="3" style="text-align: center">
+                                                    ********** NO REGISTRA DATOS **********
+                                                </td>
+                                            </tr>
+                                        @endforelse 
+
                                     </tbody>
                                 </table>
                              </td>

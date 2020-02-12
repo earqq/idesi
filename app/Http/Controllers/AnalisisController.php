@@ -680,7 +680,6 @@ class AnalisisController extends Controller
                 $resultado_analisis->fc_semanal_participacion_cuota=$fc_semanal_participacion_cuota;
                 $resultado_analisis->fc_semanal_resultado=$fc_semanal_resultado;
                 $resultado_analisis->fc_semanal_disponible_semana=$fc_semanal_disponible_semana;
-
                 $resultado_analisis->save();
                 
                 $cuantitativa= new cuantitativa;
@@ -748,7 +747,7 @@ class AnalisisController extends Controller
             $prestamo->save();
 
    
-
+ 
             $cliente = Cliente::where('id',$prestamo->cliente_id)->first();
             $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
             if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){

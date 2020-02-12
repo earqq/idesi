@@ -8,13 +8,15 @@
         </div>
         <div class="input_wrapper">
           <select v-model="fileName">
-            <option value='seleccione'>Seleccione</option>
-            <option selected value="inscripcion_de_socio" v-if="!subidos.inscripcion_socio">Inscripcion de socio</option>
-            <option selected value="solicitud_credito" v-if="!subidos.solicitud_credito" >Solicitud de credito</option>
-            <option selected  value="reporte_de_central" v-if="!subidos.reporte_de_central">Reporte de central de riesgo</option> 
-            <option selected value="copia_dni"  v-if="!subidos.copia_dni" >Copias DNI</option>
-            <option selected value="recibo_agua_casa" v-if="!subidos.recibo_agua_casa">Recibo de agua de casa</option>
-            <option selected  value="recibo_luz_casa" v-if="!subidos.recibo_luz_casa">Recibo de luz de casa</option> 
+            <option value='seleccione'>Seleccione</option> 
+
+            <option v-for="(list, index) in porSubir" :key="index"  :value="list.nombre">
+              {{list.nombre}}
+            </option>
+            <!-- <option selected  value="reporte_de_central"  >Reporte de central de riesgo</option> 
+            <option selected value="copia_dni"   >Copias DNI</option>
+            <option selected value="recibo_agua_casa"  >Recibo de agua de casa</option>
+            <option selected  value="recibo_luz_casa"  >Recibo de luz de casa</option> 
             <option selected value="titulo_casa" v-if="!subidos.titulo_casa">Titulo de propiedad de casa</option>
             <option selected value="contrato_alquiler_casa" v-if="!subidos.contrato_alquiler_casa">Contrato de alquiler de casa</option>
             <option selected value="foto_casa" v-if="!subidos.foto_casa">Fotos de casa</option>
@@ -25,7 +27,7 @@
             <option selected value="boleta_venta" v-if="!subidos.boleta_venta">Boleta de ventas del negocio</option>
             <option selected value="factura_compra" v-if="!subidos.factura_compra">Factura de compras del negocio</option>
             <option selected value="factura_venta" v-if="!subidos.factura_venta">Factura de ventas del negocio</option>
-            <option selected value="fotos_negocio" v-if="!subidos.fotos_negocio">Fotos del negocio</option>
+            <option selected value="fotos_negocio" v-if="!subidos.fotos_negocio">Fotos del negocio</option> -->
 
           </select>
         </div>
@@ -88,7 +90,7 @@
                   
             </a>
             
-          </div> 
+          </div>  
         </div>
 
          <div class="file_item"  @click="solicitudPdf()">
@@ -107,7 +109,7 @@
    
         <div class="file_item" v-for="(archivo, index) in archivos" :key="index">
           <div class="file_detail" v-if="archivo.tipo=='imagen'">
-            <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+            <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
               target="_blank">
               <i class="material-icons-outlined"> collections </i>
               <div class="file_info">
@@ -117,7 +119,7 @@
             </a>
           </div>
           <div class="file_detail" v-if="archivo.tipo=='documento'">
-            <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamos_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+            <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
               target="_blank">
               <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
@@ -134,42 +136,42 @@
         <div class="checklist_wrapper no_scroll">
           <div class="tree">
             <li>
-              <div class="state" :class="{complete: subidos.inscripcion_socio}" >
+              <div class="state complete">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Inscripcion de socio</a>
             </li>
 
             <li >
-              <div class="state" :class="{complete: subidos.solicitud_credito}" >
+              <div class="state complete" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Solicitud de credito</a>
             </li>
 
-            <li >
-              <div class="state"  :class="{complete: subidos.reporte_de_central}" >
+            <li > 
+              <div class="state"  :class="{complete: verificar('reporte_de_central')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Reporte de central de riesgo</a>
             </li>
 
             <li  >
-              <div class="state" :class="{complete: subidos.evaluacion_cualitativa}" >
+              <div class="state" :class="{complete: verificar('evaluacion_cualitativa')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Evaluacion cualitativa</a>
             </li>
 
             <li >
-              <div class="state"  :class="{complete: subidos.evaluacion_cuantitativa}" >
+              <div class="state"  :class="{complete: verificar('evaluacion_cuantitativa')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Evaluacion de cuantitativa</a>
             </li>
 
             <li>
-              <div class="state"  :class="{complete: subidos.copia_dni}" >
+              <div class="state"  :class="{complete: verificar('copia_dni')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Copia DNI</a>
@@ -179,13 +181,13 @@
           <div class="tree">
             <div class="title">Documentos de casa</div>
             <li >
-              <div class="state"  :class="{complete: subidos.recibo_agua_casa}" >
+              <div class="state"  :class="{complete: verificar('recibo_agua_casa')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Recibo de agua </a>
             </li>
             <li>
-              <div class="state"  :class="{complete: subidos.recibo_luz_casa}" >
+              <div class="state"  :class="{complete: verificar('recibo_luz_casa')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Recibo de luz</a>
@@ -197,19 +199,19 @@
               <a href="#">Ubicacion</a>
             </li>
             <li>
-              <div class="state" :class="{complete: subidos.titulo_casa}" >
+              <div class="state" :class="{complete: verificar('titulo_casa')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Titulo de propiedad</a>
             </li>
             <li>
-              <div class="state" :class="{complete: subidos.contrato_alquiler_casa}">
+              <div class="state" :class="{complete: verificar('contrato_alquiler_casa')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Contrato de alquiler</a>
             </li>
             <li>
-              <div class="state" :class="{complete: subidos.foto_casa}">
+              <div class="state" :class="{complete: verificar('foto_casa')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Fotos de casa</a>
@@ -220,13 +222,13 @@
             <div class="title">Documentos del negocio</div>
 
             <li> 
-              <div class="state" :class="{ complete: subidos.recibo_agua_negocio}">
+              <div class="state" :class="{ complete: verificar('recibo_agua_negocio')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Recibo de agua</a>
             </li>
              <li>
-              <div class="state" :class="{ complete: subidos.recibo_luz_negocio}">
+              <div class="state" :class="{ complete: verificar('recibo_luz_negocio')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Recibo de luz</a>
@@ -238,37 +240,37 @@
               <a href="#">Ubicacion</a>
             </li>
             <li>
-              <div class="state" :class="{ complete: subidos.contrato_alquiler_negocio}">
+              <div class="state" :class="{ complete: verificar('contrato_alquiler_negocio')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Contrato de alquiler</a>
             </li>
             <li>
-              <div class="state" :class="{ complete: subidos.fotos_negocio}">
+              <div class="state" :class="{ complete: verificar('fotos_negocio')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Fotos de negocio</a>
             </li>
             <li>
-              <div class="state" :class="{ complete: subidos.boleta_compra}">
+              <div class="state" :class="{ complete: verificar('boleta_compra')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Boletas de compras</a>
             </li>
              <li>
-              <div class="state" :class="{ complete: subidos.factura_compra}">
+              <div class="state" :class="{ complete: verificar('factura_compra')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Facturas de compras</a>
             </li>
             <li>
-              <div class="state" :class="{ complete: subidos.boleta_venta}">
+              <div class="state" :class="{ complete: verificar('boleta_venta')}">
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#">Boletas  de ventas</a>
             </li>
             <li>
-              <div class="state" :class="{ complete: subidos.factura_venta}" >
+              <div class="state" :class="{ complete: verificar('factura_venta')}" >
                 <i class="material-icons-outlined"> check </i>
               </div>
               <a href="#"> Facturas de ventas</a>
@@ -346,6 +348,77 @@ export default {
       errors: {},
       prestamo: {},
       archivos: [],
+      lista: [
+        {
+          nombre: "inscripcion_de_socio",
+          estado: false
+        },
+        {
+          nombre: "solicitud_credito",
+          estado: false
+        },
+        {
+          nombre:  "reporte_de_central",
+          estado: false
+        },
+        {
+          nombre:  "copia_dni",
+          estado: false
+        },
+        {
+          nombre:  "recibo_agua_casa",
+          estado: false
+        },
+        {
+          nombre:  "recibo_luz_casa",
+          estado: false
+        },
+        {
+          nombre:  "titulo_casa",
+          estado: false
+        },
+        {
+          nombre:  "contrato_alquiler_casa",
+          estado: false
+        },
+        {
+          nombre:   "foto_casa",
+          estado: false
+        },
+        {
+          nombre: "recibo_agua_negocio",
+          estado: false
+        },
+        {
+          nombre:  "recibo_agua_negocio",
+          estado: false
+        },
+        {
+          nombre:  "recibo_luz_negocio",
+          estado: false
+        },
+        {
+          nombre:  "contrato_alquiler_negocio",
+          estado: false
+        },
+        {
+          nombre:   "boleta_compra",
+          estado: false
+        },
+        {
+          nombre: "boleta_venta",
+          estado: false
+        },
+        {
+          nombre:   "factura_venta",
+          estado: false
+        },
+        {
+          nombre:  "fotos_negocio",
+          estado: false
+        } 
+      ],
+      porSubir: []
     };
   },
   created() {
@@ -357,11 +430,24 @@ export default {
       this.backMixin_handleBack('/perfil/'+this.prestamo.documento);
     },
     listFile() {
-      this.$http.get(`/files/${this.$route.params.prestamo}`).then(response => {
+      this.$http.get(`/files/${this.$route.params.prestamoID}`).then(response => {
         this.prestamo = response.data["datos"];
         this.archivos = response.data["files"];
-        this.subidos = response.data["subidos"];
         this.loaderFile=0
+
+        this.lista.map(item=>{
+          var a = this.archivos.find(f=>f.nombre == item.nombre)
+          if(a){
+            item.estado= true
+          }else{
+            this.porSubir.push({
+              nombre: item.nombre
+            })
+          }
+          // console.log(a);
+        })
+ 
+        console.log(this.porSubir[0].nombre)
       });
     },
     dragFinish (i, e) {
@@ -385,6 +471,20 @@ export default {
     },
     cancelDeleting() {
       this.deletingFile = {};
+    },
+    verificar(ad){
+      var a = 0
+      this.archivos.map(item=>{
+          
+          if(item.nombre==ad){
+            a =1
+            
+          }
+        })
+      if(a==1){
+          return true
+      }
+     
     },
     deleteFile() {
       this.$http
@@ -413,10 +513,11 @@ export default {
       this.errors = {};
     },
     uploadFile() {
+      console.log(this.$route.params.prestamoID)
       this.loading=true
       this.formData = new FormData();
       this.formData.append("name", this.fileName);
-      this.formData.append("prestamo_id", this.$route.params.prestamo);
+      this.formData.append("prestamo_id", this.$route.params.prestamoID);
       this.formData.append("file", this.attachment.content);
 
       this.$http
@@ -442,16 +543,16 @@ export default {
         });
     },
     cargarPdf(){
-                window.open('/clientes/adjuntarPdf/'+this.$route.params.prestamo,'_blank'); 
+                window.open('/clientes/adjuntarPdf/'+this.$route.params.prestamoID,'_blank'); 
       },
       solicitudPdf(){
-                window.open('/clientes/solicitudPdf/'+this.$route.params.prestamo,'_blank'); 
+                window.open('/clientes/solicitudPdf/'+this.$route.params.prestamoID,'_blank'); 
       },
       cualitativaPdf(){
-                window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamo,'_blank'); 
+                window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamoID,'_blank'); 
       },
       cuantitativaPdf(){
-               window.open('/evaluacion/cuantitativaPdf/'+this.$route.params.prestamo,'_blank'); 
+               window.open('/evaluacion/cuantitativaPdf/'+this.$route.params.prestamoID,'_blank'); 
       }
   },
   computed: {
