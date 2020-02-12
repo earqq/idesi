@@ -50,6 +50,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('prestamos/search/{state}/{text?}','PrestamosController@search');
         Route::get('prestamos/enviarEvaluacion/{prestamoID}', 'PrestamosController@enviarEvaluacion');
         Route::post('prestamos/evaluar', 'PrestamosController@evaluar');
+        Route::post('prestamos/foto', 'PrestamosController@guardarFoto');
         //Herramientas
         Route::get('extras/giro', 'ExtrasController@giro');
         Route::get('extras/colegio', 'ExtrasController@colegios');
@@ -65,8 +66,6 @@ Route::group(['middleware'=>['auth']],function(){
 
 
 
-        Route::post('clientes/visita/nuevo', 'ClientesController@visitaStore');
-        Route::get('clientes/visitas/{prestamo}', 'ClientesController@visitas');
         Route::get('/clientes/solicitudPdf/{prestamo}','ClientesController@SolicitudPdf')->name('solicitud_pdf');
         Route::get('/evaluacion/cualitativaPdf/{prestamo}','EvaluacionesController@CualitativaPdf')->name('cualitativa_pdf');
         Route::get('/evaluacion/cuantitativaPdf/{prestamo}','EvaluacionesController@CuantitativaPdf')->name('cuantitativa_pdf');

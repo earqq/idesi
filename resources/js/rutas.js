@@ -87,20 +87,31 @@ export default new Router({
                          }
                     })
             }
-        },
-        {
-            path: '/error',
-            name: 'error',
-            component: require('./views/Error').default
-        },
+        },   
         {
             path: '/prestamos',
             name: 'prestamos',
             component: require('./views/Prestamos').default,
         },       
         {
+            path: '/prestamos/:prestamoID',
+            name: 'prestamo',
+            component: require('./views/Prestamo').default,
+            beforeEnter: (to, from, next) => {
+                axios.get("/currentUser")
+                    .then(res => { 
+        
+                         if(res.data.nivel=='2' || res.data.nivel=='3' || res.data.nivel=='4' || res.data.nivel=='5' ){
+                                next()
+                         }else{
+                            next('/error')
+                         }
+                    })
+            }
+        }, 
+        {
             path: '/prestamos/persona/registrar/:clienteID/:prestamoID',
-            name: 'prestamo', 
+            name: 'registarPrestamo', 
             component: require('./views/RegistrarPrestamo').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
@@ -115,7 +126,7 @@ export default new Router({
         },
         {
             path: '/prestamos/empresa/registrar/:clienteID/:prestamoID',
-            name: 'prestamoEmpresa',
+            name: 'registrarPrestamoEmpresa',
             component: require('./views/RegistrarPrestamoEmpresa').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
@@ -147,7 +158,7 @@ export default new Router({
             component: require('./views/404').default
         },
         { 
-            path: '/eval-cualitativa/:prestamo',
+            path: '/prestamos/evaluacion/cualitativa/:prestamo',
             name: 'evalCualitativa',
             component: require('./views/EvalCualitativa').default,
             beforeEnter: (to, from, next) => {
@@ -163,7 +174,7 @@ export default new Router({
             }
         },
         {
-            path: '/eval-cuantitativa/:prestamo',
+            path: '/prestamos/evaluacion/cuantitativa/:prestamo',
             name: 'evalCuantitativa',
             component: require('./views/EvalCuantitativa').default,
             beforeEnter: (to, from, next) => {
@@ -171,22 +182,6 @@ export default new Router({
                     .then(res => { 
         
                          if(res.data.nivel=='4' ){
-                                next()
-                         }else{
-                            next('/error')
-                         }
-                    })
-            }
-        }, 
-        {
-            path: '/ver/prestamo/:prestamo',
-            name: '/ver/prestamo/',
-            component: require('./views/DetallePrestamo').default,
-            beforeEnter: (to, from, next) => {
-                axios.get("/currentUser")
-                    .then(res => { 
-        
-                         if(res.data.nivel=='2' || res.data.nivel=='3' || res.data.nivel=='4' || res.data.nivel=='5' ){
                                 next()
                          }else{
                             next('/error')
@@ -246,6 +241,11 @@ export default new Router({
                          }
                     })
             }
+        },
+        {
+            path: '/error',
+            name: 'error',
+            component: require('./views/Error').default
         },
 
     ],

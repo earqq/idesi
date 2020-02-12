@@ -140,46 +140,6 @@ class ClientesController extends Controller
     public function visitaStore(Request $request)
     {
  
-        $prestamo = Prestamo::find($request->prestamo_id);
-        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
-        $nombre = $request->name;
-        $extension = 'png';
-        $file = $request->file;
-        $file = str_replace('data:image/png;base64,', '', $file); 
-        $data = base64_decode($file);
-
-        if (!file_exists("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen")) {
-            mkdir("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen", 0777, true);
-        }
-
-        if(file_put_contents("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen/".$request->name.".png", $data)){
-
-                $pdf=PDF::loadView('reportes.imagen',compact('prestamo','cliente','nombre','extension'));
-                Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/imagenpdf/'.$request->name.'.pdf', $pdf->output());
-
-                $subidos = Subido::where('prestamos_id', $request['prestamo_id'])->first();
-                $subidos->fotos_negocio=1;
-                $subidos->save(); 
-
-                $archivo = new Archivo();
-                $archivo->nombre= $request->name;
-                $archivo->tipo='imagen'; 
-                $archivo->extension= 'png';
-                $archivo->prestamos_id=$request->prestamo_id;
-                $archivo->save();
-
-                $visita = new Vista();
-                $visita->imagen= $archivo->id;
-                $visita->latitud= $request->latitud;
-                $visita->altitud=$request->longitud; 
-                $visita->prestamos_id=$request->prestamo_id;
-                $visita->save();
-        }
-
-        return [
-            'success' => true,
-            'data' => 'Cliente creado',
-        ];
         
     }
     public function visitas($documento)
