@@ -52,8 +52,8 @@ class Prestamo extends Model
     {
         return $this->hasOne('App\ResultadoAnalisis', 'prestamo_id');
     }
-    public function geolocalizacion()
+    public function fotos()
     {
-        return $this->hasMany('App\Vista', 'prestamo_id');
+        return $this->hasMany('App\FotoNegocio', 'prestamo_id');
     }
 }

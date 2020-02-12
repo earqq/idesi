@@ -236,15 +236,49 @@ class PrestamosController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function guardarFoto(Request $request){
+
+        \Log::alert($request->all());
+        $prestamo = Prestamo::with('cliente')->find($request->prestamo_id);
+        $cliente=$prestamo->cliente;
+        $nombre = $request->name;
+        $extension = 'png';
+        $file = $request->file;
+        $file = str_replace('data:image/png;base64,', '', $file); 
+        $data = base64_decode($file);
+
+        if (!file_exists("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen")) {
+            mkdir("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen", 0777, true);
+        }
+
+        if(file_put_contents("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen/".$request->name.".png", $data)){
+
+                $pdf=PDF::loadView('reportes.imagen',compact('prestamo','cliente','nombre','extension'));
+                Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/imagenpdf/'.$request->name.'.pdf', $pdf->output());
+                $archivo = new Archivo();
+                $archivo->nombre= $request->name;
+                $archivo->tipo='imagen'; 
+                $archivo->extension= 'png';
+                $archivo->prestamo_id=$request->prestamo_id;
+                $archivo->save();
+                \Log::alert("si entra");
+                \Log::alert($request->all());
+                $fotoNegocio = new FotoNegocio();
+                $fotoNegocio->imagen= $archivo->id;
+                $fotoNegocio->latitud= $request->latitud;
+                $fotoNegocio->altitud=$request->longitud; 
+                $fotoNegocio->prestamos_id=$request->prestamo_id;
+                $fotoNegocio->save();
+        }
+
+        return [
+            'success' => true,
+            'data' => 'Cliente creado',
+        ];
+    }
     public function show($id)
     {
-        $prestamo= Prestamo::with('avales','garantias','cliente.persona.hijos','resultadoAnalisis','evaluaciones')->find($id);
+        $prestamo= Prestamo::with('avales','garantias','cliente.persona.hijos','resultadoAnalisis','evaluaciones','fotos')->find($id);
         return $prestamo;
     }
     public function enviarEvaluacion($prestamoID)
