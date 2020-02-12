@@ -70,8 +70,7 @@
 
                 </tbody>
             </table>
-
-
+        @if ($cliente->tipo_cliente == 1)
             <table style="width: 100%;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead>
                     <tr>
@@ -163,18 +162,92 @@
                         <td colspan="2" > <span class="title">Dirección</span> <span > {{$conyuge->direccion}} </span> </td>
                     </tr>
 
-            </tbody>
-            @else
-            <tbody>
-                <tr>
-                    <td colspan="3" style="text-align: center">
-                          NO REGISTRA CONYUGE   
-                    </td>
-                </tr>
+                </tbody>
+                @else
+                <tbody>
+                    <tr>
+                        <td colspan="3" style="text-align: center">
+                            NO REGISTRA CONYUGE   
+                        </td>
+                    </tr>
 
-            </tbody>
-            @endif
+                </tbody>
+                @endif
             </table>
+        @else
+            <table style="width: 100%;    border: none;"   border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">TITULAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td colspan="2">
+                            <span class="title">RAZON SOCIAL</span>  <span > {{$empresa->razon_social}}</span>
+                            </td>
+                            <td> <span class="title">RUC</span> <span >{{$cliente->documento}}</span> </td>
+                        </tr>
+
+                        <tr>
+                            <td> <span class="title">NOMBRE COMERCIAL</span> <span >{{$empresa->nombre_comercial}}</span> </td>
+                            <td> <span class="title">ACTIVIDAD</span> <span > {{$empresa->actividad_principal}}</span> </td>
+                            <td> <span class="title">NUMERO DE PARTIDA</span> <span > {{$empresa->partida_registral}} </span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"> <span class="title">DIRECCIÓN</span> <span >{{$cliente->ubicacion_direccion_declarada}}</span> </td>
+                        </tr>
+                        <tr>
+                            
+                        <td> <span class="title">FECHA DE CONSTITUCIÓN</span> <span > {{$empresa->fecha_constitucion}}</span> </td>
+                            <td colspan="2"> <span class="title">EMAIL</span> <span > {{$cliente->email}} </span> </td>
+                        </tr>
+                </tbody>
+            </table>
+
+            <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">REPRESENTANTE LEGAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td colspan="3">
+                            <span class="title"> APELLIDOS Y NOMBRES</span>  <span > {{$representante->nombres}}</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td> <span class="title">DNI</span> <span > {{$representante->documento}}</span> </td>
+                            <td> <span class="title">F. NACIMIENTO</span> <span > {{$representante->fecha_nacimiento}}</span> </td>
+                            <td> <span class="title">ESTADO CIVIL</span> <span > {{$representante->estado_civil}} </span> </td>
+                        </tr>
+                        <tr>
+                            <td> <span class="title">OCUPACIÓN</span> <span > {{$representante->ocupacion}}</span> </td>
+                            <td> <span class="title">TELÉFONO</span> <span > {{$representante->telefono}}</span> </td>
+                            <td> <span class="title">CELULAR</span> <span > {{$representante->celular}} </span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"> <span class="title">DIRECCION</span> <span > {{$representante->ubicacion_direccion}}</span> </td>
+                            <td> <span class="title">DISTRITO</span> <span > {{$representante->ubicacion_distrito}}</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"> <span class="title">PROVINCIA</span> <span > {{$representante->ubicacion_provincia}}</span> </td>
+                            <td> <span class="title">DEPARTAMENTO</span> <span > {{$representante->ubicacion_departamento}}</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"> <span class="title">REFERENCIA</span> <span > {{$representante->ubicacion_referencia}}</span> </td>
+                            <td> <span class="title">TIPO DOMICILIO</span> <span > {{$representante->tipo_domicilio}}</span> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"> <span class="title">PODERES (ASIENTOA)</span> <span > {{$representante->poderes}}</span> </td>
+                            <td> <span class="title">FECHA INICIO (CARGO)</span> <span > {{$representante->fecha_inicio}}</span> </td>
+                        </tr>
+                </tbody>
+            </table>
+        @endif
+
 
             <table style="width: 100%;margin-top: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                 <thead>
@@ -183,55 +256,60 @@
                     </tr>
                 </thead>
                 <tbody>
-                        @foreach ($avals as $aval)
-                           <tr>
-                                <td colspan="2">
-                                    <span class="title">Apellidos y Nombres</span> <span > {{$aval->apellidos}} {{$aval->nombres}}</span>
+                    @forelse($avals as $aval)
+                        <tr>
+                            <td colspan="2">
+                                <span class="title">Apellidos y Nombres</span> <span > {{$aval->apellidos}} {{$aval->nombres}}</span>
+                            </td>
+                            @if ($aval->tipo_persona == 'pn')
+                            <td>
+                                    <span class="title">P. Natural</span> <span > [ X ]</span>
+                                </td>    
+                            @else
+                            <td>
+                                    <span class="title">P. Juridico</span> <span > [ X ]</span>
                                 </td>
-                                @if ($aval->tipo_persona == 'pn')
-                                   <td>
-                                        <span class="title">P. Natural</span> <span > [ X ]</span>
-                                    </td>    
-                                @else
-                                <td>
-                                        <span class="title">P. Juridico</span> <span > [ X ]</span>
-                                    </td>
-                                @endif
-                            </tr>
-    
-                            <tr>
-                                <td> <span class="title">Dni</span> <span > {{$aval->documento}}</span> </td>
-                                <td> <span class="title">F. de Nacimiento</span><span > {{$aval->nacimiento}}</span> </td>
-                                <td> <span class="title">Estado civil</span> <span > {{$aval->estado_civil}}</span> </td>
-                            </tr>
-                            <tr>
-                                <td> <span class="title">Ocupación</span> <span > {{$aval->ocupacion}}</span> </td>
-                                <td> <span class="title">Teléfono</span> <span > {{$aval->telefono}}</span> </td>
-                                <td> <span class="title">Celular</span> <span > {{$aval->celular}} </span> </td>
-                            </tr>
-                            <tr>
-                                    @if ($aval->socio == 'si')
-                                    <td> <span class="title">¿Es socio?</span> SI <span > [ X ] </span>  NO <span > [  ] </span> </td>
-                                    <td> <span class="title">Codigo de socio </span><span > {{$aval->codigo_socio}}</span> </td>
-                                    <td> <span class="title">Aporte</span> <span > S/. {{$aval->aporte_socio}}</span> </td>
-                                    @else
-                                    <td> <span class="title">¿Es socio?</span> SI <span > [  ] </span>  NO <span > [ X ] </span> </td>
-                                    <td> <span class="title">Codigo de socio </span><span > -- --</span> </td>
-                                    <td> <span class="title">Aporte</span> <span > -- -- </span> </td>
-                                    @endif
+                            @endif
+                        </tr>
 
-                            </tr>
-    
-                            <tr>
-                                <td colspan="2" > <span class="title">Dirección</span>  <span > {{$aval->direccion}}</span> </td>
-                                <td  > <span class="title">Distrito</span> <span > {{$aval->distrito}} </span> </td>
-                            </tr>
-                            <tr>
-                                <td > <span class="title">Centro laboral</span>  <span > {{$aval->centro_laboral}}</span> </td>
-                                <td colspan="2" > <span class="title">Dirección</span> <span > {{$aval->direccion_laboral}} </span> </td>
-                            </tr>
-                        @endforeach
-                        
+                        <tr>
+                            <td> <span class="title">Dni</span> <span > {{$aval->documento}}</span> </td>
+                            <td> <span class="title">F. de Nacimiento</span><span > {{$aval->nacimiento}}</span> </td>
+                            <td> <span class="title">Estado civil</span> <span > {{$aval->estado_civil}}</span> </td>
+                        </tr>
+                        <tr>
+                            <td> <span class="title">Ocupación</span> <span > {{$aval->ocupacion}}</span> </td>
+                            <td> <span class="title">Teléfono</span> <span > {{$aval->telefono}}</span> </td>
+                            <td> <span class="title">Celular</span> <span > {{$aval->celular}} </span> </td>
+                        </tr>
+                        <tr>
+                                @if ($aval->socio == 'si')
+                                <td> <span class="title">¿Es socio?</span> SI <span > [ X ] </span>  NO <span > [  ] </span> </td>
+                                <td> <span class="title">Codigo de socio </span><span > {{$aval->codigo_socio}}</span> </td>
+                                <td> <span class="title">Aporte</span> <span > S/. {{$aval->aporte_socio}}</span> </td>
+                                @else
+                                <td> <span class="title">¿Es socio?</span> SI <span > [  ] </span>  NO <span > [ X ] </span> </td>
+                                <td> <span class="title">Codigo de socio </span><span > -- --</span> </td>
+                                <td> <span class="title">Aporte</span> <span > -- -- </span> </td>
+                                @endif
+
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" > <span class="title">Dirección</span>  <span > {{$aval->direccion}}</span> </td>
+                            <td  > <span class="title">Distrito</span> <span > {{$aval->distrito}} </span> </td>
+                        </tr>
+                        <tr>
+                            <td > <span class="title">Centro laboral</span>  <span > {{$aval->centro_laboral}}</span> </td>
+                            <td colspan="2" > <span class="title">Dirección</span> <span > {{$aval->direccion_laboral}} </span> </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" style="text-align: center">
+                                   *************** NO REGISTRA AVALES ***************
+                            </td>
+                        </tr>
+                    @endforelse      
 
                 </tbody>
             </table>
@@ -243,14 +321,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                        
-                    @foreach ($garantias as $garantia)
+                    
+                    @forelse ($garantias as $garantia)
                         <tr>
-                        <td colspan="2"> <span class="title">Bien de garantia </span> <span > {{$garantia->bien_garantia}}</span> </td>
+                            <td colspan="2"> <span class="title">Bien de garantia </span> <span > {{$garantia->bien_garantia}}</span> </td>
                             <td><span class="title">INS.</span><span > [ {{$garantia->inscripcion}} ] </span>  <span class="title">D.J</span> <span>[ {{$garantia->declaracion_jurada}} ]</span></td>
                         </tr> 
-
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="3" style="text-align: center">
+                               *************** NO REGISTRA GARANTIAS ***************
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
 
@@ -289,7 +372,7 @@
                         @endforeach
                         
                         <tr>
-                            <td colspan="4" > COMENTARIOS <span > {{$prestamo->comentarios}} </span></td>
+                            <td colspan="4" > <span class="title">COMENTARIOS</span> <span > {{$prestamo->comentarios}} </span></td>
                         </tr>
 
 

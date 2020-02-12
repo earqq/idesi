@@ -162,21 +162,6 @@ class EvaluacionController extends Controller
          return $prestamo;
     }
 
-    public function numeroHijos($id)
-    {
-        $prestamo = Prestamo::where('id',$id)
-                            ->select('clientes_id')->first();
-        $clientes = Cliente::find($prestamo->clientes_id);
-        
-        $natural = Natural::where('clientes_id',$clientes->id)->first();
-        if($natural){
-
-            $familia = Familiar::where('naturals_id',$natural->id)->select('numero')->first();
-            return $familia;
-        }
-
-    }
-
 
 
 
@@ -209,44 +194,8 @@ class EvaluacionController extends Controller
             }
     } 
 
-    public function giro(Request $request)
-    {
-        $negocios = Negocio::all();
-        return $negocios;
-    }
 
-    // public function searchGiro($giro)
-    // {
-    //     $negocios = Negocio::where('giro_negocio',$giro)->first();
-    //     return $negocios->toJson();
-    // } 
 
-    public function colegios()
-    {
-        $colegio = Colegio::all();
-        return $colegio;
-    }
-
-    public function entidades()
-    {
-        $entidades = EntidadFinanciera::all();
-        return $entidades;
-    } 
-
-    public function colegioCosto(Request $request)
-    {
-        $colegio = Colegio::where("nivel",$request->grado)
-                            ->where('nombre',$request->colegio)
-                            ->select('costo')->first();
-        return $colegio;
-    } 
-
-    public function datosCualitativas($prestamoID)
-    {
-        $cualitativa = Cualitativa::where('prestamo_id',intval($prestamoID))->first();
-        return $cualitativa;
-
-    } 
 
 
     public function evaluarFinal(Request $request)

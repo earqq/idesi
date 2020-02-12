@@ -23,6 +23,7 @@ use App\ResultadoCuantitativa;
 use App\Obligacion;
 use App\Asociativa;
 use App\Evaluacion;
+use App\Empresa;
 use App\Declaracion;
 use App\DeclaracionJuridico;
 use App\Director;
@@ -233,7 +234,13 @@ class ClientesController extends Controller
         $cliente = Cliente::where('documento',$documento)->first();
         $persona = Persona::where('clientes_id',$cliente->id)->first();
         $conyugue = Conyuge::where('naturals_id',$persona->id)->first();
-      
+        $tiene_conyuge = '';
+        if($conyugue){
+            $tiene_conyuge='SI'; 
+        }
+        else{
+            $tiene_conyuge='NO';
+        }     
         return compact('cliente','persona','conyugue','tiene_conyuge');
     }
 
@@ -436,12 +443,16 @@ class ClientesController extends Controller
         $prestamo= Prestamo::find($prestamo);
         $cliente = Cliente::where('id',$prestamo->cliente_id)->first(); 
 
-        if($cliente->tipo_documento == 'RUC'){
-            $juridico = Juridico::where('clientes_id',$cliente->id)->first();
-            $avals = Aval::where('prestamos_id',$prestamo->id)->get();
-            $garantias = Garantia::where('prestamos_id',$prestamo->id)->get(); 
-            $evaluacion = Evaluacion::where('prestamos_id',$prestamo->id)->get();
-            $pdf = \PDF::loadView('reportes.prestamoJuridico',compact('prestamo','cliente','avals','garantias','juridico','evaluacion'));
+        if($cliente->tipo_cliente == 2 ){
+
+            $empresa = Empresa::where('cliente_id',$cliente->id)->first();
+            $representante = RepresentanteLegal::where('empresa_id',$empresa->id)->first();
+
+            $avals = Aval::where('prestamo_id',$prestamo->id)->get();
+            $garantias = Garantia::where('prestamo_id',$prestamo->id)->get();
+            // $evaluacion = Evaluacion::where('prestamos_id',$prestamo->id)->get();
+
+            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','empresa','representante'));
             return $pdf->stream('solicitud_de_credito.pdf');
 
         }

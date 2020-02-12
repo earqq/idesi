@@ -129,8 +129,8 @@ class PrestamosController extends Controller
             $cliente->ubicacion_provincia = $request->cliente['ubicacion_provincia'];
             $cliente->ubicacion_referencia = $request->cliente['ubicacion_referencia'];
             $cliente->ubicacion_referencia = $request->cliente['ubicacion_referencia'];
-            $cliente->save();
-
+            $cliente->save(); 
+            
             if($cliente->tipo_cliente==1){
                 //Prestamos para personas
                 $persona = $cliente->persona;
@@ -143,7 +143,7 @@ class PrestamosController extends Controller
                 $persona->ocupacion = $request->cliente['persona']['ocupacion'];
                 $persona->tipo_domicilio =  $request->cliente['persona']['tipo_domicilio'];
                 $persona->save();
-                if(strlen($request->cliente['persona']['conyuge']['documento'])>5){
+                if($request->cliente['persona']['conyuge'] && strlen($request->cliente['persona']['conyuge']['documento'])>5){
                     
                     $conyugue = new Conyuge;
                     if($persona->conyuge)
@@ -165,6 +165,8 @@ class PrestamosController extends Controller
                     $conyugue->save();
                 }
             }else{ //Prestamos para empresas
+
+                
                 $empresa= $cliente->empresa;
                 $empresa->razon_social=$request->cliente['empresa']['razon_social'];
                 $empresa->nombre_comercial=$request->cliente['empresa']['nombre_comercial'];
@@ -174,7 +176,7 @@ class PrestamosController extends Controller
                 $empresa->tipo_negocio=$request->cliente['empresa']['tipo_negocio'];
                 $empresa->fecha_constitucion=$request->cliente['empresa']['fecha_constitucion'];
                 $empresa->save();
-
+                
                 $representante= new RepresentanteLegal;
                 if($request->cliente['empresa']['representante']['id'])
                     $representante=RepresentanteLegal::find($request->cliente['empresa']['representante']['id']);
@@ -196,6 +198,7 @@ class PrestamosController extends Controller
                 $representante->estado_civil=$request->cliente['empresa']['representante']['estado_civil'];
                 $representante->empresa_id=$empresa->id;
                 $representante->save();
+                
             }
 
             $prestamo->avales()->delete();
@@ -234,17 +237,6 @@ class PrestamosController extends Controller
                 $garantia->prestamo_id = $prestamo->id;
                 $garantia->save();
             }
-    
-            if($request->id==0){
-                $subido= new Subido;
-                $subido->prestamos_id=$prestamo->id;
-                $subido->save();
-    
-                $subidos = Subido::find($subido->id);
-                $subidos->solicitud_credito=1;
-                $subidos->inscripcion_socio=1;
-                $subidos->save();
-            }
             DB::commit();
 
             return [
@@ -267,11 +259,10 @@ class PrestamosController extends Controller
      */
     public function show($id)
     {
-        $prestamoDatos= Prestamo::with('avales','garantias')->find($id);
+        $prestamoDatos= Prestamo::with('avales','garantias','cliente.persona.hijos')->find($id);
         return $prestamoDatos;
 
     }
-
     /**
      * Show the form for editing the specified resource.
      *

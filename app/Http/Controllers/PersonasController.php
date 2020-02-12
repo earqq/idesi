@@ -192,7 +192,7 @@ class PersonasController extends Controller
                 $declaracion->save(); 
 
                 $pdf = PDF::loadView('reportes.inscripcion',compact('trabajo','representante','obligacion','declaracion','cliente',
-                                                                    'hijos','conyuge','persona','departamento','provincia','distrito',
+                                                                    'hijos','conyuge','persona',
                                                                     'departamento_domicilio','provincia_domicilio','distrito_domicilio'));
 
                 if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){

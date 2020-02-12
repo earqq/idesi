@@ -134,8 +134,8 @@
                   <input type="text" maxlength='15' v-model="prestamo.cliente.telefono"  />
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDireccionEmpresa}">
-                  <label>Dirección</label>
-                  <input type="text" maxlength='200' v-model="prestamo.cliente.empresa.ubicacion_direccion_declarada"  />
+                  <label>Dirección</label> 
+                  <input type="text" maxlength='200' v-model="prestamo.cliente.ubicacion_direccion_declarada"  />
                   <div class="message">Dirección de la emrpesa</div>
                 </div>
                 <div class="input_wrapper" :class="{require: !validateFechaConstitucion}">
@@ -206,7 +206,7 @@
                   <input
                     type="text"
                     v-mask="'### ### ###'"
-                    v-model="prestamo.cliente.empresa.representante.celular_representante"
+                    v-model="prestamo.cliente.empresa.representante.celular"
                   />
                   <div class="message">Ingrese número de celular</div>
                 </div>
@@ -622,11 +622,8 @@ export default {
       provincesTitular: [],
       districtsTitular: [],
       errors: {},
-      tools:{
-        tiene_conyuge:false,      
-      },
       prestamo: {
-        id: 0, 
+        id: this.$route.params.prestamoID,
         garantias: [],
         avales: [],
         cliente: {
@@ -799,49 +796,6 @@ export default {
     },
 
 
-     validateDocumentoConyuge(){
-      return String(this.prestamo.cliente.empresa.conyuge.documento).length > 6
-    },
-
-     validateNombreConyuge(){
-      return this.prestamo.cliente.empresa.conyuge.nombres.length>6
-    },
-
-     validateNacimientoConyuge(){
-      return this.prestamo.cliente.empresa.conyuge.fecha_nacimiento.length>6
-    },
-
-     validateOcupacionConyuge(){
-      if(this.prestamo.cliente.empresa.conyuge && this.prestamo.cliente.empresa.conyuge.ocupacion)
-        return this.prestamo.cliente.empresa.conyuge.ocupacion.length>6
-      else true
-    },
-
-    validateCelularConyuge(){
-      if(this.prestamo.cliente.empresa.conyuge && this.prestamo.cliente.empresa.conyuge.celular)
-      return this.prestamo.cliente.empresa.conyuge.celular.length>6
-      else true
-    },
-    validateCodigoConyuge(){
-      if(this.prestamo.cliente.empresa.conyuge.socio && this.prestamo.cliente.empresa.conyuge.codigo_socio){
-        return this.prestamo.cliente.empresa.conyuge.codigo_socio.length>=3
-      }
-      else return true
-    },
-    validateAporteConyuge(){
-      if(this.prestamo.cliente.empresa.conyuge.socio){
-        return String(this.prestamo.cliente.empresa.conyuge.aporte_socio)>=1
-      }
-      else return true
-    },
-    validateCentroConyuge(){
-      return this.prestamo.cliente.empresa.conyuge.centro_laboral.length>6
-    },
-
-    validateDireccionConyuge(){
-      return this.prestamo.cliente.empresa.conyuge.direccion_centro_laboral.length>6
-    },
-
     validateStep2(){
 
         return this.validateNombres && this.validateDocumento && this.validateNacimiento &&
@@ -857,6 +811,7 @@ export default {
   },
   async created() { 
     await this.obtenerDatosCliente()
+          this.obtenerDatosPrestamo()
     // this.clickAddAval()
     // this.clickAddGarantia()
 
@@ -868,10 +823,10 @@ export default {
       this.$http
       .get(`/clientes/` + this.$route.params.clienteID)
       .then(response => { 
-        console.log("respose")  
-        console.log(response)
+        
         this.prestamo.cliente=response.data
-        console.log(this.prestamo)
+        console.log(this.prestamo.cliente)    
+        console.log("respose")  
       });
     },
     tabError(){
@@ -893,6 +848,43 @@ export default {
         this.districtsTitular = this.all_districts.filter(f => {
             return f.provincia_id == this.prestamo.cliente.ubicacion_provincia
         })
+    },
+    obtenerDatosPrestamo(){
+      this.$http
+      .get(`clientes/datos/prestamo/` + this.$route.params.prestamoID)
+      .then(response => {  
+              this.prestamo.monto_inicial= response.data.monto_inicial || ""
+              this.prestamo.cuotas_inicial= response.data.cuotas_inicial  || ""
+              this.prestamo.disponibilidad_pago_inicial= response.data.disponibilidad_pago_inicial  || ""
+              this.prestamo.destino_inicial= response.data.destino_inicial   || ""
+              this.prestamo.forma_inicial= response.data.forma_inicial  || ""
+              this.prestamo.producto =  response.data.producto  || ""
+              this.prestamo.forma= response.data.forma   || ""
+              this.prestamo.importe= response.data.importe  || ""
+              this.prestamo.meses= response.data.meses  || ""
+              this.prestamo.aporte= response.data.aporte  || ""
+              this.prestamo.cuota_sistema= response.data.cuota_sistema  || ""
+              this.prestamo.cuotas= response.data.cuotas  || ""
+              this.prestamo.tasa= response.data.tasa   || ""
+              this.prestamo.comentarios= response.data.comentarios  || "" 
+              this.prestamo.producto_final= response.data.producto_final  || ""
+              this.prestamo.forma_final= response.data.forma_final  || ""
+              this.prestamo.aporte_final= response.data.aporte_final  || ""
+              this.prestamo.importe_final= response.data.importe_final || ""  
+              this.prestamo.plazo_final= response.data.plazo_final || ""  
+              this.prestamo.cuota_final= response.data.cuota_final || ""  
+              this.prestamo.tasa_final= response.data.tasa_final || ""
+
+              if(response.data.avales){
+                this.prestamo.avales= response.data.avales
+              }
+
+              if(response.data.garantias){
+                this.prestamo.garantias = response.data.garantias
+              }
+              
+              
+      });
     },
     next(index) {
       window.scrollTo(0,0)
@@ -930,6 +922,8 @@ export default {
     },
     clickAddGarantia() {
       this.prestamo.garantias.push({
+        inscripcion: "",
+        declaracion_jurada:"",
         bien_garantia: "",
         tipo: ""
       });
@@ -1021,7 +1015,7 @@ export default {
                     "Exitoso",
                     toastOptions.success
                   )
-              this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, empresa: 'PN' }})
+              this.$router.push({ name: 'perfil', params: { id: this.$route.params.clienteID}})
             }else{
                 this.$toast.error(
                   "No se pudo crear prestamo",

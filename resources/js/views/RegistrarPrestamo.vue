@@ -878,7 +878,7 @@ export default {
     },
 
     validateStep2(){
-      if(this.prestamo.cliente.persona.conyuge.conyuge_tiene=='SI'){
+      if(this.tools.tiene_conyuge){
 
           return this.validateNombre && this.validateApellidos && 
              this.validateDocumento && this.validateNacimiento &&
@@ -916,6 +916,7 @@ export default {
   },
   async created() { 
     await this.obtenerDatosCliente()
+      if(this.$route.params.prestamoID!='0')
           this.obtenerDatosPrestamo()
     // this.clickAddAval()
     // this.clickAddGarantia()
@@ -952,32 +953,30 @@ export default {
       });
     },
     obtenerDatosPrestamo(){
-            this.$http
+      this.$http
       .get(`clientes/datos/prestamo/` + this.$route.params.prestamoID)
       .then(response => {  
-        console.log(response.data.avales)
-
-              this.prestamo.monto_inicial= response.data.monto_inicial
-              this.prestamo.cuotas_inicial= response.data.cuotas_inicial 
-              this.prestamo.disponibilidad_pago_inicial= response.data.disponibilidad_pago_inicial 
-              this.prestamo.destino_inicial= response.data.destino_inicial  
-              this.prestamo.forma_inicial= response.data.forma_inicial 
-              this.prestamo.producto =  response.data.producto 
-              this.prestamo.forma= response.data.forma  
-              this.prestamo.importe= response.data.importe 
-              this.prestamo.meses= response.data.meses 
-              this.prestamo.aporte= response.data.aporte 
-              this.prestamo.cuota_sistema= response.data.cuota_sistema 
-              this.prestamo.cuotas= response.data.cuotas 
-              this.prestamo.tasa= response.data.tasa  
-              this.prestamo.comentarios= response.data.comentarios  
-              this.prestamo.producto_final= response.data.producto_final 
-              this.prestamo.forma_final= response.data.forma_final 
-              this.prestamo.aporte_final= response.data.aporte_final 
-              this.prestamo.importe_final= response.data.importe_final  
-              this.prestamo.plazo_final= response.data.plazo_final  
-              this.prestamo.cuota_final= response.data.cuota_final  
-              this.prestamo.tasa_final= response.data.tasa_final
+              this.prestamo.monto_inicial= response.data.monto_inicial || ""
+              this.prestamo.cuotas_inicial= response.data.cuotas_inicial  || "5"
+              this.prestamo.disponibilidad_pago_inicial= response.data.disponibilidad_pago_inicial  || ""
+              this.prestamo.destino_inicial= response.data.destino_inicial  || "" 
+              this.prestamo.forma_inicial= response.data.forma_inicial  || "DIARIO"
+              this.prestamo.producto =  response.data.producto  || ""
+              this.prestamo.forma= response.data.forma   || ""
+              this.prestamo.importe= response.data.importe  || ""
+              this.prestamo.meses= response.data.meses  || ""
+              this.prestamo.aporte= response.data.aporte  || ""
+              this.prestamo.cuota_sistema= response.data.cuota_sistema  || ""
+              this.prestamo.cuotas= response.data.cuotas  || ""
+              this.prestamo.tasa= response.data.tasa   || ""
+              this.prestamo.comentarios= response.data.comentarios  || "" 
+              this.prestamo.producto_final= response.data.producto_final  || ""
+              this.prestamo.forma_final= response.data.forma_final || "" 
+              this.prestamo.aporte_final= response.data.aporte_final  || ""
+              this.prestamo.importe_final= response.data.importe_final || ""  
+              this.prestamo.plazo_final= response.data.plazo_final  || "" 
+              this.prestamo.cuota_final= response.data.cuota_final  || "" 
+              this.prestamo.tasa_final= response.data.tasa_final || ""
 
               if(response.data.avales){
                 this.prestamo.avales= response.data.avales
@@ -1045,7 +1044,7 @@ export default {
         documento: "",
         nombres: "",
         apellidos: "",
-        nacimiento: "",
+        fecha_nacimiento: "",
         estado_civil: "SOLTERO",
         ocupacion: "",
         telefono: "",

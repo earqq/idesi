@@ -130,8 +130,8 @@ export default new Router({
             component: require('./views/404').default
         },
         { 
-            path: '/eval-cualitativa/:prestamo/:documento/:persona',
-            name: 'evalCualtitativa',
+            path: '/eval-cualitativa/:prestamo',
+            name: 'evalCualitativa',
             component: require('./views/EvalCualitativa').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
@@ -146,7 +146,7 @@ export default new Router({
             }
         },
         {
-            path: '/eval-cuantitativa/:prestamo/:documento/:persona',
+            path: '/eval-cuantitativa/:prestamo',
             name: 'evalCuantitativa',
             component: require('./views/EvalCuantitativa').default,
             beforeEnter: (to, from, next) => {

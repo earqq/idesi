@@ -21,19 +21,27 @@
             <i class="material-icons-outlined">notes</i>
           </a>
         </div>
- 
-        <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4' class="add_client button_primary medium" :to="{name:'registrar/persona'}"  >
-          <span>
-            CREAR PERSONA
-          </span>
-          <i class="material-icons-outlined">add</i>
-        </router-link> 
-        <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4'  class="add_client button_primary medium" :to="{name:'registrar/empresa'}"  >
-          <span>
-            CREAR EMPRESA
-          </span>
-          <i class="material-icons-outlined">add</i>
-        </router-link>     
+        <div class="dropdown hover">
+            <a href="#">CREAR CLIENTE</a>
+            <ul>
+              <li>
+                <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4' :to="{name:'registrar/persona'}"  >
+                  <span>
+                    CREAR PERSONA
+                  </span>
+                </router-link> 
+              </li>
+
+              <li>
+                <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4' :to="{name:'registrar/empresa'}"  >
+                  <span>
+                    CREAR EMPRESA
+                  </span>
+                </router-link>  
+              </li>
+            </ul>
+          </div>
+   
       </div>
 
       <div class="empty_message" v-if="clientes.length==0 && queryCount > 0">
@@ -186,6 +194,7 @@ export default {
 <style lang="sass" scoped>
 @import "../../sass/variables"
 @import "../../sass/buttons"
+
 .clients_content
   .empty_message
     height: calc(100vh - 135px)
@@ -443,6 +452,109 @@ export default {
               margin: 0
               margin-left: 10px
               text-align: left
+.dropdown
+  width: 230px
+  display: inline-block
+  margin-right: 10px
+  position: relative
+  &.toggle
+    > input
+      display: none
+
+    > label
+      border-radius: 2px
+      box-shadow: 0 6px 5px -5px rgba(0, 0, 0, 0.3)
+
+    > label::after
+      content: ""
+      float: right
+      margin: 15px 15px 0 0
+      width: 0
+      height: 0
+      border-left: 5px solid transparent
+      border-right: 5px solid transparent
+      border-top: 10px solid #CCC
+
+  > a
+    border-radius: 2px
+    box-shadow: 0 6px 5px -5px rgba(0, 0, 0, 0.3)
+
+  > a::after
+    content: ""
+    float: right
+    margin: 15px 15px 0 0
+    width: 0
+    height: 0
+    border-left: 5px solid transparent
+    border-right: 5px solid transparent
+    border-top: 10px solid #CCC
+
+  ul
+    list-style-type: none
+    display: block
+    margin: 0
+    padding: 0
+    position: absolute
+    width: 100%
+    box-shadow: 0 6px 5px -5px rgba(0, 0, 0, 0.3)
+    overflow: hidden
+
+  a, &.toggle > label
+    display: block
+    padding: 0 0 0 10px
+    text-decoration: none
+    line-height: 40px
+    font-size: 13px
+    text-transform: uppercase
+    color: #000018
+    background-color: #FFF
+
+  li
+    height: 0
+    overflow: hidden
+    transition: all 500ms
+
+  &.hover li
+    transition-delay: 300ms
+
+  li
+    &:first-child a
+      border-radius: 2px 2px 0 0
+
+    &:last-child a
+      border-radius: 0 0 2px 2px
+
+    &:first-child a::before
+      content: ""
+      display: block
+      position: absolute
+      width: 0
+      height: 0
+      border-left: 10px solid transparent
+      border-right: 10px solid transparent
+      border-bottom: 10px solid #FFF
+      margin: -10px 0 0 30px
+  &.toggle
+    >
+      label:hover, input:checked ~ label
+        background-color: #EEE
+        color: #666
+
+    >
+      label:hover::after, input:checked ~ label::after
+        border-top-color: #AAA
+
+  > a:hover::after
+    border-top-color: #AAA
+
+  // li:first-child a:hover::before
+  //   border-bottom-color: #EEE
+
+  &.hover:hover li, &.toggle > input:checked ~ ul li
+    height: 40px
+
+  &.hover:hover li:first-child, &.toggle > input:checked ~ ul li:first-child
+    padding-top: 15px
 @media screen and (max-width: 1000px)
   .clients_content
     .options_bar
