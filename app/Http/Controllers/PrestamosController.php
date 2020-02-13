@@ -23,15 +23,8 @@ use Storage;
 use Barryvdh\DomPDF\Facade as PDF;
 class PrestamosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+    private $image_ext = ['jpg', 'jpeg', 'png', 'gif'];
+    private $document_ext = ['doc', 'docx', 'pdf', 'odt','txt'];
 
     public function search($state,$text=''){
         $prestamos=Prestamo::with('cliente.persona','cliente.empresa','evaluaciones')
@@ -271,7 +264,7 @@ class PrestamosController extends Controller
         if(file_put_contents("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen/".$nombre.".png", $data)){
 
                 $pdf=PDF::loadView('reportes.imagen',compact('prestamo','cliente','nombre','extension'));
-                Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/imagenpdf/'.$nombre.'.pdf', $pdf->output());
+                Storage::disk("s3")->put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/imagenpdf/'.$nombre.'.pdf', $pdf->output());
                 $archivo = new Archivo();
                 $archivo->nombre= $nombre;
                 $archivo->tipo='imagen'; 
@@ -313,6 +306,82 @@ class PrestamosController extends Controller
         $prestamo->estado = 2;
         $prestamo->save();
     }
+    public function subirArchivo(Request $request)
+    {
+
+        $max_size = (int)ini_get('upload_max_filesize') * 1000;
+        $all_ext = implode(',', $this->allExtensions());
+
+        $file = $request->file('file');
+
+        $ext = $file->getClientOriginalExtension();
+        $type = $this->getType($ext);
+        
+
+        $prestamo= Prestamo::find($request['prestamo_id']);
+        $cliente = $prestamo->cliente;
+        $nombre = $request['name'];
+        $extension = $ext;
+
+        if (Storage::disk("s3")->putFileAs('/clientes/'.$cliente->documento.'/prestamo_'.$request['prestamo_id']. '/' , $file, $request['name'] . '.' . $ext)) {
+            
+            if($type=='imagen'){
+                $pdf=PDF::loadView('reportes.imagen',compact('prestamo','cliente','nombre','extension'));
+                Storage::disk("s3")->put('/clientes/'.$cliente->documento.'/prestamo_'.$prestamo->id.'/'.$request['name'].'.pdf', $pdf->output());
+            } 
+            
+            $archivo = new Archivo;
+            $archivo->nombre = $request['name'];
+            $archivo->tipo = $type;
+            $archivo->extension= $ext;
+            $archivo->prestamo_id = $request['prestamo_id'];
+            $archivo->save();
+        }
+ 
+        return response()->json(false);
+    }
+    private function getType($ext)
+    {
+        if (in_array($ext, $this->image_ext)) {
+            return 'imagen';
+        }
+        if (in_array($ext, $this->document_ext)) {
+            return 'documento';
+        }
+    }
+    private function getUserDir($id)
+    {   
+        $prestamo = Prestamo::where('id',$id)->first();
+        $cliente = Cliente::where('id',$prestamo->cliente_id)->first();
+        return $cliente->documento.'_' . $cliente->id;
+    }
+    /**
+     * Get all extensions
+     * @return array Extensions of all file types
+     */
+    private function allExtensions()
+    {
+        return array_merge($this->document_ext);
+    }
+
+
+    public function eliminarArchivo($id)
+    {
+        $file = Archivo::findOrFail($id);
+
+        if (Storage::disk("s3")->disk('local')->exists('/public/' . $this->getUserDir($file->prestamo_id) . '/prestamo_'.$file->prestamo_id.'/'. $file->tipo . '/' . $file->nombre . '.' . $file->extension)) {
+            if (Storage::disk("s3")->disk('local')->delete('/public/' . $this->getUserDir($file->prestamo_id) . '/prestamo_'.$file->prestamo_id.'/'. $file->tipo . '/' . $file->nombre . '.' . $file->extension)) {
+                
+                return response()->json($file->delete());
+            }
+        }
+
+        return [
+            'success' => true,
+            'data' => 'Cliente creado',
+        ];
+    }
+
     public function evaluar(Request $request)
     {   
       
