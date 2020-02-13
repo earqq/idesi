@@ -40,31 +40,31 @@
                   <div class="detail_content">
                     <li>
                       <strong>Producto</strong>
-                      <p>{{prestamo.producto}}</p>
+                      <p>{{prestamo.producto || '-- --'}}</p>
                     </li>
                     <li>
                       <strong>Importe</strong>
-                      <p>{{prestamo.importe}}</p>
+                      <p>{{prestamo.importe || '-- --'}}</p>
                     </li>
                     <li>
                       <strong>Cuotas</strong>
-                      <p>{{prestamo.cuotas}}</p>
+                      <p>{{prestamo.cuotas || '-- --'}}</p>
                     </li>
                     <li>
                       <strong>Cuotas del Sistema</strong>
-                      <p>{{prestamo.cuota_sistema}}</p>
+                      <p>{{prestamo.cuota_sistema || '-- --'}}</p>
                     </li>
                     <li>
                       <strong>Aporte</strong>
-                      <p>{{prestamo.aporte}}</p>
+                      <p>{{prestamo.aporte || '-- --'}}</p>
                     </li>
                     <li>
                       <strong>Comentarios</strong>
-                      <p>{{prestamo.comentarios}}</p>
+                      <p>{{prestamo.comentarios || '-- --'}}</p>
                     </li>
                     <li>
                       <strong>Forma</strong>
-                      <p>{{prestamo.forma}}</p>
+                      <p>{{prestamo.forma || '-- --'}}</p>
                     </li>
                     <li class="spanner"></li>
                     <li class="spanner"></li>
@@ -96,10 +96,10 @@
                           :key="evaluacion.id"
                           :class="{final_result: $store.state.currentUser.nivel == 2}"
                         >
-                          <td class="client" v-text="evaluacion.name"></td>
+                          <td class="client" v-text="evaluacion.evaluador.name"></td>
                           <td
                             class="observation"
-                            v-text="evaluacion.detalle ? evaluacion.detalle : '--'"
+                            v-text="evaluacion.detalle ? evaluacion.detalle : '-- -- -- --'"
                           ></td>
                           <td class="date">{{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
                           <td class="state">
@@ -551,7 +551,7 @@
           </div>
         </div>
 
-        <div class="form_content">
+        <div class="form_content" >
           <div class="input_wrapper" v-if="$store.state.currentUser.nivel=='3'">
             <label>Comentarios</label>
             <textarea v-model="prestamo.evaluacion.detalle"></textarea>
@@ -559,35 +559,42 @@
 
           <div class="input_wrapper" v-if="$store.state.currentUser.nivel=='2'">
             <label for>Producto</label>
-            <input type="text" v-model="prestamo.evaluacion.producto" />
+            <select v-model="prestamo.producto" >
+                <option value="CREDIDIARIO">CREDIDIARIO</option>
+                <option value="CREDISEMANA">CREDISEMANA</option>
+                <option value="PYME">PYME</option>
+                <option value="PYME ESPECIAL">PYME ESPECIAL</option>
+                <option value="CONSUMO">CONSUMO</option>
+                <option value="CONSUMO ESPECIAL">CONSUMO ESPECIAL</option>
+            </select>
           </div>
 
           <div class="inline_inputs" v-if="$store.state.currentUser.nivel=='2'">
             <div class="input_wrapper">
               <label for>Aporte</label>
-              <input type="text" v-model="prestamo.evaluacion.aporte" />
+              <input type="text" v-model="prestamo.aporte" />
             </div>
 
             <div class="input_wrapper">
               <label for>Cuotas</label>
-              <input type="text" v-model="prestamo.evaluacion.cuotas" />
+              <input type="text" v-model="prestamo.cuotas" />
             </div>
           </div>
 
           <div class="input_wrapper" v-if="$store.state.currentUser.nivel=='2'">
             <label for>Importe</label>
-            <input type="text" v-model="prestamo.evaluacion.importe" />
+            <input type="text" v-model="prestamo.importe" />
           </div>
 
           <div class="inline_inputs" v-if="$store.state.currentUser.nivel=='2'">
             <div class="input_wrapper">
               <label for>Cuota Sistema</label>
-              <input type="text" v-model="prestamo.evaluacion.cuota_sistema" />
+              <input type="text" v-model="prestamo.cuota_sistema" />
             </div>
 
             <div class="input_wrapper">
               <label for>Tasa</label>
-              <input type="text" v-model="prestamo.evaluacion.tasa" />
+              <input type="text" v-model="prestamo.tasa" />
             </div>
           </div>
         </div>
@@ -649,7 +656,10 @@ export default {
       this.$http
         .get(`/prestamos/` + id)
         .then(response => {
-          this.prestamo = response.data;
+          
+          this.prestamo = response.data
+          console.log("sadadasda")
+          console.log(this.prestamo)
           this.prestamo.evaluacion={
             estado:3,
             aporte:'',
@@ -682,6 +692,7 @@ export default {
         );
         this.tab=1;
         this.show_slide=false
+        // this.prestamos.push(prestamos)
       })
       .catch(err=>{
         this.$toast.error(

@@ -26,7 +26,7 @@
 
       <div class="empty_message" v-if="prestamos.length==0 && queryCount==0">
         <img src="img/empty_2.svg" >
-        <h1> No Se Encontraron Prestamos </h1>
+        <h1> NO REGISTRA PRESTAMOS EN EVALUACIÓN O EVALUDADOS </h1>
         <p>Registra un nuevo cliente para crear prestamos.</p>
       </div>
 
@@ -47,18 +47,19 @@
               <div class="progress_bar">
                 <span class="bar"></span>
                 <p>0% </p>
-              </div>
+              </div> 
               <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
             </div>
             <div class="actions">
               
-              <router-link class="credit_link"  :to="{name:'/ver/prestamo/', params:{prestamo:prestamo.id}}"> VER PRESTAMO</router-link>
+              <router-link class="credit_link"  :to="{name:'prestamo', params:{prestamoID:prestamo.id}}"> VER DETALLE PRESTAMO</router-link>
               <a class="credit_link" v-if="id_rol==5 && prestamo.estado=='APROBADO'" @click="entregarPrestamos(prestamo.id)"> ENTREGAR</a>
 
               <div class="options">
                 <i class="material-icons-outlined" >more_horiz</i>
                 <ul>
-                  <li v-if='currentUser.nivel<4'> <router-link :to="{name:'/prestamos/evaluar/', params:{prestamoID:prestamo.id}}"  >Evaluar</router-link></li>
+                  <li v-if='currentUser.nivel<4 && prestamo.estado==2'> <router-link :to="{name:'/prestamos/evaluar/', params:{prestamoID:prestamo.id}}"  >Evaluar</router-link></li>
+                  <li v-else-if='currentUser.nivel<4'> <router-link :to="{name:'/prestamos/evaluar/', params:{prestamoID:prestamo.id}}"  >Ver Evaluación</router-link></li>
                   <li > <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
                 </ul>
               </div>

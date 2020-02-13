@@ -423,7 +423,6 @@ export default {
           
           if(item.nombre==ad){
             a =1
-            
           }
         })
       if(a==1){
