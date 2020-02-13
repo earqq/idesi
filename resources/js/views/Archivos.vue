@@ -422,11 +422,12 @@ export default {
       this.backMixin_handleBack('/perfil/'+this.prestamo.documento);
     },
     listFile() {
-      this.$http.get(`/files/${this.$route.params.prestamoID}`).then(response => {
+       this.$http.get(`/files/${this.$route.params.prestamoID}`).then(response => {
         this.prestamo = response.data["datos"];
         this.archivos = response.data["files"];
 
         this.loaderFile=0
+        this.porSubir= []
 
         this.lista.map(item=>{
           var a = this.archivos.find(f=>f.nombre == item.nombre)
@@ -466,11 +467,9 @@ export default {
     },
     verificar(ad){
       var a = 0
-      this.archivos.map(item=>{
-          
+      this.archivos.map(item=>{       
           if(item.nombre==ad){
             a =1
-            
           }
         })
       if(a==1){
