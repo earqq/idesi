@@ -23,12 +23,13 @@ class CreateFotosNegocioTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('imagen', 200)->nullable()->default(null);
+            $table->string('nombre', 50)->nullable()->default(null);
             $table->date('fecha')->nullable()->default(null);
             $table->time('hora')->nullable()->default(null);
             $table->string('latitud', 50)->nullable()->default(null);
             $table->string('longitud', 50)->nullable()->default(null);
             $table->unsignedInteger('prestamo_id');
+            $table->string('extension', 5)->nullable();
 
             $table->index(["prestamo_id"], 'fk_vistas_prestamos1_idx');
             $table->softDeletes();

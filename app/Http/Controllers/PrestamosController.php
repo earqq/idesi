@@ -9,6 +9,7 @@ use DB;
 use App\Persona;
 use App\Conyuge;
 use App\Aval;
+use Datetime;
 use App\Cliente;
 use App\Subido;
 use App\Evaluacion;
@@ -16,7 +17,11 @@ use App\RepresentanteLegal;
 use App\Garantia;
 use App\Archivo;
 use App\Cuantitativa;
+use App\Archivo;
+use App\FotoNegocio;
 use App\ResultadoAnalisis;
+use Storage;
+use Barryvdh\DomPDF\Facade as PDF;
 class PrestamosController extends Controller
 {
     /**
@@ -75,8 +80,7 @@ class PrestamosController extends Controller
         if (!$request->ajax()) return redirect('/');
 
         try{
-
-            \Log::alert($request->all());
+            
 
             DB::beginTransaction();
 
@@ -251,10 +255,11 @@ class PrestamosController extends Controller
 
     public function guardarFoto(Request $request){
 
-        \Log::alert($request->all());
         $prestamo = Prestamo::with('cliente')->find($request->prestamo_id);
         $cliente=$prestamo->cliente;
-        $nombre = $request->name;
+        $datetime=new Datetime;
+        $time=$datetime->format('H:i:s');
+        $nombre = $request->name.($time);
         $extension = 'png';
         $file = $request->file;
         $file = str_replace('data:image/png;base64,', '', $file); 
@@ -264,24 +269,26 @@ class PrestamosController extends Controller
             mkdir("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen", 0777, true);
         }
 
-        if(file_put_contents("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen/".$request->name.".png", $data)){
+        if(file_put_contents("storage/".$cliente->documento.'_'.$cliente->id."/prestamo_".$prestamo->id."/imagen/".$nombre.".png", $data)){
 
                 $pdf=PDF::loadView('reportes.imagen',compact('prestamo','cliente','nombre','extension'));
-                Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/imagenpdf/'.$request->name.'.pdf', $pdf->output());
+                Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/imagenpdf/'.$nombre.'.pdf', $pdf->output());
                 $archivo = new Archivo();
-                $archivo->nombre= $request->name;
+                $archivo->nombre= $nombre;
                 $archivo->tipo='imagen'; 
                 $archivo->extension= 'png';
                 $archivo->prestamo_id=$request->prestamo_id;
                 $archivo->save();
-                \Log::alert("si entra");
-                \Log::alert($request->all());
                 $fotoNegocio = new FotoNegocio();
-                $fotoNegocio->imagen= $archivo->id;
+                $fotoNegocio->nombre= $nombre;
+                $fotoNegocio->extension= 'png';
                 $fotoNegocio->latitud= $request->latitud;
-                $fotoNegocio->altitud=$request->longitud; 
-                $fotoNegocio->prestamos_id=$request->prestamo_id;
+                $fotoNegocio->longitud=$request->longitud; 
+                $fotoNegocio->prestamo_id=$request->prestamo_id;
                 $fotoNegocio->save();
+                $prestamo->latitud=$request->latitud;
+                $prestamo->longitud=$request->longitud;
+                $prestamo->save();
         }
 
         return [

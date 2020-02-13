@@ -7,7 +7,7 @@
             <span>1</span>
             <p>DATOS TITULAR</p>
           </div>
-          <div class="tab" @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}">
+          <div class="tab" v-if='cliente.conyuge' @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}">
             <span>2</span>
             <p>DATOS CÓNYUGE</p>
           </div>
@@ -182,15 +182,21 @@
                 </div>
               </div>
 
-              <div class="form_buttons all">
+              <div v-if='cliente.conyuge' class="form_buttons all">
                 <a class="button_primary medium next" @click="validateStep1 ? next(1): tabError() ">
+                  <span>SIGUIENTE</span>
+                  <i class="material-icons-outlined">navigate_next</i>
+                </a>
+              </div>
+              <div v-else class="form_buttons all">
+                <a class="button_primary medium next" @click="validateStep1 ? next(2): tabError() ">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
               </div>
             </div>
 
-            <div v-show="tab == 2" class="form_step">
+            <div v-show="tab == 2"  class="form_step">
 
               <div class="form_step_wrapper">
 
@@ -575,7 +581,7 @@ export default {
       giros: [],
       tab: 1,
       entidades:[], 
-      cliente_id:0,
+      cliente:0,
       loading: false,
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
@@ -790,7 +796,7 @@ export default {
     this.$http
       .get(`/prestamos/` + this.$route.params.prestamo)
       .then(response => {
-        this.cliente_id=response.data.cliente.id
+        this.cliente=response.data.cliente
         this.evaluacion.propuesta.producto = response.data.producto;
         this.evaluacion.propuesta.monto = response.data.importe;
         this.evaluacion.propuesta.cuotas = response.data.cuotas;
@@ -1018,7 +1024,7 @@ export default {
             "Exitoso",
             toastOptions.success
           ) 
-        this.$router.push({ name: 'perfil', params: { id: this.cliente_id}})
+        this.$router.push({ name: 'perfil', params: { id: this.cliente.id}})
       }).catch(err=>{
           this.loading=false
           this.$toast.error(

@@ -106,11 +106,16 @@ class PersonasController extends Controller
                 $departamento_domicilio = Departamento::where('id',$cliente->ubicacion_departamento)->first();
                 $provincia_domicilio = Provincia::where('id',$cliente->ubicacion_provincia)->first();
                 $distrito_domicilio = Distrito::where('id',$cliente->ubicacion_distrito)->first();
+<<<<<<< HEAD
                 
                 $departamento_trabaja = '--';
                 $provincia_trabaja = '--';
                 $distrito_trabaja = '--';
 
+=======
+ 
+                $trabajo='';
+>>>>>>> 40945f10775c43317dc0440c9841516ecbc19a23
                 if($persona->estado_trabajo=='TRABAJA'){
 
                     $trabajo = new Trabajo();

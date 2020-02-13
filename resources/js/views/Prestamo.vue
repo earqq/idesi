@@ -162,16 +162,16 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="visita in prestamo.fotos" :key="visita.id" @click="selectPhoto(visita)">
+                    <tr v-for="foto in prestamo.fotos" :key="foto.id" @click="selectPhoto(foto)">
                       <td class="photo">
-                        <img :src="'../storage/'+prestamo.cliente.documento+'_'+prestamo.cliente.id+'/prestamo_'+visita.prestamos_id+'/imagen/'+visita.nombre+'.'+visita.extension">
+                        <img :src="'../storage/'+prestamo.cliente.documento+'_'+prestamo.cliente.id+'/prestamo_'+foto.prestamo_id+'/imagen/'+foto.nombre+'.'+foto.extension">
                       </td>
                       <td class="place_photo">
                         <i class="material-icons-outlined">place</i>
-                        <p v-if="geocoder"> {{ getLocationName(visita.latitud, visita.altitud, visita)}} {{visita.location_name ? visita.location_name : 'Desconocido'}}</p>
+                        <p v-if="geocoder"> {{ getLocationName(foto.latitud, foto.altitud, foto)}} {{foto.location_name ? foto.location_name : 'Desconocido'}}</p>
                         
                       </td>
-                      <td v-text="stringDate(visita.created_at)"></td>
+                      <td v-text="stringDate(foto.created_at)"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -290,8 +290,6 @@ export default {
       pos => {
         this.gettingLocation = false;
         this.location = pos;
-        console.log("obteniendo ubi")
-        console.log(pos);
       },
       err => {
         this.gettingLocation = false;
@@ -375,7 +373,6 @@ export default {
         /^data:image\/png/,
         "data:application/octet-stream"
       );
-      console.log(dataURL);
       downloadLink.setAttribute("href", url);
       downloadLink.click();
     },
