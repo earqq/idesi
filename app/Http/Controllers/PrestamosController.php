@@ -302,7 +302,7 @@ class PrestamosController extends Controller
                                 'cliente.persona.hijos',
                                 'cliente.persona.conyuge',
                                 'resultadoAnalisis',
-                                'evaluaciones',
+                                'evaluaciones.evaluador',
                                 'fotos',
                                 'archivos')->find($id);
         return $prestamo;
