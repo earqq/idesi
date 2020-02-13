@@ -57,6 +57,7 @@ class PersonasController extends Controller
                 DB::rollBack();
                 return [
                     'success' => false,
+                    'message' => 'Documento de identidad ya existe en otro cliente',
                 ];
             }
             else{
@@ -210,8 +211,8 @@ class PersonasController extends Controller
                 $declaracion->observaciones= $request->declaracion['obervaciones'];    
                 $declaracion->cliente_id= $cliente->id; 
                 $declaracion->save(); 
-
-
+                
+                
                 $pdf = PDF::loadView('reportes.inscripcion',compact('trabajo','representante','obligacion','declaracion','cliente',
                                                                     'hijos','conyuge','persona',
                                                                     'departamento_domicilio','provincia_domicilio','distrito_domicilio','departamento_trabaja','provincia_trabaja','distrito_trabaja'));

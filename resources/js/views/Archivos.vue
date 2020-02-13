@@ -107,7 +107,7 @@
         </div>
 
    
-        <div class="file_item" v-for="(archivo, index) in archivos" :key="index">
+        <div class="file_item" v-for="(archivo, index) in prestamo.archivos" :key="index">
           <div class="file_detail" v-if="archivo.tipo=='imagen'">
             <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
               target="_blank">
@@ -129,7 +129,9 @@
             </a>
           </div>
         </div>
-        <a v-show="archivos.length || 0 < 5" class="spanner" v-for="i in 5" :key="i*1.5"  ></a>
+        <div v-if='prestamo.archivos.length<5'>
+          <a class="spanner" v-for="i in 5" :key="i*1.5"  ></a>
+        </div>
       </div>
       
       <aside class="checklist"  :class="{showing: show_slide}">
@@ -346,67 +348,83 @@ export default {
       notification: false,
       message: "",
       errors: {},
-      prestamo: {},
-      archivos: [],
+      prestamo: {
+        archivos:[]
+      },      
       lista: [
         {
           nombre:  "reporte_de_central",
+          texto: "Reporte de central de riesgo",
           estado: false
         },
         {
           nombre:  "copia_dni",
+          texto: "Copia DNI",
           estado: false
         },
         {
           nombre:  "recibo_agua_casa",
+          texto: "Recibo de agua",
           estado: false
         },
         {
           nombre:  "recibo_luz_casa",
+          texto: "Recibo de luz",
           estado: false
         },
         {
           nombre:  "titulo_casa",
+          texto: "Título de propiedad",
           estado: false
         },
         {
           nombre:  "contrato_alquiler_casa",
+          texto: "Contrato de alquiler",
           estado: false
         },
         {
           nombre:   "foto_casa",
+          texto: "Fotos de casa",          
           estado: false
         },
         {
           nombre: "recibo_agua_negocio",
-          estado: false
-        },
-        {
-          nombre:  "recibo_agua_negocio",
+          texto: "Reporte de agua",
           estado: false
         },
         {
           nombre:  "recibo_luz_negocio",
+          texto: "Reporte de luz",
           estado: false
         },
         {
           nombre:  "contrato_alquiler_negocio",
+          texto: "Contrato de alquiler",
           estado: false
         },
         {
           nombre:   "boleta_compra",
+          texto: "Boletas de compra",
           estado: false
         },
         {
           nombre: "boleta_venta",
+          texto: "Boletas de venta",
           estado: false
         },
         {
           nombre:   "factura_venta",
+          texto: "Facturas de venta",
+          estado: false
+        },
+        {
+          nombre:   "factura_compra",
+          texto: "Facturas de compra",
           estado: false
         },
         {
           nombre:  "fotos_negocio",
+          texto: "Facturas de negocio",
           estado: false
         } 
       ],
@@ -422,19 +440,20 @@ export default {
       this.backMixin_handleBack('/perfil/'+this.prestamo.documento);
     },
     listFile() {
-       this.$http.get(`/files/${this.$route.params.prestamoID}`).then(response => {
-        this.prestamo = response.data["datos"];
-        this.archivos = response.data["files"];
+      this.$http.get(`/prestamos/`+this.$route.params.prestamoID).then(response => {
+        console.log("si viene")
+        console.log(response)
+        this.prestamo = response.data        
 
         this.loaderFile=0
-        this.porSubir= []
-
+        this.porSubir=[]
+        let self=this
         this.lista.map(item=>{
-          var a = this.archivos.find(f=>f.nombre == item.nombre)
+          var a = self.prestamo.archivos.find(f=>f.nombre == item.nombre)
           if(a){
             item.estado= true
           }else{
-            this.porSubir.push({
+            self.porSubir.push({
               nombre: item.nombre
             })
           }
@@ -467,7 +486,8 @@ export default {
     },
     verificar(ad){
       var a = 0
-      this.archivos.map(item=>{       
+      this.prestamo.archivos.map(item=>{
+          
           if(item.nombre==ad){
             a =1
           }
@@ -535,16 +555,16 @@ export default {
     },
     cargarPdf(){
                 window.open('/clientes/adjuntarPdf/'+this.$route.params.prestamoID,'_blank'); 
-      },
-      solicitudPdf(){
-                window.open('/clientes/solicitudPdf/'+this.$route.params.prestamoID,'_blank'); 
-      },
-      cualitativaPdf(){
-                window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamoID,'_blank'); 
-      },
-      cuantitativaPdf(){
-               window.open('/evaluacion/cuantitativaPdf/'+this.$route.params.prestamoID,'_blank'); 
-      }
+    },
+    solicitudPdf(){
+              window.open('/clientes/solicitudPdf/'+this.$route.params.prestamoID,'_blank'); 
+    },
+    cualitativaPdf(){
+              window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamoID,'_blank'); 
+    },
+    cuantitativaPdf(){
+              window.open('/evaluacion/cuantitativaPdf/'+this.$route.params.prestamoID,'_blank'); 
+    }
   },
   computed: {
     validateSizeFile () {

@@ -37,16 +37,17 @@
             <div class="client">
               <div class="avatar">
                 <img src="https://picsum.photos/100/100" v-if="false"/>
-                <div class="avatar_alt" v-else> {{prestamo.cliente.persona.apellidos ?  prestamo.cliente.persona.apellidos.substring(0,1):prestamo.empresa.razon_social.substring(0,1) }} </div>
+                <div class="avatar_alt" v-else> {{prestamo.cliente.persona ?  prestamo.cliente.persona.apellidos.substring(0,1):prestamo.cliente.empresa.razon_social.substring(0,1) }} </div>
               </div>
-              <p class="truncate">{{prestamo.cliente.persona.nombres}} {{prestamo.cliente.persona.apellidos || prestamo.empresa.razon_social}}</p>
+              <p class="truncate" v-if='prestamo.cliente.persona '>{{prestamo.cliente.persona.nombres}} {{prestamo.cliente.persona.apellidos }}</p>
+              <p class="truncate" v-else> {{prestamo.cliente.empresa.razon_social}}</p>
             </div>
             <div class="detail">
               <h2> {{prestamo.producto}} </h2>
               <div class="progress_bar">
                 <span class="bar"></span>
                 <p>0% </p>
-              </div>
+              </div> 
               <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
             </div>
             <div class="actions">
@@ -86,9 +87,10 @@
                 <td class="client">
                   <div class="avatar">
                     <img src="https://picsum.photos/100/100" v-if="false" />
-                    <div class="avatar_alt" v-else>  {{prestamo.apellidos?prestamo.apellidos.substring(0,1):prestamo.razon_social.substring(0,1) }} </div>              
+                    <div class="avatar_alt" v-else>  {{prestamo.cliente.persona ? prestamo.cliente.persona.apellidos.substring(0,1):prestamo.cliente.empresa.razon_social.substring(0,1) }} </div>              
                   </div>
-                  <p class="truncate"> {{prestamo.nombres}} {{prestamo.apellidos || prestamo.razon_social}}</p>
+                  <p class="truncate" v-if='prestamo.cliente.persona'> {{prestamo.cliente.persona.nombres}} {{prestamo.cliente.persona.apellidos}}</p>
+                  <p class="truncate" v-else> {{prestamo.cliente.empresa.razon_social}}</p>
                 </td>
                 <td> {{prestamo.producto}} </td>
                 <td> S/ {{prestamo.importe}}</td>

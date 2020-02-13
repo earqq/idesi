@@ -24,10 +24,12 @@ class ExtrasController extends Controller
         return $entidades;
     } 
     public function colegioCosto(Request $request)
-    {
+    {   
+        \Log::alert($request->all());
         $colegio = Colegio::where("nivel",$request->grado)
                             ->where('nombre',$request->colegio)
                             ->select('costo')->first();
+        \Log::alert($colegio);
         return $colegio;
     } 
     public function doc(Request $request)

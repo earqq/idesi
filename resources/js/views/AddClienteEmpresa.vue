@@ -71,7 +71,7 @@
 
                   <div class="input_wrapper" :class="{require: !validatePartida}">
                     <label>Nro. de Partida Registral</label>
-                    <input type="number" max='2' v-model="cliente.empresa.partida_registral"  />
+                    <input type="text"  v-mask="'########'" v-model="cliente.empresa.partida_registral"  />
                   </div>
 
                   <div class="input_wrapper" :class="{require: !validateOficina}">
@@ -486,7 +486,7 @@ mixins: [serviceNumber],
       return this.cliente.empresa.actividad_principal.length>4;
     },
     validatePartida() {
-      return this.cliente.empresa.partida_registral.length>3;
+      return this.cliente.empresa.partida_registral.length>7;
     },
     validateDireccion() {
       return this.cliente.ubicacion_direccion_declarada.length>3;

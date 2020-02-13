@@ -253,7 +253,11 @@
                                                         <td>{{$conyuge->documento}}</td>
                                                         <td>CONYUGE</td>
                                                         <td>{{$conyuge->fecha_nacimiento}}</td>
-                                                        <td>{{$conyuge->socio }} </td>
+                                                        @if($conyuge->socio)
+                                                            <td>SI </td>
+                                                        @else
+                                                            <td>NO </td>
+                                                        @endif
                                                     </tr>        
                                             @endisset
 
@@ -263,7 +267,11 @@
                                                     <td>{{$hijo->documento}}</td>
                                                     <td>HIJO</td>
                                                     <td>{{$hijo->fecha_nacimiento}}</td>
-                                                    <td>{{$hijo->socio}} </td>
+                                                    @if($hijo->socio)
+                                                    <td>SI </td>
+                                                    @else
+                                                    <td>NO </td>
+                                                    @endif
                                                 </tr>
                                             @endforeach    
 
@@ -294,9 +302,9 @@
                                 <td colspan="3" ><span class="title">NOMBRES Y APELLIDOS(representante)</span> {{$representante->nombres}}  </td>
                             </tr>
                             <tr>
-                                <td><span class="title">DOCUMENTO</span> {{$representante->tipo_documento}}</td>
-                                <td><span class="title">N° </span> {{$representante->documento}}</td>
-                                <td><span class="title">RELACIÓN CON EL SOLICITANTE</span> {{$representante->tipo_relacion}}</td>
+                                <td><span class="title">DOCUMENTO: </span> {{$representante->tipo_documento}}</td>
+                                <td><span class="title">N°: </span> {{$representante->documento}}</td>
+                                <td><span class="title">RELACIÓN: </span> {{$representante->relacion}}</td>
                             </tr> 
                             <tr>
                                 <td colspan="3" style="text-align: center"> ***************************** Esta sección debe ser llenada por la Cooperativa *******************************</td>

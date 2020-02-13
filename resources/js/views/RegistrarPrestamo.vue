@@ -289,18 +289,18 @@
                     <input type="text" v-model="prestamo.cliente.persona.conyuge.ocupacion" />
                   </div>
                   <div class="input_wrapper">
-                    <label>Socio</label>
+                    <label>Socio </label>
                     <select v-model="prestamo.cliente.persona.conyuge.socio">
-                      <option value="1">SI</option>
-                      <option value="0">NO</option>
+                      <option value=true>SI</option>
+                      <option value=false>NO</option>
                     </select>
                   </div> 
-                  <div class="input_wrapper" :class="{require: !validateCodigoConyuge}" v-if="prestamo.cliente.persona.conyuge.socio==1" >
+                  <div class="input_wrapper" :class="{require: !validateCodigoConyuge}" v-if="prestamo.cliente.persona.conyuge.socio" >
                     <label>Código</label>
                     <input  type="text"  v-model="prestamo.cliente.persona.conyuge.codigo_socio" maxlength='10'/>
                   </div>
                   
-                  <div class="input_wrapper" :class="{require: !validateAporteConyuge}" v-if="prestamo.cliente.persona.conyuge.socio==1">
+                  <div class="input_wrapper" :class="{require: !validateAporteConyuge}" v-if="prestamo.cliente.persona.conyuge.socio">
                     <label>Aporte </label>
                     <vue-numeric currency="S/. " separator="," v-model="prestamo.cliente.persona.conyuge.aporte_socio" v-bind:precision="2"></vue-numeric>
                   </div>                 
@@ -315,17 +315,17 @@
                   <div class="input_wrapper" >
                     <label>¿Trabaja?</label>
                     <select v-model="prestamo.cliente.persona.conyuge.trabaja">
-                      <option value="1">SI</option>
-                      <option value="0">NO</option>
+                      <option value=true>SI</option>
+                      <option value=false>NO</option>
                     </select>
                   </div>
 
-                  <div class="input_wrapper"  :class="{require: !validateCentroConyuge}" v-if="prestamo.cliente.persona.conyuge.trabaja==1">
+                  <div class="input_wrapper"  :class="{require: !validateCentroConyuge}" v-if="prestamo.cliente.persona.conyuge.trabaja">
                     <label>Centro Laboral</label>
                     <input type="text" v-model="prestamo.cliente.persona.conyuge.centro_laboral" />
                   </div>
 
-                  <div class="input_wrapper"  :class="{require: !validateDireccionConyuge}" v-if="prestamo.cliente.persona.conyuge.trabaja==1">
+                  <div class="input_wrapper"  :class="{require: !validateDireccionConyuge}" v-if="prestamo.cliente.persona.conyuge.trabaja">
                     <label>Dirección centro laboral</label>
                     <input type="text" v-model="prestamo.cliente.persona.conyuge.direccion_centro_laboral" />
                   </div>
@@ -446,9 +446,7 @@
                       <input type="text" maxlength="100" v-model="row.direccion_centro_laboral" />
                     </div>
                   </div>
-
                   <span class="separator"></span>
-
                   <div class="group_form">
                     <div class="input_wrapper">
                       <label>Socio</label>
@@ -456,12 +454,12 @@
                         <option value="1">SI</option>
                         <option value="0">NO</option>
                       </select>
-                    </div>
-                    <div  v-if="row.socio=='1'" class="input_wrapper">
+                    </div>                    
+                    <div  v-if="row.socio=='1'" :class="{require: !row.validate_codigo_socio, other: validateCodigosSociosAval}" class="input_wrapper">
                       <label>Codigo</label>
                       <input type="text" v-model="row.codigo_socio"  maxlength='10' />
                     </div>
-                    <div  v-if="row.socio=='1'" class="input_wrapper">
+                    <div  v-if="row.socio=='1'" :class="{require: !row.validate_aporte_socio , other: validateCodigosSociosAval}" class="input_wrapper">
                       <label>Aporte</label>
                       <vue-numeric
                         currency="S/. "
@@ -469,8 +467,7 @@
                         v-model="row.aporte_socio"
                         v-bind:precision="2"
                       ></vue-numeric>
-                    </div>
-              
+                    </div>              
                     <div class="input_wrapper">
                       <label>Teléfono</label>
                       <input type="text" maxlength="10" v-model="row.telefono" />
@@ -503,7 +500,7 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1) ? next(3) : tabError()">
+            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1 && validateStep3) ? next(3) : tabError()">
               <span>SIGUIENTE</span>
               <i class="material-icons-outlined">navigate_next</i>
             </a>
@@ -783,7 +780,7 @@ export default {
     }
     ,
     validateCivil(){
-      return this.prestamo.cliente.persona.estado_civil.length>5
+      return this.prestamo.cliente.persona.estado_civil.length>3
     }
     ,
     validateOcupacion(){
@@ -883,6 +880,22 @@ export default {
         return true
       }
     },
+    validateCodigosSociosAval(){
+      let response=true
+      this.prestamo.avales.map(item=>{
+        if(item.socio){
+          item.validate_codigo_socio=false
+          item.validate_aporte_socio=false
+          if(item.codigo_socio.length>2)
+            item.validate_codigo_socio=true
+          else response=false
+          if(item.aporte_socio>0)
+            item.validate_aporte_socio=true  
+          else response=false
+        }
+      })     
+      return response
+    },
     validateCentroConyuge(){
       if(this.prestamo.cliente.persona.conyuge.trabaja=='1'){
         return this.prestamo.cliente.persona.conyuge.centro_laboral.length>5
@@ -903,6 +916,9 @@ export default {
       
     },
 
+    validateStep3(){
+      return this.validateCodigosSociosAval
+    },
     validateStep2(){
     
       if(this.tools.tiene_conyuge){
@@ -957,7 +973,7 @@ export default {
       .get(`/clientes/` + this.$route.params.clienteID)
       .then(response => {  
         this.prestamo.cliente=response.data
-
+        console.log(this.prestamo.cliente)
         if(!this.prestamo.cliente.persona.trabajo){
           this.prestamo.cliente.persona.trabajo={
               empresa_ruc:"",
@@ -1091,6 +1107,8 @@ export default {
         socio: 0,
         codigo_socio: "",
         aporte_socio: "",
+        validate_codigo_socio:false,
+        validate_aporte_socio:false,
         tipo_persona: "pn",
         empresa_ruc:'',
         empresa_razon_social:'',

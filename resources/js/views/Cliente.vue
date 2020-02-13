@@ -122,8 +122,8 @@
                   <router-link  v-if="cliente.tipo_cliente=='1'" :to="{name:'registarPrestamo', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
                   <router-link  v-else-if="cliente.tipo_cliente=='2'" :to="{name:'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
                 </li> 
-                <li v-if="!prestamo.cualitativa && prestamo.estado==1"> <router-link :to="{name:'evalCualitativa', params:{prestamo:prestamo.id}}" >E. Cualitativa</router-link> </li>
-                <li v-if="!prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
+                <li v-if="!prestamo.cualitativa && prestamo.estado==1"> <router-link :to="{name:'evalCualitativa', params:{prestamoID:prestamo.id}}" >E. Cualitativa</router-link> </li>
+                <li v-if="!prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1"> <router-link :to="{name:'evalCuantitativa', params:{prestamoID:prestamo.id}}" >E. Cuantitativa</router-link> </li>
                 <li v-if="prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1" @click="enviarEvaluar(prestamo.id)"> Enviar a Evaluación</li>
                 <li> <router-link :to="{name:'archivos', params:{prestamoID:prestamo.id}}" > Documentos </router-link> </li>
               </ul>
@@ -149,7 +149,6 @@ export default {
   // components: {  LoaderPrestamo, LoaderPerfil},
   data() {
     return {
-      resource: "clientes",
       view:false,
       cliente: {
         'tipo_cliente':1,
@@ -187,32 +186,26 @@ export default {
           this.loader = 0;
           this.loader_loan = 0; 
 
-          console.log(this.cliente.prestamos)
       });
 
     },
     enviarEvaluar(id){ 
           this.$http
-            .get(`/prestamos/enviarEvaluacion/` + id)
-            .then(response => {
-            if(response.data.success){
-                this.$toast.success(
-                    "El prestamo fue enviado a evaluación",
-                    "Exitoso",
-                    toastOptions.success
-                  ) 
-                
-                this.obtenerDatosCliente()
-
-                }else{
-                    this.$toast.error(
-                      "No se pudo enviar el prestamo",
-                      "Error",
-                      toastOptions.error
-                    )
-                }
-              
-            });
+          .get(`/prestamos/enviarEvaluacion/` + id)
+          .then(response => {
+            this.$toast.success(
+              "El prestamo fue enviado a evaluación",
+              "Exitoso",
+              toastOptions.success
+            ) 
+            this.obtenerDatosCliente()
+          }).catch(err=>{
+             this.$toast.error(
+              "Error en el registro",
+              "Error",
+              toastOptions.error
+            ) 
+          })
     },
     aceptarSolicitud(){
       this.loading= true
@@ -250,7 +243,7 @@ export default {
     rechazarSolicitud(){ 
       this.loading = true
           this.$http
-            .get(`/${this.resource}/rechazar/solicitud/` + this.cliente.idcliente)
+            .get(`/clientes/rechazar/solicitud/` + this.cliente.id)
             .then(response => {
             this.loading = false 
             if(response.data.success==true){

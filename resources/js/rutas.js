@@ -158,37 +158,51 @@ export default new Router({
             component: require('./views/404').default
         },
         { 
-            path: '/prestamos/evaluacion/cualitativa/:prestamo',
+            path: '/prestamos/evaluacion/cualitativa/:prestamoID',
             name: 'evalCualitativa',
             component: require('./views/EvalCualitativa').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
                     .then(res => { 
-        
-                         if(res.data.nivel=='4' ){
-                                next()
-                         }else{
-                            next('/error')
-                         }
+                        if(res.data.nivel=='4' ){
+                            next()
+                        }else{
+                        next('/error')
+                        }
                     })
             }
         },
         {
-            path: '/prestamos/evaluacion/cuantitativa/:prestamo',
+            path: '/prestamos/evaluacion/cuantitativa/:prestamoID',
             name: 'evalCuantitativa',
             component: require('./views/EvalCuantitativa').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
                     .then(res => { 
+                        if(res.data.nivel=='4' ){
+                            next()
+                        }else{
+                        next('/error')
+                        }
+                    })
+            }
+        }, 
+        {  
+            path: '/prestamos/archivos/:prestamoID', 
+            name: 'archivos',
+            component: require('./views/Archivos').default,
+            beforeEnter: (to, from, next) => {
+                axios.get("/currentUser")
+                    .then(res => { 
         
-                         if(res.data.nivel=='4' ){
+                         if(res.data.nivel=='2' || res.data.nivel=='3' || res.data.nivel=='4'){
                                 next()
                          }else{
                             next('/error')
                          }
                     })
             }
-        }, 
+        },  
         { 
             path: '/usuarios',
             name: 'usuarios',
@@ -205,43 +219,7 @@ export default new Router({
                     })
             }
             
-        },
- 
-   
-    
-        
-        {  
-            path: '/archivos/:prestamoID', 
-            name: 'archivos',
-            component: require('./views/Archivos').default,
-            beforeEnter: (to, from, next) => {
-                axios.get("/currentUser")
-                    .then(res => { 
-        
-                         if(res.data.nivel=='2' || res.data.nivel=='3' || res.data.nivel=='4'){
-                                next()
-                         }else{
-                            next('/error')
-                         }
-                    })
-            }
-        },
-        {
-            path: '/visitas/:prestamo',
-            name: 'visitas',
-            component: require('./views/Visita').default,
-            beforeEnter: (to, from, next) => {
-                axios.get("/currentUser")
-                    .then(res => { 
-        
-                         if(res.data.nivel=='2' || res.data.nivel=='3' || res.data.nivel=='4' || res.data.nivel=='5' ){
-                                next()
-                         }else{
-                            next('/error')
-                         }
-                    })
-            }
-        },
+        },     
         {
             path: '/error',
             name: 'error',
