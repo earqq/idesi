@@ -85,8 +85,10 @@
               </div>
             </router-link>
           </article>
-          <a v-show="clientes.length < 6" class="spanner" v-for="i in 6" :key="i"  >
+          <div v-if='clientes.length<6'>
+          <a  class="spanner" v-for="i in 6" :key="i"  >
           </a>
+          </div>
         </div>
 
         <div class="table_wrapper" v-if=" type_list=='0'">
@@ -101,7 +103,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr  v-for="cliente in clientes" :key="cliente.id">
+              <tr  v-for="(cliente,index) in clientes" :key="index">
                 <td class="client">
                   <div class="avatar">
                     <div class="request" v-show="cliente.estado=='1'">
@@ -193,7 +195,7 @@ export default {
           '/clientes/search/'+this.search.state+'/'+this.search.text,          
         )
         .then(response => {
-          console.log("respuesta:"+ console.log(response))
+          // console.log("respuesta:"+ console.log(response))
           this.clientes=response.data
         })
     },   
