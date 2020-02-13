@@ -403,11 +403,11 @@
                         <option value="false">NO</option>
                       </select>
                     </div>
-                    <div  v-if="row.socio" class="input_wrapper">
+                    <div  v-if="row.socio" :class="{require: !row.validate_codigo_socio, other: validateCodigosSociosAval}" class="input_wrapper">
                       <label>Codigo</label>
                       <input type="text" v-model="row.codigo_socio"  maxlength='10' />
                     </div>
-                    <div  v-if="row.socio" class="input_wrapper">
+                    <div  v-if="row.socio"  :class="{require: !row.validate_aporte_socio , other: validateCodigosSociosAval}" class="input_wrapper">
                       <label>Aporte</label>
                       <vue-numeric
                         currency="S/. "
@@ -449,7 +449,7 @@
               <i class="material-icons-outlined">navigate_before</i>
               <span>ATRAS</span>
             </a>
-            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1) ? next(3) : tabError()">
+            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1 && validateStep3) ? next(3) : tabError()">
               <span>SIGUIENTE</span>
               <i class="material-icons-outlined">navigate_next</i>
             </a>
@@ -705,6 +705,9 @@ export default {
     validateStep1() {
       return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
     },   
+    validateStep3() {
+      return this.validateCodigosSociosAval
+    },   
     validateActividad(){
       return true
     },
@@ -771,6 +774,22 @@ export default {
       return true
     }
     ,
+    validateCodigosSociosAval(){
+      let response=true
+      this.prestamo.avales.map(item=>{
+        if(item.socio){
+          item.validate_codigo_socio=false
+          item.validate_aporte_socio=false
+          if(item.codigo_socio.length>2)
+            item.validate_codigo_socio=true
+          else response=false
+          if(item.aporte_socio>0)
+            item.validate_aporte_socio=true  
+          else response=false
+        }
+      })     
+      return response
+    },
     validateProvincia(){
       return true
     }
@@ -811,6 +830,7 @@ export default {
   },
   async created() { 
     await this.obtenerDatosCliente()
+    if(this.$route.params.prestamoID!=0)
           this.obtenerDatosPrestamo()
     // this.clickAddAval()
     // this.clickAddGarantia()
@@ -911,6 +931,8 @@ export default {
         socio: false,
         codigo_socio: "",
         aporte_socio: "",
+        validate_codigo_socio:false,
+        validate_aporte_socio:false,
         tipo_persona: "pn",
         empresa_ruc:'',
         empresa_razon_social:'',

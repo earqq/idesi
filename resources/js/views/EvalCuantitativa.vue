@@ -7,7 +7,7 @@
             <span>1</span>
             <p>DATOS TITULAR</p>
           </div>
-          <div class="tab" v-if='cliente.conyuge' @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}">
+          <div class="tab" v-if='cliente.persona.conyuge' @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}">
             <span>2</span>
             <p>DATOS CÓNYUGE</p>
           </div>
@@ -182,7 +182,7 @@
                 </div>
               </div>
 
-              <div v-if='cliente.conyuge' class="form_buttons all">
+              <div v-if='cliente.persona.conyuge' class="form_buttons all">
                 <a class="button_primary medium next" @click="validateStep1 ? next(1): tabError() ">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
@@ -581,7 +581,11 @@ export default {
       giros: [],
       tab: 1,
       entidades:[], 
-      cliente:0,
+      cliente:{
+        persona:{
+          conyuge:true
+        }
+      },
       loading: false,
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
@@ -795,8 +799,9 @@ export default {
   mounted() {
     this.$http
       .get(`/prestamos/` + this.$route.params.prestamo)
-      .then(response => {
+      .then(response => {        
         this.cliente=response.data.cliente
+        console.log(this.cliente)
         this.evaluacion.propuesta.producto = response.data.producto;
         this.evaluacion.propuesta.monto = response.data.importe;
         this.evaluacion.propuesta.cuotas = response.data.cuotas;

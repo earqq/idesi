@@ -1285,13 +1285,10 @@ export default {
                   )
 
               this.$router.push({ name: 'clientes'})
-
-              // this.resetForm();
-              // this.$router.push({ name: 'clientes'})
             }else{
                 this.loading=false
                 this.$toast.error(
-                  "Error cliente",
+                  response.data.message,
                   "Error",
                   toastOptions.error
                 )

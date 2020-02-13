@@ -38,42 +38,30 @@ use Illuminate\Support\Facades\Storage;
 class ClientesController extends Controller
 {
 
-    public function listar($estado,$text=''){
-        \Log::alert("paso");
-        $clients = Cliente::leftJoin('personas','clientes.id','=','personas.cliente_id')
-        ->leftJoin('empresas','clientes.id','=','empresas.cliente_id')
+    public function listar($estado,$text=''){  
+        $clientes=Cliente::with('persona','empresa')      
         ->where(function($query) use($estado){
-            if($estado!=3){
+            if($estado!='4'){
                 $query->where('estado',$estado);
             }
         })
         ->where(function($query) use($text){
             if($text!=''){
                 $text=strtoupper($text);
-                $query->orWhere('personas.nombres', 'LIKE', "%{$text}%")
-                ->orWhere('clientes.documento', 'LIKE', "%{$text}%")
-                ->orWhere('personas.apellidos', 'LIKE', "%{$text}%")
-                ->orWhere('empresas.razon_social', 'LIKE', "%{$text}%");
+                $query->orWhere('persona.nombres', 'LIKE', "%{$text}%")
+                ->orWhere('documento', 'LIKE', "%{$text}%")
+                ->orWhere('persona.apellidos', 'LIKE', "%{$text}%")
+                ->orWhere('empresa.razon_social', 'LIKE', "%{$text}%");
             }
         })
         ->where(function($query){
             if(Auth::user()->nivel == '4')
-                $query->where('clientes.user_id','=', Auth::user()->id);  
+                $query->where('user_id','=', Auth::user()->id);  
         })
-        ->orderBy('clientes.id','desc')
-        ->select('clientes.documento',
-                'clientes.id',
-                'clientes.tipo_cliente',
-                'personas.nombres',
-                'personas.apellidos',
-                'clientes.ubicacion_direccion_declarada', 
-                'empresas.razon_social', 
-                'clientes.celular', 
-                'clientes.estado')
+        ->orderBy('id','desc')       
         ->take(30)
         ->get();    
-        \Log::alert(" si viene");
-        return $clients;
+        return $clientes;
     }
 
 
@@ -141,63 +129,12 @@ class ClientesController extends Controller
     {
  
         
-    }
-    public function visitas($documento)
-    {
-        // if (!$request->ajax()) return redirect('/');
-        $visita = Vista::join('archivos','vistas.imagen','=','archivos.id')
-                        ->select('vistas.latitud','vistas.altitud','vistas.prestamos_id','vistas.created_at','archivos.nombre','archivos.tipo','archivos.extension')
-                        ->where('vistas.prestamos_id',$documento)->get();
-        $prestamo = Prestamo::find($documento);
-
-        $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
-
-        $evaluacion = Evaluacion::join('users','evaluacions.users_id','=','users.id')
-                    ->select('evaluacions.created_at','evaluacions.detalle','evaluacions.estado','users.name', 'users.nivel')
-                    ->where('prestamos_id',$prestamo->id)
-                    ->orderBy('users.nivel', 'DESC')->get(); 
-
-        return compact('visita','prestamo','evaluacion','cliente');
-        
-    }
+    }   
     private function getUserDir($id)
     {   
         $prestamo = Prestamo::where('id',$id)->first();
         $cliente = Cliente::where('id',$prestamo->clientes_id)->first();
         return $cliente->nombres.'_'. $cliente->apellidos .'_' . $cliente->id;
     }
-
-    public function SolicitudPdf($prestamo){
-
-        $prestamo= Prestamo::find($prestamo);
-        $cliente = Cliente::where('id',$prestamo->cliente_id)->first(); 
-
-        if($cliente->tipo_cliente == 2 ){
-
-            $empresa = Empresa::where('cliente_id',$cliente->id)->first();
-            $representante = RepresentanteLegal::where('empresa_id',$empresa->id)->first();
-
-            $avals = Aval::where('prestamo_id',$prestamo->id)->get();
-            $garantias = Garantia::where('prestamo_id',$prestamo->id)->get();
-            // $evaluacion = Evaluacion::where('prestamos_id',$prestamo->id)->get();
-
-            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','empresa','representante'));
-            return $pdf->stream('solicitud_de_credito.pdf');
-
-        }
-        else
-        {
-            $persona = Persona::where('cliente_id',$cliente->id)->first();
-            $conyuge = Conyuge::where('persona_id',$persona->id)->first();
-
-            // return $persona;
-            $avals = Aval::where('prestamo_id',$prestamo->id)->get();
-            $garantias = Garantia::where('prestamo_id',$prestamo->id)->get();
-            // $evaluacion = Evaluacion::where('prestamo_id',$prestamo->id)->get();
     
-            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','persona','conyuge'));
-            return $pdf->stream('solicitud_de_credito.pdf');
-
-        }
-    }
 }

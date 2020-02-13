@@ -62,11 +62,11 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('analisis/cualitativa','AnalisisController@saveCualitativa'); 
         Route::post('analisis/cuantitativa','AnalisisController@saveCuantitativa');
         //PDF
-        Route::get('/pdf/prestamo/expediente/{prestamoID}','PDFController@expediente')->name('adjuntar_pdf');
+        Route::get('/pdf/prestamo/expediente/{prestamoID}','FileController@expediente')->name('adjuntar_pdf');
+        Route::get('/pdf/clientes/solicitudAdmision','FileController@solicitudAdmision')->name('solicitud_pdf');
 
 
 
-        Route::get('/clientes/solicitudPdf/{prestamo}','ClientesController@SolicitudPdf')->name('solicitud_pdf');
         Route::get('/evaluacion/cualitativaPdf/{prestamo}','EvaluacionesController@CualitativaPdf')->name('cualitativa_pdf');
         Route::get('/evaluacion/cuantitativaPdf/{prestamo}','EvaluacionesController@CuantitativaPdf')->name('cuantitativa_pdf');
 

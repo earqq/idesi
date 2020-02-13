@@ -509,7 +509,7 @@
                             </div>
                             <div class="input_wrapper">
                               <label>Telefono</label>
-                              <input v-model="referencia.telefono" type="text" maxlength='11' />
+                              <input  v-model="referencia.telefono" type="text" v-mask='"#########"' />
                             </div>
 
                           </div>
@@ -794,6 +794,8 @@ export default {
             this.evaluacion.familiar.hijos[index].colegio
         )
         .then(response => {
+          console.log("si viene")
+          console.log(response)
           this.evaluacion.familiar.hijos[index].costo = response.data.costo;
         });
       // console.log(this.evaluacion.familiar.hijos[index].grado)

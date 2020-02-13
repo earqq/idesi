@@ -224,7 +224,39 @@ class FileController extends Controller
         $cliente = Cliente::where('id',$prestamo->cliente_id)->first();
         return $cliente->documento.'_' . $cliente->id;
     }
+    public function solicitudAdmision($prestamo){
 
+        $prestamo= Prestamo::find($prestamo);
+        $cliente = Cliente::where('id',$prestamo->cliente_id)->first(); 
+
+        if($cliente->tipo_cliente == 2 ){
+
+            $empresa = Empresa::where('cliente_id',$cliente->id)->first();
+            $representante = RepresentanteLegal::where('empresa_id',$empresa->id)->first();
+
+            $avals = Aval::where('prestamo_id',$prestamo->id)->get();
+            $garantias = Garantia::where('prestamo_id',$prestamo->id)->get();
+            // $evaluacion = Evaluacion::where('prestamos_id',$prestamo->id)->get();
+
+            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','empresa','representante'));
+            return $pdf->stream('solicitud_de_credito.pdf');
+
+        }
+        else
+        {
+            $persona = Persona::where('cliente_id',$cliente->id)->first();
+            $conyuge = Conyuge::where('persona_id',$persona->id)->first();
+
+            // return $persona;
+            $avals = Aval::where('prestamo_id',$prestamo->id)->get();
+            $garantias = Garantia::where('prestamo_id',$prestamo->id)->get();
+            // $evaluacion = Evaluacion::where('prestamo_id',$prestamo->id)->get();
+    
+            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avals','garantias','persona','conyuge'));
+            return $pdf->stream('solicitud_de_credito.pdf');
+
+        }
+    }
     public function expediente($prestamoID){
 
 

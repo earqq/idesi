@@ -7,10 +7,10 @@
           <i class="material-icons-outlined">search</i>
           <input type="text" placeholder="Buscar Cliente" v-model="search.text" @input="search_product">         
           <select  v-model="search.state" @change="getClients()" >
-            <option value="3">TODOS</option>
-            <option value="1">APROBADO</option>
-            <option value="2">RECHAZADOS</option>
-            <option value="0">PENDIENTES</option>
+            <option value="4">TODOS</option>
+            <option value="2">APROBADO</option>
+            <option value="3">RECHAZADOS</option>
+            <option value="1">PENDIENTES</option>
           </select>
         </div>
         <div class="switch_view">
@@ -76,12 +76,11 @@
                   <div class="request" v-show="cliente.estado=='1'">
                     <i class="material-icons-outlined">email</i>
                   </div>
-                  <img src="https://picsum.photos/100/100" v-if="false"/>
-                  <div class="avatar_alt" :class="{denied : cliente.estado=='3'}" v-else>{{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }}</div>
+                  <div class="avatar_alt" :class="{denied : cliente.estado=='3'}"  >{{ cliente.persona ? cliente.persona.apellidos.substring(0,1) : cliente.empresa.razon_social.substring(0,1) }}</div>
                 </div>
                 <div class="name_wrapper">
-                  <p class="truncate">{{cliente.apellidos || cliente.razon_social}}</p>
-                  <small class="truncate" >{{cliente.nombres || cliente.documento}}</small>
+                  <p class="truncate">{{ cliente.persona ?  cliente.persona.apellidos : cliente.empresa.razon_social}}</p>
+                  <small class="truncate" >{{ cliente.persona ?cliente.persona.nombres : cliente.empresa.documento}}</small>
                 </div>
               </div>
             </router-link>
@@ -111,9 +110,10 @@
                       <i class="material-icons-outlined">email</i>
                     </div>
                     <img src="https://picsum.photos/200/300" v-if="false" />
-                    <div class="avatar_alt"  :class="{denied : cliente.estado=='3'}" v-else> {{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }} </div>
+                    <div class="avatar_alt"  :class="{denied : cliente.estado=='3'}" v-else> {{ cliente.persona ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }} </div>
                   </div>
-                  <p class="truncate"> {{cliente.nombres}} {{cliente.apellidos || cliente.razon_social}}</p>
+                  <p class="truncate" v-if='persona.cliente'> {{cliente.persona.nombres}} {{cliente.persona.apellidos }}</p>
+                  <p class="truncate" v-else>  cliente.empresa.razon_social}}</p>
                 </td>
                 <td>
                   {{cliente.celular || '--'}}
@@ -170,7 +170,7 @@ export default {
       rol: 0,
       queryCount: 0,
       search:{
-        state:3,
+        state:4,
         text:''
       }
     }
@@ -196,7 +196,6 @@ export default {
           '/clientes/search/'+this.search.state+'/'+this.search.text,          
         )
         .then(response => {
-          // console.log("respuesta:"+ console.log(response))
           this.clientes=response.data
         })
     },   
@@ -469,7 +468,7 @@ export default {
   flex: 1
   display: inline-block
   position: relative
-  z-index: 500
+  z-index: 10
   &.toggle
     > input
       display: none
