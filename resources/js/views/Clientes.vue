@@ -22,6 +22,7 @@
           </a>
         </div>
         <div class="dropdown hover">
+           
             <a href="#">CREAR CLIENTE</a>
             <ul>
               <li>
@@ -40,7 +41,7 @@
                 </router-link>  
               </li>
             </ul>
-          </div>
+        </div>
    
       </div>
 
@@ -468,6 +469,7 @@ export default {
   flex: 1
   display: inline-block
   position: relative
+  z-index: 500
   &.toggle
     > input
       display: none
