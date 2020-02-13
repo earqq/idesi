@@ -297,7 +297,7 @@ class PrestamosController extends Controller
     }
     public function show($id)
     {
-        $prestamo= Prestamo::with('avales','garantias','cliente.persona.hijos','resultadoAnalisis','evaluaciones','fotos')->find($id);
+        $prestamo= Prestamo::with('avales','garantias','cliente.persona.hijos','resultadoAnalisis','evaluaciones.evaluador','fotos')->find($id);
         return $prestamo;
     }
     public function enviarEvaluacion($prestamoID)
@@ -322,12 +322,12 @@ class PrestamosController extends Controller
                 $prestamo->estado = $request->evaluacion['estado'];
                 $prestamo->save();
             }else{
-                $prestamo->producto_final = $request->evaluacion['producto'];
-                $prestamo->aporte_final = $request->evaluacion['aporte'];
-                $prestamo->importe_final = $request->evaluacion['importe'];
-                $prestamo->plazo_final = $request->evaluacion['cuotas'];
-                $prestamo->cuota_final = $request->evaluacion['cuota_sistema'];
-                $prestamo->tasa_final = $request->evaluacion['tasa'];
+                $prestamo->producto_final = $request['producto'];
+                $prestamo->aporte_final = $request['aporte'];
+                $prestamo->importe_final = $request['importe'];
+                $prestamo->plazo_final = $request['cuotas'];
+                $prestamo->cuota_final = $request['cuota_sistema'];
+                $prestamo->tasa_final = $request['tasa'];
                 $prestamo->estado = $request->evaluacion['estado'];
                 $prestamo->save();
             }
