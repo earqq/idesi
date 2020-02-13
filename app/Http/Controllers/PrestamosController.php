@@ -17,7 +17,6 @@ use App\RepresentanteLegal;
 use App\Garantia;
 use App\Archivo;
 use App\Cuantitativa;
-use App\Archivo;
 use App\FotoNegocio;
 use App\ResultadoAnalisis;
 use Storage;
