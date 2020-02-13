@@ -179,16 +179,16 @@ export default {
         }
     },
     mounted() {
-      this.$http
-        .get(`/inicio/datos/`)
-        .then(response => {
-        this.clientes = response.data["clientes"];
-        this.cliente = response.data["cliente"];
-        this.prestamos = response.data["prestamos"];
-        this.prestamo_rechazado = response.data['prestamo_rechazado'];
-        this.prestamo_total = response.data['prestamo_total'];
-        this.prestamo_pendiente = response.data['prestamo_pendiente'];
-        });
+    //   this.$http
+    //     .get(`/inicio/datos/`)
+    //     .then(response => {
+    //     this.clientes = response.data["clientes"];
+    //     this.cliente = response.data["cliente"];
+    //     this.prestamos = response.data["prestamos"];
+    //     this.prestamo_rechazado = response.data['prestamo_rechazado'];
+    //     this.prestamo_total = response.data['prestamo_total'];
+    //     this.prestamo_pendiente = response.data['prestamo_pendiente'];
+    //     });
     },
     methods: {
         goToClient(cliente) {

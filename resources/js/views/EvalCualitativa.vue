@@ -14,7 +14,7 @@
             <span>2</span>
             <p>TRANSPORTE</p>
           </div>
-          <div v-if='$route.params.prestamo=="PN"' class="tab" @click=" (validateStep1 && validateStep2) ? tab = 3 : tabError()" :class="{selected: tab == 3}">
+          <div v-if='prestamo.cliente.tipo_cliente==1' class="tab" @click=" (validateStep1 && validateStep2) ? tab = 3 : tabError()" :class="{selected: tab == 3}">
             <span>3</span>
             <p>FAMILIARES</p>
           </div>
@@ -239,7 +239,7 @@
                   <i class="material-icons-outlined">navigate_before</i>
                   <span>ATRAS</span>
                 </a>
-                <a v-if='$route.params.prestamo=="PN"' class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(2) : tabError()">
+                <a v-if='prestamo.cliente.tipo_cliente==1' class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(2) : tabError()">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
@@ -251,7 +251,7 @@
 
             </div>
 
-            <div v-show="tab == 3" v-if='$route.params.prestamo=="PN"' class="form_step">
+            <div v-show="tab == 3" v-if='prestamo.cliente.tipo_cliente==1' class="form_step">
               <div class="form_step_wrapper">
                 <h3 class="title">Información Familiar</h3>
                 <div class="form_content">
@@ -299,7 +299,7 @@
                           </div>
                           <div class="input_wrapper">
                             <label>Edad</label>
-                            <input type="text" v-model="hijo.edad" />
+                            <input type="text" v-model="hijo.edad"  disabled/>
                           </div>
 
                           <div class="input_wrapper">
@@ -566,7 +566,7 @@
                   <i class="material-icons-outlined">navigate_before</i>
                   <span>ATRAS</span>
                 </a>
-                <a class="button_primary medium next" @click.prevent="(validateStep1 && validateStep2) ? guardar() : tabError()" :class="{loading: loading}">
+                <a class="button_primary medium next" @click.prevent="(validateStep1 && validateStep2) ? registrar() : tabError()" :class="{loading: loading}">
                   <div class="load_spinner"></div>
                   <span>FINALIZAR</span>
                   <i class="material-icons-outlined">check</i>
@@ -595,7 +595,11 @@ export default {
       entidades: [],
       tab: 1, 
       colegios: [],
-      i: 0,
+      prestamo:{
+        cliente:{
+          tipo_cliente:1
+        }
+      },
       loading:false,
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
@@ -761,34 +765,30 @@ export default {
     clickRemoveReferencia(index) {
       this.evaluacion.referencias.splice(index, 1);
     },
-    guardar() {
+    registrar() {
       this.loading=true
-      axios.post("/evaluaciones/cualitativa", this.evaluacion).then(response => {
-         
-          console.log(response.data)
-            if(response.data.success){ 
-
-              this.loading = false
-                this.$toast.success(
-                    "La Evalación fue realizada",
-                    "Exitoso",
-                    toastOptions.success
-                  )
-                this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
-            }else{
-                this.$toast.error(
-                  "Error Evaluación",
-                  "Error",
-                  toastOptions.error
-                )
-            }
-
+      axios.post("/analisis/cualitativa", this.evaluacion)
+      .then(response => {
+          this.loading = false
+          this.$toast.success(
+            "La Evaluacion fue realizada",
+              "Exitoso",
+              toastOptions.success
+            )
+          this.$router.push({ name: 'perfil', params: { id: this.prestamo.cliente.id}})       
+      }).catch(err=>{
+          this.loading = false
+          this.$toast.error(
+            "Error Evaluación",
+            "Error",
+            toastOptions.error
+          )
       });
     }, 
     seleccionColegiosCosto(index) {
       this.$http 
         .get(
-          `/evaluaciones/colegio/costo?grado=` +
+          `/extras/colegio/costo?grado=` +
             this.evaluacion.familiar.hijos[index].grado +
             `&colegio=` + 
             this.evaluacion.familiar.hijos[index].colegio
@@ -797,23 +797,47 @@ export default {
           this.evaluacion.familiar.hijos[index].costo = response.data.costo;
         });
       // console.log(this.evaluacion.familiar.hijos[index].grado)
+    },
+    obtenerEdad(Edad) {
+    var today = new Date();
+    var birthDate = new Date(Edad);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age = age - 1;
     }
-    
+
+    return age;
+}
   },
   async mounted() {
- 
-    this.$http.get(`/evaluaciones/giro`).then(response => {
+    this.$http.get(`/prestamos/`+this.$route.params.prestamo).then(response => {
+      this.prestamo=response.data
+      this.evaluacion.principal.destino_credito_descripcion=response.data.destino_inicial || ''
+
+      if(response.data.cliente.persona && response.data.cliente.persona.hijos.length>0){
+          this.evaluacion.familiar.numero_hijos = response.data.cliente.persona.hijos.length
+          this.evaluacion.familiar.miembros_familia = this.evaluacion.familiar.numero_hijos;
+          response.data.cliente.persona.hijos.map((hijo,index)=>{
+            this.evaluacion.familiar.hijos.push({
+              edad: this.obtenerEdad(hijo.fecha_nacimiento),
+              colegio: "PRINCIPITO",
+              grado: "INICIAL",
+              costo: 0,
+              estudia: 1
+
+            });
+            this.seleccionColegiosCosto(index)
+          })
+        }
+    });
+    this.$http.get(`/extras/giro`).then(response => {
       this.giros = response.data;
     });
-    this.$http.get(`/evaluaciones/prestamos/detalle/`+this.$route.params.prestamo).then(response => {
-      console.log(response.data.prestamo.destino_inicial)
-      this.evaluacion.principal.destino_credito_descripcion=response.data.prestamo.destino_inicial || ''
-    });
-    this.$http.get(`/evaluaciones/entidades`).then(response => {
+    this.$http.get(`/extras/entidades`).then(response => {
       this.entidades = response.data;
     });
-
-    this.$http.get(`/evaluaciones/colegio`).then(response => {
+    this.$http.get(`/extras/colegio`).then(response => {
       this.colegios=[]
       response.data.map(colegio=>{
         let found = this.colegios.find(element => element.nombre == colegio.nombre)
@@ -825,32 +849,7 @@ export default {
           })
         }
       })
-    });
-
-    this.$http 
-      .get(`/evaluaciones/numerohijos/` + this.$route.params.prestamo)
-      .then(response => {
-        if(response.data){
-
-          this.evaluacion.familiar.numero_hijos = response.data.numero;
-          this.evaluacion.familiar.miembros_familia = this.evaluacion.familiar.numero_hijos;
-          for (
-            this.i = 0;
-            this.i < this.evaluacion.familiar.numero_hijos;
-            this.i++
-          ) {
-            this.evaluacion.familiar.hijos.push({
-              edad: "",
-              colegio: "PRINCIPITO",
-              grado: "INICIAL",
-              costo: 0,
-              estudia: 1
-
-            });
-            this.seleccionColegiosCosto(this.i)
-          }
-        }
-      });
+    }); 
   }
 };
 </script>  

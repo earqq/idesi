@@ -5,7 +5,7 @@
     </form>  
     <nav>
         <div class="menu_items">
-            <router-link :to="{name: 'inicio'}" class="logo" >
+            <router-link :to="{name: 'main'}" class="logo" >
               <img src="/img/logo_alt.svg">
             </router-link>
             <transition name="fade" mode="in-out">
@@ -14,15 +14,15 @@
             <div class="items_wrapper">
               <ul>
                   <li :class="{selected: tab == 'inicio'}" v-if="currentUser.nivel=='1'  || currentUser.nivel=='2' ">
-                    <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
+                    <router-link :to="{name: 'main'}" > Inicio</router-link> 
                   </li>
 
                   <li :class="{selected: tab == 'clientes'}" v-if="currentUser.nivel=='1' || currentUser.nivel=='2' || currentUser.nivel=='4'">
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                   </li>
   
-                  <li :class="{selected: tab == 'evaluaciones'}">
-                    <router-link :to="{name: 'evaluaciones'}"  >Prestamos</router-link>
+                  <li :class="{selected: tab == 'prestamos'}">
+                    <router-link :to="{name: 'prestamos'}"  >Prestamos</router-link>
                   </li>
 
                   <li :class="{selected: tab == 'usuarios'}" v-if="currentUser.nivel=='1'"> 
@@ -84,8 +84,8 @@
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                   </li>
 
-                  <li :class="{selected: tab == 'evaluaciones'}">
-                    <router-link :to="{name: 'evaluaciones'}"  >{{currentUser}}</router-link>
+                  <li :class="{selected: tab == 'prestamos'}">
+                    <router-link :to="{name: 'prestamos'}"  >{{currentUser}}</router-link>
                   </li>
 
                   <li :class="{selected: tab == 'usuarios'}" v-if="currentUser.nivel=='1'"> 
@@ -137,7 +137,6 @@ export default {
       .then(res => { 
         this.currentUser = res.data   
         this.$store.state.currentUser = res.data
-        console.log(this.$store.state.currentUser)    
       })
     }
   },

@@ -4,13 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * @property int $id
- * @property int $juridicos_id
- * @property string $nombres
- * @property int $documento
- * @property Juridico $juridico
- */
+
 class Director extends Model
 {
     /**
@@ -20,16 +14,8 @@ class Director extends Model
      */
     protected $table = 'directores';
 
-    /**
-     * @var array
-     */
-    protected $fillable = ['juridicos_id', 'nombres', 'documento','cargo'];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function juridico()
+    public function empresa()
     {
-        return $this->belongsTo('App\Juridico', 'juridicos_id');
+        return $this->belongsTo('App\Empresa', 'empresa_id');
     }
 }

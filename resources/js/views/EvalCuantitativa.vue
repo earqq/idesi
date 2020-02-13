@@ -7,7 +7,7 @@
             <span>1</span>
             <p>DATOS TITULAR</p>
           </div>
-          <div class="tab" @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}">
+          <div class="tab" v-if='cliente.conyuge' @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}">
             <span>2</span>
             <p>DATOS CÓNYUGE</p>
           </div>
@@ -182,15 +182,21 @@
                 </div>
               </div>
 
-              <div class="form_buttons all">
+              <div v-if='cliente.conyuge' class="form_buttons all">
                 <a class="button_primary medium next" @click="validateStep1 ? next(1): tabError() ">
+                  <span>SIGUIENTE</span>
+                  <i class="material-icons-outlined">navigate_next</i>
+                </a>
+              </div>
+              <div v-else class="form_buttons all">
+                <a class="button_primary medium next" @click="validateStep1 ? next(2): tabError() ">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
                 </a>
               </div>
             </div>
 
-            <div v-show="tab == 2" class="form_step">
+            <div v-show="tab == 2"  class="form_step">
 
               <div class="form_step_wrapper">
 
@@ -543,7 +549,7 @@
                     <i class="material-icons-outlined">navigate_before</i>
                     <span>ATRAS</span>
                   </a>
-                  <a class="button_primary medium next" @click.prevent="validateStep1 ? guardar(): tabError()" :class="{loading: loading}">
+                  <a class="button_primary medium next" @click.prevent="validateStep1 ? registrar(): tabError()" :class="{loading: loading}">
                     <div class="load_spinner"></div>
                   <span>FINALIZAR</span>
                   <i class="material-icons-outlined">check</i>
@@ -575,6 +581,7 @@ export default {
       giros: [],
       tab: 1,
       entidades:[], 
+      cliente:0,
       loading: false,
       evaluacion: {
         prestamo_id: this.$route.params.prestamo,
@@ -787,25 +794,26 @@ export default {
 
   mounted() {
     this.$http
-      .get(`/evaluaciones/propuestaAnalista/` + this.$route.params.prestamo)
+      .get(`/prestamos/` + this.$route.params.prestamo)
       .then(response => {
+        this.cliente=response.data.cliente
         this.evaluacion.propuesta.producto = response.data.producto;
         this.evaluacion.propuesta.monto = response.data.importe;
         this.evaluacion.propuesta.cuotas = response.data.cuotas;
         this.evaluacion.propuesta.plazo = response.data.plazo;
       });
 
-    this.$http.get(`/evaluaciones/giro`).then(response => {
+    this.$http.get(`/extras/giro`).then(response => {
       this.giros = response.data;
     });
 
-    this.$http.get(`/evaluaciones/entidades`).then(response => {
+    this.$http.get(`/extras/entidades`).then(response => {
       this.entidades = response.data;
     });
 
     this.$http
       .get(
-        `/evaluaciones/datosCualitativas/`+this.$route.params.prestamo
+        `/analisis/datosCualitativas/`+this.$route.params.prestamo
       )
       .then(response => {
         console.log(response)
@@ -1006,27 +1014,24 @@ export default {
         parseFloat(this.evaluacion.titular.ingresos_negocio[index].sabado, 2) +
         parseFloat(this.evaluacion.titular.ingresos_negocio[index].domingo, 2);
     },
-    guardar() { 
+    registrar() { 
 
       this.loading= true
-      axios.post("/evaluaciones/cuantitativa", this.evaluacion).then(response => {
-
+      axios.post("/analisis/cuantitativa", this.evaluacion).then(response => {
         this.loading=false
-            if(response.data.success){
-                this.$toast.success(
-                    "La Evalación fue realizada",
-                    "Exitoso",
-                    toastOptions.success
-                  ) 
-                  this.$router.push({ name: 'perfil', params: { documento: this.$route.params.documento, persona: this.$route.params.persona}})
-            }else{
-                this.$toast.error(
-                  "Error Evaluación",
-                  "Error",
-                  toastOptions.error
-                )
-            }
-      
+        this.$toast.success(
+            "La Evalación fue realizada",
+            "Exitoso",
+            toastOptions.success
+          ) 
+        this.$router.push({ name: 'perfil', params: { id: this.cliente.id}})
+      }).catch(err=>{
+          this.loading=false
+          this.$toast.error(
+            "Error Evaluación",
+            "Error",
+            toastOptions.error
+          )
       }); 
     },
  

@@ -21,19 +21,27 @@
             <i class="material-icons-outlined">notes</i>
           </a>
         </div>
- 
-        <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4' class="add_client button_primary medium" :to="{name:'registrar/natural'}"  >
-          <span>
-            CREAR NATURAL
-          </span>
-          <i class="material-icons-outlined">add</i>
-        </router-link> 
-        <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4'  class="add_client button_primary medium" :to="{name:'registrar/juridico'}"  >
-          <span>
-            CREAR JURIDICO
-          </span>
-          <i class="material-icons-outlined">add</i>
-        </router-link>     
+        <div class="dropdown hover">
+            <a href="#">CREAR CLIENTE</a>
+            <ul>
+              <li>
+                <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4' :to="{name:'registrar/persona'}"  >
+                  <span>
+                    CREAR PERSONA
+                  </span>
+                </router-link> 
+              </li>
+
+              <li>
+                <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4' :to="{name:'registrar/empresa'}"  >
+                  <span>
+                    CREAR EMPRESA
+                  </span>
+                </router-link>  
+              </li>
+            </ul>
+          </div>
+   
       </div>
 
       <div class="empty_message" v-if="clientes.length==0 && queryCount > 0">
@@ -45,25 +53,30 @@
       <div class="table_container" v-else >
         <div class="table_grid"  v-if=" type_list=='1'">
           <article class="client_card" v-for="cliente in clientes" :key="cliente.id" >
-            <div class="options">
+            <div class="options" v-if="cliente.estado=='2'">
               <i class="material-icons-outlined" >more_horiz</i>
-              <ul>
-                <li>
+              <ul >
+                <!-- <li>
                   Editar
-                </li>
-                <li>
-                  Nuevo Prestamo
+                </li> -->
+                <li> 
+                   <router-link  v-if="cliente.tipo_cliente=='1'"   :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+                       Nuevo prestamo
+                  </router-link>
+                  <router-link  v-if="cliente.tipo_cliente=='2'"   :to="{name: 'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:'0'}}">
+                       Nuevo prestamo
+                  </router-link>
                 </li>
               </ul>   
             </div>
-            <router-link :to="{ name:'perfil', params: { documento: cliente.documento,persona:cliente.tipo_cliente } }">
+            <router-link :to="{ name:'perfil', params: { id: cliente.id } }">
               <div class="detail">
                 <div class="avatar">
-                  <div class="request" v-show="cliente.estado=='0'">
+                  <div class="request" v-show="cliente.estado=='1'">
                     <i class="material-icons-outlined">email</i>
                   </div>
                   <img src="https://picsum.photos/100/100" v-if="false"/>
-                  <div class="avatar_alt" :class="{denied : cliente.estado=='2'}" v-else>{{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }}</div>
+                  <div class="avatar_alt" :class="{denied : cliente.estado=='3'}" v-else>{{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }}</div>
                 </div>
                 <div class="name_wrapper">
                   <p class="truncate">{{cliente.apellidos || cliente.razon_social}}</p>
@@ -91,11 +104,11 @@
               <tr  v-for="cliente in clientes" :key="cliente.id">
                 <td class="client">
                   <div class="avatar">
-                    <div class="request" v-show="cliente.estado=='0'">
+                    <div class="request" v-show="cliente.estado=='1'">
                       <i class="material-icons-outlined">email</i>
                     </div>
                     <img src="https://picsum.photos/200/300" v-if="false" />
-                    <div class="avatar_alt"  :class="{denied : cliente.estado=='2'}" v-else> {{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }} </div>
+                    <div class="avatar_alt"  :class="{denied : cliente.estado=='3'}" v-else> {{ cliente.apellidos ? cliente.apellidos.substring(0,1) : cliente.razon_social.substring(0,1) }} </div>
                   </div>
                   <p class="truncate"> {{cliente.nombres}} {{cliente.apellidos || cliente.razon_social}}</p>
                 </td>
@@ -104,21 +117,26 @@
                 </td>
                 <td> {{cliente.documento}} </td>
                 <td>
-                  {{cliente.direccion_cliente || cliente.direccion || '--'}}
+                  {{cliente.ubicacion_direccion_declarada || '--'}}
                 </td>
                 <td class="options" >
                   <i class="material-icons-outlined" >more_horiz</i>
                   <ul>
                     <li>
-                      <router-link :to="{name:'perfil', params:{documento:cliente.documento,persona:form.tipo_persona}}" >
+                      <router-link :to="{name:'perfil', params:{id: cliente.id }}" >
                         Ver Cliente
                       </router-link>
                     </li>
-                    <li>
+                    <!-- <li>
                       Editar
-                    </li>
+                    </li> -->
                     <li>
-                        Nuevo Prestamo
+                        <router-link  v-if="cliente.estado=='2' && cliente.tipo_cliente=='1'"   :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+                            Nuevo prestamo
+                        </router-link>
+                        <router-link  v-if="cliente.estado=='2' && cliente.tipo_cliente=='2'"   :to="{name: 'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:'0'}}">
+                            Nuevo prestamo
+                        </router-link>
                     </li>
                   </ul>
                 </td>
@@ -175,13 +193,10 @@ export default {
           '/clientes/search/'+this.search.state+'/'+this.search.text,          
         )
         .then(response => {
+          console.log("respuesta:"+ console.log(response))
           this.clientes=response.data
         })
     },   
-    resetForm() {
-      this.initForm();
-    },
-    
   }
 };
 </script>
@@ -189,6 +204,7 @@ export default {
 <style lang="sass" scoped>
 @import "../../sass/variables"
 @import "../../sass/buttons"
+
 .clients_content
   .empty_message
     height: calc(100vh - 135px)
@@ -446,6 +462,108 @@ export default {
               margin: 0
               margin-left: 10px
               text-align: left
+.dropdown
+  flex: 1
+  display: inline-block
+  position: relative
+  &.toggle
+    > input
+      display: none
+
+    > label
+      border-radius: 2px
+      box-shadow: 0 6px 5px -5px rgba(0, 0, 0, 0.3)
+
+    > label::after
+      content: ""
+      float: right
+      margin: 15px 15px 0 0
+      width: 0
+      height: 0
+      border-left: 5px solid transparent
+      border-right: 5px solid transparent
+      border-top: 10px solid #CCC
+
+  > a
+    border-radius: 2px
+    box-shadow: 0 6px 5px -5px rgba(0, 0, 0, 0.3)
+
+  > a::after
+    content: ""
+    float: right
+    margin: 15px 15px 0 0
+    width: 0
+    height: 0
+    border-left: 5px solid transparent
+    border-right: 5px solid transparent
+    border-top: 10px solid #CCC
+
+  ul
+    list-style-type: none
+    display: block
+    margin: 0
+    padding: 0
+    position: absolute
+    width: 100%
+    box-shadow: 0 6px 5px -5px rgba(0, 0, 0, 0.3)
+    overflow: hidden
+
+  a, &.toggle > label
+    display: block
+    padding: 0 0 0 10px
+    text-decoration: none
+    line-height: 40px
+    font-size: 13px
+    text-transform: uppercase
+    color: #000018
+    background-color: #FFF
+
+  li
+    height: 0
+    overflow: hidden
+    transition: all 500ms
+
+  &.hover li
+    transition-delay: 300ms
+
+  li
+    &:first-child a
+      border-radius: 2px 2px 0 0
+
+    &:last-child a
+      border-radius: 0 0 2px 2px
+
+    &:first-child a::before
+      content: ""
+      display: block
+      position: absolute
+      width: 0
+      height: 0
+      border-left: 10px solid transparent
+      border-right: 10px solid transparent
+      border-bottom: 10px solid #FFF
+      margin: -10px 0 0 30px
+  &.toggle
+    >
+      label:hover, input:checked ~ label
+        background-color: #EEE
+        color: #666
+
+    >
+      label:hover::after, input:checked ~ label::after
+        border-top-color: #AAA
+
+  > a:hover::after
+    border-top-color: #AAA
+
+  // li:first-child a:hover::before
+  //   border-bottom-color: #EEE
+
+  &.hover:hover li, &.toggle > input:checked ~ ul li
+    height: 40px
+
+  &.hover:hover li:first-child, &.toggle > input:checked ~ ul li:first-child
+    padding-top: 15px
 @media screen and (max-width: 1000px)
   .clients_content
     .options_bar

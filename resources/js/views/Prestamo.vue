@@ -1,749 +1,243 @@
-/<template>
-  <div class="create_client_content">
-    <section class="tabs_section">
-      <div class="tabs_wrapper">
-        <div
-          class="tab"
-          @click="tab = 1"
-          :class="[{selected: tab == 1}]"
-        >
-          <span>1</span>
-          <p>SOLICITUD</p>
-        </div>
-        <div class="tab" @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}"  >
-          <span>2</span>
-          <p>CLIENTE</p>
-        </div>
+<template>
+  <div class="credit_detail_content">
 
-        <div class="tab" @click=" (validateStep1 && validateStep2) ? tab = 3: tabError()" :class="{selected: tab == 3}" >
-          <span>3</span>
-          <p>AVAL</p>
+    <div class="modal_content" v-if="flagModalPhoto" >
+      <div class="modal_wrapper photo_viewer">
+        <div class="title"> 
+          <h1> Infomacion de Foto </h1>
+          <i  @click="flagModalPhoto = false" class="material-icons-outlined">close</i>
         </div>
-
-        <div class="tab" @click="(validateStep1 && validateStep2) ? tab = 4 : tabError()" :class="{selected: tab == 4}">
-          <span>4</span>
-          <p>GARANTIA</p>
+        <div class="photo_viewer" v-if="currentPhoto">
+          <img :src="'../storage/'+prestamo.cliente.documento+'_'+prestamo.cliente.id+'/prestamo_'+currentPhoto.prestamos_id+'/imagen/'+currentPhoto.nombre+'.'+currentPhoto.extension">
+          <div class="map_wrapper">
+            <GmapMap
+              :center="{lat:  Number(currentPhoto.latitud), lng: Number(currentPhoto.altitud) }"
+              :zoom="15"
+              style="width: 100%; height: 270px"
+              :options="optionsMap">
+                    <Gmap-Marker 
+                    :position="{
+                      lat: Number(currentPhoto.latitud),
+                      lng: Number(currentPhoto.altitud),
+                    }"
+                  ></Gmap-Marker>
+            </GmapMap>
+          </div>
         </div>
-
-
-        <div class="tab" @click="(validateStep1 && validateStep2) ? tab = 5: tabError()" :class="{selected: tab ==5}" >
-          <span>5</span>
-          <p>PROPUESTA</p>
-        </div>
-
       </div>
-    </section>
+    </div>
 
-    <section class="client_forms">
-      <div class="client_forms_wrapper">
-        <div v-show="tab == 1" class="form_step">
-          <div class="form_step_wrapper">
-            <h3 class="title">Solicitud de Crédito</h3>
-            <div class="form_content">
-              <div class="group_form">
-                <div class="input_wrapper" :class="{require: !validateMonto}">
-                  <label>Monto</label> 
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
-                    v-model="form.monto_inicial"
-                    v-bind:precision="2"
-                    maxlength='11'
-                  ></vue-numeric>
-                  <div class="message">Monto de solicitud invalido</div>
-                </div>
-                <div class="input_wrapper">
-                  <label>Forma</label>
-                  <select v-model="form.forma_inicial">
-                    <option value="DIARIO">DIARIO</option>
-                    <option value="SEMANAL">SEMANAL</option>
-                    <option value="QUINCENAL">QUINCENAL</option>
-                    <option value="MENSUAL">MENSUAL</option>
-                  </select>
-                </div>
-                <div class="input_wrapper">
-                  <label>Cuotas</label>
-                  <input type="number" v-model="form.cuotas_inicial" maxlength=11  />
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
-                  <label>Disponibilidad de pago</label>
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
-                    v-model="form.disponibilidad_pago_inicial"
-                    v-bind:precision="2"  
-                    maxlength='11'
-                  ></vue-numeric> 
-                  <div class="message">La disponibilidad es invalida</div>
-                </div>
-              </div>
-              <div class="group_form all">
-                <div class="input_wrapper" :class="{require: !validateDestino}">
-                  <label>Destino de crédito (propuesta cliente)</label>
-                  <textarea  v-model="form.destino_inicial"  />
-                  <div class="message">Información de destino es corta</div>
-                </div>
+    <div class="camera_screen_content" v-if="camara_prendida">
+      <div class="camera_screen_wrapper">
+        <div  class="close_camera">
+          <i @click="stopCamera()" class="material-icons-outlined">close</i>
+        </div>
+        <video ref="video" id="video"  autoplay></video>
+        <div class="controls" >
+          <button class="capture_photo" id="snap" v-on:click="capture()"  v-if="!captura"></button>
+          <div class="options" v-else>
+            <a @click="storePhoto()"> GUARDAR </a>
+            <a @click="startCamera()"> ELIMINAR </a>
+          </div>
+          <canvas v-show="false" ref="canvas" id="canvas" width="640" height="480"></canvas>
+          <img v-show="false" v-bind:src="captura" height="50" />
+        </div>
+      </div>
+    </div>
+
+    <div class="create_client_content">
+      <section class="client_forms">
+        <div class="client_forms_wrapper">
+          <div class="form_step">
+            <div class="form_step_wrapper">
+              <h3 class="title">Solicitud de Crédito</h3>
+
+              <div class="detail_content"> 
+                <li>
+                  <strong>Monto </strong> 
+                  <p>S/ {{prestamo.monto_inicial}}</p>
+                </li>
+                <li>
+                  <strong>Forma </strong> 
+                  <p>{{prestamo.forma_inicial}}</p>
+                </li>
+                  <li>
+                  <strong>Cuotas </strong> 
+                  <p>{{prestamo.cuotas_inicial}}</p>
+                </li>
+                  <li>
+                  <strong>Disponibilidad de pago </strong> 
+                  <p>{{prestamo.disponibilidad_pago_inicial ? prestamo.disponibilidad_pago_inicial : '--'}}</p>
+                </li>
+                <li>
+                  <strong>Destino de crédito   </strong> 
+                  <p>{{prestamo.destino_inicial}}</p>
+                </li>
+                <li class="spanner"></li>
               </div>
             </div>
-          </div>
 
-          <div class="form_buttons all">
-            <a class="button_primary medium next" @click=" validateStep1 ? next(1) : tabError()">
-              <span>SIGUIENTE</span>
-              <i class="material-icons-outlined">navigate_next</i>
-            </a>
-          </div>
-        </div>
-
-        <div v-show="tab == 2" class="form_step">
-          <div class="form_step_wrapper">
-            <h3 class="title">Datos del Titular</h3>
-            <div class="form_content">
-              <div class="group_form">
-                <div class="input_wrapper" :class="{require: !validateNombre}">
-                  <label>Nombres</label>
-                  <input type="text" v-model="form.natural.nombres" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateApellidos}">
-                  <label>Apellidos</label>
-                  <input type="text" v-model="form.natural.apellidos" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDocumento}">
-                  <label>Documento</label>
-                  <input type="text" v-model="form.cliente.documento" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateNacimiento}">
-                  <label>Fecha de nacimiento</label>
-                  <input type="date" v-model="form.natural.nacimiento" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateCivil}">
-                  <label>Estado Civil</label>
-                  <select v-model="form.natural.estado_civil">
-                    <option value="SOLTERO">SOLTERO</option>
-                    <option value="CASADO">CASADO</option>
-                    <option value="CONVIVIENTE">CONVIVIENTE</option>
-                    <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
-                    <option value="VIUDO">VIUDO</option>
-                  </select>
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateOcupacion}">
-                  <label>Ocupación</label>
-                  <input type="text" v-model="form.natural.ocupacion" maxlength='100' />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" >
-                  <label>Teléfono</label>
-                  <input type="text" v-model="form.natural.telefono" />
-                </div>
-                <div class="input_wrapper" :class="{require: !validateCelular}">
-                  <label>Celular</label>
-                  <input type="text" v-mask="'### ### ###'" v-model="form.natural.celular" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDireccion}">
-                  <label>Dirección Consignado</label>
-                  <input type="text" v-model="form.natural.direccion" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper">
-                  <label>Dirección Reniec</label>
-                  <input type="text" disabled />
-                </div>
+            <div class="form_step_wrapper in_bottom">
+              <h3 class="title">Propuesta del Analista</h3>
+              <div class="detail_content"> 
+                <li>
+                  <strong>Producto </strong> 
+                  <p>{{prestamo.producto}}</p>
+                </li>
+                <li>
+                  <strong>Importe </strong> 
+                  <p>{{prestamo.importe}}</p>
+                </li>
+                  <li>
+                  <strong>Cuotas </strong> 
+                  <p>{{prestamo.cuotas}}</p>
+                </li>
+                  <li>
+                  <strong>Cuota del Sistema </strong> 
+                  <p>{{prestamo.cuota_sistema}}</p>
+                </li>
+                  <li>
+                  <strong>Aporte </strong> 
+                  <p>{{prestamo.aporte}}</p>
+                </li>
+                  <li>
+                  <strong>Comentarios </strong> 
+                  <p>{{prestamo.comentarios}}</p>
+                </li>
+                <li>
+                  <strong>Forma </strong> 
+                  <p>{{prestamo.forma}}</p>
+                </li>
+                <li class="spanner"></li>
+                <li class="spanner"></li>
               </div>
+            </div>
 
-              <span class="separator"></span>
+            <div class="form_step_wrapper in_bottom">
+              <h3 class="title">Evaluaciones</h3>
+              <div class="empty_message_evaluation" v-if="prestamo.evaluaciones.length == 0">
+                <img src="img/empty.svg" >
+                <h1> Sin Evaluaciones </h1>
+                <p>Todavia no se han relizado evaluaciones a este prestamo</p>
+              </div>  
+              <div class="table_wrapper" v-else>
+                <table class="table_evaluations no_hover">
+                  <thead>
+                    <tr>
+                      <th>Evaluador</th>
+                      <th>Comentarios</th>
+                      <th>Fecha</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="evaluacion in prestamo.evaluaciones"
+                      :key="evaluacion.id"
+                      :class="{final_result: evaluacion.nivel == 4}">
+                      <td class="client" v-text="evaluacion.name"></td>
+                      <td class="observation" v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
+                      <td class="date">{{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
+                      <td class="state">
+                        <span :class="stateEvaluation(evaluacion.estado)"></span>
+                        {{evaluacion.estado | toCapitalize}}
+                        <strong v-show="evaluacion.nivel == 4">( Decisión )</strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-              <div class="group_form">
-                <div class="input_wrapper" :class="{require: !validateDepartamento}">
-                  <label>Departamento</label>
-                   <select
-                        v-model="form.natural.domicilio_departamento"
+            <div class="form_step_wrapper in_bottom">
+              <h3 class="title" v-show="prestamo.fotos.length > 0 " >Negocio</h3>
+
+              <div class="table_wrapper" v-show="prestamo.fotos.length > 0 ">
+                <table class="table_photos">
+                  <thead>
+                    <tr>
+                      <th class="photo">Foto</th>
+                      <th>Ubicación</th>
+                      <th>Fecha</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="foto in prestamo.fotos" :key="foto.id" @click="selectPhoto(foto)">
+                      <td class="photo">
+                        <img :src="'../storage/'+prestamo.cliente.documento+'_'+prestamo.cliente.id+'/prestamo_'+foto.prestamo_id+'/imagen/'+foto.nombre+'.'+foto.extension">
+                      </td>
+                      <td class="place_photo">
+                        <i class="material-icons-outlined">place</i>
+                        <p v-if="geocoder"> {{ getLocationName(foto.latitud, foto.altitud, foto)}} {{foto.location_name ? foto.location_name : 'Desconocido'}}</p>
                         
-                        @change="filterProvincesTitularMe"
-                        dusk="departamentos_id">
-                      <option value="0">SELECCIONE</option>
-                      <option
-                        v-for="option in all_departments"
-                        :key="option.id"
-                        :value="option.id"
-                        :label="option.descripcion"
-                      >></option>
-                  </select>
-                  <!-- <input type="text" v-model="form.natural.domicilio_departamento" /> -->
-                </div>
-                <div class="input_wrapper" :class="{require: !validateProvincia}">
-                  <label>Provincia</label> 
-                  <select
-                      v-model="form.natural.domicilio_provincia"
-                      filterable
-                      @change="filterDistrictTitularMe"
-                      dusk="provincias_id">
-                      <option value="0">SELECCIONE</option>
-                      <option
-                        v-for="option in provincesTitular"
-                        :key="option.id"
-                        :value="option.id"
-                        :label="option.descripcion"
-                      >></option>
-                  </select>
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDistrito}">
-                  <label>Distrito</label>
-                  <select
-                        v-model="form.natural.domicilio_distrito"
-                        filterable
-                        dusk="distritos_id">
-                        <option value="0">SELECCIONE</option>
-                      <option
-                        v-for="option in districtsTitular"
-                        :key="option.id"
-                        :value="option.id"
-                        :label="option.descripcion"
-                      >></option>
-                    </select> 
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateReferencia}">
-                  <label>Referencia</label>
-                  <input type="text" v-model="form.natural.referencia" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDomicilio}">
-                  <label>Tipo Domicilio</label>
-                  <select v-model="form.natural.tipo_domicilio">
-                    <option value="PROPIA">PROPIA</option>
-                    <option value="PROPIA HIPOTECA">PROPIA HIPOTECA</option>
-                    <option value="DE LOS PADRES">DE LOS PADRES</option>
-                    <option value="DE LOS FAMILIARES">DE LOS FAMILIARES</option>
-                    <option value="ALQUILADA">ALQUILADA</option>
-                  </select>
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateCentro}">
-                  <label>Centro Laboral</label>
-                  <input type="text" v-model="form.natural.centro_laboral" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDireccionLaboral}">
-                  <label>Dirección centro laboral</label>
-                  <input type="text" v-model="form.natural.direccion_laboral" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
+                      </td>
+                      <td v-text="stringDate(foto.created_at)"></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </div>
-          </div>
-          <button
-            type="button"
-            @click.prevent="clickAddconyuge"
-            class="add_section in_bottom"
-            v-if="form.conyugue.conyuge_tiene=='NO'">
-            <span>AGREGAR CÓNYUGE O CONVIVIENTE</span>
-            <i class="material-icons-outlined">add</i> 
-          </button>
 
-          <div class="form_list " v-if="form.conyugue.conyuge_tiene=='SI'">
-            <div class="form_step_wrapper in_bottom" >
-              <h3 class="title">
-                CÓNYUGE o Conviviente
-                <button  class="delete_section" type="button"  @click.prevent="clickRemoveconyuge()">
-                  <i class="material-icons-outlined"> delete </i>
-                </button>
-              </h3>
-              <div class="form_content" >
-                <div class="group_form" >
-                  <div class="input_wrapper"  :class="{require: !validateDocumentoConyuge}">
-                    <label>Documento de Identidad</label>
-                    <input
-                      type="text"
-                      v-model="form.conyugue.documento_conyugue"
-                      @keyup="datosCliente()"
-                      maxlength='15'
-                    />
-                    <div class="message">número de documento inválido</div>
-                  </div>
-                  <div class="input_wrapper"  :class="{require: !validateNombreConyuge}">
-                    <label>Nombres y Apellidos</label>
-                    <input type="text" v-model="form.conyugue.nombres_conyugue" />
-                  </div>
-                  <div class="input_wrapper"  :class="{require: !validateNacimientoConyuge}">
-                    <label>Fecha de Nacimiento</label>
-                    <input type="date" v-model="form.conyugue.nacimiento_conyugue" />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Estado Civil</label>
-                    <select v-model="form.conyugue.estado_civil_conyugue">
-                      <option value="SOLTERO">SOLTERO</option>
-                      <option value="CASADO">CASADO</option>
-                      <option value="CONVIVIENTE">CONVIVIENTE</option>
-                      <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
-                      <option value="VIUDO">VIUDO</option>
-                    </select>
-                  </div>
-                  <div class="input_wrapper"  :class="{require: !validateOcupacionConyuge}">
-                    <label>Ocupación</label>
-                    <input type="text" v-model="form.conyugue.ocupacion_conyugue" />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Socio</label>
-                    <select v-model="form.conyugue.socio_conyugue">
-                      <option value="SI">SI</option>
-                      <option value="NO">NO</option>
-                    </select>
-                  </div>
-                  <div class="input_wrapper" :class="{require: !validateCodigoConyuge}" v-if="form.conyugue.socio_conyugue=='SI'" >
-                    <label>Código</label>
-                    <input  type="text"  v-model="form.conyugue.codigo_socio_conyugue" maxlength='10'/>
-                  </div>
-                  
-                  <div class="input_wrapper" :class="{require: !validateAporteConyuge}" v-if="form.conyugue.socio_conyugue=='SI'">
-                    <label>Aporte </label>
-                    <vue-numeric currency="S/. " separator="," v-model="form.conyugue.aporte_socio_conyugue" v-bind:precision="2"></vue-numeric>
-                  </div>                 
-                  <div class="input_wrapper">
-                    <label>Teléfono</label>
-                    <input type="text" v-model="form.conyugue.telefono_conyugue" maxlength='11' />
-                  </div>
-                  <div class="input_wrapper"  :class="{require: !validateCelularConyuge}">
-                    <label>Celular</label>
-                    <input  type="text"  v-mask="'### ### ###'"  v-model="form.conyugue.celular_conyugue" />
-                  </div>
-                  <div class="input_wrapper" >
-                    <label>¿Trabaja?</label>
-                    <select v-model="form.conyugue.trabaja_conyugue">
-                      <option value="SI">SI</option>
-                      <option value="NO">NO</option>
-                    </select>
-                  </div>
-                  <div class="input_wrapper"  :class="{require: !validateCentroConyuge}" v-if="form.conyugue.trabaja_conyugue=='SI'">
-                    <label>Centro Laboral</label>
-                    <input type="text" v-model="form.conyugue.centro_laboral_conyugue" />
-                  </div>
-                  <div class="input_wrapper" v-else>
-                    <label>Centro Laboral</label>
-                    <input type="text" disabled />
-                  </div>
-                  <div class="input_wrapper"  :class="{require: !validateDireccionConyuge}" v-if="form.conyugue.trabaja_conyugue=='SI'">
-                    <label>Dirección centro laboral</label>
-                    <input type="text" v-model="form.conyugue.direccion_laboral_conyugue" />
-                  </div>
-                  <div class="input_wrapper"  v-else>
-                    <label>Dirección centro laboral</label>
-                    <input type="text"/>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+              <button  type="button" class="add_section" :class="{no_border: prestamo.fotos.length == 0 }" @click="startCamera" >
+                <span> CAPTURAR FOTO DE NEGOCIO </span>
+                <i class="material-icons-outlined">camera_alt</i> 
+              </button>
 
-          <div class="form_buttons">
-            <a class="button_inline_primary medium prev" @click="prev(2)">
-              <i class="material-icons-outlined">navigate_before</i>
-              <span>ATRAS</span>
-            </a>
-            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1) ? next(2) : tabError()" >
-              <span>SIGUIENTE</span>
-              <i class="material-icons-outlined">navigate_next</i>
-            </a>
+            </div>
           </div>
         </div>
-
-        <div v-show="tab == 3" class="form_step">
-          <div class="form_step_wrapper">
-            <div class="form_list no_border" >
-              <div class="sub_step_wrapper " v-for="(row, index) in form.avals" :key="index">
-                <h3 class="title">
-                  Aval {{index + 1}}
-                  <button v-if="index > 0"
-                    class="delete_section"
-                    type="button"
-                    @click.prevent="clickRemoveAval(index)">
-                    <i class="material-icons-outlined">delete</i>
-                  </button>
-                </h3>
-                <div class="form_content">
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Tipo Persona</label>
-                      <select v-model="row.tipo_persona">
-                        <option value="pn">Persona Natural</option>
-                        <option value="pj">Persona Juridica</option>
-                      </select>
-                    </div>
-
-                    <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
-                      <label>Ruc</label>
-                      
-                      <input
-                        type="text"
-                        v-model="row.empresa_ruc"
-                        v-mask="'###########'"
-                        @keyup='getCompanyData(row.empresa_ruc,index)'
-                      />
-                    </div>
-
-                    <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
-                      <label>Razon Social</label>
-                      <input
-                        type="text"
-                        v-model="row.empresa_razon_social"
-                      />
-                    </div>
-
-                    <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
-                      <label>Dirección</label>
-                      <input
-                        type="text"
-                        v-model="row.empresa_direccion" 
-                      />
-                    </div>
-
-                  </div>
-                  
-                  <span class="separator" ></span>
-
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Documento de Identidad</label>
-                      <input
-                        type="text"
-                        v-model="row.documento"
-                        v-mask="'########'"
-                        @change="datosAval(index)"
-                      />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Nombres</label>
-                      <input type="text" v-model="row.nombres" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Apellidos</label>
-                      <input type="text" v-model="row.apellidos" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Fecha de Nacimiento</label>
-                      <input type="date" v-model="row.nacimiento" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Estado Civil</label>
-                      <select v-model="row.estado_civil">
-                        <option value="SOLTERO">SOLTERO</option>
-                        <option value="CASADO">CASADO</option>
-                        <option value="CONVIVIENTE">CONVIVIENTE</option>
-                        <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
-                        <option value="VIUDO">VIUDO</option>
-                      </select>
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Ocupación</label>
-                      <input type="text" v-model="row.ocupacion" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Centro Laboral</label>
-                      <input type="text" v-model="row.centro_laboral" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Dirección centro laboral</label>
-                      <input type="text" v-model="row.direccion_laboral" />
-                    </div>
-                  </div>
-
-                  <span class="separator"></span>
-
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Socio</label>
-                      <select v-model="row.socio">
-                        <option value="SI">SI</option>
-                        <option value="NO">NO</option>
-                      </select>
-                    </div>
-                    <div  v-if="row.socio=='SI'" class="input_wrapper">
-                      <label>Codigo</label>
-                      <input type="text" v-model="row.codigo_socio"  maxlength='10' />
-                    </div>
-                    <div  v-if="row.socio=='SI'" class="input_wrapper">
-                      <label>Aporte</label>
-                      <vue-numeric
-                        currency="S/. "
-                        separator=","
-                        v-model="row.aporte_socio"
-                        v-bind:precision="2"
-                      ></vue-numeric>
-                    </div>
-              
-                    <div class="input_wrapper">
-                      <label>Teléfono</label>
-                      <input type="text" v-model="row.telefono" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Celular</label>
-                      <input type="text" v-model="row.celular" v-mask="'### ### ###'" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Dirección</label>
-                      <input type="text" v-model="row.direccion" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Distrito</label>
-                      <input type="text" v-model="row.distrito" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <button type="button" @click="clickAddAval" class="add_section" v-if="form.avals.length<=1">
-              <span>AGREGAR AVAL</span>
-              <i class="material-icons-outlined">add</i> 
-            </button>
-          </div>
-
-          <div class="form_buttons">
-            <a class="button_inline_primary medium prev" @click="prev(3)">
-              <i class="material-icons-outlined">navigate_before</i>
-              <span>ATRAS</span>
-            </a>
-            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1) ? next(3) : tabError()">
-              <span>SIGUIENTE</span>
-              <i class="material-icons-outlined">navigate_next</i>
-            </a>
-          </div>
-        </div>
-
-        <div v-show="tab == 4" class="form_step">
-          <div class="form_step_wrapper">
-            <div class="form_list no_border">
-              <div class="sub_step_wrapper " v-for="(row, index) in form.garantias" :key="index">
-                <h3 class="title">
-                  Garantia {{index + 1}}
-                  <button
-                    v-if="index > 0"
-                    class="delete_section"
-                    type="button"
-                    @click.prevent="clickRemoveGarantia(index)">
-                    <i class="material-icons-outlined">delete</i>
-                  </button>
-                </h3>
-                <div class="form_content">
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Bien en Garantía</label>
-                      <input type="text" v-model="row.bien_garantia" />
-                    </div>
-                  </div>
-                  <div class="group_form">
-                    <div class="input_box no_label">
-                      <div class="input_box_wrapper">
-                        <div class="input_checkbox_wrapper radio" >
-                          <input type="radio" :id="'radio'+index" :name="'garantiaType'+index" v-model="row.tipo" :value="'INS'" />
-                          <label class="box_content" :for="'radio'+index">
-                            <div class="box">
-                            </div>
-                            <span>Inscripción</span>
-                          </label>
-                        </div>
-                        <div class="input_checkbox_wrapper radio" >
-                          <input type="radio" :id="'radio2'+index" :name="'garantiaType'+index" v-model="row.tipo" :value="'DJ'" />
-                          <label class="box_content" :for="'radio2'+index">
-                            <div class="box">
-                            </div>
-                            <span>Declaración Jurada</span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <button type="button" @click="clickAddGarantia" class="add_section" v-if="form.garantias.length<=1">
-              <span>AGREGAR GARANTIA</span>
-              <i class="material-icons-outlined">add</i> 
-            </button>
-          </div>
-
-          <div class="form_buttons">
-            <a class="button_inline_primary medium prev" @click="prev(4)">
-              <i class="material-icons-outlined">navigate_before</i>
-              <span>ATRAS</span>
-            </a>
-            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1) ? next(4) : tabError()">
-              <span>SIGUIENTE</span>
-              <i class="material-icons-outlined">navigate_next</i>
-            </a>
-          </div>
-        </div>
-
-        <div v-show="tab == 5" class="form_step">
-          <div class="form_step_wrapper">
-            <h3 class="title">Propuesta de Analista</h3>
-            <div class="form_content">
-              <div class="group_form">
-                <div class="input_wrapper">
-                  <label>Producto</label>
-                  <select v-model="form.producto" @change="meses_numero">
-                    <option value="CREDIDIARIO">CREDIDIARIO</option>
-                    <option value="CREDISEMANA">CREDISEMANA</option>
-                    <option value="PYME">PYME</option>
-                    <option value="PYME ESPECIAL">PYME ESPECIAL</option>
-                    <option value="CONSUMO">CONSUMO</option>
-                    <option value="CONSUMO ESPECIAL">CONSUMO ESPECIAL</option>
-                  </select>
-                </div>
-                <div class="input_wrapper">
-                  <label>Importe</label>
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
-                    v-model="form.importe"
-                    v-bind:precision="2"
-                  ></vue-numeric>
-                </div>
-                <div class="input_wrapper">
-                  <label>Cuotas</label>
-                  <input
-                    type="number"
-                    v-model="form.plazo"
-                    :min="1"
-                    :max="48"
-                    @keyup="meses_numero"
-                  />
-                </div>
-                <div class="input_wrapper">
-                  <label>Meses</label>
-                  <input type="text" v-model="form.meses" disabled />
-                </div>
-                <div class="input_wrapper">
-                  <label>Cuota del sistema</label>
-                  <vue-numeric v-model="form.cuotas" v-bind:precision="1"></vue-numeric>
-                </div>
-                <div class="input_wrapper">
-                  <label>Aporte a la fecha</label>
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
-                    v-model="form.aporte"
-                    v-bind:precision="2"
-                  ></vue-numeric>
-                </div>
-                <div class="input_wrapper">
-                  <label>Prob. Infocorp</label>
-                  <vue-numeric v-model="form.probabilidad_infocorp" v-bind:precision="1"></vue-numeric>
-                </div>
-              </div>
-
-              <div class="group_form all">
-                <div class="input_wrapper">
-                  <label>Comentarios</label>
-                  <textarea type="text" v-model="form.comentarios"></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form_buttons">
-            <a class="button_inline_primary medium prev" @click="prev(5)">
-              <i class="material-icons-outlined">navigate_before</i>
-              <span>ATRAS</span>
-            </a>
-            <a class="button_primary medium next" @click.prevent=" (validateStep2 && validateStep1) ? submit() : tabError()" :class="{loading: loading}">
-              <div class="load_spinner"></div>
-              <span>FINALIZAR</span>
-              <i class="material-icons-outlined">check</i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </div>
 </template>
-
+ 
 <script>
-import { serviceNumber } from "../mixins/functions";
-import VueNumeric from "vue-numeric";
- import { toastOptions } from '../constants.js'
+import moment from "moment";
+import { gmapApi } from "vue2-google-maps";
+import { STYLES_MAP } from '../constants'
+
+import GoogleMapsLoader from 'google-maps'
+import Vue from 'vue'
+
 
 export default {
-  mixins: [serviceNumber],
-  components: { VueNumeric },
+  name: "visita",
+  components: {},
   data() {
     return {
-      resource: "clientes",
-      tab: 1,
-      all_departments: [],
-      all_provinces: [],
-      all_districts: [],
-      provincesTitular: [],
-      districtsTitular: [],
+      optionsMap: {
+        styles: STYLES_MAP,
+        zoomControl: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: false,
+      },
+      screen:screen,
+      location: null,
+      gettingLocation: false,
+      errorStr: null,
+      video: {},
+      canvas: {},
+      mobile:false,
+      captura: "",
+      camara_prendida: false,
       errors: {},
-      form: {
-        idprestamo: -1, 
-        garantias: [],
-        avals: [],
-        cliente: {
-          departamento: "",
-          provincia: "",
-          distrito: "",
-          documento: this.$route.params.dni
-        },
-        natural: {
-          nombres: "",
-          apellidos: "",
-          nacimiento: "",
-          estado_civil: "SOLTERO",
-          ocupacion: "",
-          telefono: "",
-          celular: "",
-          direccion: "",
-          referencia: "",
-          tipo_domicilio: "PROPIA",
-          centro_laboral: "",
-          direccion_laboral: "",
-          domicilio_departamento: "",
-          domicilio_provincia: "",
-          domicilio_distrito: ""
-        },
-        conyugue: {
-          documento_conyugue: "",
-          nombres_conyugue: "",
-          nacimiento_conyugue: "",
-          estado_civil_conyugue: "SOLTERO",
-          ocupacion_conyugue: "",
-          telefono_conyugue: "",
-          trabaja_conyugue: "SI",
-          celular_conyugue: "",
-          centro_laboral_conyugue: "",
-          direccion_laboral_conyugue: "",
-          socio_conyugue: "NO",
-          codigo_socio_conyugue: "",
-          aporte_socio_conyugue: "",
-          conyuge_tiene: "NO"
-        },
-        monto_inicial: "",
-        cuotas_inicial: "5",
-        disponibilidad_pago_inicial: "",
-        destino_inicial: "",
-        forma_inicial: "DIARIO",
-        producto: "CREDIDIARIO",
-        forma: "DIARIO",
-        meses: 0,
-        importe: 0,
-        aporte: 0,
-        plazo: 0,
-        coutas: 0,
-        tasa: 0.0,
-        comentarios: "",
-        estado: "PROCESO"},
-      contador_aval: 0,
-      loading: false,
-      contador_garantia: 0, 
+      location:{
+        coords:{
+          latitude: "",
+          altitude: "",
+        }
+      },
+      prestamo:{
+        fotos:[],
+        evaluaciones:[]
+      },      
+      camara: [],
+      formViews: {},
+      evaluacion: [],
+      formData: {},
+      tipo: true,
       notificationSystem: {
         options: {
           success: {
@@ -753,430 +247,450 @@ export default {
             position: "topRight"
           }
         }
-      }
-    };
+      },
+      geocoder: null,
+      flagModalPhoto: false,
+      currentPhoto: null
+    }
   },
   computed: {
+    google: gmapApi
+  },
+  async created() {
     
-    validateMonto() {
-      return String(this.form.monto_inicial).length > 1
-    },
-    validateDiponibilidad() {
-      return String(this.form.disponibilidad_pago_inicial).length > 1
-    },
-    validateDestino() {
-      return this.form.destino_inicial.length > 6
-    },
-    validateStep1() {
-      return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
-    },
-    validateNombre(){
-      return this.form.natural.nombres.length>4;
-    }
-    ,
-    validateApellidos(){
-      return this.form.natural.apellidos.length>5;
-    }
-    ,
-    validateDocumento(){
-      return this.form.cliente.documento.length>=8
-    }
-    ,
-    validateNacimiento(){
-      return this.form.natural.nacimiento.length>4
-    }
-    ,
-    validateCivil(){
-      return this.form.natural.estado_civil.length>5
-    }
-    ,
-    validateOcupacion(){
-      return this.form.natural.ocupacion.length>4
-    }
-    ,
-    validateCelular(){
-      return  this.form.natural.celular.length>9
-    }
-    ,
-    validateDireccion(){
-      return  this.form.natural.direccion.length>5
-    }
-    ,
-    validateDepartamento(){
-      return true
-    }
-    ,
-    validateProvincia(){
-      return true
-    }
-    ,
-    validateDistrito(){
-      return true
-    }
-    ,
-    validateReferencia(){
-      return this.form.natural.referencia.length>5
-    }
-    ,
-    validateDomicilio(){
-      return this.form.natural.tipo_domicilio.length>5
-    }
-    ,
-    validateCentro(){
-      return this.form.natural.centro_laboral.length>5
-    }
-    ,
-    validateDireccionLaboral(){
-      return this.form.natural.direccion_laboral.length>6
-    },
-
-
-     validateDocumentoConyuge(){
-      return String(this.form.conyugue.documento_conyugue).length > 6
-    },
-
-     validateNombreConyuge(){
-      return this.form.conyugue.nombres_conyugue.length>6
-    },
-
-     validateNacimientoConyuge(){
-      return this.form.conyugue.nacimiento_conyugue.length>6
-    },
-
-     validateOcupacionConyuge(){
-      return this.form.conyugue.ocupacion_conyugue.length>6
-    },
-
-     validateCelularConyuge(){
-      return this.form.conyugue.celular_conyugue.length>6
-    },
-    validateCodigoConyuge(){
-      if(this.form.conyugue.socio_conyugue=='SI'){
-        return this.form.conyugue.codigo_socio_conyugue.length>=3
-      }
-      else return true
-    },
-    validateAporteConyuge(){
-      if(this.form.conyugue.socio_conyugue=='SI'){
-        return String(this.form.conyugue.aporte_socio_conyugue)>=1
-      }
-      else return true
-    },
-    validateCentroConyuge(){
-      return this.form.conyugue.centro_laboral_conyugue.length>6
-    },
-
-    validateDireccionConyuge(){
-      return this.form.conyugue.direccion_laboral_conyugue.length>6
-    },
-
-    validateStep2(){
-      if(this.form.conyugue.conyuge_tiene=='SI'){
-
-          return this.validateNombre && this.validateApellidos && 
-             this.validateDocumento && this.validateNacimiento &&
-             this.validateCivil && this.validateOcupacion && 
-             this.validateCelular && this.validateDireccion && 
-             this.validateDepartamento && this.validateProvincia &&
-             this.validateDistrito && this.validateReferencia && 
-             this.validateDomicilio && this.validateCentro && 
-             this.validateDireccionLaboral &&
-              this.validateDocumentoConyuge &&
-              this.validateNombreConyuge &&
-              this.validateNacimientoConyuge &&
-              this.validateOcupacionConyuge &&
-              this.validateCodigoConyuge &&
-              this.validateAporteConyuge &&
-              this.validateCelularConyuge &&
-              this.validateCentroConyuge &&
-              this.validateDireccionConyuge
-
-      }
-      else{
-        return this.validateNombre && this.validateApellidos && 
-             this.validateDocumento && this.validateNacimiento &&
-             this.validateCivil && this.validateOcupacion && 
-             this.validateCelular && this.validateDireccion && 
-             this.validateDepartamento && this.validateProvincia &&
-             this.validateDistrito && this.validateReferencia && 
-             this.validateDomicilio && this.validateCentro && 
-             this.validateDireccionLaboral
-      }
-
-    }
-
-
+    await this.views();
+    /**
+     * DATOS VIES
+     */
+    await this.initForm();
   },
-  created() { 
-    this.clickAddAval()
-    this.clickAddGarantia()
+  mounted() {
+      if (process.client) {  // en lado del servidor no existe windown, document, etc
+          if (window.innerWidth < 850) this.mobile = true
+          else this.mobile = false
 
-    this.$http
-      .get(`/${this.resource}/datos/prestamo/` + this.$route.params.dni)
-      .then(response => { 
+          this.$nextTick(() => {
+              window.addEventListener('resize', () => {
+                  if (window.innerWidth < 850) this.mobile = true
+                  else this.mobile = false
+              })
+          })
+      }
+ 
+    this.geolocate();
 
-        this.form.cliente.departamento =
-          response.data["cliente"]["departamento"] || "";
-        this.form.cliente.provincia = response.data["cliente"]["provincia"] || "" 
-        this.form.cliente.distrito = response.data["cliente"]["distrito"] || ""
-        this.form.natural.estado_civil = response.data["natural"]["estado_civil"] || ""
-        this.form.natural.ocupacion = response.data["natural"]["ocupacion"] || ""
-        this.form.natural.domicilio_distrito = response.data["natural"]["domicilio_distrito"] || ""
-        this.form.natural.domicilio_provincia = response.data["natural"]["domicilio_provincia"] || ""
-        this.form.natural.domicilio_departamento = response.data["natural"]["domicilio_departamento"] || ""
-        this.form.natural.telefono = response.data["natural"]["telefono"] || ""
-        this.form.natural.celular = response.data["natural"]["celular"] || ""
-        this.form.natural.nombres = response.data["natural"]["nombres"] || ""
-        this.form.natural.apellidos = response.data["natural"]["apellidos"] || ""
-        this.form.natural.nacimiento = response.data["natural"]["nacimiento"] || ""
-        this.form.natural.direccion = response.data["natural"]["direccion_cliente"] || ""
-        this.form.natural.referencia = response.data["natural"]["referencia"] || ""
-        this.form.natural.tipo_domicilio = response.data["natural"]["tipo_domicilio"] || ""
-        this.form.natural.centro_laboral = response.data["natural"]["centro_laboral"] || ""
-        this.form.natural.direccion_laboral = response.data["natural"]["direccion_laboral"] || ""
+    if (!("geolocation" in navigator)) {
+      this.errorStr = "Geolocation is not available.";
+      return;
+    }
 
-        if (response.data["tiene_conyuge"] == "SI") { 
-          this.form.conyugue.documento_conyugue = response.data["conyugue"]["documento"] || "";
-          this.form.conyugue.nombres_conyugue = response.data["conyugue"]["nombres"] || "";
-          this.form.conyugue.nacimiento_conyugue = response.data["conyugue"]["nacimiento"] || "";
-          this.form.conyugue.estado_civil_conyugue =  response.data["conyugue"]["estado_civil"] || "";
-          this.form.conyugue.ocupacion_conyugue = response.data["conyugue"]["ocupacion"] || "";
-          this.form.conyugue.telefono_conyugue = response.data["conyugue"]["telefono"] || "";
-          this.form.conyugue.trabaja_conyugue = response.data["conyugue"]["trabaja"] || 'SI';
-          this.form.conyugue.celular_conyugue = response.data["conyugue"]["celular"] || "";
-          this.form.conyugue.centro_laboral_conyugue = response.data["conyugue"]["centro_laboral"] || "";
-          this.form.conyugue.direccion_laboral_conyugue = response.data["conyugue"]["direccion"] || "";
-          this.form.conyugue.socio_conyugue = response.data["conyugue"]["socio"] || "SI";
-          this.form.conyugue.codigo_socio_conyugue = response.data["conyugue"]["codigo_socio"] || "";
-          this.form.conyugue.aporte_socio_conyugue = response.data["conyugue"]["aporte_socio"] || "";
-          this.form.conyugue.conyuge_tiene = "SI";
-        } else {
-          this.form.conyugue.conyuge_tiene = "NO"; 
-        }
-      });
-  },
+    this.gettingLocation = true;
 
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        this.gettingLocation = false;
+        this.location = pos;
+      },
+      err => {
+        this.gettingLocation = false;
+        this.errorStr = err.message;
+      }
+    )
+
+    GoogleMapsLoader.load((google) => {
+      this.initMap(google)
+    })
+  },  
   methods: {
-    tabError(){
-       this.$toast.error(
-          "Rellene los datos necesarios",
-          "Error",
-          toastOptions.error
-        )
+    selectPhoto (visita) {
+      this.flagModalPhoto = true
+      this.currentPhoto = visita
     },
-    filterProvincesTitularMe() {
-          // this.form.natural.domicilio_provincia= '0'
-          // this.form.natural.domicilio_distrito= '0'
-          this.provincesTitular = this.all_provinces.filter(f => {
-              return f.departamento_id == this.form.natural.domicilio_departamento
-          })
-      },
-      filterDistrictTitularMe() {
-          // this.form.natural.domicilio_distrito= '0'
-          this.districtsTitular = this.all_districts.filter(f => {
-              return f.provincia_id == this.form.natural.domicilio_provincia
-          })
-      },
-    next(index) {
-      window.scrollTo(0,0)
-      this.tab = index + 1
-    },
-    prev(index) {
-      window.scrollTo(0,0)
-      this.tab = index - 1
-    },
-    clickAddconyuge() {
-      this.form.conyugue.conyuge_tiene = "SI";
-    },
-    clickRemoveconyuge() {
-      this.form.conyugue.conyuge_tiene = "NO";
-    },
-    clickAddAval() { 
-      this.form.avals.push({
-        documento: "",
-        nombres: "",
-        apellidos: "",
-        nacimiento: "",
-        estado_civil: "SOLTERO",
-        ocupacion: "",
-        telefono: "",
-        celular: "",
-        direccion: "",
-        distrito: "",
-        centro_laboral: "",
-        direccion_laboral: "",
-        socio: "NO",
-        codigo_socio: "",
-        aporte_socio: "",
-        tipo_persona: "pn",
-        empresa_ruc:'',
-        empresa_razon_social:'',
-        empresa_direccion:''
-      });
-    },
-    clickRemoveAval(index) {
-      this.form.avals.splice(index, 1);
-    },
-    clickAddGarantia() {
-      // this.contador_garantia++;
-      this.form.garantias.push({
-        bien_garantia: "",
-        tipo: ""
-      });
-    },
-    clickRemoveGarantia(index) {
-      this.form.garantias.splice(index, 1);
-    },
-    clearForm() {
-      // this.initForm();
-    },
-    // initForm() {
-    //   this.errors = {};
-    //   this.form = {
-        
-    //   }
-    // },
-    datosCliente() {
-      let me = this;
-      // me.loader = "true";
-      if(this.form.conyugue.documento_conyugue.length>7){
-        axios
-        .post("/consulta/doc", {
-          documento: this.form.conyugue.documento_conyugue
+    getLocationName (lat, lng, visita) {
+      if (lat != undefined) {
+        let latlng = new google.maps.LatLng(Number(lat) , Number(lng))
+        this.geocoder.geocode( {'location': latlng} , (results, status) => {
+          if (results && results[0]) Vue.set(visita, "location_name", results[0].formatted_address)
         })
-        .then(function(response) { 
-          if(response.data)
-          me.form.conyugue.nombres_conyugue =
-            response.data["nombres"] + " " + response.data["surnames"];
+      }
+    },
+    initMap (google) {
+      this.geocoder = new google.maps.Geocoder()
+      this.getLocationName()
+    },
+    startCamera() {
+        this.captura = null 
+        this.camara_prendida = true
+        this.$nextTick(() => {
+          this.video = this.$refs.video;
+        })
+          navigator.getMedia =
+            navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia;
+          if (!navigator.getMedia) {
+            output.innerHTML = errorMsg(
+              "Tu navegador no soporta el uso de la camara",
+              null
+            );
+          } else {
+            navigator.getMedia(
+              { video: true },
+              stream => {
+                try {
+                  this.camara = stream;
+                  this.video.srcObject = this.camara;
 
-          // me.loader = false;
-        })
-        .catch(function(error) {
-          console.log(error);
-          // me.initForm();
-        });
-      }
-    },
-    meses_numero() {
-      if (this.form.producto == "CREDIDIARIO") { 
-        this.form.meses = (Number(this.form.plazo) / 30).toFixed(2);
-      } else if (this.form.producto == "CREDISEMANA") {
-        this.form.meses = (Number(this.form.plazo) / 4).toFixed(2);
-      } else {
-        this.form.meses = (Number(this.form.plazo) / 1).toFixed(2);
-      }
-    },
-    getCompanyData(ruc,index){
-      
-      if(ruc.length==11){
-          let me = this;
-          axios
-            .post("/consulta/doc", {
-              documento: me.ruc
-            })
-            .then(function(response) {          
-              if(response.data){
-                  
-                 me.form.avals[index].empresa_razon_social=response.data.RAZON
-                 me.form.avals[index].empresa_direccion=response.data.DIRECCION
+                } catch (error) {
+                  this.video.src = URL.createObjectURL(this.camara);
+                }
+
+                this.video.play();
+              },
+              err => {
+                output.innerHTML = errorMsg("Ocurrio un error", null);
               }
-            })
-            .catch(function(error) {
-              console.log(error);
-        });
-        console.log()
-      }
+            );
+          }
     },
-    datosAval(index) {
-      let me = this;
-      // me.loader = "true";
-      axios
-        .post("/consulta/doc", {
-          documento: this.form.avals[index].documento
-        })
-        .then(function(response) { 
-          me.form.avals[index].nombres = response.data["nombres"];
-          me.form.avals[index].apellidos = response.data["surnames"];
-
-          // me.loader = false;
-        })
-        .catch(function(error) {
-          console.log(error);
-          // me.initForm();
-        });
+    capture() {
+      this.canvas = this.$refs.canvas;
+      var context = this.canvas
+        .getContext("2d")
+        .drawImage(this.video, 0, 0, 640, 480);
+      this.captura = canvas.toDataURL("image/png");
+      // this.DownloadCanvasAsImage()
+      // this.storePhoto();
+      this.pauseCamera();
     },
-    submit() {
-      console.log(this.form)
-        this.loading= true
-      this.$http
-        .post(`/${this.resource}/prestamo`, this.form)
-        .then(response => {
-
-            this.loading = false
-            if(response.data.success){
-                this.$toast.success(
-                    "El prestamo fue creado",
-                    "Exitoso",
-                    toastOptions.success
-                  )
-              this.$router.push({ name: 'perfil', params: { documento: this.$route.params.dni, persona: 'PN' }})
-            }else{
-                this.$toast.error(
-                  "No se pudo crear prestamo",
-                  "Error",
-                  toastOptions.error
-                )
-            }
-
-        })
-
-        .then(() => {
-        });
+    DownloadCanvasAsImage() {
+      let downloadLink = document.createElement("a");
+      downloadLink.setAttribute("download", "captura.png");
+      let canvas = document.getElementById("canvas");
+      let dataURL = canvas.toDataURL("image/png");
+      let url = dataURL.replace(
+        /^data:image\/png/,
+        "data:application/octet-stream"
+      );
+      downloadLink.setAttribute("href", url);
+      downloadLink.click();
+    },
+    pauseCamera () {
+      this.video.pause();
+    },
+    stopCamera() {
+      this.video = this.$refs.video;
+      this.video.pause();
+      this.camara.getVideoTracks().forEach(function(track) {
+        track.stop();
+      });
+      this.camara_prendida = false
     },
     retornar() {
-      this.backMixin_handleBack("/perfil/" + this.form.cliente.documento);
+      this.$parent.view = false;
+      this.$parent.idprestamo = 0;
+    },
+    stringDate(date) {
+      var string = moment(date)
+        .locale("es")
+        .format("D [de] MMMM [del] YYYY");
+      return string;
+    },
+    crearVisita() {
+      this.tipo = false;
+      this.addMarker();
+    },
+    cancelarVisita() {
+      this.tipo = true;
+    },
+    initForm() {
+      this.formViews = {
+        fecha: "",
+        hora: "",
+        motivo: "",        
+        estado: 1,
+        center: { lat: -9.9207648, lng: -76.2410843 },
+        markers: [],
+        places: [],
+        currentPlace: null
+      };
+    },
+    clearform() {
+      this.initForm();
+    },
+    views() {
+      this.$http
+        .get(`/prestamos/` + this.$route.params.prestamoID)
+        .then(response => {
+          this.prestamo = response.data
+        });
+    },
+    stateEvaluation(estado) {
+      if (estado == 3) return "accept";
+      if (estado == 4) return "observed";
+      if (estado == 4) return "denied";
+      return;
+    },
+    storePhoto() {
+      console.log("store photo")
+      console.log(this.location)
+      this.formData = new FormData()
+      this.formData.append("name", "captura")
+      this.formData.append("prestamo_id", this.prestamo.id)
+      this.formData.append("latitud", this.location.coords.latitude)
+      this.formData.append("longitud", this.location.coords.longitude)
+      this.formData.append("file", this.captura)
+      this.$http
+        .post(`/prestamos/foto/`, this.formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        })
+        .then(response => {
+          // this.clearForm()
+          this.views()
+          this.tipo = true
+          this.clearform()
+          this.stopCamera()
+          this.$toast.success(
+            "La visita fue registrada",
+            "Exitoso",
+            this.notificationSystem.options.success
+          );
+        })
+        .then(() => {
+          // this.loading_submit = false;
+        });
+    },
+    resetForm() {
+      this.initForm();
+    },
+    setPlace(place) {
+      this.formViews.currentPlace = place;
+    },
+    addMarker() {
+      const marker = {
+        lat: this.location.coords.latitude,
+        lng: this.location.coords.longitude
+      };
+      this.formViews.markers.push({ position: marker });
+      this.formViews.places.push(this.formViews.currentPlace);
+      this.formViews.center = marker;
+      this.formViews.currentPlace = null;
+    },
+    geolocate() {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.formViews.center = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+      });
     }
   },
-  async mounted() {
-
-    await this.$http.get(`/${this.resource}/datos/`).then(response => {
-        this.all_departments = response.data.departments;
-        this.all_provinces = response.data.provinces;
-        this.all_districts = response.data.districts; 
-        
-    });
-
-    await this.filterProvincesTitularMe()
-    await this.filterDistrictTitularMe()
-
-    if (this.form.producto == "CREDIDIARIO") {
-      this.form.meses = (Number(this.form.plazo) / 30).toFixed(2);
-    } else if (this.form.producto == "CREDISEMANA") {
-      this.form.meses = (Number(this.form.plazo) / 4).toFixed(2);
-    } else if (this.form.producto == "MENSUAL") {
-      this.form.meses = Number(this.form.plazo) / 1;
+  filters: {
+    toCapitalize (text) {
+      return text.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())
     }
   }
-};
+}
 </script>
-<style lang="scss">
-.vdpWithInput {
-  width: 100%;
-}
-.vdpWithInput > input {
-  font-size: 16px;
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  -webkit-appearance: none;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0.1em 0.3em;
-  padding: 5px 40px 6px 15px;
-  border-radius: 4px;
-  background: white;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(224, 224, 224);
-  border-image: initial;
-  outline: 0px;
-}
+
+<style lang="sass">
+@import "../../sass/variables"
+.credit_detail_content
+  position: relative
+  .photo_viewer
+    border: 1px solid $line_color
+    border-radius: 4px
+    overflow: hidden
+    img
+      width: 100%
+      height: 400px
+      object-fit: cover
+    .map_wrapper
+      height: 250px
+  .camera_screen_content
+    position: fixed
+    left: 0
+    top: 55px
+    background-color: black
+    width: 100%
+    height: calc(100vh - 175px)
+    z-index: 10
+    .camera_screen_wrapper
+      .close_camera
+        height: 50px
+        background-color: black
+        i
+          color: white
+          height: 50px
+          width: 50px
+          margin-right: 10px
+          display: flex
+          justify-content: center
+          align-items: center
+          float: right
+          font-size: 30px
+          cursor: pointer
+      video
+        height: calc(100vh - 225px)
+        width: 100%
+        display: block
+      .controls
+        height: 120px
+        display: flex
+        justify-content: center
+        align-items: center
+        background-color: black
+        .options
+          width: 100%
+          display: flex
+          a
+            flex: 1
+            flex-basis: 0
+            color: white
+            font-weight: 500
+            text-align: center
+            padding: 10px 0
+            cursor: pointer
+        button.capture_photo
+          width: 65px
+          height: 65px
+          border-radius: 50%
+          border: none
+          background-color: white
+          border: 7px solid black
+          box-shadow: 0px 0px 0px 4px white
+          transition: all ease-in-out .15s
+          &:focus, &:active
+            outline: none
+          &:hover
+            border: 10px solid black
+          
+  .create_client_content
+    margin: 20px 0
+    .empty_message_evaluation
+      display: flex
+      align-items: center
+      justify-content: center
+      flex-direction: column
+      padding: 20px
+      height: 250px
+      overflow: hidden
+      img
+        width: 120px
+      h1
+        margin: 0
+        font-size: 14px
+        margin-top: 15px
+        margin-bottom: 5px
+        font-weight: 600
+      p
+        margin: 0
+        font-size: 12px
+        text-align: center
+        line-height: 1.4
+    table.table_photos
+      thead, tbody
+        tr
+          margin-bottom: 0px
+          border-bottom: 1px solid $bg_color
+      tbody
+        tr
+          cursor: pointer
+          &:last-child
+            border-bottom: 0
+        td
+          &.place_photo
+            p
+              margin: 0
+              margin-left: 10px
+          &.photo
+            img
+              border-radius: 4px
+              width: 80px
+              height: 50px
+              object-fit: cover
+              display: block
+      .photo
+        max-width: 200px
+    table.table_evaluations
+        thead, tbody
+          tr
+            margin-bottom: 0px
+            border-bottom: 1px solid $bg_color
+        &.no_hover 
+          tbody:hover tr
+            background-color: inherit
+        tbody
+          tr
+            td.client
+              text-transform: uppercase
+            td
+              text-transform: lowercase
+              text-align: left
+            &.final_result
+              background-color: rgba($primary_color, .03) !important
+              border-left: 3px solid $primary_color
+              &:hover
+                background-color: rgba($primary_color, .03) !important
+            &:last-child
+              border-bottom: 0
+        
+        .state
+          strong
+            margin-left: 7px
+          span
+            width: 12px
+            height: 12px
+            border-radius: 50%
+            background-color: $line_color
+            margin-right: 5px
+            margin-top: 0px
+            &.accept
+              background-color: $primary_color
+            &.observed
+              background-color: $highlight_color
+            &.denied
+              background-color: $require_color
+
+@media screen and (max-width: 720px)
+  .credit_detail_content
+    .create_client_content
+      table
+        &.table_photos
+          tbody
+            tr
+              td.photo
+                img
+                  width: 150px
+                  height: 100px
+              td.place_photo
+                padding: 7px 15px
+                i
+                  margin-left: -5px
+          .photo
+            max-width: 100%
+        thead
+          display: none
+        tbody
+          tr
+            flex-direction: column
+            td
+              padding: 1px 15px
+              &:first-child
+                padding-top: 15px
+              &:last-child
+                padding-bottom: 15px
+              &.observation
+                color: rgba($text_color, .77)
+              &.client
+                font-weight: 500
+              &.date
+                display: none
+
+@media screen and (max-width: 500px)
+  .credit_detail_content
+    .create_client_content
+      margin: 15px 0
 </style>
+ 

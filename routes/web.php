@@ -21,9 +21,9 @@ Route::group(['middleware'=>['auth']],function(){
 
     Route::group(['middleware'=>['Administrador']],function(){
 
-        Route::get('/inicio', function () {
+        Route::get('/main', function () {
             return view('index');
-        })->name('inicio');
+        })->name('main');
         
         Route::get('/', function () {
             return view('index');
@@ -31,69 +31,47 @@ Route::group(['middleware'=>['auth']],function(){
         
         Route::resource('user','UserController');
         Route::get('/currentUser', 'UserController@currentUser');
-
-        
-        Route::get('/inicio/datos', 'InicioController@index');
-        
-        //Busquedas
-        Route::get('clientes/search/{state}/{text?}','ClienteController@search');
-        Route::get('prestamos/search/{state}/{text?}','PrestamosController@search');
-
-        Route::get('clientes/listado','ClienteController@index');
-        Route::get('clientes/listado/juridico','ClienteController@indexJuridico');
-        Route::post('clientes/nuevo', 'ClienteController@store');
-        Route::post('clientes/nuevo/natural', 'ClienteController@storeNatural');
-        Route::post('clientes/nuevo/juridico', 'ClienteController@storeJuridico');
-        Route::get('clientes/datos', 'ClienteController@datos');
-        Route::get('clientes/datos/prestamo/{documento}', 'ClienteController@general');
-
-        Route::get('clientes/enviarEvaluar/{prestamo}', 'ClienteController@enviarEvaluar');
-
-        Route::get('clientes/entregarPrestamo/{prestamo}', 'ClienteController@entregarPrestamo');
-        Route::get('clientes/datos/prestamo/juridico/{documento}', 'ClienteController@generalJuridico');
-        Route::get('clientes/perfil/cliente/{documento}', 'ClienteController@showCliente');
-        Route::get('clientes/perfil/juridico/cliente/{documento}', 'ClienteController@showClienteJuridico');
-        Route::get('clientes/perfil/{documento}', 'ClienteController@show');
-        Route::post('clientes/prestamo', 'ClienteController@prestamo');
-        Route::post('clientes/prestamo/juridico', 'ClienteController@prestamoJuridico');
-        Route::post('clientes/visita/nuevo', 'ClienteController@visitaStore');
-        Route::get('clientes/visitas/{prestamo}', 'ClienteController@visitas');
-
-        Route::get('clientes/aceptar/solicitud/{id}/{tipo}', 'ClienteController@aceptarSolicitud');
-        Route::get('clientes/rechazar/solicitud/{id}/{tipo}', 'ClienteController@rechazarSolicitud');
-
-        Route::get('/clientes/solicitudPdf/{prestamo}','ClienteController@SolicitudPdf')->name('solicitud_pdf');
-        Route::get('/clientes/adjuntarPdf/{prestamo}','ClienteController@AdjuntarPdf')->name('adjuntar_pdf');
  
-     
+        
+        //Personas
+        Route::resource('personas','PersonasController');
+        //Empresas
+        Route::resource('empresas','EmpresasController');
+        //Clientes        
+        Route::resource('clientes','ClientesController');
+        Route::get('clientes/datos/prestamo/{id}', 'PrestamosController@show');
+        Route::get('clientes/search/{state}/{text?}','ClientesController@listar');
+        Route::get('clientes/aceptar/solicitud/{id}', 'ClientesController@aceptarSolicitud');
+        Route::get('clientes/rechazar/solicitud/{id}', 'ClientesController@rechazarSolicitud');
+        //Ubigeo
+        Route::get('ubigeo', 'UbigeoController@listar');
+        //Prestamos
+        Route::resource('prestamos','PrestamosController');
+        Route::get('prestamos/search/{state}/{text?}','PrestamosController@search');
+        Route::get('prestamos/enviarEvaluacion/{prestamoID}', 'PrestamosController@enviarEvaluacion');
+        Route::post('prestamos/evaluar', 'PrestamosController@evaluar');
+        Route::post('prestamos/foto', 'PrestamosController@guardarFoto');
+        //Herramientas
+        Route::get('extras/giro', 'ExtrasController@giro');
+        Route::get('extras/colegio', 'ExtrasController@colegios');
+        Route::get('extras/entidades', 'ExtrasController@entidades');
+        Route::get('extras/colegio/costo', 'ExtrasController@colegioCosto');
+        Route::post('consulta/doc','ExtrasController@doc');
+        // Analisis
+        Route::get('analisis/datosCualitativas/{prestamoID}', 'AnalisisController@obtenerCualitativa'); 
+        Route::post('analisis/cualitativa','AnalisisController@saveCualitativa'); 
+        Route::post('analisis/cuantitativa','AnalisisController@saveCuantitativa');
+        //PDF
+        Route::get('/pdf/prestamo/expediente/{prestamoID}','PDFController@expediente')->name('adjuntar_pdf');
+
+
+
+        Route::get('/clientes/solicitudPdf/{prestamo}','ClientesController@SolicitudPdf')->name('solicitud_pdf');
         Route::get('/evaluacion/cualitativaPdf/{prestamo}','EvaluacionesController@CualitativaPdf')->name('cualitativa_pdf');
         Route::get('/evaluacion/cuantitativaPdf/{prestamo}','EvaluacionesController@CuantitativaPdf')->name('cuantitativa_pdf');
 
-        Route::get('clientes/prestamo/ver/{prestamo}', 'ClienteController@prestamoVer');
-        Route::get('clientes/prestamo/ver/juridico/{prestamo}', 'ClienteController@prestamoVerJuridico');
 
- 
-        Route::get('evaluaciones/prestamos', 'EvaluacionController@prestamos');
-        Route::get('evaluaciones/prestamosJuridicos', 'EvaluacionController@prestamosJuridico');
-        Route::get('evaluaciones/veridicarEvaluacion/{prestamo}', 'EvaluacionController@verificarPrestamo');
-        Route::get('evaluaciones/prestamos/detalle/{prestamo}', 'EvaluacionController@show');
-        Route::get('evaluaciones/prestamos/detalleF/{prestamo}', 'EvaluacionController@showF');
-
-
-        Route::get('evaluaciones/propuestaAnalista/{prestamo}', 'EvaluacionController@propuestaAnalista');
-        Route::get('evaluaciones/numerohijos/{prestamo}', 'EvaluacionController@numeroHijos');
-
-        Route::get('evaluaciones/giro', 'EvaluacionController@giro');
-        Route::get('evaluaciones/datosCualitativas/{prestamoID}', 'EvaluacionController@datosCualitativas');
-        Route::get('evaluaciones/colegio', 'EvaluacionController@colegios');
-        Route::get('evaluaciones/entidades', 'EvaluacionController@entidades');
-        Route::get('evaluaciones/colegio/costo', 'EvaluacionController@colegioCosto');
-
-        
-        Route::post('evaluaciones/prestamos/evaluar', 'EvaluacionController@evaluar');
-        Route::post('evaluaciones/prestamos/evaluarFinal', 'EvaluacionController@evaluarFinal');
-
-        Route::post('/consulta/doc','ConsultaController@doc');
+    
 
         Route::get('/files/{id}', 'FileController@index');
         Route::post('files/add', 'FileController@store');
@@ -101,8 +79,7 @@ Route::group(['middleware'=>['auth']],function(){
 
         // Route::get('{path}',"HomeController@index")->where('path','([A-z\d-\/_.]+)?');
         // evaluaciones cuantitativas y cualitativas
-        Route::post('evaluaciones/cuantitativa','EvaluacionesController@saveCuantitativa');
-        Route::post('evaluaciones/cualitativa','EvaluacionesController@saveCualitativa'); 
+       
     });
 
 
