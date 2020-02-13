@@ -952,7 +952,7 @@ export default {
           empresa_email:"",
         },
         tools:{
-          hijos:"NO",
+          hijos:"0",
           conyuge:'0',
           numero_hijos:0
         },
