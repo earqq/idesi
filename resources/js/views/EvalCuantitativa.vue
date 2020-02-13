@@ -7,7 +7,7 @@
             <span>1</span>
             <p>DATOS TITULAR</p>
           </div>
-          <div class="tab" v-if='cliente.persona.conyuge' @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}">
+          <div class="tab" v-if='cliente.persona && cliente.persona.conyuge' @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}">
             <span>2</span>
             <p>DATOS CÓNYUGE</p>
           </div>
@@ -182,7 +182,7 @@
                 </div>
               </div>
 
-              <div v-if='cliente.persona.conyuge' class="form_buttons all">
+              <div v-if='cliente.persona && cliente.persona.conyuge' class="form_buttons all">
                 <a class="button_primary medium next" @click="validateStep1 ? next(1): tabError() ">
                   <span>SIGUIENTE</span>
                   <i class="material-icons-outlined">navigate_next</i>
