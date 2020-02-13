@@ -49,6 +49,7 @@ class PersonasController extends Controller
 
     public function store(Request $request)
     {
+        
         try{
             DB::beginTransaction();
             $cliente = Cliente::where('documento', $request->documento)->first();
@@ -105,7 +106,10 @@ class PersonasController extends Controller
                 $departamento_domicilio = Departamento::where('id',$cliente->ubicacion_departamento)->first();
                 $provincia_domicilio = Provincia::where('id',$cliente->ubicacion_provincia)->first();
                 $distrito_domicilio = Distrito::where('id',$cliente->ubicacion_distrito)->first();
- 
+                
+                $departamento_trabaja = '--';
+                $provincia_trabaja = '--';
+                $distrito_trabaja = '--';
 
                 if($persona->estado_trabajo=='TRABAJA'){
 
@@ -135,21 +139,32 @@ class PersonasController extends Controller
                     $trabajo->empresa_email = $request->trabajo['empresa_email'];    
                     $trabajo->persona_id = $persona->id;    
                     $trabajo->save();
-                }
 
-                foreach ($request->persona["hijos"] as $hijo) {
-                    $parienteDetalle= new Hijo;
-                    $parienteDetalle->nombres = $hijo['nombres'];
-                    $parienteDetalle->documento = $hijo['documento'];
-                    $parienteDetalle->fecha_nacimiento = $hijo['fecha_nacimiento'];
-                    $parienteDetalle->socio = $hijo['socio'];
-                    $parienteDetalle->persona_id= $persona->id;
-                    $parienteDetalle->save();
+                    $departamento_trabaja = Departamento::where('id',$trabajo->empresa_departamento)->first();
+                    $provincia_trabaja = Provincia::where('id',$trabajo->empresa_provincia)->first();
+                    $distrito_trabaja = Distrito::where('id',$trabajo->empresa_distrito)->first();
+                }
+                
+                // return $distrito_trabaja;
+                if($request->tools["hijos"]=='1'){
+                    foreach ($request->persona["hijos"] as $hijo) {
+                        $parienteDetalle= new Hijo;
+                        $parienteDetalle->nombres = $hijo['nombres'];
+                        $parienteDetalle->documento = $hijo['documento'];
+                        $parienteDetalle->fecha_nacimiento = $hijo['fecha_nacimiento'];
+                        if($hijo['socio']=='1'){
+                            $parienteDetalle->socio = true;
+                        }else{
+                            $parienteDetalle->socio = false;
+                        }
+                        $parienteDetalle->persona_id= $persona->id;
+                        $parienteDetalle->save();
+                    } 
                 }
 
                 $hijos = Hijo::where('persona_id',$persona->id)->get();
                 
-                if($request->tools["conyuge"])
+                if($request->tools["conyuge"]=='1')
                 {
                     
                     $conyuge= new Conyuge;
@@ -196,9 +211,10 @@ class PersonasController extends Controller
                 $declaracion->cliente_id= $cliente->id; 
                 $declaracion->save(); 
 
+
                 $pdf = PDF::loadView('reportes.inscripcion',compact('trabajo','representante','obligacion','declaracion','cliente',
                                                                     'hijos','conyuge','persona',
-                                                                    'departamento_domicilio','provincia_domicilio','distrito_domicilio'));
+                                                                    'departamento_domicilio','provincia_domicilio','distrito_domicilio','departamento_trabaja','provincia_trabaja','distrito_trabaja'));
 
                 if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
                 }

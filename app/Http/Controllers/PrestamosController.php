@@ -14,6 +14,7 @@ use App\Subido;
 use App\Evaluacion;
 use App\RepresentanteLegal;
 use App\Garantia;
+use App\Archivo;
 use App\Cuantitativa;
 use App\ResultadoAnalisis;
 class PrestamosController extends Controller
@@ -142,8 +143,19 @@ class PrestamosController extends Controller
                     $conyugue->ocupacion =  $request->cliente['persona']['conyuge']['ocupacion'];
                     $conyugue->telefono =  $request->cliente['persona']['conyuge']['telefono'] ;
                     $conyugue->celular =  $request->cliente['persona']['conyuge']['celular'];
-                    $conyugue->trabaja =  $request->cliente['persona']['conyuge']['trabaja'];
-                    $conyugue->socio =  $request->cliente['persona']['conyuge']['socio'];
+
+                    if($request->cliente['persona']['conyuge']['trabaja']=='1'){
+                        $conyugue->trabaja = true ;
+                    }else{
+                        $conyugue->trabaja = false ;
+                    }
+
+                    if($request->cliente['persona']['conyuge']['socio']=='1'){
+                        $conyugue->socio = true ;
+                    }else{
+                        $conyugue->socio = false ;
+                    }
+                    
                     $conyugue->codigo_socio =  $request->cliente['persona']['conyuge']['codigo_socio'];
                     $conyugue->aporte_socio =  $request->cliente['persona']['conyuge']['aporte_socio'];
                     $conyugue->persona_id = $persona->id;   
@@ -222,6 +234,7 @@ class PrestamosController extends Controller
                 $garantia->prestamo_id = $prestamo->id;
                 $garantia->save();
             }
+
             DB::commit();
 
             return [

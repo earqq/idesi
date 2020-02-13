@@ -350,14 +350,6 @@ export default {
       archivos: [],
       lista: [
         {
-          nombre: "inscripcion_de_socio",
-          estado: false
-        },
-        {
-          nombre: "solicitud_credito",
-          estado: false
-        },
-        {
           nombre:  "reporte_de_central",
           estado: false
         },
@@ -433,6 +425,7 @@ export default {
       this.$http.get(`/files/${this.$route.params.prestamoID}`).then(response => {
         this.prestamo = response.data["datos"];
         this.archivos = response.data["files"];
+
         this.loaderFile=0
 
         this.lista.map(item=>{
@@ -446,8 +439,7 @@ export default {
           }
           // console.log(a);
         })
- 
-        console.log(this.porSubir[0].nombre)
+
       });
     },
     dragFinish (i, e) {
@@ -504,7 +496,7 @@ export default {
       this.formData = {};
       this.fileName = "seleccione";
       this.attachment.content = "";
-      this.f
+      // this.f
     },
     anyError() {
       return Object.keys(this.errors).length > 0;
@@ -526,7 +518,6 @@ export default {
         })
         .then(response => {
           this.loading=false
-          this.resetForm();
           this.listFile();
           $('#file').val('')
           this.flagModalUpload = false
@@ -535,6 +526,7 @@ export default {
             "Exitoso",
             toastOptions.success
           )
+          this.resetForm();
 
         })
         .catch(error => {

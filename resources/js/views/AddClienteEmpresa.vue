@@ -295,7 +295,7 @@
                     <div class="group_form">
                       <div class="input_wrapper">
                         <label> Doc. Identidad </label>
-                        <input type="number" @keyup='getPersonData(a)' maxlength="9" v-model="a.documento"/>
+                        <input type="text" @keyup='getPersonData(a)' maxlength="9" v-model="a.documento" v-mask="'########'"/>
                       </div>
                       <div class="input_wrapper">
                         <label> Apellidos y Nombres </label>

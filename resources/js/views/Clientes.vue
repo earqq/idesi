@@ -53,14 +53,19 @@
       <div class="table_container" v-else >
         <div class="table_grid"  v-if=" type_list=='1'">
           <article class="client_card" v-for="cliente in clientes" :key="cliente.id" >
-            <div class="options">
+            <div class="options" v-if="cliente.estado=='2'">
               <i class="material-icons-outlined" >more_horiz</i>
-              <ul>
-                <li>
+              <ul >
+                <!-- <li>
                   Editar
-                </li>
-                <li>
-                  Nuevo Prestamo
+                </li> -->
+                <li> 
+                   <router-link  v-if="cliente.tipo_cliente=='1'"   :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+                       Nuevo prestamo
+                  </router-link>
+                  <router-link  v-if="cliente.tipo_cliente=='2'"   :to="{name: 'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:'0'}}">
+                       Nuevo prestamo
+                  </router-link>
                 </li>
               </ul>   
             </div>
@@ -112,21 +117,26 @@
                 </td>
                 <td> {{cliente.documento}} </td>
                 <td>
-                  {{cliente.direccion_cliente || cliente.direccion || '--'}}
+                  {{cliente.ubicacion_direccion_declarada || '--'}}
                 </td>
                 <td class="options" >
                   <i class="material-icons-outlined" >more_horiz</i>
                   <ul>
                     <li>
-                      <router-link :to="{name:'perfil', params:{documento:cliente.documento,persona:form.tipo_persona}}" >
+                      <router-link :to="{name:'perfil', params:{id: cliente.id }}" >
                         Ver Cliente
                       </router-link>
                     </li>
-                    <li>
+                    <!-- <li>
                       Editar
-                    </li>
+                    </li> -->
                     <li>
-                        Nuevo Prestamo
+                        <router-link  v-if="cliente.estado=='2' && cliente.tipo_cliente=='1'"   :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+                            Nuevo prestamo
+                        </router-link>
+                        <router-link  v-if="cliente.estado=='2' && cliente.tipo_cliente=='2'"   :to="{name: 'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:'0'}}">
+                            Nuevo prestamo
+                        </router-link>
                     </li>
                   </ul>
                 </td>
@@ -453,9 +463,8 @@ export default {
               margin-left: 10px
               text-align: left
 .dropdown
-  width: 230px
+  flex: 1
   display: inline-block
-  margin-right: 10px
   position: relative
   &.toggle
     > input

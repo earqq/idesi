@@ -1,4 +1,4 @@
-/<template>
+<template>
   <div class="create_client_content">
     <section class="tabs_section">
       <div class="tabs_wrapper">
@@ -714,6 +714,11 @@ export default {
               codigo_socio: "",
               aporte_socio: "",
             },
+            trabajo:{
+              empresa_direccion: "",
+              empresa_razon_social: "",
+            },   
+
           },
         },
         monto_inicial: "",
@@ -814,9 +819,14 @@ export default {
     }
     ,
     validateCentro(){
+      
       if(this.prestamo.cliente.persona.trabajo)
-      return this.prestamo.cliente.persona.trabajo.empresa_razon_social.length>5
-      else return true
+      {
+        return this.prestamo.cliente.persona.trabajo.empresa_razon_social.length>5
+      }
+      else{
+        return true
+      }
     }
     ,
     validateDireccionLaboral(){
@@ -858,23 +868,39 @@ export default {
       else true
     },
     validateCodigoConyuge(){
-      if(this.prestamo.cliente.persona.conyuge.socio && this.prestamo.cliente.persona.conyuge.codigo_socio){
+      if(this.prestamo.cliente.persona.conyuge.socio=='1'){
         return this.prestamo.cliente.persona.conyuge.codigo_socio.length>=3
       }
-      else return true
+      else{
+        return true
+      }
     },
     validateAporteConyuge(){
-      if(this.prestamo.cliente.persona.conyuge.socio){
+      if(this.prestamo.cliente.persona.conyuge.socio=='1'){
         return String(this.prestamo.cliente.persona.conyuge.aporte_socio)>=1
       }
-      else return true
+      else{
+        return true
+      }
     },
     validateCentroConyuge(){
-      return this.prestamo.cliente.persona.conyuge.centro_laboral.length>6
+      if(this.prestamo.cliente.persona.conyuge.trabaja=='1'){
+        return this.prestamo.cliente.persona.conyuge.centro_laboral.length>5
+      }
+      else{
+        return true
+      }
+      
     },
 
     validateDireccionConyuge(){
-      return this.prestamo.cliente.persona.conyuge.direccion_centro_laboral.length>6
+       if(this.prestamo.cliente.persona.conyuge.trabaja=='1'){
+        return this.prestamo.cliente.persona.conyuge.direccion_centro_laboral.length>5
+      }
+      else{
+        return true
+      }
+      
     },
 
     validateStep2(){
@@ -931,6 +957,15 @@ export default {
       .get(`/clientes/` + this.$route.params.clienteID)
       .then(response => {  
         this.prestamo.cliente=response.data
+
+        if(!this.prestamo.cliente.persona.trabajo){
+          this.prestamo.cliente.persona.trabajo={
+              empresa_ruc:"",
+              empresa_direccion: "",
+              empresa_razon_social: "",
+            }
+        }
+
         if(this.prestamo.cliente.persona.conyuge){
           this.tools.tiene_conyuge=true
           this.prestamo.cliente.persona.conyuge={
@@ -941,10 +976,10 @@ export default {
               ocupacion: this.prestamo.cliente.persona.conyuge.ocupacion || "",
               telefono: this.prestamo.cliente.persona.conyuge.telefono || "",
               celular: this.prestamo.cliente.persona.conyuge.celular || "",
-              trabaja: this.prestamo.cliente.persona.conyuge.trabaja || "",
+              trabaja: this.prestamo.cliente.persona.conyuge.trabaja,
               centro_laboral: this.prestamo.cliente.persona.conyuge.centro_laboral || "",
               direccion_centro_laboral: this.prestamo.cliente.persona.conyuge.direccion_centro_laboral || "",
-              socio: this.prestamo.cliente.persona.conyuge.socio || "",
+              socio: this.prestamo.cliente.persona.conyuge.socio,
               codigo_socio: this.prestamo.cliente.persona.conyuge.codigo_socio || "",
               aporte_socio: this.prestamo.cliente.persona.conyuge.aporte_socio || "",
           }

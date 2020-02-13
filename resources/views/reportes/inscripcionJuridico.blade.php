@@ -41,7 +41,7 @@
             <table style="width: 100%; margin: 4px 0 27px 0px;"   cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px">Sr. Presidente del Consejo de Administración de la Cooperativa de Ahorro
+                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px;text-align: center">Sr. Presidente del Consejo de Administración de la Cooperativa de Ahorro
                          y Crédito Sembrar, solicito ser aceptado(a) como socio(a), asimismo me comprometo a cumplir con las disposiciones del Estatuto y Leyes vigentes.</th>
                     </tr>
                 </thead>
@@ -268,7 +268,11 @@
                         <td colspan="2" style="height: 70px;"> <div style="border: 1px solid; width: 100px; height: 70px;margin: 0 auto;"></div> </td>
                     </tr>
                     <tr>
-                        <td><span class="title">Estado</span> {{$cliente->estado}}</td>
+                        <td><span class="title">Estado</span> 
+                            @if ($cliente->estado=='1')
+                                CREADO - PENDIENTE 
+                            @endif 
+                        </td>
                         <td colspan="2"><span class="title">Fecha</span> {{$declaracion->created_at}}</td>
                     </tr>
 

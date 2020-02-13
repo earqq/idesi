@@ -6,7 +6,7 @@
           <div class="options_profile">
             <i class="material-icons-outlined" >more_horiz</i>
             <ul>
-              <li>Editar</li>
+              <!-- <li>Editar</li> -->
               <li>
                 <a class="" :href="'../storage/'+cliente.documento+'_'+cliente.id+'/general/documento/inscripcion_de_socio.pdf'" target="_blank">
                   Solicitud de Admisión
@@ -119,8 +119,8 @@
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
                 <li v-if="prestamo.estado==1"> 
-                  <router-link  v-if="cliente.tipo_cliente=='1'" :to="{name:'prestamo', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
-                  <router-link  v-else-if="cliente.tipo_cliente=='2'" :to="{name:'prestamoEmpresa', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
+                  <router-link  v-if="cliente.tipo_cliente=='1'" :to="{name:'registarPrestamo', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
+                  <router-link  v-else-if="cliente.tipo_cliente=='2'" :to="{name:'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
                 </li> 
                 <li v-if="!prestamo.cualitativa && prestamo.estado==1"> <router-link :to="{name:'evalCualitativa', params:{prestamo:prestamo.id}}" >E. Cualitativa</router-link> </li>
                 <li v-if="!prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>

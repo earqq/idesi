@@ -62,19 +62,12 @@ class FileController extends Controller
                 Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/imagenpdf/'.$request['name'].'.pdf', $pdf->output());
             } 
             
-            \Log::alert("asdasd");
-            \Log::alert($request['prestamo_id']);
-
             $archivo = new Archivo;
             $archivo->nombre = $request['name'];
             $archivo->tipo = $type;
             $archivo->extension= $ext;
             $archivo->prestamo_id = $request['prestamo_id'];
             $archivo->save();
-
-            \Log::alert("aaaa");
-            \Log::alert($request['prestamo_id']);
-
         }
  
         return response()->json(false);

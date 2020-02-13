@@ -41,7 +41,7 @@
             <table style="width: 100%; margin: 4px 0 27px 0px;"   cellspacing="0">
                 <thead>
                     <tr>
-                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px">Sr. Presidente del Consejo de Administración de la Cooperativa de Ahorro
+                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px;text-align: center">Sr. Presidente del Consejo de Administración de la Cooperativa de Ahorro
                         y Crédito Sembrar, solicito ser aceptado(a) como socio(a), asimismo me comprometo a cumplir con las disposiciones del Estatuto y Leyes vigentes.</th>
                     </tr>
                 </thead>
@@ -141,22 +141,22 @@
                             <td> <span class="title">GIRO DE NEGOCIO</span>  {{$trabajo->empresa_giro_negocio}} <span >  </span> </td>
                         </tr> 
                         <tr>
-                            <td><span class="title">NÚMERO</span> [ {{$trabajo->empresa_numero}} ]  </td>
-                            <td><span class="title">MANZANA</span> [ {{$trabajo->empresa_manzana}} ]  </td>
-                            <td><span class="title">LOTE</span> [ {{$trabajo->empresa_lote}} ] </td>
+                            <td><span class="title">NÚMERO</span>  {{$trabajo->empresa_numero}}   </td>
+                            <td><span class="title">MANZANA</span>  {{$trabajo->empresa_manzana}}   </td>
+                            <td><span class="title">LOTE</span>  {{$trabajo->empresa_lote}}  </td>
                         </tr>
                         <tr>
-                            <td><span class="title">Nº DEPARTAMENTO</span> [ {{$trabajo->empresa_dpto}} ]   </td>
-                            <td><span class="title">INTERIOR</span> [ {{$trabajo->empresa_int}} ] </td>
-                            <td><span class="title">PISO</span> [ {{$trabajo->empresa_piso}} ]  </td>
+                            <td><span class="title">Nº DEPARTAMENTO</span>  {{$trabajo->empresa_dpto}}    </td>
+                            <td><span class="title">INTERIOR</span>  {{$trabajo->empresa_int}}  </td>
+                            <td><span class="title">PISO</span>  {{$trabajo->empresa_piso}}   </td>
                         </tr>
                         <tr>
                             <td colspan="3"><span class="title"> PAIS </span> {{$trabajo->empresa_pais}}</td>
                         </tr>
                         <tr>
-                            <td> <span class="title">DISTRITO</span> <span > {{$trabajo->empresa_descripcion}} </span> </td>
-                            <td> <span class="title">PROVINCIA</span> {{$trabajo->empresa_descripcion}} <span > </span> </td>
-                            <td> <span class="title">DEPARTAMENTO</span> {{$trabajo->empresa_descripcion}} </td>
+                            <td> <span class="title">DEPARTAMENTO</span> {{$departamento_trabaja->descripcion}} </td>
+                            <td> <span class="title">PROVINCIA</span> {{$provincia_trabaja->descripcion}} <span > </span> </td>
+                            <td> <span class="title">DISTRITO</span> <span > {{$distrito_trabaja->descripcion}} </span> </td>
                         </tr>
  
                         <tr>

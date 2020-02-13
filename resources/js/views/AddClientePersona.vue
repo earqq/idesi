@@ -189,7 +189,7 @@
                       <select
                         v-model="cliente.ubicacion_departamento"
                         filterable
-                        @change="filterProvinceTitular"
+                        @change="filterProvincesTitularMe"
                         dusk="departamentos_id">
                       <option value="0">SELECCIONE</option>
                       <option
@@ -206,7 +206,7 @@
                       <select
                       v-model="cliente.ubicacion_provincia"
                       filterable
-                      @change="filterDistrictTitular"
+                      @change="filterDistrictTitularMe"
                       dusk="provincias_id">
                       <option value="0">SELECCIONE</option>
                       <option
@@ -575,12 +575,12 @@
                   <div class="input_wrapper">
                     <label>¿Tiene Hijos?</label>
                     <select v-model="cliente.tools.hijos">
-                      <option value="SI">SI</option>
-                      <option value="NO">NO</option>
+                      <option value="1">SI</option>
+                      <option value="0">NO</option>
                     </select>
                   </div> 
  
-                  <div class="input_wrapper" v-if="cliente.tools.hijos=='SI'">
+                  <div class="input_wrapper" v-if="cliente.tools.hijos=='1'">
                     <label>Nro de hijos</label>
                     <input type="text" maxlength="2" v-mask="'##'" v-model="cliente.tools.numero_hijos" >
                   </div>
@@ -588,8 +588,8 @@
                   <div class="input_wrapper">
                     <label>¿Tiene cónyuge ó conviviente?</label>
                     <select v-model="cliente.tools.conyuge">
-                      <option value="true">SI</option>
-                      <option value="false">NO</option>
+                      <option value="1">SI</option>
+                      <option value="0">NO</option>
                     </select>
                   </div> 
                  
@@ -599,7 +599,7 @@
               </div>
         
               <div class="form_list" >
-                <div v-if="cliente.tools.conyuge" class="sub_step_wrapper"  >
+                <div v-if="cliente.tools.conyuge=='1'" class="sub_step_wrapper"  >
                   <h3 class="title">
                     Conyuge
                   </h3>
@@ -617,7 +617,7 @@
                         </select>
                       </div>
 
-                      <div class="input_wrapper" v-if="cliente.tools.conyuge">
+                      <div class="input_wrapper">
                         <label>Ocupación del cónyuge ó conviviente?</label>
                         <select v-model="cliente.persona.conyuge.ocupacion" maxlength="15">
                           <option value="AMA DE CASA">AMA DE CASA</option>
@@ -627,7 +627,7 @@
                       </div> 
                       <div class="input_wrapper" :class="{require: !validarDocumentoConyuge}">
                         <label> Documento </label>
-                        <input type="text" v-model="cliente.persona.conyuge.documento" maxlength="9" @keyup="datosConyuge(cliente.persona.conyuge.documento)" />
+                        <input type="text" v-model="cliente.persona.conyuge.documento" maxlength="9" @keyup="datosConyuge(cliente.persona.conyuge.documento)"  v-mask="'########'" />
                       </div>
 
                       <div class="input_wrapper" :class="{require: !validarNombresConyuge}">
@@ -663,7 +663,7 @@
 
                       <div class="input_wrapper" :class="{require: !row.validar_documentos}">
                         <label> Documento </label>
-                        <input type="text" maxlength="9" v-model="row.documento" @keyup="datosFamiliar(index,row.documento)" />
+                        <input type="text" maxlength="9" v-model="row.documento" @keyup="datosFamiliar(index,row.documento)" v-mask="'########'" />
                       </div>
 
                       <div class="input_wrapper" :class="{require: !row.validar_nombres}">
@@ -953,7 +953,7 @@ export default {
         },
         tools:{
           hijos:"NO",
-          conyuge:false,
+          conyuge:'0',
           numero_hijos:0
         },
         obligacion:{
@@ -992,17 +992,17 @@ export default {
       return this.cliente.persona.fecha_nacimiento.length>4;
     },
     validarNacimientoConyuge(){
-      if(this.cliente.tools.conyuge)
-      return this.cliente.persona.conyuge.fecha_nacimiento.length>7
+      if(this.cliente.tools.conyuge=='1')
+      return this.cliente.persona.conyuge.fecha_nacimiento.length>5
       else return true
     },
     validarDocumentoConyuge(){
-      if(this.cliente.tools.conyuge)
+      if(this.cliente.tools.conyuge=='1')
       return this.cliente.persona.conyuge.documento.length>7
       else return true
     },
     validarNombresConyuge(){
-      if(this.cliente.tools.conyuge)
+      if(this.cliente.tools.conyuge=='1')
       return this.cliente.persona.conyuge.nombres.length>7
       else return true
     },
@@ -1308,24 +1308,27 @@ export default {
     },
 
     filterProvincesTitularMe() {
+      this.cliente.ubicacion_provincia="0"
+      this.cliente.ubicacion_distrito="0"
           this.provincesTitular = this.all_provinces.filter(f => {
               return f.departamento_id == this.cliente.ubicacion_departamento
           })
       },
     filterDistrictTitularMe() {
+      this.cliente.ubicacion_distrito="0"
         this.districtsTitular = this.all_districts.filter(f => {
             return f.provincia_id == this.cliente.ubicacion_provincia
         })
     },
     filterProvincesLaboralMe() {
-      this.cliente.trabajo.provincia = '0'
-      this.cliente.trabajo.distrito = '0'
+      this.cliente.trabajo.empresa_provincia='0'
+      this.cliente.trabajo.empresa_distrito='0'
           this.provincesLaboral = this.all_provinces.filter(f => {
               return f.departamento_id == this.cliente.trabajo.empresa_departamento
           })
       },
     filterDistrictLaboralMe() {
-      this.cliente.trabajo.distrito = '0'
+      this.cliente.trabajo.empresa_distrito='0'
         this.districtsLaboral = this.all_districts.filter(f => {
             return f.provincia_id == this.cliente.trabajo.empresa_provincia
         })
@@ -1333,12 +1336,12 @@ export default {
   },
   watch: {
     'cliente.tools.numero_hijos'(new_value,old_value){
-      if (new_value == 0 && new_value != '') this.cliente.tools.hijos = 'NO'    
+      if (new_value == 0 && new_value != '') this.cliente.tools.hijos = '0'    
       this.hijosAsignacion(new_value,old_value)
     },
     'cliente.tools.hijos' (val) {
-      if (val == 'NO') this.cliente.tools.numero_hijos = 0
-      else if (val == 'SI') this.cliente.tools.numero_hijos = 1
+      if (val == '0') this.cliente.tools.numero_hijos = 0
+      else if (val == '1') this.cliente.tools.numero_hijos = 1
     },
     'cliente.documento'(val){
       if(val.length==8){
