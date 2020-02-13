@@ -80,7 +80,7 @@
                 </div>
                 <div class="name_wrapper">
                   <p class="truncate">{{ cliente.persona ?  cliente.persona.apellidos : cliente.empresa.razon_social}}</p>
-                  <small class="truncate" >{{ cliente.persona ?cliente.persona.nombres : cliente.empresa.documento}}</small>
+                  <small class="truncate" >{{ cliente.persona ? cliente.persona.nombres : cliente.empresa.documento}}</small>
                 </div>
               </div>
             </router-link>
@@ -130,9 +130,6 @@
                         Ver Cliente
                       </router-link>
                     </li>
-                    <!-- <li>
-                      Editar
-                    </li> -->
                     <li>
                         <router-link  v-if="cliente.estado=='2' && cliente.tipo_cliente=='1'"   :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
                             Nuevo prestamo

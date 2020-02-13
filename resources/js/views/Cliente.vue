@@ -112,9 +112,7 @@
             <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
           </div>
           <div class="actions">
-            
             <router-link class="credit_link"  :to="{name:'prestamo', params:{prestamoID:prestamo.id}}"> VER PRESTAMO</router-link>
-
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
@@ -122,8 +120,8 @@
                   <router-link  v-if="cliente.tipo_cliente=='1'" :to="{name:'registarPrestamo', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
                   <router-link  v-else-if="cliente.tipo_cliente=='2'" :to="{name:'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
                 </li> 
-                <li v-if="!prestamo.cualitativa && prestamo.estado==1"> <router-link :to="{name:'evalCualitativa', params:{prestamo:prestamo.id}}" >E. Cualitativa</router-link> </li>
-                <li v-if="!prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1"> <router-link :to="{name:'evalCuantitativa', params:{prestamo:prestamo.id}}" >E. Cuantitativa</router-link> </li>
+                <li v-if="!prestamo.cualitativa && prestamo.estado==1"> <router-link :to="{name:'evalCualitativa', params:{prestamoID:prestamo.id}}" >E. Cualitativa</router-link> </li>
+                <li v-if="!prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1"> <router-link :to="{name:'evalCuantitativa', params:{prestamoID:prestamo.id}}" >E. Cuantitativa</router-link> </li>
                 <li v-if="prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1" @click="enviarEvaluar(prestamo.id)"> Enviar a Evaluación</li>
                 <li> <router-link :to="{name:'archivos', params:{prestamoID:prestamo.id}}" > Documentos </router-link> </li>
               </ul>

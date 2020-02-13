@@ -297,7 +297,14 @@ class PrestamosController extends Controller
     }
     public function show($id)
     {
-        $prestamo= Prestamo::with('avales','garantias','cliente.persona.hijos','cliente.persona.conyuge','resultadoAnalisis','evaluaciones','fotos')->find($id);
+        $prestamo= Prestamo::with('avales',
+                                'garantias',
+                                'cliente.persona.hijos',
+                                'cliente.persona.conyuge',
+                                'resultadoAnalisis',
+                                'evaluaciones',
+                                'fotos',
+                                'archivos')->find($id);
         return $prestamo;
     }
     public function enviarEvaluacion($prestamoID)
