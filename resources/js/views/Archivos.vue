@@ -89,7 +89,7 @@
             </a>
           </div> 
         </div>
-        <div class="file_item" v-if='listas[3].estado'  @click="cualitativaPDF()">
+        <div class="file_item" v-if='prestamo.cualitativa'  @click="cualitativaPDF()">
           <div class="file_detail">
             <a :href="'#'"
               >
@@ -101,7 +101,7 @@
             </a>
           </div> 
         </div>
-        <div class="file_item" v-if='listas[4].estado' @click="cuantitativaPDF()">
+        <div class="file_item" v-if='prestamo.cuantitativa' @click="cuantitativaPDF()">
           <div class="file_detail">
             <a :href="'#'"
               >
@@ -390,6 +390,10 @@ export default {
         this.loaderFile=0
         this.porSubir=[]
         let self=this
+        if(this.prestamo.cualitativa)
+          this.listas[3].estado=true
+        if(this.prestamo.cuantitativa)
+          this.listas[4].estado=true
         this.listas.map(item=>{
           var a = self.prestamo.archivos.find(f=>f.nombre == item.nombre)
           if(a){

@@ -631,7 +631,7 @@ export default {
           numero_hijos: 0,
           tipo_vivienda: "PROPIA CANCELADA",
           situacion_familiar: "SOLTERO",
-          miembros_familia: 1,
+          miembros_familia: 0,
           hijos: []
         },
         comentario_central_riesgo:'',
