@@ -46,9 +46,9 @@
                   <vue-numeric
                     currency="S/. "
                     separator=","
+                    v-mask='"######"'
                     v-model="prestamo.monto_inicial"
                     v-bind:precision="2"
-                    maxlength='11'
                   ></vue-numeric>
                   <div class="message">Monto de solicitud invalido</div>
                 </div>
@@ -594,6 +594,7 @@
                     separator=","
                     v-model="prestamo.importe"
                     v-bind:precision="2"
+                    v-mask='"#####"'
                   ></vue-numeric>
                 </div>
                 <div class="input_wrapper">
@@ -601,8 +602,7 @@
                   <input
                     type="number"
                     v-model="prestamo.cuotas"
-                    :min="1"
-                    :max="48"
+                    v-mask='"#####"'
                     @keyup="meses_numero"
                   />
                 </div>
@@ -612,20 +612,21 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Cuota del sistema</label>
-                  <vue-numeric v-model="prestamo.cuota_sistema" v-bind:precision="1"></vue-numeric>
+                  <vue-numeric v-model="prestamo.cuota_sistema" v-mask='"#####"' v-bind:precision="1"></vue-numeric>
                 </div>
                 <div class="input_wrapper">
                   <label>Aporte a la fecha</label>
                   <vue-numeric
                     currency="S/. "
                     separator=","
+                    v-mask='"#####"'
                     v-model="prestamo.aporte"
                     v-bind:precision="2"
                   ></vue-numeric>
                 </div>
                 <div class="input_wrapper">
                   <label>Prob. Infocorp</label>
-                  <vue-numeric v-model="prestamo.probabilidad_infocorp" v-bind:precision="1"></vue-numeric>
+                  <vue-numeric v-model="prestamo.probabilidad_infocorp" v-mask='"###"' v-bind:precision="1"></vue-numeric>
                 </div>
               </div>
 
@@ -764,7 +765,7 @@ export default {
       return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
     },
     validateNombre(){
-      return this.prestamo.cliente.persona.nombres.length>4;
+      return this.prestamo.cliente.persona.nombres.length>2;
     }
     ,
     validateApellidos(){

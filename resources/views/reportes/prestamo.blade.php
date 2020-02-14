@@ -52,7 +52,7 @@
                         @if($cliente->tipo_cliente==1)
                             <th colspan="3" style="text-align: inherit;border: none;font-size:12px">Solicitud de Crèdito - Persona Natural</th>
                         @else
-                            <th colspan="3" style="text-align: inherit;border: none;font-size:12px">Solicitud de Crèdito - Persona Jurídica</th>
+                            <th colspan="3" style="text-align: inherit;border: none;font-size:12px">Solicitud de Crèdito - Persona Jurídica </th>
                         @endif
                         <th colspan="3" style="text-align: inherit;border: none;font-size:12px;text-align: end;">Nº <span> 15 </span></th>
                         <th colspan="3" style="text-align: inherit;border: none;font-size:12px;text-align: end;">Aporte a la fecha <span> S/. 2500</span></th>
@@ -328,8 +328,16 @@
                     
                     @forelse ($garantias as $garantia)
                         <tr>
-                            <td colspan="2"> <span class="title">Bien de garantia </span> <span > {{$garantia->bien_garantia}}</span> </td>
-                            <td><span class="title">INS.</span><span > [ {{$garantia->inscripcion}} ] </span>  <span class="title">D.J</span> <span>[ {{$garantia->declaracion_jurada}} ]</span></td>
+                            @if($garantia->bien_garantia)
+                                <td colspan="2"> <span class="title">Bien de garantia </span> <span >[ X ]</span> </td>
+                            @else 
+                                <td colspan="2"> <span class="title">Bien de garantia </span> <span >[]</span> </td>
+                            @endif
+                            @if($garantia->inscripcion)
+                            <td><span class="title">INS.</span><span > [ {{$garantia->inscripcion}} ] </span>  <span class="title">D.J</span> <span>[ X ]</span></td>
+                            @else
+                            <td><span class="title">INS.</span><span > [ {{$garantia->inscripcion}} ] </span>  <span class="title">D.J</span> <span>[]</span></td>
+                            @endif
                         </tr> 
                     @empty
                     <tr>
@@ -360,21 +368,7 @@
                             <td> <span class="title">PLAZO</span> <span > {{$prestamo->plazo}}</span> </td>
                             <td> <span class="title">CUOTAS</span> <span > {{$prestamo->cuotas}} </span> </td>
                             <td> <span class="title">APORTE</span> <span >S/. {{$prestamo->aporte}} </span> </td>
-                        </tr>
-                        @foreach ($avales as $aval)
-                        <tr>
-                                <td colspan="3"> <span class="title">Aval</span> <span > {{$aval->apellidos}} {{$aval->nombres}} </span> </td>
-                                <td> <span class="title">Dni</span> <span > {{$aval->documento}}</span> </td>
-                            </tr>   
-                        @endforeach
-                        
-                        @foreach ($garantias as $garantia)
-                        <tr>
-                                <td colspan="3"> <span class="title">Bien de garantia </span> <span > {{$garantia->bien_garantia}} </span> </td>
-                                <td><span class="title">INS.</span><span > [ {{$garantia->inscripcion}} ] </span>  <span class="title">D.J</span> <span>[ {{$garantia->declaracion_jurada}}]</span></td>
-                        </tr>
-                        @endforeach
-                        
+                        </tr>                      
                         <tr>
                             <td colspan="4" > <span class="title">COMENTARIOS</span> <span > {{$prestamo->comentarios}} </span></td>
                         </tr>

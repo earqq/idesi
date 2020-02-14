@@ -47,8 +47,8 @@
                     currency="S/. "
                     separator=","
                     v-model="prestamo.monto_inicial"
-                    v-bind:precision="2"
-                    maxlength='11'
+                    v-mask='"######"'
+                    v-bind:precision="2"                    
                   ></vue-numeric>
                   <div class="message">Monto de solicitud invalido</div>
                 </div>
@@ -72,7 +72,7 @@
                     separator=","
                     v-model="prestamo.disponibilidad_pago_inicial"
                     v-bind:precision="2"  
-                    maxlength='11'
+                    maxlength='5'
                   ></vue-numeric> 
                   <div class="message">La disponibilidad es invalida</div>
                 </div>
@@ -131,7 +131,7 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Teléfono</label>
-                  <input type="text" maxlength='15' v-model="prestamo.cliente.telefono"  />
+                  <input type="text" maxlength='10' v-model="prestamo.cliente.telefono"  />
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDireccionEmpresa}">
                   <label>Dirección</label> 
@@ -542,16 +542,16 @@
                     currency="S/. "
                     separator=","
                     v-model="prestamo.importe"
+                    v-mask='"######"'
                     v-bind:precision="2"
                   ></vue-numeric>
                 </div>
                 <div class="input_wrapper">
                   <label>Cuotas</label>
                   <input
-                    type="number"
+                    type="text"
                     v-model="prestamo.cuotas"
-                    :min="1"
-                    :max="48"
+                    v-mask='"#####"'
                     @keyup="meses_numero"
                   />
                 </div>
@@ -561,7 +561,7 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Cuota del sistema</label>
-                  <vue-numeric v-model="prestamo.cuota_sistema" v-bind:precision="1"></vue-numeric>
+                  <vue-numeric v-model="prestamo.cuota_sistema" v-mask='"#####"' v-bind:precision="1"></vue-numeric>
                 </div>
                 <div class="input_wrapper">
                   <label>Aporte a la fecha</label>
@@ -569,12 +569,13 @@
                     currency="S/. "
                     separator=","
                     v-model="prestamo.aporte"
+                    v-mask='"#####"'
                     v-bind:precision="2"
                   ></vue-numeric>
                 </div>
                 <div class="input_wrapper">
                   <label>Prob. Infocorp</label>
-                  <vue-numeric v-model="prestamo.probabilidad_infocorp" v-bind:precision="1"></vue-numeric>
+                  <vue-numeric v-model="prestamo.probabilidad_infocorp" v-mask='"###"' v-bind:precision="1"></vue-numeric>
                 </div>
               </div>
 
