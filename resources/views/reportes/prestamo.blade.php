@@ -256,7 +256,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($avals as $aval)
+                    @forelse($avales as $aval)
                         <tr>
                             <td colspan="2">
                                 <span class="title">Apellidos y Nombres</span> <span > {{$aval->apellidos}} {{$aval->nombres}}</span>

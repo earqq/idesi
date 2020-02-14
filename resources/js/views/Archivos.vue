@@ -11,24 +11,8 @@
             <option value='seleccione'>Seleccione</option> 
 
             <option v-for="(list, index) in porSubir" :key="index"  :value="list.nombre">
-              {{list.nombre}}
-            </option>
-            <!-- <option selected  value="reporte_de_central"  >Reporte de central de riesgo</option> 
-            <option selected value="copia_dni"   >Copias DNI</option>
-            <option selected value="recibo_agua_casa"  >Recibo de agua de casa</option>
-            <option selected  value="recibo_luz_casa"  >Recibo de luz de casa</option> 
-            <option selected value="titulo_casa" v-if="!subidos.titulo_casa">Titulo de propiedad de casa</option>
-            <option selected value="contrato_alquiler_casa" v-if="!subidos.contrato_alquiler_casa">Contrato de alquiler de casa</option>
-            <option selected value="foto_casa" v-if="!subidos.foto_casa">Fotos de casa</option>
-            <option selected value="recibo_agua_negocio" v-if="!subidos.recibo_agua_negocio">Recibo de agua del negocio</option>
-            <option selected value="recibo_luz_negocio" v-if="!subidos.recibo_luz_negocio">Recibo de luz del negocio</option>
-            <option selected value="contrato_alquiler_negocio" v-if="!subidos.contrato_alquiler_negocio">Contrato de alquiler del negocio</option>
-            <option selected value="boleta_compra" v-if="!subidos.boleta_compra">Boleta de compras del negocio</option>
-            <option selected value="boleta_venta" v-if="!subidos.boleta_venta">Boleta de ventas del negocio</option>
-            <option selected value="factura_compra" v-if="!subidos.factura_compra">Factura de compras del negocio</option>
-            <option selected value="factura_venta" v-if="!subidos.factura_venta">Factura de ventas del negocio</option>
-            <option selected value="fotos_negocio" v-if="!subidos.fotos_negocio">Fotos del negocio</option> -->
-
+              {{list.texto}}
+            </option>         
           </select>
         </div>
         <div class="dropzone_content">
@@ -47,14 +31,14 @@
                   <i class="material-icons-outlined">picture_as_pdf</i>
                 </div>
                 <h1>
-                  <p>  {{attachment.content.name}} {{validateSizeFile}}</p>
+                  <p>  {{ attachment.content ? attachment.content.name : ''}} {{validateSizeFile}}</p>
                   <small>{{(attachment.content.size / 1000).toFixed(2)}} Kb <b v-if="!validateSizeFile"> ( Archivo muy grande, Max: 8 Mb )</b> </small> 
                 </h1>
               </div>
           </label>
         </div>
 
-        <button v-if='fileName!="seleccione" && attachment.content.name.length>1' class="button_primary medium" type="button" @click="uploadFile">
+        <button v-if='fileName!="seleccione" && attachment.content' class="button_primary medium" type="button" @click="uploadFile">
           <span> CARGAR ARCHIVO </span>
         </button>
       </div>
@@ -81,8 +65,8 @@
 
        <div class="file_item">
           <div class="file_detail">
-            <a class="" :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/general/documento/inscripcion_de_socio.pdf'" target="_blank">
-                 <i class="material-icons-outlined"> picture_as_pdf </i>
+            <a class="" :href="'../storage/'+prestamo.cliente.documento+'_'+prestamo.id+'/general/documento/inscripcion_de_socio.pdf'" target="_blank">
+                <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
                 <p> Solicitud de Admisión </p> 
                 <small> 27 de enero de 2020 </small>              
@@ -93,23 +77,46 @@
           </div>  
         </div>
 
-         <div class="file_item"  @click="solicitudPdf()">
+        <div class="file_item"  @click="solicitudPdf()">
           <div class="file_detail">
             <a :href="'#'"
               >
               <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
-                <p> solicitud_credito </p> 
+                <p> Solicitud de credito </p> 
                 <small> 27 de enero de 2020 </small>            
               </div>
             </a>
           </div> 
         </div>
-
-   
-        <div class="file_item" v-for="(archivo, index) in prestamo.archivos" :key="index">
-          <div class="file_detail" v-if="archivo.tipo=='imagen'">
-            <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+        <div class="file_item" v-if='listas[3].estado'  @click="cualitativaPDF()">
+          <div class="file_detail">
+            <a :href="'#'"
+              >
+              <i class="material-icons-outlined"> picture_as_pdf </i>
+              <div class="file_info">
+                <p> Evaluación cualitativa </p> 
+                <small> 27 de enero de 2020 </small>            
+              </div>
+            </a>
+          </div> 
+        </div>
+        <div class="file_item" v-if='listas[4].estado' @click="cuantitativaPDF()">
+          <div class="file_detail">
+            <a :href="'#'"
+              >
+              <i class="material-icons-outlined"> picture_as_pdf </i>
+              <div class="file_info">
+                <p> Evaluación cuantitativa </p> 
+                <small> 27 de enero de 2020 </small>            
+              </div>
+            </a>
+          </div> 
+        </div>
+        <div v-for="(archivo, index) in prestamo.archivos" :key="index">
+        <div class="file_item"  v-if="archivo.nombre!='evaluacion_cuantitativa' && archivo.nombre!='evaluacion_cualitativa'">
+          <div class="file_detail" v-if="archivo.tipo=='imagen' ">
+            <a :href="'../storage/'+prestamo.cliente.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
               target="_blank">
               <i class="material-icons-outlined"> collections </i>
               <div class="file_info">
@@ -118,8 +125,8 @@
               </div>
             </a>
           </div>
-          <div class="file_detail" v-if="archivo.tipo=='documento'">
-            <a :href="'../storage/'+prestamo.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+          <div class="file_detail" v-if="archivo.tipo=='documento' ">
+            <a :href="'../storage/'+prestamo.cliente.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
               target="_blank">
               <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
@@ -129,6 +136,7 @@
             </a>
           </div>
         </div>
+        </div>
         <div v-if='prestamo.archivos.length<5'>
           <a class="spanner" v-for="i in 5" :key="i*1.5"  ></a>
         </div>
@@ -137,171 +145,46 @@
       <aside class="checklist"  :class="{showing: show_slide}">
         <div class="checklist_wrapper no_scroll">
           <div class="tree">
-            <li>
-              <div class="state complete">
+            <li v-show='lista.type==0' v-for='(lista,index) in listas' :key='index '>
+              <div class="state" :class="{complete: lista.estado}">
                 <i class="material-icons-outlined"> check </i>
               </div>
-              <a href="#">Inscripcion de socio</a>
-            </li>
-
-            <li >
-              <div class="state complete" >
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Solicitud de credito</a>
-            </li>
-
-            <li > 
-              <div class="state"  :class="{complete: verificar('reporte_de_central')}" >
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Reporte de central de riesgo</a>
-            </li>
-
-            <li  >
-              <div class="state" :class="{complete: verificar('evaluacion_cualitativa')}" >
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Evaluacion cualitativa</a>
-            </li>
-
-            <li >
-              <div class="state"  :class="{complete: verificar('evaluacion_cuantitativa')}" >
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Evaluacion de cuantitativa</a>
-            </li>
-
-            <li>
-              <div class="state"  :class="{complete: verificar('copia_dni')}" >
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Copia DNI</a>
+              <a href="#">{{lista.texto}}</a>
             </li>
           </div>
 
           <div class="tree">
             <div class="title">Documentos de casa</div>
-            <li >
-              <div class="state"  :class="{complete: verificar('recibo_agua_casa')}" >
+            <li v-show='lista.type==1' v-for='(lista,index) in listas' :key='index '>
+              <div class="state" :class="{complete: lista.estado}">
                 <i class="material-icons-outlined"> check </i>
               </div>
-              <a href="#">Recibo de agua </a>
-            </li>
-            <li>
-              <div class="state"  :class="{complete: verificar('recibo_luz_casa')}" >
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Recibo de luz</a>
-            </li>
-            <li>
-              <div class="state" >
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Ubicacion</a>
-            </li>
-            <li>
-              <div class="state" :class="{complete: verificar('titulo_casa')}" >
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Titulo de propiedad</a>
-            </li>
-            <li>
-              <div class="state" :class="{complete: verificar('contrato_alquiler_casa')}">
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Contrato de alquiler</a>
-            </li>
-            <li>
-              <div class="state" :class="{complete: verificar('foto_casa')}">
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Fotos de casa</a>
+              <a href="#">{{lista.texto}}</a>
             </li>
           </div>
 
           <div class="tree">
             <div class="title">Documentos del negocio</div>
-
-            <li> 
-              <div class="state" :class="{ complete: verificar('recibo_agua_negocio')}">
+            <li v-show='lista.type==2' v-for='(lista,index) in listas' :key='index '>
+              <div class="state" :class="{complete: lista.estado}">
                 <i class="material-icons-outlined"> check </i>
               </div>
-              <a href="#">Recibo de agua</a>
+              <a href="#">{{lista.texto}}</a>
             </li>
-             <li>
-              <div class="state" :class="{ complete: verificar('recibo_luz_negocio')}">
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Recibo de luz</a>
-            </li>
-            <li>
-              <div class="state" >
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Ubicacion</a>
-            </li>
-            <li>
-              <div class="state" :class="{ complete: verificar('contrato_alquiler_negocio')}">
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Contrato de alquiler</a>
-            </li>
-            <li>
-              <div class="state" :class="{ complete: verificar('fotos_negocio')}">
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Fotos de negocio</a>
-            </li>
-            <li>
-              <div class="state" :class="{ complete: verificar('boleta_compra')}">
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Boletas de compras</a>
-            </li>
-             <li>
-              <div class="state" :class="{ complete: verificar('factura_compra')}">
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Facturas de compras</a>
-            </li>
-            <li>
-              <div class="state" :class="{ complete: verificar('boleta_venta')}">
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Boletas  de ventas</a>
-            </li>
-            <li>
-              <div class="state" :class="{ complete: verificar('factura_venta')}" >
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#"> Facturas de ventas</a>
-            </li>
+            
           </div>
 
           <div class="tree">
             <div class="title">Colateral</div>
-            <li>
-              <div class="state" >
+            <li v-show='lista.type==3' v-for='(lista,index) in listas' :key='index '>
+              <div class="state" :class="{complete: lista.estado}">
                 <i class="material-icons-outlined"> check </i>
               </div>
-              <a href="#">Ubicacion</a>
-            </li>
-            <li>
-              <div class="state" >
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Contrato de alquiler</a>
-            </li>
-            <li>
-              <div class="state" >
-                <i class="material-icons-outlined"> check </i>
-              </div>
-              <a href="#">Fotos de negocio</a>
+              <a href="#">{{lista.texto}}</a>
             </li>
           </div>
         </div>
-        <a class="button_primary generate" @click="cargarPdf">
+        <a class="button_primary generate" @click="generarExpediente">
           <span>
             GENERAR EXPEDIENTE
           </span>
@@ -349,84 +232,155 @@ export default {
       message: "",
       errors: {},
       prestamo: {
+        id:0,
+        cliente:{},
         archivos:[]
       },      
-      lista: [
+      listas: [
+        {
+          nombre:  "inscripcion_socio",
+          texto: "Inscripcion de socio",
+          estado: true,
+          type:0
+        },
+        {
+          nombre:  "solicitud_credito",
+          texto: "Solicitud de crédito",
+          estado: true,
+          type:0
+        },
         {
           nombre:  "reporte_de_central",
           texto: "Reporte de central de riesgo",
-          estado: false
+          estado: false,
+          type:0
+        },
+        {
+          nombre:  "evaluacion_cualitativa",
+          texto: "Evaluación cualitativa",
+          estado: false,
+          type:0
+        },
+        {
+          nombre:  "evaluacion_cuantitativa",
+          texto: "Evaluación cuantitativa",
+          estado: false,
+          type:0
         },
         {
           nombre:  "copia_dni",
           texto: "Copia DNI",
-          estado: false
+          estado: false,
+          type:0
         },
         {
           nombre:  "recibo_agua_casa",
-          texto: "Recibo de agua",
-          estado: false
+          texto: "Recibo de agua casa",
+          estado: false,
+          type:1
         },
         {
           nombre:  "recibo_luz_casa",
-          texto: "Recibo de luz",
-          estado: false
+          texto: "Recibo de luz casa",
+          estado: false,
+          type:1
+        },
+        {
+          nombre:  "ubicacion",
+          texto: "Ubicacion casa",
+          estado: false,
+          type:1
         },
         {
           nombre:  "titulo_casa",
-          texto: "Título de propiedad",
-          estado: false
+          texto: "Título de propiedad casa" ,
+          estado: false,
+          type:1
         },
         {
           nombre:  "contrato_alquiler_casa",
-          texto: "Contrato de alquiler",
-          estado: false
+          texto: "Contrato de alquiler casa",
+          estado: false,
+          type:1
         },
         {
           nombre:   "foto_casa",
           texto: "Fotos de casa",          
-          estado: false
+          estado: false,
+          type:1
         },
         {
           nombre: "recibo_agua_negocio",
-          texto: "Reporte de agua",
-          estado: false
+          texto: "Reporte de agua negocio",
+          estado: false,
+          type:2
         },
         {
           nombre:  "recibo_luz_negocio",
-          texto: "Reporte de luz",
-          estado: false
+          texto: "Reporte de luz negocio",
+          estado: false,
+          type:2
         },
         {
-          nombre:  "contrato_alquiler_negocio",
-          texto: "Contrato de alquiler",
-          estado: false
+          nombre:  "ubicacion_negocio",
+          texto: "Ubicacion negocio",
+          estado: false,
+          type:2
         },
         {
-          nombre:   "boleta_compra",
+          nombre: "contrato_alquiler_negocio",
+          texto: "Contrato de alquiler negocio",
+          estado: false,
+          type:2
+        },
+        {
+          nombre: "fotos_negocio",
+          texto: "Fotos de negocio",
+          estado: false,
+          type:2
+        },
+        {
+          nombre: "boleta_compra",
           texto: "Boletas de compra",
-          estado: false
+          estado: false,
+          type:2
+        },
+        {
+          nombre: "factura_compra",
+          texto: "Facturas de compra",
+          estado: false,
+          type:2
         },
         {
           nombre: "boleta_venta",
           texto: "Boletas de venta",
-          estado: false
-        },
+          estado: false,
+          type:2
+        },       
         {
           nombre:   "factura_venta",
           texto: "Facturas de venta",
-          estado: false
+          estado: false,
+          type:2
         },
         {
-          nombre:   "factura_compra",
-          texto: "Facturas de compra",
-          estado: false
+          nombre:  "ubicacion_colateral",
+          texto: "Ubicacion colateral",
+          estado: false,
+          type:3
         },
         {
-          nombre:  "fotos_negocio",
-          texto: "Facturas de negocio",
-          estado: false
-        } 
+          nombre:  "contrato_alquiler_colateral",
+          texto: "Contrato de alquiler colateral",
+          estado: false,
+          type:3
+        },
+        {
+          nombre:  "fotos_negocio_colateral",
+          texto: "Fotos de negocio colateral",
+          estado: false,
+          type:3
+        }  
       ],
       porSubir: []
     };
@@ -441,20 +395,23 @@ export default {
     },
     listFile() {
       this.$http.get(`/prestamos/`+this.$route.params.prestamoID).then(response => {
-        console.log("si viene")
-        console.log(response)
         this.prestamo = response.data        
 
         this.loaderFile=0
         this.porSubir=[]
         let self=this
-        this.lista.map(item=>{
+        this.listas.map(item=>{
           var a = self.prestamo.archivos.find(f=>f.nombre == item.nombre)
           if(a){
             item.estado= true
           }else{
+            if(item.nombre!='inscripcion_socio' && 
+              item.nombre!='evaluacion_cualitativa' &&
+              item.nombre!='evaluacion_cuantitativa' &&
+              item.nombre!='solicitud_credito')
             self.porSubir.push({
-              nombre: item.nombre
+              nombre: item.nombre,
+              texto: item.texto
             })
           }
           // console.log(a);
@@ -524,7 +481,6 @@ export default {
       this.errors = {};
     },
     uploadFile() {
-      console.log(this.$route.params.prestamoID)
       this.loading=true
       this.formData = new FormData();
       this.formData.append("name", this.fileName);
@@ -532,7 +488,7 @@ export default {
       this.formData.append("file", this.attachment.content);
 
       this.$http
-        .post(`/files/add`, this.formData, {
+        .post(`/prestamos/archivos`, this.formData, {
           headers: { "Content-Type": "multipart/form-data" }
         })
         .then(response => {
@@ -553,17 +509,17 @@ export default {
           this.showNotification(error.response.data.message, false);
         });
     },
-    cargarPdf(){
-                window.open('/clientes/adjuntarPdf/'+this.$route.params.prestamoID,'_blank'); 
+    generarExpediente(){
+                window.open('/pdf/prestamo/expediente/'+this.$route.params.prestamoID,'_blank'); 
     },
     solicitudPdf(){
-              window.open('/clientes/solicitudPdf/'+this.$route.params.prestamoID,'_blank'); 
+              window.open('/pdf/prestamo/'+this.$route.params.prestamoID,'_blank'); 
     },
-    cualitativaPdf(){
-              window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamoID,'_blank'); 
+    cualitativaPDF(){
+              window.open('/pdf/evaluacion/cualitativa/'+this.$route.params.prestamoID,'_blank'); 
     },
-    cuantitativaPdf(){
-              window.open('/evaluacion/cuantitativaPdf/'+this.$route.params.prestamoID,'_blank'); 
+    cuantitativaPDF(){
+              window.open('/pdf/evaluacion/cuantitativa/'+this.$route.params.prestamoID,'_blank'); 
     }
   },
   computed: {

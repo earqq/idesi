@@ -50,7 +50,9 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('prestamos/search/{state}/{text?}','PrestamosController@search');
         Route::get('prestamos/enviarEvaluacion/{prestamoID}', 'PrestamosController@enviarEvaluacion');
         Route::post('prestamos/evaluar', 'PrestamosController@evaluar');
-        Route::post('prestamos/foto', 'PrestamosController@guardarFoto');
+        Route::post('prestamos/foto', 'PrestamosController@guardarFoto');    
+        Route::post('prestamos/archivos', 'PrestamosController@subirArchivo');
+        Route::put('prestamos/archivos/{fileID}', 'PrestamosController@eliminarArchivo');
         //Herramientas
         Route::get('extras/giro', 'ExtrasController@giro');
         Route::get('extras/colegio', 'ExtrasController@colegios');
@@ -62,20 +64,13 @@ Route::group(['middleware'=>['auth']],function(){
         Route::post('analisis/cualitativa','AnalisisController@saveCualitativa'); 
         Route::post('analisis/cuantitativa','AnalisisController@saveCuantitativa');
         //PDF
-        Route::get('/pdf/prestamo/expediente/{prestamoID}','FileController@expediente')->name('adjuntar_pdf');
-        Route::get('/pdf/clientes/solicitudAdmision','FileController@solicitudAdmision')->name('solicitud_pdf');
+        Route::get('/pdf/prestamo/expediente/{prestamoID}','PDFController@expediente')->name('adjuntar_pdf');
+        Route::get('/pdf/prestamo/{prestamoID}','PDFController@solicitudCredito')->name('solicitud_credito');
+        Route::get('/pdf/evaluacion/cualitativa/{prestamoID}','PDFController@cualitativa')->name('cualitativa_pdf');
+        Route::get('/pdf/evaluacion/cuantitativa/{prestamoID}','PDFController@cuantitativa')->name('cuantitativa_pdf');
 
 
 
-        Route::get('/evaluacion/cualitativaPdf/{prestamo}','EvaluacionesController@CualitativaPdf')->name('cualitativa_pdf');
-        Route::get('/evaluacion/cuantitativaPdf/{prestamo}','EvaluacionesController@CuantitativaPdf')->name('cuantitativa_pdf');
-
-
-    
-
-        Route::get('/files/{id}', 'FileController@index');
-        Route::post('files/add', 'FileController@store');
-        Route::get('files/delete/{id}/{prestamo}', 'FileController@destroy');
 
         // Route::get('{path}',"HomeController@index")->where('path','([A-z\d-\/_.]+)?');
         // evaluaciones cuantitativas y cualitativas
