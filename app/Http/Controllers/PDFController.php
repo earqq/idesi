@@ -115,7 +115,7 @@ class PDFController extends Controller
         $avales=$prestamo->avales;
         $garantias=$prestamo->garantias;
         $archivos=$prestamo->archivos;               
-        // Storage::disk('public')->deleteDirectory('/expedientes/'.$cliente->documento);
+        Storage::disk('public')->deleteDirectory('/expedientes/'.$cliente->documento);
         $pdfMerge = new \LynX39\LaraPdfMerger\PdfManage;
         //Inscripcion de socio
         $pdfFile = Storage::disk('s3')->get('clientes/'.$cliente->documento.'/inscripcion_de_socio.pdf');                
