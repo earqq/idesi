@@ -66,7 +66,7 @@
             </div>
             
           </article>
-          <a v-show="prestamos.length < 4" class="spanner" v-for="i in 4" :key="i*1.3"  >
+          <a v-show="prestamos.length < 4" class="spanner" v-for="i in 4" :key="i*1.3"  > 
           </a>
         </div>
 
