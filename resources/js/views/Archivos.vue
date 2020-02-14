@@ -114,19 +114,9 @@
           </div> 
         </div>
         <div v-for="(archivo, index) in prestamo.archivos" :key="index">
-        <div class="file_item"  v-if="archivo.nombre!='evaluacion_cuantitativa' && archivo.nombre!='evaluacion_cualitativa'">
-          <div class="file_detail" v-if="archivo.tipo=='imagen' ">
-            <a :href="'../storage/'+prestamo.cliente.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
-              target="_blank">
-              <i class="material-icons-outlined"> collections </i>
-              <div class="file_info">
-                <p > {{archivo.nombre | noUnderscore }}</p>
-                <small> 27 de enero de 2020 </small>            
-              </div>
-            </a>
-          </div>
-          <div class="file_detail" v-if="archivo.tipo=='documento' ">
-            <a :href="'../storage/'+prestamo.cliente.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+        <div class="file_item"  v-if="archivo.nombre!='evaluacion_cuantitativa' && archivo.nombre!='evaluacion_cualitativa'">        
+          <div class="file_detail" >
+            <a :href="'/pdf/archivos/'+archivo.id"
               target="_blank">
               <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">

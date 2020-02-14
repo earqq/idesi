@@ -138,9 +138,7 @@ class EmpresasController extends Controller
                 
                 $pdf = PDF::loadView('reportes.inscripcionJuridico',compact('cliente','empresa','representante',
                 'directores','accionistas','obligacion','declaracion'));
-
-                if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
-                }
+                Storage::disk("s3")->put('/clientes/'.$cliente->documento.'/inscripcion_de_socio.pdf', $pdf->output());
 
 
                 DB::commit();

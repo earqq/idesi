@@ -26,6 +26,6 @@ class Archivo extends Model
      */
     public function prestamo()
     {
-        return $this->belongsTo('App\Prestamo', 'prestamos_id');
+        return $this->belongsTo('App\Prestamo', 'prestamo_id');
     }
 }

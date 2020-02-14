@@ -228,8 +228,7 @@ class PrestamosController extends Controller
                 $garantia->declaracion_jurada = $garantias['declaracion_jurada'];
                 $garantia->prestamo_id = $prestamo->id;
                 $garantia->save();
-            }
-
+            }          
             DB::commit();
 
             return [
@@ -321,21 +320,18 @@ class PrestamosController extends Controller
         $cliente = $prestamo->cliente;
         $nombre = $request['name'];
         $extension = $ext;
-
-        if (Storage::disk("s3")->putFileAs('/clientes/'.$cliente->documento.'/prestamo_'.$request['prestamo_id']. '/' , $file, $request['name'] . '.' . $ext)) {
-            
-            if($type=='imagen'){
-                $pdf=PDF::loadView('reportes.imagen',compact('prestamo','cliente','nombre','extension'));
-                Storage::disk("s3")->put('/clientes/'.$cliente->documento.'/prestamo_'.$prestamo->id.'/'.$request['name'].'.pdf', $pdf->output());
-            } 
-            
+        if($type=='imagen'){
+            $pdf=PDF::loadView('reportes.imagen',compact('prestamo','cliente','nombre','extension'));
+            Storage::disk("s3")->put('/clientes/'.$cliente->documento.'/prestamo_'.$prestamo->id.'/'.$request['name'].'.pdf', $pdf->output());
+        }
+        else 
+            Storage::disk("s3")->putFileAs('/clientes/'.$cliente->documento.'/prestamo_'.$request['prestamo_id']. '/' , $file, $request['name'] . '.' . $ext);
             $archivo = new Archivo;
             $archivo->nombre = $request['name'];
             $archivo->tipo = $type;
             $archivo->extension= $ext;
             $archivo->prestamo_id = $request['prestamo_id'];
             $archivo->save();
-        }
  
         return response()->json(false);
     }
