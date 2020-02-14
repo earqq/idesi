@@ -742,7 +742,7 @@ class AnalisisController extends Controller
             $cualitativa->comentario_colateral=$request->comentario_colateral;
             $cualitativa->save();
 
-            $prestamo = Prestamo::find($request->prestamo_id); 
+            $prestamo = $cualitativa->prestamo_id;
             $prestamo->cualitativa=1;
             $prestamo->save();
 
