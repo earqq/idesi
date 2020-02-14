@@ -138,7 +138,8 @@
                                           </tr>
                                        
                                     </thead>
-                                    <tbody>
+                                    <tbody> 
+                                        @if($cualitativa->familiar['hijos'])
                                             @foreach ($cualitativa->familiar['hijos'] as $hijos)
                                                 <tr>
                                                     <td>{{$hijos['edad']}}</td>
@@ -147,7 +148,7 @@
                                                     <td>S/. {{$hijos['costo']}}</td>
                                                 </tr>      
                                             @endforeach
-                                                  
+                                        @endif
                                     </tbody>
                                 </table>
                                 </td>
@@ -189,18 +190,19 @@
                                    
                                 </thead>
                                 <tbody>
-                                    @foreach ($cualitativa->central_riesgo as $cual)
-                                    <tr>
-                                        <td>{{$cual['entidad_financiera']}}</td>
-                                        <td>{{ $cual['capital'] ? 'SI' : 'NO'}}</td>
-                                        <td> {{ $cual['activo_f'] ? 'SI' : 'NO'}}</td>
-                                        <td>{{ $cual['consumo'] ? 'SI' : 'NO'}}</td>
-                                        <td>{{ $cual['vehicular'] ? 'SI' : 'NO'}}</td>
-                                        <td>{{ $cual['hipoteca'] ? 'SI' : 'NO'}}</td>
-                                        <td>{{ $cual['terceros'] ? 'SI' : 'NO'}}</td>
-                                    
-                                    </tr>
-                                    @endforeach
+                                    @if($cualitativa->central_riesgo)
+                                        @foreach ($cualitativa->central_riesgo as $cual)
+                                        <tr>
+                                            <td>{{$cual['entidad_financiera']}}</td>
+                                            <td>{{ $cual['capital'] ? 'SI' : 'NO'}}</td>
+                                            <td> {{ $cual['activo_f'] ? 'SI' : 'NO'}}</td>
+                                            <td>{{ $cual['consumo'] ? 'SI' : 'NO'}}</td>
+                                            <td>{{ $cual['vehicular'] ? 'SI' : 'NO'}}</td>
+                                            <td>{{ $cual['hipoteca'] ? 'SI' : 'NO'}}</td>
+                                            <td>{{ $cual['terceros'] ? 'SI' : 'NO'}}</td>
+                                        </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                     </tr>
@@ -229,6 +231,7 @@
                                    
                                 </thead>
                                 <tbody>
+                                @if($cualitativa->central_riesgo)
                                     @foreach ($cualitativa->referencias as $ref)
                                     @if ($ref['tipo_relacion'])
                                         
@@ -240,6 +243,7 @@
                                     </tr>
                                     @endif
                                     @endforeach   
+                                @endif
                                 </tbody>
                             </table>
                     </tr>  

@@ -55,6 +55,22 @@ class PDFController extends Controller
 
         }
     }
+    public function inscripcionCliente($clienteID){
+        $cliente=Cliente::find($clienteID);
+        $filename=$cliente->documento.'/inscripcion_de_socio.pdf';
+        if (Storage::disk('s3')->exists('clientes/'.$filename))
+        {
+            $file = Storage::disk('s3')->get('clientes/'.$filename);
+            $headers = [
+                'Content-Type' => 'application/pdf', 
+                'Content-Description' => 'File Transfer',
+                'Content-Disposition' => "attachment; filename=".$filename,
+            ];
+            return response($file, 200, $headers); 
+        }	    
+        else return "Archivo no encontrado";
+
+    }
     public function cualitativa($prestamoID){
 
         $cualitativa= Cualitativa::where('prestamo_id',intval($prestamoID))->first();  

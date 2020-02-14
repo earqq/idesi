@@ -63,9 +63,9 @@
           <p> NUEVO ARCHIVO  </p>
         </a>
 
-       <div class="file_item">
+       <div class="file_item"  @click="inscripcionPdf()">
           <div class="file_detail">
-            <a class="" :href="'../storage/'+prestamo.cliente.documento+'_'+prestamo.id+'/general/documento/inscripcion_de_socio.pdf'" target="_blank">
+            <a class=""  target="_blank">
                 <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
                 <p> Solicitud de Admisión </p> 
@@ -504,6 +504,9 @@ export default {
     },
     solicitudPdf(){
               window.open('/pdf/prestamo/'+this.$route.params.prestamoID,'_blank'); 
+    },
+    inscripcionPdf(){
+              window.open('/pdf/cliente/inscripcion/'+this.prestamo.cliente.id,'_blank'); 
     },
     cualitativaPDF(){
               window.open('/pdf/evaluacion/cualitativa/'+this.$route.params.prestamoID,'_blank'); 

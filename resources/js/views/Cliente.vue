@@ -8,7 +8,7 @@
             <ul>
               <!-- <li>Editar</li> -->
               <li>
-                <a class="" :href="'../storage/'+cliente.documento+'_'+cliente.id+'/general/documento/inscripcion_de_socio.pdf'" target="_blank">
+                <a class="" @click='inscripcionPdf()' target="_blank">
                   Solicitud de Admisión
                 </a>
             </li>
@@ -175,6 +175,9 @@ export default {
     await   this.obtenerDatosCliente()
   },
   methods: {
+    inscripcionPdf(){
+              window.open('/pdf/cliente/inscripcion/'+this.cliente.id,'_blank'); 
+    },
     cambiarView(id){
       this.idprestamo= id
       this.view=true
