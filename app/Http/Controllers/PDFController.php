@@ -122,11 +122,11 @@ class PDFController extends Controller
         Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf',$pdfFile);
         $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf'), 'all');
         \Log::alert(public_path('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf'));
-        // //Solicitud de crédito
-        // $pdfFile = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge','empresa'));
-        // Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf',$pdfFile);
-        // $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'), 'all');        
-        // \Log::alert(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'));
+        //Solicitud de crédito
+        $pdfFile = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge','empresa'));
+        Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf',$pdfFile);
+        $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'), 'all');        
+        \Log::alert(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'));
         // //cualitativa
         // if($prestamo->cualitativa){
         //     $cualitativa= Cuantitativa::where('prestamo_id',intval($prestamoID))->first();        
