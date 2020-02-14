@@ -154,7 +154,7 @@ class PDFController extends Controller
             $filepath=public_path('/expedientes/'.$cliente->documento.'/'.$archivo->nombre.'.'.$archivo->extension);
             $pdfMerge->addPDF($filepath, 'all');
         }
-        Storage::disk('public')->deleteDirectory('/expedientes/'.$cliente->documento);
+        // Storage::disk('public')->deleteDirectory('/expedientes/'.$cliente->documento);
         $pdfMerge->merge("archivo_adjunto.pdf", "download");
     }
 }
