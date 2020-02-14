@@ -693,7 +693,7 @@ class AnalisisController extends Controller
                 $cuantitativa->propiedades=$request->propiedades;
                 $cuantitativa->save();
 
-                $prestamo = Prestamo::find($request->prestamo_id);
+                $prestamo = $cuantitativa->prestamo_id;
                 $prestamo->cuantitativa=1;
                 $prestamo->save();
 
