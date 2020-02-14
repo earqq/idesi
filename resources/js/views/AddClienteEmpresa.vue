@@ -159,7 +159,7 @@
 
                   <div class="input_wrapper">
                     <label>Teléfono</label>
-                    <input type="text" maxlength="15" v-model="cliente.telefono" />
+                    <input type="text" maxlength="10" v-model="cliente.telefono" />
                   </div>
 
                   <div class="input_wrapper" :class="{require: !validateCelular}">
