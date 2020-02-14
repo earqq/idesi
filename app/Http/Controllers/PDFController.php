@@ -10,6 +10,8 @@ use App\Archivo;
 use App\Subido;
 use App\Persona ;
 use App\Conyuge ;
+use App\Cualitativa;
+use App\Cuantitativa;
 use App\Aval ;
 use App\Garantia ;
 use App\Cliente;
@@ -50,6 +52,22 @@ class PDFController extends Controller
             return $pdf->stream('solicitud_de_credito.pdf');
 
         }
+    }
+    public function cualitativa($prestamoID){
+
+        $cualitativa= Cualitativa::where('prestamo_id',intval($prestamoID))->first();  
+        $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
+        return $pdf->stream('evaluacion_cualitativa.pdf');
+
+    }
+
+    public function cuantitativa($prestamoID){
+
+        $cuantitativa= Cuantitativa::where('prestamo_id',intval($prestamoID))->first();
+        // return $cuantitativa;
+        $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
+        return $pdf->stream('evaluacion_cuantitativa.pdf');
+
     }
     public function expediente($prestamoID){
 

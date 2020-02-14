@@ -77,22 +77,45 @@
           </div>  
         </div>
 
-         <div class="file_item"  @click="solicitudPdf()">
+        <div class="file_item"  @click="solicitudPdf()">
           <div class="file_detail">
             <a :href="'#'"
               >
               <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
-                <p> solicitud_credito </p> 
+                <p> Solicitud de credito </p> 
                 <small> 27 de enero de 2020 </small>            
               </div>
             </a>
           </div> 
         </div>
-
-   
-        <div class="file_item" v-for="(archivo, index) in prestamo.archivos" :key="index">
-          <div class="file_detail" v-if="archivo.tipo=='imagen'">
+        <div class="file_item" v-if='listas[3].estado'  @click="cualitativaPDF()">
+          <div class="file_detail">
+            <a :href="'#'"
+              >
+              <i class="material-icons-outlined"> picture_as_pdf </i>
+              <div class="file_info">
+                <p> Evaluación cualitativa </p> 
+                <small> 27 de enero de 2020 </small>            
+              </div>
+            </a>
+          </div> 
+        </div>
+        <div class="file_item" v-if='listas[4].estado' @click="cuantitativaPDF()">
+          <div class="file_detail">
+            <a :href="'#'"
+              >
+              <i class="material-icons-outlined"> picture_as_pdf </i>
+              <div class="file_info">
+                <p> Evaluación cuantitativa </p> 
+                <small> 27 de enero de 2020 </small>            
+              </div>
+            </a>
+          </div> 
+        </div>
+        <div v-for="(archivo, index) in prestamo.archivos" :key="index">
+        <div class="file_item"  v-if="archivo.nombre!='evaluacion_cuantitativa' && archivo.nombre!='evaluacion_cualitativa'">
+          <div class="file_detail" v-if="archivo.tipo=='imagen' ">
             <a :href="'../storage/'+prestamo.cliente.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
               target="_blank">
               <i class="material-icons-outlined"> collections </i>
@@ -102,7 +125,7 @@
               </div>
             </a>
           </div>
-          <div class="file_detail" v-if="archivo.tipo=='documento'">
+          <div class="file_detail" v-if="archivo.tipo=='documento' ">
             <a :href="'../storage/'+prestamo.cliente.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
               target="_blank">
               <i class="material-icons-outlined"> picture_as_pdf </i>
@@ -112,6 +135,7 @@
               </div>
             </a>
           </div>
+        </div>
         </div>
         <div v-if='prestamo.archivos.length<5'>
           <a class="spanner" v-for="i in 5" :key="i*1.5"  ></a>
@@ -491,11 +515,11 @@ export default {
     solicitudPdf(){
               window.open('/pdf/prestamo/'+this.$route.params.prestamoID,'_blank'); 
     },
-    cualitativaPdf(){
-              window.open('/evaluacion/cualitativaPdf/'+this.$route.params.prestamoID,'_blank'); 
+    cualitativaPDF(){
+              window.open('/pdf/evaluacion/cualitativa/'+this.$route.params.prestamoID,'_blank'); 
     },
-    cuantitativaPdf(){
-              window.open('/evaluacion/cuantitativaPdf/'+this.$route.params.prestamoID,'_blank'); 
+    cuantitativaPDF(){
+              window.open('/pdf/evaluacion/cuantitativa/'+this.$route.params.prestamoID,'_blank'); 
     }
   },
   computed: {

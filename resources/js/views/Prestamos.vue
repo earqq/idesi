@@ -60,7 +60,7 @@
                 <ul>
                   <li v-if='currentUser.nivel<4 && prestamo.estado==2'> <router-link :to="{name:'/prestamos/evaluar/', params:{prestamoID:prestamo.id}}"  >Evaluar</router-link></li>
                   <li v-else-if='currentUser.nivel<4'> <router-link :to="{name:'/prestamos/evaluar/', params:{prestamoID:prestamo.id}}"  >Ver Evaluación</router-link></li>
-                  <li > <router-link :to="{name:'archivos', params:{prestamo:prestamo.id}}" > Documentos </router-link> </li>
+                  <li > <router-link :to="{name:'archivos', params:{prestamoID:prestamo.id}}" > Documentos </router-link> </li>
                 </ul>
               </div>
             </div>

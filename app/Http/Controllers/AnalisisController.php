@@ -699,16 +699,16 @@ class AnalisisController extends Controller
 
 
                 $cliente = Cliente::where('id',$prestamo->cliente_id)->first();
-                $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
-                if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cuantitativa.pdf', $pdf->output())){
+                // $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
+                // if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cuantitativa.pdf', $pdf->output())){
                     
-                    $archivo = new Archivo();
-                    $archivo->nombre = 'evaluacion_cuantitativa';
-                    $archivo->tipo = 'documento';
-                    $archivo->extension='pdf';
-                    $archivo->prestamo_id= $prestamo->id;
-                    $archivo->save();
-                }
+                //     $archivo = new Archivo();
+                //     $archivo->nombre = 'evaluacion_cuantitativa';
+                //     $archivo->tipo = 'documento';
+                //     $archivo->extension='pdf';
+                //     $archivo->prestamo_id= $prestamo->id;
+                //     $archivo->save();
+                // }
 
                 DB::commit();
                 return [
@@ -748,16 +748,16 @@ class AnalisisController extends Controller
 
    
  
-            $cliente = Cliente::where('id',$prestamo->cliente_id)->first();
-            $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
-            if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
-                $archivo = new Archivo();
-                $archivo->nombre = 'evaluacion_cualitativa';
-                $archivo->tipo = 'documento';
-                $archivo->extension='pdf';
-                $archivo->prestamo_id= $prestamo->id;
-                $archivo->save();
-            }
+            // $cliente = Cliente::where('id',$prestamo->cliente_id)->first();
+            // $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
+            // if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
+            //     $archivo = new Archivo();
+            //     $archivo->nombre = 'evaluacion_cualitativa';
+            //     $archivo->tipo = 'documento';
+            //     $archivo->extension='pdf';
+            //     $archivo->prestamo_id= $prestamo->id;
+            //     $archivo->save();
+            // }
 
  
             DB::commit();
@@ -774,23 +774,7 @@ class AnalisisController extends Controller
  
     }
 
-    public function CualitativaPdf($prestamo){
-
-        $cualitativa= cualitativa::where('prestamo_id',$prestamo)->first();
-        // return $cualitativa;
-        $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
-        return $pdf->stream('evaluacion_cualitativa.pdf');
-
-    }
-
-    public function CuantitativaPdf($prestamo){
-
-        $cuantitativa= cuantitativa::where('prestamo_id',$prestamo)->first();
-        // return $cuantitativa;
-        $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
-        return $pdf->stream('evaluacion_cuantitativa.pdf');
-
-    }
+   
 
 
 
