@@ -43,13 +43,12 @@
               <div class="group_form">
                 <div class="input_wrapper" :class="{require: !validateMonto}">
                   <label>Monto</label> 
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
+                  <input type='text' v-mask='"######"'
+                    
+                    
                     v-model="prestamo.monto_inicial"
-                    v-bind:precision="2"                    
-                    maxlength='5'
-                  ></vue-numeric>
+                                        
+                  >
                   <div class="message">Monto de solicitud invalido</div>
                 </div>
                 <div class="input_wrapper">
@@ -67,13 +66,12 @@
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
                   <label>Disponibilidad de pago</label>
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
+                  <input type='text' v-mask='"######"'
+                    
+                    
                     v-model="prestamo.disponibilidad_pago_inicial"
-                    v-bind:precision="2"  
-                    maxlength='5'
-                  ></vue-numeric> 
+                                          
+                  > 
                   <div class="message">La disponibilidad es invalida</div>
                 </div>
               </div>
@@ -409,12 +407,12 @@
                     </div>
                     <div  v-if="row.socio=='1'"  :class="{require: !row.validate_aporte_socio , other: validateCodigosSociosAval}" class="input_wrapper">
                       <label>Aporte</label>
-                      <vue-numeric
-                        currency="S/. "
-                        separator=","
+                      <input type='text' v-mask='"######"'
+                        
+                        
                         v-model="row.aporte_socio"
-                        v-bind:precision="2"
-                      ></vue-numeric>
+                        
+                      >
                     </div>
               
                     <div class="input_wrapper">
@@ -538,13 +536,9 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Importe</label>
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
-                    v-model="prestamo.importe"
-                    v-mask='"######"'
-                    v-bind:precision="2"
-                  ></vue-numeric>
+                  <input type='text' v-mask='"######"'
+                    v-model="prestamo.importe"                    
+                  >
                 </div>
                 <div class="input_wrapper">
                   <label>Cuotas</label>
@@ -561,21 +555,17 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Cuota del sistema</label>
-                  <vue-numeric v-model="prestamo.cuota_sistema" v-mask='"#####"' v-bind:precision="1"></vue-numeric>
+                  <input type='number'  v-model="prestamo.cuota_sistema" >
                 </div>
                 <div class="input_wrapper">
                   <label>Aporte a la fecha</label>
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
+                  <input type='number' 
                     v-model="prestamo.aporte"
-                    v-mask='"#####"'
-                    v-bind:precision="2"
-                  ></vue-numeric>
+                  >
                 </div>
                 <div class="input_wrapper">
                   <label>Prob. Infocorp</label>
-                  <vue-numeric v-model="prestamo.probabilidad_infocorp" v-mask='"###"' v-bind:precision="1"></vue-numeric>
+                  <input type='number' v-model="prestamo.probabilidad_infocorp" >
                 </div>
               </div>
 
@@ -905,6 +895,7 @@ export default {
       this.provincesTitular = this.all_provinces.filter(f => {
           return f.departamento_id == this.prestamo.cliente.ubicacion_departamento
       })
+      if(this.provincesTitular[0])
       this.prestamo.cliente.ubicacion_provincia=this.provincesTitular[0].id
       this.filterDistrictTitularMe()
     },
@@ -912,6 +903,7 @@ export default {
         this.districtsTitular = this.all_districts.filter(f => {
             return f.provincia_id == this.prestamo.cliente.ubicacion_provincia
         })
+        if(this.districtsTitular[0])
         this.prestamo.cliente.ubicacion_distrito=this.districtsTitular[0].id
     },
     obtenerDatosPrestamo(){

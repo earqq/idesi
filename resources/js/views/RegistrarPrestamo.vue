@@ -43,13 +43,10 @@
               <div class="group_form">
                 <div class="input_wrapper" :class="{require: !validateMonto}">
                   <label>Monto</label> 
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
+                  <input type='text'
                     v-mask='"######"'
                     v-model="prestamo.monto_inicial"
-                    v-bind:precision="2"
-                  ></vue-numeric>
+                  >
                   <div class="message">Monto de solicitud invalido</div>
                 </div>
                 <div class="input_wrapper">
@@ -67,13 +64,11 @@
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
                   <label>Disponibilidad de pago</label>
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
+                  <input
+                    type='text'                    
                     v-model="prestamo.disponibilidad_pago_inicial"
-                    v-bind:precision="2"  
-                    maxlength='11'
-                  ></vue-numeric> 
+                    v-mask='"######"'
+                  >
                   <div class="message">La disponibilidad es invalida</div>
                 </div>
               </div>
@@ -302,7 +297,7 @@
                   
                   <div class="input_wrapper" :class="{require: !validateAporteConyuge}" v-if="prestamo.cliente.persona.conyuge.socio">
                     <label>Aporte </label>
-                    <vue-numeric currency="S/. " separator="," v-model="prestamo.cliente.persona.conyuge.aporte_socio" v-bind:precision="2"></vue-numeric>
+                    <input type='text' v-mask='"######"' v-model="prestamo.cliente.persona.conyuge.aporte_socio" >
                   </div>                 
                   <div class="input_wrapper">
                     <label>Teléfono</label>
@@ -461,12 +456,12 @@
                     </div>
                     <div  v-if="row.socio=='1'" :class="{require: !row.validate_aporte_socio , other: validateCodigosSociosAval}" class="input_wrapper">
                       <label>Aporte</label>
-                      <vue-numeric
-                        currency="S/. "
-                        separator=","
+                      <input
+                        type='text'
+                        v-mask='"######"'
                         v-model="row.aporte_socio"
-                        v-bind:precision="2"
-                      ></vue-numeric>
+                        
+                      >
                     </div>              
                     <div class="input_wrapper">
                       <label>Teléfono</label>
@@ -589,18 +584,16 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Importe</label>
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
+                  <input
+                    type='text'
                     v-model="prestamo.importe"
-                    v-bind:precision="2"
                     v-mask='"#####"'
-                  ></vue-numeric>
+                  >
                 </div>
                 <div class="input_wrapper">
                   <label>Cuotas</label>
                   <input
-                    type="number"
+                    type="text"
                     v-model="prestamo.cuotas"
                     v-mask='"#####"'
                     @keyup="meses_numero"
@@ -612,21 +605,19 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Cuota del sistema</label>
-                  <vue-numeric v-model="prestamo.cuota_sistema" v-mask='"#####"' v-bind:precision="1"></vue-numeric>
+                  <input  type='number' v-model="prestamo.cuota_sistema"    >
                 </div>
                 <div class="input_wrapper">
                   <label>Aporte a la fecha</label>
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
+                  <input
+                    type='text'                    
                     v-mask='"#####"'
                     v-model="prestamo.aporte"
-                    v-bind:precision="2"
-                  ></vue-numeric>
+                  >
                 </div>
                 <div class="input_wrapper">
                   <label>Prob. Infocorp</label>
-                  <vue-numeric v-model="prestamo.probabilidad_infocorp" v-mask='"###"' v-bind:precision="1"></vue-numeric>
+                  <input type='number' v-model="prestamo.probabilidad_infocorp"  >
                 </div>
               </div>
 
@@ -658,12 +649,10 @@
 
 <script>
 import { serviceNumber } from "../mixins/functions";
-import VueNumeric from "vue-numeric";
  import { toastOptions } from '../constants.js'
 
 export default {
   mixins: [serviceNumber],
-  components: { VueNumeric },
   data() {
     return {
       resource: "clientes",
@@ -750,8 +739,7 @@ export default {
       }
     };
   },
-  computed: {
-    
+  computed: {   
     validateMonto() {
       return String(this.prestamo.monto_inicial).length > 1
     },
@@ -1012,7 +1000,7 @@ export default {
   
   },
 
-  methods: {
+  methods: {    
     obtenerDatosCliente(){ 
       this.$http
       .get(`/clientes/` + this.$route.params.clienteID)
