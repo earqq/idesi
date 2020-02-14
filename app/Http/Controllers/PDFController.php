@@ -115,6 +115,7 @@ class PDFController extends Controller
         $avales=$prestamo->avales;
         $garantias=$prestamo->garantias;
         $archivos=$prestamo->archivos;               
+        Storage::disk('public')->deleteDirectory('/expedientes/'.$cliente->documento);
         $pdfMerge = new \LynX39\LaraPdfMerger\PdfManage;
         //Inscripcion de socio
         $pdfFile = Storage::disk('s3')->get('clientes/'.$cliente->documento.'/inscripcion_de_socio.pdf');                
@@ -152,9 +153,10 @@ class PDFController extends Controller
         //Juntando archivos
         foreach ($archivos as $archivo) {                                                
             $filepath=public_path('/expedientes/'.$cliente->documento.'/'.$archivo->nombre.'.'.$archivo->extension);
+            if(file_exists($filepath))
             $pdfMerge->addPDF($filepath, 'all');
         }
-        // Storage::disk('public')->deleteDirectory('/expedientes/'.$cliente->documento);
+ 
         $pdfMerge->merge("archivo_adjunto.pdf", "download");
     }
 }
