@@ -117,11 +117,11 @@ class PDFController extends Controller
         $archivos=$prestamo->archivos;               
         $pdfMerge = new \LynX39\LaraPdfMerger\PdfManage;
         //Inscripcion de socio
-        $pdfFIle = Storage::disk('s3')->get('clientes/'.$cliente->documento.'/inscripcion_de_socio.pdf');                
+        $pdfFile = Storage::disk('s3')->get('clientes/'.$cliente->documento.'/inscripcion_de_socio.pdf');                
         Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf',$pdfFile->output());
         $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf'), 'all');
         //Solicitud de crédito
-        $pdfFIle = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge','empresa'));
+        $pdfFile = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge','empresa'));
         Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf',$pdfFile->output());
         $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'), 'all');        
         //cualitativa
