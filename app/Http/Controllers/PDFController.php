@@ -124,7 +124,7 @@ class PDFController extends Controller
         \Log::alert(public_path('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf'));
         //Solicitud de crédito
         $pdfFile = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge','empresa'));
-        Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf',$pdfFile);
+        Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf',$pdfFile->output());
         $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'), 'all');        
         \Log::alert(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'));
         // //cualitativa
