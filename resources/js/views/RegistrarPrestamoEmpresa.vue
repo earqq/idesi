@@ -399,15 +399,15 @@
                     <div class="input_wrapper">
                       <label>Socio</label>
                       <select v-model="row.socio">
-                        <option value="true">SI</option>
-                        <option value="false">NO</option>
+                        <option value="1">SI</option>
+                        <option value="0">NO</option>
                       </select>
                     </div>
-                    <div  v-if="row.socio" :class="{require: !row.validate_codigo_socio, other: validateCodigosSociosAval}" class="input_wrapper">
+                    <div  v-if="row.socio=='1'" :class="{require: !row.validate_codigo_socio, other: validateCodigosSociosAval}" class="input_wrapper">
                       <label>Codigo</label>
                       <input type="text" v-model="row.codigo_socio"  maxlength='10' />
                     </div>
-                    <div  v-if="row.socio"  :class="{require: !row.validate_aporte_socio , other: validateCodigosSociosAval}" class="input_wrapper">
+                    <div  v-if="row.socio=='1'"  :class="{require: !row.validate_aporte_socio , other: validateCodigosSociosAval}" class="input_wrapper">
                       <label>Aporte</label>
                       <vue-numeric
                         currency="S/. "
@@ -777,7 +777,7 @@ export default {
     validateCodigosSociosAval(){
       let response=true
       this.prestamo.avales.map(item=>{
-        if(item.socio){
+        if(item.socio=='1'){
           item.validate_codigo_socio=false
           item.validate_aporte_socio=false
           if(item.codigo_socio.length>2)
@@ -928,7 +928,7 @@ export default {
         distrito: "",
         centro_laboral: "",
         direccion_centro_laboral: "",
-        socio: false,
+        socio: 0,
         codigo_socio: "",
         aporte_socio: "",
         validate_codigo_socio:false,

@@ -706,7 +706,7 @@ export default {
     stateEvaluation(estado) {
       if (estado == 3) return "accept";
       if (estado == 4) return "observed";
-      if (estado == 4) return "denied";
+      if (estado == 5) return "denied";
       return;
     }
   }  
