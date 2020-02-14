@@ -508,6 +508,7 @@ class AnalisisController extends Controller
                 $fc_semanal_participacion_cuota=0;
                 $fc_semanal_resultado=0;
                 $fc_semanal_disponible_semana=0;
+                \Log::alert($request);
                 $prestamo=prestamo::find($request->prestamo_id);
                 if($prestamo->forma=='DIARIO'){
 
@@ -693,22 +694,12 @@ class AnalisisController extends Controller
                 $cuantitativa->propiedades=$request->propiedades;
                 $cuantitativa->save();
 
-                $prestamo = $cuantitativa->prestamo_id;
+                $prestamo = Prestamo::find($cuantitativa->prestamo_id);
                 $prestamo->cuantitativa=1;
                 $prestamo->save();
 
 
-                $cliente = Cliente::where('id',$prestamo->cliente_id)->first();
-                // $pdf = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
-                // if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cuantitativa.pdf', $pdf->output())){
-                    
-                //     $archivo = new Archivo();
-                //     $archivo->nombre = 'evaluacion_cuantitativa';
-                //     $archivo->tipo = 'documento';
-                //     $archivo->extension='pdf';
-                //     $archivo->prestamo_id= $prestamo->id;
-                //     $archivo->save();
-                // }
+                $cliente = Cliente::where('id',$prestamo->cliente_id)->first();               
 
                 DB::commit();
                 return [
@@ -742,23 +733,12 @@ class AnalisisController extends Controller
             $cualitativa->comentario_colateral=$request->comentario_colateral;
             $cualitativa->save();
 
-            $prestamo = $cualitativa->prestamo_id;
+            $prestamo = Prestamo::find($cualitativa->prestamo_id);
             $prestamo->cualitativa=1;
             $prestamo->save();
 
    
- 
-            // $cliente = Cliente::where('id',$prestamo->cliente_id)->first();
-            // $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
-            // if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/prestamo_'.$prestamo->id.'/documento/evaluacion_cualitativa.pdf', $pdf->output())){
-            //     $archivo = new Archivo();
-            //     $archivo->nombre = 'evaluacion_cualitativa';
-            //     $archivo->tipo = 'documento';
-            //     $archivo->extension='pdf';
-            //     $archivo->prestamo_id= $prestamo->id;
-            //     $archivo->save();
-            // }
-
+             
  
             DB::commit();
                 return [ 

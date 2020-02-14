@@ -813,10 +813,10 @@ export default {
 }
   },
   async mounted() {
-    this.$http.get(`/prestamos/`+this.$route.params.prestamo).then(response => {
+    this.$http.get(`/prestamos/`+this.$route.params.prestamoID).then(response => {
       this.prestamo=response.data
       this.evaluacion.principal.destino_credito_descripcion=response.data.destino_inicial || ''
-
+      this.evaluacion.prestamo_id=this.prestamo.id
       if(response.data.cliente.persona && response.data.cliente.persona.hijos.length>0){
           this.evaluacion.familiar.numero_hijos = response.data.cliente.persona.hijos.length
           this.evaluacion.familiar.miembros_familia = this.evaluacion.familiar.numero_hijos;

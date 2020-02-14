@@ -588,7 +588,7 @@ export default {
       },
       loading: false,
       evaluacion: {
-        prestamo_id: this.$route.params.prestamo,
+        prestamo_id: this.$route.params.prestamoID,
         tipo_persona :this.$route.params.persona,
         propuesta: {
           producto: "",
@@ -798,10 +798,9 @@ export default {
 
   mounted() {
     this.$http
-      .get(`/prestamos/` + this.$route.params.prestamo)
+      .get(`/prestamos/` + this.$route.params.prestamoID)
       .then(response => {        
         this.cliente=response.data.cliente
-        console.log(this.cliente)
         this.evaluacion.propuesta.producto = response.data.producto;
         this.evaluacion.propuesta.monto = response.data.importe;
         this.evaluacion.propuesta.cuotas = response.data.cuotas;
@@ -818,7 +817,7 @@ export default {
 
     this.$http
       .get(
-        `/analisis/datosCualitativas/`+this.$route.params.prestamo
+        `/analisis/datosCualitativas/`+this.$route.params.prestamoID
       )
       .then(response => {
         console.log(response)
@@ -826,6 +825,7 @@ export default {
         response.data.familiar.hijos.map(element=>{
           this.evaluacion.gastos_hogar[5].pago+=parseFloat(element.costo)
         })
+       
         // entidades financieras
         response.data.central_riesgo.map(element=>{
           if(element.entidad_financiera){
