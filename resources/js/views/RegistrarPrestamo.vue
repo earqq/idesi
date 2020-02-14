@@ -402,7 +402,7 @@
                   <span class="separator" ></span>
 
                   <div class="group_form">
-                    <div class="input_wrapper">
+                     <div :class="{require: !row.validate_documento, other: validateDocumentosSocios}" class="input_wrapper">
                       <label>Documento de Identidad</label>
                       <input
                         type="text"
@@ -411,15 +411,15 @@
                         @change="datosAval(index)"
                       />
                     </div>
-                    <div class="input_wrapper">
+                     <div :class="{require: !row.validate_nombres, other: validateNombresSocios}" class="input_wrapper">
                       <label>Nombres</label>
                       <input type="text" maxlength="50" v-model="row.nombres" />
                     </div>
-                    <div class="input_wrapper">
+                     <div :class="{require: !row.validate_apellidos, other: validateApellidosSocios}" class="input_wrapper">
                       <label>Apellidos</label>
                       <input type="text" maxlength="50" v-model="row.apellidos" />
                     </div>
-                     <div :class="{require: !row.validate_fecha_nacimiento, other: validateFechasNacimientoSocios}" class="input_wrapper">
+                    <div :class="{require: !row.validate_fecha_nacimiento, other: validateFechasNacimientoSocios}" class="input_wrapper">
                       <label>Fecha de Nacimiento</label>
                       <input type="date" v-model="row.fecha_nacimiento" />
                     </div>
@@ -907,6 +907,36 @@ export default {
       })     
       return response
     },
+    validateDocumentosSocios(){
+      let response=true
+      this.prestamo.avales.map(item=>{
+        item.validate_documento=false
+        if(item.documento && item.documento.length>2)
+          item.validate_documento=true
+        else response=false
+      })     
+      return response
+    },
+    validateNombresSocios(){
+      let response=true
+      this.prestamo.avales.map(item=>{
+        item.validate_nombres=false
+        if(item.nombres && item.nombres.length>2)
+          item.validate_nombres=true
+        else response=false
+      })     
+      return response
+    },
+    validateApellidosSocios(){
+      let response=true
+      this.prestamo.avales.map(item=>{
+        item.validate_apellidos=false
+        if(item.apellidos && item.apellidos.length>2)
+          item.validate_apellidos=true
+        else response=false
+      })     
+      return response
+    },
     validateCentroConyuge(){
       if(this.prestamo.cliente.persona.conyuge.trabaja=='1'){
         return this.prestamo.cliente.persona.conyuge.centro_laboral.length>5
@@ -928,7 +958,11 @@ export default {
     },
 
     validateStep3(){
-      return this.validateCodigosSociosAval && this.validateFechasNacimientoSocios
+      return this.validateCodigosSociosAval &&
+            this.validateFechasNacimientoSocios &&
+            this.validateDocumentosSocios &&
+            this.validateNombresSocios &&
+            this.validateApellidosSocios
     },
     validateStep2(){
     
@@ -1045,6 +1079,9 @@ export default {
                   item.validate_codigo_socio=true
                   item.validate_aporte_socio=true
                   item.validate_fecha_nacimiento=true
+                  item.validate_documento=true
+                  item.validate_nombres=true
+                  item.validate_apellidos=true
                   if(item.socio)
                     item.socio='1'
                   else 
@@ -1073,12 +1110,15 @@ export default {
           this.provincesTitular = this.all_provinces.filter(f => {
               return f.departamento_id == this.prestamo.cliente.ubicacion_departamento
           })
+          this.prestamo.cliente.ubicacion_provincia=this.provincesTitular[0].id
+          this.filterDistrictTitularMe()
       },
     filterDistrictTitularMe() {
         // this.prestamo.cliente.domicilio_distrito= '0'
         this.districtsTitular = this.all_districts.filter(f => {
             return f.provincia_id == this.prestamo.cliente.ubicacion_provincia
-        })
+        })        
+        this.prestamo.cliente.ubicacion_distrito=this.districtsTitular[0].id
     },
     next(index) {
       window.scrollTo(0,0)
@@ -1130,6 +1170,9 @@ export default {
         validate_codigo_socio:false,
         validate_aporte_socio:false,
         validate_fecha_nacimiento:false,
+        validate_documento:false,
+        validate_nombres:false,
+        validate_apellidos:false,
         tipo_persona: "pn",
         empresa_ruc:'',
         empresa_razon_social:'',
