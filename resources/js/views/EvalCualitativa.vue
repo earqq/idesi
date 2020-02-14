@@ -811,6 +811,7 @@ export default {
 
     return age;
 }
+
   },
   async mounted() {
     this.$http.get(`/prestamos/`+this.$route.params.prestamoID).then(response => {
