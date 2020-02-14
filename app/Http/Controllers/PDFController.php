@@ -115,22 +115,25 @@ class PDFController extends Controller
         $avales=$prestamo->avales;
         $garantias=$prestamo->garantias;
         $archivos=$prestamo->archivos;               
-        // Storage::disk('public')->deleteDirectory('/expedientes/'.$cliente->documento);
+        Storage::disk('public')->deleteDirectory('/expedientes/'.$cliente->documento);
         $pdfMerge = new \LynX39\LaraPdfMerger\PdfManage;
         //Inscripcion de socio
         $pdfFile = Storage::disk('s3')->get('clientes/'.$cliente->documento.'/inscripcion_de_socio.pdf');                
         Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf',$pdfFile);
         $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf'), 'all');
+        \Log::alert(public_path('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf'));
         //Solicitud de crédito
         $pdfFile = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge','empresa'));
         Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf',$pdfFile);
         $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'), 'all');        
+        \Log::alert(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'));
         //cualitativa
         if($prestamo->cualitativa){
             $cualitativa= Cuantitativa::where('prestamo_id',intval($prestamoID))->first();        
             $pdfFile = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
             Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/evaluacion_cualitativa.pdf', $pdfFile->output());
             $filepath=public_path('/expedientes/'.$cliente->documento.'/evaluacion_cualitativa.pdf');
+            \Log::alert($filepath);
             $pdfMerge->addPDF($filepath, 'all');
         }
         //Cuantitativa
@@ -139,6 +142,7 @@ class PDFController extends Controller
             $pdfFile = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
             Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/evaluacion_cuantitativa.pdf', $pdfFile->output());
             $filepath=public_path('/expedientes/'.$cliente->documento.'/evaluacion_cuantitativa.pdf');
+            \Log::alert($filepath);
             $pdfMerge->addPDF($filepath, 'all');
         }
         //Descargando archivos
@@ -153,6 +157,7 @@ class PDFController extends Controller
         //Juntando archivos
         foreach ($archivos as $archivo) {                                                
             $filepath=public_path('/expedientes/'.$cliente->documento.'/'.$archivo->nombre.'.'.$archivo->extension);
+            \Log::alert($filepath);
             if(file_exists($filepath))
             $pdfMerge->addPDF($filepath, 'all');
         }
