@@ -156,7 +156,7 @@ class PDFController extends Controller
             if(file_exists($filepath))
             $pdfMerge->addPDF($filepath, 'all');
         }
- 
+        return $pdfMerge;
         $pdfMerge->merge("archivo_adjunto.pdf", "download");
     }
 }
