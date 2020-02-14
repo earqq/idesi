@@ -365,7 +365,7 @@
                       <label>Apellidos</label>
                       <input type="text" maxlength="50" v-model="row.apellidos" />
                     </div>
-                    <div class="input_wrapper">
+                    <div :class="{require: !row.validate_fecha_nacimiento, other: validateFechasNacimientoSocios}" class="input_wrapper">
                       <label>Fecha de Nacimiento</label>
                       <input type="date" v-model="row.fecha_nacimiento" />
                     </div>
@@ -706,7 +706,7 @@ export default {
       return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
     },   
     validateStep3() {
-      return this.validateCodigosSociosAval
+      return this.validateCodigosSociosAval && this.validateFechasNacimientoSocios
     },   
     validateActividad(){
       return true
@@ -780,13 +780,23 @@ export default {
         if(item.socio=='1'){
           item.validate_codigo_socio=false
           item.validate_aporte_socio=false
-          if(item.codigo_socio.length>2)
+          if(item.codigo_socio && item.codigo_socio.length>2)
             item.validate_codigo_socio=true
           else response=false
           if(item.aporte_socio>0)
             item.validate_aporte_socio=true  
           else response=false
         }
+      })     
+      return response
+    },
+    validateFechasNacimientoSocios(){
+      let response=true
+      this.prestamo.avales.map(item=>{
+        item.validate_fecha_nacimiento=false
+        if(item.fecha_nacimiento && item.fecha_nacimiento.length>2)
+          item.validate_fecha_nacimiento=true
+        else response=false
       })     
       return response
     },
@@ -896,7 +906,16 @@ export default {
               this.prestamo.tasa_final= response.data.tasa_final || ""
 
               if(response.data.avales){
-                this.prestamo.avales= response.data.avales
+                response.data.avales.map(item=>{
+                  item.validate_codigo_socio=true
+                  item.validate_aporte_socio=true
+                  item.validate_fecha_nacimiento=true
+                  if(item.socio)
+                    item.socio='1'
+                  else 
+                    item.socio='0'
+                  this.prestamo.avales.push(item)                  
+                })
               }
 
               if(response.data.garantias){
@@ -921,6 +940,7 @@ export default {
         apellidos: "",
         nacimiento: "",
         estado_civil: "SOLTERO",
+        fecha_nacimiento:'',
         ocupacion: "",
         telefono: "",
         celular: "",
@@ -933,6 +953,7 @@ export default {
         aporte_socio: "",
         validate_codigo_socio:false,
         validate_aporte_socio:false,
+        validate_fecha_nacimiento:false,
         tipo_persona: "pn",
         empresa_ruc:'',
         empresa_razon_social:'',

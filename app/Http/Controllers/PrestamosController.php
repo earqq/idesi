@@ -95,7 +95,6 @@ class PrestamosController extends Controller
             $prestamo->probabilidad_infocorp = $request->probabilidad_infocorp;
             $prestamo->cuotas = $request->cuotas;
             $prestamo->cuota_sistema = $request->cuota_sistema;
-            $prestamo->tasa = $request->tasa;
             $prestamo->comentarios = $request->comentarios;
             $prestamo->estado = $request->estado;
             
@@ -401,9 +400,8 @@ class PrestamosController extends Controller
                 $prestamo->producto_final = $request['producto'];
                 $prestamo->aporte_final = $request['aporte'];
                 $prestamo->importe_final = $request['importe'];
-                $prestamo->plazo_final = $request['cuotas'];
-                $prestamo->cuota_final = $request['cuota_sistema'];
-                $prestamo->tasa_final = $request['tasa'];
+                $prestamo->cuotas_final = $request['cuotas'];
+                $prestamo->cuota_sistema = $request['cuota_sistema'];
                 $prestamo->estado = $request->evaluacion['estado'];
                 $prestamo->save();
             }

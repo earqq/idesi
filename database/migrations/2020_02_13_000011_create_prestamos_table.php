@@ -41,7 +41,7 @@ class CreatePrestamosTable extends Migration
             $table->string('forma_final', 45)->nullable()->default(null);
             $table->decimal('aporte_final', 11, 2)->nullable()->default(null);
             $table->decimal('importe_final', 11, 2)->nullable()->default(null);
-            $table->integer('plazo_final')->nullable()->default(null);
+            $table->integer('cuotas_final')->nullable()->default(null);
             $table->integer('cuota_final')->nullable()->default(null);
             $table->decimal('tasa_final', 11, 2)->nullable()->default(null);
             $table->boolean('cuantitativa')->nullable()->default('0');
