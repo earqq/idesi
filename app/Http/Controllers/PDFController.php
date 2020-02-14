@@ -122,45 +122,45 @@ class PDFController extends Controller
         Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf',$pdfFile);
         $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf'), 'all');
         \Log::alert(public_path('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf'));
-        //Solicitud de crédito
-        $pdfFile = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge','empresa'));
-        Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf',$pdfFile);
-        $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'), 'all');        
-        \Log::alert(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'));
-        //cualitativa
-        if($prestamo->cualitativa){
-            $cualitativa= Cuantitativa::where('prestamo_id',intval($prestamoID))->first();        
-            $pdfFile = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
-            Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/evaluacion_cualitativa.pdf', $pdfFile->output());
-            $filepath=public_path('/expedientes/'.$cliente->documento.'/evaluacion_cualitativa.pdf');
-            \Log::alert($filepath);
-            $pdfMerge->addPDF($filepath, 'all');
-        }
-        //Cuantitativa
-        if($prestamo->cuantitativa){
-            $cuantitativa= Cuantitativa::where('prestamo_id',intval($prestamoID))->first();        
-            $pdfFile = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
-            Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/evaluacion_cuantitativa.pdf', $pdfFile->output());
-            $filepath=public_path('/expedientes/'.$cliente->documento.'/evaluacion_cuantitativa.pdf');
-            \Log::alert($filepath);
-            $pdfMerge->addPDF($filepath, 'all');
-        }
-        //Descargando archivos
-        foreach ($archivos as $archivo) {                                                
-            $filename=$cliente->documento.'/prestamo_'.$prestamo->id.'/'.$archivo->nombre.'.'.$archivo->extension;
-            if (Storage::disk('s3')->exists('clientes/'.$filename))
-            {
-                $file = Storage::disk('s3')->get('clientes/'.$filename);                
-                Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/'.$archivo->nombre.'.'.$archivo->extension,$file);
-            }	    
-        }
-        //Juntando archivos
-        foreach ($archivos as $archivo) {                                                
-            $filepath=public_path('/expedientes/'.$cliente->documento.'/'.$archivo->nombre.'.'.$archivo->extension);
-            \Log::alert($filepath);
-            if(file_exists($filepath))
-            $pdfMerge->addPDF($filepath, 'all');
-        }
+        // //Solicitud de crédito
+        // $pdfFile = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge','empresa'));
+        // Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf',$pdfFile);
+        // $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'), 'all');        
+        // \Log::alert(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'));
+        // //cualitativa
+        // if($prestamo->cualitativa){
+        //     $cualitativa= Cuantitativa::where('prestamo_id',intval($prestamoID))->first();        
+        //     $pdfFile = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
+        //     Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/evaluacion_cualitativa.pdf', $pdfFile->output());
+        //     $filepath=public_path('/expedientes/'.$cliente->documento.'/evaluacion_cualitativa.pdf');
+        //     \Log::alert($filepath);
+        //     $pdfMerge->addPDF($filepath, 'all');
+        // }
+        // //Cuantitativa
+        // if($prestamo->cuantitativa){
+        //     $cuantitativa= Cuantitativa::where('prestamo_id',intval($prestamoID))->first();        
+        //     $pdfFile = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
+        //     Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/evaluacion_cuantitativa.pdf', $pdfFile->output());
+        //     $filepath=public_path('/expedientes/'.$cliente->documento.'/evaluacion_cuantitativa.pdf');
+        //     \Log::alert($filepath);
+        //     $pdfMerge->addPDF($filepath, 'all');
+        // }
+        // //Descargando archivos
+        // foreach ($archivos as $archivo) {                                                
+        //     $filename=$cliente->documento.'/prestamo_'.$prestamo->id.'/'.$archivo->nombre.'.'.$archivo->extension;
+        //     if (Storage::disk('s3')->exists('clientes/'.$filename))
+        //     {
+        //         $file = Storage::disk('s3')->get('clientes/'.$filename);                
+        //         Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/'.$archivo->nombre.'.'.$archivo->extension,$file);
+        //     }	    
+        // }
+        // //Juntando archivos
+        // foreach ($archivos as $archivo) {                                                
+        //     $filepath=public_path('/expedientes/'.$cliente->documento.'/'.$archivo->nombre.'.'.$archivo->extension);
+        //     \Log::alert($filepath);
+        //     if(file_exists($filepath))
+        //     $pdfMerge->addPDF($filepath, 'all');
+        // }
         // return $pdfMerge;
         $pdfMerge->merge("archivo_adjunto.pdf", "download");
     }
