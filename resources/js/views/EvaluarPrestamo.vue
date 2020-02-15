@@ -139,10 +139,10 @@
                       <strong>Tasa</strong>
                       <p>{{prestamo.tasa_final}}</p>
                     </li>
-                    <li>
+                    <!-- <li>
                       <strong>Forma</strong>
                       <p>{{prestamo.forma_final ? prestamo.forma_final : "--"}}</p>
-                    </li>
+                    </li> -->
                     <li class="spanner"></li>
                     <li class="spanner"></li>
                   </div>
@@ -696,7 +696,7 @@ export default {
       })
       .catch(err=>{
         this.$toast.error(
-          "La evaluación falló",
+          "La evaluación falló", 
           "Error",
           this.notificationSystem.options.error
         );
