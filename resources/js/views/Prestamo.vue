@@ -112,44 +112,40 @@
                 <li class="spanner"></li>
               </div>
             </div>
-
-            <div class="form_step_wrapper in_bottom">
-              <h3 class="title">Evaluaciones</h3>
-              <div class="empty_message_evaluation" v-if="prestamo.evaluaciones.length == 0">
-                <img src="img/empty.svg" >
-                <h1> Sin Evaluaciones </h1>
-                <p>Todavia no se han relizado evaluaciones a este prestamo</p>
-              </div>  
-              <div class="table_wrapper" v-else>
-                <table class="table_evaluations no_hover">
-                  <thead>
-                    <tr>
-                      <th>Evaluador</th>
-                      <th>Comentarios</th>
-                      <th>Fecha</th>
-                      <th>Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      v-for="evaluacion in prestamo.evaluaciones"
-                      :key="evaluacion.id"
-                      :class="{final_result: evaluacion.nivel == 4}">
-                      <td class="client" v-text="evaluacion.evaluador.name"></td>
-                      <td class="observation" v-text="evaluacion.detalle ? evaluacion.detalle : '--'"></td>
-                      <td class="date">{{evaluacion.created_at | moment("D [de] MMMM, YYYY")}}</td>
-                      <td class="state">
-                        <span :class="stateEvaluation(evaluacion.estado)"></span>
-                        {{evaluacion.estado}}
-                        <strong v-show="evaluacion.nivel == 4">( Decisión )</strong>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+            <div v-if='prestamo.estado>2' class="form_step_wrapper in_bottom">
+              <h3 class="title">Resultado final</h3>
+              <div class="detail_content"> 
+                <li>
+                  <strong>Producto </strong> 
+                  <p>{{prestamo.producto_final}}</p>
+                </li>
+                <li>
+                  <strong>Importe </strong> 
+                  <p>{{prestamo.importe_final}}</p>
+                </li>
+                  <li>
+                  <strong>Cuotas </strong> 
+                  <p>{{prestamo.cuotas_final}}</p>
+                </li>
+                  <li>
+                  <strong>Cuota del Sistema </strong> 
+                  <p>{{prestamo.cuota_final}}</p>
+                </li>
+                  <li>
+                  <strong>Aporte </strong> 
+                  <p>{{prestamo.aporte_final}}</p>
+                </li>              
+                <li>
+                  <strong>Forma </strong> 
+                  <p>{{prestamo.forma}}</p>
+                </li>
+                <li class="spanner"></li>
+                <li class="spanner"></li>
               </div>
             </div>
+ 
 
-            <div class="form_step_wrapper in_bottom">
+            <div v-if='prestamo.estado==1' class="form_step_wrapper in_bottom">
               <h3 class="title" v-show="prestamo.fotos.length > 0 " >Negocio</h3>
 
               <div class="table_wrapper" v-show="prestamo.fotos.length > 0 ">

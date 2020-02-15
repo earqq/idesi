@@ -63,9 +63,9 @@
           <p> NUEVO ARCHIVO  </p>
         </a>
 
-       <div class="file_item">
+       <div class="file_item"  @click="inscripcionPdf()">
           <div class="file_detail">
-            <a class="" :href="'../storage/'+prestamo.cliente.documento+'_'+prestamo.id+'/general/documento/inscripcion_de_socio.pdf'" target="_blank">
+            <a class=""  target="_blank">
                 <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
                 <p> Solicitud de Admisión </p> 
@@ -89,7 +89,7 @@
             </a>
           </div> 
         </div>
-        <div class="file_item" v-if='listas[3].estado'  @click="cualitativaPDF()">
+        <div class="file_item" v-if='prestamo.cualitativa'  @click="cualitativaPDF()">
           <div class="file_detail">
             <a :href="'#'"
               >
@@ -101,7 +101,7 @@
             </a>
           </div> 
         </div>
-        <div class="file_item" v-if='listas[4].estado' @click="cuantitativaPDF()">
+        <div class="file_item" v-if='prestamo.cuantitativa' @click="cuantitativaPDF()">
           <div class="file_detail">
             <a :href="'#'"
               >
@@ -114,19 +114,9 @@
           </div> 
         </div>
         <div v-for="(archivo, index) in prestamo.archivos" :key="index">
-        <div class="file_item"  v-if="archivo.nombre!='evaluacion_cuantitativa' && archivo.nombre!='evaluacion_cualitativa'">
-          <div class="file_detail" v-if="archivo.tipo=='imagen' ">
-            <a :href="'../storage/'+prestamo.cliente.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
-              target="_blank">
-              <i class="material-icons-outlined"> collections </i>
-              <div class="file_info">
-                <p > {{archivo.nombre | noUnderscore }}</p>
-                <small> 27 de enero de 2020 </small>            
-              </div>
-            </a>
-          </div>
-          <div class="file_detail" v-if="archivo.tipo=='documento' ">
-            <a :href="'../storage/'+prestamo.cliente.documento+'_'+prestamo.id+'/prestamo_'+archivo.prestamo_id+'/'+archivo.tipo+'/'+archivo.nombre+'.'+archivo.extension"
+        <div class="file_item"  v-if="archivo.nombre!='evaluacion_cuantitativa' && archivo.nombre!='evaluacion_cualitativa'">        
+          <div class="file_detail" >
+            <a :href="'/pdf/archivos/'+archivo.id"
               target="_blank">
               <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
@@ -400,6 +390,10 @@ export default {
         this.loaderFile=0
         this.porSubir=[]
         let self=this
+        if(this.prestamo.cualitativa)
+          this.listas[3].estado=true
+        if(this.prestamo.cuantitativa)
+          this.listas[4].estado=true
         this.listas.map(item=>{
           var a = self.prestamo.archivos.find(f=>f.nombre == item.nombre)
           if(a){
@@ -514,6 +508,9 @@ export default {
     },
     solicitudPdf(){
               window.open('/pdf/prestamo/'+this.$route.params.prestamoID,'_blank'); 
+    },
+    inscripcionPdf(){
+              window.open('/pdf/cliente/inscripcion/'+this.prestamo.cliente.id,'_blank'); 
     },
     cualitativaPDF(){
               window.open('/pdf/evaluacion/cualitativa/'+this.$route.params.prestamoID,'_blank'); 

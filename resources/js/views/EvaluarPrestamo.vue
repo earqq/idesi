@@ -51,7 +51,7 @@
                       <p>{{prestamo.cuotas || '-- --'}}</p>
                     </li>
                     <li>
-                      <strong>Cuotas del Sistema</strong>
+                      <strong>Cuota del Sistema</strong>
                       <p>{{prestamo.cuota_sistema || '-- --'}}</p>
                     </li>
                     <li>
@@ -129,7 +129,7 @@
                     </li>
                     <li>
                       <strong>Plazo</strong>
-                      <p>{{prestamo.plazo_final}}</p>
+                      <p>{{prestamo.cuotas_final}}</p>
                     </li>
                     <li>
                       <strong>Cuota</strong>
@@ -329,7 +329,7 @@
                           </tr>
                           <tr style="background: white;">
                             <td class="pt-2 w-50">PARTICIPACION DE LA CUOTA</td>
-                            <td v-text="resultadoAnalisis.fc_semanal_"></td>
+                            <td v-text="resultadoAnalisis.fc_semanal_participacion_cuota"></td>
                           </tr>
                           <tr style="background: white;">
                             <td class="pt-2 w-50">RESULTADO</td>
@@ -592,10 +592,7 @@
               <input type="text" v-model="prestamo.cuota_sistema" />
             </div>
 
-            <div class="input_wrapper">
-              <label for>Tasa</label>
-              <input type="text" v-model="prestamo.tasa" />
-            </div>
+           
           </div>
         </div>
 
@@ -632,7 +629,7 @@ export default {
           aporte:'',
           cuota:'',
           importe:'',
-          cuota_sistema:'',
+          cuota:'',
           detalle:''
         }
       },
@@ -665,7 +662,7 @@ export default {
             aporte:'',
             cuota:'',
             importe:'',
-            cuota_sistema:'',
+            cuota:'',
             detalle:''
           }
           let self=this

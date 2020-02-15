@@ -43,13 +43,12 @@
               <div class="group_form">
                 <div class="input_wrapper" :class="{require: !validateMonto}">
                   <label>Monto</label> 
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
+                  <input type='text' v-mask='"######"'
+                    
+                    
                     v-model="prestamo.monto_inicial"
-                    v-bind:precision="2"
-                    maxlength='11'
-                  ></vue-numeric>
+                                        
+                  >
                   <div class="message">Monto de solicitud invalido</div>
                 </div>
                 <div class="input_wrapper">
@@ -67,13 +66,12 @@
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
                   <label>Disponibilidad de pago</label>
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
+                  <input type='text' v-mask='"######"'
+                    
+                    
                     v-model="prestamo.disponibilidad_pago_inicial"
-                    v-bind:precision="2"  
-                    maxlength='11'
-                  ></vue-numeric> 
+                                          
+                  > 
                   <div class="message">La disponibilidad es invalida</div>
                 </div>
               </div>
@@ -131,7 +129,7 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Teléfono</label>
-                  <input type="text" maxlength='15' v-model="prestamo.cliente.telefono"  />
+                  <input type="text" maxlength='10' v-model="prestamo.cliente.telefono"  />
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDireccionEmpresa}">
                   <label>Dirección</label> 
@@ -348,7 +346,7 @@
                   <span class="separator" ></span>
 
                   <div class="group_form">
-                    <div class="input_wrapper">
+                    <div :class="{require: !row.validate_documento, other: validateDocumentosSocios}" class="input_wrapper">
                       <label>Documento de Identidad</label>
                       <input
                         type="text"
@@ -357,15 +355,15 @@
                         @change="datosAval(index)"
                       />
                     </div>
-                    <div class="input_wrapper">
+                    <div :class="{require: !row.validate_nombres, other: validateNombresSocios}" class="input_wrapper">
                       <label>Nombres</label>
                       <input type="text" maxlength="50" v-model="row.nombres" />
                     </div>
-                    <div class="input_wrapper">
+                    <div :class="{require: !row.validate_apellidos, other: validateApellidosSocios}" class="input_wrapper">
                       <label>Apellidos</label>
                       <input type="text" maxlength="50" v-model="row.apellidos" />
                     </div>
-                    <div class="input_wrapper">
+                    <div :class="{require: !row.validate_fecha_nacimiento, other: validateFechasNacimientoSocios}" class="input_wrapper">
                       <label>Fecha de Nacimiento</label>
                       <input type="date" v-model="row.fecha_nacimiento" />
                     </div>
@@ -409,12 +407,12 @@
                     </div>
                     <div  v-if="row.socio=='1'"  :class="{require: !row.validate_aporte_socio , other: validateCodigosSociosAval}" class="input_wrapper">
                       <label>Aporte</label>
-                      <vue-numeric
-                        currency="S/. "
-                        separator=","
+                      <input type='text' v-mask='"######"'
+                        
+                        
                         v-model="row.aporte_socio"
-                        v-bind:precision="2"
-                      ></vue-numeric>
+                        
+                      >
                     </div>
               
                     <div class="input_wrapper">
@@ -538,20 +536,16 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Importe</label>
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
-                    v-model="prestamo.importe"
-                    v-bind:precision="2"
-                  ></vue-numeric>
+                  <input type='text' v-mask='"######"'
+                    v-model="prestamo.importe"                    
+                  >
                 </div>
                 <div class="input_wrapper">
                   <label>Cuotas</label>
                   <input
-                    type="number"
+                    type="text"
                     v-model="prestamo.cuotas"
-                    :min="1"
-                    :max="48"
+                    v-mask='"#####"'
                     @keyup="meses_numero"
                   />
                 </div>
@@ -561,20 +555,17 @@
                 </div>
                 <div class="input_wrapper">
                   <label>Cuota del sistema</label>
-                  <vue-numeric v-model="prestamo.cuota_sistema" v-bind:precision="1"></vue-numeric>
+                  <input type='number'  v-model="prestamo.cuota_sistema" >
                 </div>
                 <div class="input_wrapper">
                   <label>Aporte a la fecha</label>
-                  <vue-numeric
-                    currency="S/. "
-                    separator=","
+                  <input type='number' 
                     v-model="prestamo.aporte"
-                    v-bind:precision="2"
-                  ></vue-numeric>
+                  >
                 </div>
                 <div class="input_wrapper">
                   <label>Prob. Infocorp</label>
-                  <vue-numeric v-model="prestamo.probabilidad_infocorp" v-bind:precision="1"></vue-numeric>
+                  <input type='number' v-model="prestamo.probabilidad_infocorp" >
                 </div>
               </div>
 
@@ -706,7 +697,11 @@ export default {
       return this.validateMonto && this.validateDiponibilidad && this.validateDestino;
     },   
     validateStep3() {
-      return this.validateCodigosSociosAval
+      return this.validateCodigosSociosAval && 
+            this.validateFechasNacimientoSocios && 
+            this.validateDocumentosSocios &&
+            this.validateNombresSocios &&
+            this.validateApellidosSocios
     },   
     validateActividad(){
       return true
@@ -780,13 +775,53 @@ export default {
         if(item.socio=='1'){
           item.validate_codigo_socio=false
           item.validate_aporte_socio=false
-          if(item.codigo_socio.length>2)
+          if(item.codigo_socio && item.codigo_socio.length>2)
             item.validate_codigo_socio=true
           else response=false
           if(item.aporte_socio>0)
             item.validate_aporte_socio=true  
           else response=false
         }
+      })     
+      return response
+    },
+    validateFechasNacimientoSocios(){
+      let response=true
+      this.prestamo.avales.map(item=>{
+        item.validate_fecha_nacimiento=false
+        if(item.fecha_nacimiento && item.fecha_nacimiento.length>2)
+          item.validate_fecha_nacimiento=true
+        else response=false
+      })     
+      return response
+    },
+      validateDocumentosSocios(){
+      let response=true
+      this.prestamo.avales.map(item=>{
+        item.validate_documento=false
+        if(item.documento && item.documento.length>2)
+          item.validate_documento=true
+        else response=false
+      })     
+      return response
+    },
+    validateNombresSocios(){
+      let response=true
+      this.prestamo.avales.map(item=>{
+        item.validate_nombres=false
+        if(item.nombres && item.nombres.length>2)
+          item.validate_nombres=true
+        else response=false
+      })     
+      return response
+    },
+    validateApellidosSocios(){
+      let response=true
+      this.prestamo.avales.map(item=>{
+        item.validate_apellidos=false
+        if(item.apellidos && item.apellidos.length>2)
+          item.validate_apellidos=true
+        else response=false
       })     
       return response
     },
@@ -857,17 +892,19 @@ export default {
         )
     },
     filterProvincesTitularMe() {
-          // this.prestamo.cliente.empresa.domicilio_provincia= '0'
-          // this.prestamo.cliente.empresa.domicilio_distrito= '0'
-          this.provincesTitular = this.all_provinces.filter(f => {
-              return f.departamento_id == this.prestamo.cliente.ubicacion_departamento
-          })
-      },
+      this.provincesTitular = this.all_provinces.filter(f => {
+          return f.departamento_id == this.prestamo.cliente.ubicacion_departamento
+      })
+      if(this.provincesTitular[0])
+      this.prestamo.cliente.ubicacion_provincia=this.provincesTitular[0].id
+      this.filterDistrictTitularMe()
+    },
     filterDistrictTitularMe() {
-        // this.prestamo.cliente.domicilio_distrito= '0'
         this.districtsTitular = this.all_districts.filter(f => {
             return f.provincia_id == this.prestamo.cliente.ubicacion_provincia
         })
+        if(this.districtsTitular[0])
+        this.prestamo.cliente.ubicacion_distrito=this.districtsTitular[0].id
     },
     obtenerDatosPrestamo(){
       this.$http
@@ -896,7 +933,19 @@ export default {
               this.prestamo.tasa_final= response.data.tasa_final || ""
 
               if(response.data.avales){
-                this.prestamo.avales= response.data.avales
+                response.data.avales.map(item=>{
+                  item.validate_codigo_socio=true
+                  item.validate_aporte_socio=true
+                  item.validate_fecha_nacimiento=true
+                  item.validate_documento=true
+                  item.validate_nombres=true
+                  item.validate_apellidos=true
+                  if(item.socio)
+                    item.socio='1'
+                  else 
+                    item.socio='0'
+                  this.prestamo.avales.push(item)                  
+                })
               }
 
               if(response.data.garantias){
@@ -921,6 +970,7 @@ export default {
         apellidos: "",
         nacimiento: "",
         estado_civil: "SOLTERO",
+        fecha_nacimiento:'',
         ocupacion: "",
         telefono: "",
         celular: "",
@@ -933,6 +983,10 @@ export default {
         aporte_socio: "",
         validate_codigo_socio:false,
         validate_aporte_socio:false,
+        validate_fecha_nacimiento:false,
+        validate_documento:false,
+        validate_nombres:false,
+        validate_apellidos:false,
         tipo_persona: "pn",
         empresa_ruc:'',
         empresa_razon_social:'',

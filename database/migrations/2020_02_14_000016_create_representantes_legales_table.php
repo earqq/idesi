@@ -35,7 +35,7 @@ class CreateRepresentantesLegalesTable extends Migration
             $table->string('ubicacion_provincia', 100)->nullable();
             $table->string('ubicacion_distrito', 100)->nullable();
             $table->string('ubicacion_referencia', 100)->nullable();
-            $table->string('tipo_domicilio', 15)->nullable()->default('PROPIA');
+            $table->string('tipo_domicilio', 30)->nullable()->default('PROPIA');
             $table->string('poderes', 10)->nullable();
             $table->date('fecha_inicio')->nullable();
             $table->string('estado_civil', 30)->nullable()->default('SOLTERO');

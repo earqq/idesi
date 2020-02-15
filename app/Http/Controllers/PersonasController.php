@@ -216,9 +216,7 @@ class PersonasController extends Controller
                 $pdf = PDF::loadView('reportes.inscripcion',compact('trabajo','representante','obligacion','declaracion','cliente',
                                                                     'hijos','conyuge','persona',
                                                                     'departamento_domicilio','provincia_domicilio','distrito_domicilio','departamento_trabaja','provincia_trabaja','distrito_trabaja'));
-
-                if (Storage::put('public/'.$cliente->documento.'_'.$cliente->id.'/general/documento/inscripcion_de_socio.pdf', $pdf->output())){
-                }
+                Storage::disk("s3")->put('/clientes/'.$cliente->documento.'/inscripcion_de_socio.pdf', $pdf->output());
                 
 
                 DB::commit();
