@@ -55,7 +55,7 @@
                             <th colspan="3" style="text-align: inherit;border: none;font-size:12px">Solicitud de Crèdito - Persona Jurídica </th>
                         @endif
                         <th colspan="3" style="text-align: inherit;border: none;font-size:12px;text-align: end;">Nº <span> 15 </span></th>
-                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px;text-align: end;">Aporte a la fecha <span> S/. 2500</span></th>
+                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px;text-align: end;">Aporte a la fecha <span> S/. 0.00</span></th>
                     </tr>
                 </thead>
             </table>
