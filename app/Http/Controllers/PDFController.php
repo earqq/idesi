@@ -14,6 +14,7 @@ use App\RepresentanteLegal;
 use App\Conyuge ;
 use App\Cualitativa;
 use App\Cuantitativa;
+use App\Evaluacion;
 use App\Aval ;
 use App\Garantia ;
 use App\Cliente;
@@ -48,9 +49,9 @@ class PDFController extends Controller
             // return $persona;
             $avales = Aval::where('prestamo_id',$prestamo->id)->get();
             $garantias = Garantia::where('prestamo_id',$prestamo->id)->get();
-            // $evaluacion = Evaluacion::where('prestamo_id',$prestamo->id)->get();
+            $evaluacion = Evaluacion::where('prestamo_id',$prestamo->id)->get();
     
-            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge'));
+            $pdf = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge','evaluacion'));
             return $pdf->stream('solicitud_de_credito.pdf');
 
         }
