@@ -148,7 +148,7 @@
                                                         <td>{{$hijos['grado']}}</td>
                                                         <td>S/. {{$hijos['costo']}}</td>
                                                     </tr>  
-                                                @else
+                                                @endif
 
                                             @endforeach
                                         @endif
