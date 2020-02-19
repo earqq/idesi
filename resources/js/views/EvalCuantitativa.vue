@@ -137,12 +137,12 @@
                             <label>Entidad</label>
                             <input  type="text" disabled='disabled' v-model="evaluacion.titular.gasto_financiero[index].entidad" />
                           </div>
-                          <div class="input_wrapper" :class="{require: !validateSaldoCapitalTitular1}">
+                          <div class="input_wrapper" :class="{require: !gasto.validar_margen}">
                             <label>Saldo Capital</label>
                             <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_financiero[index].saldo_capital" v-bind:precision="2"></vue-numeric>
                             <div class="message">Ingrese saldo capital de prestamo</div>
                           </div>
-                          <div class="input_wrapper" :class="{require: !validateCuotaTitular1}">
+                          <div class="input_wrapper" :class="{require: !gasto.validar_cuota}">
                             <label>Cuota</label>
                             <vue-numeric  currency="S/. " separator="," v-model="evaluacion.titular.gasto_financiero[index].cuota" v-bind:precision="2"></vue-numeric>
                             <div class="message">Ingrese cuota de prestamo</div>
@@ -893,11 +893,31 @@ export default {
       return  String(this.evaluacion.titular.gasto_negocio[4].pago).length > 0
     },
 
+
     validateSaldoCapitalTitular1(){
-        return  String(this.evaluacion.titular.gasto_financiero[0].saldo_capital).length > 1
+          let response=true
+          this.evaluacion.titular.gasto_financiero.map(detail=>{ 
+            if(String(detail.saldo_capital).length<1){
+              detail.validar_margen=false
+              response=false
+            }else{
+              detail.validar_margen=true
+            }
+          })
+      return response
     },
+
     validateCuotaTitular1(){
-        return  String(this.evaluacion.titular.gasto_financiero[0].cuota).length > 1
+          let response=true
+          this.evaluacion.titular.gasto_financiero.map(detail=>{ 
+            if(String(detail.cuota).length<1){
+              detail.validar_cuota=false
+              response=false
+            }else{
+              detail.validar_cuota=true
+            }
+          })
+      return response 
     },
 
     validateStep1() {
@@ -977,7 +997,9 @@ export default {
       this.evaluacion.titular.gasto_financiero_personal.push({
               entidad: "",
               saldo_capital: 0,
-              cuota: 0
+              cuota: 0,
+              validar_margen:false,
+              validar_cuota:false
       });
     },
     clickRemoveEntidadTitular(index) {
