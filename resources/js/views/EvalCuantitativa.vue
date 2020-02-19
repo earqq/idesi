@@ -119,7 +119,7 @@
 
                     <div class="input_wrapper" :class="{require: !validateNegocioValor}">
                       <label>Valor Inventario</label>
-                      <input type="text"  v-model="evaluacion.titular.valor_inventario"  />
+                      <input type="text"  v-model="evaluacion.titular.valor_inventario"  v-mask="'#######'"/>
                     </div>
 
                   </div>

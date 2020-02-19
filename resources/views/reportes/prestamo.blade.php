@@ -55,7 +55,7 @@
                             <th colspan="3" style="text-align: inherit;border: none;font-size:12px">Solicitud de Crèdito - Persona Jurídica </th>
                         @endif
                         <th colspan="3" style="text-align: inherit;border: none;font-size:12px;text-align: end;">Nº <span> 15 </span></th>
-                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px;text-align: end;">Aporte a la fecha <span> S/. 2500</span></th>
+                        <th colspan="3" style="text-align: inherit;border: none;font-size:12px;text-align: end;">Aporte a la fecha <span> S/. 0.00</span></th>
                     </tr>
                 </thead>
             </table>
@@ -328,16 +328,15 @@
                     
                     @forelse ($garantias as $garantia)
                         <tr>
-                            @if($garantia->bien_garantia)
-                                <td colspan="2"> <span class="title">Bien de garantia </span> <span >[ X ]</span> </td>
-                            @else 
-                                <td colspan="2"> <span class="title">Bien de garantia </span> <span >[]</span> </td>
-                            @endif
-                            @if($garantia->inscripcion)
-                            <td><span class="title">INS.</span><span > [ {{$garantia->inscripcion}} ] </span>  <span class="title">D.J</span> <span>[ X ]</span></td>
+                            <td colspan="2">
+                                <span class="title">Bien de garantia </span> <span> {{$garantia->bien_garantia}} </span>
+                            </td>
+                            @if ($garantia->inscripcion==1)
+                                <td><span class="title">INS.</span> <span>[ SI ] </span> <span class="title">D.J</span> <span>[ NO ]</span></td>
                             @else
-                            <td><span class="title">INS.</span><span > [ {{$garantia->inscripcion}} ] </span>  <span class="title">D.J</span> <span>[]</span></td>
+                                 <td><span class="title">INS.</span> <span>[ NO ] </span> <span class="title">D.J</span> <span>[ SI ]</span></td> 
                             @endif
+
                         </tr> 
                     @empty
                     <tr>
@@ -386,38 +385,34 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                        @forelse ($evaluacion as $eval)
+                            <tr>
+                                @if ($eval->estado==5)
+                                    <td> <span class="title">APROBADO</span><span > [    --     ]</span> </td>
+                                    <td> <span class="title">DESAPROBADO</span> <span > [    --     ]</span> </td>
+                                    <td> <span class="title">OBSERVADO</span> <span   > [     X    ]</span> </td>
+                                @elseif($eval->estado==3)
+                                    <td> <span class="title">APROBADO</span><span  > [     X    ]</span> </td>
+                                    <td> <span class="title">DESAPROBADO</span> <span > [   --      ]</span> </td>
+                                    <td> <span class="title">OBSERVADO</span> <span > [    --     ]</span> </td>
+                                @elseif($eval->estado==4)
+                                    <td> <span class="title">APROBADO</span><span > [     --    ]</span> </td>
+                                    <td> <span class="title">RECHAZADO</span> <span   > [    X     ]</span> </td>
+                                    <td> <span class="title">OBSERVADO</span> <span > [   --      ]</span> </td>
+                                @endif
+                            </tr>
+                            <tr>
+                                <td colspan="3"> <span class="title">INDICACIONES</span> <span > {{$eval->detalle}}</span> </td>
+                            </tr> 
+                        @empty
+                            <tr>
+                                <td colspan="3" style="text-align: center">
+                                        NO REGISTRA EVALUACIONES
+                                </td>
+                            </tr>
+                        @endforelse
                             
-                           {{-- @if ($evaluacion)
-                                @foreach ($evaluacion as $eval)
-                                        <tr>
-                                            @if ($eval->estado=='OBSERVADO')
-                                                <td> <span class="title">APROBADO</span><span > [    --     ]</span> </td>
-                                                <td> <span class="title">DESAPROBADO</span> <span > [    --     ]</span> </td>
-                                                <td> <span class="title">OBSERVADO</span> <span style="background: #009688;color:#fff"  > [     X    ]</span> </td>
-                                            @elseif($eval->estado=='APROBADO')
-                                                <td> <span class="title">APROBADO</span><span style="background: #009688;color:#fff" > [     X    ]</span> </td>
-                                                <td> <span class="title">DESAPROBADO</span> <span > [   --      ]</span> </td>
-                                                <td> <span class="title">OBSERVADO</span> <span > [    --     ]</span> </td>
-                                            @elseif($eval->estado=='DESAPROBADO')
-                                                <td> <span class="title">APROBADO</span><span > [     --    ]</span> </td>
-                                                <td> <span class="title">DESAPROBADO</span> <span style="background: #009688;color:#fff"  > [    X     ]</span> </td>
-                                                <td> <span class="title">OBSERVADO</span> <span > [   --      ]</span> </td>
-                                            @endif
-                                        </tr>
-                                        <tr>
-                                        <td colspan="3"> <span class="title">INDICACIONES</span> <span > {{$eval->detalle}}</span> </td>
-                                        </tr> 
-                                    
-                                @endforeach
-
-                            @else
-                                <tr>
-                                    <td colspan="3" style="text-align: center">
-                                            NO REGISTRA EVALUACIONES
-                                    </td>
-                                </tr>
-                            @endif --}}
-
     
                     </tbody>
                 </table>
@@ -439,11 +434,11 @@
                                 <tr>
                                     <td colspan="3" style="text-align: center"> LA SOLICITUD DE CREDITO ESTA EN EVALUACIÓN</td>
                                 </tr>
-                            @elseif($prestamo->estado == 'DESAPROBADO')
+                            @elseif($prestamo->estado == 4)
                                 <tr>
                                     <td colspan="3" style="text-align: center"> LA SOLICITUD DE CREDITO FUE RECHAZADA</td>
                                 </tr>
-                            @elseif($prestamo->estado == 'APROBADO')
+                            @elseif($prestamo->estado == 3)
                                 <tr>
                                     <td colspan="3" style="text-align: center"> LA SOLICITUD DE CREDITO FUE APROBADA</td>
                                 </tr>
