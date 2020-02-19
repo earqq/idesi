@@ -384,12 +384,10 @@ class PrestamosController extends Controller
             $prestamo=Prestamo::find($request->id);
             if($request->evaluacion['estado']==4 ){
                 $prestamo->producto_final = 0;
-                $prestamo->forma_final = 0;
                 $prestamo->aporte_final = 0;
                 $prestamo->importe_final = 0;
-                $prestamo->plazo_final = 0;
-                $prestamo->cuota_final = 0;
-                $prestamo->tasa_final = 0;
+                $prestamo->cuotas_final = 0;
+                $prestamo->cuota_sistema = 0;
                 $prestamo->estado = $request->evaluacion['estado'];
                 $prestamo->save();
             }else{

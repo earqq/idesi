@@ -1006,7 +1006,9 @@ export default {
       .get(`/clientes/` + this.$route.params.clienteID)
       .then(response => {  
         this.prestamo.cliente=response.data
-        console.log(this.prestamo.cliente)
+        console.log("asdadsad")
+        console.log(this.prestamo.cliente.ubicacion_provincia)
+
         if(!this.prestamo.cliente.persona.trabajo){
           this.prestamo.cliente.persona.trabajo={
               empresa_ruc:"",
@@ -1035,6 +1037,7 @@ export default {
         }else{
           this.tools.tiene_conyuge=false
         }    
+
       });
     },
     obtenerDatosPrestamo(){
@@ -1095,10 +1098,17 @@ export default {
     filterProvincesTitularMe() {
           // this.prestamo.cliente.persona.domicilio_provincia= '0'
           // this.prestamo.cliente.persona.domicilio_distrito= '0'
+
           this.provincesTitular = this.all_provinces.filter(f => {
               return f.departamento_id == this.prestamo.cliente.ubicacion_departamento
           })
-          this.prestamo.cliente.ubicacion_provincia=this.provincesTitular[0].id
+
+          for (let index = 0; index < this.provincesTitular.length; index++) {
+            if(this.prestamo.cliente.ubicacion_provincia==this.provincesTitular[index].id){
+              this.prestamo.cliente.ubicacion_provincia=this.provincesTitular[index].id
+            }
+          }
+          // this.prestamo.cliente.ubicacion_provincia=this.provincesTitular[0].id
           this.filterDistrictTitularMe()
       },
     filterDistrictTitularMe() {
@@ -1106,7 +1116,14 @@ export default {
         this.districtsTitular = this.all_districts.filter(f => {
             return f.provincia_id == this.prestamo.cliente.ubicacion_provincia
         })        
-        this.prestamo.cliente.ubicacion_distrito=this.districtsTitular[0].id
+
+         for (let index = 0; index < this.districtsTitular.length; index++) {
+            if(this.prestamo.cliente.ubicacion_distrito==this.districtsTitular[index].id){
+              this.prestamo.cliente.ubicacion_distrito=this.districtsTitular[index].id
+            }
+          }
+        // this.prestamo.cliente.ubicacion_distrito=this.districtsTitular[0].id
+
     },
     next(index) {
       window.scrollTo(0,0)
@@ -1298,8 +1315,8 @@ export default {
         
     });
 
-    await this.filterProvincesTitularMe()
-    await this.filterDistrictTitularMe()
+     this.filterProvincesTitularMe()
+     this.filterDistrictTitularMe()
 
     if (this.prestamo.producto == "CREDIDIARIO") {
       this.prestamo.meses = (Number(this.prestamo.cuotas) / 30).toFixed(2);

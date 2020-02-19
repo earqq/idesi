@@ -44,27 +44,23 @@
                     </li>
                     <li>
                       <strong>Importe</strong>
-                      <p>{{prestamo.importe || '-- --'}}</p>
+                      <p>S/. {{prestamo.importe || '0.00'}}</p>
                     </li>
                     <li>
                       <strong>Cuotas</strong>
-                      <p>{{prestamo.cuotas || '-- --'}}</p>
+                      <p>{{prestamo.cuotas || '0'}}</p>
                     </li>
                     <li>
                       <strong>Cuota del Sistema</strong>
-                      <p>{{prestamo.cuota_sistema || '-- --'}}</p>
+                      <p>{{prestamo.cuota_sistema || '0'}}</p>
                     </li>
                     <li>
                       <strong>Aporte</strong>
-                      <p>{{prestamo.aporte || '-- --'}}</p>
+                      <p>S/. {{prestamo.aporte || '0.00'}}</p>
                     </li>
                     <li>
                       <strong>Comentarios</strong>
-                      <p>{{prestamo.comentarios || '-- --'}}</p>
-                    </li>
-                    <li>
-                      <strong>Forma</strong>
-                      <p>{{prestamo.forma || '-- --'}}</p>
+                      <p>{{prestamo.comentarios || 'SIN COMENTARIOS'}}</p>
                     </li>
                     <li class="spanner"></li>
                     <li class="spanner"></li>
@@ -121,15 +117,15 @@
                     </li>
                     <li>
                       <strong>Aporte</strong>
-                      <p>{{prestamo.aporte_final}}</p>
+                      <p>S/. {{prestamo.aporte_final}}</p>
                     </li>
                     <li>
                       <strong>Importe</strong>
-                      <p>{{prestamo.importe_final}}</p>
+                      <p>S/. {{prestamo.importe_final}}</p>
                     </li>
                     <li>
                       <strong>Plazo</strong>
-                      <p>{{prestamo.cuotas_final}}</p>
+                      <p>{{prestamo.cuotas_final || '0'}}</p>
                     </li>
                     <li>
                       <strong>Cuota</strong>
@@ -139,10 +135,6 @@
                       <strong>Tasa</strong>
                       <p>{{prestamo.tasa_final}}</p>
                     </li>
-                    <!-- <li>
-                      <strong>Forma</strong>
-                      <p>{{prestamo.forma_final ? prestamo.forma_final : "--"}}</p>
-                    </li> -->
                     <li class="spanner"></li>
                     <li class="spanner"></li>
                   </div>
@@ -586,14 +578,11 @@
             <input type="text" v-model="prestamo.importe" />
           </div>
 
-          <div class="inline_inputs" v-if="$store.state.currentUser.nivel=='2'">
-            <div class="input_wrapper">
-              <label for>Cuota Sistema</label>
-              <input type="text" v-model="prestamo.cuota_sistema" />
-            </div>
-
-           
+          <div class="input_wrapper" v-if="$store.state.currentUser.nivel=='2'">
+            <label for>Cuota Sistema</label>
+            <input type="text" v-model="prestamo.cuota_sistema" />
           </div>
+
         </div>
 
         <button class="button_primary medium" @click="firmarEvaluacion()">
