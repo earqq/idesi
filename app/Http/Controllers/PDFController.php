@@ -131,7 +131,9 @@ class PDFController extends Controller
         if($prestamo->cualitativa){
             $cualitativa= Cuantitativa::where('prestamo_id',intval($prestamoID))->first(); 
             if(!$cualitativa)       
-                $cualitativa= Cuantitativa::where('prestamo_id',$prestamoID)->first(); 
+                $cualitativa= Cuantitativa::where('prestamo_id',$prestamoID)->first();
+            \Log::alert("cualitativa");
+            \Log::alert($cualitativa); 
             $pdfFile = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
             Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/evaluacion_cualitativa.pdf', $pdfFile->output());
             $filepath=public_path('/expedientes/'.$cliente->documento.'/evaluacion_cualitativa.pdf');
