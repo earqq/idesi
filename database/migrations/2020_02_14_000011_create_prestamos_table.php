@@ -33,7 +33,7 @@ class CreatePrestamosTable extends Migration
             $table->decimal('importe', 11, 2)->nullable()->default(null);
             $table->decimal('meses', 11, 2)->nullable()->default(null);
             $table->decimal('aporte', 11, 2)->nullable()->default(null);
-            $table->double('cuota_sistema')->nullable()->default(null);
+            $table->double('cuota_sistema')->nullable()->default(null); 
             $table->integer('cuotas')->nullable()->default(null);
             $table->text('comentarios')->nullable()->default(null);
             $table->string('producto_final', 45)->nullable()->default(null);

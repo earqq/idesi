@@ -141,12 +141,15 @@
                                     <tbody> 
                                         @if($cualitativa->familiar['hijos'])
                                             @foreach ($cualitativa->familiar['hijos'] as $hijos)
-                                                <tr>
-                                                    <td>{{$hijos['edad']}}</td>
-                                                    <td>{{$hijos['colegio']}}</td>
-                                                    <td>{{$hijos['grado']}}</td>
-                                                    <td>S/. {{$hijos['costo']}}</td>
-                                                </tr>      
+                                                @if ($hijos['costo']!=0)
+                                                    <tr>
+                                                        <td>{{$hijos['edad']}}</td>
+                                                        <td>{{$hijos['colegio']}}</td>
+                                                        <td>{{$hijos['grado']}}</td>
+                                                        <td>S/. {{$hijos['costo']}}</td>
+                                                    </tr>  
+                                                @else
+
                                             @endforeach
                                         @endif
                                     </tbody>

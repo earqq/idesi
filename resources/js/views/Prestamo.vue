@@ -67,7 +67,7 @@
                 </li>
                   <li>
                   <strong>Disponibilidad de pago </strong> 
-                  <p>{{prestamo.disponibilidad_pago_inicial ? prestamo.disponibilidad_pago_inicial : '--'}}</p>
+                  <p>S/. {{prestamo.disponibilidad_pago_inicial ? prestamo.disponibilidad_pago_inicial : '0.00'}}</p>
                 </li>
                 <li>
                   <strong>Destino de crédito   </strong> 
@@ -86,7 +86,7 @@
                 </li>
                 <li>
                   <strong>Importe </strong> 
-                  <p>{{prestamo.importe}}</p>
+                  <p>S/. {{prestamo.importe}}</p>
                 </li>
                   <li>
                   <strong>Cuotas </strong> 
@@ -98,15 +98,11 @@
                 </li>
                   <li>
                   <strong>Aporte </strong> 
-                  <p>{{prestamo.aporte}}</p>
+                  <p>S/. {{prestamo.aporte}}</p>
                 </li>
                   <li>
                   <strong>Comentarios </strong> 
-                  <p>{{prestamo.comentarios}}</p>
-                </li>
-                <li>
-                  <strong>Forma </strong> 
-                  <p>{{prestamo.forma}}</p>
+                  <p>{{prestamo.comentarios || 'SIN COMENTARIOS'}}</p>
                 </li>
                 <li class="spanner"></li>
                 <li class="spanner"></li>
