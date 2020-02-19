@@ -155,7 +155,7 @@ class AnalisisController extends Controller
                 $servicios_lat_total=$servicios_lat_titular+$servicios_lat_conyuge;
                 \Log::alert('servicios latinos total: '.$servicios_lat_total);
                 //validacion
-                $servicios_lat_validacion=floatval($request->titular["gasto_negocio"][3]["pago"])*-1;
+                $servicios_lat_validacion=$servicios_lat_total;
                 \Log::alert('servicios latinos validacion: '.$servicios_lat_validacion);
                 //SERVICIO ALQUILER
                 //titular
