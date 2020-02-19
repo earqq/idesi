@@ -151,7 +151,6 @@ export default {
   },
   async created() { 
     await this.getCurrentUser();   
-    await this.getPrestamos();   
   },
   methods: {
     entregarPrestamos(id){
@@ -164,7 +163,8 @@ export default {
     getCurrentUser () {
       axios.get("/currentUser")
       .then(res => { 
-        this.currentUser = res.data   
+        this.currentUser = res.data 
+        this.getPrestamos();   
       })
     },
     getPrestamos() {

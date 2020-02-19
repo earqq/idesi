@@ -143,6 +143,158 @@
 
               <div v-show="tab == 2" class="form_step">
                 <div class="row">
+                  <table id="travel" style="width: 100%;">
+                    <thead>
+                      <tr>
+                        <th
+                          scope="col"
+                          rowspan="2"
+                          style="text-align: center;"
+                        >FLUJO DE CAJA MENSUAL</th>
+                        <th
+                          scope="col"
+                          colspan="6"
+                          style="text-align: center;"
+                        >RESULTADOS DE EVALUACIÓN</th>
+                      </tr>
+
+                      <tr>
+                        <th scope="col">Titulos</th>
+                        <th scope="col">Cónyuge</th>
+                        <th scope="col">Unidad Familiar</th>
+                        <th scope="col">Comprobación</th>
+                      </tr>
+                    </thead>
+
+                    <tfoot>
+                      <tr>
+                        <th scope="row">RESULTADO EVA</th>
+                        <td colspan="4">
+                          <span v-text="resultadoAnalisis.resultado_eva"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">RESULTADO SIST</th>
+                        <td colspan="4">
+                          <span v-text="resultadoAnalisis.resultado_sist"></span>
+                        </td>
+                      </tr>
+                    </tfoot>
+
+                    <tbody>
+                      <tr class>
+                        <th scope="row">Ingreso / ventas</th>
+                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_titular"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_total"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_validacion"></td>
+                      </tr>
+
+                      <tr class>
+                        <th scope="row">Costo de venta</th>
+                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_titular"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_total"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_validacion"></td>
+                      </tr>
+
+                      <tr class>
+                        <th scope="row">Margen Bruto</th>
+                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_titular"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_total"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_validacion"></td>
+                      </tr>
+
+                      <tr class>
+                        <th scope="row">Servicios LAT</th>
+                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_titular"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_total"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_validacion"></td>
+                      </tr>
+
+                      <tr class>
+                        <th scope="row">Alquiler</th>
+                        <td v-text="'S/. '+resultadoAnalisis.alquiler_titular"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.alquiler_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.alquiler_total"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.alquiler_validacion"></td>
+                      </tr>
+
+                      <tr class>
+                        <th scope="row">Empleados</th>
+                        <td v-text="'S/. '+resultadoAnalisis.empleados_titular"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.empleados_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.empleados_total"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.empleados_validacion"></td>
+                      </tr>
+
+                      <tr class>
+                        <th scope="row">Gasto Financiero</th>
+                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_titular"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_total"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_validacion"></td>
+                      </tr>
+                      <tr class>
+                        <th scope="row">Utilidad neta neogico</th>
+                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_titular"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_total"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_validacion"></td>
+                      </tr>
+                      <tr class>
+                        <th scope="row">Otros ingresos</th>
+                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_titular"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_total"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_validacion"></td>
+                      </tr>
+                      <tr class>
+                        <th scope="row">Gasto Hogar</th>
+                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_titular"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_total"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_validacion"></td>
+                      </tr>
+                      <tr class>
+                        <th scope="row">Gasto Financiero Personal</th>
+                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_titular"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_conyuge"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_total"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_validacion"></td>
+                      </tr>
+                      <tr class>
+                        <th scope="row">Disponible</th>
+                        <td v-text="'s/. '+resultadoAnalisis.disponible_titular"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.disponible_conyuge"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.disponible_total"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.disponible_validacion"></td>
+                      </tr>
+                      <tr class>
+                        <th scope="row">Cuota insitución</th>
+                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_titular"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_conyuge"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_total"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_validacion"></td>
+                      </tr>
+                      <tr class>
+                        <th scope="row">Disponible desp. Cuota</th>
+                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_titular"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_conyuge"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_total"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_validacion"></td>
+                      </tr>
+                      <tr class>
+                        <th scope="row">Participación de la cuota</th>
+                        <td v-text="resultadoAnalisis.participacion_cuota_titular + ' %'"></td>
+                        <td></td>
+                        <td v-text="resultadoAnalisis.participacion_cuota_total + ' %'"></td>
+                        <td v-text="resultadoAnalisis.participacion_cuota_validacion + ' %'"></td>
+                      </tr>
+                    </tbody>
+                  </table>
                   <div class="col-md-3 ratios p-0" style="margin: 0 30px;">
                     <div class="card-body p-0">
                       <table class="table table-responsive-sm">
@@ -333,158 +485,7 @@
                   </div>
 
                   
-                  <table id="travel" style="width: 100%;">
-                    <thead>
-                      <tr>
-                        <th
-                          scope="col"
-                          rowspan="2"
-                          style="text-align: center;"
-                        >FLUJO DE CAJA MENSUAL</th>
-                        <th
-                          scope="col"
-                          colspan="6"
-                          style="text-align: center;"
-                        >RESULTADOS DE EVALUACIÓN</th>
-                      </tr>
-
-                      <tr>
-                        <th scope="col">Titulos</th>
-                        <th scope="col">Cónyuge</th>
-                        <th scope="col">Unidad Familiar</th>
-                        <th scope="col">Comprobación</th>
-                      </tr>
-                    </thead>
-
-                    <tfoot>
-                      <tr>
-                        <th scope="row">RESULTADO EVA</th>
-                        <td colspan="4">
-                          <span v-text="resultadoAnalisis.resultado_eva"></span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">RESULTADO SIST</th>
-                        <td colspan="4">
-                          <span v-text="resultadoAnalisis.resultado_sist"></span>
-                        </td>
-                      </tr>
-                    </tfoot>
-
-                    <tbody>
-                      <tr class>
-                        <th scope="row">Ingreso / ventas</th>
-                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_validacion"></td>
-                      </tr>
-
-                      <tr class>
-                        <th scope="row">Costo de venta</th>
-                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_validacion"></td>
-                      </tr>
-
-                      <tr class>
-                        <th scope="row">Margen Bruto</th>
-                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_validacion"></td>
-                      </tr>
-
-                      <tr class>
-                        <th scope="row">Servicios LAT</th>
-                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_validacion"></td>
-                      </tr>
-
-                      <tr class>
-                        <th scope="row">Alquiler</th>
-                        <td v-text="'S/. '+resultadoAnalisis.alquiler_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.alquiler_conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.alquiler_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.alquiler_validacion"></td>
-                      </tr>
-
-                      <tr class>
-                        <th scope="row">Empleados</th>
-                        <td v-text="'S/. '+resultadoAnalisis.empleados_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.empleados_conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.empleados_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.empleados_validacion"></td>
-                      </tr>
-
-                      <tr class>
-                        <th scope="row">Gasto Financiero</th>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Utilidad neta neogico</th>
-                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Otros ingresos</th>
-                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Gasto Hogar</th>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Gasto Financiero Personal</th>
-                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_titular"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_conyuge"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_total"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Disponible</th>
-                        <td v-text="'s/. '+resultadoAnalisis.disponible_titular"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.disponible_conyuge"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.disponible_total"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.disponible_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Cuota insitución</th>
-                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_titular"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_conyuge"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_total"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Disponible desp. Cuota</th>
-                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_titular"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_conyuge"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_total"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Participación de la cuota</th>
-                        <td v-text="resultadoAnalisis.participacion_cuota_titular + ' %'"></td>
-                        <td></td>
-                        <td v-text="resultadoAnalisis.participacion_cuota_total + ' %'"></td>
-                        <td v-text="resultadoAnalisis.participacion_cuota_validacion + ' %'"></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  
                 </div>
               </div>
             </div>
