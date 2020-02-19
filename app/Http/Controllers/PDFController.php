@@ -105,9 +105,10 @@ class PDFController extends Controller
         else return "Archivo no encontrado";
     }
     public function expediente($prestamoID){
-        $prestamo= Prestamo::with('cliente.persona.conyuge','cliente.empresa.representante','avales','garantias','archivos')->find($prestamoID);
+        $prestamo= Prestamo::with('cliente.persona.conyuge','evaluaciones','cliente.empresa.representante','avales','garantias','archivos')->find($prestamoID);
         $cliente=$prestamo->cliente;
         $persona=$cliente->persona;
+        $evaluacion=$prestamo->evaluaciones;
         $conyuge='';
         if($cliente->persona)
         $conyuge=$persona->conyuge;
@@ -122,7 +123,7 @@ class PDFController extends Controller
         Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf',$pdfFile);
         $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/inscripcion_de_socio.pdf'), 'all');
         //Solicitud de crédito
-        $pdfFile = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge','empresa'));
+        $pdfFile = \PDF::loadView('reportes.prestamo',compact('prestamo','cliente','avales','garantias','persona','conyuge','empresa','evaluacion'));
         Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf',$pdfFile->output());
         $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'), 'all');        
         //cualitativa
