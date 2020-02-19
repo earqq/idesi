@@ -21,8 +21,8 @@ class CreateEmpresasTable extends Migration
     public function up()
     {
         Schema::create($this->tableName, function (Blueprint $table) {
-            $table->engine = 'EXAMPLE';
-            $table->increments('id');
+            $table->engine = 'InnoDB';
+            $table->increments('id'); 
             $table->string('razon_social', 200)->nullable()->default(null);
             $table->string('nombre_comercial', 200)->nullable()->default(null);
             $table->string('actividad_principal', 200)->nullable()->default(null);
