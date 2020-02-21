@@ -47,8 +47,10 @@
           <p v-if="cliente.estado==1">Pendiente</p> 
           <p v-if="cliente.estado==2">Aprobado</p> 
           <p v-if="cliente.estado==3">Rechazado</p> 
-        </li>
-        <blockquote class="message_request" v-if="cliente.estado==1 &&  this.$store.state.currentUser.nivel=='2'">
+        </li> 
+
+        <!-- &&  this.$store.state.currentUser.nivel=='2' -->
+        <blockquote class="message_request" v-if="cliente.estado==1 ">
           <div class="message_request_wrapper">
             <h1>SOLICITUD DE ACEPTACIÓN</h1>
             <p> Se ha registrado un nuevo cliente esperando por aprobación.  </p>

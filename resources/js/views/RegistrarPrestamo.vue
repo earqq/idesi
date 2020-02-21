@@ -137,7 +137,7 @@
                 </div>
                 <div class="input_wrapper" :class="{require: !validateCelular}">
                   <label>Celular</label>
-                  <input type="text" v-mask="'### ### ###'" v-model="prestamo.cliente.persona.celular" />
+                  <input type="text" v-mask="'### ### ###'" v-model="prestamo.cliente.celular" />
                   <div class="message">Se requiere esta información</div>
                 </div>
                 <div class="input_wrapper" :class="{require: !validateDireccion}">
@@ -303,7 +303,7 @@
                     <label>Teléfono</label>
                     <input type="text" v-model="prestamo.cliente.persona.conyuge.telefono" maxlength='11' />
                   </div>
-                  <div class="input_wrapper"  :class="{require: !validateCelularConyuge}">
+                  <div class="input_wrapper">
                     <label>Celular</label>
                     <input  type="text"  v-mask="'### ### ###'"  v-model="prestamo.cliente.persona.conyuge.celular" />
                   </div>
@@ -848,11 +848,7 @@ export default {
       else true
     },
 
-    validateCelularConyuge(){
-      if(this.prestamo.cliente.persona.conyuge && this.prestamo.cliente.persona.conyuge.celular)
-      return this.prestamo.cliente.persona.conyuge.celular.length>6
-      else true
-    },
+
     validateCodigoConyuge(){
       if(this.prestamo.cliente.persona.conyuge.socio=='1'){
         return this.prestamo.cliente.persona.conyuge.codigo_socio.length>=3
@@ -970,7 +966,6 @@ export default {
               this.validateOcupacionConyuge &&
               this.validateCodigoConyuge &&
               this.validateAporteConyuge &&
-              this.validateCelularConyuge &&
               this.validateCentroConyuge &&
               this.validateDireccionConyuge
 
@@ -1007,7 +1002,7 @@ export default {
       .then(response => {  
         this.prestamo.cliente=response.data
         console.log("asdadsad")
-        console.log(this.prestamo.cliente.ubicacion_provincia)
+        console.log(this.prestamo.cliente.celular)
 
         if(!this.prestamo.cliente.persona.trabajo){
           this.prestamo.cliente.persona.trabajo={

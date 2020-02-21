@@ -2,7 +2,7 @@
   <div>
 
     <div class="credits_content" >
-
+ 
       <div class="options_bar">
         <div class="search_bar" >
           <i class="material-icons-outlined">search</i>
@@ -44,6 +44,7 @@
             </div>
             <div class="detail">
               <h2> {{prestamo.producto}} </h2>
+              <h2 style="font-size: 14px; font-weight: 500; margin: 10px 0 0 0px;"> {{prestamo.created_at}} </h2>
               <div class="progress_bar">
                 <span class="bar"></span>
                 <p>0% </p>

@@ -159,8 +159,8 @@
                       </tr>
 
                       <tr>
-                        <th scope="col">Titulos</th>
-                        <th scope="col">Cónyuge</th>
+                        <th scope="col">Titular</th>
+                        <th scope="col" v-if="conyuge">Cónyuge</th>
                         <th scope="col">Unidad Familiar</th>
                         <th scope="col">Comprobación</th>
                       </tr>
@@ -185,7 +185,7 @@
                       <tr class>
                         <th scope="row">Ingreso / ventas</th>
                         <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_conyuge" v-if="conyuge"></td>
                         <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_total"></td>
                         <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_validacion"></td>
                       </tr>
@@ -193,7 +193,7 @@
                       <tr class>
                         <th scope="row">Costo de venta</th>
                         <td v-text="'S/. '+resultadoAnalisis.costo_venta_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_conyuge" v-if="conyuge"></td>
                         <td v-text="'S/. '+resultadoAnalisis.costo_venta_total"></td>
                         <td v-text="'S/. '+resultadoAnalisis.costo_venta_validacion"></td>
                       </tr>
@@ -201,7 +201,7 @@
                       <tr class>
                         <th scope="row">Margen Bruto</th>
                         <td v-text="'S/. '+resultadoAnalisis.margen_bruto_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_conyuge" v-if="conyuge"></td>
                         <td v-text="'S/. '+resultadoAnalisis.margen_bruto_total"></td>
                         <td v-text="'S/. '+resultadoAnalisis.margen_bruto_validacion"></td>
                       </tr>
@@ -209,7 +209,7 @@
                       <tr class>
                         <th scope="row">Servicios LAT</th>
                         <td v-text="'S/. '+resultadoAnalisis.servicios_lat_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_conyuge" v-if="conyuge"></td>
                         <td v-text="'S/. '+resultadoAnalisis.servicios_lat_total"></td>
                         <td v-text="'S/. '+resultadoAnalisis.servicios_lat_validacion"></td>
                       </tr>
@@ -217,7 +217,7 @@
                       <tr class>
                         <th scope="row">Alquiler</th>
                         <td v-text="'S/. '+resultadoAnalisis.alquiler_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.alquiler_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.alquiler_conyuge" v-if="conyuge"></td>
                         <td v-text="'S/. '+resultadoAnalisis.alquiler_total"></td>
                         <td v-text="'S/. '+resultadoAnalisis.alquiler_validacion"></td>
                       </tr>
@@ -225,7 +225,7 @@
                       <tr class>
                         <th scope="row">Empleados</th>
                         <td v-text="'S/. '+resultadoAnalisis.empleados_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.empleados_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.empleados_conyuge" v-if="conyuge"></td>
                         <td v-text="'S/. '+resultadoAnalisis.empleados_total"></td>
                         <td v-text="'S/. '+resultadoAnalisis.empleados_validacion"></td>
                       </tr>
@@ -233,63 +233,63 @@
                       <tr class>
                         <th scope="row">Gasto Financiero</th>
                         <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_conyuge" v-if="conyuge"></td>
                         <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_total"></td>
                         <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_validacion"></td>
                       </tr>
                       <tr class>
-                        <th scope="row">Utilidad neta neogico</th>
+                        <th scope="row">Utilidad neta del negocio</th>
                         <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_conyuge" v-if="conyuge"></td>
                         <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_total"></td>
                         <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_validacion"></td>
                       </tr>
                       <tr class>
                         <th scope="row">Otros ingresos</th>
                         <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_conyuge" v-if="conyuge"></td>
                         <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_total"></td>
                         <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_validacion"></td>
                       </tr>
                       <tr class>
                         <th scope="row">Gasto Hogar</th>
                         <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_conyuge"></td>
+                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_conyuge" v-if="conyuge"></td>
                         <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_total"></td>
                         <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_validacion"></td>
                       </tr>
                       <tr class>
                         <th scope="row">Gasto Financiero Personal</th>
                         <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_titular"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_conyuge"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_conyuge" v-if="conyuge"></td>
                         <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_total"></td>
                         <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_validacion"></td>
                       </tr>
                       <tr class>
                         <th scope="row">Disponible</th>
                         <td v-text="'s/. '+resultadoAnalisis.disponible_titular"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.disponible_conyuge"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.disponible_conyuge" v-if="conyuge"></td>
                         <td v-text="'s/. '+resultadoAnalisis.disponible_total"></td>
                         <td v-text="'s/. '+resultadoAnalisis.disponible_validacion"></td>
                       </tr>
                       <tr class>
                         <th scope="row">Cuota insitución</th>
                         <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_titular"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_conyuge"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_conyuge" v-if="conyuge"></td>
                         <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_total"></td>
                         <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_validacion"></td>
                       </tr>
                       <tr class>
                         <th scope="row">Disponible desp. Cuota</th>
                         <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_titular"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_conyuge"></td>
+                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_conyuge" v-if="conyuge"></td>
                         <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_total"></td>
                         <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_validacion"></td>
                       </tr>
                       <tr class>
                         <th scope="row">Participación de la cuota</th>
                         <td v-text="resultadoAnalisis.participacion_cuota_titular + ' %'"></td>
-                        <td></td>
+                        <td v-if="conyuge"></td>
                         <td v-text="resultadoAnalisis.participacion_cuota_total + ' %'"></td>
                         <td v-text="resultadoAnalisis.participacion_cuota_validacion + ' %'"></td>
                       </tr>
@@ -605,6 +605,7 @@ export default {
     return {
       show_slide: false,
       tab: 1,
+      conyuge:0,
       resultadoAnalisis: {},
       evaluado:false,
       estados:{
@@ -646,7 +647,13 @@ export default {
           
           this.prestamo = response.data
           console.log("sadadasda")
-          console.log(this.prestamo)
+          
+          if(this.prestamo.cliente.persona.conyuge){
+            this.conyuge=1
+          }else{
+            this.conyuge=0
+          }
+          console.log(this.conyuge)
           this.prestamo.evaluacion={
             estado:3,
             aporte:'',
