@@ -127,7 +127,10 @@ class AnalisisController extends Controller
                 \Log::alert('Costo de venta total: '.$costo_venta_total);
                 //Validacion
                 $negocio=negocio::where('giro_negocio',$request->titular["giro_negocio"])->first();
-                $costo_venta_validacion=$ingresos_ventas_validacion/100*floatval($negocio->costo_ventas);
+                $costo_ventas=0;
+                if($negocio)
+                    $costo_ventas=$negocio->costo_ventaS;
+                $costo_venta_validacion=$ingresos_ventas_validacion/100*floatval($costo_ventas);
                 \Log::alert('Costo de venta validacion: '.$costo_venta_validacion);
                 //MARGEN BRUTO 
                 //Margen bruto titular

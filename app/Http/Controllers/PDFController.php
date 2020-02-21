@@ -129,7 +129,9 @@ class PDFController extends Controller
         $pdfMerge->addPDF(public_path('/expedientes/'.$cliente->documento.'/solicitud_credito.pdf'), 'all');        
         //cualitativa
         if($prestamo->cualitativa){
-            $cualitativa= Cuantitativa::where('prestamo_id',intval($prestamoID))->first();        
+            $cualitativa= Cualitativa::where('prestamo_id',intval($prestamoID))->first(); 
+            if(!$cualitativa)       
+                $cualitativa= Cualitativa::where('prestamo_id',$prestamoID)->first();
             $pdfFile = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
             Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/evaluacion_cualitativa.pdf', $pdfFile->output());
             $filepath=public_path('/expedientes/'.$cliente->documento.'/evaluacion_cualitativa.pdf');
@@ -138,6 +140,8 @@ class PDFController extends Controller
         //Cuantitativa
         if($prestamo->cuantitativa){
             $cuantitativa= Cuantitativa::where('prestamo_id',intval($prestamoID))->first();        
+            if(!$cuantitativa)
+                $cuantitativa= Cuantitativa::where('prestamo_id',$prestamoID)->first();        
             $pdfFile = \PDF::loadView('reportes.cuantitativa',compact('cuantitativa'));
             Storage::disk('public')->put('/expedientes/'.$cliente->documento.'/evaluacion_cuantitativa.pdf', $pdfFile->output());
             $filepath=public_path('/expedientes/'.$cliente->documento.'/evaluacion_cuantitativa.pdf');
