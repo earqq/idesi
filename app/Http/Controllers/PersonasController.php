@@ -69,12 +69,6 @@ class PersonasController extends Controller
                 $cliente->pais = strtoupper($request->pais);
                 $cliente->estado = 1;
                 $cliente->ubicacion_referencia=strtoupper( $request->ubicacion_referencia);    
-                $cliente->ubicacion_manzana=strtoupper( $request->ubicacion_manzana);    
-                $cliente->ubicacion_numero= $request->ubicacion_numero;    
-                $cliente->ubicacion_lote= $request->ubicacion_lote;    
-                $cliente->ubicacion_nro_departamento= $request->ubicacion_nro_departamento;    
-                $cliente->ubicacion_interior= $request->ubicacion_interior;    
-                $cliente->ubicacion_piso= $request->ubicacion_piso;    
                 $cliente->ubicacion_distrito=strtoupper( $request->ubicacion_distrito);    
                 $cliente->ubicacion_provincia=strtoupper( $request->ubicacion_provincia);    
                 $cliente->ubicacion_departamento=strtoupper( $request->ubicacion_departamento);    
@@ -124,12 +118,6 @@ class PersonasController extends Controller
                     $trabajo->empresa_razon_social= $request->trabajo['empresa_razon_social'];    
                     $trabajo->empresa_giro_negocio= $request->trabajo['empresa_giro_negocio'];    
                     $trabajo->empresa_direccion = $request->trabajo['empresa_direccion'];            
-                    $trabajo->empresa_numero = $request->trabajo['empresa_numero'];    
-                    $trabajo->empresa_manzana = $request->trabajo['empresa_manzana'];    
-                    $trabajo->empresa_lote = $request->trabajo['empresa_lote'];    
-                    $trabajo->empresa_dpto = $request->trabajo['empresa_dpto'];    
-                    $trabajo->empresa_int = $request->trabajo['empresa_int'];    
-                    $trabajo->empresa_piso = $request->trabajo['empresa_piso'];    
                     $trabajo->empresa_distrito = $request->trabajo['empresa_distrito'];    
                     $trabajo->empresa_provincia = $request->trabajo['empresa_provincia'];    
                     $trabajo->empresa_departamento = $request->trabajo['empresa_departamento'];    

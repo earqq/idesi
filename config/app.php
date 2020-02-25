@@ -230,5 +230,7 @@ return [
         //Extras
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,    
     ],
-
+    /**
+     * Any middleware for a specific 'graphql' schema
+     */   
 ];

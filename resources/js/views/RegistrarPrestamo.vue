@@ -71,6 +71,38 @@
                   >
                   <div class="message">La disponibilidad es invalida</div>
                 </div>
+                <div class="input_wrapper" :class="{require: !validateFuenteIngreso}">
+                  <label>Fuente de ingreso  </label> 
+                  <v-select
+                    label="giro_negocio"
+                    :options="giros"
+                    :reduce="giros => giros.giro_negocio"
+                    v-model="cualitativa.principal.fuente_ingreso"
+                    >
+                    <span slot="no-options">
+                      No se encontro giro de negocio
+                    </span>
+                  </v-select>
+                  <div class="message">Se requiere esta información</div>
+                </div>
+                <div class="input_wrapper">
+                  <label>Destino del credito</label>
+                  <select v-model="cualitativa.principal.destino_credito">
+                        <option value="Capital de trabajo">Capital de trabajo</option>
+                        <option value="Activo Fijo">Activo Fijo</option>
+                        <option value="Consumo">Consumo</option>
+                        <option value="Vehiculo">Vehiculo</option>
+                        <option value="Hipotecario">Hipotecario</option>
+                        <option value="Mejoramiento de vivienda">Mejoramiento de vivienda</option>
+                        <option value="Compra de deuda">Compra de deuda</option>
+                      </select>
+                </div>
+                <div class="input_wrapper" :class="{require: !validateDestinoCredito}">
+                  <label>Descripcion destino</label>
+                  <p>{{cualitativa.principal.destino_credito_descripcio}}</p>
+                  <textarea  v-model="cualitativa.principal.destino_credito_descripcion" ></textarea>
+                  <div class="message">Se requiere esta información</div>
+                </div>
               </div>
               <div class="group_form all">
                 <div class="input_wrapper" :class="{require: !validateDestino}">
@@ -649,7 +681,7 @@
 
 <script>
 import { serviceNumber } from "../mixins/functions";
- import { toastOptions } from '../constants.js'
+import { toastOptions } from '../constants.js'
 
 export default {
   mixins: [serviceNumber],
@@ -665,6 +697,75 @@ export default {
       errors: {},
       tools:{
         tiene_conyuge:false,      
+      },
+      cualitativa: {
+        prestamo_id: this.$route.params.prestamo,
+        principal: {
+          destino_credito_descripcion: "",
+          destino_credito: "Capital de trabajo",
+          fuente_ingreso: ""
+        },
+        negocio: {
+          ubicacion: "",
+          antiguedad: "1 AÑO",
+          local: "PROPIO",
+          licencia_funcionamiento: "SI CUENTA",
+          horario_atencion_inicio: "00:00",
+          horario_atencion_salida: "00:00",
+          mejoras_local: "SI REALIZO"
+        },
+        vehiculo: {
+          marca: "",
+          modelo: "",
+          año: "2010",
+          tipo_servicio_brinda: "",
+          antiguedad_servicio: "",
+          permiso_servicio: "SI CUENTA",
+          horario_servicio_inicio: "00:00",
+          horario_servicio_fin: "00:00"
+        },
+        familiar: {
+          numero_hijos: 0,
+          tipo_vivienda: "PROPIA CANCELADA",
+          situacion_familiar: "SOLTERO",
+          miembros_familia: 0,
+          hijos: []
+        },
+        comentario_central_riesgo:'',
+        central_riesgo: [
+          {
+            entidad_financiera: "",
+            capital: false,
+            activo_f: false,
+            consumo: false,
+            vehicular: false,
+            hipoteca: false,
+            terceros: false
+          },
+          {
+            entidad_financiera: "",
+            capital: false,
+            activo_f: false,
+            consumo: false,
+            vehicular: false,
+            hipoteca: false,
+            terceros: false
+          }
+        ],
+        referencias: [
+          {
+            tipo_relacion: "",
+            nombre: "",
+            telefono: ""
+          },
+          {
+            tipo_relacion: "",
+            nombre: "",
+            telefono: ""
+          }
+        ],
+        colateral: "SIN COLATERAL",
+        comentario_colateral: ""
       },
       prestamo: {
         id: this.$route.params.prestamoID, 

@@ -78,10 +78,22 @@
                   </div>
     
                   <div class="input_wrapper" :class="{require: !validateNumero}">
-                    <label for="documento">Número</label>
+                    <label for="documento">Número documento</label>
                     <input type="text"  v-if="cliente.tipo_documento=='DNI'" v-model="cliente.documento"   v-mask="'########'" />
                     <input type="text"  v-else v-model="cliente.documento" v-mask="'#########'"   />
                     <div class="message">N° de documento invalido</div>
+                  </div>
+
+                 
+                  <div class="input_wrapper"  :class="{require: !validateNombres}" >
+                    <label for="nombres">Nombres</label>
+                    <input type="text" maxlength="100" v-model="cliente.persona.nombres" placeholder />
+                    <div class="message">Se requiere nombres</div>
+                  </div>
+                  <div class="input_wrapper" :class="{require: !validateApellidos}">
+                    <label for="apellidos">Apellidos</label>
+                    <input type="text" maxlength="100" v-model="cliente.persona.apellidos" placeholder />
+                    <div class="message">Se requiere apellidos</div>
                   </div>
 
                   <div class="input_wrapper" :class="{require: !validateNacimiento}">
@@ -90,48 +102,65 @@
                     <div class="message">Fecha invalida</div>
                   </div>
 
-                  <div class="input_wrapper"  :class="{require: !validateNombres}" >
-                    <label for="nombres">Nombres</label>
-                    <input type="text" maxlength="100" v-model="cliente.persona.nombres" placeholder />
-                    <div class="message">Se requeire nombres</div>
+                
+                  <div class="input_wrapper"  >
+                    <label for="apellidos">Pais</label>
+                    <select>
+                      <option value='PERU'>PERU</option>
+                    </select>
+                  </div>
+                  <div class="input_wrapper">
+                    <label>Departamento de nacimiento</label>
+                    <select
+                      v-model="cliente.persona.nacimiento_departamento" 
+                      filterable
+                      @change="filterProvincesNacimiento"
+                      dusk="departamentos_id">
+                    <option
+                      v-for="option in all_departments"
+                      :key="option.id"
+                      :value="option.id"
+                      :label="option.descripcion"
+                    ></option>
+                  </select>
+
                   </div>
 
-                  <div class="input_wrapper" :class="{require: !validateApellidos}">
-                    <label for="apellidos">Apellidos</label>
-                    <input type="text" maxlength="100" v-model="cliente.persona.apellidos" placeholder />
-                    <div class="message">Se requiere apellidos</div>
+                  <div class="input_wrapper"  >
+                    <label>Provincia de nacimiento</label>
+                    <select
+                    v-model="cliente.persona.nacimiento_provincia"
+                    filterable
+                    @change="filterDistrictNacimiento"
+                    dusk="provincias_id">
+                    <option
+                      v-for="option in provincesNacimiento"
+                      :key="option.id"
+                      :value="option.id"
+                      :label="option.descripcion"
+                    ></option>
+                    </select>
+                    <div class="message">Seleccione provincia</div>
                   </div>
 
-                  <div class="input_wrapper"  :class="{require: !validateNacionalidad}">
-                    <label for="apellidos">Nacionalidad</label>
-                    <input type="text"  maxlength="20"  v-model="cliente.pais"/>
-                    <div class="message">Nombre de nacionalidad invalida</div>
-                  </div>
-
-                  <div class="input_wrapper" :class="{require: !validateDepartamento}">
-                    <label for="apellidos">Departamento de Nacimiento</label>
-                    <input type="text" v-model="cliente.persona.nacimiento_departamento" maxlength="100"  />
-                    <div class="message">Nombre de departamento invalido</div>
-                  </div>
-
-                  <div class="input_wrapper" :class="{require: !validateProvincia}" >
-                    <label for="apellidos">Provincia de Nacimiento</label>
-                    <input type="text" v-model="cliente.persona.nacimiento_provincia" maxlength="100"  />
-                    <div class="message">Nombre de provincia invalido</div>
-                  </div>
-
-                  <div class="input_wrapper"  :class="{require: !validateDistrito}">
-                    <label for="apellidos">Distrito de Nacimiento</label>
-                    <input type="text" v-model="cliente.persona.nacimiento_distrito" maxlength="100"  />
-                    <div class="message">Nombre de distrito invalido</div>
-                  </div>
-
+                  <div class="input_wrapper"  >
+                    <label>Distrito de nacimiento</label>
+                    <select
+                      v-model="cliente.persona.nacimiento_distrito"
+                      filterable
+                      dusk="distritos_id">
+                    <option
+                      v-for="option in districtsNacimiento"
+                      :key="option.id"
+                      :value="option.id"
+                      :label="option.descripcion"
+                    ></option>
+                    </select>
+                    <div class="message">Seleccione Distrito</div>
+                  </div> 
                 </div>
-
                 <span class="separator"></span>
-
                 <div class="group_form">
-
                   <div class="input_wrapper">
                     <label>Estado Civil</label>
                     <select v-model="cliente.persona.estado_civil" maxlength="25" >
@@ -142,7 +171,6 @@
                       <option value="VIUDO">VIUDO</option>
                     </select>
                   </div>
-
                   <div class="input_wrapper">
                     <label>Genero</label>
                     <select v-model="cliente.persona.genero" maxlength="10" >
@@ -150,7 +178,6 @@
                       <option value="MASCULINO">MASCULINO</option>
                     </select>
                   </div>
-
                   <div class="input_wrapper">
                     <label>Grado de Instrucción</label>
                     <select v-model="cliente.persona.grado_instruccion" maxlength="10" class="cliente-control">
@@ -170,22 +197,9 @@
                 </div>
 
                 <span class="separator"></span>
-
                 <div class="group_form">
-
-                  <div class="input_wrapper" :class="{require: !validateDomicilio}">
-                      <label>Domicilio Declarado</label>
-                      <input type="text" v-model="cliente.ubicacion_direccion_declarada" maxlength="100" />
-                      <div class="message">Información muy corta</div>
-                  </div>
-
                   <div class="input_wrapper">
-                      <label>Domicilio Reniec</label>
-                      <input type="text" v-model="cliente.ubicacion_direccion_reniec" maxlength="100" disabled/>
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>Departamento</label>
+                      <label>Departamento actual</label>
                       <select
                         v-model="cliente.ubicacion_departamento"
                         filterable
@@ -202,13 +216,12 @@
                   </div>
 
                   <div class="input_wrapper" :class="{require: !validateProvinciaDomicilio}">
-                      <label>Provincia</label>
+                      <label>Provincia actual</label>
                       <select
                       v-model="cliente.ubicacion_provincia"
                       filterable
                       @change="filterDistrictTitularMe"
                       dusk="provincias_id">
-                      <option value="0">SELECCIONE</option>
                       <option
                         v-for="option in provincesTitular"
                         :key="option.id"
@@ -220,12 +233,11 @@
                   </div>
 
                   <div class="input_wrapper" :class="{require: !validateDistritoDomicilio}">
-                      <label>Distrito</label>
+                      <label>Distrito actual</label>
                       <select
                         v-model="cliente.ubicacion_distrito"
                         filterable
-                        dusk="distritos_id">
-                      <option value="0">SELECCIONE</option>
+                        dusk="distritos_id">                      
                       <option
                         v-for="option in districtsTitular"
                         :key="option.id"
@@ -235,49 +247,30 @@
                     </select>
                     <div class="message">Seleccione distrito</div>
                   </div>
+                  <div class="input_wrapper" :class="{require: !validateDomicilio}">
+                      <label>Domicilio Declarado</label>
+                      <input type="text" v-model="cliente.ubicacion_direccion_declarada" maxlength="100" />
+                      <div class="message">Información muy corta</div>
+                  </div>
+                  <div class="input_wrapper" :class="{require: !validateReferencia}">
+                      <label>Referencia</label>
+                      <input type="text" v-model="cliente.ubicacion_referencia" maxlength="50" />
+                      <div class="message">Información muy corta</div>
+                  </div>
+                  <div class="input_wrapper">
+                      <label>Domicilio Reniec</label>
+                      <input type="text" v-model="cliente.ubicacion_direccion_reniec" maxlength="100" disabled/>
+                  </div>
+                  
 
                 </div>
 
                 <span class="separator"></span>
 
                 <div class="group_form">
+                  
 
-                  <div class="input_wrapper">
-                      <label>Número</label>
-                      <input type="number" v-model="cliente.ubicacion_numero" maxlength="3" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>Manzana</label>
-                      <input type="text" v-model="cliente.ubicacion_manzana" maxlength="5" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>Lote</label>
-                      <input type="number" v-model="cliente.ubicacion_lote" maxlength="5" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>N° departamento</label>
-                      <input type="number" v-model="cliente.ubicacion_nro_departamento" maxlength="3" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>Interior</label>
-                      <input type="number" v-model="cliente.ubicacion_interior" maxlength="3" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>Piso</label>
-                      <input type="number" v-model="cliente.ubicacion_piso" maxlength="3" />
-                  </div>
-
-                  <div class="input_wrapper" :class="{require: !validateReferencia}">
-                      <label>Referencia</label>
-                      <input type="text" v-model="cliente.ubicacion_referencia" maxlength="50" />
-                      <div class="message">Información muy corta</div>
-                  </div>
-
+              
                   <div class="input_wrapper">
                       <label>Teléfono</label>
                       <input type="text" v-model="cliente.telefono" maxlength="10" />
@@ -411,11 +404,7 @@
                     <div class="message">Se requiere giro de negocio</div>
                   </div>
 
-                  <div class="input_wrapper" :class="{require: !validateDireccion}">
-                    <label for="nacimiento">Dirección</label>
-                    <input type="text" maxlength="100" v-model="cliente.trabajo.empresa_direccion">
-                    <div class="message">Dirección de la empresa</div>
-                  </div>
+                
 
                   <div class="input_wrapper">
                       <label>Pais</label>
@@ -440,14 +429,13 @@
 
                   </div>
 
-                  <div class="input_wrapper"  :class="{require: !validateProvinciaDomicilioLaboral}">
+                  <div class="input_wrapper" >
                       <label>Provincia</label>
                       <select
                       v-model="cliente.trabajo.empresa_provincia"
                       filterable
                       @change="filterDistrictLaboralMe"
                       dusk="provincias_id">
-                      <option value="0">SELECCIONE</option>
                       <option
                         v-for="option in provincesLaboral"
                         :key="option.id"
@@ -458,13 +446,12 @@
                     <div class="message">Seleccione provincia</div>
                   </div>
 
-                  <div class="input_wrapper"  :class="{require: !validateDistritoDomicilioLaboral}">
+                  <div class="input_wrapper" >
                       <label>Distrito</label>
                       <select
                         v-model="cliente.trabajo.empresa_distrito"
                         filterable
                         dusk="distritos_id">
-                      <option value="0">SELECCIONE</option>
                       <option
                         v-for="option in districtsLaboral"
                         :key="option.id"
@@ -474,55 +461,27 @@
                     </select>
                     <div class="message">Seleccione Distrito</div>
                   </div> 
-
-                </div> 
-
-                <span v-if="cliente.persona.estado_trabajo=='TRABAJA'" class="separator"></span>
-
-                <div class="group_form"  v-if="cliente.persona.estado_trabajo=='TRABAJA'">
-
-                  <div class="input_wrapper">
-                    <label>Número</label>
-                    <input type="number" v-model="cliente.trabajo.empresa_numero" maxlength="5" />
+                  <div class="input_wrapper" :class="{require: !validateDireccion}">
+                    <label for="nacimiento">Dirección</label>
+                    <input type="text" maxlength="100" v-model="cliente.trabajo.empresa_direccion">
+                    <div class="message">Dirección de la empresa</div>
                   </div>
-
-                  <div class="input_wrapper">
-                      <label>Manzana</label>
-                      <input type="text" v-model="cliente.trabajo.empresa_manzana" maxlength="5" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>Lote</label>
-                      <input type="number" v-model="cliente.trabajo.empresa_lote" maxlength="5" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>N° departamento</label>
-                      <input type="number" v-model="cliente.trabajo.empresa_dpto" maxlength="5" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>Interior</label>
-                      <input type="number" v-model="cliente.trabajo.empresa_int" maxlength="5" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>Piso</label>
-                      <input type="number" v-model="cliente.trabajo.empresa_piso" maxlength="5" />
-                  </div>
-
                   <div class="input_wrapper" :class="{require: !validateReferenciaLaboral}">
                       <label>Referencia</label>
                       <input type="text" v-model="cliente.trabajo.empresa_referencia" maxlength="50" />
                       <div class="message">Referencia de la dirección</div>
                   </div>
+                </div> 
 
+                <span v-if="cliente.persona.estado_trabajo=='TRABAJA'" class="separator"></span>
+
+                <div class="group_form"  v-if="cliente.persona.estado_trabajo=='TRABAJA'">
                   <div class="input_wrapper">
                       <label>Teléfono</label>
                       <input type="text" v-model="cliente.trabajo.empresa_telefono" maxlength="10" />
                   </div>
     
-                  <div class="input_wrapper" :class="{require: !validateCelularLaboral}">
+                  <div class="input_wrapper" >  
                       <label>Celular</label>
                       <input
                         type="text"
@@ -872,6 +831,8 @@ export default {
       all_provinces: [],
       all_districts: [],
       provincesLaboral: [],
+      provincesNacimiento: [],
+      districtsNacimiento: [],
       districtsLaboral: [],
       provincesTitular: [],
       districtsTitular: [],
@@ -899,9 +860,9 @@ export default {
         persona:{
           nombres: "",
           apellidos: "",
-          nacimiento_departamento: "",
-          nacimiento_provincia: "",
-          nacimiento_distrito: "",
+          nacimiento_departamento: "10",
+          nacimiento_provincia: "1001",
+          nacimiento_distrito: "100101",
           fecha_nacimiento: "",
           estado_civil: "SOLTERO",
           ocupacion: "",
@@ -1052,15 +1013,7 @@ export default {
     validateNacionalidad() {
       return this.cliente.pais.length>3;
     },
-    validateDepartamento() {
-      return this.cliente.persona.nacimiento_departamento.length>3;
-    },
-    validateProvincia() {
-      return this.cliente.persona.nacimiento_provincia.length>3
-    },
-    validateDistrito() {
-      return this.cliente.persona.nacimiento_distrito.length>3;
-    },
+  
     validateOcupacion() {
       return this.cliente.persona.ocupacion.length>3;
     },
@@ -1081,18 +1034,11 @@ export default {
     },
     validateStep1(){
       return  this.validateNumero  &&
-              this.validateNacimiento &&
               this.validateNombres &&
               this.validateApellidos &&
-              this.validateNacionalidad &&
-              this.validateDepartamento &&
-              this.validateProvincia &&
-              this.validateDistrito &&
               this.validateOcupacion &&
               this.validateDomicilio &&
               this.validateReferencia &&
-              this.validateProvinciaDomicilio &&
-              this.validateDistritoDomicilio &&
               this.validateCelular 
     },
 
@@ -1120,12 +1066,6 @@ export default {
      validateEspecifique() {
       return this.cliente.persona.trabajo_especificacion.length>3;
     },
-     validateProvinciaDomicilioLaboral() {
-      return this.cliente.trabajo.empresa_provincia!='0';
-    },
-    validateDistritoDomicilioLaboral() {
-      return this.cliente.trabajo.empresa_distrito!='0';
-    },
     validateStep2(){
 
       if(this.cliente.persona.estado_trabajo=='TRABAJA'){
@@ -1134,10 +1074,7 @@ export default {
                     this.validateFechaIngreso &&
                     this.validateGiro &&
                     this.validateDireccion &&
-                    this.validateReferenciaLaboral &&
-                    this.validateCelularLaboral &&
-                    this.validateDistritoDomicilioLaboral &&
-                    this.validateProvinciaDomicilioLaboral
+                    this.validateReferenciaLaboral 
       }
       else if(this.cliente.persona.estado_trabajo=='OTROS'){
                 return  this.validateEspecifique
@@ -1303,32 +1240,44 @@ export default {
             )
         })
     },
-
+    filterProvincesNacimiento() {
+        this.provincesNacimiento = this.all_provinces.filter(f => {
+            return f.departamento_id == this.cliente.persona.nacimiento_departamento
+        })
+        this.cliente.persona.nacimiento_provincia=this.provincesNacimiento[0].id
+        this.filterDistrictNacimiento()
+    },
+    filterDistrictNacimiento() {
+        this.districtsNacimiento = this.all_districts.filter(f => {
+            return f.provincia_id == this.cliente.persona.nacimiento_provincia
+        })
+        this.cliente.persona.nacimiento_distrito=this.districtsNacimiento[0].id
+    },
     filterProvincesTitularMe() {
-      this.cliente.ubicacion_provincia="0"
-      this.cliente.ubicacion_distrito="0"
-          this.provincesTitular = this.all_provinces.filter(f => {
-              return f.departamento_id == this.cliente.ubicacion_departamento
-          })
+        this.provincesTitular = this.all_provinces.filter(f => {
+            return f.departamento_id == this.cliente.ubicacion_departamento
+        })
+        this.cliente.ubicacion_provincia=this.provincesTitular[0].id
+        this.filterDistrictTitularMe()
       },
     filterDistrictTitularMe() {
-      this.cliente.ubicacion_distrito="0"
         this.districtsTitular = this.all_districts.filter(f => {
             return f.provincia_id == this.cliente.ubicacion_provincia
         })
+        this.cliente.ubicacion_distrito=this.districtsTitular[0].id
     },
     filterProvincesLaboralMe() {
-      this.cliente.trabajo.empresa_provincia='0'
-      this.cliente.trabajo.empresa_distrito='0'
           this.provincesLaboral = this.all_provinces.filter(f => {
               return f.departamento_id == this.cliente.trabajo.empresa_departamento
           })
+          this.cliente.trabajo.empresa_provincia=this.provincesLaboral[0].id
+          this.filterDistrictLaboralMe()
       },
     filterDistrictLaboralMe() {
-      this.cliente.trabajo.empresa_distrito='0'
         this.districtsLaboral = this.all_districts.filter(f => {
             return f.provincia_id == this.cliente.trabajo.empresa_provincia
         })
+        this.cliente.trabajo.empresa_distrito=this.districtsLaboral[0].id
     },
   },
   watch: {
@@ -1346,7 +1295,7 @@ export default {
       }
     },
   },
-  async mounted() {
+  async mounted() { 
 
     this.$http.get(`/extras/giro`).then(response => {
       this.giros = response.data;
@@ -1357,7 +1306,7 @@ export default {
         this.all_provinces = response.data.provinces;
         this.all_districts = response.data.districts; 
       });
-
+    await this.filterProvincesNacimiento()
     await this.filterProvincesTitularMe()
     await this.filterDistrictTitularMe()
 

@@ -77,7 +77,7 @@
       <img src="img/empty_2.svg" >
       <h1> Sin Prestamos Registrados </h1>
       <p>Todavía no se han registrado ningun prestamo a este cliente.</p>
-      <router-link  v-if=" cliente.estado=='2' && cliente.tipo_cliente=='1'"  class="button_primary small" :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+      <router-link  v-if=" cliente.estado=='2' && cliente.tipo_cliente=='1'"  class="button_primary small" :to="{name: 'registarPrestamo', params:{tipoCliente:1,clienteID:cliente.id,prestamoID:'0'}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
       </router-link>   

@@ -110,9 +110,9 @@ export default new Router({
             }
         }, 
         {
-            path: '/prestamos/persona/registrar/:clienteID/:prestamoID',
+            path: '/prestamos/registrar/:tipoCliente/:clienteID/:prestamoID',
             name: 'registarPrestamo', 
-            component: require('./views/RegistrarPrestamo').default,
+            component: require('./views/prestamos/RegistrarPrestamo').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
                     .then(res => {  

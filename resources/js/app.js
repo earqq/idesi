@@ -17,6 +17,10 @@ import VueIziToast from 'vue-izitoast';
 import 'izitoast/dist/css/iziToast.css'; 
 import * as VueGoogleMaps from 'vue2-google-maps';
 import Vuex from 'vuex'
+import { ApolloClient } from 'apollo-client'
+import { HttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import VueApollo from 'vue-apollo'
 /*google maps para geocoding */
 import GoogleMapsLoader from "google-maps";
 const mapsApiKey = "AIzaSyAbyVLUSddPTErLdnCbHoXpRO7Y1S4FuDA";
@@ -26,7 +30,23 @@ GoogleMapsLoader.LIBRARIES = ["geometry", "places"];
 import VueMoment from 'vue-moment'
 import VueTheMask from 'vue-the-mask'
 import VueApexCharts from 'vue-apexcharts'
-
+//apollo
+const httpLink = new HttpLink({
+  // You should use an absolute URL here
+  uri: 'http://localhost:8000/graphql'
+})
+const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+  connectToDevTools: true
+})
+Vue.use(VueApollo)
+const apolloProvider = new VueApollo({
+  defaultClient: apolloClient,
+  defaultOptions: {
+    $loadingKey: 'loading'
+  }
+})
 Vue.use(VueTheMask)
 Vue.use(VueMoment, { moment })
 Vue.use(Vuex)
@@ -51,6 +71,6 @@ Vue.component('app', require('./components/AppComponent.vue').default);
 const app = new Vue({
     el: '#app',
     router,
-    store
-
+    store,
+    provide: apolloProvider.provide(),
 });
