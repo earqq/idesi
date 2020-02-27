@@ -1,682 +1,403 @@
-<template>
-  <div class="create_client_content">
-    <section class="tabs_section">
-      <div class="tabs_wrapper">
-        <div
-          class="tab"
-          @click="tab = 1"
-          :class="[{selected: tab == 1}]"
-        >
-          <span>1</span>
-          <p>SOLICITUD</p>
-        </div>
-        <div class="tab" @click="validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}"  >
-          <span>2</span>
-          <p>CLIENTE</p>
-        </div>
+<template lang='pug'>
+  .create_client_content
+  section.tabs_section
+    .tabs_wrapper
+      .tab(@click='tab = 1' :class='[{selected: tab == 1}]')
+        span 1
+        p SOLICITUD
+      .tab(@click='validateStep1 ? tab = 2 : tabError()' :class='{selected: tab == 2}')
+        span 2
+        p CLIENTE
+      .tab(@click=' (validateStep1 && validateStep2) ? tab = 3: tabError()' :class='{selected: tab == 3}')
+        span 3
+        p AVAL
+      .tab(@click='(validateStep1 && validateStep2) ? tab = 4 : tabError()' :class='{selected: tab == 4}')
+        span 4
+        p GARANTIA
+      .tab(@click='(validateStep1 && validateStep2) ? tab = 5: tabError()' :class='{selected: tab ==5}')
+        span 5
+        p PROPUESTA
+  section.client_forms
+    .client_forms_wrapper
+      .form_step(v-show='tab == 1')
+        .form_step_wrapper
+          h3.title Solicitud de Cr&eacute;dito
+          .form_content
+            .group_form
+              .input_wrapper(:class='{require: !validateMonto}')
+                label Monto
+                input(type='text' v-mask='"######"' v-model='prestamo.monto_inicial')
+                .message Monto de solicitud invalido
+              .input_wrapper
+                label Forma
+                select(v-model='prestamo.forma_inicial')
+                  option(value='DIARIO') DIARIO
+                  option(value='SEMANAL') SEMANAL
+                  option(value='QUINCENAL') QUINCENAL
+                  option(value='MENSUAL') MENSUAL
+              .input_wrapper
+                label Cuotas
+                input(type='number' v-model='prestamo.cuotas_inicial' maxlength='11')
+              .input_wrapper(:class='{require: !validateDiponibilidad}')
+                label Disponibilidad de pago
+                input(type='text' v-model='prestamo.disponibilidad_pago_inicial' v-mask='"######"')
+                .message La disponibilidad es invalida
+              .input_wrapper(:class='{require: !validateFuenteIngreso}')
+                label Fuente de ingreso  
+                v-select(label='giro_negocio' :options='giros' :reduce='giros => giros.giro_negocio' v-model='cualitativa.principal.fuente_ingreso')
+                  span(slot='no-options')
+                    | No se encontro giro de negocio
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper
+                label Destino del credito
+                select(v-model='cualitativa.principal.destino_credito')
+                  option(value='Capital de trabajo') Capital de trabajo
+                  option(value='Activo Fijo') Activo Fijo
+                  option(value='Consumo') Consumo
+                  option(value='Vehiculo') Vehiculo
+                  option(value='Hipotecario') Hipotecario
+                  option(value='Mejoramiento de vivienda') Mejoramiento de vivienda
+                  option(value='Compra de deuda') Compra de deuda
+              .input_wrapper(:class='{require: !validateDestinoCredito}')
+                label Descripcion destino
+                p {{cualitativa.principal.destino_credito_descripcio}}
+                textarea(v-model='cualitativa.principal.destino_credito_descripcion')
+                .message Se requiere esta informaci&oacute;n
+            .group_form.all
+              .input_wrapper(:class='{require: !validateDestino}')
+                label Destino de cr&eacute;dito (propuesta cliente)
+                textarea(v-model='prestamo.destino_inicial')
+                  .message Informaci&oacute;n de destino es corta
+        .form_buttons.all
+          a.button_primary.medium.next(@click=' validateStep1 ? next(1) : tabError()')
+            span SIGUIENTE
+            i.material-icons-outlined navigate_next
+      .form_step(v-if='prestamo.cliente.tipo_cliente==1' v-show='tab == 2')
+        .form_step_wrapper
+          h3.title Datos del Titular
+          .form_content
+            .group_form
+              .input_wrapper(:class='{require: !validateNombre}')
+                label Nombres
+                input(type='text' v-model='prestamo.cliente.persona.nombres')
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper(:class='{require: !validateApellidos}')
+                label Apellidos
+                input(type='text' v-model='prestamo.cliente.persona.apellidos')
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper(:class='{require: !validateDocumento}')
+                label Documento
+                input(type='text' v-model='prestamo.cliente.documento')
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper(:class='{require: !validateNacimiento}')
+                label Fecha de nacimiento
+                input(type='date' v-model='prestamo.cliente.persona.fecha_nacimiento')
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper(:class='{require: !validateCivil}')
+                label Estado Civil
+                select(v-model='prestamo.cliente.persona.estado_civil')
+                  option(value='SOLTERO') SOLTERO
+                  option(value='CASADO') CASADO
+                  option(value='CONVIVIENTE') CONVIVIENTE
+                  option(value='DIVORCIADO - SEPARADO') DIVORCIADO - SEPARADO
+                  option(value='VIUDO') VIUDO
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper(:class='{require: !validateOcupacion}')
+                label Ocupaci&oacute;n
+                input(type='text' v-model='prestamo.cliente.persona.ocupacion' maxlength='100')
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper
+                label Tel&eacute;fono
+                input(type='text' v-model='prestamo.cliente.telefono')
+              .input_wrapper(:class='{require: !validateCelular}')
+                label Celular
+                input(type='text' v-mask="'### ### ###'" v-model='prestamo.cliente.celular')
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper(:class='{require: !validateDireccion}')
+                label Direcci&oacute;n Declarada
+                input(type='text' v-model='prestamo.cliente.ubicacion_direccion_declarada')
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper
+                label Direcci&oacute;n Reniec
+                input(type='text' v-model='prestamo.cliente.ubicacion_direccion_sistema' disabled='')
+            span.separator
+            .group_form
+              .input_wrapper(:class='{require: !validateDepartamento}')
+                label Departamento
+                select(v-model='prestamo.cliente.ubicacion_departamento' @change='filterProvincesTitularMe' dusk='departamentos_id')
+                  option(value='0') SELECCIONE
+                  option(v-for='option in all_departments' :key='option.id' :value='option.id' :label='option.descripcion') &gt;
+              .input_wrapper(:class='{require: !validateProvincia}')
+                label Provincia
+                select(v-model='prestamo.cliente.ubicacion_provincia' filterable='' @change='filterDistrictTitularMe' dusk='provincias_id')
+                  option(value='0') SELECCIONE
+                  option(v-for='option in provincesTitular' :key='option.id' :value='option.id' :label='option.descripcion') &gt;
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper(:class='{require: !validateDistrito}')
+                label Distrito
+                select(v-model='prestamo.cliente.ubicacion_distrito' filterable='' dusk='distritos_id')
+                  option(value='0') SELECCIONE
+                  option(v-for='option in districtsTitular' :key='option.id' :value='option.id' :label='option.descripcion') &gt;
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper(:class='{require: !validateReferencia}')
+                label Referencia
+                input(type='text' v-model='prestamo.cliente.ubicacion_referencia')
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper(:class='{require: !validateDomicilio}')
+                label Tipo Domicilio
+                select(v-model='prestamo.cliente.persona.tipo_domicilio')
+                  option(value='PROPIA') PROPIA
+                  option(value='PROPIA HIPOTECA') PROPIA HIPOTECA
+                  option(value='DE LOS PADRES') DE LOS PADRES
+                  option(value='DE LOS FAMILIARES') DE LOS FAMILIARES
+                  option(value='ALQUILADA') ALQUILADA
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper(:class='{require: !validateCentro}')
+                label Centro Laboral
+                input(type='text' v-model='prestamo.cliente.persona.trabajo.empresa_razon_social')
+                .message Se requiere esta informaci&oacute;n
+              .input_wrapper(:class='{require: !validateDireccionLaboral}')
+                label Direcci&oacute;n centro laboral 
+                input(type='text' v-model='prestamo.cliente.persona.trabajo.empresa_direccion')
+                .message Se requiere esta informaci&oacute;n
+        button.add_section.in_bottom(type='button' @click='clickAddconyuge' v-if='tools.tiene_conyuge==false')
+          span AGREGAR C&Oacute;NYUGE O CONVIVIENTE
+          i.material-icons-outlined add
+        .form_list(v-if='tools.tiene_conyuge==true')
+          .form_step_wrapper.in_bottom
+            h3.title
+              | C&Oacute;NYUGE o Conviviente 
+              button.delete_section(type='button' @click='clickRemoveconyuge()')
+                i.material-icons-outlined  delete 
+            .form_content
+              .group_form
+                .input_wrapper(:class='{require: !validateDocumentoConyuge}')
+                  label Documento de Identidad
+                  input(type='text' v-model='prestamo.cliente.persona.conyuge.documento' @keyup='datosCliente()' maxlength='15')
+                  .message n&uacute;mero de documento inv&aacute;lido
+                .input_wrapper(:class='{require: !validateNombreConyuge}')
+                  label Nombres y Apellidos
+                  input(type='text' v-model='prestamo.cliente.persona.conyuge.nombres')
+                .input_wrapper(:class='{require: !validateNacimientoConyuge}')
+                  label Fecha de Nacimiento
+                  input(type='date' v-model='prestamo.cliente.persona.conyuge.fecha_nacimiento')
+                .input_wrapper
+                  label Estado Civil
+                  select(v-model='prestamo.cliente.persona.conyuge.estado_civil')
+                    option(value='SOLTERO') SOLTERO
+                    option(value='CASADO') CASADO
+                    option(value='CONVIVIENTE') CONVIVIENTE
+                    option(value='DIVORCIADO - SEPARADO') DIVORCIADO - SEPARADO
+                    option(value='VIUDO') VIUDO
+                .input_wrapper(:class='{require: !validateOcupacionConyuge}')
+                  label Ocupaci&oacute;n
+                  input(type='text' v-model='prestamo.cliente.persona.conyuge.ocupacion')
+                .input_wrapper
+                  label Socio 
+                  select(v-model='prestamo.cliente.persona.conyuge.socio')
+                    option(value='true') SI
+                    option(value='false') NO
+                .input_wrapper(:class='{require: !validateCodigoConyuge}' v-if='prestamo.cliente.persona.conyuge.socio')
+                  label C&oacute;digo
+                  input(type='text' v-model='prestamo.cliente.persona.conyuge.codigo_socio' maxlength='10')
+                .input_wrapper(:class='{require: !validateAporteConyuge}' v-if='prestamo.cliente.persona.conyuge.socio')
+                  label Aporte 
+                  input(type='text' v-mask='"######"' v-model='prestamo.cliente.persona.conyuge.aporte_socio')
+                .input_wrapper
+                  label Tel&eacute;fono
+                  input(type='text' v-model='prestamo.cliente.persona.conyuge.telefono' maxlength='11')
+                .input_wrapper
+                  label Celular
+                  input(type='text' v-mask="'### ### ###'" v-model='prestamo.cliente.persona.conyuge.celular')
+                .input_wrapper
+                  label &iquest;Trabaja?
+                  select(v-model='prestamo.cliente.persona.conyuge.trabaja')
+                    option(value='true') SI
+                    option(value='false') NO
+                .input_wrapper(:class='{require: !validateCentroConyuge}' v-if='prestamo.cliente.persona.conyuge.trabaja')
+                  label Centro Laboral
+                  input(type='text' v-model='prestamo.cliente.persona.conyuge.centro_laboral')
+                .input_wrapper(:class='{require: !validateDireccionConyuge}' v-if='prestamo.cliente.persona.conyuge.trabaja')
+                  label Direcci&oacute;n centro laboral
+                  input(type='text' v-model='prestamo.cliente.persona.conyuge.direccion_centro_laboral')
+        .form_buttons
+          a.button_inline_primary.medium.prev(@click='prev(2)')
+            i.material-icons-outlined navigate_before
+            span ATRAS
+          a.button_primary.medium.next(@click=' (validateStep2 && validateStep1) ? next(2) : tabError()')
+            span SIGUIENTE
+            i.material-icons-outlined navigate_next
+      .form_step(v-show='tab == 3')
+        .form_step_wrapper
+          .form_list.no_border
+            .sub_step_wrapper(v-for='(row, index) in prestamo.avales' :key='index')
+              h3.title
+                | Aval {{index + 1}}
+                button.delete_section(type='button' @click.prevent='clickRemoveAval(index)')
+                  i.material-icons-outlined delete
+              .form_content
+                .group_form
+                  .input_wrapper
+                    label Tipo
+                    select(v-model='row.tipo_persona')
+                      option(value='pn') Persona Natural
+                      option(value='pj') Persona Juridica
+                  .input_wrapper(v-if="row.tipo_persona=='pj'")
+                    label Ruc
+                    input(type='text' v-model='row.empresa_ruc' v-mask="'###########'" @keyup='ObtenerDatosAvalEmpresa(row.empresa_ruc,index)')
+                  .input_wrapper(v-if="row.tipo_persona=='pj'")
+                    label Razon Social
+                    input(type='text' maxlength='200' v-model='row.empresa_razon_social')
+                  .input_wrapper(v-if="row.tipo_persona=='pj'")
+                    label Direcci&oacute;n
+                    input(type='text' maxlength='200' v-model='row.empresa_direccion')
+                span.separator
+                .group_form
+                  .input_wrapper(:class='{require: !row.validate_documento, other: validateDocumentosSocios}')
+                    label Documento de Identidad
+                    input(type='text' v-model='row.documento' v-mask="'#########'" @change='datosAval(index)')
+                  .input_wrapper(:class='{require: !row.validate_nombres, other: validateNombresSocios}')
+                    label Nombres
+                    input(type='text' maxlength='50' v-model='row.nombres')
+                  .input_wrapper(:class='{require: !row.validate_apellidos, other: validateApellidosSocios}')
+                    label Apellidos
+                    input(type='text' maxlength='50' v-model='row.apellidos')
+                  .input_wrapper(:class='{require: !row.validate_fecha_nacimiento, other: validateFechasNacimientoSocios}')
+                    label Fecha de Nacimiento
+                    input(type='date' v-model='row.fecha_nacimiento')
+                  .input_wrapper
+                    label Estado Civil
+                    select(v-model='row.estado_civil')
+                      option(value='SOLTERO') SOLTERO
+                      option(value='CASADO') CASADO
+                      option(value='CONVIVIENTE') CONVIVIENTE
+                      option(value='DIVORCIADO - SEPARADO') DIVORCIADO - SEPARADO
+                      option(value='VIUDO') VIUDO
+                  .input_wrapper
+                    label Ocupaci&oacute;n
+                    input(type='text' maxlength='40' v-model='row.ocupacion')
+                  .input_wrapper
+                    label Centro Laboral
+                    input(type='text' maxlength='50' v-model='row.centro_laboral')
+                  .input_wrapper
+                    label Direcci&oacute;n centro laboral
+                    input(type='text' maxlength='100' v-model='row.direccion_centro_laboral')
+                span.separator
+                .group_form
+                  .input_wrapper
+                    label Socio
+                    select(v-model='row.socio')
+                      option(value='1') SI
+                      option(value='0') NO
+                  .input_wrapper(v-if="row.socio=='1'" :class='{require: !row.validate_codigo_socio, other: validateCodigosSociosAval}')
+                    label Codigo
+                    input(type='text' v-model='row.codigo_socio' maxlength='10')
+                  .input_wrapper(v-if="row.socio=='1'" :class='{require: !row.validate_aporte_socio , other: validateCodigosSociosAval}')
+                    label Aporte
+                    input(type='text' v-mask='"######"' v-model='row.aporte_socio')
+                  .input_wrapper
+                    label Tel&eacute;fono
+                    input(type='text' maxlength='10' v-model='row.telefono')
+                  .input_wrapper
+                    label Celular
+                    input(type='text' v-model='row.celular' v-mask="'### ### ###'")
+                  .input_wrapper
+                    label Direcci&oacute;n
+                    input(type='text' v-model='row.direccion' maxlength='100')
+                  .input_wrapper
+                    label Distrito
+                    input(type='text' v-model='row.distrito' maxlength='30')
+          button.add_section(type='button' @click='clickAddAval' v-if='prestamo.avales.length<=1')
+            span AGREGAR AVAL
+            i.material-icons-outlined add
+        .form_buttons
+          a.button_inline_primary.medium.prev(@click='prev(3)')
+            i.material-icons-outlined navigate_before
+            span ATRAS
+          a.button_primary.medium.next(@click=' (validateStep2 && validateStep1 && validateStep3) ? next(3) : tabError()')
+            span SIGUIENTE
+            i.material-icons-outlined navigate_next
+      .form_step(v-show='tab == 4')
+        .form_step_wrapper
+          .form_list.no_border
+            .sub_step_wrapper(v-for='(row, index) in prestamo.garantias' :key='index')
+              h3.title
+                | Garantia {{index + 1}}
+                button.delete_section(type='button' @click.prevent='clickRemoveGarantia(index)')
+                  i.material-icons-outlined delete
+              .form_content
+                .group_form
+                  .input_wrapper
+                    label Bien en Garant&iacute;a
+                    input(type='text' maxlength='50' v-model='row.bien_garantia')
+                .group_form
+                  .input_box.no_label
+                    .input_box_wrapper
+                      .input_checkbox_wrapper.radio
+                        input(type='radio' :id="'radio'+index" :name="'garantiaType'+index" v-model='row.inscripcion' value='1')
+                        label.box_content(:for="'radio'+index")
+                          .box
+                          span Inscripci&oacute;n
+                      .input_checkbox_wrapper.radio
+                        input(type='radio' :id="'radio2'+index" :name="'garantiaType'+index" v-model='row.declaracion_jurada' value='1')
+                        label.box_content(:for="'radio2'+index")
+                          .box
+                          span Declaraci&oacute;n Jurada
+          button.add_section(type='button' @click='clickAddGarantia' v-if='prestamo.garantias.length<=1')
+            span AGREGAR GARANTIA
+            i.material-icons-outlined add
+        .form_buttons
+          a.button_inline_primary.medium.prev(@click='prev(4)')
+            i.material-icons-outlined navigate_before
+            span ATRAS
+          a.button_primary.medium.next(@click=' (validateStep2 && validateStep1) ? next(4) : tabError()')
+            span SIGUIENTE
+            i.material-icons-outlined navigate_next
+      .form_step(v-show='tab == 5')
+        .form_step_wrapper
+          h3.title Propuesta de Analista
+          .form_content
+            .group_form
+              .input_wrapper
+                label Producto
+                select(v-model='prestamo.producto' @change='meses_numero')
+                  option(value='CREDIDIARIO') CREDIDIARIO
+                  option(value='CREDISEMANA') CREDISEMANA
+                  option(value='PYME') PYME
+                  option(value='PYME ESPECIAL') PYME ESPECIAL
+                  option(value='CONSUMO') CONSUMO
+                  option(value='CONSUMO ESPECIAL') CONSUMO ESPECIAL
+              .input_wrapper
+                label Importe
+                input(type='text' v-model='prestamo.importe' v-mask='"#####"')
+              .input_wrapper
+                label Cuotas
+                input(type='text' v-model='prestamo.cuotas' v-mask='"#####"' @keyup='meses_numero')
+              .input_wrapper
+                label Meses
+                input(type='text' v-model='prestamo.meses' disabled='')
+              .input_wrapper
+                label Cuota del sistema
+                input(type='number' v-model='prestamo.cuota_sistema')
+              .input_wrapper
+                label Aporte a la fecha
+                input(type='text' v-mask='"#####"' v-model='prestamo.aporte')
+              .input_wrapper
+                label Prob. Infocorp
+                input(type='number' v-model='prestamo.probabilidad_infocorp')
+            .group_form.all
+              .input_wrapper
+                label Comentarios
+                textarea(type='text' v-model='prestamo.comentarios')
+        .form_buttons
+          a.button_inline_primary.medium.prev(@click='prev(5)')
+            i.material-icons-outlined navigate_before
+            span ATRAS
+          a.button_primary.medium.next(@click.prevent=' (validateStep2 && validateStep1) ? registrar() : tabError()' :class='{loading: loading}')
+            .load_spinner
+            span FINALIZAR
+            i.material-icons-outlined check
 
-        <div class="tab" @click=" (validateStep1 && validateStep2) ? tab = 3: tabError()" :class="{selected: tab == 3}" >
-          <span>3</span>
-          <p>AVAL</p>
-        </div>
-
-        <div class="tab" @click="(validateStep1 && validateStep2) ? tab = 4 : tabError()" :class="{selected: tab == 4}">
-          <span>4</span>
-          <p>GARANTIA</p>
-        </div>
-
-
-        <div class="tab" @click="(validateStep1 && validateStep2) ? tab = 5: tabError()" :class="{selected: tab ==5}" >
-          <span>5</span>
-          <p>PROPUESTA</p>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="client_forms">
-      <div class="client_forms_wrapper">
-        <div v-show="tab == 1" class="form_step">
-          <div class="form_step_wrapper">
-            <h3 class="title">Solicitud de Crédito</h3>
-            <div class="form_content">
-              <div class="group_form">
-                <div class="input_wrapper" :class="{require: !validateMonto}">
-                  <label>Monto</label> 
-                  <input type='text'
-                    v-mask='"######"'
-                    v-model="prestamo.monto_inicial"
-                  >
-                  <div class="message">Monto de solicitud invalido</div>
-                </div>
-                <div class="input_wrapper">
-                  <label>Forma</label>
-                  <select v-model="prestamo.forma_inicial">
-                    <option value="DIARIO">DIARIO</option>
-                    <option value="SEMANAL">SEMANAL</option>
-                    <option value="QUINCENAL">QUINCENAL</option>
-                    <option value="MENSUAL">MENSUAL</option>
-                  </select>
-                </div>
-                <div class="input_wrapper">
-                  <label>Cuotas</label>
-                  <input type="number" v-model="prestamo.cuotas_inicial" maxlength=11  />
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDiponibilidad}">
-                  <label>Disponibilidad de pago</label>
-                  <input
-                    type='text'                    
-                    v-model="prestamo.disponibilidad_pago_inicial"
-                    v-mask='"######"'
-                  >
-                  <div class="message">La disponibilidad es invalida</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateFuenteIngreso}">
-                  <label>Fuente de ingreso  </label> 
-                  <v-select
-                    label="giro_negocio"
-                    :options="giros"
-                    :reduce="giros => giros.giro_negocio"
-                    v-model="cualitativa.principal.fuente_ingreso"
-                    >
-                    <span slot="no-options">
-                      No se encontro giro de negocio
-                    </span>
-                  </v-select>
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper">
-                  <label>Destino del credito</label>
-                  <select v-model="cualitativa.principal.destino_credito">
-                        <option value="Capital de trabajo">Capital de trabajo</option>
-                        <option value="Activo Fijo">Activo Fijo</option>
-                        <option value="Consumo">Consumo</option>
-                        <option value="Vehiculo">Vehiculo</option>
-                        <option value="Hipotecario">Hipotecario</option>
-                        <option value="Mejoramiento de vivienda">Mejoramiento de vivienda</option>
-                        <option value="Compra de deuda">Compra de deuda</option>
-                      </select>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDestinoCredito}">
-                  <label>Descripcion destino</label>
-                  <p>{{cualitativa.principal.destino_credito_descripcio}}</p>
-                  <textarea  v-model="cualitativa.principal.destino_credito_descripcion" ></textarea>
-                  <div class="message">Se requiere esta información</div>
-                </div>
-              </div>
-              <div class="group_form all">
-                <div class="input_wrapper" :class="{require: !validateDestino}">
-                  <label>Destino de crédito (propuesta cliente)</label>
-                  <textarea  v-model="prestamo.destino_inicial"  />
-                  <div class="message">Información de destino es corta</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form_buttons all">
-            <a class="button_primary medium next" @click=" validateStep1 ? next(1) : tabError()">
-              <span>SIGUIENTE</span>
-              <i class="material-icons-outlined">navigate_next</i>
-            </a>
-          </div>
-        </div>
-
-        <div v-if='prestamo.cliente.tipo_cliente==1' v-show="tab == 2" class="form_step">
-          <div class="form_step_wrapper">
-            <h3 class="title">Datos del Titular</h3>
-            <div class="form_content">
-              <div class="group_form">
-                <div class="input_wrapper" :class="{require: !validateNombre}">
-                  <label>Nombres</label>
-                  <input type="text" v-model="prestamo.cliente.persona.nombres" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateApellidos}">
-                  <label>Apellidos</label>
-                  <input type="text" v-model="prestamo.cliente.persona.apellidos" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDocumento}">
-                  <label>Documento</label>
-                  <input type="text" v-model="prestamo.cliente.documento" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateNacimiento}">
-                  <label>Fecha de nacimiento</label>
-                  <input type="date" v-model="prestamo.cliente.persona.fecha_nacimiento" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateCivil}">
-                  <label>Estado Civil</label>
-                  <select v-model="prestamo.cliente.persona.estado_civil">
-                    <option value="SOLTERO">SOLTERO</option>
-                    <option value="CASADO">CASADO</option>
-                    <option value="CONVIVIENTE">CONVIVIENTE</option>
-                    <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
-                    <option value="VIUDO">VIUDO</option>
-                  </select>
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateOcupacion}">
-                  <label>Ocupación</label>
-                  <input type="text" v-model="prestamo.cliente.persona.ocupacion" maxlength='100' />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" >
-                  <label>Teléfono</label>
-                  <input type="text" v-model="prestamo.cliente.telefono" />
-                </div>
-                <div class="input_wrapper" :class="{require: !validateCelular}">
-                  <label>Celular</label>
-                  <input type="text" v-mask="'### ### ###'" v-model="prestamo.cliente.persona.celular" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDireccion}">
-                  <label>Dirección Declarada</label>
-                  <input type="text" v-model="prestamo.cliente.ubicacion_direccion_declarada" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper">
-                  <label>Dirección Reniec</label>
-                  <input type="text" v-model='prestamo.cliente.ubicacion_direccion_sistema' disabled />
-                </div>
-              </div>
-
-              <span class="separator"></span>
-
-              <div class="group_form">
-                <div class="input_wrapper" :class="{require: !validateDepartamento}">
-                  <label>Departamento</label>
-                   <select
-                        v-model="prestamo.cliente.ubicacion_departamento"
-                        
-                        @change="filterProvincesTitularMe"
-                        dusk="departamentos_id">
-                      <option value="0">SELECCIONE</option>
-                      <option
-                        v-for="option in all_departments"
-                        :key="option.id"
-                        :value="option.id"
-                        :label="option.descripcion"
-                      >></option>
-                  </select>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateProvincia}">
-                  <label>Provincia</label> 
-                  <select
-                      v-model="prestamo.cliente.ubicacion_provincia"
-                      filterable
-                      @change="filterDistrictTitularMe"
-                      dusk="provincias_id">
-                      <option value="0">SELECCIONE</option>
-                      <option
-                        v-for="option in provincesTitular"
-                        :key="option.id"
-                        :value="option.id"
-                        :label="option.descripcion"
-                      >></option>
-                  </select>
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDistrito}">
-                  <label>Distrito</label>
-                  <select
-                        v-model="prestamo.cliente.ubicacion_distrito"
-                        filterable
-                        dusk="distritos_id">
-                        <option value="0">SELECCIONE</option>
-                      <option
-                        v-for="option in districtsTitular"
-                        :key="option.id"
-                        :value="option.id"
-                        :label="option.descripcion"
-                      >></option>
-                    </select> 
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateReferencia}">
-                  <label>Referencia</label>
-                  <input type="text" v-model="prestamo.cliente.ubicacion_referencia" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDomicilio}">
-                  <label>Tipo Domicilio</label>
-                  <select v-model="prestamo.cliente.persona.tipo_domicilio">
-                    <option value="PROPIA">PROPIA</option>
-                    <option value="PROPIA HIPOTECA">PROPIA HIPOTECA</option>
-                    <option value="DE LOS PADRES">DE LOS PADRES</option>
-                    <option value="DE LOS FAMILIARES">DE LOS FAMILIARES</option>
-                    <option value="ALQUILADA">ALQUILADA</option>
-                  </select>
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateCentro}">
-                  <label>Centro Laboral</label>
-                  <input type="text" v-model="prestamo.cliente.persona.trabajo.empresa_razon_social" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDireccionLaboral}">
-                  <label>Dirección centro laboral </label>
-                  <input type="text" v-model="prestamo.cliente.persona.trabajo.empresa_direccion" />
-                  <div class="message">Se requiere esta información</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button
-            type="button"
-            @click="clickAddconyuge"
-            class="add_section in_bottom"
-            v-if="tools.tiene_conyuge==false">
-            <span>AGREGAR CÓNYUGE O CONVIVIENTE</span>
-            <i class="material-icons-outlined">add</i> 
-          </button>
-
-          <div class="form_list " v-if="tools.tiene_conyuge==true">
-            <div class="form_step_wrapper in_bottom" >
-              <h3 class="title">
-                CÓNYUGE o Conviviente 
-                <button  class="delete_section" type="button"  @click="clickRemoveconyuge()">
-                  <i class="material-icons-outlined"> delete </i>
-                </button>
-              </h3>
-              <div class="form_content" >
-                <div class="group_form" >
-                  <div class="input_wrapper"  :class="{require: !validateDocumentoConyuge}">
-                    <label>Documento de Identidad</label>
-                    <input
-                      type="text"
-                      v-model="prestamo.cliente.persona.conyuge.documento"
-                      @keyup="datosCliente()"
-                      maxlength='15'
-                    />
-                    <div class="message">número de documento inválido</div>
-                  </div>
-                  <div class="input_wrapper"  :class="{require: !validateNombreConyuge}">
-                    <label>Nombres y Apellidos</label>
-                    <input type="text" v-model="prestamo.cliente.persona.conyuge.nombres" />
-                  </div>
-                  <div class="input_wrapper"  :class="{require: !validateNacimientoConyuge}">
-                    <label>Fecha de Nacimiento</label>
-                    <input type="date" v-model="prestamo.cliente.persona.conyuge.fecha_nacimiento" />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Estado Civil</label>
-                    <select v-model="prestamo.cliente.persona.conyuge.estado_civil">
-                      <option value="SOLTERO">SOLTERO</option>
-                      <option value="CASADO">CASADO</option>
-                      <option value="CONVIVIENTE">CONVIVIENTE</option>
-                      <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
-                      <option value="VIUDO">VIUDO</option>
-                    </select>
-                  </div>
-                  <div class="input_wrapper"  :class="{require: !validateOcupacionConyuge}">
-                    <label>Ocupación</label>
-                    <input type="text" v-model="prestamo.cliente.persona.conyuge.ocupacion" />
-                  </div>
-                  <div class="input_wrapper">
-                    <label>Socio </label>
-                    <select v-model="prestamo.cliente.persona.conyuge.socio">
-                      <option value=true>SI</option>
-                      <option value=false>NO</option>
-                    </select>
-                  </div> 
-                  <div class="input_wrapper" :class="{require: !validateCodigoConyuge}" v-if="prestamo.cliente.persona.conyuge.socio" >
-                    <label>Código</label>
-                    <input  type="text"  v-model="prestamo.cliente.persona.conyuge.codigo_socio" maxlength='10'/>
-                  </div>
-                  
-                  <div class="input_wrapper" :class="{require: !validateAporteConyuge}" v-if="prestamo.cliente.persona.conyuge.socio">
-                    <label>Aporte </label>
-                    <input type='text' v-mask='"######"' v-model="prestamo.cliente.persona.conyuge.aporte_socio" >
-                  </div>                 
-                  <div class="input_wrapper">
-                    <label>Teléfono</label>
-                    <input type="text" v-model="prestamo.cliente.persona.conyuge.telefono" maxlength='11' />
-                  </div>
-                  <div class="input_wrapper"  :class="{require: !validateCelularConyuge}">
-                    <label>Celular</label>
-                    <input  type="text"  v-mask="'### ### ###'"  v-model="prestamo.cliente.persona.conyuge.celular" />
-                  </div>
-                  <div class="input_wrapper" >
-                    <label>¿Trabaja?</label>
-                    <select v-model="prestamo.cliente.persona.conyuge.trabaja">
-                      <option value=true>SI</option>
-                      <option value=false>NO</option>
-                    </select>
-                  </div>
-
-                  <div class="input_wrapper"  :class="{require: !validateCentroConyuge}" v-if="prestamo.cliente.persona.conyuge.trabaja">
-                    <label>Centro Laboral</label>
-                    <input type="text" v-model="prestamo.cliente.persona.conyuge.centro_laboral" />
-                  </div>
-
-                  <div class="input_wrapper"  :class="{require: !validateDireccionConyuge}" v-if="prestamo.cliente.persona.conyuge.trabaja">
-                    <label>Dirección centro laboral</label>
-                    <input type="text" v-model="prestamo.cliente.persona.conyuge.direccion_centro_laboral" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form_buttons">
-            <a class="button_inline_primary medium prev" @click="prev(2)">
-              <i class="material-icons-outlined">navigate_before</i>
-              <span>ATRAS</span>
-            </a>
-            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1) ? next(2) : tabError()" >
-              <span>SIGUIENTE</span>
-              <i class="material-icons-outlined">navigate_next</i>
-            </a>
-          </div>
-        </div>    
-        <div v-show="tab == 3" class="form_step">
-          <div class="form_step_wrapper">
-            <div class="form_list no_border" >
-              <div class="sub_step_wrapper " v-for="(row, index) in prestamo.avales" :key="index">
-                <h3 class="title">
-                  Aval {{index + 1}}
-                  <button 
-                    class="delete_section"
-                    type="button"
-                    @click.prevent="clickRemoveAval(index)">
-                    <i class="material-icons-outlined">delete</i>
-                  </button>
-                </h3>
-                <div class="form_content">
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Tipo</label>
-                      <select v-model="row.tipo_persona">
-                        <option value="pn">Persona Natural</option>
-                        <option value="pj">Persona Juridica</option>
-                      </select>
-                    </div>
-
-                    <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
-                      <label>Ruc</label>
-                      
-                      <input
-                        type="text"
-                        v-model="row.empresa_ruc"
-                        v-mask="'###########'"
-                        @keyup='ObtenerDatosAvalEmpresa(row.empresa_ruc,index)'
-                      />
-                    </div>
-
-                    <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
-                      <label>Razon Social</label>
-                      <input
-                        type="text"
-                        maxlength='200'
-                        v-model="row.empresa_razon_social"
-                      />
-                    </div>
-
-                    <div class="input_wrapper" v-if="row.tipo_persona=='pj'">
-                      <label>Dirección</label>
-                      <input
-                        type="text"
-                        maxlength='200'
-                        v-model="row.empresa_direccion" 
-                      />
-                    </div>
-
-                  </div>
-                  
-                  <span class="separator" ></span>
-
-                  <div class="group_form">
-                     <div :class="{require: !row.validate_documento, other: validateDocumentosSocios}" class="input_wrapper">
-                      <label>Documento de Identidad</label>
-                      <input
-                        type="text"
-                        v-model="row.documento"
-                        v-mask="'#########'"
-                        @change="datosAval(index)"
-                      />
-                    </div>
-                     <div :class="{require: !row.validate_nombres, other: validateNombresSocios}" class="input_wrapper">
-                      <label>Nombres</label>
-                      <input type="text" maxlength="50" v-model="row.nombres" />
-                    </div>
-                     <div :class="{require: !row.validate_apellidos, other: validateApellidosSocios}" class="input_wrapper">
-                      <label>Apellidos</label>
-                      <input type="text" maxlength="50" v-model="row.apellidos" />
-                    </div>
-                    <div :class="{require: !row.validate_fecha_nacimiento, other: validateFechasNacimientoSocios}" class="input_wrapper">
-                      <label>Fecha de Nacimiento</label>
-                      <input type="date" v-model="row.fecha_nacimiento" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Estado Civil</label>
-                      <select v-model="row.estado_civil">
-                        <option value="SOLTERO">SOLTERO</option>
-                        <option value="CASADO">CASADO</option>
-                        <option value="CONVIVIENTE">CONVIVIENTE</option>
-                        <option value="DIVORCIADO - SEPARADO">DIVORCIADO - SEPARADO</option>
-                        <option value="VIUDO">VIUDO</option>
-                      </select>
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Ocupación</label>
-                      <input type="text" maxlength="40" v-model="row.ocupacion" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Centro Laboral</label>
-                      <input type="text" maxlength="50" v-model="row.centro_laboral" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Dirección centro laboral</label>
-                      <input type="text" maxlength="100" v-model="row.direccion_centro_laboral" />
-                    </div>
-                  </div>
-                  <span class="separator"></span>
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Socio</label>
-                      <select v-model="row.socio">
-                        <option value="1">SI</option>
-                        <option value="0">NO</option>
-                      </select>
-                    </div>                    
-                    <div  v-if="row.socio=='1'" :class="{require: !row.validate_codigo_socio, other: validateCodigosSociosAval}" class="input_wrapper">
-                      <label>Codigo</label>
-                      <input type="text" v-model="row.codigo_socio"  maxlength='10' />
-                    </div>
-                    <div  v-if="row.socio=='1'" :class="{require: !row.validate_aporte_socio , other: validateCodigosSociosAval}" class="input_wrapper">
-                      <label>Aporte</label>
-                      <input
-                        type='text'
-                        v-mask='"######"'
-                        v-model="row.aporte_socio"
-                        
-                      >
-                    </div>              
-                    <div class="input_wrapper">
-                      <label>Teléfono</label>
-                      <input type="text" maxlength="10" v-model="row.telefono" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Celular</label>
-                      <input type="text" v-model="row.celular" v-mask="'### ### ###'" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Dirección</label>
-                      <input type="text" v-model="row.direccion" maxlength="100" />
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Distrito</label>
-                      <input type="text" v-model="row.distrito" maxlength="30" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <button type="button" @click="clickAddAval" class="add_section" v-if="prestamo.avales.length<=1">
-              <span>AGREGAR AVAL</span>
-              <i class="material-icons-outlined">add</i> 
-            </button>
-          </div>
-
-          <div class="form_buttons">
-            <a class="button_inline_primary medium prev" @click="prev(3)">
-              <i class="material-icons-outlined">navigate_before</i>
-              <span>ATRAS</span>
-            </a>
-            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1 && validateStep3) ? next(3) : tabError()">
-              <span>SIGUIENTE</span>
-              <i class="material-icons-outlined">navigate_next</i>
-            </a>
-          </div>
-        </div>
-
-        <div v-show="tab == 4" class="form_step">
-          <div class="form_step_wrapper">
-            <div class="form_list no_border">
-              <div class="sub_step_wrapper " v-for="(row, index) in prestamo.garantias" :key="index">
-                <h3 class="title">
-                  Garantia {{index + 1}}
-                  <button 
-                    class="delete_section"
-                    type="button"
-                    @click.prevent="clickRemoveGarantia(index)">
-                    <i class="material-icons-outlined">delete</i>
-                  </button>
-                </h3>
-                <div class="form_content">
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Bien en Garantía</label>
-                      <input type="text" maxlength="50" v-model="row.bien_garantia" />
-                    </div>
-                  </div>
-                  <div class="group_form">
-                    <div class="input_box no_label">
-                      <div class="input_box_wrapper">
-                        <div class="input_checkbox_wrapper radio" >
-                          <input type="radio" :id="'radio'+index" :name="'garantiaType'+index" v-model="row.inscripcion" value="1" />
-                          <label class="box_content" :for="'radio'+index">
-                            <div class="box">
-                            </div>
-                            <span>Inscripción</span>
-                          </label>
-                        </div>
-                        <div class="input_checkbox_wrapper radio" >
-                          <input type="radio" :id="'radio2'+index" :name="'garantiaType'+index" v-model="row.declaracion_jurada" value="1" />
-                          <label class="box_content" :for="'radio2'+index">
-                            <div class="box">
-                            </div>
-                            <span>Declaración Jurada</span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <button type="button" @click="clickAddGarantia" class="add_section" v-if="prestamo.garantias.length<=1">
-              <span>AGREGAR GARANTIA</span>
-              <i class="material-icons-outlined">add</i> 
-            </button>
-          </div>
-
-          <div class="form_buttons">
-            <a class="button_inline_primary medium prev" @click="prev(4)">
-              <i class="material-icons-outlined">navigate_before</i>
-              <span>ATRAS</span>
-            </a>
-            <a class="button_primary medium next" @click=" (validateStep2 && validateStep1) ? next(4) : tabError()">
-              <span>SIGUIENTE</span>
-              <i class="material-icons-outlined">navigate_next</i>
-            </a>
-          </div>
-        </div>
-
-        <div v-show="tab == 5" class="form_step">
-          <div class="form_step_wrapper">
-            <h3 class="title">Propuesta de Analista</h3>
-            <div class="form_content">
-              <div class="group_form">
-                <div class="input_wrapper">
-                  <label>Producto</label>
-                  <select v-model="prestamo.producto" @change="meses_numero">
-                    <option value="CREDIDIARIO">CREDIDIARIO</option>
-                    <option value="CREDISEMANA">CREDISEMANA</option>
-                    <option value="PYME">PYME</option>
-                    <option value="PYME ESPECIAL">PYME ESPECIAL</option>
-                    <option value="CONSUMO">CONSUMO</option>
-                    <option value="CONSUMO ESPECIAL">CONSUMO ESPECIAL</option>
-                  </select>
-                </div>
-                <div class="input_wrapper">
-                  <label>Importe</label>
-                  <input
-                    type='text'
-                    v-model="prestamo.importe"
-                    v-mask='"#####"'
-                  >
-                </div>
-                <div class="input_wrapper">
-                  <label>Cuotas</label>
-                  <input
-                    type="text"
-                    v-model="prestamo.cuotas"
-                    v-mask='"#####"'
-                    @keyup="meses_numero"
-                  />
-                </div>
-                <div class="input_wrapper">
-                  <label>Meses</label>
-                  <input type="text" v-model="prestamo.meses" disabled />
-                </div>
-                <div class="input_wrapper">
-                  <label>Cuota del sistema</label>
-                  <input  type='number' v-model="prestamo.cuota_sistema"    >
-                </div>
-                <div class="input_wrapper">
-                  <label>Aporte a la fecha</label>
-                  <input
-                    type='text'                    
-                    v-mask='"#####"'
-                    v-model="prestamo.aporte"
-                  >
-                </div>
-                <div class="input_wrapper">
-                  <label>Prob. Infocorp</label>
-                  <input type='number' v-model="prestamo.probabilidad_infocorp"  >
-                </div>
-              </div>
-
-              <div class="group_form all">
-                <div class="input_wrapper">
-                  <label>Comentarios</label>
-                  <textarea type="text" v-model="prestamo.comentarios"></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form_buttons">
-            <a class="button_inline_primary medium prev" @click="prev(5)">
-              <i class="material-icons-outlined">navigate_before</i>
-              <span>ATRAS</span>
-            </a>
-            <a class="button_primary medium next" @click.prevent=" (validateStep2 && validateStep1) ? registrar() : tabError()" :class="{loading: loading}">
-              <div class="load_spinner"></div>
-              <span>FINALIZAR</span>
-              <i class="material-icons-outlined">check</i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
 </template>
 
 <script>
@@ -949,11 +670,7 @@ export default {
       else true
     },
 
-    validateCelularConyuge(){
-      if(this.prestamo.cliente.persona.conyuge && this.prestamo.cliente.persona.conyuge.celular)
-      return this.prestamo.cliente.persona.conyuge.celular.length>6
-      else true
-    },
+
     validateCodigoConyuge(){
       if(this.prestamo.cliente.persona.conyuge.socio=='1'){
         return this.prestamo.cliente.persona.conyuge.codigo_socio.length>=3
@@ -1071,7 +788,6 @@ export default {
               this.validateOcupacionConyuge &&
               this.validateCodigoConyuge &&
               this.validateAporteConyuge &&
-              this.validateCelularConyuge &&
               this.validateCentroConyuge &&
               this.validateDireccionConyuge
 
@@ -1108,7 +824,7 @@ export default {
       .then(response => {  
         this.prestamo.cliente=response.data
         console.log("asdadsad")
-        console.log(this.prestamo.cliente.ubicacion_provincia)
+        console.log(this.prestamo.cliente.celular)
 
         if(!this.prestamo.cliente.persona.trabajo){
           this.prestamo.cliente.persona.trabajo={

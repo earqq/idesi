@@ -35,16 +35,20 @@ const httpLink = new HttpLink({
   // You should use an absolute URL here
   uri: 'http://localhost:8000/graphql'
 })
+
 const apolloClient = new ApolloClient({
   link: httpLink,
-  cache: new InMemoryCache(),
-  connectToDevTools: true
+  cache: new InMemoryCache({ addTypename: false }),
 })
 Vue.use(VueApollo)
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
+
   defaultOptions: {
     $loadingKey: 'loading'
+  },
+  errorHandler (error) {
+    console.log('Global error handler'+error)
   }
 })
 Vue.use(VueTheMask)
@@ -72,5 +76,5 @@ const app = new Vue({
     el: '#app',
     router,
     store,
-    provide: apolloProvider.provide(),
+    apolloProvider,
 });

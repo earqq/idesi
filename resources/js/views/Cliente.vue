@@ -47,8 +47,10 @@
           <p v-if="cliente.estado==1">Pendiente</p> 
           <p v-if="cliente.estado==2">Aprobado</p> 
           <p v-if="cliente.estado==3">Rechazado</p> 
-        </li>
-        <blockquote class="message_request" v-if="cliente.estado==1 &&  this.$store.state.currentUser.nivel=='2'">
+        </li> 
+
+        <!-- &&  this.$store.state.currentUser.nivel=='2' -->
+        <blockquote class="message_request" v-if="cliente.estado==1 ">
           <div class="message_request_wrapper">
             <h1>SOLICITUD DE ACEPTACIÓN</h1>
             <p> Se ha registrado un nuevo cliente esperando por aprobación.  </p>
@@ -145,24 +147,13 @@
 import { serviceNumber } from "../mixins/functions"; 
 import moment from "moment";
 import { toastOptions } from '../constants.js'
-
+import { OBTENER_CLIENTE } from '../graphql.js'
 export default {
   mixins: [serviceNumber],
   // components: {  LoaderPrestamo, LoaderPerfil},
   data() {
     return {
-      view:false,
-      cliente: {
-        'tipo_cliente':1,
-        'documento':'',
-        prestamos:[],
-        persona:{
-          apellidos:""
-        },
-        empresa:{
-          razon_social:""
-        }
-      },
+      view:false,     
       loading: false,
       loader: 1,
       loader_loan: 1,
@@ -170,6 +161,14 @@ export default {
       show_slide: false,
       tab: 2
     };
+  },
+  apollo:{
+    cliente: OBTENER_CLIENTE,
+    variables(){
+      return{
+        id:this.$route.params.clienteID
+      }
+    }
   },
   async mounted() { 
     await   this.obtenerDatosCliente()

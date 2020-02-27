@@ -2,11 +2,15 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 
-use Jenssegers\Mongodb\Eloquent\Model as MongoModel;
-
-class Cualitativa extends MongoModel
-{	
-   protected $connection='mongo';     
-   protected $guarded = [''];
+class Cualitativa extends Model
+{
+   
+      protected $table = 'cualitativas';
+      public $timestamps=false;
+      public function prestamo()
+      {
+         return $this->belongsTo('App\Prestamo', 'prestamo_id');
+      }
 }

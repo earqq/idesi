@@ -19,4 +19,7 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/sweetalert2.js') }}"></script>
     </body>
+    <script>
+        localStorage.setItem('userID', "{{$userID}}");
+    </script>
 </html>

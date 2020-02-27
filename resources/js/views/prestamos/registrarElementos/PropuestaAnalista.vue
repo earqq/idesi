@@ -1,52 +1,64 @@
 <template lang="pug">
-      <div class="form_step_wrapper">
-            <div class="form_list no_border">
-              <div class="sub_step_wrapper " v-for="(row, index) in prestamo.garantias" :key="index">
-                <h3 class="title">
-                  Garantia {{index + 1}}
-                  <button 
-                    class="delete_section"
-                    type="button"
-                    @click.prevent="clickRemoveGarantia(index)">
-                    <i class="material-icons-outlined">delete</i>
-                  </button>
-                </h3>
-                <div class="form_content">
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Bien en Garantía</label>
-                      <input type="text" maxlength="50" v-model="row.bien_garantia" />
-                    </div>
-                  </div>
-                  <div class="group_form">
-                    <div class="input_box no_label">
-                      <div class="input_box_wrapper">
-                        <div class="input_checkbox_wrapper radio" >
-                          <input type="radio" :id="'radio'+index" :name="'garantiaType'+index" v-model="row.inscripcion" value="1" />
-                          <label class="box_content" :for="'radio'+index">
-                            <div class="box">
-                            </div>
-                            <span>Inscripción</span>
-                          </label>
-                        </div>
-                        <div class="input_checkbox_wrapper radio" >
-                          <input type="radio" :id="'radio2'+index" :name="'garantiaType'+index" v-model="row.declaracion_jurada" value="1" />
-                          <label class="box_content" :for="'radio2'+index">
-                            <div class="box">
-                            </div>
-                            <span>Declaración Jurada</span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+  .form_step_wrapper
+    h3.title Propuesta de Analista
+    .form_content
+      .group_form
+        .input_wrapper
+          label Producto
+          select(v-model='propuestaAnalista.producto_analista' @change='meses_numero')
+            option(value='CREDIDIARIO') CREDIDIARIO
+            option(value='CREDISEMANA') CREDISEMANA
+            option(value='PYME') PYME
+            option(value='PYME ESPECIAL') PYME ESPECIAL
+            option(value='CONSUMO') CONSUMO
+            option(value='CONSUMO ESPECIAL') CONSUMO ESPECIAL
+        .input_wrapper
+          label Importe
+          input(type='text' v-model='propuestaAnalista.importe' v-mask='"#####"')
+        .input_wrapper
+          label Cuotas
+          input(type='text' v-model='propuestaAnalista.cuotas' v-mask='"#####"' @keyup='meses_numero')
+        .input_wrapper
+          label Meses
+          input(type='text' v-model='propuestaAnalista.meses' disabled='')
+        .input_wrapper
+          label Cuota del sistema
+          input(type='number' v-model='propuestaAnalista.cuota_sistema')
+        .input_wrapper
+          label Aporte a la fecha
+          input(type='text' v-mask='"#####"' v-model='propuestaAnalista.aporte')
+        .input_wrapper
+          label Prob. Infocorp
+          input(type='number' v-model='propuestaAnalista.probabilidad_infocorp')
+      .group_form.all
+        .input_wrapper
+          label Comentarios
+          textarea(type='text' v-model='propuestaAnalista.comentarios')
 
-            <button type="button" @click="clickAddGarantia" class="add_section" v-if="prestamo.garantias.length<=1">
-              <span>AGREGAR GARANTIA</span>
-              <i class="material-icons-outlined">add</i> 
-            </button>
-          </div>
 </template>
+<script>
+export default {
+  data(){
+    return{
+      propuestaAnalista:{
+        producto_analista: "CREDIDIARIO",
+        meses_analista: 0,
+        importe_analista: 0,
+        aporte_analista: 0,
+        cuotas_analista: 0,
+      }
+    }
+  },
+  methods:{
+    meses_numero() {
+      if (this.propuestaAnalista.producto_analista == "CREDIDIARIO") { 
+        this.propuestaAnalista.meses = (Number(this.propuestaAnalista.cuotas) / 30).toFixed(2);
+      } else if (this.propuestaAnalista.producto == "CREDISEMANA") {
+        this.propuestaAnalista.meses = (Number(this.propuestaAnalista.cuotas) / 4).toFixed(2);
+      } else {
+        this.propuestaAnalista.meses = (Number(this.prestamo.cuotas) / 1).toFixed(2);
+      }
+    },
+  }
+}
+</script>

@@ -215,7 +215,7 @@ class PersonasController extends Controller
     
             }
         } catch (Exception $e){
-            return [
+            return [ 
                 'success' => false,
             ];
             DB::rollBack();

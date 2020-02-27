@@ -22,11 +22,13 @@ Route::group(['middleware'=>['auth']],function(){
     Route::group(['middleware'=>['Administrador']],function(){
 
         Route::get('/main', function () {
-            return view('index');
+            $userID=\Auth::user()->id;
+            return view('index',compact('userID'));
         })->name('main');
         
         Route::get('/', function () {
-            return view('index');
+            $userID=\Auth::user()->id;
+            return view('index',compact('userID'));
         });
         
         Route::resource('user','UserController');

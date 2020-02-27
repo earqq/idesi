@@ -17,14 +17,35 @@
                     </div>
                 </div>
                 <div class="number_item n3">
-                    <i class="material-icons-outlined"> person </i>
+                    <i class="material-icons-outlined"> swap_horiz </i>
                     <div class="stat">
-                        <h1 v-text="cliente"></h1>
-                        <p>Clientes Totales</p>
+                        <h1 v-text="prestamo_prendiente"></h1>
+                        <p>Prestamos Pendientes</p>
+                    </div>
+                </div>
+                <div class="number_item n3">
+                    <i class="material-icons-outlined"> swap_horiz </i>
+                    <div class="stat">
+                        <h1 v-text="prestamo_aprobado"></h1>
+                        <p>Prestamos Aprobados</p>
+                    </div>
+                </div>
+                <div class="number_item n3">
+                    <i class="material-icons-outlined"> swap_horiz </i>
+                    <div class="stat">
+                        <h1 v-text="prestamo_proceso"></h1>
+                        <p>Prestamos en Procesos</p>
+                    </div>
+                </div>
+                <div class="number_item n3">
+                    <i class="material-icons-outlined"> swap_horiz </i>
+                    <div class="stat">
+                        <h1 v-text="prestamo_observado"></h1>
+                        <p>Prestamos Observadoss</p>
                     </div>
                 </div>
             </article>
-            <article class="chart_stats">
+            <article class="chart_stats" style="margin-top: 100px;">
                 <h2 class="title"> Historial / Año </h2>
                 <div id="chart">
                     <apexchart type="line" height="350" :options="optionsChart" :series="series" />
@@ -38,61 +59,64 @@
                         <p>Registra un nuevo cliente para continuar.</p>
                     </div>
                     <h2 class="title" v-if="!clientes.length==0"> Nuevos Clientes </h2>
+                    
                     <ul class="list_client_wrapper" v-if="!clientes.length==0">
                         <li v-for="cliente in clientes" :key="cliente.id" @click="goToClient(cliente)">
                             <div class="avatar">
                                 <div class="request" v-show="cliente.estado=='0'">
                                     <i class="material-icons-outlined">email</i>
                                 </div>
-                                <img src="https://picsum.photos/200/300" v-if="false"/>
-                                <div class="avatar_alt" :class="{denied : cliente.estado=='2'}" v-else> c </div>
+                                <img src="https://picsum.photos/200/300" v-if="false"/> 
+                                <div class="avatar_alt" :class="{denied : cliente.estado=='3'}"  >{{ cliente.persona ? cliente.persona.nombres.substring(0,1) : cliente.empresa.razon_social.substring(0,1) }}</div>
                             </div>
                             <div class="name">
-                                <h1 class="truncate" v-text="cliente.nombres+' '+cliente.apellidos"> </h1>
+                                <h1 class="truncate" v-text="cliente.persona.nombres+' '+cliente.persona.apellidos"> </h1>
                                 <p v-text="cliente.documento"></p>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div class="list_credits">
-                    <div class="empty_message" v-if="true">
+                    
+                    <div class="empty_message" v-if="prestamos.length<=0">
                         <img src="img/empty_2.svg" >
-                        <h1> No Se Encontraron Prestamos </h1>
+                        <h1> No Se Encontraron Prestamos  </h1>
                         <p>Registra un nuevo cliente para crear prestamos.</p>
                     </div>
-                    <h2 class="title" v-if="false"> Ultimos Prestamos </h2>
-                    <div class="table_wrapper "  v-if="false">
+                    <h2 class="title" v-if="prestamos.length>0"> Prestamos Pendientes </h2>
+                    <div class="table_wrapper " v-if="prestamos.length>0">
                         <table class="table_credits no_hover">
                             <thead>
                                 <tr>
                                     <th>Cliente</th>
-                                    <th>Monto</th>
-                                    <th>Plazo</th>
-                                    <th>Progreso</th>
+                                    <th>Producto</th>
+                                    <th>aporte</th>
+                                    <th>importe</th>
+                                    <th>cuotas</th>
+                                    <!-- <th>Progreso</th> -->
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="i in 7" :key="i">
+                                <tr v-for="(prestamo,index) in prestamos" :key="index">
                                     <td class="client">
-                                        <div class="avatar">
-                                            <img src="https://picsum.photos/100/100" v-if="false" />
-                                            <div class="avatar_alt" v-else> C </div>              
-                                        </div>
+                                        
                                         <div class="name_wrapper">
-                                            <p class="truncate"> OMAR BENJAMIN CHAGUA RAMOS </p>
+                                            <p class="truncate"> {{prestamo.cliente.persona.nombres}} {{prestamo.cliente.persona.apellidos}} </p>
                                             <small class="credit_detail">
-                                                S/ 1000 &nbsp; / &nbsp; 12 Meses
+                                                {{prestamo.producto}}
                                             </small>
                                         </div>
                                     </td>
-                                    <td> S/ 1000</td>
-                                    <td> 12 Meses </td>
-                                    <td> 
+                                    <td> {{prestamo.producto}}</td>
+                                    <td> S/. {{prestamo.aporte}}</td>
+                                    <td> S/. {{prestamo.importe}}</td>
+                                    <td> {{prestamo.cuotas}} </td>
+                                    <!-- <td> 
                                         <div class="progress_bar">
                                         <span class="bar"></span>
                                         <p>0% </p>
                                         </div> 
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>
@@ -112,12 +136,19 @@ import { STYLES_MAP } from '../constants'
 export default {
     data () {
         return {
+                  currentUser:{
+                id:0,
+                nivel:1,        
+            },
             clientes: [],
             prestamos:[],
             cliente: 0,
             prestamo_rechazado: 0,
             prestamo_total: 0,
             prestamo_prendiente: 0,
+            prestamo_aprobado:0,
+            prestamo_proceso:0,
+            prestamo_observado:0,
             optionsMap: {
                 styles: STYLES_MAP,
                 zoomControl: false,
@@ -178,19 +209,104 @@ export default {
             ]
         }
     },
-    mounted() {
-    //   this.$http
-    //     .get(`/inicio/datos/`)
-    //     .then(response => {
-    //     this.clientes = response.data["clientes"];
-    //     this.cliente = response.data["cliente"];
-    //     this.prestamos = response.data["prestamos"];
-    //     this.prestamo_rechazado = response.data['prestamo_rechazado'];
-    //     this.prestamo_total = response.data['prestamo_total'];
-    //     this.prestamo_pendiente = response.data['prestamo_pendiente'];
-    //     });
+    async created() { 
+        await this.getCurrentUser()
+        await this.getClients() 
+
     },
     methods: {
+        getCurrentUser () {
+            
+            axios.get("/currentUser")
+            .then(res => { 
+                this.currentUser = res.data 
+                console.log(this.currentUser)
+                this.getPrestamos();   
+            })
+            },
+            getClients() {
+                this.clientes= [];
+                this.$http 
+                    .get(
+                    '/clientes/search/'+'4'+'/'+'',          
+                    )
+                    .then(response => {
+                    this.clientes=response.data
+                    })
+            },  
+        getPrestamos() {
+            
+        this.prestamos = []
+        this.$http 
+        .get(
+            '/prestamos/search/'+'2'+'/'+''
+        ) 
+        .then(response => {
+            response.data.map(prestamo=>{
+            if(!this.prestamos.find(element=>element.id==prestamo.id)){
+                if(this.currentUser.nivel==3 && prestamo.evaluaciones.length>0 ) {
+                prestamo.evaluaciones.map(item=>{
+                    if(item.user_id!=this.currentUser.id){
+                        this.prestamos.push(prestamo)
+                    }     
+                })
+                }else 
+                this.prestamos.push(prestamo) 
+            }
+
+            
+            
+            for (let index = 0; index < this.prestamos.length; index++) {
+                
+                if(this.currentUser.nivel==4){
+                    if(this.currentUser.id==this.prestamos[index].user_id){
+
+                            this.prestamo_total++
+
+                            if(this.prestamos[index].estado=='2'){
+                                this.prestamo_prendiente++
+                            }
+                            else if(this.prestamos[index].estado=='4'){
+                                this.prestamo_rechazado++
+                            }
+                            else if(this.prestamos[index].estado=='1'){
+                                this.prestamo_proceso++
+                            }
+                            else if(this.prestamos[index].estado=='3'){
+                                this.prestamo_aprobado++
+                            }
+                            else if(this.prestamos[index].estado=='5'){
+                                this.prestamo_observado++
+                            }
+                    }
+                }
+                else{
+
+                    this.prestamo_total++
+
+                            if(this.prestamos[index].estado=='2'){
+                                this.prestamo_prendiente++
+                            }
+                            else if(this.prestamos[index].estado=='4'){
+                                this.prestamo_rechazado++
+                            }
+                            else if(this.prestamos[index].estado=='1'){
+                                this.prestamo_proceso++
+                            }
+                            else if(this.prestamos[index].estado=='3'){
+                                this.prestamo_aprobado++
+                            }
+                            else if(this.prestamos[index].estado=='5'){
+                                this.prestamo_observado++
+                            }
+
+                }
+                
+            } 
+            
+            })
+        })
+        }, 
         goToClient(cliente) {
             //this.$router.push({ name:'perfil', params: { documento: cliente.documento, persona: "PN" } })
         }

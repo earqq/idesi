@@ -1,74 +1,47 @@
-<template>
-    <div class="form_step_wrapper">
-            <h3 class="title">Solicitud de Crédito</h3>
-            <div class="form_content">
-              <div class="group_form">
-                <div class="input_wrapper" :class="{require: !validateMonto}">
-                  <label>Monto</label> 
-                  <input type='text'
-                    v-mask='"######"'
-                    v-model="propuestaCliente.monto_cliente"
-                  >
-                  <div class="message">Monto de solicitud invalido</div>
-                </div>
-                <div class="input_wrapper">
-                  <label>Forma</label>
-                  <select v-model="propuestaCliente.forma">
-                    <option value="DIARIO">DIARIO</option>
-                    <option value="SEMANAL">SEMANAL</option>
-                    <option value="QUINCENAL">QUINCENAL</option>
-                    <option value="MENSUAL">MENSUAL</option>
-                  </select>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateCuotas}">
-                  <label>Cuotas</label>
-                  <input type="number" v-model="propuestaCliente.cuotas_cliente" maxlength=11  />
-                </div>
-                <div class="input_wrapper" :class="{require: !validateDisponibilidad}">
-                  <label>Disponibilidad de pago</label>
-                  <input
-                    type='text'                    
-                    v-model="propuestaCliente.disponibilidad_pago"
-                    v-mask='"######"'
-                  >
-                  <div class="message">La disponibilidad es invalida</div>
-                </div>
-                <div class="input_wrapper" :class="{require: !validateFuenteIngreso}">
-                  <label>Fuente de ingreso  </label> 
-                  <v-select
-                    label="giro_negocio"
-                    :options="negocios"
-                    :reduce="negocios => negocios.giro_negocio"
-                    v-model="propuestaCliente.fuente_ingreso"
-                    >
-                    <span slot="no-options">
-                      No se encontro giro de negocio
-                    </span>
-                  </v-select>
-                  <div class="message">Se requiere esta información</div>
-                </div>
-                <div class="input_wrapper">
-                  <label>Destino del credito</label>
-                  <select v-model="propuestaCliente.destino_credito">
-                        <option value="Capital de trabajo">Capital de trabajo</option>
-                        <option value="Activo Fijo">Activo Fijo</option>
-                        <option value="Consumo">Consumo</option>
-                        <option value="Vehiculo">Vehiculo</option>
-                        <option value="Hipotecario">Hipotecario</option>
-                        <option value="Mejoramiento de vivienda">Mejoramiento de vivienda</option>
-                        <option value="Compra de deuda">Compra de deuda</option>
-                      </select>
-                </div>                
-              </div>
-              <div class="group_form all">
-                <div class="input_wrapper" :class="{require: !validateDestino}">
-                  <label>Destino de crédito (propuesta cliente)</label>
-                  <textarea  v-model="propuestaCliente.destino_credito_descripcion"  />
-                  <div class="message">Información de destino es corta</div>
-                </div>
-              </div>
-            </div>
-          </div>
+<template lang='pug'>
+  .form_step_wrapper
+    h3.title Solicitud de Cr&eacute;dito
+    .form_content
+      .group_form
+        .input_wrapper(:class='{require: !validateMonto}')
+          label Monto
+          input(type='text' v-mask='"######"' v-model='propuestaCliente.monto_cliente')
+          .message Monto de solicitud invalido
+        .input_wrapper
+          label Forma
+          select(v-model='propuestaCliente.forma')
+            option(value='DIARIO') DIARIO
+            option(value='SEMANAL') SEMANAL
+            option(value='QUINCENAL') QUINCENAL
+            option(value='MENSUAL') MENSUAL
+        .input_wrapper(:class='{require: !validateCuotas}')
+          label Cuotas
+          input(type='number' v-model='propuestaCliente.cuotas_cliente' maxlength='11')
+        .input_wrapper(:class='{require: !validateDisponibilidad}')
+          label Disponibilidad de pago
+          input(type='text' v-model='propuestaCliente.disponibilidad_pago' v-mask='"######"')
+          .message La disponibilidad es invalida
+        .input_wrapper(:class='{require: !validateFuenteIngreso}')
+          label Fuente de ingreso  
+          v-select(label='giro_negocio' :options='negocios' :reduce='negocios => negocios.giro_negocio' v-model='propuestaCliente.fuente_ingreso')
+            span(slot='no-options')
+              | No se encontro giro de negocio
+          .message Se requiere esta informaci&oacute;n
+        .input_wrapper
+          label Destino del credito
+          select(v-model='propuestaCliente.destino_credito')
+            option(value='Capital de trabajo') Capital de trabajo
+            option(value='Activo Fijo') Activo Fijo
+            option(value='Consumo') Consumo
+            option(value='Vehiculo') Vehiculo
+            option(value='Hipotecario') Hipotecario
+            option(value='Mejoramiento de vivienda') Mejoramiento de vivienda
+            option(value='Compra de deuda') Compra de deuda
+      .group_form.all
+        .input_wrapper(:class='{require: !validateDestino}')
+          label Destino de cr&eacute;dito (propuesta cliente)
+          textarea(v-model='propuestaCliente.destino_credito_descripcion')
+            .message Informaci&oacute;n de destino es corta
 
 </template>
 <script>
@@ -78,7 +51,6 @@ export default {
     components: {
       vSelect
     },
-    props:["cliente"],
     data(){
       return{
         propuestaCliente:{

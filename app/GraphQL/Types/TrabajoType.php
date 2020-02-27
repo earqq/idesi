@@ -60,6 +60,10 @@ class TrabajoType extends GraphQLType
                 'type'=>Type::string(),
                 'description'=>'empresa_distrito'
             ],  
+            'empresa_ruc'=>[
+                'type'=>Type::string(),
+                'description'=>'empresa ruc'
+            ], 
             'empresa_provincia'=>[
                 'type'=>Type::string(),
                 'description'=>'empresa_provincia'

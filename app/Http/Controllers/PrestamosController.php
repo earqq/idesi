@@ -27,6 +27,7 @@ class PrestamosController extends Controller
     private $document_ext = ['doc', 'docx', 'pdf', 'odt','txt'];
 
     public function search($state,$text=''){
+        
         $prestamos=Prestamo::with('cliente.persona','cliente.empresa','evaluaciones')
         ->where(function($query) use($state){
             if($state!='TODOS'){

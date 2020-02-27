@@ -13,7 +13,7 @@
             </transition>
             <div class="items_wrapper">
               <ul>
-                  <li :class="{selected: tab == 'inicio'}" v-if="currentUser.nivel=='1'  || currentUser.nivel=='2' ">
+                  <li :class="{selected: tab == 'inicio'}" v-if="currentUser.nivel=='1'  || currentUser.nivel=='2' || currentUser.nivel=='4'">
                     <router-link :to="{name: 'main'}" > Inicio</router-link> 
                   </li>
 

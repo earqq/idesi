@@ -111,7 +111,14 @@ return [
                 'distritos'=>App\GraphQL\Queries\DistritosQuery::class,
             ],
             'mutation' => [
-                // 'example_mutation'  => ExampleMutation::class,
+                'prestamos'=>App\GraphQL\Mutations\PrestamosMutation::class,
+            ],
+            'types' => [
+                'clienteInput' => App\GraphQL\Inputs\ClienteInput::class,                 
+                'cualitativaInput' => App\GraphQL\Inputs\CualitativaInput::class,
+                'personaInput' => App\GraphQL\Inputs\PersonaInput::class,                 
+                'trabajoInput' => App\GraphQL\Inputs\TrabajoInput::class,               
+                'conyugeInput' => App\GraphQL\Inputs\ConyugeInput::class,               
             ],
             'middleware' => [\App\Http\Middleware\Cors::class],
             'method' => ['get', 'post'],
@@ -143,6 +150,11 @@ return [
         'departamento' => App\GraphQL\Types\DepartamentoType::class,
         'provincia' => App\GraphQL\Types\ProvinciaType::class,
         'distrito' => App\GraphQL\Types\DistritoType::class,
+        'clienteInput' => App\GraphQL\Inputs\ClienteInput::class,                 
+        'cualitativaInput' => App\GraphQL\Inputs\CualitativaInput::class,
+        'personaInput' => App\GraphQL\Inputs\PersonaInput::class,                 
+        'trabajoInput' => App\GraphQL\Inputs\TrabajoInput::class,
+        'conyugeInput' => App\GraphQL\Inputs\ConyugeInput::class,
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request

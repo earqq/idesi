@@ -97,3 +97,32 @@ query obtenerClientes($id:Int){
     } 
 }
 `
+
+export const REGISTRAR_PRESTAMO= gql`
+mutation registrarPrestamo(
+    $id:Int
+    $monto_cliente:Float
+    $forma:String
+    $cuotas_cliente:Int
+    $disponibilidad_pago:Float
+    $cualitativa:CualitativaInput
+    $cliente:ClienteInput
+    $userID:Int
+    ){ 
+    prestamos(
+        id:$id
+        user_id:$userID
+        monto_cliente:$monto_cliente
+        forma:$forma
+        cuotas_cliente:$cuotas_cliente
+        disponibilidad_pago:$disponibilidad_pago
+        cualitativa:$cualitativa
+        cliente:$cliente
+        ) {
+        id
+        monto_cliente
+        forma
+        cuotas_cliente
+    } 
+}
+`
