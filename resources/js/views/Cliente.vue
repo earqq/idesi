@@ -182,6 +182,9 @@ export default {
       update(res){
         console.log("si viene")        
         this.cliente=res.clientes[0]
+        this.cliente.empresa={
+          razon_social:""
+        }
       },
       fetchPolicy:'no-cache'
     }
