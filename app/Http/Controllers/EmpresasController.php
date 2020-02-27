@@ -69,12 +69,6 @@ class EmpresasController extends Controller
                 $cliente->estado = 1;
                 $cliente->ubicacion_direccion_declarada= $request->ubicacion_direccion_declarada;    
                 $cliente->ubicacion_direccion_sistema= $request->ubicacion_direccion_declarada;    
-                $cliente->ubicacion_numero= $request->ubicacion_numero;    
-                $cliente->ubicacion_manzana= $request->ubicacion_manzana;    
-                $cliente->ubicacion_lote= $request->ubicacion_lote;    
-                $cliente->ubicacion_nro_departamento= $request->ubicacion_nro_departamento;
-                $cliente->ubicacion_interior= $request->ubicacion_interior;
-                $cliente->ubicacion_piso= $request->ubicacion_piso;
                 $cliente->ubicacion_referencia= $request->ubicacion_referencia;
                 $cliente->telefono= $request->telefono;
                 $cliente->celular= $request->celular;
