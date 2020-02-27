@@ -55,24 +55,20 @@
               <div class="detail_content"> 
                 <li>
                   <strong>Monto </strong> 
-                  <p>S/ {{prestamo.monto_inicial}}</p>
+                  <p>S/ {{prestamo.monto_cliente}}</p>
                 </li>
                 <li>
                   <strong>Forma </strong> 
-                  <p>{{prestamo.forma_inicial}}</p>
+                  <p>{{prestamo.forma}}</p>
                 </li>
                   <li>
                   <strong>Cuotas </strong> 
-                  <p>{{prestamo.cuotas_inicial}}</p>
+                  <p>{{prestamo.cuotas_cliente}}</p>
                 </li>
                   <li>
                   <strong>Disponibilidad de pago </strong> 
-                  <p>S/. {{prestamo.disponibilidad_pago_inicial ? prestamo.disponibilidad_pago_inicial : '0.00'}}</p>
-                </li>
-                <li>
-                  <strong>Destino de crédito   </strong> 
-                  <p>{{prestamo.destino_inicial}}</p>
-                </li>
+                  <p>S/. {{prestamo.disponibilidad_pago ? prestamo.disponibilidad_pago : '0.00'}}</p>
+                </li>               
                 <li class="spanner"></li>
               </div>
             </div>
@@ -82,15 +78,15 @@
               <div class="detail_content"> 
                 <li>
                   <strong>Producto </strong> 
-                  <p>{{prestamo.producto}}</p>
+                  <p>{{prestamo.producto_analista}}</p>
                 </li>
                 <li>
                   <strong>Importe </strong> 
-                  <p>S/. {{prestamo.importe}}</p>
+                  <p>S/. {{prestamo.importe_analista}}</p>
                 </li>
                   <li>
                   <strong>Cuotas </strong> 
-                  <p>{{prestamo.cuotas}}</p>
+                  <p>{{prestamo.cuotas_analista}}</p>
                 </li>
                   <li>
                   <strong>Cuota del Sistema </strong> 
@@ -98,7 +94,7 @@
                 </li>
                   <li>
                   <strong>Aporte </strong> 
-                  <p>S/. {{prestamo.aporte}}</p>
+                  <p>S/. {{prestamo.aporte_analista}}</p>
                 </li>
                   <li>
                   <strong>Comentarios </strong> 
