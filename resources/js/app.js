@@ -33,7 +33,7 @@ import VueApexCharts from 'vue-apexcharts'
 //apollo
 const httpLink = new HttpLink({
   // You should use an absolute URL here
-  uri: 'http://localhost:8082/graphql'
+  uri: '/graphql'
 })
 
 const apolloClient = new ApolloClient({
