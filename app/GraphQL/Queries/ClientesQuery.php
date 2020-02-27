@@ -42,10 +42,11 @@ class ClientesQuery extends Query
                 $clientes->with('persona');
             }
         }       
-
+        \Log::alert("si viene cliente");
+        \Log::alert($args);
         if($args["id"])
             $clientes->where('id',$args["id"]);
-            \Log::alert($clientes->get());
+        \Log::alert($clientes->get());
         return $clientes->get();
     }
 }
