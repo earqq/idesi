@@ -744,13 +744,13 @@ class AnalisisController extends Controller
             foreach($request->central_riesgo as $central){
                 if($central["entidad_financiera"]){
                     $central=new CentralRiesgo;
-                    $central->entidad_financiera=$central["entidad_financiera"];
+                    $central->entidad=$central["entidad_financiera"];
                     $central->cualitativa_id=$cualitativa->id;
-                    $central->capital=$central["capital"];
-                    $central->activo_f=$central["activo_f"];
+                    $central->capital_trabajo=$central["capital"];
+                    $central->activo_fijo=$central["activo_f"];
                     $central->consumo=$central["consumo"];
                     $central->vehicular=$central["vehicular"];
-                    $central->hipoteca=$central["hipoteca"];
+                    $central->hipotecario=$central["hipoteca"];
                     $central->terceros=$central["terceros"];
                     $central->save();
             }
@@ -761,8 +761,8 @@ class AnalisisController extends Controller
                     $referencia = new Referencia;
                     $referencia->cualitativa_id=$cualitativa->id;
                     $referencia->tipo_relacion=$referencia["tipo_relacion"];
-                    $referencia->nombre=$referencia["nombre"];
-                    $referencia->telefono=$referencia["telefono"];
+                    $referencia->nombres=$referencia["nombre"];
+                    $referencia->telefonos=$referencia["telefono"];
                     $referencia->save();
                 }
             }

@@ -79,11 +79,11 @@
       <img src="img/empty_2.svg" >
       <h1> Sin Prestamos Registrados </h1>
       <p>Todavía no se han registrado ningun prestamo a este cliente.</p>
-      <router-link  v-if=" cliente.estado=='2' && cliente.tipo_cliente=='1'"  class="button_primary small" :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+      <router-link  v-if="  cliente.tipo_cliente=='1'"  class="button_primary small" :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
       </router-link>   
-      <router-link  v-if=" cliente.estado=='2' && cliente.tipo_cliente=='2'"  class="button_primary small" :to="{name: 'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:0}}">
+      <router-link  v-if="  cliente.tipo_cliente=='2'"  class="button_primary small" :to="{name: 'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:0}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
       </router-link>   
@@ -92,13 +92,13 @@
     <div class="credits_grid" v-else>
      
       <div class="table_grid" >
-        <router-link  v-if="cliente.estado=='2' && cliente.tipo_cliente=='1'"  class="add_credit" :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+        <router-link  v-if=" cliente.tipo_cliente=='1'"  class="add_credit" :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
           <p> NUEVO PRESTAMO  </p>
         </router-link>
-         <router-link  v-if="cliente.estado=='2' && cliente.tipo_cliente=='2'"  class="add_credit" :to="{name: 'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:'0'}}">
+         <router-link  v-if=" cliente.tipo_cliente=='2'"  class="add_credit" :to="{name: 'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:'0'}}">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
