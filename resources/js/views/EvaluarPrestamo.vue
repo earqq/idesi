@@ -40,15 +40,15 @@
                   <div class="detail_content">
                     <li>
                       <strong>Producto</strong>
-                      <p>{{prestamo.producto || '-- --'}}</p>
+                      <p>{{prestamo.producto_analista || '-- --'}}</p>
                     </li>
                     <li>
                       <strong>Importe</strong>
-                      <p>S/. {{prestamo.importe || '0.00'}}</p>
+                      <p>S/. {{prestamo.importe_analista || '0.00'}}</p>
                     </li>
                     <li>
                       <strong>Cuotas</strong>
-                      <p>{{prestamo.cuotas || '0'}}</p>
+                      <p>{{prestamo.cuotas_analista || '0'}}</p>
                     </li>
                     <li>
                       <strong>Cuota del Sistema</strong>
@@ -56,7 +56,7 @@
                     </li>
                     <li>
                       <strong>Aporte</strong>
-                      <p>S/. {{prestamo.aporte || '0.00'}}</p>
+                      <p>S/. {{prestamo.aporte_analista || '0.00'}}</p>
                     </li>
                     <li>
                       <strong>Comentarios</strong>
