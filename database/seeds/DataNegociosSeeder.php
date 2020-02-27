@@ -12,6 +12,8 @@ class DataNegociosSeeder extends Seeder
      */
     public function run()
     {
+        \Log::alert("env");
+        \Log::alert(env('RUTA'));
         Excel::import(new NegociosImport, env('RUTA').'/public/data_negocios.xlsx');
     }
 }
