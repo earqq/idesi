@@ -206,7 +206,7 @@ export default {
               "Exitoso",
               toastOptions.success
             ) 
-            this.obtenerDatosCliente()
+            this.$apollo.queries.clienteBD.refetch()
           }).catch(err=>{
              this.$toast.error(
               "Error en el registro",
@@ -228,7 +228,7 @@ export default {
                     toastOptions.success
                   ) 
                 
-                this.obtenerDatosCliente()
+                this.$apollo.queries.clienteBD.refetch()
 
                 }else{
                     this.$toast.error(
