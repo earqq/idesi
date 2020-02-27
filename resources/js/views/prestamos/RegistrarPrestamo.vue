@@ -231,7 +231,8 @@ export default {
           cuotas_cliente: this.prestamo.cuotas_cliente,
           disponibilidad_pago: this.prestamo.disponibilidad_pago,
           cualitativa: cualitativa,
-          cliente: this.prestamo.cliente
+          cliente: this.prestamo.cliente,
+          estado:this.prestamo.estado
         }
       }).then(res=>{
         console.log("si volvio")

@@ -3,28 +3,51 @@
     .form_list.no_border
       .sub_step_wrapper(v-for='(row, index) in prestamoGarantias.garantias' :key='index')
         h3.title
-          | Garantia {{index + 1}}
+          | Garantia {{index + 1}} {{tipo}}
           button.delete_section(type='button' @click.prevent='clickRemoveGarantia(index)')
             i.material-icons-outlined delete
         .form_content
-          .group_form
-            .input_wrapper(:class='{require : !row.validate_bien_garantia, other: validateInscripcion}')
-              label Bien en Garantía
-              input(type='text' maxlength='50' v-model='row.bien_garantia')
+          .group_form(v-if='tipo=="GARANTIA VEHICULAR"')
+            .input_wrapper
+              label Marca
+              input(type='text' maxlength='50' v-model='row.marca')
               .message Información obligatoria
-          .group_form
-            .input_box.no_label
-              .input_box_wrapper
-                .input_checkbox_wrapper.radio
-                  input(type='radio' :id="'radio'+index" :name="'garantiaType'+index" v-model='row.inscripcion' value='1')
-                  label.box_content(:for="'radio'+index")
-                    .box
-                    span Inscripción
-                .input_checkbox_wrapper.radio
-                  input(type='radio' :id="'radio2'+index" :name="'garantiaType'+index" v-model='row.declaracion_jurada' value='1')
-                  label.box_content(:for="'radio2'+index")
-                    .box
-                    span Declaración Jurada
+            .input_wrapper
+              label Modelo
+              input(type='text' maxlength='50' v-model='row.modelo')
+              .message Información obligatoria
+            .input_wrapper
+              label Año fabricación
+              input(type='date' maxlength='50' v-model='row.anio_fabricacion')
+              .message Información obligatoria
+            .input_wrapper
+              label Placa
+              input(type='text' maxlength='50' v-model='row.placa')
+              .message Información obligatoria
+            .input_wrapper
+              label Partida Registral
+              input(type='text' maxlength='50' v-model='row.partida_registral')
+              .message Información obligatoria  
+        .form_content
+          .group_form(v-if='tipo=="GARANTIA INMOBILIARIA"')
+            .input_wrapper
+              label Terreno o Casa
+              select(v-model='row.tipo_inmobiliaria')
+                option(value='Terreno') Terreno
+                option(value='Casa') Casa
+            .input_wrapper
+              label Dirección del bien
+              input(type='text' maxlength='100' v-model='row.direccion_inmobiliaria')
+              .message Información obligatoria
+            .input_wrapper
+              label Partida Registral
+              input(type='date' maxlength='50' v-model='row.partida_registral')
+              .message Información obligatoria      
+        .form_content
+          .group_form(v-if='tipo=="GARANTIA LIQUIDA"')
+            .input_wrapper
+              label Monto del ahorro o  deposio a plazo
+              input(type='number' v-model='row.monto_ahorrado_liquido' maxlength='100' )         
     button.add_section(type='button' @click='clickAddGarantia' v-if='prestamoGarantias.garantias.length<=1')
       span AGREGAR GARANTIA
       i.material-icons-outlined add
@@ -32,6 +55,7 @@
 </template>
 <script>
 export default {
+  props:["tipo"],
   data(){
       return{
         prestamoGarantias:{
@@ -59,13 +83,16 @@ export default {
   methods:{
     clickAddGarantia() {
       this.prestamoGarantias.garantias.push({
-        inscripcion: "",
-        declaracion_jurada:"",
-        bien_garantia: "",
-        tipo: ""
+        marca: "",
+        modelo: "",
+        anio_fabricacion: "",
+        placa: "",
+        partida_registral: "",
+        tipo_inmobiliaria: "",
+        direccion_inmobiliaria: "",
+        monto_ahorrado_liquido: "",
       });
     },
-
     clickRemoveGarantia(index) {
       this.prestamoGarantias.garantias.splice(index, 1);
     },

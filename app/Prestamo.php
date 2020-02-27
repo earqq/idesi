@@ -42,6 +42,10 @@ class Prestamo extends Model
     {
         return $this->hasMany('App\Evaluacion', 'prestamo_id');
     }
+    public function cualitativaAnalisis()
+    {
+        return $this->hasOne('App\Cualitativa', 'prestamo_id');
+    }
 
     public function garantias()
     {

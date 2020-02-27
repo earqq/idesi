@@ -79,7 +79,7 @@
       <img src="img/empty_2.svg" >
       <h1> Sin Prestamos Registrados </h1>
       <p>Todavía no se han registrado ningun prestamo a este cliente.</p>
-      <router-link  v-if=" cliente.estado=='2' && cliente.tipo_cliente=='1'"  class="button_primary small" :to="{name: 'registarPrestamo', params:{tipoCliente:1,clienteID:cliente.id,prestamoID:'0'}}">
+      <router-link  v-if=" cliente.estado=='2' && cliente.tipo_cliente=='1'"  class="button_primary small" :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
       </router-link>   
@@ -106,12 +106,12 @@
         </router-link>
         <article class="credit_card" v-for="prestamo in cliente.prestamos" :key="prestamo.id"  >
           <div class="detail">
-            <h2> {{prestamo.producto}} </h2>
+            <h2> {{prestamo.forma}} </h2>
             <div class="progress_bar">
               <span class="bar"></span>
               <p>0% </p> 
             </div> 
-            <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
+            <h3> S/ {{prestamo.monto_cliente}} &nbsp; / &nbsp; {{prestamo.cuotas_cliente}} {{timeCredit[prestamo.forma]}} </h3>
           </div>
           <div class="actions">
             
@@ -148,30 +148,41 @@ import { serviceNumber } from "../mixins/functions";
 import moment from "moment";
 import { toastOptions } from '../constants.js'
 import { OBTENER_CLIENTE } from '../graphql.js'
+
 export default {
   mixins: [serviceNumber],
   // components: {  LoaderPrestamo, LoaderPerfil},
   data() {
     return {
-      view:false,     
+      view:false,
+      cliente: {
+        'tipo_cliente':1,
+        'documento':'',
+        prestamos:[],
+        persona:{
+          apellidos:""
+        },
+        empresa:{
+          razon_social:""
+        }
+      },
       loading: false,
-      loader: 1,
-      loader_loan: 1,
-      option_loan: 1,
       show_slide: false,
       tab: 2
     };
   },
-  apollo:{
-    cliente: OBTENER_CLIENTE,
-    variables(){
-      return{
-        id:this.$route.params.clienteID
+ apollo:{
+    clienteBD:{
+      query:OBTENER_CLIENTE,
+      variables(){
+        return{
+          id:this.$route.params.id
+        }
+      },
+      update(res){
+        this.cliente=res.clientes[0]
       }
     }
-  },
-  async mounted() { 
-    await   this.obtenerDatosCliente()
   },
   methods: {
     inscripcionPdf(){
@@ -180,18 +191,6 @@ export default {
     cambiarView(id){
       this.idprestamo= id
       this.view=true
-    },
-    obtenerDatosCliente(){
-      this.$http
-        .get('/clientes/' + this.$route.params.id)
-        .then(response => {
-          
-          this.cliente=response.data
-          this.loader = 0;
-          this.loader_loan = 0; 
-
-      });
-
     },
     enviarEvaluar(id){ 
           this.$http

@@ -381,9 +381,12 @@ export default {
   },
   watch: {
 		cliente: {
-			handler (item) {	
+			handler (item) {
+        if(item.persona.estado_civil=='CASADO' || item.persona.estado_civil=='CONVIVIENTE')
+          this.cliente.tiene_conyuge=true
+        else this.cliente.tiene_conyuge=false
         item.validate = this.validateClientePersona
-				this.$emit('update',item)
+        this.$emit('update',item)
 			},
 			deep: true			
 		},

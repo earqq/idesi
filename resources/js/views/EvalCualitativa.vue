@@ -1,599 +1,350 @@
-<template >
-    <div class="create_client_content">
-      <section class="tabs_section">
-        <div class="tabs_wrapper">
-          <div class="tab"  @click="tab = 1" :class="[{complete : validateStep1 }, {selected: tab == 1}]" >
-            <span>1</span>
-            <p>PRINCIPALES</p>
-          </div>
-          <div class="tab" @click=" validateStep1 ? tab = 2 : tabError()" :class="{selected: tab == 2}" v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ'">
-            <span>2</span>
-            <p>NEGOCIO</p>
-          </div>
-          <div class="tab" @click="tab = 2" :class="{selected: tab == 2}" v-else>
-            <span>2</span>
-            <p>TRANSPORTE</p>
-          </div>
-          <div v-if='prestamo.cliente.tipo_cliente==1' class="tab" @click=" (validateStep1 && validateStep2) ? tab = 3 : tabError()" :class="{selected: tab == 3}">
-            <span>3</span>
-            <p>FAMILIARES</p>
-          </div>
-          <div class="tab" @click="validateStep1 && validateStep2 ? tab = 4 : tabError()" :class="{selected: tab == 4}">
-            <span>4</span>
-            <p>CENTRAL DE RIESGO</p>
-          </div>
-          <div class="tab" @click="validateStep1 && validateStep2 ? tab = 5 : tabError()" :class="{selected: tab ==5}">
-            <span>5</span>
-            <p>REFERENCIAS</p>
-          </div>
-          <div class="tab" @click="validateStep1 && validateStep2 ? tab = 6 : tabError()" :class="{selected: tab ==6}">
-            <span>6</span>
-            <p>COLATERAL</p>
-          </div>
-        </div>
-      </section>
-
-       <section class="client_forms">
-          <div class="client_forms_wrapper">
-            <div v-show="tab == 1" class="form_step">
-              <div class="form_step_wrapper">
-                <h3 class="title">Datos Principales</h3>
-                <div class="form_content">
-                  <div class="group_form">
-                    <div class="input_wrapper" :class="{require: !validateFuenteIngreso}">
-                      <label>Fuente de ingreso  </label> 
-                      <v-select
-                        label="giro_negocio"
-                        :options="giros"
-                        :reduce="giros => giros.giro_negocio"
-                        v-model="evaluacion.principal.fuente_ingreso"
-                        
-                        >
-                        <span slot="no-options">
-                          No se encontro giro de negocio
-                        </span>
-                      </v-select>
-                      <div class="message">Se requiere esta información</div>
-                    </div>
-                    <div class="input_wrapper">
-                      <label>Destino del credito</label>
-                      <select v-model="evaluacion.principal.destino_credito">
-                            <option value="Capital de trabajo">Capital de trabajo</option>
-                            <option value="Activo Fijo">Activo Fijo</option>
-                            <option value="Consumo">Consumo</option>
-                            <option value="Vehiculo">Vehiculo</option>
-                            <option value="Hipotecario">Hipotecario</option>
-                            <option value="Mejoramiento de vivienda">Mejoramiento de vivienda</option>
-                            <option value="Compra de deuda">Compra de deuda</option>
-                          </select>
-                    </div>
-                  </div>
-                  <div class="group_form all">
-                    <div class="input_wrapper" :class="{require: !validateDestinoCredito}">
-                      <label>Descripcion destino</label>
-                      <p>{{evaluacion.principal.destino_credito_descripcio}}</p>
-                      <textarea  v-model="evaluacion.principal.destino_credito_descripcion" ></textarea>
-                      <div class="message">Se requiere esta información</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div  class="form_buttons all">
-                <a class="button_primary medium next" @click=" (validateStep1) ? next(1) : tabError()">
-                  <span>SIGUIENTE</span>
-                  <i class="material-icons-outlined">navigate_next</i>
-                </a>
-              </div>          
-            </div>
-            
-            <div v-show="tab == 2" class="form_step">
-              <div class="form_step_wrapper">
-
-                <h3 class="title" v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ'">Datos del Negocio</h3>
-                <h3 class="title" v-else>Datos del Vehiculo</h3>
-                <div class="form_content">
-
-                  <div class="group_form"  v-if="evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ' ">
-
-                        <div class="input_wrapper" :class="{require: !validateUbicacion}">
-                          <label>Ubicacion del negocio</label>
-                          <input type="text" v-model="evaluacion.negocio.ubicacion"  />
-                          <div class="message">Ingrese dirección del negocio</div>
-                        </div>
-                        
-                        <div class="input_wrapper">
-                          <label>Antiguedad</label>
-                          <select v-model="evaluacion.negocio.antiguedad" >
-                            <option value="MENOS DE 1 AÑO">Menos de 1 año</option>
-                            <option value="1 AÑO">1 año</option>
-                            <option value="2 AÑOS">2 años</option>
-                            <option value="3 AÑOS">3 años</option>
-                            <option value="4 AÑOS">4 años</option>
-                            <option value="5 AÑOS">5 años</option>
-                            <option value="6 MÁS DE 5 AÑOS">Más de 5 años</option>
-                          </select>
-                        </div>
-
-                        <div class="input_wrapper">
-                          <label>Local</label>
-                          <select v-model="evaluacion.negocio.local" >
-                            <option value="PROPIO">Propio</option>
-                            <option value="ALQUILADO">Alquilado</option>
-                            <option value="MODULO V. PUBLICO">Módulo V. pública</option>
-                            <option value="FAMILIAR">Familiar</option>
-                            <option value="HIPOTECA/ANTICRISIS">HipoteaA/anticresis</option>
-                          </select>
-                        </div>
-
-                        <div class="input_wrapper">
-                          <label>Licencia de Funcionamiento</label>
-                          <select  v-model="evaluacion.negocio.licencia_funcionamiento" >
-                            <option value="SI CUENTA">Si cuenta</option>
-                            <option value="NO CUENTA">No cuenta</option>
-                          </select>
-                        </div>
-
-                        <div class="input_wrapper">
-                          <label>Realizo mejoras en el local</label>
-                          <select v-model="evaluacion.negocio.mejoras_local" >
-                            <option value="SI REALIZO">Si realizo</option>
-                            <option value="NO REALIZO">No realizo</option>
-                          </select>
-                        </div>
-
-                        <div class="input_wrapper">
-                          <label>Horario de atención entrada</label>
-                          <input type='time' v-model='evaluacion.negocio.horario_atencion_inicio' >
-                        </div>
-
-                        <div class="input_wrapper">
-                          <label>Horario de atención salida</label>
-                          <input type='time' v-model='evaluacion.negocio.horario_atencion_salida' >
-                        </div>
-
-                  </div>
-
-                  <div class="group_form" v-else>
-
-                        <div class="input_wrapper" :class="{require: !validateMarca}">
-                          <label>Marca</label>
-                          <input type="text" v-model="evaluacion.vehiculo.marca"  />
-                          <div class="message">Ingrese marca del vehiculo</div>
-                        </div>
-                        
-                        <div class="input_wrapper" :class="{require: !validateModelo}">
-                          <label>Modelo</label>
-                          <input type="text" v-model="evaluacion.vehiculo.modelo"  />
-                          <div class="message">Ingrese modelo del vehiculo</div>
-                        </div>
-
-                        <div class="input_wrapper">
-                          <label>Año fabricación</label>
-                          
-                          <select v-model="evaluacion.vehiculo.año" >
-                            <option value="1995">1995</option>
-                            <option value="1996">1996</option>
-                            <option value="1997">1997</option>
-                            <option value="1998">1998</option>
-                            <option value="1999">1999</option>
-                            <option value="2001">2001</option>
-                            <option value="2002">2002</option>
-                            <option value="2003">2003</option>
-                            <option value="2004">2004</option>
-                            <option value="2005">2005</option>
-                            <option value="2006">2006</option>
-                            <option value="2007">2007</option>
-                            <option value="2008">2008</option>
-                            <option value="2009">2009</option>
-                            <option value="2010">2010</option>
-                            <option value="2011">2011</option>
-                            <option value="2012">2012</option>
-                            <option value="2013">2013</option>
-                            <option value="2014">2014</option>
-                            <option value="2015">2015</option>
-                            <option value="2016">2016</option>
-                            <option value="2017">2017</option>
-                            <option value="2018">2018</option>
-                            <option value="2018">2018</option>
-                            <option value="2019">2019</option>
-                          </select>
-                        </div>
-
-                        <div class="input_wrapper" :class="{require: !validateServicio}">
-                          <label>Tipo servicio que brinda</label>
-                          <input type="text" v-model="evaluacion.vehiculo.tipo_servicio_brinda"  />
-                          <div class="message">ingrese tiempo de servicio</div>
-                        </div>
-
-                        <div class="input_wrapper" :class="{require: !validateAntiguedad}">
-                          <label>Antiguedad realizando el servicio</label>
-                          <input type="text" v-model="evaluacion.vehiculo.antiguedad_servicio"  />
-                          <div class="message">Ingrese antiguedad de servicio</div>
-                        </div>
-
-                        <div class="input_wrapper">
-                          <label>Permiso para brindar servicio</label>
-                          <select v-model="evaluacion.vehiculo.permiso_servicio" >
-                            <option value="SI CUENTA">Si cuenta</option>
-                            <option value="NO CUENTA">No cuenta</option>
-                          </select>
-                        </div>
-
-                        <div class="input_wrapper">
-                          <label>Horario trabajo inicio</label>
-                          <input type='time' v-model="evaluacion.vehiculo.horario_servicio_inicio">
-                        </div>
-
-                        <div class="input_wrapper">
-                          <label>Horario trabajo inicio</label>
-                          <input type='time' v-model="evaluacion.vehiculo.horario_servicio_fin" >
-                        </div>
-                  </div>
-
-                </div>
-              </div>
-
-              <div class="form_buttons">
-                <a class="button_inline_primary medium prev" @click="prev(2)">
-                  <i class="material-icons-outlined">navigate_before</i>
-                  <span>ATRAS</span>
-                </a>
-                <a v-if='prestamo.cliente.tipo_cliente==1' class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(2) : tabError()">
-                  <span>SIGUIENTE</span>
-                  <i class="material-icons-outlined">navigate_next</i>
-                </a>
-                <a v-else class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(3) : tabError()">
-                  <span>SIGUIENTE</span>
-                  <i class="material-icons-outlined">navigate_next</i>
-                </a>
-              </div>
-
-            </div>
-
-            <div v-show="tab == 3" v-if='prestamo.cliente.tipo_cliente==1' class="form_step">
-              <div class="form_step_wrapper">
-                <h3 class="title">Información Familiar</h3>
-                <div class="form_content">
-                  <div class="group_form"  >
-                    <div class="input_wrapper">
-                      <label>Tipo de vivienda</label>
-                      <select v-model="evaluacion.familiar.tipo_vivienda" >
-                        <option value="PROPIA CANCELADA">Propia Cancelada</option>
-                        <option value="PROPIA (HIPOTECA)">Propia (hipoteca)</option>
-                        <option value="DE LOS PADRES">De los padres</option>
-                        <option value="DE FAMILIARES">De familiares</option>
-                        <option value="ALQUILADA">Alquilada</option>
-                      </select>
-                    </div>
-                    
-                    <div class="input_wrapper">
-                      <label>Situacion familiar</label>
-                      <select v-model="evaluacion.familiar.situacion_familiar" >
-                        <option value="SOLTERO">Soltero</option>
-                        <option value="CASADO">Casado</option>
-                        <option value="CONVIVIENTE">Conviviente</option>
-                      </select>
-                    </div>
-
-                    <div class="input_wrapper">
-                      <label>Miembros de familia</label>
-                      <input  type="number" v-model="evaluacion.familiar.miembros_familia"  disabled />
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form_list" >
-                    <div class="sub_step_wrapper" v-for="(hijo, index) in evaluacion.familiar.hijos" :key="index">
-                      <h3 class="title">
-                        Hijo {{index + 1}}
-                      </h3>
-                      <div class="form_content">
-                        <div class="group_form">
-                          <div class="input_wrapper">
-                            <label>Estudia</label>
-                            <select v-model='hijo.estudia' @change='cambiarEstudio(index)' >
-                              <option value='0'>No estudia</option>
-                              <option value='1'>Si estudia</option>
-                            </select>
-                          </div>
-                          <div class="input_wrapper">
-                            <label>Edad</label>
-                            <input type="text" v-model="hijo.edad"  disabled/>
-                          </div>
-
-                          <div class="input_wrapper">
-                            <label>Colegio</label>
-                            <select
-                              :disabled='hijo.estudia=="0"'
-                              v-model="hijo.colegio"
-                              @change="seleccionColegiosCosto(index)"
-                            >
-                            <option
-                              v-for="(colegio,index) in colegios"
-                              v-bind:value="colegio.nombre"
-                              :key="index"
-                            >{{ colegio.nombre }}</option>
-                            </select>
-                          </div>
-
-                          <div class="input_wrapper">
-                            <label>Grado</label>
-                            <select
-                                :disabled='hijo.estudia=="0"'
-                                v-model="hijo.grado"
-                                @change="seleccionColegiosCosto(index)"
-                              >
-                                <option value="INICIAL">INICIAL</option>
-                                <option value="PRIMARIA">PRIMARIA</option>
-                                <option value="SECUNDARIA">SECUNDARIA</option>
-                              </select>
-                          </div>
-
-                          <div class="input_wrapper">
-                            <label>Costo</label>
-                                  <input
-                                v-if='hijo.estudia'
-                                type="text"
-                                :value="'S/. '+hijo.costo"
-                                :disabled='hijo.estudia=="0"'
-                                />
-                          
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                </div>
-              </div>
-              <div class="form_buttons">
-                <a class="button_inline_primary medium prev" @click="prev(3)">
-                  <i class="material-icons-outlined">navigate_before</i>
-                  <span>ATRAS</span>
-                </a>
-                <a class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(3) : tabError()">
-                  <span>SIGUIENTE</span>
-                  <i class="material-icons-outlined">navigate_next</i>
-                </a>
-              </div>
-            </div>
-
-            <div v-show="tab == 4" class="form_step">
-              
-              <div class="form_step_wrapper">
-                <div class="form_list no_border" >
-                    <div class="sub_step_wrapper" v-for="(entidad_financiera, index) in evaluacion.central_riesgo" :key="index">
-                      <h3 class="title">
-                        Entidad Financiera {{index + 1}} 
-                        <button
-                            v-if="index > 0"
-                            class="delete_section"
-                            type="button"
-                            @click="clickRemoveFinanciera(index)"
-                            >
-                            <i class="material-icons-outlined">delete</i>
-                        </button> 
-                      </h3>
-                      <div class="form_content">
-                        <div class="group_form">
-
-                          <div class="input_wrapper">
-                            <label>Entidad</label>
-                            <v-select
-                              label="nombre"
-                              :options="entidades"
-                              :reduce="entidades => entidades.nombre"
-                              v-model="entidad_financiera.entidad_financiera">
-                              <span slot="no-options">
-                                No se encontro giro de negocio
-                              </span>
-                              </v-select> 
-                          </div>
-                        </div>
-
-                        <div class="group_form">
-                          <div class="input_box no_label ">
-                            <div class="input_box_wrapper">
-                              <div class="input_checkbox_wrapper" >
-                                <input type="checkbox" :id="'checkbox'+index" v-model="entidad_financiera.capital" />
-                                <label class="box_content" :for="'checkbox'+index">
-                                  <div class="box">
-                                  </div>
-                                  <span>Capital de trabajo</span>
-                                </label>
-                              </div>
-                              <div class="input_checkbox_wrapper" >
-                                <input type="checkbox" :id="'checkbox2'+index" v-model="entidad_financiera.activo_f" />
-                                <label class="box_content" :for="'checkbox2'+index">
-                                  <div class="box">
-                                  </div>
-                                  <span>Activo Fijo</span>
-                                </label>
-                              </div>
-                              <div class="input_checkbox_wrapper" >
-                                <input type="checkbox" :id="'checkbox3'+index" v-model="entidad_financiera.consumo" />
-                                <label class="box_content" :for="'checkbox3'+index">
-                                  <div class="box">
-                                  </div>
-                                  <span>Consumo</span>
-                                </label>
-                              </div>
-                              <div class="input_checkbox_wrapper" >
-                                <input type="checkbox" :id="'checkbox4'+index" v-model="entidad_financiera.vehicular" />
-                                <label class="box_content" :for="'checkbox4'+index">
-                                  <div class="box">
-                                  </div>
-                                  <span>Vehicular</span>
-                                </label>
-                              </div>
-                              <div class="input_checkbox_wrapper" >
-                                <input type="checkbox" :id="'checkbox5'+index" v-model="entidad_financiera.hipoteca" />
-                                <label class="box_content" :for="'checkbox5'+index">
-                                  <div class="box">
-                                  </div>
-                                  <span>Hipotecario</span>
-                                </label>
-                              </div>
-                              <div class="input_checkbox_wrapper" >
-                                <input type="checkbox" :id="'checkbox6'+index" v-model="entidad_financiera.terceros" />
-                                <label class="box_content" :for="'checkbox6'+index">
-                                  <div class="box">
-                                  </div>
-                                  <span>Terceros</span>
-                                </label>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-
-                <button type="button"    class="add_section" @click="clickAddFinanciera" >
-                  <span> AGREGAR ENTIDAD FINANCIERA </span>
-                  <i class="material-icons-outlined">add</i>  
-                </button>
-              </div>
-              
-              <div class="form_step_wrapper in_bottom">
-                <h3 class="title">Situacion de Entidades</h3>
-                <div class="form_content">
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Comentarios</label>
-                      <textarea class="form-control" v-model="evaluacion.comentario_central_riesgo"></textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="form_buttons">
-                <a class="button_inline_primary medium prev" @click="prev(4)">
-                  <i class="material-icons-outlined">navigate_before</i>
-                  <span>ATRAS</span>
-                </a>
-                <a class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(4) : tabError()">
-                  <span>SIGUIENTE</span>
-                  <i class="material-icons-outlined">navigate_next</i>
-                </a>
-              </div>
-
-            </div>
-        
-            <div v-show="tab == 5" class="form_step">
-                <div class="form_step_wrapper">
-                  <div class="form_list no_border">
-                      <div class="sub_step_wrapper" v-for="(referencia, index) in evaluacion.referencias" :key="index">
-                        <h3 class="title">
-                          Referencia  {{index + 1}}
-                          <button
-                            v-if="index > 0"
-                            class="delete_section"
-                            type="button"
-                            @click.prevent="clickRemoveReferencia(index)">
-                            <i class="material-icons-outlined">delete</i>
-                          </button>
-                        </h3>
-                        <div class="form_content">
-                          <div class="group_form">
-
-                            <div class="input_wrapper">
-                              <label>Tipo de relación</label>
-                              <input v-model="referencia.tipo_relacion" type="text" placeholder="Familiares, compañeros de trabajo, vecinos" />
-                            </div>
-
-                            <div class="input_wrapper">
-                              <label>Nombre</label>
-                              <input v-model="referencia.nombre" type="text" />
-                            </div>
-                            <div class="input_wrapper">
-                              <label>Telefono</label>
-                              <input  v-model="referencia.telefono" type="text" v-mask='"#########"' />
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                  </div>
-                  <button type="button"    class="add_section"  @click="clickAddReferencia">
-                    <span> AGREGAR REFERENCIA </span>
-                    <i class="material-icons-outlined">add</i>  
-                  </button>
-                </div>
-
-                <div class="form_buttons">
-                  <a class="button_inline_primary medium prev" @click="prev(5)">
-                    <i class="material-icons-outlined">navigate_before</i>
-                    <span>ATRAS</span>
-                  </a>
-                  <a class="button_primary medium next" @click="(validateStep1 && validateStep2) ? next(5) : tabError()">
-                    <span>SIGUIENTE</span>
-                    <i class="material-icons-outlined">navigate_next</i>
-                  </a>
-                </div>
-
-            </div>
-
-            <div v-show="tab == 6" class="form_step">
-              <div class="form_step_wrapper">
-                <h3 class="title">Colateral</h3>
-                <div class="form_content">
-                  <div class="group_form">
-                    <div class="input_wrapper">
-                      <label>Colateral</label>
-                      <select v-model="evaluacion.colateral">
-                        <option value="AVAL CON CASA PROPIA">Aval con casa propia</option>
-                        <option value="AVAL CON CASA ALQUILADA">Aval con casa alquilada</option>
-                        <option value="GARANTIA LIQUIDA ">Garantia liquida </option>
-                        <option value="GARANTIA VEHICULAR">Garantia vehicular</option>
-                        <option value="HIPOTECA INMOBILIRARIA">Hipoteca inmobiliara</option>
-                        <option value="SIN COLATERAL">Sin colateral</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="group_form all">
-                    <div class="input_wrapper">
-                      <label>Comentarios</label>
-                      <textarea v-model="evaluacion.comentario_colateral"> </textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form_buttons">
-                <a class="button_inline_primary medium prev" @click="prev(6)">
-                  <i class="material-icons-outlined">navigate_before</i>
-                  <span>ATRAS</span>
-                </a>
-                <a class="button_primary medium next" @click.prevent="(validateStep1 && validateStep2) ? registrar() : tabError()" :class="{loading: loading}">
-                  <div class="load_spinner"></div>
-                  <span>FINALIZAR</span>
-                  <i class="material-icons-outlined">check</i>
-                </a>
-              </div>
-            </div>
-          </div>
-     </section>
-
-    </div>
+<template lang='pug'>
+  .create_client_content
+    section.tabs_section
+      .tabs_wrapper
+        .tab(@click='tab = 2' :class='{selected: tab == 2}' v-if="evaluacion.fuente_ingreso!='TRANSPORTES' &&  evaluacion.fuente_ingreso!='TRANSPORTE BAJAJ'")
+          span 2
+          p NEGOCIO
+        .tab(@click='tab = 2' :class='{selected: tab == 2}' v-else='')
+          span 2
+          p TRANSPORTE
+        .tab(v-if='prestamo.cliente.tipo_cliente==1' @click=' (validateStep2) ? tab = 3 : tabError()' :class='{selected: tab == 3}')
+          span 3
+          p FAMILIARES
+        .tab(@click='validateStep2 ? tab = 4 : tabError()' :class='{selected: tab == 4}')
+          span 4
+          p CENTRAL DE RIESGO
+        .tab(@click='validateStep2 ? tab = 5 : tabError()' :class='{selected: tab ==5}')
+          span 5
+          p REFERENCIAS
+        .tab(@click='validateStep2 ? tab = 6 : tabError()' :class='{selected: tab ==6}')
+          span 6
+          p COLATERAL
+        .tab(@click='validateStep2 ? tab = 7 : tabError()' :class='{selected: tab ==7}')
+          span 7
+          p PROPUESTA 
+    section.client_forms
+      .client_forms_wrapper
+        .form_step(v-show='tab == 2')
+          .form_step_wrapper
+            h3.title(v-if="evaluacion.fuente_ingreso!='TRANSPORTES' &&  evaluacion.fuente_ingreso!='TRANSPORTE BAJAJ'") Datos del Negocio
+            h3.title(v-else='') Datos del Vehiculo
+            .form_content
+              .group_form(v-if="evaluacion.fuente_ingreso!='TRANSPORTES' &&  evaluacion.fuente_ingreso!='TRANSPORTE BAJAJ' ")
+                .input_wrapper(:class='{require: !validateUbicacion}')
+                  label Ubicacion del negocio
+                  input(type='text' v-model='evaluacion.negocio.ubicacion')
+                  .message Ingrese direcci&oacute;n del negocio
+                .input_wrapper
+                  label Antiguedad
+                  select(v-model='evaluacion.negocio.antiguedad')
+                    option(value='MENOS DE 1 AÑO') Menos de 1 a&ntilde;o
+                    option(value='1 AÑO') 1 a&ntilde;o
+                    option(value='2 AÑOS') 2 a&ntilde;os
+                    option(value='3 AÑOS') 3 a&ntilde;os
+                    option(value='4 AÑOS') 4 a&ntilde;os
+                    option(value='5 AÑOS') 5 a&ntilde;os
+                    option(value='6 MÁS DE 5 AÑOS') M&aacute;s de 5 a&ntilde;os
+                .input_wrapper
+                  label Local
+                  select(v-model='evaluacion.negocio.local')
+                    option(value='PROPIO') Propio
+                    option(value='ALQUILADO') Alquilado
+                    option(value='MODULO V. PUBLICO') M&oacute;dulo V. p&uacute;blica
+                    option(value='FAMILIAR') Familiar
+                    option(value='HIPOTECA/ANTICRISIS') HipoteaA/anticresis
+                .input_wrapper
+                  label Licencia de Funcionamiento
+                  select(v-model='evaluacion.negocio.licencia_funcionamiento')
+                    option(value='SI CUENTA') Si cuenta
+                    option(value='NO CUENTA') No cuenta
+                .input_wrapper
+                  label Realizo mejoras en el local
+                  select(v-model='evaluacion.negocio.mejoras_local')
+                    option(value='1') Si realizo
+                    option(value='0') No realizo
+                .input_wrapper
+                  label Horario de atenci&oacute;n entrada
+                  input(type='time' v-model='evaluacion.negocio.horario_atencion_inicio')
+                .input_wrapper
+                  label Horario de atenci&oacute;n salida
+                  input(type='time' v-model='evaluacion.negocio.horario_atencion_salida')
+              .group_form(v-else='')
+                .input_wrapper(:class='{require: !validateMarca}')
+                  label Marca
+                  input(type='text' v-model='evaluacion.vehiculo.marca')
+                  .message Ingrese marca del vehiculo
+                .input_wrapper(:class='{require: !validateModelo}')
+                  label Modelo
+                  input(type='text' v-model='evaluacion.vehiculo.modelo')
+                  .message Ingrese modelo del vehiculo
+                .input_wrapper
+                  label A&ntilde;o fabricaci&oacute;n
+                  select(v-model='evaluacion.vehiculo.año')
+                    option(value='1995') 1995
+                    option(value='1996') 1996
+                    option(value='1997') 1997
+                    option(value='1998') 1998
+                    option(value='1999') 1999
+                    option(value='2001') 2001
+                    option(value='2002') 2002
+                    option(value='2003') 2003
+                    option(value='2004') 2004
+                    option(value='2005') 2005
+                    option(value='2006') 2006
+                    option(value='2007') 2007
+                    option(value='2008') 2008
+                    option(value='2009') 2009
+                    option(value='2010') 2010
+                    option(value='2011') 2011
+                    option(value='2012') 2012
+                    option(value='2013') 2013
+                    option(value='2014') 2014
+                    option(value='2015') 2015
+                    option(value='2016') 2016
+                    option(value='2017') 2017
+                    option(value='2018') 2018
+                    option(value='2018') 2018
+                    option(value='2019') 2019
+                .input_wrapper(:class='{require: !validateServicio}')
+                  label Tipo servicio que brinda
+                  input(type='text' v-model='evaluacion.vehiculo.tipo_servicio_brinda')
+                  .message ingrese tiempo de servicio
+                .input_wrapper(:class='{require: !validateAntiguedad}')
+                  label Antiguedad realizando el servicio
+                  input(type='text' v-model='evaluacion.vehiculo.antiguedad_servicio')
+                  .message Ingrese antiguedad de servicio
+                .input_wrapper
+                  label Permiso para brindar servicio
+                  select(v-model='evaluacion.vehiculo.permiso_servicio')
+                    option(value='SI CUENTA') Si cuenta
+                    option(value='NO CUENTA') No cuenta
+                .input_wrapper
+                  label Horario trabajo inicio
+                  input(type='time' v-model='evaluacion.vehiculo.horario_servicio_inicio')
+                .input_wrapper
+                  label Horario trabajo inicio
+                  input(type='time' v-model='evaluacion.vehiculo.horario_servicio_fin')
+          .form_buttons
+            a.button_inline_primary.medium.prev(@click='prev(2)')
+              i.material-icons-outlined navigate_before
+              span ATRAS
+            a.button_primary.medium.next(v-if='prestamo.cliente.tipo_cliente==1' @click='(validateStep2) ? next(2) : tabError()')
+              span SIGUIENTE
+              i.material-icons-outlined navigate_next
+            a.button_primary.medium.next(v-else='' @click='( validateStep2) ? next(3) : tabError()')
+              span SIGUIENTE
+              i.material-icons-outlined navigate_next
+        .form_step(v-show='tab == 3' v-if='prestamo.cliente.tipo_cliente==1')
+          .form_step_wrapper
+            h3.title Informaci&oacute;n Familiar
+            .form_content
+              .group_form
+                .input_wrapper
+                  label Tipo de vivienda
+                  select(v-model='evaluacion.familiar.tipo_vivienda')
+                    option(value='PROPIA CANCELADA') Propia Cancelada
+                    option(value='PROPIA (HIPOTECA)') Propia (hipoteca)
+                    option(value='DE LOS PADRES') De los padres
+                    option(value='DE FAMILIARES') De familiares
+                    option(value='ALQUILADA') Alquilada
+                .input_wrapper
+                  label Situacion familiar
+                  select(v-model='evaluacion.familiar.situacion_familiar')
+                    option(value='SOLTERO') Soltero
+                    option(value='CASADO') Casado
+                    option(value='CONVIVIENTE') Conviviente
+                .input_wrapper
+                  label Miembros de familia
+                  input(type='number' v-model='evaluacion.familiar.miembros_familia' disabled='')
+            .form_list
+              .sub_step_wrapper(v-for='(hijo, index) in evaluacion.familiar.hijos' :key='index')
+                h3.title
+                  | Hijo {{index + 1}}
+                .form_content
+                  .group_form
+                    .input_wrapper
+                      label Estudia
+                      select(v-model='hijo.estudia' @change='cambiarEstudio(index)')
+                        option(value='0') No estudia
+                        option(value='1') Si estudia
+                    .input_wrapper
+                      label Edad
+                      input(type='text' v-model='hijo.edad' disabled='')
+                    .input_wrapper
+                      label Colegio
+                      select(:disabled='hijo.estudia=="0"' v-model='hijo.colegio' @change='seleccionColegiosCosto(index)')
+                        option(v-for='(colegio,index) in colegios' v-bind:value='colegio.nombre' :key='index') {{ colegio.nombre }}
+                    .input_wrapper
+                      label Grado
+                      select(:disabled='hijo.estudia=="0"' v-model='hijo.grado' @change='seleccionColegiosCosto(index)')
+                        option(value='INICIAL') INICIAL
+                        option(value='PRIMARIA') PRIMARIA
+                        option(value='SECUNDARIA') SECUNDARIA
+                    .input_wrapper
+                      label Costo
+                      input(v-if='hijo.estudia' type='text' :value="'S/. '+hijo.costo" :disabled='hijo.estudia=="0"')
+          .form_buttons
+            a.button_inline_primary.medium.prev(@click='prev(3)')
+              i.material-icons-outlined navigate_before
+              span ATRAS
+            a.button_primary.medium.next(@click='( validateStep2) ? next(3) : tabError()')
+              span SIGUIENTE
+              i.material-icons-outlined navigate_next
+        .form_step(v-show='tab == 4')
+          .form_step_wrapper
+            .form_list.no_border
+              .sub_step_wrapper(v-for='(entidad_financiera, index) in evaluacion.central_riesgo' :key='index')
+                h3.title
+                  | Entidad Financiera {{index + 1}} 
+                  button.delete_section(v-if='index > 0' type='button' @click='clickRemoveFinanciera(index)')
+                    i.material-icons-outlined delete
+                .form_content
+                  .group_form
+                    .input_wrapper
+                      label Entidad
+                      v-select(label='nombre' :options='entidades' :reduce='entidades => entidades.nombre' v-model='entidad_financiera.entidad_financiera')
+                        span(slot='no-options')
+                          | No se encontro giro de negocio
+                  .group_form
+                    .input_box.no_label
+                      .input_box_wrapper
+                        .input_checkbox_wrapper
+                          input(type='checkbox' :id="'checkbox'+index" v-model='entidad_financiera.capital')
+                          label.box_content(:for="'checkbox'+index")
+                            .box
+                            span Capital de trabajo
+                        .input_checkbox_wrapper
+                          input(type='checkbox' :id="'checkbox2'+index" v-model='entidad_financiera.activo_f')
+                          label.box_content(:for="'checkbox2'+index")
+                            .box
+                            span Activo Fijo
+                        .input_checkbox_wrapper
+                          input(type='checkbox' :id="'checkbox3'+index" v-model='entidad_financiera.consumo')
+                          label.box_content(:for="'checkbox3'+index")
+                            .box
+                            span Consumo
+                        .input_checkbox_wrapper
+                          input(type='checkbox' :id="'checkbox4'+index" v-model='entidad_financiera.vehicular')
+                          label.box_content(:for="'checkbox4'+index")
+                            .box
+                            span Vehicular
+                        .input_checkbox_wrapper
+                          input(type='checkbox' :id="'checkbox5'+index" v-model='entidad_financiera.hipoteca')
+                          label.box_content(:for="'checkbox5'+index")
+                            .box
+                            span Hipotecario
+                        .input_checkbox_wrapper
+                          input(type='checkbox' :id="'checkbox6'+index" v-model='entidad_financiera.terceros')
+                          label.box_content(:for="'checkbox6'+index")
+                            .box
+                            span Terceros
+            button.add_section(type='button' @click='clickAddFinanciera')
+              span  AGREGAR ENTIDAD FINANCIERA 
+              i.material-icons-outlined add
+          .form_step_wrapper.in_bottom
+            h3.title Situacion de Entidades
+            .form_content
+              .group_form
+                .input_wrapper
+                  label Comentarios
+                  textarea.form-control(v-model='evaluacion.comentario_central_riesgo')
+          .form_buttons
+            a.button_inline_primary.medium.prev(@click='prev(4)')
+              i.material-icons-outlined navigate_before
+              span ATRAS
+            a.button_primary.medium.next(@click='( validateStep2) ? next(4) : tabError()')
+              span SIGUIENTE
+              i.material-icons-outlined navigate_next
+        .form_step(v-show='tab == 5')
+          .form_step_wrapper
+            .form_list.no_border
+              .sub_step_wrapper(v-for='(referencia, index) in evaluacion.referencias' :key='index')
+                h3.title
+                  | Referencia  {{index + 1}}
+                  button.delete_section(v-if='index > 0' type='button' @click.prevent='clickRemoveReferencia(index)')
+                    i.material-icons-outlined delete
+                .form_content
+                  .group_form
+                    .input_wrapper
+                      label Tipo de relaci&oacute;n
+                      input(v-model='referencia.tipo_relacion' type='text' placeholder='Familiares, compañeros de trabajo, vecinos')
+                    .input_wrapper
+                      label Nombre
+                      input(v-model='referencia.nombre' type='text')
+                    .input_wrapper
+                      label Telefono
+                      input(v-model='referencia.telefono' type='text' v-mask='"#########"')
+            button.add_section(type='button' @click='clickAddReferencia')
+              span  AGREGAR REFERENCIA 
+              i.material-icons-outlined add
+          .form_buttons
+            a.button_inline_primary.medium.prev(@click='prev(5)')
+              i.material-icons-outlined navigate_before
+              span ATRAS
+            a.button_primary.medium.next(@click='( validateStep2) ? next(5) : tabError()')
+              span SIGUIENTE
+              i.material-icons-outlined navigate_next
+        .form_step(v-show='tab == 6')
+          .form_step_wrapper
+            h3.title Colateral
+            .form_content
+              .group_form
+                .input_wrapper
+                  label Colateral
+                  select(v-model='evaluacion.colateral')
+                    option(value='AVAL CON CASA PROPIA') Aval con casa propia
+                    option(value='AVAL CON CASA ALQUILADA') Aval con casa alquilada
+                    option(value='GARANTIA LIQUIDA') Garantia liquida 
+                    option(value='GARANTIA VEHICULAR') Garantia vehicular
+                    option(value='GARANTIA INMOBILIARIA') Garantia inmobiliara
+                    option(value='SIN COLATERAL') Sin colateral
+              .group_form.all
+                .input_wrapper
+                  label Comentarios
+                  textarea(v-model='evaluacion.comentario_colateral')  
+          avales( v-on:update='updateAvales' v-if='evaluacion.colateral=="AVAL CON CASA PROPIA" || evaluacion.colateral=="AVAL CON CASA ALQUILADA"')
+          garantias( v-on:update='updateGarantias' :tipo='evaluacion.colateral' v-if='evaluacion.colateral=="GARANTIA LIQUIDA" || evaluacion.colateral=="GARANTIA VEHICULAR" || evaluacion.colateral=="GARANTIA INMOBILIARIA" ')
+          .form_buttons
+            a.button_inline_primary.medium.prev(@click='prev(6)')
+              i.material-icons-outlined navigate_before
+              span ATRAS
+            a.button_primary.medium.next(@click='( validateStep2) ? next(6) : tabError()')
+              span SIGUIENTE
+              i.material-icons-outlined navigate_next
+        .form_step(v-show='tab == 7')    
+          .form_step_wrapper     
+            propuesta-analista( v-on:update='updatePropuestaAnalista')
+          .form_buttons
+            a.button_inline_primary.medium.prev(@click='prev(7)')
+              i.material-icons-outlined navigate_before
+              span ATRAS
+            a.button_primary.medium.next(@click.prevent='( validateStep2) ? registrar() : tabError()' :class='{loading: loading}')
+              .load_spinner
+              span FINALIZAR
+              i.material-icons-outlined check 
 
 </template>
 <script>
 import vSelect from "vue-select";
 import { serviceNumber } from "../mixins/functions";
 import { toastOptions } from '../constants.js'
-
+import Avales from './prestamos/registrarElementos/Avales';
+import Garantias from './prestamos/registrarElementos/Garantias';
+import PropuestaAnalista from './prestamos/registrarElementos/PropuestaAnalista';
 export default {
   mixins: [serviceNumber], 
   components: {
-    vSelect
+    vSelect,
+    Avales,
+    Garantias,
+    PropuestaAnalista
   },
   data() {
     return {
       giros: [],
       entidades: [],
-      tab: 1, 
+      tab: 2, 
       colegios: [],
       prestamo:{
         cliente:{
@@ -601,13 +352,14 @@ export default {
         }
       },
       loading:false,
-      evaluacion: {
-        prestamo_id: this.$route.params.prestamo,
-        principal: {
-          destino_credito_descripcion: "",
-          destino_credito: "Capital de trabajo",
-          fuente_ingreso: ""
-        },
+      evaluacion: { 
+        propuestaAnalista:{},
+        avales:[],
+        garantias:[],
+        prestamo_id: this.$route.params.prestamo,     
+        fuente_ingresos:"",
+        destino_credito:"",
+        destino_credito_descripcion:"",   
         negocio: {
           ubicacion: "",
           antiguedad: "1 AÑO",
@@ -615,7 +367,7 @@ export default {
           licencia_funcionamiento: "SI CUENTA",
           horario_atencion_inicio: "00:00",
           horario_atencion_salida: "00:00",
-          mejoras_local: "SI REALIZO"
+          mejoras_local: "1"
         },
         vehiculo: {
           marca: "",
@@ -673,18 +425,7 @@ export default {
     };
   },
   computed: {
-
-    validateFuenteIngreso() {
-      return  this.evaluacion.principal.fuente_ingreso.length > 4
-    },
-    validateDestinoCredito() {
-      return this.evaluacion.principal.destino_credito_descripcion.length > 6
-    },
-
-    validateStep1() {
-      return this.validateFuenteIngreso && this.validateDestinoCredito;
-    },
-
+    
     validateUbicacion() {
       return this.evaluacion.negocio.ubicacion.length > 3
     },
@@ -706,7 +447,7 @@ export default {
     },
 
     validateStep2(){
-      if(this.evaluacion.principal.fuente_ingreso!='TRANSPORTES' &&  this.evaluacion.principal.fuente_ingreso!='TRANSPORTE BAJAJ'){
+      if(this.evaluacion.fuente_ingreso!='TRANSPORTES' &&  this.evaluacion.fuente_ingreso!='TRANSPORTE BAJAJ'){
          return this.validateUbicacion
       }else{
           return  this.validateMarca &&
@@ -722,6 +463,15 @@ export default {
     
   },
   methods: {
+    updateGarantias(val){
+      this.evaluacion.garantias=val.garantias
+    },
+    updateAvales(val){
+      this.evaluacion.avales=val.avales
+    },
+    updatePropuestaAnalista(val){
+      this.evaluacion.propuestaAnalista=val 
+    },
         tabError(){
        this.$toast.error(
           "Rellene los datos necesarios",
@@ -767,6 +517,7 @@ export default {
     },
     registrar() {
       this.loading=true
+      console.log(this.evaluacion)
       axios.post("/analisis/cualitativa", this.evaluacion)
       .then(response => {
           this.loading = false
@@ -816,7 +567,10 @@ export default {
   async mounted() {
     this.$http.get(`/prestamos/`+this.$route.params.prestamoID).then(response => {
       this.prestamo=response.data
-      this.evaluacion.principal.destino_credito_descripcion=response.data.destino_inicial || ''
+      console.log(this.prestamo)
+      this.evaluacion.destino_credito_descripcion=response.data.cualitativa_analisis.destino_credito_descripcion || ''
+      this.evaluacion.destino_credito=response.data.cualitativa_analisis.destino_credito || ''
+      this.evaluacion.fuente_ingresos=response.data.cualitativa_analisis.fuente_ingresos || ''
       this.evaluacion.prestamo_id=this.prestamo.id
       if(response.data.cliente.persona && response.data.cliente.persona.hijos.length>0){
           this.evaluacion.familiar.numero_hijos = response.data.cliente.persona.hijos.length

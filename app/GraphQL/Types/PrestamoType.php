@@ -104,6 +104,14 @@ class PrestamoType extends GraphQLType
                 'type'=>Type::string(),
                 'description'=>'Latitud'
             ],
+            'cualitativa'=>[
+                'type'=>Type::boolean(),
+                'description'=>'cualitativa'
+            ],
+            'cuantitativa'=>[
+                'type'=>Type::boolean(),
+                'description'=>'cuantitativa'
+            ],
             'cliente'=>[
                 'type'=>GraphQL::type("cliente"),
                 'description'=>'Cliente ah quien se hizo prestamo'
@@ -112,7 +120,7 @@ class PrestamoType extends GraphQLType
                 'type'=>GraphQL::type("user"),
                 'description'=>'Cliente ah quien se hizo prestamo'
             ],
-            'cualitativa'=>[
+            'cualitativaAnalisis'=>[
                 'type'=>GraphQL::type("cualitativa"),
                 'description'=>'Cliente ah quien se hizo prestamo'
             ],

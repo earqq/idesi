@@ -294,6 +294,7 @@ class PrestamosController extends Controller
                                 'cliente.persona.hijos',
                                 'cliente.persona.conyuge',
                                 'resultadoAnalisis',
+                                'cualitativaAnalisis',
                                 'evaluaciones.evaluador',
                                 'fotos',
                                 'archivos')->find($id);

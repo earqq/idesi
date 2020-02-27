@@ -111,7 +111,7 @@ export default new Router({
             }
         }, 
         {
-            path: '/prestamos/registrar/:tipoCliente/:clienteID/:prestamoID',
+            path: '/prestamos/registrar/:clienteID/:prestamoID',
             name: 'registarPrestamo', 
             component: require('./views/prestamos/RegistrarPrestamo').default,
             beforeEnter: (to, from, next) => {

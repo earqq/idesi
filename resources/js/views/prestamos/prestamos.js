@@ -108,6 +108,7 @@ mutation registrarPrestamo(
     $cualitativa:CualitativaInput
     $cliente:ClienteInput
     $userID:Int
+    $estado:Int
     ){ 
     prestamos(
         id:$id
@@ -118,6 +119,7 @@ mutation registrarPrestamo(
         disponibilidad_pago:$disponibilidad_pago
         cualitativa:$cualitativa
         cliente:$cliente
+        estado:$estado
         ) {
         id
         monto_cliente

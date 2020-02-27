@@ -11,6 +11,8 @@ use App\Evaluacion;
 use App\Cuantitativa;
 use App\Cliente;
 use App\Cualitativa;
+use App\CentralRiesgo;
+use App\Referencia;
 use App\ResultadoAnalisis;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -722,22 +724,56 @@ class AnalisisController extends Controller
         try{
 
             DB::beginTransaction();
-            
-            $cualitativa= new cualitativa;
-            $cualitativa->prestamo_id=intval($request->prestamo_id);
-            $cualitativa->principal=$request->principal;
-            $cualitativa->negocio=$request->negocio;
-            $cualitativa->vehiculo=$request->vehiculo;
-            $cualitativa->familiar=$request->familiar;
-            $cualitativa->central_riesgo=$request->central_riesgo;
-            $cualitativa->comentario_central_riesgo=$request->comentario_central_riesgo;
-            $cualitativa->referencias=$request->referencias;
+            \Log::alert($request->all());
+            $cualitativa=cualitativa::where('prestamo_id',$request->prestamo_id)->first();
+            $cualitativa->fuente_ingresos=$request->fuente_ingresos;
+            $cualitativa->destino_credito=$request->destino_credito;
+            $cualitativa->destino_credito_descripcion=$request->destino_credito_descripcion;
+            $cualitativa->ubicacion_negocio=$request->negocio['ubicacion'];
+            $cualitativa->antiguedad=$request->negocio['antiguedad'];
+            $cualitativa->local=$request->negocio['local'];
+            $cualitativa->licencia_funcionamiento=$request->negocio['licencia_funcionamiento'];
+            $cualitativa->horario_atencion_entrada=$request->negocio['horario_atencion_inicio'];
+            $cualitativa->horario_atencion_salida=$request->negocio['horario_atencion_salida'];
+            $cualitativa->mejoras_local=$request->negocio['mejoras_local'];
+            $cualitativa->ubicacion_negocio=$request->negocio['ubicacion'];
             $cualitativa->colateral=$request->colateral;
-            $cualitativa->comentario_colateral=$request->comentario_colateral;
+            $cualitativa->descripcion_colateral=$request->comentario_colateral;
             $cualitativa->save();
+            
+            foreach($request->central_riesgo as $central){
+                if($central["entidad_financiera"]){
+                    $central=new CentralRiesgo;
+                    $central->entidad_financiera=$central["entidad_financiera"];
+                    $central->cualitativa_id=$cualitativa->id;
+                    $central->capital=$central["capital"];
+                    $central->activo_f=$central["activo_f"];
+                    $central->consumo=$central["consumo"];
+                    $central->vehicular=$central["vehicular"];
+                    $central->hipoteca=$central["hipoteca"];
+                    $central->terceros=$central["terceros"];
+                    $central->save();
+            }
+            }
+            foreach($request->referencias as $referencia){
+                if($referencia["tipo_relacion"]){
 
+                    $referencia = new Referencia;
+                    $referencia->cualitativa_id=$cualitativa->id;
+                    $referencia->tipo_relacion=$referencia["tipo_relacion"];
+                    $referencia->nombre=$referencia["nombre"];
+                    $referencia->telefono=$referencia["telefono"];
+                    $referencia->save();
+                }
+            }
             $prestamo = Prestamo::find($cualitativa->prestamo_id);
             $prestamo->cualitativa=1;
+            $prestamo->producto_analista=$request->propuestaAnalista["producto_analista"];
+            $prestamo->meses_analista=$request->propuestaAnalista["meses_analista"];
+            $prestamo->importe_analista=$request->propuestaAnalista["importe_analista"];
+            $prestamo->cuotas_analista=$request->propuestaAnalista["cuotas_analista"];
+            $prestamo->cuota_sistema=$request->propuestaAnalista["cuota_sistema"];
+            $prestamo->probabilidad_infocorp=$request->propuestaAnalista["probabilidad_infocorp"];
             $prestamo->save();
 
    
