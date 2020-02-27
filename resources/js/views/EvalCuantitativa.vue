@@ -838,7 +838,7 @@ export default {
           }
         })
         this.evaluacion.titular.ingresos_negocio[0].concepto=response.data.principal.fuente_ingreso
-        this.evaluacion.titular.giro_negocio=response.data.principal.fuente_ingreso
+        this.evaluacion.titular.giro_negocio=response.data.fuente_ingreso
       });
   },
     computed: {
