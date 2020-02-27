@@ -79,7 +79,7 @@
       <img src="img/empty_2.svg" >
       <h1> Sin Prestamos Registrados </h1>
       <p>Todavía no se han registrado ningun prestamo a este cliente.</p>
-      <router-link  v-if="  cliente.tipo_cliente=='1'"  class="button_primary small" :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+      <router-link  v-if="  cliente.tipo_cliente=='1'"  class="button_primary small" :to="{name: 'registrarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
       </router-link>   
@@ -92,7 +92,7 @@
     <div class="credits_grid" v-else>
      
       <div class="table_grid" >
-        <router-link  v-if=" cliente.tipo_cliente=='1'"  class="add_credit" :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+        <router-link  v-if=" cliente.tipo_cliente=='1'"  class="add_credit" :to="{name: 'registrarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
@@ -121,7 +121,7 @@
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
                 <li v-if="prestamo.estado==1"> 
-                  <router-link  v-if="cliente.tipo_cliente=='1'" :to="{name:'registarPrestamo', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
+                  <router-link  v-if="cliente.tipo_cliente=='1'" :to="{name:'registrarPrestamo', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
                   <router-link  v-else-if="cliente.tipo_cliente=='2'" :to="{name:'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
                 </li> 
                 <li v-if="!prestamo.cualitativa && prestamo.estado==1"> <router-link :to="{name:'evalCualitativa', params:{prestamoID:prestamo.id}}" >E. Cualitativa</router-link> </li>
@@ -180,8 +180,10 @@ export default {
         }
       },
       update(res){
+        console.log("si viene")        
         this.cliente=res.clientes[0]
-      }
+      },
+      fetchPolicy:'no-cache'
     }
   },
   methods: {
