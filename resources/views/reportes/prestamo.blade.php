@@ -63,13 +63,12 @@
             <table style="width: 100%;"   border="1" cellpadding="5" cellspacing="0">
                 <tbody>
                         <tr>
-                            <td> <span class="title">MONTO</span> <span > S/. {{$prestamo->monto_inicial}}</span> </td>
-                            <td> <span class="title">PLAZO</span> <span > {{$prestamo->cuotas_inicial}}</span> </td>
-                            <td> <span class="title">DISPONIBILIDAD DE PAGO</span> <span >S/. {{$prestamo->disponibilidad_pago_inicial}}</span> </td>
+                            <td> <span class="title">MONTO</span> <span > S/. {{$prestamo->monto_cliente}}</span> </td>
+                            <td> <span class="title">PLAZO</span> <span > {{$prestamo->cuotas_cliente}}</span> </td>
+                            <td> <span class="title">DISPONIBILIDAD DE PAGO</span> <span >S/. {{$prestamo->disponibilidad_pago}}</span> </td>
                         </tr>
                         <tr>
-                            <td colspan="2" ><span class="title">DESTINO</span> <span > {{$prestamo->destino_inicial}}</span> </td>
-                            <td> <span class="title">FORMA</span> <span > {{$prestamo->forma_inicial}}</span> </td>
+                            <td> <span class="title">FORMA</span> <span > {{$prestamo->forma}}</span> </td>
                         </tr>
 
                 </tbody>
@@ -359,14 +358,14 @@
                         
 
                         <tr>
-                            <td colspan="4"> <span class="title">PRODUCTO</span><span > {{$prestamo->producto}}</span> </td>
+                            <td colspan="4"> <span class="title">PRODUCTO</span><span > {{$prestamo->producto_analista}}</span> </td>
                             {{-- <td> <span class="title">FORMA</span> <span > {{$prestamo->forma}}</span> </td> --}}
                         </tr>
                         <tr>
-                            <td> <span class="title">IMPORTE</span> <span >S/. {{$prestamo->importe}}</span> </td>
-                            <td> <span class="title">PLAZO</span> <span > {{$prestamo->plazo}}</span> </td>
-                            <td> <span class="title">CUOTAS</span> <span > {{$prestamo->cuotas}} </span> </td>
-                            <td> <span class="title">APORTE</span> <span >S/. {{$prestamo->aporte}} </span> </td>
+                            <td> <span class="title">IMPORTE</span> <span >S/. {{$prestamo->importe_analista}}</span> </td>
+                            <td> <span class="title">PLAZO</span> <span > {{$prestamo->cuotas_analista}}</span> </td>
+                            <td> <span class="title">CUOTAS</span> <span > {{$prestamo->cuota_sistema}} </span> </td>
+                            <td> <span class="title">APORTE</span> <span >S/. {{$prestamo->aporte_analista}} </span> </td>
                         </tr>                      
                         <tr>
                             <td colspan="4" > <span class="title">COMENTARIOS</span> <span > {{$prestamo->comentarios}} </span></td>

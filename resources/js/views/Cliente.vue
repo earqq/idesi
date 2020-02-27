@@ -208,7 +208,7 @@ export default {
             ) 
             this.$apollo.queries.clienteBD.refetch()
           }).catch(err=>{
-             this.$toast.error(
+            this.$toast.error(
               "Error en el registro",
               "Error",
               toastOptions.error
