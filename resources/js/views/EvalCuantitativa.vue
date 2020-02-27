@@ -591,10 +591,10 @@ export default {
         prestamo_id: this.$route.params.prestamoID,
         tipo_persona :this.$route.params.persona,
         propuesta: {
-          producto: "",
-          monto: 1,
-          numero_cuotas: 0,
-          cuotas: 0
+          producto_analista: "",
+          importe_analista: 1,
+          cuotas_analista: 0,
+          cuota_sistema: 0
         },
         probabilidad_infocorp: 0,
         gastos_hogar: [
@@ -801,10 +801,10 @@ export default {
       .get(`/prestamos/` + this.$route.params.prestamoID)
       .then(response => {        
         this.cliente=response.data.cliente
-        this.evaluacion.propuesta.producto = response.data.producto;
-        this.evaluacion.propuesta.monto = response.data.importe;
-        this.evaluacion.propuesta.cuotas = response.data.cuotas;
-        this.evaluacion.propuesta.plazo = response.data.plazo;
+        this.evaluacion.propuesta.producto_analista = response.data.producto_analista;
+        this.evaluacion.propuesta.importe_analista = response.data.importe_analista;
+        this.evaluacion.propuesta.cuotas_analista = response.data.cuotas_analista;
+        this.evaluacion.propuesta.cuota_sistema = response.data.cuota_sistema;
       });
 
     this.$http.get(`/extras/giro`).then(response => {

@@ -335,21 +335,21 @@ class AnalisisController extends Controller
                 //CUOTA INSTITUCION
                 //titular
                 $multiplier=1;
-                if($request->propuesta["producto"]=='CREDISEMANA')
+                if($request->propuesta["producto_analista"]=='CREDISEMANA')
                 $multiplier=4;
-                else if($request->propuesta["producto"]=='CREDIDIARIO')
+                else if($request->propuesta["producto_analista"]=='CREDIDIARIO')
                 $multiplier=24;
-                else if($request->propuesta["producto"]=='CREDIQUINCENA')
+                else if($request->propuesta["producto_analista"]=='CREDIQUINCENA')
                 $multiplier=2;
-                else if($request->propuesta["producto"]=='PYME')
+                else if($request->propuesta["producto_analista"]=='PYME')
                 $multiplier=1;
-                else if($request->propuesta["producto"]=='PYME ESPECIAL')
+                else if($request->propuesta["producto_analista"]=='PYME ESPECIAL')
                 $multiplier=1;
-                else if($request->propuesta["producto"]=='CONSUMO')
+                else if($request->propuesta["producto_analista"]=='CONSUMO')
                 $multiplier=1;
-                else if($request->propuesta["producto"]=='CONSUMO ESPECIAL')
+                else if($request->propuesta["producto_analista"]=='CONSUMO ESPECIAL')
                 $multiplier=1;
-                $cuota_institucion_titular=$request->propuesta["cuotas"]*$multiplier;
+                $cuota_institucion_titular=$request->propuesta["cuotas_analista"]*$multiplier;
                 \Log::alert("cuota institucion titular: ".$cuota_institucion_titular);
 
                 \Log::alert("cuota institucion conyuge: ".$cuota_institucion_conyuge);
