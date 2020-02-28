@@ -734,47 +734,59 @@ class AnalisisController extends Controller
     
     public function saveCualitativa(Request $request){
         try{
-
             DB::beginTransaction();
             \Log::alert($request->all());
+            // return $save;
             $cualitativa=cualitativa::where('prestamo_id',$request->prestamo_id)->first();
             $cualitativa->fuente_ingresos=$request->fuente_ingresos;
             $cualitativa->destino_credito=$request->destino_credito;
             $cualitativa->destino_credito_descripcion=$request->destino_credito_descripcion;
-            $cualitativa->ubicacion_negocio=$request->negocio['ubicacion'];
-            $cualitativa->antiguedad=$request->negocio['antiguedad'];
-            $cualitativa->local=$request->negocio['local'];
-            $cualitativa->licencia_funcionamiento=$request->negocio['licencia_funcionamiento'];
-            $cualitativa->horario_atencion_entrada=$request->negocio['horario_atencion_inicio'];
-            $cualitativa->horario_atencion_salida=$request->negocio['horario_atencion_salida'];
-            $cualitativa->mejoras_local=$request->negocio['mejoras_local'];
-            $cualitativa->ubicacion_negocio=$request->negocio['ubicacion'];
             $cualitativa->colateral=$request->colateral;
             $cualitativa->descripcion_colateral=$request->comentario_colateral;
+            if($request->negocio['ubicacion'] && $request->negocio['ubicacion']!=''){
+                $cualitativa->negocio_licencia_funcionamiento=$request->negocio['licencia_funcionamiento'];
+                $cualitativa->negocio_local=$request->negocio['local'];
+                $cualitativa->negocio_antiguedad=$request->negocio['antiguedad'];
+                $cualitativa->negocio_mejoras_local=$request->negocio['mejoras_local'];
+                $cualitativa->negocio_ubicacion=$request->negocio['ubicacion'];
+            }
+            if($request->vehiculo["marca"] && $request->vehiculo["marca"]!=''){
+                $cualitativa->vehiculo_marca=$request->vehiculo["marca"];
+                $cualitativa->vehiculo_modelo=$request->vehiculo["modelo"];
+                $cualitativa->vehiculo_anio=$request->vehiculo["anio"];
+                $cualitativa->vehiculo_tipo_servicio_brinda=$request->vehiculo["tipo_servicio_brinda"];
+                $cualitativa->vehiculo_permiso_servicio=$request->vehiculo["permiso_servicio"];
+            }
+            $total_estudio=0;
+            foreach($request->familiar["hijos"] as $hijo){
+                $total_estudio+=$hijo['costo'];
+            }
+            $cualitativa->precio_educacion_hijos=$total_estudio;
+            $cualitativa->horario_atencion_salida=$request->negocio['horario_atencion_salida'];
+            $cualitativa->horario_atencion_entrada=$request->negocio['horario_atencion_inicio'];
             $cualitativa->save();
             
-            foreach($request->central_riesgo as $central){
-                if($central["entidad_financiera"]){
+            foreach($request->central_riesgo as $centralRiesgo){
+                if($centralRiesgo["entidad_financiera"]){
                     $central=new CentralRiesgo;
-                    $central->entidad=$central["entidad_financiera"];
+                    $central->entidad=$centralRiesgo["entidad_financiera"];
                     $central->cualitativa_id=$cualitativa->id;
-                    $central->capital_trabajo=$central["capital"];
-                    $central->activo_fijo=$central["activo_f"];
-                    $central->consumo=$central["consumo"];
-                    $central->vehicular=$central["vehicular"];
-                    $central->hipotecario=$central["hipoteca"];
-                    $central->terceros=$central["terceros"];
+                    $central->capital_trabajo=$centralRiesgo["capital"];
+                    $central->activo_fijo=$centralRiesgo["activo_f"];
+                    $central->consumo=$centralRiesgo["consumo"];
+                    $central->vehicular=$centralRiesgo["vehicular"];
+                    $central->hipotecario=$centralRiesgo["hipoteca"];
+                    $central->terceros=$centralRiesgo["terceros"];
                     $central->save();
+                }
             }
-            }
-            foreach($request->referencias as $referencia){
-                if($referencia["tipo_relacion"]){
-
+            foreach($request->referencias as $referenciaFront){
+                if($referenciaFront["tipo_relacion"]){
                     $referencia = new Referencia;
                     $referencia->cualitativa_id=$cualitativa->id;
-                    $referencia->tipo_relacion=$referencia["tipo_relacion"];
-                    $referencia->nombres=$referencia["nombre"];
-                    $referencia->telefonos=$referencia["telefono"];
+                    $referencia->tipo_relacion=$referenciaFront["tipo_relacion"];
+                    $referencia->nombres=$referenciaFront["nombre"];
+                    $referencia->telefonos=$referenciaFront["telefono"];
                     $referencia->save();
                 }
             }
@@ -783,14 +795,12 @@ class AnalisisController extends Controller
             $prestamo->producto_analista=$request->propuestaAnalista["producto_analista"];
             $prestamo->meses_analista=$request->propuestaAnalista["meses_analista"];
             $prestamo->importe_analista=$request->propuestaAnalista["importe_analista"];
+            if(isset($request->propuestaAnalista["comentarios"]))
+                $prestamo->comentarios=$request->propuestaAnalista["comentarios"];
             $prestamo->cuotas_analista=$request->propuestaAnalista["cuotas_analista"];
             $prestamo->cuota_sistema=$request->propuestaAnalista["cuota_sistema"];
             $prestamo->probabilidad_infocorp=$request->propuestaAnalista["probabilidad_infocorp"];
             $prestamo->save();
-
-   
-             
- 
             DB::commit();
                 return [ 
                     'success' => true,

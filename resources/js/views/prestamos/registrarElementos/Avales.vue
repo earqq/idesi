@@ -3,9 +3,9 @@
     .form_list.no_border
       .sub_step_wrapper(v-for='(row, index) in prestamoAvales.avales' :key='index')
         h3.title
-          | Aval {{index + 1}}
-          button.delete_section(type='button' @click.prevent='clickRemoveAval(index)')
-            i.material-icons-outlined delete
+          | Aval
+          //- button.delete_section(type='button' @click.prevent='clickRemoveAval(index)')
+          //-   i.material-icons-outlined delete
         .form_content
           .group_form
             .input_wrapper
@@ -78,9 +78,9 @@
             .input_wrapper
               label Distrito
               input(type='text' v-model='row.distrito' maxlength='30')
-    button.add_section(type='button' @click='clickAddAval' v-if='prestamoAvales.avales.length<=1')
-      span AGREGAR AVAL
-      i.material-icons-outlined add
+    //- button.add_section(type='button' @click='clickAddAval' v-if='prestamoAvales.avales.length<=1')
+    //-   span AGREGAR AVAL
+    //-   i.material-icons-outlined add
 
 </template>
 <script>
@@ -163,6 +163,9 @@ export default {
           // me.initForm();
         });
     },
+  },
+  mounted(){
+    this.clickAddAval()
   },
   computed: {       
     validateCodigosSociosAval(){

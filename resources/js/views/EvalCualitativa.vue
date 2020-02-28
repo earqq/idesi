@@ -2,7 +2,7 @@
   .create_client_content
     section.tabs_section
       .tabs_wrapper
-        .tab(@click='tab = 2' :class='{selected: tab == 2}' v-if="evaluacion.fuente_ingreso!='TRANSPORTES' &&  evaluacion.fuente_ingreso!='TRANSPORTE BAJAJ'")
+        .tab(@click='tab = 2' :class='{selected: tab == 2}' v-if="evaluacion.fuente_ingresos!='TRANSPORTES' &&  evaluacion.fuente_ingresos!='TRANSPORTE BAJAJ'")
           span 2
           p NEGOCIO
         .tab(@click='tab = 2' :class='{selected: tab == 2}' v-else='')
@@ -27,10 +27,10 @@
       .client_forms_wrapper
         .form_step(v-show='tab == 2')
           .form_step_wrapper
-            h3.title(v-if="evaluacion.fuente_ingreso!='TRANSPORTES' &&  evaluacion.fuente_ingreso!='TRANSPORTE BAJAJ'") Datos del Negocio
+            h3.title(v-if="evaluacion.fuente_ingresos!='TRANSPORTES' &&  evaluacion.fuente_ingresos!='TRANSPORTE BAJAJ'") Datos del Negocio
             h3.title(v-else='') Datos del Vehiculo
             .form_content
-              .group_form(v-if="evaluacion.fuente_ingreso!='TRANSPORTES' &&  evaluacion.fuente_ingreso!='TRANSPORTE BAJAJ' ")
+              .group_form(v-if="evaluacion.fuente_ingresos!='TRANSPORTES' &&  evaluacion.fuente_ingresos!='TRANSPORTE BAJAJ' ")
                 .input_wrapper(:class='{require: !validateUbicacion}')
                   label Ubicacion del negocio
                   input(type='text' v-model='evaluacion.negocio.ubicacion')
@@ -56,8 +56,8 @@
                 .input_wrapper
                   label Licencia de Funcionamiento
                   select(v-model='evaluacion.negocio.licencia_funcionamiento')
-                    option(value='SI CUENTA') Si cuenta
-                    option(value='NO CUENTA') No cuenta
+                    option(value='true') Si cuenta
+                    option(value='false') No cuenta
                 .input_wrapper
                   label Realizo mejoras en el local
                   select(v-model='evaluacion.negocio.mejoras_local')
@@ -80,7 +80,7 @@
                   .message Ingrese modelo del vehiculo
                 .input_wrapper
                   label A&ntilde;o fabricaci&oacute;n
-                  select(v-model='evaluacion.vehiculo.año')
+                  select(v-model='evaluacion.vehiculo.anio')
                     option(value='1995') 1995
                     option(value='1996') 1996
                     option(value='1997') 1997
@@ -112,13 +112,13 @@
                   .message ingrese tiempo de servicio
                 .input_wrapper(:class='{require: !validateAntiguedad}')
                   label Antiguedad realizando el servicio
-                  input(type='text' v-model='evaluacion.vehiculo.antiguedad_servicio')
+                  input(type='number' v-model='evaluacion.vehiculo.antiguedad_servicio')
                   .message Ingrese antiguedad de servicio
                 .input_wrapper
                   label Permiso para brindar servicio
                   select(v-model='evaluacion.vehiculo.permiso_servicio')
-                    option(value='SI CUENTA') Si cuenta
-                    option(value='NO CUENTA') No cuenta
+                    option(value='true') Si cuenta
+                    option(value='false') No cuenta
                 .input_wrapper
                   label Horario trabajo inicio
                   input(type='time' v-model='evaluacion.vehiculo.horario_servicio_inicio')
@@ -299,12 +299,12 @@
                     option(value='GARANTIA VEHICULAR') Garantia vehicular
                     option(value='GARANTIA INMOBILIARIA') Garantia inmobiliara
                     option(value='SIN COLATERAL') Sin colateral
+                  avales( v-on:update='updateAvales' v-if='evaluacion.colateral=="AVAL CON CASA PROPIA" || evaluacion.colateral=="AVAL CON CASA ALQUILADA"')
+                  garantias( v-on:update='updateGarantias' :tipo='evaluacion.colateral' v-if='evaluacion.colateral=="GARANTIA LIQUIDA" || evaluacion.colateral=="GARANTIA VEHICULAR" || evaluacion.colateral=="GARANTIA INMOBILIARIA" ')
               .group_form.all
                 .input_wrapper
                   label Comentarios
-                  textarea(v-model='evaluacion.comentario_colateral')  
-          avales( v-on:update='updateAvales' v-if='evaluacion.colateral=="AVAL CON CASA PROPIA" || evaluacion.colateral=="AVAL CON CASA ALQUILADA"')
-          garantias( v-on:update='updateGarantias' :tipo='evaluacion.colateral' v-if='evaluacion.colateral=="GARANTIA LIQUIDA" || evaluacion.colateral=="GARANTIA VEHICULAR" || evaluacion.colateral=="GARANTIA INMOBILIARIA" ')
+                  textarea(v-model='evaluacion.comentario_colateral')           
           .form_buttons
             a.button_inline_primary.medium.prev(@click='prev(6)')
               i.material-icons-outlined navigate_before
@@ -319,7 +319,7 @@
             a.button_inline_primary.medium.prev(@click='prev(7)')
               i.material-icons-outlined navigate_before
               span ATRAS
-            a.button_primary.medium.next(@click.prevent='( validateStep2) ? registrar() : tabError()' :class='{loading: loading}')
+            a.button_primary.medium.next(@click.prevent='( validateStep2 && validate.propuesta_analista) ? registrar() : tabError()' :class='{loading: loading}')
               .load_spinner
               span FINALIZAR
               i.material-icons-outlined check 
@@ -346,6 +346,9 @@ export default {
       entidades: [],
       tab: 2, 
       colegios: [],
+      validate:{
+        propuesta_analista:false
+      },
       prestamo:{
         cliente:{
           tipo_cliente:1
@@ -364,7 +367,7 @@ export default {
           ubicacion: "",
           antiguedad: "1 AÑO",
           local: "PROPIO",
-          licencia_funcionamiento: "SI CUENTA",
+          licencia_funcionamiento: true,
           horario_atencion_inicio: "00:00",
           horario_atencion_salida: "00:00",
           mejoras_local: "1"
@@ -372,10 +375,10 @@ export default {
         vehiculo: {
           marca: "",
           modelo: "",
-          año: "2010",
+          anio: "2010",
           tipo_servicio_brinda: "",
-          antiguedad_servicio: "",
-          permiso_servicio: "SI CUENTA",
+          antiguedad_servicio: 0,
+          permiso_servicio: true,
           horario_servicio_inicio: "00:00",
           horario_servicio_fin: "00:00"
         },
@@ -443,11 +446,11 @@ export default {
     },
 
     validateAntiguedad() {
-      return this.evaluacion.vehiculo.antiguedad_servicio.length > 3
+      return this.evaluacion.vehiculo.antiguedad_servicio > 0
     },
 
     validateStep2(){
-      if(this.evaluacion.fuente_ingreso!='TRANSPORTES' &&  this.evaluacion.fuente_ingreso!='TRANSPORTE BAJAJ'){
+      if(this.evaluacion.fuente_ingresos!='TRANSPORTES' &&  this.evaluacion.fuente_ingresos!='TRANSPORTE BAJAJ'){
          return this.validateUbicacion
       }else{
           return  this.validateMarca &&
@@ -470,7 +473,8 @@ export default {
       this.evaluacion.avales=val.avales
     },
     updatePropuestaAnalista(val){
-      this.evaluacion.propuestaAnalista=val 
+      this.evaluacion.propuestaAnalista=val.propuestaAnalista
+      this.validate.propuesta_analista=val.validate 
     },
         tabError(){
        this.$toast.error(
