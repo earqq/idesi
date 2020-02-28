@@ -94,69 +94,26 @@
                       <label>Dirección</label>
                       <input type="text" maxlength="200"  v-model="cliente.ubicacion_direccion_declarada" />
                   </div>
-
-                  <div class="input_wrapper" :class="{require: !validatePais}">
-                    <label>País</label>
-                    <input type="text" v-model="cliente.pais" maxlength="20
-                    " />
-                  </div>
-
-                  <div class="input_wrapper" :class="{require: !validateDistrito}">
-                    <label>Distrito</label>
-                    <input type="text" v-model="cliente.ubicacion_distrito" maxlength="100" />
-                  </div>
-
-                  <div class="input_wrapper" :class="{require: !validateProvincia}">
-                    <label>Provincia</label>
-                    <input type="text" v-model="cliente.ubicacion_provincia" maxlength="100" />
-                  </div>
-
+                  <div class="input_wrapper" :class="{require: !validateReferencia}">
+                    <label>Referencia</label>
+                    <input type="text" maxlength="100" v-model="cliente.ubicacion_referencia" />
+                  </div>               
                   <div class="input_wrapper" :class="{require: !validateDepartamento}">
                     <label>Departamento</label>
                     <input type="text" v-model="cliente.ubicacion_departamento" maxlength="100" />
                   </div>
-
+                  <div class="input_wrapper" :class="{require: !validateProvincia}">
+                    <label>Provincia</label>
+                    <input type="text" v-model="cliente.ubicacion_provincia" maxlength="100" />
+                  </div>
+                  <div class="input_wrapper" :class="{require: !validateDistrito}">
+                    <label>Distrito</label>
+                    <input type="text" v-model="cliente.ubicacion_distrito" maxlength="100" />
+                  </div>
                 </div>
-
                 <span class="separator"></span>
 
                 <div class="group_form">
-
-                  <div class="input_wrapper">
-                      <label>Número</label>
-                      <input type="number" v-model="cliente.ubicacion_numero"  maxlength="10" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>Manzana</label>
-                      <input type="text" v-model="cliente.ubicacion_manzana"  maxlength="5" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>Lote</label>
-                      <input type="number" v-model="cliente.ubicacion_lote"  maxlength="10" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>N° departamento</label>
-                      <input type="number" v-model="cliente.ubicacion_nro_departamento"  maxlength="10" />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>Interior</label>
-                      <input type="number" v-model="cliente.ubicacion_interior" maxlength="10"  />
-                  </div>
-
-                  <div class="input_wrapper">
-                      <label>Piso</label>
-                      <input type="number" v-model="cliente.ubicacion_piso"  maxlength="10" />
-                  </div>
-
-                  <div class="input_wrapper" :class="{require: !validateReferencia}">
-                    <label>Referencia</label>
-                    <input type="text" maxlength="100" v-model="cliente.ubicacion_referencia" />
-                  </div>
-
                   <div class="input_wrapper">
                     <label>Teléfono</label>
                     <input type="text" maxlength="10" v-model="cliente.telefono" />
@@ -491,9 +448,6 @@ mixins: [serviceNumber],
     validateDireccion() {
       return this.cliente.ubicacion_direccion_declarada.length>3;
     },
-    validatePais() {
-      return this.cliente.pais.length>3
-    },
     validateDistrito() {
       return this.cliente.ubicacion_distrito.length>3;
     },
@@ -519,7 +473,6 @@ mixins: [serviceNumber],
               this.validateActividad &&
               this.validatePartida &&
               this.validateDireccion &&
-              this.validatePais &&
               this.validateDistrito &&
               this.validateProvincia &&
               this.validateDepartamento &&

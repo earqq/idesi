@@ -15,6 +15,8 @@ use App\Cualitativa;
 use App\Conyuge;
 use App\Trabajo;
 use App\Cliente;
+use App\Empresa;
+use App\RepresentanteLegal;
 use App\Persona;
 use Auth;
 class PrestamosMutation extends Mutation
@@ -171,8 +173,7 @@ class PrestamosMutation extends Mutation
             if(isset($args["cualitativa"]["destino_credito_descripcion"]))
                 $cualitativa->destino_credito_descripcion=$args["cualitativa"]["destino_credito_descripcion"];
             $cualitativa->save();
-        }
-
+        }        
         if(isset($args["cliente"])){
             $cliente=$prestamo->cliente;
             if(isset($args["cliente"]["tipo_documento"]))
@@ -204,6 +205,56 @@ class PrestamosMutation extends Mutation
             if(isset($args["cliente"]["email"]))
                 $cliente->email=$args["cliente"]["email"];
             $cliente->save();
+            if(isset($args["cliente"]["empresa"]) && $args["cliente"]["empresa"]["razon_social"]!=""){
+                $empresa = new empresa;
+                if($cliente->empresa)
+                    $empresa=$cliente->empresa;
+                $empresa->razon_social=$args["cliente"]["empresa"]["razon_social"];
+                $empresa->nombre_comercial=$args["cliente"]["empresa"]["nombre_comercial"];
+                $empresa->actividad_principal=$args["cliente"]["empresa"]["actividad_principal"];
+                $empresa->partida_registral=$args["cliente"]["empresa"]["partida_registral"];
+                $empresa->oficina_principal=$args["cliente"]["empresa"]["oficina_principal"];
+                $empresa->tipo_negocio=$args["cliente"]["empresa"]["tipo_negocio"];
+                $empresa->fecha_constitucion=$args["cliente"]["empresa"]["fecha_constitucion"];
+                $empresa->save();
+                if(isset($args["cliente"]["empresa"]["representante"]) && $args["cliente"]["empresa"]["representante"]["nombres"]!=''){
+                    $representante= new RepresentanteLegal;
+                    if($empresa->representante)
+                        $representante=$empresa->representante;
+                    if(isset($args["cliente"]["empresa"]["representante"]["nombres"]))
+                    $representante->nombres=$args["cliente"]["empresa"]["representante"]["nombres"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["cargo"]))
+                    $representante->cargo=$args["cliente"]["empresa"]["representante"]["cargo"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["fecha_nacimiento"]))
+                    $representante->fecha_nacimiento=$args["cliente"]["empresa"]["representante"]["fecha_nacimiento"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["ocupacion"]))
+                    $representante->ocupacion=$args["cliente"]["empresa"]["representante"]["ocupacion"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["telefono"]))
+                    $representante->telefono=$args["cliente"]["empresa"]["representante"]["telefono"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["celular"]))
+                    $representante->celular=$args["cliente"]["empresa"]["representante"]["celular"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["ubicacion_direccion"]))
+                    $representante->ubicacion_direccion=$args["cliente"]["empresa"]["representante"]["ubicacion_direccion"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["ubicacion_departamento"]))
+                    $representante->ubicacion_departamento=$args["cliente"]["empresa"]["representante"]["ubicacion_departamento"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["ubicacion_provincia"]))
+                    $representante->ubicacion_provincia=$args["cliente"]["empresa"]["representante"]["ubicacion_provincia"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["ubicacion_distrito"]))
+                    $representante->ubicacion_distrito=$args["cliente"]["empresa"]["representante"]["ubicacion_distrito"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["ubicacion_referencia"]))
+                    $representante->ubicacion_referencia=$args["cliente"]["empresa"]["representante"]["ubicacion_referencia"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["tipo_domicilio"]))
+                    $representante->tipo_domicilio=$args["cliente"]["empresa"]["representante"]["tipo_domicilio"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["poderes"]))
+                    $representante->poderes=$args["cliente"]["empresa"]["representante"]["poderes"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["fecha_inicio"]))
+                    $representante->fecha_inicio=$args["cliente"]["empresa"]["representante"]["fecha_inicio"];
+                    if(isset($args["cliente"]["empresa"]["representante"]["estado_civil"]))
+                    $representante->estado_civil=$args["cliente"]["empresa"]["representante"]["estado_civil"];
+                    $representante->save();
+                }
+                $empresa->tipo_negocio=$args["cliente"]["empresa"]["tipo_negocio"];
+            }
             if(isset($args["cliente"]["persona"])  && $args['cliente']['persona']["nombres"]!=''){
                 $persona= new persona;
                 if($cliente->persona)

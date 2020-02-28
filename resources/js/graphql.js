@@ -16,6 +16,10 @@ query obtenerClientes($id:Int){
             fecha_nacimiento
             estado_civil
         },
+        empresa{
+            razon_social
+            partida_registral
+        }
         prestamos{
             id
             aporte_analista

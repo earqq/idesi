@@ -23,7 +23,7 @@
           .message La disponibilidad es invalida
         .input_wrapper(:class='{require: !validateFuenteIngreso}')
           label Fuente de ingreso  
-          v-select(label='giro_negocio' :options='negocios' :reduce='negocios => negocios.giro_negocio' v-model='propuestaCliente.fuente_ingreso')
+          v-select(label='giro_negocio' :options='negocios' :reduce='negocios => negocios.giro_negocio' v-model='propuestaCliente.fuente_ingresos')
             span(slot='no-options')
               | No se encontro giro de negocio
           .message Se requiere esta informaci&oacute;n
@@ -58,7 +58,7 @@ export default {
           forma:'DIARIO',
           cuotas_cliente:0,
           disponibilidad_pago:0,
-          fuente_ingreso:'',
+          fuente_ingresos:'',
           destino_credito:"Capital de trabajo",
           destino_credito_descripcion:'',
           validate:false
@@ -84,7 +84,7 @@ export default {
       return this.propuestaCliente.destino_credito_descripcion.length > 6
     },
     validateFuenteIngreso() {
-      return  this.propuestaCliente.fuente_ingreso.length > 4
+      return  this.propuestaCliente.fuente_ingresos.length > 4
     },
     validatePropuestaCliente() {
       let validate = false

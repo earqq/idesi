@@ -41,9 +41,11 @@ class ClientesQuery extends Query
             if ($field === 'persona') {
                 $clientes->with('persona');
             }
+            if ($field === 'empresa') {
+                $clientes->with('empresa');
+            }
         }       
-        \Log::alert("si viene cliente");
-        \Log::alert($args);
+        
         if($args["id"])
             $clientes->where('id',$args["id"]);
         \Log::alert($clientes->get());

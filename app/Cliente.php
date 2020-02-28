@@ -11,26 +11,14 @@ class Cliente extends Model
     {
         return $this->belongsTo('App\User', 'user_id');
     }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function empresa()
     {
         return $this->hasOne('App\Empresa', 'cliente_id');
     }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function persona()
     {
         return $this->hasOne('App\Persona', 'cliente_id');
     }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function prestamos()
     {
         return $this->hasMany('App\Prestamo', 'cliente_id');

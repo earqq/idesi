@@ -111,7 +111,7 @@ export default new Router({
             }
         }, 
         {
-            path: '/prestamos/registrar/:clienteID/:prestamoID',
+            path: '/prestamos/registrar/:tipoCliente/:clienteID/:prestamoID',
             name: 'registrarPrestamo', 
             component: require('./views/prestamos/RegistrarPrestamo').default,
             beforeEnter: (to, from, next) => {
@@ -124,21 +124,7 @@ export default new Router({
                         }
                     })
             }
-        },
-        {
-            path: '/prestamos/empresa/registrar/:clienteID/:prestamoID',
-            name: 'registrarPrestamoEmpresa',
-            component: require('./views/RegistrarPrestamoEmpresa').default,
-            beforeEnter: (to, from, next) => {
-                axios.get("/currentUser")
-                    .then(res => { 
-                        if(res.data.nivel=='2'  || res.data.nivel=='4')
-                            next()
-                        else
-                            next('/error')
-                    })
-            }
-        },       
+        }, 
         {
             path: '/prestamos/evaluar/:prestamoID',
             name: '/prestamos/evaluar/',

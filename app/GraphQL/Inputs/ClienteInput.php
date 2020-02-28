@@ -94,6 +94,10 @@ class ClienteInput extends InputType
                 'type'=>Type::boolean(),
                 'description'=>'aporte socio'
             ],      
+            'empresa'=>[
+                'type'=>GraphQL::type("empresaInput"),
+                'description'=>'empresa de cliente'
+            ],
         ];
     }
 }

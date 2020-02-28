@@ -145,6 +145,8 @@ return [
         'resultadoAnalisis' => 'App\GraphQL\Types\ResultadoAnalisisType',
         'user' => 'App\GraphQL\Types\UserType',
         'persona' => App\GraphQL\Types\PersonaType::class,
+        'empresa' => App\GraphQL\Types\EmpresaType::class,
+        'representante' => App\GraphQL\Types\RepresentanteLegalType::class,
         'trabajo' => App\GraphQL\Types\TrabajoType::class,
         'negocio' => App\GraphQL\Types\NegocioType::class,
         'departamento' => App\GraphQL\Types\DepartamentoType::class,
@@ -155,6 +157,8 @@ return [
         'personaInput' => App\GraphQL\Inputs\PersonaInput::class,                 
         'trabajoInput' => App\GraphQL\Inputs\TrabajoInput::class,
         'conyugeInput' => App\GraphQL\Inputs\ConyugeInput::class,
+        'empresaInput' => App\GraphQL\Inputs\EmpresaInput::class,
+        'representanteInput' => App\GraphQL\Inputs\RepresentanteLegalInput::class,
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request

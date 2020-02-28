@@ -48,21 +48,6 @@
           <p v-if="cliente.estado==2">Aprobado</p> 
           <p v-if="cliente.estado==3">Rechazado</p> 
         </li> 
-
-        <!-- &&  this.$store.state.currentUser.nivel=='2' -->
-        <blockquote class="message_request" v-if="cliente.estado==1 ">
-          <div class="message_request_wrapper">
-            <h1>SOLICITUD DE ACEPTACIÓN</h1>
-            <p> Se ha registrado un nuevo cliente esperando por aprobación.  </p>
-            <div class="actions">
-              <a class="denied" @click="rechazarSolicitud"  :class="{loading: loading}"><div class="load_spinner"></div>  RECHAZAR </a>
-              <a class="button_primary small" @click="aceptarSolicitud" :class="{loading: loading}">
-                <div class="load_spinner"></div>
-                <span> ACEPTAR </span>
-              </a>
-            </div>
-          </div>
-        </blockquote>
       </ul>
     </aside>
 
@@ -79,31 +64,23 @@
       <img src="img/empty_2.svg" >
       <h1> Sin Prestamos Registrados </h1>
       <p>Todavía no se han registrado ningun prestamo a este cliente.</p>
-      <router-link  v-if="  cliente.tipo_cliente=='1'"  class="button_primary small" :to="{name: 'registrarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+      <router-link class="button_primary small" :to="{name: 'registrarPrestamo', params:{tipoCliente:cliente.tipo_cliente,clienteID:cliente.id,prestamoID:'0'}}">
         <span> NUEVO PRESTAMO  </span>
         <i class="material-icons-outlined">add</i>
       </router-link>   
-      <router-link  v-if="  cliente.tipo_cliente=='2'"  class="button_primary small" :to="{name: 'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:0}}">
-        <span> NUEVO PRESTAMO  </span>
-        <i class="material-icons-outlined">add</i>
-      </router-link>   
+
     </div>
 
     <div class="credits_grid" v-else>
      
       <div class="table_grid" >
-        <router-link  v-if=" cliente.tipo_cliente=='1'"  class="add_credit" :to="{name: 'registrarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+        <router-link class="add_credit" :to="{name: 'registrarPrestamo', params:{tipoCliente:cliente.tipo_cliente,clienteID:cliente.id,prestamoID:'0'}}">
           <span>
             <i class="material-icons-outlined">add</i>
           </span>
           <p> NUEVO PRESTAMO  </p>
         </router-link>
-         <router-link  v-if=" cliente.tipo_cliente=='2'"  class="add_credit" :to="{name: 'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:'0'}}">
-          <span>
-            <i class="material-icons-outlined">add</i>
-          </span>
-          <p> NUEVO PRESTAMO  </p>
-        </router-link>
+
         <article class="credit_card" v-for="prestamo in cliente.prestamos" :key="prestamo.id"  >
           <div class="detail">
             <h2> {{prestamo.forma}} </h2>
@@ -121,8 +98,7 @@
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
                 <li v-if="prestamo.estado==1"> 
-                  <router-link  v-if="cliente.tipo_cliente=='1'" :to="{name:'registrarPrestamo', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
-                  <router-link  v-else-if="cliente.tipo_cliente=='2'" :to="{name:'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
+                  <router-link   :to="{name:'registrarPrestamo', params:{tipoCliente:cliente.tipo_cliente,clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
                 </li> 
                 <li v-if="!prestamo.cualitativa && prestamo.estado==1"> <router-link :to="{name:'evalCualitativa', params:{prestamoID:prestamo.id}}" >E. Cualitativa</router-link> </li>
                 <li v-if="!prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1"> <router-link :to="{name:'evalCuantitativa', params:{prestamoID:prestamo.id}}" >E. Cuantitativa</router-link> </li>
@@ -180,10 +156,11 @@ export default {
         }
       },
       update(res){
-        console.log("si viene")        
         this.cliente=res.clientes[0]
-        this.cliente.empresa={
-          razon_social:""
+        if(!this.cliente.empresa){
+          this.cliente.empresa={
+            razon_social:""
+          }
         }
       },
       fetchPolicy:'no-cache'

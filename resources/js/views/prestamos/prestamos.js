@@ -94,6 +94,32 @@ query obtenerClientes($id:Int){
                 empresa_giro_negocio                
             }
         }
+        empresa{
+            razon_social
+            partida_registral
+            nombre_comercial
+            actividad_principal
+            oficina_principal
+            tipo_negocio
+            fecha_constitucion
+            representante{
+                nombres
+                documento
+                fecha_nacimiento
+                estado_civil
+                ocupacion
+                telefono
+                celular
+                ubicacion_direccion
+                ubicacion_departamento
+                ubicacion_provincia
+                ubicacion_distrito
+                ubicacion_referencia
+                tipo_domicilio
+                cargo
+                fecha_inicio
+            }
+        }
     } 
 }
 `

@@ -87,7 +87,11 @@ class ClienteType extends GraphQLType
             'persona'=>[
                 'type'=>GraphQL::type("persona"),
                 'description'=>'persona de cliente'
-            ],            
+            ],          
+            'empresa'=>[
+                'type'=>GraphQL::type("empresa"),
+                'description'=>'empresa de cliente'
+            ],    
         ];
     }
 }
