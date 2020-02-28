@@ -74,16 +74,11 @@
         .input_wrapper(:class='{require: !validateDireccionLaboral}')
           label Dirección centro laboral 
           input(type='text' v-model='cliente.persona.trabajo.empresa_direccion')
-          .message Se requiere esta información
-    button.add_section.in_bottom(type='button' @click='cliente.tiene_conyuge=true' v-if='!cliente.tiene_conyuge')
-      span AGREGAR CÓNYUGE O CONVIVIENTE
-      i.material-icons-outlined add
-    .form_list(v-if='cliente.tiene_conyuge')
+          .message Se requiere esta información   
+    .form_list(v-if='tiene_conyuge')
       .form_step_wrapper.in_bottom
         h3.title
           | CÓNYUGE o Conviviente 
-          button.delete_section(type='button' @click='cliente.tiene_conyuge=false')
-            i.material-icons-outlined  delete 
         .form_content
           .group_form
             .input_wrapper(:class='{require: !validateDocumentoConyuge}')
@@ -139,9 +134,9 @@
           
 </template>
 <script>
-import { OBTENER_DEPARTAMENTOS, OBTENER_PROVINCIAS, OBTENER_DISTRITOS } from '../prestamos.js'
+import { OBTENER_DEPARTAMENTOS, OBTENER_PROVINCIAS, OBTENER_DISTRITOS,OBTENER_CLIENTES } from '../prestamos.js'
 export default {
-  props:["clienteBD"],
+  props:["clienteID"],
   data(){
     return{
       departamentos:[],
@@ -149,8 +144,9 @@ export default {
       distritos:[],
       provincesTitular: [],
       districtsTitular: [],
-      cliente: {
-        tiene_conyuge:false,
+      tiene_conyuge:false,
+      cliente: {        
+        tipo_cliente:1,
         ubicacion_departamento: "",
         ubicacion_provincia: "",
         ubicacion_distrito: "",
@@ -174,7 +170,7 @@ export default {
             ocupacion: "",
             telefono: "",
             celular: "",
-            trabaja: 1,
+            trabaja: false,
             centro_laboral: "",
             direccion_centro_laboral: "",
             socio: false,
@@ -191,6 +187,38 @@ export default {
     }
   },
   apollo:{
+    obtenercliente:{
+      query: OBTENER_CLIENTES,
+      variables(){
+          return{
+              id:this.clienteID
+          }
+      },
+      update(res){
+          this.$apollo.queries.obtenercliente.skip=true
+          let cliente =res.clientes[0]
+          if(!res.clientes[0].persona.conyuge){
+            cliente.persona.conyuge={
+                documento: "",
+                nombres: "",
+                fecha_nacimiento: "",
+                estado_civil: "SOLTERO",
+                ocupacion: "",
+                telefono: "",
+                celular: "",
+                trabaja: false,
+                centro_laboral: "",
+                direccion_centro_laboral: "",
+                socio: false,
+                codigo_socio: "",
+                aporte_socio: "",
+            }
+          }
+          this.cliente=cliente
+          console.log(this.cliente)
+      },
+      fetchPolicy:"no-cache"
+    },
     departamentosBD:{
       query:OBTENER_DEPARTAMENTOS,              
       update(res){
@@ -248,13 +276,6 @@ export default {
         });
       }
     },
-  },
-  mounted(){
-    // this.$set(this.cliente,'a',this.clienteBD)
-    if(this.clienteBD.persona.conyuge.documento!='')
-      this.cliente.tiene_conyuge=true 
-    this.cliente=this.clienteBD    
-    console.log(this.cliente)
   },
   computed:{    
     validateOcupacion(){
@@ -363,7 +384,7 @@ export default {
             this.validateCelular && this.validateDireccion && 
             this.validateReferencia && this.validateDomicilio &&
             this.validateCentro && this.validateDireccionLaboral
-      if(this.cliente.tiene_conyuge){   
+      if(this.tiene_conyuge){   
         validateConyuge=
               this.validateDocumentoConyuge &&
               this.validateNombreConyuge &&
@@ -383,10 +404,14 @@ export default {
 		cliente: {
 			handler (item) {
         if(item.persona.estado_civil=='CASADO' || item.persona.estado_civil=='CONVIVIENTE')
-          this.cliente.tiene_conyuge=true
-        else this.cliente.tiene_conyuge=false
-        item.validate = this.validateClientePersona
-        this.$emit('update',item)
+          this.tiene_conyuge=true
+        else this.tiene_conyuge=false
+        item.tiene_conyuge=this.tiene_conyuge
+        let res={
+          cliente:item,
+          validate:this.validateClientePersona
+        }
+        this.$emit('update',res)
 			},
 			deep: true			
 		},

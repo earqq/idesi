@@ -92,12 +92,12 @@ export default new Router({
         {
             path: '/prestamos',
             name: 'prestamos',
-            component: require('./views/Prestamos').default,
+            component: require('./views/prestamos/Prestamos').default,
         },       
         {
             path: '/prestamos/:prestamoID',
             name: 'prestamo',
-            component: require('./views/Prestamo').default,
+            component: require('./views/prestamos/Prestamo').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
                     .then(res => { 
@@ -128,7 +128,7 @@ export default new Router({
         {
             path: '/prestamos/evaluar/:prestamoID',
             name: '/prestamos/evaluar/',
-            component: require('./views/EvaluarPrestamo').default,
+            component: require('./views/prestamos/EvaluarPrestamo').default,
             beforeEnter: (to, from, next) => {
                 axios.get("/currentUser")
                     .then(res => { 

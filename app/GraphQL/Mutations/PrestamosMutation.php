@@ -159,7 +159,6 @@ class PrestamosMutation extends Mutation
         if(isset($args["user_id"]))
         $prestamo->user_id=$args["user_id"];
         $prestamo->save();
-
         if(isset($args["cualitativa"])){
             $cualitativa= new cualitativa;
             $cualitativa->prestamo_id=$prestamo->id;
@@ -255,6 +254,7 @@ class PrestamosMutation extends Mutation
                 }
                 $empresa->tipo_negocio=$args["cliente"]["empresa"]["tipo_negocio"];
             }
+            // $aca
             if(isset($args["cliente"]["persona"])  && $args['cliente']['persona']["nombres"]!=''){
                 $persona= new persona;
                 if($cliente->persona)

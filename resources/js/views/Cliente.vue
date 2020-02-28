@@ -132,6 +132,7 @@ export default {
     return {
       view:false,
       cliente: {
+        id:0,
         'tipo_cliente':1,
         'documento':'',
         prestamos:[],

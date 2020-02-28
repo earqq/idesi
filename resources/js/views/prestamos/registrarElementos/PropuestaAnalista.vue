@@ -63,10 +63,7 @@ export default {
   watch: {
 		propuestaAnalista: {
 			handler (item) {		
-        console.log("si viene")
-        console.log(item)
 				this.$emit('update',item)
-        console.log("si viene 2")
 			},
 			deep: true			
 		},

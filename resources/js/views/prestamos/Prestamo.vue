@@ -181,7 +181,7 @@
 <script>
 import moment from "moment";
 import { gmapApi } from "vue2-google-maps";
-import { STYLES_MAP } from '../constants'
+import { STYLES_MAP } from '../../constants'
 
 import GoogleMapsLoader from 'google-maps'
 import Vue from 'vue'
@@ -484,7 +484,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../../sass/variables"
+@import "../../../sass/variables"
 .credit_detail_content
   position: relative
   .photo_viewer

@@ -206,8 +206,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import "../../sass/variables"
-@import "../../sass/buttons"
+@import "../../../sass/variables"
+@import "../../../sass/buttons"
 .credits_content
   .empty_message
     height: calc(100vh - 135px)
