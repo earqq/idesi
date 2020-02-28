@@ -13,4 +13,8 @@ class Cualitativa extends Model
       {
          return $this->belongsTo('App\Prestamo', 'prestamo_id');
       }
+      public function central_riesgo()
+      {
+         return $this->hasMany('App\CentralRiesgo', 'cualitativa_id');
+      }
 }

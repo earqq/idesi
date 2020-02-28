@@ -49,7 +49,7 @@
                 <span class="bar"></span>
                 <p>0% </p>
               </div> 
-              <h3> S/ {{prestamo.importe}} &nbsp; / &nbsp; {{prestamo.plazo}} {{timeCredit[prestamo.producto]}} </h3>
+              <h3> S/ {{prestamo.importe_analista}} &nbsp; / &nbsp; {{prestamo.cuotas_analista}} {{timeCredit[prestamo.producto_analista]}} </h3>
             </div>
             <div class="actions">
               

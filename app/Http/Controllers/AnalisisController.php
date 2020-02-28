@@ -24,7 +24,7 @@ class AnalisisController extends Controller
 
     public function obtenerCualitativa($prestamoID)
     {
-        $cualitativa = Cualitativa::where('prestamo_id',intval($prestamoID))->first();
+        $cualitativa = Cualitativa::with('central_riesgo')->where('prestamo_id',intval($prestamoID))->first();
         return $cualitativa;
 
     } 
@@ -373,16 +373,25 @@ class AnalisisController extends Controller
                 \Log::alert('disponible despues cuota validacion: '.$disponible_desp_cuota_validacion);
 
                 //PARTICIPACION CUOTA
-                $participacion_cuota_titular=round(($cuota_institucion_titular/$disponible_titular)*100);
+                $div=$disponible_titular;
+                if($disponible_titular==0)
+                    $div=1;
+                $participacion_cuota_titular=round(($cuota_institucion_titular/$div)*100);
                 \Log::alert("participacion cuota titular: ".$participacion_cuota_titular);
                 $participacion_cuota_conyuge=0;
                 \Log::alert("participacion cuota conyuge: ".$participacion_cuota_conyuge);
-                $participacion_cuota_total=round(($cuota_institucion_total/$disponible_total)*100);
+                $div=$disponible_total;
+                if($disponible_total==0)
+                    $div=1;
+                $participacion_cuota_total=round(($cuota_institucion_total/$div)*100);
                 \Log::alert("participacion cuota total: ".$participacion_cuota_total);
                 
                 // if($disponible_validacion<0) $participacion_cuota_validacion='NO TIENE CAPACIDAD';
                 // else 
-                    $participacion_cuota_validacion=round(($cuota_institucion_validacion/$utilidad_neta_negocio_validacion)*100);
+                $div=$utilidad_neta_negocio_validacion;
+                if($utilidad_neta_negocio_validacion==0)
+                    $div=1;
+                    $participacion_cuota_validacion=round(($cuota_institucion_validacion/$div)*100);
                 \Log::alert("participacion cuota validacion: ".$participacion_cuota_validacion);
 
                 //RESULTADO EVA
@@ -398,7 +407,10 @@ class AnalisisController extends Controller
 
                 //RESULTADO SIST
                 $resultado_sist='NO TIENE CAPACIDAD DE PAGO';
-                $div=($cuota_institucion_validacion/$utilidad_neta_negocio_validacion)*100;
+                $div1=$utilidad_neta_negocio_validacion;
+                if($utilidad_neta_negocio_validacion==0)
+                    $div1=1;
+                $div=($cuota_institucion_validacion/$div1)*100;
                 if($div>100 || $div<0)
                     $resultado_sist='NO TIENE CAPACIDAD';
                 else if($div>40)

@@ -820,12 +820,10 @@ export default {
         `/analisis/datosCualitativas/`+this.$route.params.prestamoID
       )
       .then(response => {
-        console.log(response)
         //Total de costo en educacion
-        response.data.familiar.hijos.map(element=>{
-          this.evaluacion.gastos_hogar[5].pago+=parseFloat(element.costo)
-        })
-       
+        // response.data.familiar.hijos.map(element=>{
+        //   this.evaluacion.gastos_hogar[5].pago+=parseFloat(element.costo)
+        // })
         // entidades financieras
         response.data.central_riesgo.map(element=>{
           if(element.entidad_financiera){
@@ -837,8 +835,8 @@ export default {
             })
           }
         })
-        this.evaluacion.titular.ingresos_negocio[0].concepto=response.data.principal.fuente_ingreso
-        this.evaluacion.titular.giro_negocio=response.data.fuente_ingreso
+        this.evaluacion.titular.ingresos_negocio[0].concepto=response.data.fuente_ingresos
+        this.evaluacion.titular.giro_negocio=response.data.fuente_ingresos
       });
   },
     computed: {
