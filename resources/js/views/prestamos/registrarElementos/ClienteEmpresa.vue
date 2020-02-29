@@ -152,6 +152,26 @@ export default {
             fetchPolicy:"no-cache"
         }
     },
+    methods:{
+        datosCliente() {
+            let me = this;
+            if(this.cliente.empresa.representante && this.cliente.empresa.representante.documento.length>7){
+                axios
+                .post("/consulta/doc", {
+                    documento: this.cliente.empresa.representante.documento
+                })
+                .then(function(response) { 
+                if(response.data){
+                    me.cliente.empresa.representante.nombres =
+                    response.data["nombres"] + " " + response.data["surnames"];
+                }
+                })
+                .catch(function(error) {
+                console.log(error);
+                });
+            }
+        },
+    },
     computed:{
         validateCivil(){
             if(this.cliente.empresa.representante.estado_civil)
