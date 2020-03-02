@@ -1,8 +1,6 @@
 <template>
   <div>
-
     <div class="credits_content" >
- 
       <div class="options_bar">
         <div class="search_bar" >
           <i class="material-icons-outlined">search</i>
@@ -22,16 +20,15 @@
             <i class="material-icons-outlined">notes</i>
           </a>
         </div>
-      </div> 
+      </div>
 
       <div class="empty_message" v-if="prestamos.length==0 && queryCount==0">
         <img src="img/empty_2.svg" >
-        <h1> NO REGISTRA PRESTAMOS EN EVALUACIÓN O EVALUDADOS </h1>
-        <p>Registra un nuevo cliente para crear prestamos.</p>
+        <h1> No Se Encontraron Prestamos </h1>
+        <p>No se pudo encontrar prestamos en evaluación o evaluadas.</p>
       </div>
 
       <div class="table_container" v-else >
-
         <div class="table_grid"  v-if="type_list==0">
           <article class="credit_card" v-for="prestamo in prestamos" :key="prestamo.id" >
             <div class="client">

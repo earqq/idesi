@@ -42,12 +42,6 @@
           <strong>Dirección</strong>
           <p >{{cliente.ubicacion_direccion_declarada || '--' }}</p>
         </li>
-        <li>
-          <strong>Estado</strong>
-          <p v-if="cliente.estado==1">Pendiente</p> 
-          <p v-if="cliente.estado==2">Aprobado</p> 
-          <p v-if="cliente.estado==3">Rechazado</p> 
-        </li> 
       </ul>
     </aside>
 

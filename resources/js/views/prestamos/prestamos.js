@@ -1,7 +1,5 @@
 import gql from 'graphql-tag'
 
-
-
 export const OBTENER_PRESTAMOS= gql`
 query obtenerPrestamos($id:Int){ 
     prestamos(id:$id) {

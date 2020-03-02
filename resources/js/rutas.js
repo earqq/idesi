@@ -92,7 +92,7 @@ export default new Router({
         {
             path: '/prestamos',
             name: 'prestamos',
-            component: require('./views/prestamos/Prestamos').default,
+            component: require('./views/prestamos/PrestamosList').default,
         },       
         {
             path: '/prestamos/:prestamoID',
