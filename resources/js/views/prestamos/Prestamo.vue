@@ -31,7 +31,7 @@
       <div class="camera_screen_wrapper">
         <div  class="close_camera">
           <select v-model='selectedCameraID'>
-            <option v-for='(cameraID,index) in listDevices' @change='stopCamera(); startCamera()' v-bind:key='index' :value='cameraID'> Camara {{index+1}} </option>
+            <option v-for='(cameraID,index) in listDevices' @change=' refreshCamera()' v-bind:key='index' :value='cameraID'> Camara {{index+1}} </option>
           </select>
           <i @click="stopCamera()" class="material-icons-outlined">close</i>
         </div>
@@ -339,6 +339,10 @@ export default {
         }
       }
     },
+    refreshCamera(){
+      this.stopCamera();
+      this.startCamera();
+    },
     startCamera() {
         this.captura = null 
         this.camara_prendida = true
@@ -374,7 +378,7 @@ export default {
             }
           );
         }
-    },
+    },    
     capture() {
       this.canvas = this.$refs.canvas;
       var context = this.canvas
