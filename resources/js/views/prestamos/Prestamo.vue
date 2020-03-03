@@ -30,7 +30,7 @@
     <div class="camera_screen_content" v-if="camara_prendida">
       <div class="camera_screen_wrapper">
         <div  class="close_camera">
-          <select @change=' startCamera()' v-model='selectedCameraID'>
+          <select @change='refreshCamera()' v-model='selectedCameraID'>
             <option v-for='(cameraID,index) in listDevices'  v-bind:key='index' :value='cameraID'> Camara {{index+1}} </option>
           </select>
           <i @click="stopCamera()" class="material-icons-outlined">close</i>
@@ -338,6 +338,10 @@ export default {
           deviceId: {exact: this.selectedCameraID}
         }
       }
+    },
+    refreshCamera(){
+      this.stopCamera();
+      this.startCamera();
     },
     startCamera() {
         this.captura = null 
