@@ -67,7 +67,7 @@ export default {
     },
     apollo:{
       negocios:{
-        query: OBTENER_NEGOCIOS
+        query: OBTENER_NEGOCIOS,
       }
     },
     computed: {   

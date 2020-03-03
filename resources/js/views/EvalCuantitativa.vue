@@ -503,7 +503,7 @@
                 </button>
               </div>
 
-              <div class="form_step_wrapper in_bottom">
+              <div class="form_step_wrapper in_bottom" v-if='cliente.persona && cliente.persona.conyuge'>
                 <h3 class="title">Gasto Financiero del cónyuge o Conviviente (Personales) </h3>
                 <div class="form_list no_border">
                   <div class="sub_step_wrapper" v-for="(gasto,index) in evaluacion.conyuge.gasto_financiero_personal" v-bind:key="index">

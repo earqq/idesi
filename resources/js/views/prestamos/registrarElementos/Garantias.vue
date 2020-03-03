@@ -3,9 +3,9 @@
     .form_list.no_border
       .sub_step_wrapper(v-for='(row, index) in prestamoGarantias.garantias' :key='index')
         h3.title
-          | Garantia {{index + 1}} {{tipo}}
-          button.delete_section(type='button' @click.prevent='clickRemoveGarantia(index)')
-            i.material-icons-outlined delete
+          | Garantia 
+          //- button.delete_section(type='button' @click.prevent='clickRemoveGarantia(index)')
+          //-   i.material-icons-outlined delete
         .form_content
           .group_form(v-if='tipo=="GARANTIA VEHICULAR"')
             .input_wrapper
@@ -48,9 +48,9 @@
             .input_wrapper
               label Monto del ahorro o  deposio a plazo
               input(type='number' v-model='row.monto_ahorrado_liquido' maxlength='100' )         
-    button.add_section(type='button' @click='clickAddGarantia' v-if='prestamoGarantias.garantias.length<=1')
-      span AGREGAR GARANTIA
-      i.material-icons-outlined add
+    //- button.add_section(type='button' @click='clickAddGarantia' v-if='prestamoGarantias.garantias.length<=1')
+    //-   span AGREGAR GARANTIA
+    //-   i.material-icons-outlined add
 
 </template>
 <script>
@@ -80,6 +80,9 @@ export default {
       return this.validateInscripcion            
     },
   },
+  mounted(){
+    this.clickAddGarantia()
+  },
   methods:{
     clickAddGarantia() {
       this.prestamoGarantias.garantias.push({
@@ -97,7 +100,7 @@ export default {
       this.prestamoGarantias.garantias.splice(index, 1);
     },
     
-  },
+  },  
   watch: {
 		prestamoGarantias: {
 			handler (item) {	

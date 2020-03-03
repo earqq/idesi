@@ -16,36 +16,36 @@
                     label Actividad
                     input(type='text' maxlength='200' v-model='cliente.empresa.actividad_principal')
                     .message Actividad de la empresa
-                .input_wrapper(:class='{require: !validatePartida}')
-                    label N&uacute;mero de partida
+                .input_wrapper
+                    label Número de partida
                     input(type='text' maxlength='8' v-model='cliente.empresa.partida_registral')
                     .message N&deg; de partida la empresa
                 .input_wrapper
-                    label Tel&eacute;fono
+                    label Teléfono
                     input(type='text' maxlength='10' v-model='cliente.telefono')
-                .input_wrapper(:class='{require: !validateDireccionEmpresa}')
-                    label Direcci&oacute;n
+                .input_wrapper
+                    label Dirección
                     input(type='text' maxlength='200' v-model='cliente.ubicacion_direccion_declarada')
-                    .message Direcci&oacute;n de la emrpesa
-                .input_wrapper(:class='{require: !validateFechaConstitucion}')
-                    label Fecha de constituci&oacute;n
+                    .message Dirección de la emrpesa
+                .input_wrapper
+                    label Fecha de constitución
                     input(type='date' v-model='cliente.empresa.fecha_constitucion')
                     .message Fecha de inicio de la empresa
-                .input_wrapper(:class='{require: !validateEmail}')
+                .input_wrapper
                     label Email
                     input(maxlength='50' type='text' v-model='cliente.email')
                     .message Ingrese correo de la empresa
                 span.separator
             .group_form
-                .input_wrapper(:class='{require: !validateDocumentoRepresentante}')
+                .input_wrapper
                     label Documento de Identidad
                     input(type='text' v-model='cliente.empresa.representante.documento' @keyup='datosCliente()' v-mask="'########'")
                     .message Numero de documento del representante
-                .input_wrapper(:class='{require: !validateNombres}')
+                .input_wrapper
                     label Nombres y Apellidos
                     input(type='text' maxlength='100' v-model='cliente.empresa.representante.nombres')
                     .message Nombre del representante
-                .input_wrapper(:class='{require: !validateNacimiento}')
+                .input_wrapper
                     label Fecha de Nacimiento
                     input(type='date' v-model='cliente.empresa.representante.fecha_nacimiento')
                     .message Fecha de nacimiento del representante
@@ -59,7 +59,7 @@
                         option(value='VIUDO') VIUDO
                     .message Estado civil del representante
                 .input_wrapper(:class='{require: !validateOcupacion}')
-                    label Ocupaci&oacute;n
+                    label Ocupación
                     input(type='text' maxlength='50' v-model='cliente.empresa.representante.ocupacion')
                     .message Ingrese ocupacion del representante
                 .input_wrapper
@@ -69,21 +69,21 @@
                     label Celular
                     input(type='text' v-mask="'### ### ###'" v-model='cliente.empresa.representante.celular')
                     .message Ingrese n&uacute;mero de celular
-                .input_wrapper(:class='{require: !validateDireccionRepresentante}')
-                    label Direcci&oacute;n
+                .input_wrapper
+                    label Dirección
                     input(type='text' maxlength='100' v-model='cliente.empresa.representante.ubicacion_direccion')
-                    .message Ingrese su direcci&oacute;n
+                    .message Ingrese su dirección
             .separator
             .group_form
-                .input_wrapper(:class='{require: !validateDepartamento}')
+                .input_wrapper
                     label Departamento
                     input(type='text' v-model='cliente.empresa.representante.ubicacion_departamento')
                     .message Seleccione departamento
-                .input_wrapper(:class='{require: !validateProvincia}')
+                .input_wrapper
                     label Provincia
                     input(type='text' v-model='cliente.empresa.representante.ubicacion_provincia')
                     .message Seleccione provincia
-                .input_wrapper(:class='{require: !validateDistrito}')
+                .input_wrapper
                     label Distrito
                     input(type='text' v-model='cliente.empresa.representante.ubicacion_distrito')
                     .message Seleccione distrito
@@ -91,7 +91,7 @@
                     label Referencia
                     input(type='text' maxlength='100' v-model='cliente.empresa.representante.ubicacion_referencia')
                     .message La referencia es invalido
-                .input_wrapper(:class='{require: !validateTipoDomicilio}')
+                .input_wrapper
                     label Tipo Domicilio
                     select(v-model='cliente.empresa.representante.tipo_domicilio')
                         option(value='PROPIA') PROPIA
@@ -100,11 +100,11 @@
                         option(value='DE LOS FAMILIARES') DE LOS FAMILIARES
                         option(value='ALQUILADA') ALQUILADA
                     .message Tipo de vivienda invalido
-                .input_wrapper(:class='{require: !validatePoderes}')
+                .input_wrapper
                     label Poderes (Asiento)
                     input(type='text' v-model='cliente.empresa.representante.poderes' v-mask="'####'")
                     .message Ingrese poderes
-                .input_wrapper(:class='{require: !validateFechaCargo}')
+                .input_wrapper
                     label Fecha inicio (Cargo) 
                     input(type='date' v-model='cliente.empresa.representante.fecha_inicio')
                     .message Fecha incorrecta
@@ -149,19 +149,30 @@ export default {
                 console.log(res)
                 this.cliente =res.clientes[0]
             },
+            fetchPolicy:"no-cache"
         }
     },
+    methods:{
+        datosCliente() {
+            let me = this;
+            if(this.cliente.empresa.representante && this.cliente.empresa.representante.documento.length>7){
+                axios
+                .post("/consulta/doc", {
+                    documento: this.cliente.empresa.representante.documento
+                })
+                .then(function(response) { 
+                if(response.data){
+                    me.cliente.empresa.representante.nombres =
+                    response.data["nombres"] + " " + response.data["surnames"];
+                }
+                })
+                .catch(function(error) {
+                console.log(error);
+                });
+            }
+        },
+    },
     computed:{
-        validateDocumento(){
-            return this.cliente.documento.length>=8
-        }
-        ,
-        validateNacimiento(){
-            if(this.cliente.empresa.representante.fecha_nacimiento)
-            return this.cliente.empresa.representante.fecha_nacimiento.length>4
-            else return true
-        }
-        ,
         validateCivil(){
             if(this.cliente.empresa.representante.estado_civil)
                 return this.cliente.empresa.representante.estado_civil.length>5
@@ -170,110 +181,38 @@ export default {
         validateOcupacion(){
             if(this.cliente.empresa.representante.ocupacion)
             return this.cliente.empresa.representante.ocupacion.length>4
-        }
-        ,
+        },
         validateCelular(){
             return  this.cliente.celular.length>9
         }
         ,
         validateDireccion(){
             return  this.cliente.ubicacion_direccion_declarada.length>5 
-        },
-        validateClienteEmpresa(){
-            return this.validateNombres && this.validateDocumento && this.validateNacimiento &&
-                this.validateCivil && this.validateOcupacion && 
-                this.validateCelular && this.validateDireccion && 
-                this.validateDepartamento && this.validateProvincia &&
-                this.validateDistrito && this.validateReferencia
-        },
-            validateActividad(){
+        },    
+        validateActividad(){
             return true
         },
-        validatePartida(){
-        return true
-        },
-        validateNombres(){
-        return true
-        },  
-        validateDireccionEmpresa(){
-        return true
-        },
-        validateDireccionRepresentante(){
-        return true
-        },
-        validateTipoDomicilio(){
-        return true
-        },
-        validatePoderes(){
-        return true
-        },
-        validateFechaConstitucion(){
-        return true
-        },
-        validateFechaCargo(){
-        return true
-        },
-        validateEmail(){
-        return true
-        },
-        validateDocumentoRepresentante(){
-        return true
-        },
         validateDocumento(){
-        return this.cliente.documento.length>=8
+            return this.cliente.documento.length>=8
         }
         ,
         validateNacimiento(){
-        if(this.cliente.empresa.representante.fecha_nacimiento)
-        return this.cliente.empresa.representante.fecha_nacimiento.length>4
-        else return true
-        }
-        ,
-        validateCivil(){
-        
-        if(this.cliente.empresa.representante.estado_civil)
-            return this.cliente.empresa.representante.estado_civil.length>5
-        }
-        ,
-        validateOcupacion(){
-        if(this.cliente.empresa.representante.ocupacion)
-        return this.cliente.empresa.representante.ocupacion.length>4
-        }
-        ,
-        validateCelular(){
-        return  this.cliente.celular.length>9
-        }
-        ,
-        validateDireccion(){
-        return  this.cliente.ubicacion_direccion_declarada.length>5
-        }
-        ,
-        validateDepartamento(){
-        return true
-        }
-        ,
-        validateProvincia(){
-        return true
-        }
-        ,
-        validateDistrito(){
-        return true
-        }
-        ,
+            if(this.cliente.empresa.representante.fecha_nacimiento)
+            return this.cliente.empresa.representante.fecha_nacimiento.length>4
+            else return true
+        },          
         validateReferencia(){
-        return this.cliente.ubicacion_referencia.length>5
-        }
-        ,
-        validateCentro(){
-        if(this.cliente.empresa.trabajo)
-        return this.cliente.empresa.trabajo.empresa_razon_social.length>5
-        else return true
-        }
-        ,
+            return this.cliente.ubicacion_referencia.length>5
+        },        
         validateDireccionLaboral(){
-        if(this.cliente.empresa.trabajo)
-        return this.cliente.empresa.trabajo.empresa_direccion.length>6
-        else return true
+            if(this.cliente.empresa.trabajo)
+                return this.cliente.empresa.trabajo.empresa_direccion.length>6
+            else return true
+        },
+        validateClienteEmpresa(){
+            return this.validateDocumento && this.validateNacimiento &&
+                this.validateCivil && this.validateOcupacion && 
+                this.validateCelular && this.validateReferencia
         },
     },
     watch: {

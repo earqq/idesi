@@ -42,12 +42,6 @@
           <strong>Dirección</strong>
           <p >{{cliente.ubicacion_direccion_declarada || '--' }}</p>
         </li>
-        <li>
-          <strong>Estado</strong>
-          <p v-if="cliente.estado==1">Pendiente</p> 
-          <p v-if="cliente.estado==2">Aprobado</p> 
-          <p v-if="cliente.estado==3">Rechazado</p> 
-        </li> 
       </ul>
     </aside>
 
@@ -108,10 +102,8 @@
             </div>
           </div>
         </article>
-        <div v-if="cliente.prestamos.length < 4 " >
-        <a class="spanner" v-for="i in 4" :key="i*1.5"  >
-        </a>
-        </div>
+          <a class="spanner" v-for="i in 4" :key="i*1.5"  v-show="cliente.prestamos.length < 4 " >
+          </a>
       </div>
     
     </div>
@@ -132,6 +124,7 @@ export default {
     return {
       view:false,
       cliente: {
+        id:0,
         'tipo_cliente':1,
         'documento':'',
         prestamos:[],

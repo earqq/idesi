@@ -1,7 +1,5 @@
 import gql from 'graphql-tag'
 
-
-
 export const OBTENER_PRESTAMOS= gql`
 query obtenerPrestamos($id:Int){ 
     prestamos(id:$id) {
@@ -86,6 +84,7 @@ query obtenerClientes($id:Int){
             trabajo{
                 estado_laboral
                 tipo_trabajador
+                empresa_direccion
                 especificacion
                 empresa_razon_social
                 ingreso_mensual
@@ -116,7 +115,7 @@ query obtenerClientes($id:Int){
                 ubicacion_distrito
                 ubicacion_referencia
                 tipo_domicilio
-                cargo
+                poderes
                 fecha_inicio
             }
         }

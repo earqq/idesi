@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title> {{$persona->apellidos}} {{$persona->nombres}}</title>
     <style>
         body{
             font-family: sans-serif;
@@ -309,7 +309,7 @@
                     @empty
                         <tr>
                             <td colspan="3" style="text-align: center">
-                                   *************** NO REGISTRA AVALES ***************
+                                   NO REGISTRA AVALES 
                             </td>
                         </tr>
                     @endforelse      
@@ -340,7 +340,7 @@
                     @empty
                     <tr>
                         <td colspan="3" style="text-align: center">
-                               *************** NO REGISTRA GARANTIAS ***************
+                                NO REGISTRA GARANTIAS 
                         </td>
                     </tr>
                     @endforelse

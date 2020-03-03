@@ -13,7 +13,7 @@
             </transition>
             <div class="items_wrapper">
               <ul>
-                  <li :class="{selected: tab == 'inicio'}" v-if="currentUser.nivel=='1'  || currentUser.nivel=='2' || currentUser.nivel=='4'">
+                  <li :class="{selected: tab == 'main'}" v-if="currentUser.nivel=='1'  || currentUser.nivel=='2' || currentUser.nivel=='4'">
                     <router-link :to="{name: 'main'}" > Inicio</router-link> 
                   </li>
 
@@ -80,12 +80,12 @@
                     <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
                   </li>
 
-                  <li :class="{selected: tab == 'clientes'}" v-if="currentUser.nivel=='1' || currentUser.nivel=='2'">
+                  <li :class="{selected: tab == 'clientes'}" v-if="currentUser.nivel=='1' || currentUser.nivel=='2' || currentUser.nivel=='4'">
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                   </li>
 
                   <li :class="{selected: tab == 'prestamos'}">
-                    <router-link :to="{name: 'prestamos'}"  >{{currentUser}}</router-link>
+                    <router-link :to="{name: 'prestamos'}"  >Prestamos</router-link>
                   </li>
 
                   <li :class="{selected: tab == 'usuarios'}" v-if="currentUser.nivel=='1'"> 
@@ -130,7 +130,7 @@ export default {
   },
   methods:{
     logout () {
-        this.$refs.form.submit();
+      this.$refs.form.submit();
     },
     getCurrentUser () {
       axios.get("/currentUser")
@@ -142,10 +142,14 @@ export default {
   },
   mounted () {
     this.tab = this.$route.name
+    console.log( this.$route)
     this.$router.beforeEach((to, from, next) => {
         this.tab = to.name
         this.menu_user = false
         next()
+    })
+    this.$router.afterEach((to, from) => {
+      this.tab = to.name
     })
 
     if (window.innerWidth < 720) this.mobile = true
@@ -157,8 +161,7 @@ export default {
             else this.mobile = false
         })
     })
-
-
+    
   }
 }
 </script>

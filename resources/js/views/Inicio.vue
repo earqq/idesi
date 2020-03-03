@@ -3,34 +3,34 @@
         <div class="dashboard_wrapper">
             <article class="numbers_stats">
                 <div class="number_item n1">
-                    <i class="material-icons-outlined"> swap_horiz </i>
+                    <i class="material-icons-outlined"> sort </i>
                     <div class="stat">
                         <h1 v-text="prestamo_total"></h1>
                         <p>Prestamos Totales</p>
                     </div>
                 </div>
                 <div class="number_item n2">
-                    <i class="material-icons-outlined"> shuffle </i>
-                    <div class="stat">
-                        <h1 v-text="prestamo_rechazado"></h1>
-                        <p>Prestamos Rechazados</p>
-                    </div>
-                </div>
-                <div class="number_item n3">
-                    <i class="material-icons-outlined"> swap_horiz </i>
+                    <i class="material-icons-outlined"> access_time </i>
                     <div class="stat">
                         <h1 v-text="prestamo_prendiente"></h1>
                         <p>Prestamos Pendientes</p>
                     </div>
                 </div>
                 <div class="number_item n3">
-                    <i class="material-icons-outlined"> swap_horiz </i>
+                    <i class="material-icons-outlined"> shuffle </i>
+                    <div class="stat">
+                        <h1 v-text="prestamo_rechazado"></h1>
+                        <p>Prestamos Rechazados</p>
+                    </div>
+                </div>
+                <div class="number_item n1">
+                    <i class="material-icons-outlined"> playlist_add_check </i>
                     <div class="stat">
                         <h1 v-text="prestamo_aprobado"></h1>
                         <p>Prestamos Aprobados</p>
                     </div>
                 </div>
-                <div class="number_item n3">
+                <div class="number_item n2">
                     <i class="material-icons-outlined"> swap_horiz </i>
                     <div class="stat">
                         <h1 v-text="prestamo_proceso"></h1>
@@ -38,14 +38,14 @@
                     </div>
                 </div>
                 <div class="number_item n3">
-                    <i class="material-icons-outlined"> swap_horiz </i>
+                    <i class="material-icons-outlined"> error_outline </i>
                     <div class="stat">
                         <h1 v-text="prestamo_observado"></h1>
-                        <p>Prestamos Observadoss</p>
+                        <p>Prestamos Observados</p>
                     </div>
                 </div>
             </article>
-            <article class="chart_stats" style="margin-top: 100px;">
+            <article class="chart_stats" >
                 <h2 class="title"> Historial / Año </h2>
                 <div id="chart">
                     <apexchart type="line" height="350" :options="optionsChart" :series="series" />
@@ -320,7 +320,7 @@ export default {
         display: grid
         grid-template-areas: "numbers map" "chart map" "lists map"
         grid-template-columns: 1fr 500px
-        grid-template-rows: 100px 400px 450px
+        grid-template-rows: 200px 400px 450px
         grid-auto-rows: max-content
         grid-gap: 15px
         padding: 20px
@@ -354,11 +354,11 @@ export default {
                     i
                         color: $primary_color
                         background-color: rgba($primary_color, .2)
-                &.n2
+                &.n3
                     i
                         color: $require_color
                         background-color: rgba($require_color, .2)
-                &.n3
+                &.n2
                     i
                         color: $highlight_color
                         background-color: rgba($highlight_color, .2)

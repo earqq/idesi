@@ -597,7 +597,7 @@
 </template>
 
 <script>
-import { serviceNumber } from "../mixins/functions";
+import { serviceNumber } from "../../mixins/functions";
 
 export default {
   mixins: [serviceNumber],
@@ -708,7 +708,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../../sass/variables"
+@import "../../../sass/variables"
 p, table, caption, td, tr, th
   margin: 0
   padding: 0

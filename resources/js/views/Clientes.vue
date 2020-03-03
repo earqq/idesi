@@ -1,17 +1,10 @@
 <template>
   <div>
     <div class="clients_content" >
-
-      <div class="options_bar">
+      <div class="options_bar" :class="{no_button: !permissionCreate}">
         <div class="search_bar">
           <i class="material-icons-outlined">search</i>
           <input type="text" placeholder="Buscar Cliente" v-model="search.text" @input="search_product">         
-          <select  v-model="search.state" @change="getClients()" >
-            <option value="4">TODOS</option>
-            <option value="2">APROBADO</option>
-            <option value="3">RECHAZADOS</option>
-            <option value="1">PENDIENTES</option>
-          </select>
         </div>
         <div class="switch_view">
           <a @click="type_list_card" :class="{selected: type_list == 1}">
@@ -21,51 +14,44 @@
             <i class="material-icons-outlined">notes</i>
           </a>
         </div>
-        <div class="dropdown hover">
-           
-            <a href="#">CREAR CLIENTE</a>
-            <ul>
-              <li>
-                <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4' :to="{name:'registrar/persona'}"  >
-                  <span>
-                    CREAR PERSONA
-                  </span>
-                </router-link> 
-              </li>
-
-              <li>
-                <router-link v-if='$store.state.currentUser.nivel==2 || $store.state.currentUser.nivel==4' :to="{name:'registrar/empresa'}"  >
-                  <span>
-                    CREAR EMPRESA
-                  </span>
-                </router-link>  
-              </li>
-            </ul>
-        </div>
-   
+        <a class="add_client button_primary medium" @click="option_open=!option_open" v-if='permissionCreate'>
+          <span>
+            CREAR CLIENTE
+          </span>
+          <i class="material-icons-outlined">add</i>
+        </a>
+        <transition name="slide-fade" mode="in-out">
+          <ul class="button_options" v-if='permissionCreate' v-show="option_open">
+            <router-link :to="{name:'registrar/persona'}"  >
+              <span>
+                CREAR PERSONA
+              </span>
+            </router-link> 
+            <router-link :to="{name:'registrar/empresa'}"  >
+              <span>
+                CREAR EMPRESA
+              </span>
+            </router-link>  
+          </ul>
+        </transition>
       </div>
-
       <div class="empty_message" v-if="clientes.length==0 && queryCount > 0">
         <img src="img/empty.svg" >
         <h1> No Se Encontraron Clientes </h1>
         <p>Registra un nuevo cliente para continuar.</p>
       </div>
-
       <div class="table_container" v-else >
         <div class="table_grid"  v-if=" type_list=='1'">
           <article class="client_card" v-for="cliente in clientes" :key="cliente.id" >
-            <div class="options" v-if="cliente.estado=='2'">
+            <div class="options" v-if="true || cliente.estado=='2'">
               <i class="material-icons-outlined" >more_horiz</i>
-              <ul >
-                <!-- <li>
-                  Editar
-                </li> -->
+              <ul>
                 <li> 
-                   <router-link  v-if="cliente.tipo_cliente=='1'"   :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
-                       Nuevo prestamo
+                  <router-link  v-if="cliente.tipo_cliente=='1'"   :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+                    Nuevo prestamo
                   </router-link>
                   <router-link  v-if="cliente.tipo_cliente=='2'"   :to="{name: 'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:'0'}}">
-                       Nuevo prestamo
+                    Nuevo prestamo
                   </router-link>
                 </li>
               </ul>   
@@ -73,10 +59,7 @@
             <router-link :to="{ name:'perfil', params: { id: cliente.id } }">
               <div class="detail">
                 <div class="avatar">
-                  <div class="request" v-show="cliente.estado=='1'">
-                    <i class="material-icons-outlined">email</i>
-                  </div>
-                  <div class="avatar_alt" :class="{denied : cliente.estado=='3'}"  >{{ cliente.persona ? cliente.persona.apellidos.substring(0,1) : cliente.empresa.razon_social.substring(0,1) }}</div>
+                  <div class="avatar_alt" >{{ cliente.persona ? cliente.persona.apellidos.substring(0,1) : cliente.empresa.razon_social.substring(0,1) }}</div>
                 </div>
                 <div class="name_wrapper">
                   <p class="truncate">{{ cliente.persona ?  cliente.persona.apellidos : cliente.empresa.razon_social}}</p>
@@ -85,10 +68,8 @@
               </div>
             </router-link>
           </article>
-          <div v-if='clientes.length<6'>
-          <a  class="spanner" v-for="i in 6" :key="i"  >
+          <a class="spanner" v-for="i in 6" :key="i*1.5" v-show='clientes.length<6' >
           </a>
-          </div>
         </div>
 
         <div class="table_wrapper" v-if=" type_list=='0'">
@@ -146,9 +127,7 @@
         </div> 
 
       </div>
-
     </div>
-
   </div>
 </template> 
 
@@ -169,7 +148,8 @@ export default {
       search:{
         state:4,
         text:''
-      }
+      },
+      option_open: false
     }
   },
   async mounted() {
@@ -178,7 +158,6 @@ export default {
   methods: {
     async search_product() { 
       await this.getClients();
-      this.queryCount ++
     },
     type_list_card(){
       this.type_list=1
@@ -194,8 +173,14 @@ export default {
         )
         .then(response => {
           this.clientes=response.data
+          this.queryCount ++
         })
     },   
+  },
+  computed: {
+    permissionCreate () {
+      return this.$store.state.currentUser.nivel==2 || this.$store.state.currentUser.nivel==4
+    }
   }
 };
 </script>
@@ -213,8 +198,45 @@ export default {
     grid-gap: 15px
     padding: 20px
     box-sizing: border-box 
+    position: relative
+    &.no_button
+      grid-template-columns: 1fr 120px
     .add_client
       width: 200px
+    ul.button_options
+      position: absolute
+      right: 20px
+      top: 75px
+      background-color: white
+      padding: 0
+      border-radius: 3px
+      box-shadow: $shadow_hover
+      &::before
+        position: absolute
+        display: block
+        content: ''
+        width: 12px
+        height: 12px
+        background-color: white
+        top: -7px
+        right: 7px
+        transform: rotateZ(45deg)
+        border-top: 1px solid #f3f1f1
+        border-left: 1px solid #f3f1f1
+      a
+        display: block
+        height: 40px
+        display: flex
+        align-items: center
+        padding: 0 20px
+        text-decoration: none
+        font-size: 13px
+        color: rgba($text_color, .5)
+        font-weight: 500
+        &:first-child
+          border-bottom: 1px solid $line_color
+        &:hover
+          color: $text_color
     .search_bar
       border-radius: 4px
       overflow: hidden
@@ -291,7 +313,9 @@ export default {
           width: 40px
           height: 27px
           cursor: pointer
-          position: relative
+          position: absolute
+          top: 5px
+          right: 5px
           float: right
           &:hover
             i
@@ -618,7 +642,6 @@ export default {
               flex-direction: row
               padding: 20px 15px
               justify-content: flex-start
-              padding-top: 0
               .avatar
                 margin-right: 10px
                 .request

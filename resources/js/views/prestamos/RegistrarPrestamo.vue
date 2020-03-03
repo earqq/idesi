@@ -66,7 +66,7 @@ export default {
         estado: 1,
         cliente:{
           id:this.$route.params.clienteID,
-          tipo_cliente:this.$route.params.clienteID
+          tipo_cliente:this.$route.params.tipoCliente
         }
       },
       loading: false,
@@ -86,28 +86,13 @@ export default {
       }
     };
   },
-  apollo:{
-      obtenerPrestamo:{
-        query: OBTENER_PRESTAMOS,
-        variables(){
-          return {
-            id:this.$route.params.prestamoID
-          } 
-        },
-        update(res){
-          if(res.prestamos[0])
-            console.log("updating")
-        }
-      },  
-  },
-
   methods: {    
     updatePropuestaCliente(data){
       this.prestamo.monto_cliente=data.monto_cliente
       this.prestamo.forma=data.forma
       this.prestamo.cuotas_cliente=data.cuotas_cliente
       this.prestamo.disponibilidad_pago=data.disponibilidad_pago
-      this.cualitativa.fuente_ingreso=data.fuente_ingreso
+      this.cualitativa.fuente_ingresos=data.fuente_ingresos
       this.cualitativa.destino_credito=data.destino_credito
       this.cualitativa.destino_credito_descripcion=data.destino_credito_descripcion
       this.validate.propuesta_cliente = data.validate
@@ -134,7 +119,7 @@ export default {
     registrar() {
       this.loading= true
       let cualitativa={
-        fuente_ingresos:this.cualitativa.fuente_ingreso,
+        fuente_ingresos:this.cualitativa.fuente_ingresos,
         destino_credito:this.cualitativa.destino_credito,
         destino_credito_descripcion:this.cualitativa.destino_credito_descripcion,
       }
