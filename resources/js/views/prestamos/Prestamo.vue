@@ -53,7 +53,7 @@
         <div class="client_forms_wrapper">
           <div class="form_step">
             <div class="form_step_wrapper">
-              <h3 class="title">Solicitud de Crédito</h3>
+              <h3 class="title">Solicitud de Crédito asdfawef {{listDevices.length}}</h3>
 
               <div class="detail_content"> 
                 <li>
@@ -165,11 +165,11 @@
                   </tbody>
                 </table>
               </div>
-              <button  type="button" class="add_section" :class="{no_border: prestamo.fotos.length == 0 }" @click="startCamera"  v-if="listDevices.length > 0">
-                <span> CAPTURAR FOTO DE NEGOCIO </span>
-                <i class="material-icons-outlined">camera_alt</i> 
-              </button>
             </div>
+            <button  type="button" class="add_section" :class="{no_border: prestamo.fotos.length == 0 }" @click="startCamera"  v-if="listDevices.length > 0">
+              <span> CAPTURAR FOTO DE NEGOCIO  </span>
+              <i class="material-icons-outlined">camera_alt</i> 
+            </button>
           </div>
         </div>
       </section>
