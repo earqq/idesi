@@ -31,7 +31,7 @@
       <div class="camera_screen_wrapper">
         <div  class="close_camera">
           <select v-model='selectedCameraID'>
-            <option v-for='(cameraID,index) in listDevices' @change='startCamera()' v-bind:key='index' :value='cameraID'> Camara {{index+1}} </option>
+            <option v-for='(cameraID,index) in listDevices' @change='stopCamera(); startCamera()' v-bind:key='index' :value='cameraID'> Camara {{index+1}} </option>
           </select>
           <i @click="stopCamera()" class="material-icons-outlined">close</i>
         </div>
