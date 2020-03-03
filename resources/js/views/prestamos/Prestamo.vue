@@ -237,7 +237,8 @@ export default {
       },
       geocoder: null,
       flagModalPhoto: false,
-      currentPhoto: null
+      currentPhoto: null,
+      videoSelect: []
     }
   },
   computed: {
@@ -316,16 +317,10 @@ export default {
     gotDevices(deviceInfos) {
       for (let i = 0; i !== deviceInfos.length; ++i) {
         const deviceInfo = deviceInfos[i]
-        const option = document.createElement('option')
-        option.value = deviceInfo.deviceId
 
-        if (deviceInfo.kind === 'audioinput') {
-          console.log(deviceInfo.label || 'microphone ')
-          // audioSelect.appendChild(option);
-        }
-        else if (deviceInfo.kind === 'videoinput') {
+        if (deviceInfo.kind === 'videoinput') {
           console.log(deviceInfo.label || 'camera')
-          // videoSelect.appendChild(option);
+          this.videoSelect.push(deviceInfo.deviceId)
         } else {
           console.log('Found another kind of device: ', deviceInfo);
         }
@@ -338,8 +333,18 @@ export default {
           track.stop()
         })
       }
+
+      const constraints = {
+        video: {
+          deviceId: {exact: this.videoSelect[0]}
+        }
+      }
+
+      this.startCamera(constraints)
+      // navigator.mediaDevices.getUserMedia(constraints).
+      //   then(gotStream).catch(handleError);
     },
-    startCamera() {
+    startCamera(constraints) {
         this.captura = null 
         this.camara_prendida = true
         this.$nextTick(() => {
@@ -353,15 +358,10 @@ export default {
         navigator.msGetUserMedia
 
         if (!navigator.getMedia) {
-          output.innerHTML = errorMsg(
-            "Tu navegador no soporta el uso de la camara",
-            null
-          );
+          console.error("Tu navegador no soporta el uso de la camara")
         } else {
           navigator.getMedia(
-            { 
-              video: true
-            },
+            constraints,
             stream => {
               try {
                 this.camara = stream;
@@ -372,7 +372,7 @@ export default {
               this.video.play();
             },
             err => {
-              output.innerHTML = errorMsg("Ocurrio un error", null);
+              console.error("Ocurrio un error")
             }
           );
         }
