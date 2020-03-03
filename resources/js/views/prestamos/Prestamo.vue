@@ -70,6 +70,7 @@
                   <p>S/. {{prestamo.disponibilidad_pago ? prestamo.disponibilidad_pago : '0.00'}}</p>
                 </li>               
                 <li class="spanner"></li>
+                <li class="spanner"></li>
               </div>
             </div>
 
@@ -100,8 +101,6 @@
                   <strong>Comentarios </strong> 
                   <p>{{prestamo.comentarios || 'SIN COMENTARIOS'}}</p>
                 </li>
-                <li class="spanner"></li>
-                <li class="spanner"></li>
               </div>
             </div>
             <div v-if='prestamo.estado>2' class="form_step_wrapper in_bottom">
@@ -288,6 +287,8 @@ export default {
     GoogleMapsLoader.load((google) => {
       this.initMap(google)
     })
+
+    this.selectCamera()
   },  
   methods: {
     selectPhoto (visita) {
@@ -306,41 +307,75 @@ export default {
       this.geocoder = new google.maps.Geocoder()
       this.getLocationName()
     },
+    selectCamera () {
+      // https://www.html5rocks.com/en/tutorials/getusermedia/intro/
+      navigator.mediaDevices.enumerateDevices()
+        .then(this.gotDevices).then(this.getStream).catch(console.error)
+
+    },
+    gotDevices(deviceInfos) {
+      for (let i = 0; i !== deviceInfos.length; ++i) {
+        const deviceInfo = deviceInfos[i]
+        const option = document.createElement('option')
+        option.value = deviceInfo.deviceId
+
+        if (deviceInfo.kind === 'audioinput') {
+          console.log(deviceInfo.label || 'microphone ')
+          // audioSelect.appendChild(option);
+        }
+        else if (deviceInfo.kind === 'videoinput') {
+          console.log(deviceInfo.label || 'camera')
+          // videoSelect.appendChild(option);
+        } else {
+          console.log('Found another kind of device: ', deviceInfo);
+        }
+
+      }
+    },
+    getStream() {
+      if (window.stream) {
+        window.stream.getTracks().forEach(function(track) {
+          track.stop()
+        })
+      }
+    },
     startCamera() {
         this.captura = null 
         this.camara_prendida = true
         this.$nextTick(() => {
           this.video = this.$refs.video;
         })
-          navigator.getMedia =
-            navigator.getUserMedia ||
-            navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia ||
-            navigator.msGetUserMedia;
-          if (!navigator.getMedia) {
-            output.innerHTML = errorMsg(
-              "Tu navegador no soporta el uso de la camara",
-              null
-            );
-          } else {
-            navigator.getMedia(
-              { video: true },
-              stream => {
-                try {
-                  this.camara = stream;
-                  this.video.srcObject = this.camara;
 
-                } catch (error) {
-                  this.video.src = URL.createObjectURL(this.camara);
-                }
+        navigator.getMedia =
+        navigator.getUserMedia ||
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia
 
-                this.video.play();
-              },
-              err => {
-                output.innerHTML = errorMsg("Ocurrio un error", null);
+        if (!navigator.getMedia) {
+          output.innerHTML = errorMsg(
+            "Tu navegador no soporta el uso de la camara",
+            null
+          );
+        } else {
+          navigator.getMedia(
+            { 
+              video: true
+            },
+            stream => {
+              try {
+                this.camara = stream;
+                this.video.srcObject = this.camara;
+              } catch (error) {
+                this.video.src = URL.createObjectURL(this.camara);
               }
-            );
-          }
+              this.video.play();
+            },
+            err => {
+              output.innerHTML = errorMsg("Ocurrio un error", null);
+            }
+          );
+        }
     },
     capture() {
       this.canvas = this.$refs.canvas;

@@ -1231,7 +1231,7 @@ export default {
                 )
             }  
         })
-        .catch(res=>{
+        .catch(error=>{
             this.loading=false
             this.$toast.error(
               "Error al registrar",
