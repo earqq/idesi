@@ -43,7 +43,7 @@
       <div class="table_container" v-else >
         <div class="table_grid"  v-if=" type_list=='1'">
           <article class="client_card" v-for="cliente in clientes" :key="cliente.id" >
-            <div class="options" v-if="true || cliente.estado=='2'">
+            <div class="options" v-if="cliente.estado=='2'">
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
                 <li> 
