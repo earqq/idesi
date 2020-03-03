@@ -592,12 +592,12 @@ export default {
             margin: 0
             margin-top: 10px
             text-align: center
-            p
+            p 
               line-height: 1.3
               overflow: hidden
               text-overflow: ellipsis
               display: -webkit-box
-              -webkit-line-clamp: 1
+              -webkit-line-clamp: 1 
               -webkit-box-orient: vertical
               margin-bottom: 3px
             strong

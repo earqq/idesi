@@ -94,8 +94,10 @@
                 <li v-if="prestamo.estado==1"> 
                   <router-link   :to="{name:'registrarPrestamo', params:{tipoCliente:cliente.tipo_cliente,clienteID:cliente.id,prestamoID:prestamo.id}}"> Editar </router-link>
                 </li> 
-                <li v-if="!prestamo.cualitativa && prestamo.estado==1"> <router-link :to="{name:'evalCualitativa', params:{prestamoID:prestamo.id}}" >E. Cualitativa</router-link> </li>
-                <li v-if="!prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1"> <router-link :to="{name:'evalCuantitativa', params:{prestamoID:prestamo.id}}" >E. Cuantitativa</router-link> </li>
+                <li v-if="!prestamo.cualitativa && prestamo.estado==1"> 
+                  <router-link :to="{name:'evalCualitativa', params:{prestamoID:prestamo.id}}" >E. Cualitativa</router-link> </li>
+                <li v-if="!prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1"> 
+                  <router-link :to="{name:'evalCuantitativa', params:{prestamoID:prestamo.id}}" >E. Cuantitativa</router-link> </li>
                 <li v-if="prestamo.cuantitativa && prestamo.cualitativa  && prestamo.estado==1" @click="enviarEvaluar(prestamo.id)"> Enviar a Evaluación</li>
                 <li> <router-link :to="{name:'archivos', params:{prestamoID:prestamo.id}}" > Documentos </router-link> </li>
               </ul>
@@ -155,6 +157,9 @@ export default {
             razon_social:""
           }
         }
+
+        console.log("asdadadadada")
+        console.log(this.cliente.estado)
       },
       fetchPolicy:'no-cache'
     }

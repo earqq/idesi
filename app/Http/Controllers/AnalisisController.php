@@ -737,6 +737,7 @@ class AnalisisController extends Controller
             DB::beginTransaction();
             \Log::alert($request->all());
             // return $save;
+            
             $cualitativa=cualitativa::where('prestamo_id',$request->prestamo_id)->first();
             $cualitativa->fuente_ingresos=$request->fuente_ingresos;
             $cualitativa->destino_credito=$request->destino_credito;

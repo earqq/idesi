@@ -120,7 +120,7 @@
 
                         @if ($cualitativa->familiar['numero_hijos']==0)
                             <tr>
-                                <td colspan="3">*****************************************   NO REGISTRA HIJOS  ***********************************</td>
+                                <td colspan="3" style="text-align: center">  NO REGISTRA HIJOS</td>
                             </tr>
                         @else
 
@@ -136,6 +136,7 @@
                                         </tr>
                                     </thead>
                                     <tbody> 
+
                                         @if($cualitativa->familiar['hijos'])
                                             @foreach ($cualitativa->familiar['hijos'] as $hijos)
                                                 @if ($hijos['costo']!=0)
@@ -188,15 +189,17 @@
                                 <tbody>
                                     @if($cualitativa->central_riesgo)
                                         @foreach ($cualitativa->central_riesgo as $cual)
-                                        <tr>
-                                            <td>{{$cual['entidad_financiera']}}</td>
-                                            <td>{{ $cual['capital'] ? 'SI' : 'NO'}}</td>
-                                            <td> {{ $cual['activo_f'] ? 'SI' : 'NO'}}</td>
-                                            <td>{{ $cual['consumo'] ? 'SI' : 'NO'}}</td>
-                                            <td>{{ $cual['vehicular'] ? 'SI' : 'NO'}}</td>
-                                            <td>{{ $cual['hipoteca'] ? 'SI' : 'NO'}}</td>
-                                            <td>{{ $cual['terceros'] ? 'SI' : 'NO'}}</td>
-                                        </tr>
+                                        @if ($cual['entidad_financiera'])
+                                            <tr>
+                                                <td>{{$cual['entidad_financiera']}}</td>
+                                                <td>{{ $cual['capital'] ? 'SI' : 'NO'}}</td>
+                                                <td> {{ $cual['activo_f'] ? 'SI' : 'NO'}}</td>
+                                                <td>{{ $cual['consumo'] ? 'SI' : 'NO'}}</td>
+                                                <td>{{ $cual['vehicular'] ? 'SI' : 'NO'}}</td>
+                                                <td>{{ $cual['hipoteca'] ? 'SI' : 'NO'}}</td>
+                                                <td>{{ $cual['terceros'] ? 'SI' : 'NO'}}</td>
+                                            </tr>
+                                        @endif
                                         @endforeach
                                     @endif
                                 </tbody>
@@ -221,19 +224,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @if($cualitativa->referencias)
-                                    @foreach ($cualitativa->referencias as $ref)
-                                    @if ($ref['tipo_relacion'])
-                                        
                                     
-                                    <tr>
-                                        <td>{{ $ref['tipo_relacion']}}</td>
-                                        <td>{{ $ref['nombre']}}</td>
-                                        <td>{{ $ref['telefono']}}</td> 
-                                    </tr>
+                                    @if (is_array($cualitativa->referencias) || is_object($cualitativa->referencias))      
+                                        @foreach ($cualitativa->referencias as $ref)
+                                            @if ($ref['tipo_relacion'])
+                                                <tr>
+                                                    <td>{{ $ref['tipo_relacion']}}</td>
+                                                    <td>{{ $ref['nombre']}}</td>
+                                                    <td>{{ $ref['telefono']}}</td> 
+                                                </tr>
+                                            @endif
+                                        @endforeach
                                     @endif
-                                    @endforeach   
-                                @endif
+
                                 </tbody>
                             </table>
                     </tr>  

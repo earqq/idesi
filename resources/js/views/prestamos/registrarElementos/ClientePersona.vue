@@ -214,6 +214,13 @@ export default {
                 aporte_socio: "",
             }
           }
+          if(!res.clientes[0].persona.trabajo){
+            cliente.persona.trabajo={
+                empresa_direccion: "",
+                empresa_razon_social: "",
+            }
+          }
+
           this.cliente=cliente
           console.log(this.cliente)
       },
@@ -239,7 +246,7 @@ export default {
         this.filterProvincesTitularMe()
       }          
     }
-  },    
+  },     
   methods:{
     filterProvincesTitularMe() {        
         this.provincesTitular = this.provincias.filter(f => {

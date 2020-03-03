@@ -280,8 +280,8 @@ export default {
                             }
                     }
                 }
-                else{
-
+                else{ 
+ 
                     this.prestamo_total++
 
                             if(this.prestamos[index].estado=='2'){
