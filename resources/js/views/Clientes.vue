@@ -43,18 +43,15 @@
       <div class="table_container" v-else >
         <div class="table_grid"  v-if=" type_list=='1'">
           <article class="client_card" v-for="cliente in clientes" :key="cliente.id" >
-            <div class="options" v-if="cliente.estado=='2'">
+            <div class="options" v-if="true || cliente.estado=='2'">
               <i class="material-icons-outlined" >more_horiz</i>
-              <ul >
-                <!-- <li>
-                  Editar
-                </li> -->
+              <ul>
                 <li> 
-                   <router-link  v-if="cliente.tipo_cliente=='1'"   :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
-                       Nuevo prestamo
+                  <router-link  v-if="cliente.tipo_cliente=='1'"   :to="{name: 'registarPrestamo', params:{clienteID:cliente.id,prestamoID:'0'}}">
+                    Nuevo prestamo
                   </router-link>
                   <router-link  v-if="cliente.tipo_cliente=='2'"   :to="{name: 'registrarPrestamoEmpresa', params:{clienteID:cliente.id,prestamoID:'0'}}">
-                       Nuevo prestamo
+                    Nuevo prestamo
                   </router-link>
                 </li>
               </ul>   
@@ -316,7 +313,9 @@ export default {
           width: 40px
           height: 27px
           cursor: pointer
-          position: relative
+          position: absolute
+          top: 5px
+          right: 5px
           float: right
           &:hover
             i
@@ -643,7 +642,6 @@ export default {
               flex-direction: row
               padding: 20px 15px
               justify-content: flex-start
-              padding-top: 0
               .avatar
                 margin-right: 10px
                 .request

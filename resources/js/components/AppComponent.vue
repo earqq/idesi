@@ -80,7 +80,7 @@
                     <router-link :to="{name: 'inicio'}" > Inicio</router-link> 
                   </li>
 
-                  <li :class="{selected: tab == 'clientes'}" v-if="currentUser.nivel=='1' || currentUser.nivel=='2'">
+                  <li :class="{selected: tab == 'clientes'}" v-if="currentUser.nivel=='1' || currentUser.nivel=='2' || currentUser.nivel=='4'">
                     <router-link :to="{name: 'clientes'}"  >Clientes</router-link>
                   </li>
 

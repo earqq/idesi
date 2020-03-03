@@ -310,15 +310,34 @@ export default {
     selectCamera () {
       // https://www.html5rocks.com/en/tutorials/getusermedia/intro/
       navigator.mediaDevices.enumerateDevices()
-        .then((devices) => {
-          devices.forEach(function(device) {
-            console.log(device.kind + ": " + device.label +
-              " id = " + device.deviceId);
-          })
+        .then(this.gotDevices).then(this.getStream).catch(console.error)
+
+    },
+    gotDevices(deviceInfos) {
+      for (let i = 0; i !== deviceInfos.length; ++i) {
+        const deviceInfo = deviceInfos[i]
+        const option = document.createElement('option')
+        option.value = deviceInfo.deviceId
+
+        if (deviceInfo.kind === 'audioinput') {
+          console.log(deviceInfo.label || 'microphone ')
+          // audioSelect.appendChild(option);
+        }
+        else if (deviceInfo.kind === 'videoinput') {
+          console.log(deviceInfo.label || 'camera')
+          // videoSelect.appendChild(option);
+        } else {
+          console.log('Found another kind of device: ', deviceInfo);
+        }
+
+      }
+    },
+    getStream() {
+      if (window.stream) {
+        window.stream.getTracks().forEach(function(track) {
+          track.stop()
         })
-        .catch((e) => {
-          console.log(e.name + ": " + e.message);
-        })
+      }
     },
     startCamera() {
         this.captura = null 

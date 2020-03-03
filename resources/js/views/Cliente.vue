@@ -102,10 +102,8 @@
             </div>
           </div>
         </article>
-        <div v-if="cliente.prestamos.length < 4 " >
-        <a class="spanner" v-for="i in 4" :key="i*1.5"  >
-        </a>
-        </div>
+          <a class="spanner" v-for="i in 4" :key="i*1.5"  v-show="cliente.prestamos.length < 4 " >
+          </a>
       </div>
     
     </div>
