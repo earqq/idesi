@@ -163,13 +163,14 @@
                   </tbody>
                 </table>
               </div>
-
+              <select v-model='selectedCameraID'>
+                <option v-for='(cameraID,index) in videoSelect' v-bind:key='index' :value='cameraID'>Camera {{index+1}}</option>
+              </select>
               <button  type="button" class="add_section" :class="{no_border: prestamo.fotos.length == 0 }" @click="startCamera" >
                 <span> CAPTURAR FOTO DE NEGOCIO </span>
                 
                 <i class="material-icons-outlined">camera_alt</i> 
               </button>
-              <li>{{videoSelect}}</li>
             </div>
           </div>
         </div>
@@ -201,7 +202,7 @@ export default {
         rotateControl: false,
         fullscreenControl: false,
       },
-      listDevices:[],
+      selectedCameraID:{},
       screen:screen,
       location: null,
       gettingLocation: false,
@@ -322,6 +323,7 @@ export default {
         if (deviceInfo.kind == 'videoinput') {
           console.log(deviceInfo.kind , 'camera')
           this.videoSelect.push(deviceInfo.deviceId)
+          this.selectedCameraID=deviceInfo.deviceId
         } else {
           console.log('Found another kind of device: ', deviceInfo);
         }
@@ -337,7 +339,7 @@ export default {
 
       const constraints = {
         video: {
-          deviceId: {exact: this.videoSelect[0]}
+          deviceId: {exact: this.selectedCameraID}
         }
       }
 
@@ -351,18 +353,21 @@ export default {
         this.$nextTick(() => {
           this.video = this.$refs.video;
         })
-
+       
         navigator.getMedia =
         navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia ||
         navigator.msGetUserMedia
+        
 
         if (!navigator.getMedia) {
           console.error("Tu navegador no soporta el uso de la camara")
         } else {
           navigator.getMedia(
-            constraints,
+            {video:{
+              deviceId:{exact: this.selectedCameraID}
+            }},
             stream => {
               try {
                 this.camara = stream;
