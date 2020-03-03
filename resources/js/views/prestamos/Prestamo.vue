@@ -30,6 +30,9 @@
     <div class="camera_screen_content" v-if="camara_prendida">
       <div class="camera_screen_wrapper">
         <div  class="close_camera">
+          <select v-model='selectedCameraID'>
+            <option v-for='(cameraID,index) in listDevices' v-bind:key='index' :value='cameraID'> Camara {{index+1}} </option>
+          </select>
           <i @click="stopCamera()" class="material-icons-outlined">close</i>
         </div>
         <video ref="video" id="video"  autoplay></video>
@@ -136,10 +139,9 @@
             </div>
  
 
-            <div v-if='prestamo.estado==1' class="form_step_wrapper in_bottom">
-              <h3 class="title" v-show="prestamo.fotos.length > 0 " >Negocio</h3>
-
-              <div class="table_wrapper" v-show="prestamo.fotos.length > 0 ">
+            <div v-if='prestamo.estado==1'  v-show="prestamo.fotos.length > 0 " class="form_step_wrapper in_bottom">
+              <h3 class="title" >Negocio</h3>
+              <div class="table_wrapper" >
                 <table class="table_photos">
                   <thead>
                     <tr>
@@ -163,12 +165,8 @@
                   </tbody>
                 </table>
               </div>
-              <select v-model='selectedCameraID'>
-                <option v-for='(cameraID,index) in videoSelect' v-bind:key='index' :value='cameraID'>Camera {{index+1}}</option>
-              </select>
-              <button  type="button" class="add_section" :class="{no_border: prestamo.fotos.length == 0 }" @click="startCamera" >
+              <button  type="button" class="add_section" :class="{no_border: prestamo.fotos.length == 0 }" @click="startCamera"  v-if="listDevices.length > 0">
                 <span> CAPTURAR FOTO DE NEGOCIO </span>
-                
                 <i class="material-icons-outlined">camera_alt</i> 
               </button>
             </div>
@@ -202,8 +200,8 @@ export default {
         rotateControl: false,
         fullscreenControl: false,
       },
-      selectedCameraID:{},
-      screen:screen,
+      selectedCameraID: {},
+      screen: screen,
       location: null,
       gettingLocation: false,
       errorStr: null,
@@ -241,7 +239,7 @@ export default {
       geocoder: null,
       flagModalPhoto: false,
       currentPhoto: null,
-      videoSelect: []
+      listDevices: []
     }
   },
   computed: {
@@ -322,12 +320,11 @@ export default {
         const deviceInfo = deviceInfos[i]
         if (deviceInfo.kind == 'videoinput') {
           console.log(deviceInfo.kind , 'camera')
-          this.videoSelect.push(deviceInfo.deviceId)
+          this.listDevices.push(deviceInfo.deviceId)
           this.selectedCameraID=deviceInfo.deviceId
         } else {
           console.log('Found another kind of device: ', deviceInfo);
         }
-
       }
     },
     getStream() {
@@ -336,18 +333,13 @@ export default {
           track.stop()
         })
       }
-
       const constraints = {
         video: {
           deviceId: {exact: this.selectedCameraID}
         }
       }
-
-      // this.startCamera(constraints)
-      // navigator.mediaDevices.getUserMedia(constraints).
-      //   then(gotStream).catch(handleError);
     },
-    startCamera(constraints) {
+    startCamera() {
         this.captura = null 
         this.camara_prendida = true
         this.$nextTick(() => {
@@ -359,14 +351,15 @@ export default {
         navigator.mozGetUserMedia ||
         navigator.msGetUserMedia
         
-
         if (!navigator.getMedia) {
           console.error("Tu navegador no soporta el uso de la camara")
         } else {
           navigator.getMedia(
-            {video:{
-              deviceId:{exact: this.selectedCameraID}
-            }},
+            {
+              video: {
+                deviceId:{exact: this.selectedCameraID}
+              }
+            },
             stream => {
               try {
                 this.camara = stream;
@@ -549,6 +542,17 @@ export default {
       .close_camera
         height: 50px
         background-color: black
+        select
+          height: 35px
+          padding: 0 10px
+          margin-top: 15px
+          margin-left: 15px
+          border-radius: 3px
+          font-size: 14px
+          background-color: black
+          color: white
+          &:focus, &:active
+            outline: none
         i
           color: white
           height: 50px
