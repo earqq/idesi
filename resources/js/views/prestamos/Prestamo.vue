@@ -353,7 +353,6 @@ export default {
         this.$nextTick(() => {
           this.video = this.$refs.video;
         })
-       
         navigator.getMedia =
         navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
