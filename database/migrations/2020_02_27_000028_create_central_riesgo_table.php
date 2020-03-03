@@ -23,7 +23,7 @@ class CreateCentralRiesgoTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('cualitativa_id');
+            $table->unsignedInteger('cualitativa_id');
             $table->text('entidad')->nullable();
             $table->boolean('capital_trabajo')->nullable()->default('0');
             $table->boolean('activo_fijo')->nullable()->default('0');

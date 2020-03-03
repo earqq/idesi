@@ -162,6 +162,9 @@ export default {
             razon_social:""
           }
         }
+
+        console.log("asdadadadada")
+        console.log(this.cliente.estado)
       },
       fetchPolicy:'no-cache'
     }

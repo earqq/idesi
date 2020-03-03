@@ -234,19 +234,20 @@
                                    
                                 </thead>
                                 <tbody>
-                                @if($cualitativa->central_riesgo)
-                                    @foreach ($cualitativa->referencias as $ref)
-                                    @if ($ref['tipo_relacion'])
-                                        
-                                    
-                                    <tr>
-                                        <td>{{ $ref['tipo_relacion']}}</td>
-                                        <td>{{ $ref['nombre']}}</td>
-                                        <td>{{ $ref['telefono']}}</td> 
-                                    </tr>
+                                    @forelse ($cualitativa->referencias as $ref)
+                                        @if ($ref['tipo_relacion'])
+                                        <tr>
+                                            <td>{{ $ref['tipo_relacion']}}</td>
+                                            <td>{{ $ref['nombre']}}</td>
+                                            <td>{{ $ref['telefono']}}</td> 
+                                        </tr>
                                     @endif
-                                    @endforeach   
-                                @endif
+                                    @empty
+                                        
+                                    @endforelse
+
+                                        
+
                                 </tbody>
                             </table>
                     </tr>  
