@@ -26,7 +26,8 @@ class ClientesQuery extends Query
     public function args(): array
     {
         return [
-            'id' => ['name' => 'id', 'type' => Type::int()],
+            'search' => ['name' => 'search', 'type' => Type::string()],
+            'id' => ['name' => 'id', 'type' => Type::int()]
         ];
     }
 
@@ -46,9 +47,23 @@ class ClientesQuery extends Query
             }
         }       
         
-        if($args["id"])
+        if(isset($args["id"]))
             $clientes->where('id',$args["id"]);
-        \Log::alert($clientes->get());
+        if(isset($args["search"])){
+            $text=strtoupper($args["search"]);
+            if($text!=''){
+                $clientes->where(function($query) use($text){
+                    $query->whereHas('persona',function ($query) use($text){
+                        $query->where('nombres','LIKE', "%{$text}%")
+                        ->orWhere('apellidos','LIKE', "%{$text}%");
+                    })
+                    ->orWhere('documento', 'LIKE', "%{$text}%")
+                    ->orWhereHas('empresa',function($query) use($text){
+                        $query->where('razon_social', 'LIKE', "%{$text}%");
+                    });
+                });
+            }
+        }
         return $clientes->get();
     }
 }

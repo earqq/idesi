@@ -293,7 +293,7 @@ class AnalisisController extends Controller
                 //validacion
                 $gasto_financiero_personal_validacion=$gasto_financiero_personal_total;
                 \Log::alert('gasto financiero personal validacion: '.$gasto_financiero_personal_validacion);
-                //UTILIDAD
+                //DISPONIBLLE
                 //titular
             
                 $disponible_titular=floatval($margen_bruto_titular+$otros_ingresos_titular
@@ -349,9 +349,8 @@ class AnalisisController extends Controller
                 $multiplier=1;
                 else if($request->propuesta["producto_analista"]=='CONSUMO ESPECIAL')
                 $multiplier=1;
-                $cuota_institucion_titular=$request->propuesta["cuotas_analista"]*$multiplier;
+                $cuota_institucion_titular=$request->propuesta["cuota_sistema"]*$multiplier;
                 \Log::alert("cuota institucion titular: ".$cuota_institucion_titular);
-
                 \Log::alert("cuota institucion conyuge: ".$cuota_institucion_conyuge);
                 $cuota_institucion_total=$cuota_institucion_titular;
                 \Log::alert("cuota institucion total: ".$cuota_institucion_total);
@@ -360,13 +359,13 @@ class AnalisisController extends Controller
 
                 //disponible DESPUES CUOTA
                 //titular
-                $disponible_desp_cuota_titular=$utilidad_neta_negocio_titular-$cuota_institucion_titular;
+                $disponible_desp_cuota_titular=$disponible_titular-$cuota_institucion_titular;
                 \Log::alert('disponible despues cuota titular: '.$disponible_desp_cuota_titular);
                 //conyuge
                 $disponible_desp_cuota_conyuge=$disponible_conyuge-$cuota_institucion_conyuge;
                 \Log::alert('disponible despues cuota conyuge: '.$disponible_desp_cuota_conyuge);
                 //total
-                $disponible_desp_cuota_total=$utilidad_neta_negocio_total-$cuota_institucion_total;
+                $disponible_desp_cuota_total=$disponible_total-$cuota_institucion_total;
                 \Log::alert('disponible despues cuota total: '.$disponible_desp_cuota_total);
                 //validacion
                 $disponible_desp_cuota_validacion=$disponible_validacion-$cuota_institucion_validacion;
@@ -459,7 +458,7 @@ class AnalisisController extends Controller
                 \Log::alert('PATRIMONIO CAPITAL: '.$balance_patrimonio_capital);
 
                 //PATRIMONIO UTILIDAD
-                $balance_patrimonio_utilidad=$disponible_desp_cuota_total;
+                $balance_patrimonio_utilidad=$disponible_total;
                 \Log::alert('PATRIMONIO UTILIDAD: '.$balance_patrimonio_utilidad);
 
                 //TOTAL PASIVO Y PATRIMONIO

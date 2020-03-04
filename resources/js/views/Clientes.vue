@@ -4,7 +4,7 @@
       <div class="options_bar" :class="{no_button: !permissionCreate}">
         <div class="search_bar">
           <i class="material-icons-outlined">search</i>
-          <input type="text" placeholder="Buscar Cliente" v-model="search.text" @input="search_product">         
+          <input type="text" placeholder="Buscar Cliente" v-model="search.text" >         
         </div>
         <div class="switch_view">
           <a @click="type_list_card" :class="{selected: type_list == 1}">
@@ -132,6 +132,7 @@
 </template> 
 
 <script>
+import { OBTENER_CLIENTE } from '../graphql.js'
 export default {
   name: 'clients', 
   data() {
@@ -152,30 +153,27 @@ export default {
       option_open: false
     }
   },
-  async mounted() {
-    await this.getClients();
+  apollo:{
+    clienteBD:{
+      query:OBTENER_CLIENTE,
+      variables(){
+        return{
+          search:this.search.text,
+        }
+      },
+      update(res){
+          this.clientes=res.clientes
+      },
+      fetchPolicy:'no-cache'
+    }
   },
   methods: {
-    async search_product() { 
-      await this.getClients();
-    },
     type_list_card(){
       this.type_list=1
     },
     type_list_list(){
       this.type_list=0
     },
-    getClients() {
-      this.clientes= [];
-      this.$http 
-        .get(
-          '/clientes/search/'+this.search.state+'/'+this.search.text,          
-        )
-        .then(response => {
-          this.clientes=response.data
-          this.queryCount ++
-        })
-    },   
   },
   computed: {
     permissionCreate () {

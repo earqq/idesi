@@ -38,7 +38,7 @@ class PrestamosController extends Controller
             if($text!=''){
                 $text=strtoupper($text);
                 $query->orWhere('cliente.persona.nombres', 'LIKE', "%{$text}%")
-                ->orWhere('clientes.documento', 'LIKE', "%{$text}%")
+                ->orWhere('cliente.documento', 'LIKE', "%{$text}%")
                 ->orWhere('cliente.persona.apellidos', 'LIKE', "%{$text}%")
                 ->orWhere('cliente.empresa.razon_social', 'LIKE', "%{$text}%")
                 ->orWhere('producto', 'LIKE', "%{$text}%");

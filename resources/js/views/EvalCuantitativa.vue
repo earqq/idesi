@@ -820,11 +820,7 @@ export default {
         `/analisis/datosCualitativas/`+this.$route.params.prestamoID
       )
       .then(response => {
-        //Total de costo en educacion
-        // response.data.familiar.hijos.map(element=>{
-        //   this.evaluacion.gastos_hogar[5].pago+=parseFloat(element.costo)
-        // })
-        // entidades financieras
+        this.evaluacion.gastos_hogar[5].pago=parseFloat(response.data.precio_educacion_hijos)
         response.data.central_riesgo.map(element=>{
           if(element.entidad_financiera){
 

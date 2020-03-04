@@ -48,10 +48,10 @@ class ClientesController extends Controller
         ->where(function($query) use($text){
             if($text!=''){
                 $text=strtoupper($text);
-                $query->orWhere('persona.nombres', 'LIKE', "%{$text}%")
-                ->orWhere('documento', 'LIKE', "%{$text}%")
-                ->orWhere('persona.apellidos', 'LIKE', "%{$text}%")
-                ->orWhere('empresa.razon_social', 'LIKE', "%{$text}%");
+                $query->orWhere('personas.nombres', 'LIKE', "%{$text}%")
+                ->orWhere('clientes.documento', 'LIKE', "%{$text}%")
+                ->orWhere('personas.apellidos', 'LIKE', "%{$text}%")
+                ->orWhere('empresas.razon_social', 'LIKE', "%{$text}%");
             }
         })
         ->where(function($query){

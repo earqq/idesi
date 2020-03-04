@@ -5,7 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Persona extends Model
-{
+{   
+    protected $table='personas';
     public function cliente()
     {
         return $this->belongsTo('App\Cliente', 'cliente_id');
@@ -23,43 +24,5 @@ class Persona extends Model
     public function conyuge()
     {
         return $this->hasOne('App\Conyuge', 'persona_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function adicionals()
-    {
-        return $this->hasMany('App\Adicional', 'naturals_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function declaracions()
-    {
-        return $this->hasMany('App\Declaracion', 'naturals_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-  
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function obligacions()
-    {
-        return $this->hasMany('App\Obligacion', 'naturals_id');
-    }
+    } 
 }

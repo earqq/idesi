@@ -1,8 +1,13 @@
 import gql from 'graphql-tag'
 
 export const OBTENER_CLIENTE= gql`
-query obtenerClientes($id:Int){ 
-    clientes(id:$id) {
+query obtenerClientes($id:Int,
+        $search: String, 
+        ){ 
+    clientes(id:$id, 
+        search:$search, 
+        ) 
+        {
         id
         tipo_documento
         documento
