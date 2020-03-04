@@ -795,6 +795,7 @@ class AnalisisController extends Controller
             $prestamo->producto_analista=$request->propuestaAnalista["producto_analista"];
             $prestamo->meses_analista=$request->propuestaAnalista["meses_analista"];
             $prestamo->importe_analista=$request->propuestaAnalista["importe_analista"];
+            $prestamo->aporte_analista=$request->propuestaAnalista["aporte_analista"];
             if(isset($request->propuestaAnalista["comentarios"]))
                 $prestamo->comentarios=$request->propuestaAnalista["comentarios"];
             $prestamo->cuotas_analista=$request->propuestaAnalista["cuotas_analista"];

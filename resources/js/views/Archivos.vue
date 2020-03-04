@@ -8,8 +8,7 @@
         </div>
         <div class="input_wrapper">
           <select v-model="fileName">
-            <option value='seleccione'>Seleccione</option> 
-
+            <option value='seleccione'>Seleccione</option>
             <option v-for="(list, index) in porSubir" :key="index"  :value="list.nombre">
               {{list.texto}}
             </option>         
@@ -37,7 +36,6 @@
               </div>
           </label>
         </div>
-
         <button v-if='fileName!="seleccione" && attachment.content' class="button_primary medium" type="button" @click="uploadFile">
           <span> CARGAR ARCHIVO </span>
         </button>
@@ -66,14 +64,12 @@
        <div class="file_item"  @click="inscripcionPdf()">
           <div class="file_detail">
             <a class=""  target="_blank">
-                <i class="material-icons-outlined"> picture_as_pdf </i>
+              <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
                 <p> Solicitud de Admisión </p> 
-                <small> 27 de enero de 2020 </small>              
+                <small> 27 de enero, 2020 </small>              
               </div>
-                  
             </a>
-            
           </div>  
         </div>
 
@@ -84,31 +80,29 @@
               <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
                 <p> Solicitud de credito </p> 
-                <small> 27 de enero de 2020 </small>            
+                <small> 27 de enero, 2020 </small>            
               </div>
             </a>
           </div> 
         </div>
         <div class="file_item" v-if='prestamo.cualitativa'  @click="cualitativaPDF()">
           <div class="file_detail">
-            <a :href="'#'"
-              >
+            <a :href="'#'">
               <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
                 <p> Evaluación cualitativa </p> 
-                <small> 27 de enero de 2020 </small>            
+                <small> 27 de enero, 2020 </small>            
               </div>
             </a>
           </div> 
         </div>
         <div class="file_item" v-if='prestamo.cuantitativa' @click="cuantitativaPDF()">
           <div class="file_detail">
-            <a :href="'#'"
-              >
+            <a :href="'#'">
               <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
                 <p> Evaluación cuantitativa </p> 
-                <small> 27 de enero de 2020 </small>            
+                <small> 27 de enero, 2020 </small>            
               </div>
             </a>
           </div> 
@@ -121,15 +115,13 @@
               <i class="material-icons-outlined"> picture_as_pdf </i>
               <div class="file_info">
                 <p> {{archivo.nombre | noUnderscore }} </p>
-                <small> 27 de enero de 2020 </small>            
+                <small> {{archivo.created_at | moment('DD [de] MMMM, YYYY ') }} </small>            
               </div>
             </a>
           </div>
         </div>
         </div>
-        <div v-if='prestamo.archivos.length<5'>
-          <a class="spanner" v-for="i in 5" :key="i*1.5"  ></a>
-        </div>
+        <a class="spanner" v-for="i in 5" :key="i*1.5"  v-show="prestamo.archivos.length<5"></a>
       </div>
       
       <aside class="checklist"  :class="{showing: show_slide}">

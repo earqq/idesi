@@ -85,9 +85,7 @@
             <h3> S/ {{prestamo.monto_cliente}} &nbsp; / &nbsp; {{prestamo.cuotas_cliente}} {{timeCredit[prestamo.forma]}} </h3>
           </div>
           <div class="actions">
-            
             <router-link class="credit_link"  :to="{name:'prestamo', params:{prestamoID:prestamo.id}}">VER DETALLE PRESTAMO</router-link>
-
             <div class="options">
               <i class="material-icons-outlined" >more_horiz</i>
               <ul>
@@ -104,8 +102,8 @@
             </div>
           </div>
         </article>
-          <a class="spanner" v-for="i in 4" :key="i*1.5"  v-show="cliente.prestamos.length < 4 " >
-          </a>
+        <a v-show="cliente.prestamos.length < 4 " class="spanner" v-for="i in 4" :key="i*1.3"   >
+        </a>
       </div>
     
     </div>
@@ -158,8 +156,6 @@ export default {
           }
         }
 
-        console.log("asdadadadada")
-        console.log(this.cliente.estado)
       },
       fetchPolicy:'no-cache'
     }

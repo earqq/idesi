@@ -51,6 +51,7 @@ class PrestamosController extends Controller
                 $query->where('user_id','=', Auth::user()->id);  
         })   
         ->where('estado','!=',1)
+        ->orderBy('created_at','desc')
         ->take(30)
         ->get();    
         return $prestamos;
@@ -393,10 +394,10 @@ class PrestamosController extends Controller
                 $prestamo->estado = $request->evaluacion['estado'];
                 $prestamo->save();
             }else{
-                $prestamo->producto_final = $request['producto'];
-                $prestamo->aporte_final = $request['aporte'];
-                $prestamo->importe_final = $request['importe'];
-                $prestamo->cuotas_final = $request['cuotas'];
+                $prestamo->producto_final = $request['producto_analista'];
+                $prestamo->aporte_final = $request['aporte_analista'];
+                $prestamo->importe_final = $request['importe_analista'];
+                $prestamo->cuotas_final = $request['cuotas_analista'];
                 $prestamo->cuota_sistema = $request['cuota_sistema'];
                 $prestamo->estado = $request->evaluacion['estado'];
                 $prestamo->save();
@@ -414,28 +415,4 @@ class PrestamosController extends Controller
 
 
 
-
-    public function evaluarFinal(Request $request)
-    {
-            try{
-
-                   DB::beginTransaction();
-                    
-                   $prestamo = Prestamo::find($request['prestamos_id']);
-                   
-                   
-    
-                    DB::commit();
-                    return [
-                        'success' => true,
-                        'data' => 'Cliente creado',
-                    ];
-    
-            } catch (Exception $e){
-                return [
-                    'success' => false,
-                ];
-                DB::rollBack();
-            }
-    } 
 }

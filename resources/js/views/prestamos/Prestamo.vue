@@ -27,34 +27,36 @@
       </div>
     </div>
 
-    <div class="camera_screen_content" v-if="camara_prendida">
-      <div class="camera_screen_wrapper">
-        <div  class="close_camera">
-          <select @change='refreshCamera()' v-model='selectedCameraID'>
-            <option v-for='(cameraID,index) in listDevices'  v-bind:key='index' :value='cameraID'> Camara {{index+1}} </option>
-          </select>
-          <i @click="stopCamera()" class="material-icons-outlined">close</i>
-        </div>
-        <video ref="video" id="video"  autoplay></video>
-        <div class="controls" >
-          <button class="capture_photo" id="snap" v-on:click="capture()"  v-if="!captura"></button>
-          <div class="options" v-else>
-            <a @click="storePhoto()"> GUARDAR </a>
-            <a @click="startCamera()"> ELIMINAR </a>
+    <transition name="fade" mode="in-out">
+      <div class="camera_screen_content" v-if="camara_on">
+        <div class="camera_screen_wrapper">
+          <div  class="header_camera">
+            <select @change='refreshCamera()' v-model='selected_camera_id'>
+              <option v-for='(camera_id,index) in listDevices'  v-bind:key='index' :value='camera_id'> Camara {{index+1}} </option>
+            </select>
+            <i @click="stopCamera()" class="material-icons-outlined">close</i>
           </div>
-          <canvas v-show="false" ref="canvas" id="canvas" width="640" height="480"></canvas>
-          <img v-show="false" v-bind:src="captura" height="50" />
+          <video ref="video" id="video"  autoplay></video>
+          <div class="controls" >
+            <button class="capture_photo" id="snap" v-on:click="capture()"  v-if="!captura"></button>
+            <div class="options" v-else>
+              <a @click="storePhoto()"> GUARDAR </a>
+              <a @click="startCamera()"> ELIMINAR </a>
+            </div>
+            <canvas v-show="false" ref="canvas" id="canvas" width="640" height="480"></canvas>
+            <img v-show="false" v-bind:src="captura" height="50" />
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
 
     <div class="create_client_content">
       <section class="client_forms">
         <div class="client_forms_wrapper">
           <div class="form_step">
+
             <div class="form_step_wrapper">
               <h3 class="title">Solicitud de Crédito asdfawef {{listDevices.length}}</h3>
-
               <div class="detail_content"> 
                 <li>
                   <strong>Monto </strong> 
@@ -106,6 +108,7 @@
                 </li>
               </div>
             </div>
+
             <div v-if='prestamo.estado>2' class="form_step_wrapper in_bottom">
               <h3 class="title">Resultado final</h3>
               <div class="detail_content"> 
@@ -137,7 +140,6 @@
                 <li class="spanner"></li>
               </div>
             </div>
- 
 
             <div v-if='prestamo.estado==1'  v-show="prestamo.fotos.length > 0 " class="form_step_wrapper in_bottom">
               <h3 class="title" >Negocio</h3>
@@ -166,10 +168,13 @@
                 </table>
               </div>
             </div>
-            <button  type="button" class="add_section" :class="{no_border: prestamo.fotos.length == 0 }" @click="startCamera"  v-if="listDevices.length > 0">
-              <span> CAPTURAR FOTO DE NEGOCIO  </span>
-              <i class="material-icons-outlined">camera_alt</i> 
-            </button>
+
+            <div class="form_step_wrapper in_bottom" v-if="listDevices.length > 0">
+              <button  type="button" class="add_section" :class="{no_border: prestamo.fotos.length == 0 }" @click="startCamera"  >
+                <span> CAPTURAR FOTO DE NEGOCIO  </span>
+                <i class="material-icons-outlined">camera_alt</i> 
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -200,16 +205,16 @@ export default {
         rotateControl: false,
         fullscreenControl: false,
       },
-      selectedCameraID: {},
+      selected_camera_id: {},
       screen: screen,
       location: null,
       gettingLocation: false,
       errorStr: null,
-      video: {},
+      video: null,
       canvas: {},
       mobile:false,
       captura: "",
-      camara_prendida: false,
+      camara_on: false,
       errors: {},
       location:{
         coords:{
@@ -254,27 +259,23 @@ export default {
     await this.initForm();
   },
   mounted() {
-      if (process.client) {  // en lado del servidor no existe windown, document, etc
-          if (window.innerWidth < 850) this.mobile = true
-          else this.mobile = false
+    if (process.client) {  // en lado del servidor no existe windown, document, etc
+        if (window.innerWidth < 850) this.mobile = true
+        else this.mobile = false
 
-          this.$nextTick(() => {
-              window.addEventListener('resize', () => {
-                  if (window.innerWidth < 850) this.mobile = true
-                  else this.mobile = false
-              })
-          })
-      }
- 
+        this.$nextTick(() => {
+            window.addEventListener('resize', () => {
+                if (window.innerWidth < 850) this.mobile = true
+                else this.mobile = false
+            })
+        })
+    }
     this.geolocate();
-
     if (!("geolocation" in navigator)) {
       this.errorStr = "Geolocation is not available.";
       return;
     }
-
     this.gettingLocation = true;
-
     navigator.geolocation.getCurrentPosition(
       pos => {
         this.gettingLocation = false;
@@ -285,11 +286,9 @@ export default {
         this.errorStr = err.message;
       }
     )
-
     GoogleMapsLoader.load((google) => {
       this.initMap(google)
     })
-
     this.selectCamera()
   },  
   methods: {
@@ -321,7 +320,7 @@ export default {
         if (deviceInfo.kind == 'videoinput') {
           console.log(deviceInfo.kind , 'camera')
           this.listDevices.push(deviceInfo.deviceId)
-          this.selectedCameraID=deviceInfo.deviceId
+          this.selected_camera_id=deviceInfo.deviceId
         } else {
           console.log('Found another kind of device: ', deviceInfo);
         }
@@ -335,7 +334,7 @@ export default {
       }
       const constraints = {
         video: {
-          deviceId: {exact: this.selectedCameraID}
+          deviceId: {exact: this.selected_camera_id}
         }
       }
     },
@@ -345,7 +344,7 @@ export default {
     },
     startCamera() {
         this.captura = null 
-        this.camara_prendida = true
+        this.camara_on = true
         this.$nextTick(() => {
           this.video = this.$refs.video;
         })
@@ -361,7 +360,7 @@ export default {
           navigator.getMedia(
             {
               video: {
-                deviceId:{exact: this.selectedCameraID}
+                deviceId:{exact: this.selected_camera_id}
               }
             },
             stream => {
@@ -378,7 +377,19 @@ export default {
             }
           );
         }
-    },    
+    },
+    pauseCamera () {
+      this.video.pause();
+    },
+    stopCamera() {
+      //this.video = this.$refs.video;
+      this.video.pause();
+      this.camara.getVideoTracks().forEach(function(track) {
+        track.stop();
+      });
+      this.camara_on = false
+      this.video = null
+    },
     capture() {
       this.canvas = this.$refs.canvas;
       var context = this.canvas
@@ -400,17 +411,6 @@ export default {
       );
       downloadLink.setAttribute("href", url);
       downloadLink.click();
-    },
-    pauseCamera () {
-      this.video.pause();
-    },
-    stopCamera() {
-      this.video = this.$refs.video;
-      this.video.pause();
-      this.camara.getVideoTracks().forEach(function(track) {
-        track.stop();
-      });
-      this.camara_prendida = false
     },
     retornar() {
       this.$parent.view = false;
@@ -537,19 +537,21 @@ export default {
   .camera_screen_content
     position: fixed
     left: 0
-    top: 55px
+    top: 0
     background-color: black
     width: 100%
     height: calc(100vh - 175px)
-    z-index: 10
+    z-index: 15
     .camera_screen_wrapper
-      .close_camera
-        height: 50px
+      .header_camera
+        height: 60px
         background-color: black
+        display: flex
+        align-items: center
+        justify-content: space-between
         select
-          height: 35px
+          height: 32px
           padding: 0 10px
-          margin-top: 15px
           margin-left: 15px
           border-radius: 3px
           font-size: 14px
@@ -559,21 +561,21 @@ export default {
             outline: none
         i
           color: white
-          height: 50px
+          height: 40px
           width: 50px
           margin-right: 10px
           display: flex
           justify-content: center
           align-items: center
-          float: right
           font-size: 30px
           cursor: pointer
       video
-        height: calc(100vh - 225px)
+        height: calc(100vh - 170px)
         width: 100%
         display: block
+        background-color: black
       .controls
-        height: 120px
+        height: 110px
         display: flex
         justify-content: center
         align-items: center
