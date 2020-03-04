@@ -40,13 +40,13 @@
               <p class="truncate" v-else> {{prestamo.cliente.empresa.razon_social}}</p>
             </div>
             <div class="detail">
-              <h2> {{prestamo.producto}} </h2>
-              <h2 style="font-size: 14px; font-weight: 500; margin: 10px 0 0 0px;"> {{prestamo.created_at}} </h2>
+              <h2> {{prestamo.producto_analista}} </h2>
+              <h3> S/ {{prestamo.importe_analista}} &nbsp; / &nbsp; {{prestamo.cuotas_analista}} {{timeCredit[prestamo.producto_analista]}} </h3>
               <div class="progress_bar">
                 <span class="bar"></span>
                 <p>0% </p>
               </div> 
-              <h3> S/ {{prestamo.importe_analista}} &nbsp; / &nbsp; {{prestamo.cuotas_analista}} {{timeCredit[prestamo.producto_analista]}} </h3>
+              <small>{{prestamo.created_at | moment('DD [de] MMMM, YYYY ') }}</small>
             </div>
             <div class="actions">
               
@@ -315,7 +315,7 @@ export default {
             font-weight: 500
             margin-bottom: -2px
         .detail
-          padding: 25px 20px
+          padding: 20px
           h2
             font-size: 12px
             margin: 0
@@ -338,6 +338,11 @@ export default {
           h3
             font-size: 11px
             margin: 0
+            margin-top: 10px
+          small
+            font-size: 11px
+            display: block
+            color: rgba($text_color, .7)
         .actions
           display: flex
           align-items: center

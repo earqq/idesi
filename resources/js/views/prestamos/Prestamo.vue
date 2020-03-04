@@ -169,8 +169,8 @@
               </div>
             </div>
 
-            <div class="form_step_wrapper in_bottom">
-              <button  type="button" class="add_section" :class="{no_border: prestamo.fotos.length == 0 }" @click="startCamera"  v-if="listDevices.length > 0">
+            <div class="form_step_wrapper in_bottom" v-if="listDevices.length > 0">
+              <button  type="button" class="add_section" :class="{no_border: prestamo.fotos.length == 0 }" @click="startCamera"  >
                 <span> CAPTURAR FOTO DE NEGOCIO  </span>
                 <i class="material-icons-outlined">camera_alt</i> 
               </button>
@@ -544,12 +544,14 @@ export default {
     z-index: 15
     .camera_screen_wrapper
       .header_camera
-        height: 50px
+        height: 60px
         background-color: black
+        display: flex
+        align-items: center
+        justify-content: space-between
         select
           height: 32px
           padding: 0 10px
-          margin-top: 10px
           margin-left: 15px
           border-radius: 3px
           font-size: 14px
@@ -559,13 +561,12 @@ export default {
             outline: none
         i
           color: white
-          height: 50px
+          height: 40px
           width: 50px
           margin-right: 10px
           display: flex
           justify-content: center
           align-items: center
-          float: right
           font-size: 30px
           cursor: pointer
       video
@@ -574,7 +575,7 @@ export default {
         display: block
         background-color: black
       .controls
-        height: 120px
+        height: 110px
         display: flex
         justify-content: center
         align-items: center

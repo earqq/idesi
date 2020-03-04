@@ -33,7 +33,6 @@
                     <i class="material-icons-outlined">download</i>
                   </button>
                 </div>
-
                 <div class="form_step_wrapper in_bottom">
                   <h3 class="title">Propuesta del Analista</h3>
 
@@ -62,8 +61,6 @@
                       <strong>Comentarios</strong>
                       <p>{{prestamo.comentarios || 'SIN COMENTARIOS'}}</p>
                     </li>
-                    <li class="spanner"></li>
-                    <li class="spanner"></li>
                   </div>
                 </div>
 
@@ -77,7 +74,7 @@
                   </div>
 
                   <div class="table_wrapper" v-else>
-                    <table class="table_clients no_hover">
+                    <table class="table_evaluation no_hover">
                       <thead>
                         <tr>
                           <th>Evaluador</th>
@@ -142,201 +139,225 @@
               </div>
 
               <div v-show="tab == 2" class="form_step">
-                <div class="row">
-                  <table id="travel" style="width: 100%;">
-                    <thead>
-                      <tr>
-                        <th
-                          scope="col"
-                          rowspan="2"
-                          style="text-align: center;"
-                        >FLUJO DE CAJA MENSUAL</th>
-                        <th
-                          scope="col"
-                          colspan="6"
-                          style="text-align: center;"
-                        >RESULTADOS DE EVALUACIÓN</th>
-                      </tr>
+                <div class="analytics_grid">
 
-                      <tr>
-                        <th scope="col">Titular</th>
-                        <th scope="col" v-if="conyuge">Cónyuge</th>
-                        <th scope="col">Unidad Familiar</th>
-                        <th scope="col">Comprobación</th>
-                      </tr>
-                    </thead>
-
-                    <tfoot>
-                      <tr>
-                        <th scope="row">RESULTADO EVA</th>
-                        <td colspan="4">
-                          <span v-text="resultadoAnalisis.resultado_eva"></span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">RESULTADO SIST</th>
-                        <td colspan="4">
-                          <span v-text="resultadoAnalisis.resultado_sist"></span>
-                        </td>
-                      </tr>
-                    </tfoot>
-
-                    <tbody>
-                      <tr class>
-                        <th scope="row">Ingreso / ventas</th>
-                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_conyuge" v-if="conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_validacion"></td>
-                      </tr>
-
-                      <tr class>
-                        <th scope="row">Costo de venta</th>
-                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_conyuge" v-if="conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.costo_venta_validacion"></td>
-                      </tr>
-
-                      <tr class>
-                        <th scope="row">Margen Bruto</th>
-                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_conyuge" v-if="conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.margen_bruto_validacion"></td>
-                      </tr>
-
-                      <tr class>
-                        <th scope="row">Servicios LAT</th>
-                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_conyuge" v-if="conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.servicios_lat_validacion"></td>
-                      </tr>
-
-                      <tr class>
-                        <th scope="row">Alquiler</th>
-                        <td v-text="'S/. '+resultadoAnalisis.alquiler_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.alquiler_conyuge" v-if="conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.alquiler_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.alquiler_validacion"></td>
-                      </tr>
-
-                      <tr class>
-                        <th scope="row">Empleados</th>
-                        <td v-text="'S/. '+resultadoAnalisis.empleados_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.empleados_conyuge" v-if="conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.empleados_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.empleados_validacion"></td>
-                      </tr>
-
-                      <tr class>
-                        <th scope="row">Gasto Financiero</th>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_conyuge" v-if="conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Utilidad neta del negocio</th>
-                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_conyuge" v-if="conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Otros ingresos</th>
-                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_conyuge" v-if="conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Gasto Hogar</th>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_titular"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_conyuge" v-if="conyuge"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_total"></td>
-                        <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Gasto Financiero Personal</th>
-                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_titular"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_conyuge" v-if="conyuge"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_total"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.gasto_financiero_personal_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Disponible</th>
-                        <td v-text="'s/. '+resultadoAnalisis.disponible_titular"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.disponible_conyuge" v-if="conyuge"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.disponible_total"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.disponible_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Cuota insitución</th>
-                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_titular"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_conyuge" v-if="conyuge"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_total"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.cuota_institucion_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Disponible desp. Cuota</th>
-                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_titular"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_conyuge" v-if="conyuge"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_total"></td>
-                        <td v-text="'s/. '+resultadoAnalisis.utilidad_desp_cuota_validacion"></td>
-                      </tr>
-                      <tr class>
-                        <th scope="row">Participación de la cuota</th>
-                        <td v-text="resultadoAnalisis.participacion_cuota_titular + ' %'"></td>
-                        <td v-if="conyuge"></td>
-                        <td v-text="resultadoAnalisis.participacion_cuota_total + ' %'"></td>
-                        <td v-text="resultadoAnalisis.participacion_cuota_validacion + ' %'"></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div class="col-md-3 ratios p-0" style="margin: 0 30px;">
-                    <div class="card-body p-0">
-                      <table class="table table-responsive-sm">
+                  <div class="analytics_result_wrapper results">
+                    <h3 class="title">RESULTADOS DE EVALUACIÓN</h3>
+                    <div class="table_wrapper">
+                      <table >
+                        <thead>
+                          <tr>
+                            <th>TIPO</th>
+                            <th>TITULAR</th>
+                            <th v-if="conyuge">CÓNYUGE</th>
+                            <th>UNIDAD FAMILIAR</th>
+                            <th>COMPROBACIÓN</th>
+                          </tr>
+                        </thead>
                         <tbody>
-                          <tr class="mt-3 title-table">
-                            <td colspan="3" class="pt-2 text-center" style="background: #4b6085;color: #fff;">RATIOS</td>
+                          <tr class>
+                            <td class="sub_title">Ingreso / ventas</td>
+                            <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.ingresos_ventas_validacion"></td>
                           </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2" style="width: 11%;">ENDEUDAMIENTO</td>
-                            <td
-                              class="font-weight-bold pt-2"
-                              v-text="parseFloat(resultadoAnalisis.ratios_endeudamiento*100).toFixed(2) + ' %'"
-                            ></td>
-                            <td
-                              class="font-weight-bold pt-2"
-                              v-text="resultadoAnalisis.ratios_endeudamiento_resultado"
-                            ></td>
+
+                          <tr class>
+                            <td class="sub_title">Costo de venta</td>
+                            <td v-text="'S/. '+resultadoAnalisis.costo_venta_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.costo_venta_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.costo_venta_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.costo_venta_validacion"></td>
                           </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2" style="width: 11%;">MARGEN NETO</td>
-                            <td
-                              v-if="resultadoAnalisis.ratios_margen_neto"
-                              v-text="parseFloat(resultadoAnalisis.ratios_margen_neto*100).toFixed(2) + ' %'"
-                            ></td>
+
+                          <tr class>
+                            <td class="sub_title">Margen Bruto</td>
+                            <td v-text="'S/. '+resultadoAnalisis.margen_bruto_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.margen_bruto_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.margen_bruto_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.margen_bruto_validacion"></td>
+                          </tr>
+
+                          <tr class>
+                            <td class="sub_title">Servicios LAT</td>
+                            <td v-text="'S/. '+resultadoAnalisis.servicios_lat_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.servicios_lat_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.servicios_lat_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.servicios_lat_validacion"></td>
+                          </tr>
+
+                          <tr class>
+                            <td class="sub_title">Alquiler</td>
+                            <td v-text="'S/. '+resultadoAnalisis.alquiler_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.alquiler_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.alquiler_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.alquiler_validacion"></td>
+                          </tr>
+
+                          <tr class>
+                            <td class="sub_title">Empleados</td>
+                            <td v-text="'S/. '+resultadoAnalisis.empleados_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.empleados_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.empleados_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.empleados_validacion"></td>
+                          </tr>
+
+                          <tr class>
+                            <td class="sub_title">Gasto Financiero</td>
+                            <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_validacion"></td>
+                          </tr>
+                          <tr class>
+                            <td class="sub_title">Utilidad neta del negocio</td>
+                            <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.utilidad_neta_negocio_validacion"></td>
+                          </tr>
+                          <tr class>
+                            <td class="sub_title">Otros ingresos</td>
+                            <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.otros_ingresos_validacion"></td>
+                          </tr>
+                          <tr class>
+                            <td class="sub_title">Gasto Hogar</td>
+                            <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.gasto_hogar_validacion"></td>
+                          </tr>
+                          <tr class>
+                            <td class="sub_title">Gasto Financiero Personal</td>
+                            <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_personal_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_personal_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_personal_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.gasto_financiero_personal_validacion"></td>
+                          </tr>
+                          <tr class>
+                            <td class="sub_title">Disponible</td>
+                            <td v-text="'S/. '+resultadoAnalisis.disponible_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.disponible_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.disponible_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.disponible_validacion"></td>
+                          </tr>
+                          <tr class>
+                            <td class="sub_title">Cuota insitución</td>
+                            <td v-text="'S/. '+resultadoAnalisis.cuota_institucion_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.cuota_institucion_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.cuota_institucion_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.cuota_institucion_validacion"></td>
+                          </tr>
+                          <tr class>
+                            <td class="sub_title">Disponible desp. Cuota</td>
+                            <td v-text="'S/. '+resultadoAnalisis.utilidad_desp_cuota_titular"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.utilidad_desp_cuota_conyuge" v-if="conyuge"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.utilidad_desp_cuota_total"></td>
+                            <td v-text="'S/. '+resultadoAnalisis.utilidad_desp_cuota_validacion"></td>
+                          </tr>
+                          <tr class>
+                            <td class="sub_title">Participación de la cuota</td>
+                            <td v-text="resultadoAnalisis.participacion_cuota_titular + ' %'"></td>
+                            <td v-if="conyuge"></td>
+                            <td v-text="resultadoAnalisis.participacion_cuota_total + ' %'"></td>
+                            <td v-text="resultadoAnalisis.participacion_cuota_validacion + ' %'"></td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <td class="sub_title" colspan="3">RESULTADO EVA</td>
+                            <td >
+                              <span v-text="resultadoAnalisis.resultado_eva"></span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="sub_title" colspan="3">RESULTADO SIST</td>
+                            <td >
+                              <span v-text="resultadoAnalisis.resultado_sist"></span>
+                            </td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="analytics_result_wrapper balance">
+                    <h3 class="title">BALANCE</h3>
+                    <div class="table_wrapper">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th >ACTIVO</th>
+                            <th></th>
+                            <th >PASIVO</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="sub_title" >CAJA</td>
+                            <td v-text="'S/. '+resultadoAnalisis.balance_activo_caja"></td>
+                            <td class="sub_title" >DEUDAS</td>
+                            <td v-text="'S/. '+resultadoAnalisis.balance_pasivo_deudas"></td>
+                          </tr>
+                          <tr>
+                            <td class="sub_title">INVENTARIO</td>
+                            <td v-text="'S/. '+resultadoAnalisis.balance_activo_inventario">0</td>
+                            <td class="sub_title">PATRIMONIO</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td class="sub_title" >ACTIVO F</td>
+                            <td v-text="'S/. '+resultadoAnalisis.balance_activo_f"></td>
+                            <td class="sub_title" >CAPITAL</td>
+                            <td v-text="'S/. '+resultadoAnalisis.balance_patrimonio_capital"></td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td class="sub_title" >UTILIDAD</td>
+                            <td v-text="'S/. '+resultadoAnalisis.balance_patrimonio_utilidad"></td>
+                          </tr>
+                          <tr>
+                            <td class="sub_title" >TOTAL</td>
+                            <td v-text="'S/. '+resultadoAnalisis.balance_activo_total"></td>
+                            <td class="sub_title" >TOTAL</td>
+                            <td v-text="'S/. '+resultadoAnalisis.balance_patrimonio_total"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="analytics_result_wrapper ratios">
+                    <h3 class="title">RATIOS</h3>
+                    <div class="table_wrapper">
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td class="sub_title">ENDEUDAMIENTO</td>
+                            <td v-text="parseFloat(resultadoAnalisis.ratios_endeudamiento*100).toFixed(2) + ' %'"></td>
+                            <td v-text="resultadoAnalisis.ratios_endeudamiento_resultado"></td>
+                          </tr>
+                          <tr>
+                            <td class="sub_title">MARGEN NETO</td>
+                            <td v-if="resultadoAnalisis.ratios_margen_neto" v-text="parseFloat(resultadoAnalisis.ratios_margen_neto*100).toFixed(2) + ' %'"></td>
                             <td v-else>0</td>
                             <td v-text="resultadoAnalisis.ratios_margen_neto_resultado"></td>
                           </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2" style="width: 11%;">LIQUIDEZ</td>
-                            <td
-                              v-if="resultadoAnalisis.ratios_liquidez"
-                              v-text="parseFloat(resultadoAnalisis.ratios_liquidez).toFixed(2)"
-                            ></td>
+                          <tr>
+                            <td class="sub_title">LIQUIDEZ</td>
+                            <td v-if="resultadoAnalisis.ratios_liquidez" v-text="parseFloat(resultadoAnalisis.ratios_liquidez).toFixed(2)"></td>
                             <td v-else>0</td>
                             <td v-text="resultadoAnalisis.ratios_liquidez_resultado"></td>
                           </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2" style="width: 11%;">SOLVENCIA</td>
-                            <td
-                              v-if="resultadoAnalisis.ratios_solvencia"
-                              v-text="parseFloat(resultadoAnalisis.ratios_solvencia).toFixed(2)"
-                            ></td>
+                          <tr>
+                            <td class="sub_title">SOLVENCIA</td>
+                            <td v-if="resultadoAnalisis.ratios_solvencia" v-text="parseFloat(resultadoAnalisis.ratios_solvencia).toFixed(2)"></td>
                             <td v-else>0</td>
                             <td v-text="resultadoAnalisis.ratios_solvencia_resultado"></td>
                           </tr>
@@ -344,105 +365,30 @@
                       </table>
                     </div>
                   </div>
-                  <div class="col-md-3 balance p-0" style="margin: 0 30px;">
-                    <div class="card-body p-0">
-                      <table class="table table-responsive-sm">
+               
+                  <div v-if="prestamo.forma=='DIARIO'"  class="analytics_result_wrapper flow">
+                    <h3 class="title">flujo para creditos diarios</h3>
+                    <div class="table_wrapper">
+                      <table>
                         <tbody>
-                          <tr class="title-table">
-                            <td colspan="4" class="pt-2 text-center"  style="background: #4b6085;color: #fff;">BALANCE</td>
-                          </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2 text-center" colspan="2">ACTIVO</td>
-                            <td class="pt-2 text-center" colspan="2">PASIVO</td>
-                          </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2">CAJA</td>
-                            <td
-                              class="font-weight-bold pt-2"
-                              v-text="'S/. '+resultadoAnalisis.balance_activo_caja"
-                            ></td>
-                            <td class="pt-2">DEUDAS</td>
-                            <td
-                              class="font-weight-bold pt-2"
-                              v-text="'S/. '+resultadoAnalisis.balance_pasivo_deudas"
-                            ></td>
-                          </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2">INVENTARIO</td>
-                            <td
-                              class="font-weight-bold pt-2"
-                              v-text="'S/. '+resultadoAnalisis.balance_activo_inventario"
-                            >0</td>
-                            <td class="font-weight-bold pt-2 text-center" colspan="2">PATRIMONIO</td>
-                          </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2">ACTIVO F</td>
-                            <td
-                              class="font-weight-bold pt-2"
-                              v-text="'S/. '+resultadoAnalisis.balance_activo_f"
-                            ></td>
-                            <td class="pt-2">CAPITAL</td>
-                            <td
-                              class="font-weight-bold pt-2"
-                              v-text="'S/. '+resultadoAnalisis.balance_patrimonio_capital"
-                            ></td>
-                          </tr>
-                          <tr style="background: white;"></tr>
-                          <tr style="background: white;">
-                            <td class="pt-2 text-center" colspan="2"></td>
-                            <td class="pt-2">UTILIDAD</td>
-                            <td
-                              class="font-weight-bold pt-2"
-                              v-text="'S/. '+resultadoAnalisis.balance_patrimonio_utilidad"
-                            ></td>
-                          </tr>
-
-                          <tr style="background: white;">
-                            <td class="pt-2">TOTAL</td>
-                            <td
-                              class="font-weight-bold pt-2"
-                              v-text="'S/. '+resultadoAnalisis.balance_activo_total"
-                            ></td>
-                            <td class="pt-2">TOTAL</td>
-                            <td
-                              class="font-weight-bold pt-2"
-                              v-text="'S/. '+resultadoAnalisis.balance_patrimonio_total"
-                            ></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div
-                    v-if="prestamo.forma=='DIARIO'"
-                    class="col-md-3 ratios p-0"
-                    style="margin: 0 30px;"
-                  >
-                    <div class="card-body p-0">
-                      <table class="table table-responsive-sm">
-                        <tbody>
-                          <tr class="mt-3 title-table">
-                            <td colspan="3" class="pt-2 text-center"  style="background: #4b6085;color: #fff;">FLUJO PARA CREDITOS DIARIOS</td>
-                          </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2 w-50">MINIMO INGRESO</td>
+                          <tr>
+                            <td  class="sub_title">MINIMO INGRESO</td>
                             <td v-text="resultadoAnalisis.fc_diario_minimo_ingreso"></td>
                           </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2 w-50">CUOTA</td>
+                          <tr>
+                            <td  class="sub_title">CUOTA</td>
                             <td v-text="resultadoAnalisis.fc_diario_cuota"></td>
                           </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2 w-50">DISPONIBLE DIARIO</td>
+                          <tr>
+                            <td  class="sub_title">DISPONIBLE DIARIO</td>
                             <td v-text="resultadoAnalisis.fc_diario_disponible_diario"></td>
                           </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2 w-50">PARTICIPACION DE LA CUOTA</td>
+                          <tr>
+                            <td  class="sub_title">PARTICIPACION DE LA CUOTA</td>
                             <td v-text="resultadoAnalisis.fc_diario_participacion_cuota + ' %'"></td>
                           </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2 w-50">RESULTADO</td>
+                          <tr>
+                            <td  class="sub_title">RESULTADO</td>
                             <td v-text="resultadoAnalisis.fc_diario_resultado"></td>
                           </tr>
                         </tbody>
@@ -450,33 +396,30 @@
                     </div>
                   </div>
 
-                  <div v-if="prestamo.forma=='SEMANAL'" class="col-md-3 ratios p-0">
-                    <div class="card-body p-0">
+                  <div v-if="prestamo.forma=='SEMANAL'"  class="analytics_result_wrapper flow">
+                    <h3 class="title">flujo para creditos semanal</h3>
+                    <div class="table_wrapper">
                       <table
-                        class="table table-responsive-sm table-bordered table-striped table-sm"
-                      >
+                        class="table table-responsive-sm table-bordered table-striped table-sm">
                         <tbody>
-                          <tr class="mt-3 title-table">
-                            <td colspan="3" class="pt-2 text-center">FLUJO PARA CREDITOS SEMANA</td>
-                          </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2 w-50">MINIMO INGRESO</td>
+                          <tr >
+                            <td  class="sub_title">MINIMO INGRESO</td>
                             <td v-text="resultadoAnalisis.fc_semanal_minimo_ingreso"></td>
                           </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2 w-50">CUOTA</td>
+                          <tr >
+                            <td  class="sub_title">CUOTA</td>
                             <td v-text="resultadoAnalisis.fc_semanal_cuota"></td>
                           </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2 w-50">DISPONIBLE SEMANA</td>
+                          <tr >
+                            <td  class="sub_title">DISPONIBLE SEMANA</td>
                             <td v-text="resultadoAnalisis.fc_semanal_disponible_semana"></td>
                           </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2 w-50">PARTICIPACION DE LA CUOTA</td>
+                          <tr >
+                            <td  class="sub_title">PARTICIPACION DE LA CUOTA</td>
                             <td v-text="resultadoAnalisis.fc_semanal_participacion_cuota"></td>
                           </tr>
-                          <tr style="background: white;">
-                            <td class="pt-2 w-50">RESULTADO</td>
+                          <tr >
+                            <td  class="sub_title">RESULTADO</td>
                             <td v-text="resultadoAnalisis.fc_semanal_resultado"></td>
                           </tr>
                         </tbody>
@@ -484,8 +427,6 @@
                     </div>
                   </div>
 
-                  
-                  
                 </div>
               </div>
             </div>
@@ -493,12 +434,10 @@
         </div>
       </div>
     </div>
-
     <aside
       class="evaluation no_scroll"
       :class="{showing: show_slide}"
-      v-if="prestamo.estado==2 && ($store.state.currentUser.nivel=='3' || $store.state.currentUser.nivel=='2') && !evaluado"
-    >
+      v-if="prestamo.estado==2 && ($store.state.currentUser.nivel=='3' || $store.state.currentUser.nivel=='2') && !evaluado">
       <div class="evaluation_wrapper">
         <div class="input_box">
           <div class="input_box_wrapper">
@@ -646,7 +585,6 @@ export default {
         .then(response => {
           
           this.prestamo = response.data
-          console.log("sadadasda")
           
           if(this.prestamo.cliente.persona.conyuge){
             this.conyuge=1
@@ -709,65 +647,6 @@ export default {
 
 <style lang="sass">
 @import "../../../sass/variables"
-p, table, caption, td, tr, th
-  margin: 0
-  padding: 0
-  font-weight: normal
-
-/* ---- Paragraphs ----
-
-p
-  margin-bottom: 15px
-
-/* ---- Table ----
-
-table
-  border-collapse: collapse
-  margin-bottom: 15px
-
-caption
-  text-align: left
-  font-size: 15px
-  padding-bottom: 10px
-
-table
-  td, th
-    padding: 5px
-    border: 1px solid #fff
-    border-width: 0 1px 1px 0
-
-thead th
-  background: #919fb6
-  color: #fff
-
-
-  &[colspan], &[rowspan]
-    background: rgba(33, 57, 103, 0.8)
-    color: #fff
-
-tbody th, tfoot th
-  text-align: left
-  background: rgba(75, 96, 133, 0.5882352941176471)
-  color: #fff
-
-tbody td
-  text-align: center!important
-
-tfoot
-  td
-    text-align: center
-    background: #d5eaf0
-
-  th
-    background: #b0cc7f
-
-  td
-    background: #d7e1c5
-    font-weight: bold
-
-tbody tr.odd td
-  background: #bcd9e1
-
 .evaluation_content
   display: flex
   .evaluation_detail
@@ -809,6 +688,69 @@ tbody tr.odd td
       margin-bottom: 20px
       .add_section
         border-top: none
+      .analytics_grid
+        display: grid
+        grid-template-areas: "results results" "balance balance" "ratios flow"
+        grid-template-columns: 1fr 1fr
+        grid-gap: 10px
+        .analytics_result_wrapper
+          background-color: white
+          box-shadow: $shadow
+          box-sizing: border-box
+          border: 1px solid $line_color
+          border-radius: 4px
+          overflow: hidden
+          h3.title
+            font-size: 12px
+            margin: 0
+            width: 100%
+            border-bottom: 1px solid $line_color
+            font-weight: 700
+            padding: 7px 20px
+            display: flex
+            align-items: center
+            justify-content: space-between
+            min-height: 30px
+            text-transform: uppercase
+          &.results
+            grid-area: results
+          &.ratios
+            grid-area: ratios
+          &.balance
+            grid-area: balance
+          &.flow
+            grid-area: flow
+          table
+            background-color: $bg_color
+            thead tr
+              border-radius: 0
+            tr
+              td
+                text-align: left
+            tbody:hover tr
+              background-color: white
+            .sub_title
+              font-weight: 700
+              text-transform: uppercase
+            tfoot
+              display: block
+              color: $primary_color
+              tr
+                display: flex
+                width: 100%
+                font-family: $font
+                transition: all ease-in-out .2s
+                border-left: 3px solid $primary_color
+                background-color: rgba($primary_color, .03) !important
+                td
+                  text-align: center
+                  font-size: 12px
+                  display: flex
+                  justify-content: flex-start
+                  align-items: center
+                  flex: 1
+                  padding: 12px 15px
+                  color: $text_color
       .empty_message_evaluation
         display: flex
         align-items: center
@@ -830,7 +772,7 @@ tbody tr.odd td
           font-size: 12px
           text-align: center
           line-height: 1.4
-      table
+      table.table_evaluation
         thead, tbody
           tr
             margin-bottom: 0px
@@ -964,7 +906,7 @@ tbody tr.odd td
   .evaluation_content
     .evaluation_detail
       .evaluation_detail_wrapper
-        table
+        table.table_evaluation
           thead
             display: none
           tbody
