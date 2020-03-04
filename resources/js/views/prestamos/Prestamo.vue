@@ -56,7 +56,7 @@
           <div class="form_step">
 
             <div class="form_step_wrapper">
-              <h3 class="title">Solicitud de Crédito asdfawef {{listDevices.length}}</h3>
+              <h3 class="title">Solicitud de Crédito </h3>
               <div class="detail_content"> 
                 <li>
                   <strong>Monto </strong> 
