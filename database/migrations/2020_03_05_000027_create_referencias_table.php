@@ -26,7 +26,7 @@ class CreateReferenciasTable extends Migration
             $table->string('tipo_relacion', 100)->nullable();
             $table->text('nombres')->nullable();
             $table->string('telefonos', 100)->nullable();
-            $table->unsignedInteger('cualitativa_id');
+            $table->integer('cualitativa_id');
 
             $table->index(["cualitativa_id"], 'fk_referencias_cualitativas1_idx');
 

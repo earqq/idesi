@@ -42,6 +42,7 @@ class CreateCualitativasTable extends Migration
             $table->string('vehiculo_tipo_servicio_brinda', 200)->nullable();
             $table->boolean('vehiculo_permiso_servicio')->nullable();
             $table->float('precio_educacion_hijos')->nullable();
+            $table->integer('vehiculo_antiguedad_servicio')->nullable();
 
             $table->index(["prestamo_id"], 'fk_cualitativa_prestamos1_idx');
 

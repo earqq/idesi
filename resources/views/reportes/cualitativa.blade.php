@@ -76,11 +76,7 @@
                             <td > <span class="title">TIPO DE SERVICIO: </span> {{$cualitativa->vehiculo_tipo_servicio_brinda}} <span > </span> </td>
                             <td > <span class="title">ANTIGUEDAD DE SERVICIO: </span> {{$cualitativa->vehiculo_antiguedad_servicio}} <span > </span> </td> 
                             <td > <span class="title">PERMISO SERVICIO: </span> 
-                            @if($cualitativa->vehiculo_permiso_servicio)
-                            SI
-                            @else
-                            NO
-                            @endif
+                            {{ $cualitativa->vehiculo_permiso_servicio ? 'SI' : 'NO' }} 
                             <span > </span> </td> 
                         </tr>
                         <tr>
@@ -93,17 +89,21 @@
                 @else
                  <tbody>
                     <tr>
-                        <td> <span class="title">UBICACIÓN DE INGRESO </span> {{$cualitativa->ubicacion_negocio}} <span > </span> </td>
-                        <td > <span class="title">ANTIGUEDAD</span> {{$cualitativa->antiguedad}} <span > </span> </td> 
-                        <td > <span class="title">LOCAL</span> {{$cualitativa->local}} <span > </span> </td> 
+                        <td> <span class="title">UBICACIÓN DE INGRESO </span> {{$cualitativa->negocio_ubicacion}} <span > </span> </td>
+                        <td > <span class="title">ANTIGUEDAD</span> {{$cualitativa->negocio_antiguedad}} <span > </span> </td> 
+                        <td > <span class="title">LOCAL</span> {{$cualitativa->negocio_local}} <span > </span> </td> 
                     </tr>
                     <tr>
-                        <td > <span class="title">LICENCIA FUNCIONAMIENTO</span> {{$cualitativa->licencia_funcionamiento}} <span > </span> </td>
-                        <td > <span class="title">REALIZO MEJORAS</span> {{$cualitativa->mejoras_local}} <span > </span> </td> 
+                        <td > <span class="title">LICENCIA FUNCIONAMIENTO</span>
+                        {{$cualitativa->negocio_licencia_funcionamiento ?  'SI' : 'NO' }}
+                        <span > </span> </td>
+                        <td > <span class="title">REALIZO MEJORAS</span>
+                        {{$cualitativa->negocio_mejoras_local ? 'SI' :  'NO'}}
+                        <span > </span> </td> 
                         <td ></td> 
                     </tr>
                     <tr>
-                        <td > <span class="title">HR. ATENCION ENTRADA</span> {{$cualitativa->horario_atencion_inicio}} <span > </span> </td> 
+                        <td > <span class="title">HR. ATENCION ENTRADA</span> {{$cualitativa->horario_atencion_entrada}} <span > </span> </td> 
                         <td > <span class="title">HR. ATENCION SALIDA</span> {{$cualitativa->horario_atencion_salida}} <span > </span> </td> 
                     </tr>
                  </tbody> 
@@ -121,10 +121,10 @@
                         <tr>
                             <td> <span class="title">TIPO DE VIVIENDA </span> {{$cualitativa->familiar['tipo_vivienda']}}  <span > </span> </td>
                             <td > <span class="title">SITUACIÓN FAMILIAR</span>  {{$cualitativa->familiar['situacion_familiar']}} <span > </span> </td> 
-                            <td > <span class="title">MIEMBROS DE FAMILIA</span>  {{$cualitativa->familiar['miembros_familia']}} <span > </span> </td> 
+                            <td > <span class="title">MIEMBROS DE FAMILIA</span>  {{count($cualitativa->prestamo->cliente->persona->hijos)}} <span > </span> </td> 
                         </tr>
 
-                        @if ($cualitativa->familiar['numero_hijos']==0)
+                        @if (!$cualitativa->prestamo->cliente->persona->hijos)
                             <tr>
                                 <td colspan="3" style="text-align: center">  NO REGISTRA HIJOS</td>
                             </tr>
@@ -135,32 +135,26 @@
                                     <table style="width: 100%;margin-bottom: 20px;    border: none;" border="1" cellpadding="5" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none; font-size: 10px">Edad</th>
-                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Colegio</th>
-                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Grado</th>
-                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Costo</th>
+                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none; font-size: 10px">Documento</th>
+                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Nombres</th>
+                                            <th style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 10px">Fecha nacimiento</th>
                                         </tr>
                                     </thead>
                                     <tbody> 
 
-                                        @if($cualitativa->familiar['hijos'])
-                                            @foreach ($cualitativa->familiar['hijos'] as $hijos)
-                                                @if ($hijos['costo']!=0)
+                                        @if($cualitativa->prestamo->cliente->persona->hijos)
+                                            @foreach ($cualitativa->prestamo->cliente->persona->hijos as $hijos)
                                                     <tr>
-                                                        <td>{{$hijos['edad']}}</td>
-                                                        <td>{{$hijos['colegio']}}</td>
-                                                        <td>{{$hijos['grado']}}</td>
-                                                        <td>S/. {{$hijos['costo']}}</td>
+                                                        <td>{{$hijos['documento']}}</td>
+                                                        <td>{{$hijos['nombres']}}</td>
+                                                        <td>{{$hijos['fecha_nacimiento']}}</td>
                                                     </tr>  
-                                                @endif
-
                                             @endforeach
                                         @endif
                                     </tbody>
                                 </table>
                                 </td>
                             </tr>
-                            
                         @endif
                 </tbody>
             </table>
@@ -173,7 +167,7 @@
                 <tbody>
                     <tr>
                         <td colspan="3">
-                            <span class="title">COMENTARIOS</span>
+                            <span class="title">COMENTARIOS: </span>
                             <span>
                                 {{$cualitativa->comentario_central_riesgo}} 
                             </span>
@@ -195,11 +189,11 @@
                                 <tbody>
                                     @if($cualitativa->central_riesgo)
                                         @foreach ($cualitativa->central_riesgo as $cual)
-                                        @if ($cual['entidad_financiera'])
+                                        @if ($cual['entidad'])
                                             <tr>
-                                                <td>{{$cual['entidad_financiera']}}</td>
-                                                <td>{{ $cual['capital'] ? 'SI' : 'NO'}}</td>
-                                                <td> {{ $cual['activo_f'] ? 'SI' : 'NO'}}</td>
+                                                <td>{{$cual['entidad']}}</td>
+                                                <td>{{ $cual['capital_trabajo'] ? 'SI' : 'NO'}}</td>
+                                                <td> {{ $cual['activo_fijo'] ? 'SI' : 'NO'}}</td>
                                                 <td>{{ $cual['consumo'] ? 'SI' : 'NO'}}</td>
                                                 <td>{{ $cual['vehicular'] ? 'SI' : 'NO'}}</td>
                                                 <td>{{ $cual['hipoteca'] ? 'SI' : 'NO'}}</td>
@@ -236,8 +230,8 @@
                                             @if ($ref['tipo_relacion'])
                                                 <tr>
                                                     <td>{{ $ref['tipo_relacion']}}</td>
-                                                    <td>{{ $ref['nombre']}}</td>
-                                                    <td>{{ $ref['telefono']}}</td> 
+                                                    <td>{{ $ref['nombres']}}</td>
+                                                    <td>{{ $ref['telefonos']}}</td> 
                                                 </tr>
                                             @endif
                                         @endforeach

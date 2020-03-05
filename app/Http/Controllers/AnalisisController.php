@@ -756,6 +756,7 @@ class AnalisisController extends Controller
                 $cualitativa->vehiculo_anio=$request->vehiculo["anio"];
                 $cualitativa->vehiculo_tipo_servicio_brinda=$request->vehiculo["tipo_servicio_brinda"];
                 $cualitativa->vehiculo_permiso_servicio=$request->vehiculo["permiso_servicio"];
+                $cualitativa->vehiculo_antiguedad_servicio=$request->vehiculo["antiguedad_servicio"];
             }
             $total_estudio=0;
             foreach($request->familiar["hijos"] as $hijo){
