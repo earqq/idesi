@@ -53,10 +53,10 @@ export default {
     meses_numero() {
       if (this.propuestaAnalista.producto_analista == "CREDIDIARIO") { 
         this.propuestaAnalista.meses_analista = (Number(this.propuestaAnalista.cuotas_analista) / 30).toFixed(2);
-      } else if (this.propuestaAnalista.producto == "CREDISEMANA") {
+      } else if (this.propuestaAnalista.producto_analista == "CREDISEMANA") {
         this.propuestaAnalista.meses_analista = (Number(this.propuestaAnalista.cuotas_analista) / 4).toFixed(2);
       } else {
-        this.propuestaAnalista.meses_analista = (Number(this.prestamo.cuotas_analista) / 1).toFixed(2);
+        this.propuestaAnalista.meses_analista = (Number(this.propuestaAnalista.cuotas_analista) / 1).toFixed(2);
       }
     },
   },

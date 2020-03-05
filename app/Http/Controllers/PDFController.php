@@ -74,7 +74,7 @@ class PDFController extends Controller
     }
     public function cualitativa($prestamoID){
 
-        $cualitativa= Cualitativa::where('prestamo_id',intval($prestamoID))->first();  
+        $cualitativa= Cualitativa::where('prestamo_id',intval($prestamoID))->first();
         $pdf = \PDF::loadView('reportes.cualitativa',compact('cualitativa'));
         return $pdf->stream('evaluacion_cualitativa.pdf');
 

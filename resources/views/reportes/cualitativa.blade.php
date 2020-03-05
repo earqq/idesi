@@ -57,7 +57,7 @@
             <table style="width: 100%; margin-top: 20px;    border: none;"   border="1" cellpadding="5" cellspacing="0">
                 <thead> 
                     <tr>
-                        @if ($cualitativa->fuente_ingreso == 'TRANSPORTE BAJAJ' || $cualitativa->fuente_ingreso == 'TRANSPORTES')
+                        @if ($cualitativa->fuente_ingresos == 'TRANSPORTE BAJAJ' || $cualitativa->fuente_ingresos == 'TRANSPORTES')
                             <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;">DATOS VEHICULO</th>
                         @else
                         <th colspan="3" style="text-align: inherit;background: #e4e4e4;font-weight: 100;border: none;font-size: 12px">DATOS NEGOCIO</th>
@@ -65,21 +65,27 @@
                         
                     </tr>
                 </thead>
-                @if ($cualitativa->fuente_ingreso == 'TRANSPORTE BAJAJ' || $cualitativa->fuente_ingreso == 'TRANSPORTES')
+                @if ($cualitativa->fuente_ingresos == 'TRANSPORTE BAJAJ' || $cualitativa->fuente_ingresos == 'TRANSPORTES')
                     <tbody>
                         <tr>
-                            <td> <span class="title">MARCA</span> {{$cualitativa->vehiculo['marca']}} <span > </span> </td>
-                            <td > <span class="title">MODELO</span> {{$cualitativa->vehiculo['modelo']}} <span > </span> </td> 
-                            <td > <span class="title">AÑO</span> {{$cualitativa->vehiculo['año']}} <span > </span> </td> 
+                            <td> <span class="title">MARCA: </span> {{$cualitativa->vehiculo_marca}} <span > </span> </td>
+                            <td > <span class="title">MODELO: </span> {{$cualitativa->vehiculo_modelo}} <span > </span> </td> 
+                            <td > <span class="title">AÑO: </span> {{$cualitativa->vehiculo_anio}} <span > </span> </td> 
                         </tr>
                         <tr>
-                            <td > <span class="title">TIPO DE SERVICIO</span> {{$cualitativa->vehiculo['tipo_servicio_brinda']}} <span > </span> </td>
-                            <td > <span class="title">ANTIGUEDAD DE SERVICIO</span> {{$cualitativa->vehiculo['antiguedad_servicio']}} <span > </span> </td> 
-                            <td > <span class="title">PERMISO SERVICIO</span> {{$cualitativa->vehiculo['permiso_servicio']}} <span > </span> </td> 
+                            <td > <span class="title">TIPO DE SERVICIO: </span> {{$cualitativa->vehiculo_tipo_servicio_brinda}} <span > </span> </td>
+                            <td > <span class="title">ANTIGUEDAD DE SERVICIO: </span> {{$cualitativa->vehiculo_antiguedad_servicio}} <span > </span> </td> 
+                            <td > <span class="title">PERMISO SERVICIO: </span> 
+                            @if($cualitativa->vehiculo_permiso_servicio)
+                            SI
+                            @else
+                            NO
+                            @endif
+                            <span > </span> </td> 
                         </tr>
                         <tr>
-                            <td > <span class="title">HR. SERVICIO INICIO</span> {{$cualitativa->vehiculo['horario_servicio_inicio']}} <span > </span> </td>
-                            <td > <span class="title">HR. SERVICIO FIN</span> {{$cualitativa->vehiculo['horario_servicio_fin']}} <span > </span> </td> 
+                            <td > <span class="title">HR. SERVICIO INICIO</span> {{$cualitativa->horario_atencion_entrada}} <span > </span> </td>
+                            <td > <span class="title">HR. SERVICIO FIN</span> {{$cualitativa->horario_atencion_salida}} <span > </span> </td> 
                             <td ></td> 
                         </tr>
                     
